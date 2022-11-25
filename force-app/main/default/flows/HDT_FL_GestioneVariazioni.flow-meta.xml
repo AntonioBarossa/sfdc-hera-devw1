@@ -53,6 +53,25 @@
         </outputParameters>
     </actionCalls>
     <actionCalls>
+        <name>Chiudi_Activity_Scarto</name>
+        <label>Chiudi Activity Scarto</label>
+        <locationX>20686</locationX>
+        <locationY>1214</locationY>
+        <actionName>HDT_LC_EditScartiComplessi</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Init_Case_per_Risottomissione</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>input</name>
+            <value>
+                <elementReference>discardActivityId</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Crea_Allineamento_Anagrafica</name>
         <label>Crea Allineamento Anagrafica</label>
         <locationX>2778</locationX>
@@ -566,8 +585,8 @@
     <assignments>
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
-        <locationX>20290</locationX>
-        <locationY>638</locationY>
+        <locationX>20818</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato_0_0_0_0_0_0_0_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -583,7 +602,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Rilavorazione_Scarto</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1077,6 +1096,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Default_Processo</name>
+        <label>Assegna Default Processo</label>
+        <locationX>21346</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeScarto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>VariazioneFiscaleProcess</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Domestico_Residente</name>
         <label>Assegna Domestico Residente</label>
         <locationX>17166</locationX>
@@ -1166,6 +1201,70 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Nome_Processo</name>
+        <label>Assegna Nome Processo</label>
+        <locationX>20290</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeScarto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica Unita Immobiliari Componenti Domestico Residente Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Nome_Processo_1</name>
+        <label>Assegna Nome Processo</label>
+        <locationX>20554</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeScarto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Modifica Unita Immobiliari Componenti Promiscuo Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Nome_Processo_3</name>
+        <label>Assegna Nome Processo</label>
+        <locationX>20818</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeScarto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Esenzione Modifica Fognatura Depurazione DGRER569/19 non Allacciato / Uso Irriguo Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Nome_Processo_4</name>
+        <label>Assegna Nome Processo</label>
+        <locationX>21082</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>processTypeScarto</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Esenzione Modifica Fognatura Depurazione Modifica Fognatura e Depurazione Acqua</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1550,6 +1649,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Init_Case_per_Risottomissione</name>
+        <label>Init Case per Risottomissione</label>
+        <locationX>20686</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0_0_0_0_0.HerokuPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0_0_0_0_0.DistributorPracticeCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -2019,10 +2141,10 @@
     <decisions>
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
-        <locationX>15318</locationX>
+        <locationX>15582</locationX>
         <locationY>278</locationY>
         <defaultConnector>
-            <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Scelta_Process_Type</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Bozza</defaultConnectorLabel>
         <rules>
@@ -3413,6 +3535,129 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Rilavorazione_Scarto</name>
+        <label>Rilavorazione Scarto?</label>
+        <locationX>20818</locationX>
+        <locationY>1094</locationY>
+        <defaultConnector>
+            <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Wizard_Scarto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>discardRework</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiudi_Activity_Scarto</targetReference>
+            </connector>
+            <label>Wizard Scarto</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Scelta_Process_Type</name>
+        <label>Scelta Process Type</label>
+        <locationX>20818</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Default_Processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Modifica_Unita_Imobiliari_Componenti_Domestico</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Unita Immobiliari Componenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.RateCategory__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ACDOMRESP0</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Nome_Processo</targetReference>
+            </connector>
+            <label>Modifica Unita Imobiliari Componenti - Domestico</label>
+        </rules>
+        <rules>
+            <name>Modifica_Unita_Imobiliari_Componenti_Promiscuo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Unita Immobiliari Componenti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.RateCategory__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>ACDOMRESP0</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Nome_Processo_1</targetReference>
+            </connector>
+            <label>Modifica Unita Imobiliari Componenti - Promiscuo</label>
+        </rules>
+        <rules>
+            <name>Esenzione_Modifica_Fognatura_Depurazione_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>DGRER569/19 non allacciato/uso irriguo </stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Nome_Processo_3</targetReference>
+            </connector>
+            <label>Esenzione Modifica Fognatura Depurazione - DGRER</label>
+        </rules>
+        <rules>
+            <name>Esenzione_Modifica_Fognatura_Depurazione_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Fognatura e Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Nome_Processo_4</targetReference>
+            </connector>
+            <label>Esenzione Modifica Fognatura Depurazione - Modifica</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Seleziona_Documenti</name>
         <label>Seleziona Documenti?</label>
         <locationX>9334</locationX>
@@ -4690,8 +4935,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetCaseAggiornato_0_0_0_0_0_0_0_0</name>
         <label>GetCaseAggiornato</label>
-        <locationX>20290</locationX>
-        <locationY>518</locationY>
+        <locationX>20818</locationX>
+        <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0</targetReference>
@@ -4879,7 +5124,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>15318</locationX>
+        <locationX>15582</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -5030,8 +5275,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_00_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>20290</locationX>
-        <locationY>758</locationY>
+        <locationX>20818</locationX>
+        <locationY>1550</locationY>
         <connector>
             <targetReference>Loading_Spinner_0_0_0_0</targetReference>
         </connector>
@@ -5707,8 +5952,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>Loading_Spinner_0_0_0_0</name>
         <label>Loading Spinner</label>
-        <locationX>20290</locationX>
-        <locationY>878</locationY>
+        <locationX>20818</locationX>
+        <locationY>1670</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8075,8 +8320,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <screens>
         <name>ScreenInputFiscale_0_0_0_0_0_0_0_0</name>
         <label>Screen Input Fiscale</label>
-        <locationX>20290</locationX>
-        <locationY>398</locationY>
+        <locationX>20818</locationX>
+        <locationY>734</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8167,7 +8412,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>VariazioneFiscaleProcess</elementReference>
+                    <elementReference>processTypeScarto</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -8277,7 +8522,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>15192</locationX>
+        <locationX>15456</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -8608,6 +8853,20 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>discardActivityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>discardRework</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>existingCase</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
@@ -8661,6 +8920,13 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     </variables>
     <variables>
         <name>ProcessTypeModificaUnitImm</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>processTypeScarto</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
