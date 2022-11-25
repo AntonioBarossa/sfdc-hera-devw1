@@ -82,6 +82,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             HDT_WRP_Actions newAction = getOnCloseActions(actualCase, currentCaseActivity, actWithCase?.wrts_prcgvr__ActivityTemplate__r?.Name);
             if(STRING.isNotBlank(newAction?.phase)){
                 Case caseUpdate = new Case(Id=actualCase.Id, Phase__c=newAction.phase);
+                if(caseUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    caseUpdate.Status = 'Closed';
+                }
                 sObjectToUpdate.add(caseUpdate);
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
@@ -107,10 +110,10 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             HDT_WRP_Actions newAction = getOnCloseActions(actualOrder, currentOrderActivity, actWithOrder?.wrts_prcgvr__ActivityTemplate__r?.Name);
             if(STRING.isNotBlank(newAction?.phase)){
                 Order orderUpdate = new Order(Id=actualOrder.Id, Phase__c=newAction.phase);
-                sObjectToUpdate.add(orderUpdate);
                 if(orderUpdate.Phase__c.containsIgnoreCase('Annull')){
                     orderUpdate.Status = 'Annullato';
                 }
+                sObjectToUpdate.add(orderUpdate);
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
                 Order orderUpdate = new Order(Id=actualOrder.ParentOrder__c, Phase__c=newAction.parentSObjectPhase);
