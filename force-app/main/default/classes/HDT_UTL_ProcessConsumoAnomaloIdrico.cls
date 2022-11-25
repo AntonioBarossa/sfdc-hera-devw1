@@ -8,7 +8,9 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private Map<String, String> mapCaseFields;
     private Map<String, String> mapWrapperCaseFields;
     private List<HDT_WRP_ProcessObjects> processObjList;
-
+    private Map<String, String> accountContactMap = new Map<String, String>();
+    private Map<String, Contract> podContractMap = new Map<String, Contract>();
+    
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
 
