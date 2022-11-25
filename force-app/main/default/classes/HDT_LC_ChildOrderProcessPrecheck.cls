@@ -69,6 +69,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     @AuraEnabled
     public static String next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams, ServiceRequest__c srRequest){
 
+        List<SObject> objToUpdate = new List<SObject>();
         String compatibility='';
         ServiceRequest__c srvReq = new ServiceRequest__c();
         srvReq.ServicePointCode__c= srRequest.ServicePointCode__c;
@@ -138,8 +139,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
                     callDataEnrichment(order.SAPImplantCode__c,sapCode,JSON.serialize(newOrder));
-                    //newOrder = orderUtl.enrichOrder(newOrder);
-                    //orderSrv.updateRecord(newOrder);
                     String tax = order.CommodityFormula__c == 'Energia Elettrica' ? newOrder.ExciseEle__c : newOrder.ExciseGAS__c;
                     String city = order.SupplyCity__c;
                     String region = '';
@@ -232,7 +231,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
                     newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
 
-                    //Predefault secondo RateCategory
+                    //Inizio: Predefault secondo RateCategory
                     for (List<String> fieldToPredefault : predefaultRatecategories) {
                         if( fieldToPredefault.contains(order.RateCategory__c) ){
                             String defaultValue = fieldToPredefault.get(1);
@@ -244,7 +243,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             }
                         }
                     }
-                    // PayPurification__c & PaySewer__c: SE Tipo Impianto “Uso cantiere”(?????) 0R “Uso irriguo”(?????) --> “No - Esente”, Altrimenti "Si - Paga"
+
+                    newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+                    newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+                    // Fine: Predefault secondo RateCategory
                     
                 }
                 when 'Energia Elettrica' {
@@ -259,7 +261,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
 
-            //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
             newOrder.Id = orderId;
             newOrder.RecordTypeId = recordTypeId;
             newOrder.Step__c = 2;
@@ -268,8 +269,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            orderSrv.updateRecord(newOrder);
-            //EVERIS 
+
+            //Update RateCategory sul Service Point
+            order.ServicePoint__r.RateCategory__c = order.RateCategory__c;
+
+            objToUpdate.add(newOrder);
+            objToUpdate.add(order.ServicePoint__r);
+            HDT_UTL_DatabaseService.updateSObject(objToUpdate);
+            
         }
         return compatibility;
 
