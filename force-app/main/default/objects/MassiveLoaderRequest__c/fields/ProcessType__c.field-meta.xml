@@ -104,6 +104,11 @@
                 <default>false</default>
                 <label>Allineamento Anagrafica</label>
             </value>
+            <value>
+                <fullName>ConsumoAnomaloIdrico</fullName>
+                <default>false</default>
+                <label>Consumo Anomalo Idrico</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
