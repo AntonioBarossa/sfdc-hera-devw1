@@ -29,6 +29,7 @@ export default class HdtVistaDatiCatastali extends LightningElement {
     title = 'Vista Dati Catastali';
     cols = COLUMNS;
     rows;
+    showSpinner = true;
 
     connectedCallback(){
         console.log('>>recordId:', this.recordId);
@@ -38,25 +39,23 @@ export default class HdtVistaDatiCatastali extends LightningElement {
             getVistaDatiCatastali({ recordId: this.recordId })
             .then( result => {
                 if(result.status){
-                    if(result.response.status == 'success'){
-                        this.rows = [];
-                        let posizioni = result.response.data?.posizioni;
-                        let index = 0;
-                        let finalRows = [];
-                        posizioni.forEach(curPos => {
-                            let newRow = JSON.parse(JSON.stringify(curPos));
-                            newRow["Id"] = "tableRow_" + index;
-                            finalRows.push(newRow);
-                            index++;
-                        })
-                        this.rows = finalRows;
-                        return;
-                    }
-                    if(result.response.status == 'failed'){
+                    this.rows = [];
+                    let posizioni = result.rows;
+                    let index = 0;
+                    let finalRows = [];
+                    posizioni.forEach(curPos => {
+                        let newRow = JSON.parse(JSON.stringify(curPos));
+                        newRow["Id"] = "tableRow_" + index;
+                        finalRows.push(newRow);
+                        index++;
+                    })
+                    this.rows = finalRows;
+
+                    if(this.rows.length == 0){
                         const event = new ShowToastEvent({
-                            title: 'Errore',
-                            message: result.response.errorDetails[0].message,
-                            variant: 'error',
+                            title: result.status,
+                            message: result.message,
+                            variant: result.status == 'KO' ? 'error' : 'warning',
                             mode: 'dismissable'
                         });
                         this.dispatchEvent(event);
@@ -66,6 +65,9 @@ export default class HdtVistaDatiCatastali extends LightningElement {
             })
             .catch(error => {
                 console.error(JSON.stringify(error));
+            })
+            .finally(()=>{
+                this.showSpinner = false;
             })
         }
     }

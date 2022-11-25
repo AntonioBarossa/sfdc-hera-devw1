@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength, PMD.CyclomaticComplexity, PMD.NcssMethodCount, PMD.AvoidDeeplyNestedIfStmts')
 public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
@@ -635,6 +635,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
+            if(currentCase.Type == 'Autolettura da cliente' && currentCase.Commodity__c == 'Acqua'){
+                List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da DL' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c =: discardReason WITH SECURITY_ENFORCED]; 
+                if(!discRuleAutoletList.isEmpty()){
+                    currentCase.abnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
+                }     
+            }
             updateFuture(JSON.serialize(currentCase));
         /**@frpanico 21/01/2022
          * Aggiunto completamento automatico

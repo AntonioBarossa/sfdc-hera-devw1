@@ -71,6 +71,7 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
+            SAPContractCode__c,
             Status,
             BillingProfile__c,
             SBQQ__Order__r.BillingProfile__c,

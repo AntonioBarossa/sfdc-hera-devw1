@@ -21,6 +21,7 @@ public inherited sharing class HDT_UTL_MatrixCompatibility {
             
             ServiceRequest__c srRequest = new ServiceRequest__c();
             srRequest.ServicePointCode__c = String.valueOf(servReq.get('servicePointCode'));
+            srRequest.ServicePointCode__c = srRequest.ServicePointCode__c == null? String.valueOf(servReq.get('servicePoint')):srRequest.ServicePointCode__c;
             srRequest.Status__c = 'Bozza';
             srRequest.Order__c = String.valueOf(servReq.get('order'));
             srRequest.CommoditySector__c = String.valueOf(servReq.get('commoditySector'));

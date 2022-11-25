@@ -69,7 +69,7 @@ public with sharing class HDT_UTL_LandRegistry {
             }
             if('Contract'.equalsIgnoreCase(sobjectType)){
                 List<Contract> cn = new HDT_QR_Contract().getRecordById((String)recordId);
-                request.put('contratto', cn[0].ContractNumber);
+                request.put('contratto', cn[0].SAPContractCode__c);
             }
 			System.debug('sobjectType: ' + sobjectType);    
  			System.debug('request.body: ' + request.get('impianto'));
@@ -106,7 +106,17 @@ public with sharing class HDT_UTL_LandRegistry {
         if(response.getBody() != null){
             parsedResp = (HDT_WS_VistaDatiCatastaliResponse)JSON.deserialize(response.getBody(), HDT_WS_VistaDatiCatastaliResponse.class);
             result.status = parsedResp.status;
-            result.response = parsedResp;
+            if('success'.equalsIgnoreCase(parsedResp.status)){
+                if(parsedResp.data.testata != null){
+                    result.status = parsedResp.data.testata.esito;
+                    result.message = parsedResp.data.testata.messaggio;
+                }
+                result.rows = parsedResp.data.posizioni;
+            }
+            if('failed'.equalsIgnoreCase(parsedResp.status)){
+                result.status = 'KO';
+                result.message = 'Errore tecnico';
+            }
         }
         
         return result;
@@ -116,6 +126,8 @@ public with sharing class HDT_UTL_LandRegistry {
         @AuraEnabled
         public string status;
         @AuraEnabled
-        public HDT_WS_VistaDatiCatastaliResponse response;
+        public string message;
+        @AuraEnabled
+        public List<HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_PosizioniResponseObject> rows;
     }
 }
