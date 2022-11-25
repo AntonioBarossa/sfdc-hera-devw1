@@ -20,7 +20,7 @@ public inherited sharing class HDT_LC_ManageBillingProfile {
     @AuraEnabled
     public static List<BillingProfile__c> getBillingProfileList(String accountId){
         
-        billingProfileSrv.checkReadAccess('PaymentMethod__c,InvoicingCountry__c,BillSendingMethod__c,IBAN__c');
+        billingProfileSrv.checkReadAccess('PaymentMethod__c,InvoicingCountry__c,BillSendingMethod__c,IBAN__c,PaymentConditions__c');
 
         return billingProfileQr.getRecordsByAccount(accountId);
 

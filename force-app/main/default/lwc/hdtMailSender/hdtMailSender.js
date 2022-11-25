@@ -72,6 +72,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 this.spinner = false;
             } else {
                 console.log('# FAIL #');
+                this.closeAction();
                 this.dispatchEvent(
                     new ShowToastEvent({
                         title: 'ATTENZIONE',
@@ -121,6 +122,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                         mode: 'sticky'
                     })
                 );
+                
             }
 
         })
@@ -183,7 +185,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
             );
         } else {
             this.spinner = true;
-            //this.sendMailToApex();
+            this.sendMailToApex();
         }
 
     }

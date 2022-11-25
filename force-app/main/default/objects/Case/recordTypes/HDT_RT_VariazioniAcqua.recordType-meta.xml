@@ -8430,6 +8430,10 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Esito consuntivazione KO</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

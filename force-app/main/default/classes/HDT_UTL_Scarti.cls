@@ -473,6 +473,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
                                                 AND IsActive__c = true
+                                                AND RecordType.DeveloperName = 'HDT_RT_Automatic'
                                                 WITH SECURITY_ENFORCED];
 		
         system.debug(LoggingLevel.DEBUG, 'checkDiscardAnnullmentRule rules: ' + JSON.serializePretty(rules));

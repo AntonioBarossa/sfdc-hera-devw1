@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 14-09-2022
+ * @last modified on  : 24-11-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -44,6 +44,10 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             this(phase);
             this.parentSObjectPhase = parentSObjectPhase;
         }
+        HDT_WRP_UpdateSobj(Sobject sobj){
+            this.sobjToUpdate=sobj;
+        }
+
     }
 
     @TestVisible
@@ -82,7 +86,15 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
                 Case caseUpdate = new Case(Id=actualCase.RelatedCase__c, Phase__c=newAction.parentSObjectPhase);
+                if(caseUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    caseUpdate.Status = 'Closed';
+                }
                 sObjectToUpdate.add(caseUpdate);
+            }
+            if(newAction.sobjToUpdate != null){
+                SObject sobjToUpdate = newAction.sobjToUpdate;
+                sobjToUpdate.Id = sobjToUpdate.Id!=null? sobjToUpdate.Id : actualCase.Id;
+                sObjectToUpdate.add(sobjToUpdate);
             }
             if(STRING.isNotBlank(newAction?.activityType)){
                 caseToNewActivityType.put(actualCase.Id,newAction);
@@ -96,9 +108,15 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if(STRING.isNotBlank(newAction?.phase)){
                 Order orderUpdate = new Order(Id=actualOrder.Id, Phase__c=newAction.phase);
                 sObjectToUpdate.add(orderUpdate);
+                if(orderUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    orderUpdate.Status = 'Annullato';
+                }
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
                 Order orderUpdate = new Order(Id=actualOrder.ParentOrder__c, Phase__c=newAction.parentSObjectPhase);
+                if(orderUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    orderUpdate.Status = 'Annullato';
+                }
                 sObjectToUpdate.add(orderUpdate);
             }
             if(STRING.isNotBlank(newAction?.activityType)){
@@ -149,19 +167,16 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
     @TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Case selectedCase, wrts_prcgvr__Activity__c activity, String activityType){
-        String approved = activity.Approved__c;
-        String outcome = activity.ActivityOutcome__c;
+        String approved = activity.ActivityOutcome__c;
         String caseType = selectedCase.Type;
         activityType=STRING.isNotBlank(activityType)? activityType : ''; 
 
-        if(caseType == 'Formulari Richiesta Sconto')       return new HDT_WRP_UpdateSobj('Completata');
-        if(caseType == 'Sconti Collettivi Pap')            return new HDT_WRP_UpdateSobj('Completata');
-        if(caseType == 'Conferimento Centri di Raccolta')  return new HDT_WRP_UpdateSobj('Completata');
-        
-        if(caseType == 'Riduz. Superficie rifiuti spec promiscui') {
+        if(new set<String>{'Riduz. superficie rifiuti spec promiscui', 'Formulari Richiesta Sconto', 'Sconti Collettivi Pap', 'Conferimento Centri di Raccolta'}.contains(caseType)) {
             if('Gestione Manuale SAP'.equalsIgnoreCase(activityType))   return new HDT_WRP_UpdateSobj('Completata');
-            if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c);//Se gestione SAP non va in completata subito
-            if('no'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
+            //CASE_ISTRUTTORIA_BACKOFFICE
+            if('Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_CreateActivity('Gestione Manuale SAP', true, selectedCase.Phase__c); 
+            if(!'Positivo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');   
+            
         }
         //START >>> marco.arci@webresults.it
 

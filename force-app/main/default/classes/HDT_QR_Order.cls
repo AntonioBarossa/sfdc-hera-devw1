@@ -546,6 +546,7 @@ public inherited sharing class HDT_QR_Order {
             IsEarlyActivation__c,
             Contact__r.FiscalCode__c,
             Contact__c,
+            IntegratedSAP__c,
             isSTG__c
             FROM Order 
             WHERE Id IN :orderIds
@@ -633,6 +634,7 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
+            AND CommodityFormula__c != 'Acqua'
             /* AND ProcessType__c != ''
             AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED

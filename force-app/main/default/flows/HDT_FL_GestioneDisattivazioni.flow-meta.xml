@@ -368,7 +368,7 @@
         <name>Assegna_Phase_KO_SAP</name>
         <label>Assegna Phase KO SAP</label>
         <locationX>2546</locationX>
-        <locationY>3182</locationY>
+        <locationY>3542</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -381,6 +381,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.NotPerformedBefore__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoForUpdate.NotPerformedBefore__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoForUpdate.DistributorNote__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -501,7 +515,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>2535</locationX>
-        <locationY>3854</locationY>
+        <locationY>4214</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -524,7 +538,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>3129</locationX>
-        <locationY>4526</locationY>
+        <locationY>4886</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -991,7 +1005,7 @@
         <name>NotPerformedBeforeDate_equal_last_day_current_month</name>
         <label>NotPerformedBeforeDate = ultimo giorno mese corrente</label>
         <locationX>2799</locationX>
-        <locationY>4214</locationY>
+        <locationY>4574</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato_1.NotPerformedBefore__c</assignToReference>
             <operator>Assign</operator>
@@ -1008,7 +1022,7 @@
         <name>NotPerformedBeforeDate_equal_last_day_next_month</name>
         <label>NotPerformedBeforeDate = ultimo giorno mese successivo</label>
         <locationX>3063</locationX>
-        <locationY>4214</locationY>
+        <locationY>4574</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato_1.NotPerformedBefore__c</assignToReference>
             <operator>Assign</operator>
@@ -1191,7 +1205,7 @@
         <name>Current_Process_Recesso_Ripensamento</name>
         <label>Current Process Recesso Ripensamento?</label>
         <locationX>3129</locationX>
-        <locationY>3974</locationY>
+        <locationY>4334</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0</targetReference>
         </defaultConnector>
@@ -1216,7 +1230,7 @@
         <name>Data_Inserimento_Richiesta_minore_uguale_10_mese_corrente</name>
         <label>Data Ricezione Richiesta &lt;= 10 del mese corrente?</label>
         <locationX>2931</locationX>
-        <locationY>4094</locationY>
+        <locationY>4454</locationY>
         <defaultConnector>
             <targetReference>NotPerformedBeforeDate_equal_last_day_next_month</targetReference>
         </defaultConnector>
@@ -1257,7 +1271,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Phase_KO_SAP</targetReference>
+                <targetReference>GetCaseAggiornatoForUpdate</targetReference>
             </connector>
             <label>KO</label>
         </rules>
@@ -2008,7 +2022,7 @@
         <name>Votive</name>
         <label>Votive?</label>
         <locationX>2832</locationX>
-        <locationY>3734</locationY>
+        <locationY>4094</locationY>
         <defaultConnector>
             <targetReference>Get_Case_Aggiornato_1</targetReference>
         </defaultConnector>
@@ -2170,6 +2184,53 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>CreaActivityScarto</name>
+        <label>CreaActivityScarto</label>
+        <locationX>2546</locationX>
+        <locationY>3422</locationY>
+        <connector>
+            <targetReference>Assegna_Phase_KO_SAP</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DiscardCategory__c</field>
+            <value>
+                <stringValue>Scarto complesso</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DiscardDescription__c</field>
+            <value>
+                <elementReference>Submit_Request.commenti</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RecordTypeId</field>
+            <value>
+                <elementReference>GetRecordTypeScarto.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <stringValue>Errore Lavorazione SAP</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Submit_Request.commenti</elementReference>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
     <recordLookups>
         <name>CalcoloCodiceCausale</name>
         <label>Calcolo Codice Causale</label>
@@ -2216,7 +2277,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Get_Case_Aggiornato_1</name>
         <label>Get_Case_Aggiornato_1</label>
         <locationX>3129</locationX>
-        <locationY>3854</locationY>
+        <locationY>4214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Current_Process_Recesso_Ripensamento</targetReference>
@@ -2262,6 +2323,27 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Output_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornatoForUpdate</name>
+        <label>GetCaseAggiornatoForUpdate</label>
+        <locationX>2546</locationX>
+        <locationY>3182</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetRecordTypeScarto</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2322,6 +2404,34 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetRecordTypeScarto</name>
+        <label>GetRecordTypeScarto</label>
+        <locationX>2546</locationX>
+        <locationY>3302</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreaActivityScarto</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_Scarto</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>wrts_prcgvr__Activity__c</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -2412,7 +2522,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>2535</locationX>
-        <locationY>3974</locationY>
+        <locationY>4334</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2449,7 +2559,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Update_Status_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>3129</locationX>
-        <locationY>4646</locationY>
+        <locationY>5006</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen</targetReference>
         </connector>
@@ -2469,7 +2579,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Update_Status_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>2546</locationX>
-        <locationY>3302</locationY>
+        <locationY>3662</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3118,7 +3228,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Loading_Spinner_screen</name>
         <label>Loading Spinner screen</label>
         <locationX>3129</locationX>
-        <locationY>4766</locationY>
+        <locationY>5126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

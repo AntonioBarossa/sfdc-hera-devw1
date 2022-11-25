@@ -470,10 +470,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
                 orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
-            }else if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family) && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
+            }
+            if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)){
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
-                if(!orderItemsPod.isEmpty()){
+                if(!orderItemsPod.isEmpty() && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c != null){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                    orderToUpdate.RateCategory__c = orderItemsPod[0].Order.RateCategory__c;
+                }else{
+                    orderToUpdate.RateCategory__c = getTariCommercialProductCodeFromSub(originalOrder.ContractReference__c);
                 }
             }
         }
@@ -540,6 +544,22 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         {
             alignServicePointFields(orderToUpdate, orderToUpdate.ServicePoint__c);
         }
+    }
+
+    private static String getTariCommercialProductCodeFromSub(Id contrReference){
+        if(contrReference != null){    
+            List<SBQQ__Subscription__c> lsubs = [
+                SELECT ProductCode__c
+                FROM SBQQ__Subscription__c 
+                WHERE SBQQ__Contract__c =:contrReference
+                AND SBQQ__Product__r.Family='Offerta commerciale'
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+            if(lsubs.isEmpty()){    return null;    }
+            return lsubs[0].ProductCode__c;
+        }
+        return null;
     }
 
     /**

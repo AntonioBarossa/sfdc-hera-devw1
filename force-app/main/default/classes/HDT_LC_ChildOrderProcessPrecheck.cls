@@ -15,6 +15,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
+    private static List<List<String>> predefaultRatecategories = new List<List<String>>{
+        new List<String>{'NotDisconnectabilityCustomer__c','Si','ACANTINC00','ACPUBNDIS0','ACANTIN000'}, //altrimenti N
+        new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
+        new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
+        new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
+        new List<String>{'AgriculturalHousingUnit__c','1','ACAGRICO00'},
+        new List<String>{'CommercialHousingUnit__c','1','ACARTCOMM0','ACAUGRUNC0'},
+        new List<String>{'IndustrialHousingUnit__c','1','ACINDSTR00','ACAUGRUNI0'},
+        new List<String>{'ZootechnicalHousingUnit__c','1','ACAGRIZOO0','ACZOOTECN0'},
+        new List<String>{'SeasonUse__c','Nessuna stagionalita','ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITMINDAP0','AITMINDBP0','AITMNDOME0'}
+    };
+
     @AuraEnabled
     public static List<ProcessMatrix__c> init(Order order){
         List<ProcessMatrix__c> processesList = new List<ProcessMatrix__c>();
@@ -219,6 +231,21 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
                     newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
                     newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
+
+                    //Predefault secondo RateCategory
+                    for (List<String> fieldToPredefault : predefaultRatecategories) {
+                        if( fieldToPredefault.contains(order.RateCategory__c) ){
+                            String defaultValue = fieldToPredefault.get(1);
+                            if (defaultValue.isNumeric()){
+                                newOrder.put( fieldToPredefault.get(0), Integer.valueof(defaultValue) );
+                            } 
+                            else {
+                                newOrder.put( fieldToPredefault.get(0), defaultValue );
+                            }
+                        }
+                    }
+                    // PayPurification__c & PaySewer__c: SE Tipo Impianto “Uso cantiere”(?????) 0R “Uso irriguo”(?????) --> “No - Esente”, Altrimenti "Si - Paga"
+                    
                 }
                 when 'Energia Elettrica' {
                     newOrder.VAT__c = order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)';

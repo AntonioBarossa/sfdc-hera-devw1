@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 24-10-2022
+ * @last modified on  : 24-11-2022
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
     static void riduzioneSuperficieTest(){
 
         Case caso = new Case();
-        caso.Type = 'Riduz. Superficie rifiuti spec promiscui';
+        caso.Type = 'Riduz. superficie rifiuti spec promiscui';
         caso.Phase__c = '';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
     static void executeOnCloseActionsCaseTest(){
 
         Case caso = new Case();
-        caso.Type = 'Riduz. Superficie rifiuti spec promiscui';
+        caso.Type = 'Riduz. superficie rifiuti spec promiscui';
         caso.Phase__c = '';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
