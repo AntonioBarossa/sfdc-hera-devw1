@@ -68,10 +68,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 if (orderActiveMonitoring[0].SignedDate__c==null) {
                     orderUpdate.SignedDate__c = Date.today();
                 }
-                upList.add(orderUpdate);
+                
             }
             causalQuality = 'Quality Call OK';
-
+            upList.add(orderUpdate);
         }
         HDT_UTL_DatabaseService.updateSObject(upList);
         //orderSrv.updateRecord(orderUpdate);
