@@ -30,6 +30,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject obj = (sObject) argsMap.get('sender');
+        List<Case> lcs = [ SELECT FIELDS(ALL) FROM Case Where Order__c=:obj.Id AND RecordTypeId=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId() WITH SECURITY_ENFORCED LIMIT 1 ];
         wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
 
         Map<String,String> mapObj = new Map<String,String>();
@@ -43,8 +44,8 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
         Map<String, Object> request = generate.generateMap();
 
-        Order ord = (Order) obj;
-        Order ordToUpdate = new Order(Id=ord.Id);
+        Case caso = lcs[0];
+        Case caseToUpdate = new Case(Id=caso.Id);
 
         HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res);
@@ -53,17 +54,17 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         
         try{
             if(res.status.equalsIgnoreCase('success')){
-                ordToUpdate.TecnicalPhase__c=PHASE;
+                caseToUpdate.TecnicalPhase__c=PHASE;
 
             }else{
-                ordToUpdate.TecnicalPhase__c=PHASE;
+                caseToUpdate.TecnicalPhase__c=PHASE;
             }
 
             /*if(STRING.isNotBlank(res?.data?.esito)){//Aggiornare Case Istruttoria
                 HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, NoticeId__c=res.data.esito));
             }*/
             if(!Test.isRunningTest()){
-                HDT_UTL_DatabaseService.updateSObject(ordToUpdate);
+                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
             }
 
         }catch(Exception ex ) {
