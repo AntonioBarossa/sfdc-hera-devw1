@@ -530,6 +530,11 @@
         <field>Case.NoticeNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.RetroactiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.CartographyDetail__c</field>

@@ -659,9 +659,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.showMessage('Errore', 'In caso di Tipo Impianto Promiscuo è necessario che il numero delle Unita Immobiliari sia maggiore di 1', 'error');
                         return;
                     }
-                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value > 1 )
+                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value != 1 )
                     {
-                        this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari maggiore di 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
+                        this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
                     }
                 }

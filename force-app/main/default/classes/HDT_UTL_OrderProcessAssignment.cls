@@ -217,6 +217,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             {
                 availableProcesses.add(process);
             }
+            else if( process.ProcessName__c == 'Voltura - Subentro Scarico produttivo' && 'Marche Multiservizi S.p.A'.equalsIgnoreCase(ord.SalesCompany__c) ){
+                continue;
+            }
             else if(
                     /* Controllo Stato Contratto */
                     (process.ContractStatus__c.containsIgnoreCase(sapContractStatus))
