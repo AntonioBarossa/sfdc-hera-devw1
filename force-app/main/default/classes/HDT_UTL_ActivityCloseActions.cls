@@ -94,7 +94,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 }
                 sObjectToUpdate.add(caseUpdate);
             }
-            if(newAction.sobjToUpdate != null){
+            if(newAction?.sobjToUpdate != null){
                 SObject sobjToUpdate = newAction.sobjToUpdate;
                 sobjToUpdate.Id = sobjToUpdate.Id!=null? sobjToUpdate.Id : actualCase.Id;
                 sObjectToUpdate.add(sobjToUpdate);
@@ -207,12 +207,11 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         //String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
         String orderType = selectedOrder.ProcessType__c;
         
-        if( 
-            'Approvazione Agevolazione'.containsIgnoreCase(activityType)
-            && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
-        ){
+        if( 'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 
+            new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType) )
+        {
             if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, null);
-            if('Positivo'.equalsIgnoreCase(outcome))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
+            if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
         return null;
     }
