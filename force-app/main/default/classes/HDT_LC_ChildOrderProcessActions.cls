@@ -264,7 +264,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.CIAccoutn__c = 'Richiesto';
             }
             when 'HDT_RT_CambioOfferta'{
-                if(order.SignedDate__c != null){                    
+                if(String.isNotBlank(order.ServicePoint__r.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(order.ServicePoint__r.CommoditySector__c)){
+                    order.EffectiveDate__c = System.today();
+                }else if(order.SignedDate__c != null){                    
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
                 }
             }

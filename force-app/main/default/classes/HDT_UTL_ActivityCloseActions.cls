@@ -82,6 +82,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             HDT_WRP_Actions newAction = getOnCloseActions(actualCase, currentCaseActivity, actWithCase?.wrts_prcgvr__ActivityTemplate__r?.Name);
             if(STRING.isNotBlank(newAction?.phase)){
                 Case caseUpdate = new Case(Id=actualCase.Id, Phase__c=newAction.phase);
+                if(caseUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    caseUpdate.Status = 'Closed';
+                }
                 sObjectToUpdate.add(caseUpdate);
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
@@ -107,10 +110,16 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             HDT_WRP_Actions newAction = getOnCloseActions(actualOrder, currentOrderActivity, actWithOrder?.wrts_prcgvr__ActivityTemplate__r?.Name);
             if(STRING.isNotBlank(newAction?.phase)){
                 Order orderUpdate = new Order(Id=actualOrder.Id, Phase__c=newAction.phase);
+                if(orderUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    orderUpdate.Status = 'Annullato';
+                }
                 sObjectToUpdate.add(orderUpdate);
             }
             if(STRING.isNotBlank(newAction?.parentSObjectPhase)){
                 Order orderUpdate = new Order(Id=actualOrder.ParentOrder__c, Phase__c=newAction.parentSObjectPhase);
+                if(orderUpdate.Phase__c.containsIgnoreCase('Annull')){
+                    orderUpdate.Status = 'Annullato';
+                }
                 sObjectToUpdate.add(orderUpdate);
             }
             if(STRING.isNotBlank(newAction?.activityType)){
@@ -193,17 +202,17 @@ public with sharing class HDT_UTL_ActivityCloseActions {
     
 	@TestVisible
     private static HDT_WRP_Actions getOnCloseActions(Order selectedOrder, wrts_prcgvr__Activity__c activity, String activityType){
-        String approved = activity.Approved__c;
-        String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
-        String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
+        String outcome = activity.ActivityOutcome__c;
+        //String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
+        //String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
         String orderType = selectedOrder.ProcessType__c;
         
         if( 
-            'Approvazione Agevolazione'.containsIgnoreCase(activityName)
+            'Approvazione Agevolazione'.containsIgnoreCase(activityType)
             && new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType)
         ){
-            if(approved.equalsIgnoreCase('no')) return new HDT_WRP_CreateActivity('Contattare Cliente', false, orderActualPhase);
-            if ('In attesa Approvazione'.equalsIgnoreCase(orderActualPhase))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
+            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, null);
+            if('Positivo'.equalsIgnoreCase(outcome))   return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
         return null;
     }
