@@ -55,9 +55,12 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumber {
     public static Boolean matchEstimatedSetFiscalCode(Map<String, String> infoData, String fiscalCode)
     {
         Set<String> estimatedSetFiscalCode=HDT_UTL_CalculateFiscalCode.calculateSetFiscalCode(infoData);
-        if(!estimatedSetFiscalCode.isEmpty() && estimatedSetFiscalCode.contains(HDT_UTL_CalculateFiscalCode.cleanFiscalCodeFromOmocodia(fiscalCode)))
+        for(String estFiscalCode : estimatedSetFiscalCode)
         {
-            return true;
+            if(estFiscalCode.equalsIgnoreCase(fiscalCode))
+            {
+                return true;
+            }
         }
         return false;
     }
