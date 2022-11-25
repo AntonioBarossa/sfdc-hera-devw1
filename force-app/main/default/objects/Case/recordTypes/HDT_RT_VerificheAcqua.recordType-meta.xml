@@ -397,6 +397,10 @@
             <fullName>32 x 50 - 30 mc</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -573,6 +577,10 @@
         </values>
         <values>
             <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
