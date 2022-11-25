@@ -44,7 +44,7 @@
         <name>assignAttachments</name>
         <label>assignAttachments</label>
         <locationX>3497</locationX>
-        <locationY>7682</locationY>
+        <locationY>7070</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.MandatoryAttachments__c</assignToReference>
             <operator>Assign</operator>
@@ -115,7 +115,7 @@
         <name>assignLandRegistry</name>
         <label>assignLandRegistry</label>
         <locationX>4278</locationX>
-        <locationY>5738</locationY>
+        <locationY>5126</locationY>
         <assignmentItems>
             <assignToReference>getPreLandRegistry.LandRegistry__c</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +131,7 @@
         <name>assignmentPostForm</name>
         <label>assignmentPostForm</label>
         <locationX>3172</locationX>
-        <locationY>6650</locationY>
+        <locationY>6038</locationY>
         <assignmentItems>
             <assignToReference>tryGet.FirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -411,7 +411,7 @@
         <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0</name>
         <label>AssignNumeroPersoneConcatenazione</label>
         <locationX>3244</locationX>
-        <locationY>8282</locationY>
+        <locationY>7670</locationY>
         <assignmentItems>
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
@@ -427,7 +427,7 @@
         <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0</name>
         <label>AssignNumeroPersoneConcatenazione</label>
         <locationX>3508</locationX>
-        <locationY>8282</locationY>
+        <locationY>7670</locationY>
         <assignmentItems>
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
@@ -443,7 +443,7 @@
         <name>AssignNumeroPersoneConcatenazione_0_0_0_0_0_0_0_0</name>
         <label>AssignNumeroPersoneConcatenazione</label>
         <locationX>3772</locationX>
-        <locationY>8282</locationY>
+        <locationY>7670</locationY>
         <assignmentItems>
             <assignToReference>numeroPersoneConcatenazione</assignToReference>
             <operator>Assign</operator>
@@ -459,7 +459,7 @@
         <name>assignParams</name>
         <label>assignParams</label>
         <locationX>3497</locationX>
-        <locationY>7442</locationY>
+        <locationY>6830</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
@@ -556,7 +556,7 @@
         <name>assignProcessTypeToSubFlow</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>874</locationX>
-        <locationY>12218</locationY>
+        <locationY>11606</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -572,7 +572,7 @@
         <name>assignProcessTypeToSubFlow_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>1138</locationX>
-        <locationY>12218</locationY>
+        <locationY>11606</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -588,7 +588,7 @@
         <name>assignProcessTypeToSubFlow_0_0</name>
         <label>assignProcessTypeToSubFlow</label>
         <locationX>1402</locationX>
-        <locationY>12218</locationY>
+        <locationY>11606</locationY>
         <assignmentItems>
             <assignToReference>processToCancellation</assignToReference>
             <operator>Assign</operator>
@@ -604,7 +604,7 @@
         <name>assignRavvedimentoOutput_0</name>
         <label>assignRavvedimentoOutput</label>
         <locationX>3926</locationX>
-        <locationY>9170</locationY>
+        <locationY>8558</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.BlockOnComputation__c</assignToReference>
             <operator>Assign</operator>
@@ -671,7 +671,7 @@
         <name>assignStringConcatenazione_0_0</name>
         <label>assignStringConcatenazione</label>
         <locationX>3772</locationX>
-        <locationY>8738</locationY>
+        <locationY>8126</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -687,7 +687,7 @@
         <name>ChangePhase</name>
         <label>ChangePhase</label>
         <locationX>4173</locationX>
-        <locationY>10322</locationY>
+        <locationY>9710</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -703,7 +703,7 @@
         <name>ChangePhaseDocumentale</name>
         <label>ChangePhaseDocumentale</label>
         <locationX>4701</locationX>
-        <locationY>10682</locationY>
+        <locationY>10070</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -758,7 +758,7 @@
         <name>ChangePhaseIntegrati_0</name>
         <label>ChangePhaseIntegrati</label>
         <locationX>5229</locationX>
-        <locationY>10562</locationY>
+        <locationY>9950</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -781,7 +781,7 @@
         <name>ChangePhaseNonIntegrati_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
         <locationX>4965</locationX>
-        <locationY>10562</locationY>
+        <locationY>9950</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -804,7 +804,7 @@
         <name>ChangePhaseNonIntegrati_0_0_0</name>
         <label>ChangePhaseNonIntegrati</label>
         <locationX>3909</locationX>
-        <locationY>9530</locationY>
+        <locationY>8918</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -821,7 +821,7 @@
         <name>SuperficieDichiarata</name>
         <label>SuperficieDichiarata</label>
         <locationX>4371</locationX>
-        <locationY>9986</locationY>
+        <locationY>9374</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.DeclaredArea__c</assignToReference>
             <operator>Assign</operator>
@@ -837,7 +837,7 @@
         <name>SurfaceFromNullToZero</name>
         <label>SurfaceFromNullToZero</label>
         <locationX>4371</locationX>
-        <locationY>9650</locationY>
+        <locationY>9038</locationY>
         <assignmentItems>
             <assignToReference>getAfterSecondForm.Surface__c</assignToReference>
             <operator>Assign</operator>
@@ -1013,7 +1013,7 @@
         <name>Annullamento_0_0</name>
         <label>Annullamento</label>
         <locationX>3062</locationX>
-        <locationY>7202</locationY>
+        <locationY>6590</locationY>
         <defaultConnector>
             <targetReference>getAfterSecondForm</targetReference>
         </defaultConnector>
@@ -1078,7 +1078,7 @@
         <locationX>3233</locationX>
         <locationY>4526</locationY>
         <defaultConnector>
-            <targetReference>IstatRonchiProcess</targetReference>
+            <targetReference>getPreLandRegistry</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1113,7 +1113,7 @@
         <name>Annullamento_0_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
         <locationX>3926</locationX>
-        <locationY>9290</locationY>
+        <locationY>8678</locationY>
         <defaultConnector>
             <targetReference>endStepWhichProcess</targetReference>
         </defaultConnector>
@@ -1139,7 +1139,7 @@
         <name>Annullamento_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
         <locationX>3497</locationX>
-        <locationY>7922</locationY>
+        <locationY>7310</locationY>
         <defaultConnector>
             <targetReference>ConcatenazionePreDocumentale_0_0</targetReference>
         </defaultConnector>
@@ -1164,7 +1164,7 @@
         <name>Annullamento_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento</label>
         <locationX>3640</locationX>
-        <locationY>8618</locationY>
+        <locationY>8006</locationY>
         <defaultConnector>
             <targetReference>assignStringConcatenazione_0_0</targetReference>
         </defaultConnector>
@@ -1216,7 +1216,7 @@
         <name>annullamentoFromDocumentale_MDC</name>
         <label>annullamentoFromDocumentale</label>
         <locationX>4569</locationX>
-        <locationY>10562</locationY>
+        <locationY>9950</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseDocumentale</targetReference>
         </defaultConnector>
@@ -1236,32 +1236,6 @@
                 <targetReference>processTypeAnnullamento</targetReference>
             </connector>
             <label>annullamento</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>AnnullamentoRonchi</name>
-        <label>Annullamento</label>
-        <locationX>4124</locationX>
-        <locationY>4886</locationY>
-        <defaultConnector>
-            <targetReference>getPreLandRegistry</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>subFlowAnnullamentoRonchi</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>hdtFlowNavButtons_9_0_0_0.cancelCase</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>processTypeAnnullamento</targetReference>
-            </connector>
-            <label>subFlowAnnullamento</label>
         </rules>
     </decisions>
     <decisions>
@@ -1377,7 +1351,7 @@
         <name>AnnullamentoSreenIndirizzo_0_0_0</name>
         <label>Annullamento</label>
         <locationX>4014</locationX>
-        <locationY>5618</locationY>
+        <locationY>5006</locationY>
         <defaultConnector>
             <targetReference>assignLandRegistry</targetReference>
         </defaultConnector>
@@ -1415,7 +1389,7 @@
         <name>assignSuperficieDichiarata</name>
         <label>assignSuperficieDichiarata</label>
         <locationX>4503</locationX>
-        <locationY>9866</locationY>
+        <locationY>9254</locationY>
         <defaultConnector>
             <targetReference>IstruttoriBackOffice</targetReference>
         </defaultConnector>
@@ -1551,7 +1525,7 @@
         <name>checkModuleFromContributor_0</name>
         <label>checkModuleFromContributor</label>
         <locationX>4833</locationX>
-        <locationY>10322</locationY>
+        <locationY>9710</locationY>
         <defaultConnector>
             <targetReference>ChoiceIntegration_0</targetReference>
         </defaultConnector>
@@ -1665,7 +1639,7 @@
         <name>ChoiceIntegration_0</name>
         <label>ChoiceIntegration</label>
         <locationX>5097</locationX>
-        <locationY>10442</locationY>
+        <locationY>9830</locationY>
         <defaultConnector>
             <targetReference>ChangePhaseIntegrati_0</targetReference>
         </defaultConnector>
@@ -1718,7 +1692,7 @@
         <name>ConcatenazionePreDocumentale_0_0</name>
         <label>ConcatenazionePreDocumentale</label>
         <locationX>3926</locationX>
-        <locationY>8042</locationY>
+        <locationY>7430</locationY>
         <defaultConnector>
             <targetReference>checkRavvedimentoOperoso_0</targetReference>
         </defaultConnector>
@@ -1771,7 +1745,7 @@
         <name>endStepWhichProcess</name>
         <label>endStepWhichProcess?</label>
         <locationX>4206</locationX>
-        <locationY>9410</locationY>
+        <locationY>8798</locationY>
         <defaultConnector>
             <targetReference>IsSurfaceNull</targetReference>
         </defaultConnector>
@@ -1796,7 +1770,7 @@
         <name>Generalit_popolate</name>
         <label>Generalità popolate</label>
         <locationX>2820</locationX>
-        <locationY>6530</locationY>
+        <locationY>5918</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>QualitaSoggetto</targetReference>
@@ -1889,7 +1863,7 @@
         <name>IsSurfaceNull</name>
         <label>IsSurfaceNull</label>
         <locationX>4503</locationX>
-        <locationY>9530</locationY>
+        <locationY>8918</locationY>
         <defaultConnector>
             <targetReference>assignSuperficieDichiarata</targetReference>
         </defaultConnector>
@@ -1911,35 +1885,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>IstatRonchiProcess</name>
-        <label>IstatRonchiProcess</label>
-        <locationX>4278</locationX>
-        <locationY>4646</locationY>
-        <defaultConnector>
-            <targetReference>getPreLandRegistry</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>YesRonchi</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>getAfterAddress.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>NON DOM_ISTAT/Ronchi</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>IstatRonchiScreen</targetReference>
-            </connector>
-            <label>Yes</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>IstruttoriBackOffice</name>
         <label>IstruttoriBackOffice?</label>
         <locationX>4503</locationX>
-        <locationY>10202</locationY>
+        <locationY>9590</locationY>
         <defaultConnector>
             <targetReference>checkModuleFromContributor_0</targetReference>
         </defaultConnector>
@@ -1968,6 +1917,13 @@
                     <elementReference>getAfterSecondForm.Surface__c</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getAfterSecondForm.SupplyType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Non Domestico</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>ChangePhase</targetReference>
             </connector>
@@ -1978,7 +1934,7 @@
         <name>processTypeAnnullamento</name>
         <label>processTypeAnnullamento</label>
         <locationX>1270</locationX>
-        <locationY>12098</locationY>
+        <locationY>11486</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Modifica_dati_contrattuali_choice</name>
@@ -2030,7 +1986,7 @@
         <name>Quale_Campo_Numero_Persone_0_0</name>
         <label>Quale Campo Numero Persone</label>
         <locationX>3640</locationX>
-        <locationY>8162</locationY>
+        <locationY>7550</locationY>
         <defaultConnector>
             <targetReference>ConcatenazioneLogic_0_0</targetReference>
         </defaultConnector>
@@ -2085,7 +2041,7 @@
         <name>QualitaSoggetto</name>
         <label>Qualità Soggetto Passivo?</label>
         <locationX>3304</locationX>
-        <locationY>6530</locationY>
+        <locationY>5918</locationY>
         <defaultConnector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </defaultConnector>
@@ -2135,7 +2091,7 @@
         <name>Riapertura_0_0</name>
         <label>Riapertura?</label>
         <locationX>3062</locationX>
-        <locationY>6410</locationY>
+        <locationY>5798</locationY>
         <defaultConnector>
             <targetReference>QualitaSoggetto</targetReference>
         </defaultConnector>
@@ -2160,7 +2116,7 @@
         <name>showSecondScreen</name>
         <label>showSecondScreen?</label>
         <locationX>4278</locationX>
-        <locationY>6290</locationY>
+        <locationY>5678</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>getAfterSecondForm</targetReference>
@@ -2200,7 +2156,7 @@
         <name>subDatiCatastali</name>
         <label>subDatiCatastali</label>
         <locationX>4278</locationX>
-        <locationY>5378</locationY>
+        <locationY>4766</locationY>
         <defaultConnector>
             <targetReference>tryGet</targetReference>
         </defaultConnector>
@@ -2377,7 +2333,7 @@
         <name>getAfterSecondForm</name>
         <label>getAfterSecondForm</label>
         <locationX>3497</locationX>
-        <locationY>7322</locationY>
+        <locationY>6710</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignParams</targetReference>
@@ -2468,7 +2424,7 @@
         <name>getPreLandRegistry</name>
         <label>getPreLandRegistry</label>
         <locationX>4278</locationX>
-        <locationY>5258</locationY>
+        <locationY>4646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>subDatiCatastali</targetReference>
@@ -2545,7 +2501,7 @@
         <name>tryGet</name>
         <label>tryGet</label>
         <locationX>4278</locationX>
-        <locationY>6170</locationY>
+        <locationY>5558</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>showSecondScreen</targetReference>
@@ -2566,7 +2522,7 @@
         <name>commitPostForm</name>
         <label>commitPostForm</label>
         <locationX>3172</locationX>
-        <locationY>6770</locationY>
+        <locationY>6158</locationY>
         <connector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </connector>
@@ -2693,14 +2649,14 @@
         <name>updateafterSecondForm</name>
         <label>updateafterSecondForm</label>
         <locationX>4503</locationX>
-        <locationY>11090</locationY>
+        <locationY>10478</locationY>
         <inputReference>getAfterSecondForm</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>updateAttachments</name>
         <label>updateAttachments</label>
         <locationX>3497</locationX>
-        <locationY>7802</locationY>
+        <locationY>7190</locationY>
         <connector>
             <targetReference>Annullamento_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
@@ -2750,7 +2706,7 @@
         <name>updatePostLandRegistry</name>
         <label>updatePostLandRegistry</label>
         <locationX>4278</locationX>
-        <locationY>5858</locationY>
+        <locationY>5246</locationY>
         <connector>
             <targetReference>tryGet</targetReference>
         </connector>
@@ -2816,7 +2772,7 @@
         <name>checkRavvedimentoOperoso_0</name>
         <label>checkRavvedimentoOperoso</label>
         <locationX>3926</locationX>
-        <locationY>9050</locationY>
+        <locationY>8438</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2928,7 +2884,7 @@
         <name>ConcatenazioneLogic_0_0</name>
         <label>ConcatenazioneLogic</label>
         <locationX>3640</locationX>
-        <locationY>8498</locationY>
+        <locationY>7886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3047,7 +3003,7 @@
         <name>GestioneAllegati_0_0</name>
         <label>GestioneAllegati</label>
         <locationX>3497</locationX>
-        <locationY>7562</locationY>
+        <locationY>6950</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3248,105 +3204,10 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
-        <name>IstatRonchiScreen</name>
-        <label>IstatRonchiScreen</label>
-        <locationX>4124</locationX>
-        <locationY>4766</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>AnnullamentoRonchi</targetReference>
-        </connector>
-        <fields>
-            <name>headerIstatRonchi</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getAfterAddress.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Sottoprocesso {!getAfterAddress.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>RonchiComponent</name>
-            <extensionName>c:hdtCodiceRonchiForFlow</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>caseRecord</name>
-                <value>
-                    <elementReference>getAfterAddress</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>title</name>
-                <value>
-                    <stringValue>Selezione codice Ronchi</stringValue>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>hdtFlowNavButtons_9_0_0_0</name>
-            <extensionName>c:hdtFlowNavigationButton</extensionName>
-            <fieldType>ComponentInstance</fieldType>
-            <inputParameters>
-                <name>isCancel</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isDraft</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>isPrevious</name>
-                <value>
-                    <booleanValue>false</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>standAlone</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextLabel</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>Brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>recordId</name>
-                <value>
-                    <elementReference>InputCase</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>sessionid</name>
-                <value>
-                    <elementReference>$Flow.InterviewGuid</elementReference>
-                </value>
-            </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <showFooter>false</showFooter>
-        <showHeader>false</showHeader>
-    </screens>
-    <screens>
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
         <locationX>4569</locationX>
-        <locationY>10442</locationY>
+        <locationY>9830</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3516,7 +3377,7 @@
             <inputParameters>
                 <name>saveButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3546,13 +3407,13 @@
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>draftButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3567,6 +3428,152 @@
                     <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>ScreenForm_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>ScreenForm_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>selectIstat</name>
+                    <extensionName>c:hdtIstatRonchiForFlow</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>title</name>
+                        <value>
+                            <stringValue>Istat</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>caseRecord</name>
+                        <value>
+                            <elementReference>getAfterAddress</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenForm_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>selectRonchi</name>
+                    <extensionName>c:hdtIstatRonchiForFlow</extensionName>
+                    <fieldType>ComponentInstance</fieldType>
+                    <inputParameters>
+                        <name>title</name>
+                        <value>
+                            <stringValue>Ronchi</stringValue>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>caseRecord</name>
+                        <value>
+                            <elementReference>getAfterAddress</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+                    <isRequired>true</isRequired>
+                    <storeOutputAutomatically>true</storeOutputAutomatically>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>6</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>getAfterAddress.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>NON DOM_ISTAT/Ronchi</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtFlowNavBttons_1</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>disabledNavigationEvent</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -3578,7 +3585,7 @@
         <name>ScreenLandRegistry</name>
         <label>ScreenLandRegistry</label>
         <locationX>4014</locationX>
-        <locationY>5498</locationY>
+        <locationY>4886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3738,7 +3745,7 @@
         <name>SecondFormDipendenti_0</name>
         <label>SecondFormDipendenti</label>
         <locationX>3062</locationX>
-        <locationY>7082</locationY>
+        <locationY>6470</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4500,7 +4507,7 @@
         <name>flowAnnullamento</name>
         <label>flowAnnullamento</label>
         <locationX>1270</locationX>
-        <locationY>12434</locationY>
+        <locationY>11822</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
