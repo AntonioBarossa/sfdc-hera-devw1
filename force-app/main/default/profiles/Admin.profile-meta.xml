@@ -862,7 +862,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.TimoeRevoke__c</field>
+        <field>Order.Revoke__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
