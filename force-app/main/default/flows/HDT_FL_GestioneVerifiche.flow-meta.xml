@@ -175,6 +175,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Label_Avanti</name>
+        <label>Assegna Label Avanti</label>
+        <locationX>1293</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>SaveLabel</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Avanti</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LWC_hdtRecordEditForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Label_Conferma</name>
         <label>Assegna Label Conferma</label>
         <locationX>1029</locationX>
@@ -397,7 +413,7 @@
         <locationX>1161</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
+            <targetReference>Assegna_Label_Avanti</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
@@ -415,6 +431,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Verifica Interna</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Interventi con verifica</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -687,19 +710,12 @@
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Skip_Si</name>
-            <conditionLogic>1 OR (2 AND 3) OR 4 OR 5</conditionLogic>
+            <conditionLogic>1 OR 2 OR 3 OR 4</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Verifica Interna</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetRecordAfterUpdate.Subprocess__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Lettura su Contratto Aperto</stringValue>
                 </rightValue>
             </conditions>
             <conditions>

@@ -2159,7 +2159,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>processTypeFormula</elementReference>
+                    <elementReference>CustomMetadataProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
