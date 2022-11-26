@@ -762,7 +762,7 @@
         <locationX>2701</locationX>
         <locationY>3494</locationY>
         <defaultConnector>
-            <targetReference>Set_Phase_In_Lavorazione</targetReference>
+            <targetReference>is_Errore_di_fatturazione_Acqua</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
@@ -875,6 +875,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>is_Errore_di_fatturazione_Acqua</name>
+        <label>is Errore di fatturazione Acqua?</label>
+        <locationX>3779</locationX>
+        <locationY>3614</locationY>
+        <defaultConnector>
+            <targetReference>Set_Phase_In_Lavorazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Errore_di_fatturazione_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Phase_In_Lavorazione_con_Stato</targetReference>
+            </connector>
+            <label>Errore di fatturazione Acqua</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>1898</locationX>
@@ -953,7 +985,7 @@
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
         <locationX>3779</locationX>
-        <locationY>3734</locationY>
+        <locationY>3950</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Avvisare_Cliente</name>
@@ -1559,8 +1591,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>3779</locationX>
-        <locationY>3614</locationY>
+        <locationX>3911</locationX>
+        <locationY>3734</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1574,6 +1606,36 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         </filters>
         <inputAssignments>
             <field>Phase__c</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Set_Phase_In_Lavorazione_con_Stato</name>
+        <label>Set Phase In Lavorazione con Stato</label>
+        <locationX>3647</locationX>
+        <locationY>3734</locationY>
+        <connector>
+            <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
             <value>
                 <stringValue>In Lavorazione</stringValue>
             </value>
@@ -2931,7 +2993,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
         <locationX>3647</locationX>
-        <locationY>3854</locationY>
+        <locationY>4070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
