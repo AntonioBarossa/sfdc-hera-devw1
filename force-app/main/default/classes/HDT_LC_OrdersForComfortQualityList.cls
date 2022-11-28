@@ -27,7 +27,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
-
+        List<Order> upList = new List<Order>();
         Order orderUpdate = new Order(
             Id = ordId,
             ConfirmCustomerContract__c = confirmText
@@ -56,6 +56,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             causalQuality = 'Comfort Call OK';
             orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
+            upList.add(orderUpdate);
+            upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
@@ -66,11 +68,13 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 if (orderActiveMonitoring[0].SignedDate__c==null) {
                     orderUpdate.SignedDate__c = Date.today();
                 }
+                
             }
             causalQuality = 'Quality Call OK';
-
+            upList.add(orderUpdate);
         }
-        orderSrv.updateRecord(orderUpdate);
+        HDT_UTL_DatabaseService.updateSObject(upList);
+        //orderSrv.updateRecord(orderUpdate);
 
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
