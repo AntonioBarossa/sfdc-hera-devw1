@@ -167,7 +167,13 @@ public with sharing class HDT_SRV_SelfReadings {
                 readingFields += fields;
             }
         }
-        Reading__c reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        Reading__c reading;
+        try{
+            reading = queryReadings.getReading('Case', caseId, readingCase.CommodityFormula__c, readingFields);
+        }catch (Exception ex){
+            inputParams.requestBody = '$001:Error Reading';
+            return inputParams;
+        }
         System.debug(LoggingLevel.DEBUG, 'reading: ' + reading);
         
         JSONGenerator gen = JSON.createGenerator(false);
