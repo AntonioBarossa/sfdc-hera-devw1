@@ -211,7 +211,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         // Per tutti i sottoprocessi, tranne la Variaz. Gruppo IVA, inneschiamo il processo di Allineamento Anagrafica.
-        if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA') && currentCase.SubProcess__c.equalsIgnoreCase('Modifica Dati di Recapito')) {
+        if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA') && !currentCase.SubProcess__c.equalsIgnoreCase('Modifica Dati di Recapito')) {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         }
