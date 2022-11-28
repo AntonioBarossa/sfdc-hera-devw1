@@ -84,6 +84,32 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>tabType</name>
+                    <value>consumptionList2g</value>
+                </componentInstanceProperties>
+                <componentName>hdtConsumptionActivityList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-c6b75196-fdc1-4329-91aa-e754f85bfa0a</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>tabType</name>
+                    <value>activityList2g</value>
+                </componentInstanceProperties>
+                <componentName>hdtConsumptionActivityList</componentName>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-1hdqdsq5fjz</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -111,6 +137,32 @@
                 <componentInstanceProperties>
                     <name>title</name>
                     <value>Standard.Tab.detail</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-c6b75196-fdc1-4329-91aa-e754f85bfa0a</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Elenco Consumi 2G</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-1hdqdsq5fjz</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Elenco Attività 2G</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
             </componentInstance>

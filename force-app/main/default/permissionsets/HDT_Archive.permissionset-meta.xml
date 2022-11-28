@@ -2554,11 +2554,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SiebelRdo__x.ACR__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
         <field>SiebelRdo__x.ACTION_CD__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2960,6 +2955,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SiebelRdo__x.X_ACQUISTO_CREDITO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SiebelRdo__x.X_ACR__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

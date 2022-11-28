@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Elenco Attività 2G</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+    {
+      &quot;tableTitle&quot;: &quot;Elenco Attività&quot;,
+      &quot;tableName&quot;: &quot;activityList2g&quot;,
+      &quot;iconName&quot;: &quot;standard:record_update&quot;,
+      &quot;columns&quot;: [
+        {
+          &quot;label&quot;: &quot;POD&quot;,
+          &quot;fieldName&quot;: &quot;pod&quot;,
+          &quot;initialWidth&quot;: 140
+        },
+        {
+            &quot;label&quot;: &quot;Data da&quot;,
+            &quot;fieldName&quot;: &quot;dateFrom&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;Data a&quot;,
+            &quot;fieldName&quot;: &quot;dateTo&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;Data rich&quot;,
+            &quot;fieldName&quot;: &quot;dateReq&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;id Service&quot;,
+            &quot;fieldName&quot;: &quot;idService&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;Giorno libero&quot;,
+            &quot;fieldName&quot;: &quot;freeDay&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;band day&quot;,
+            &quot;fieldName&quot;: &quot;bandDay&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;outcome&quot;,
+            &quot;fieldName&quot;: &quot;outcome&quot;,
+            &quot;initialWidth&quot;: 140
+          },
+          {
+            &quot;label&quot;: &quot;outcome Descr&quot;,
+            &quot;fieldName&quot;: &quot;outcomeDescr&quot;,
+            &quot;initialWidth&quot;: 140
+          }
+      ]
+    }
+  ]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">Callout:activityList2g</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>
