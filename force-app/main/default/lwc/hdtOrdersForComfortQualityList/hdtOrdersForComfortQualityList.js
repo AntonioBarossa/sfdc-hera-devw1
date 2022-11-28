@@ -193,7 +193,7 @@ export default class HdtOrdersForComfortQualityList extends LightningElement {
             if(data!=null){
                 getCachedUuid().then(cachedUuid => {
                     if(cachedUuid!=null){
-                        window.TOOLBAR.EASYCIM.saveScript(cachedUuid, data.Campaign.PositiveOutcomeDefaultStatus__c, true)
+                        window.TOOLBAR.EASYCIM.saveScript(cachedUuid, 'Rinuncia contratto', true)
                     }
                 });
             }
