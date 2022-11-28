@@ -31,7 +31,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'type' => currentCase.Type,
                 'promessaPagamentoEnte' => 'TRUE',
                 'comuneEnte' => currentCase.CityOrInstitution__c,
-                'note' => currentCase.Note__c
+                'note' => currentCase.Note__c,
+                'acconto' => currentCase.PaidAmount__c
             };
         }else{
             caseMap = new Map<String, Object>{
@@ -43,7 +44,8 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'abi' => currentCase.IbanABI__c,
                 'intestatarioContoOrdinante' => currentCase.BankAccountSignatoryFirstName__c + currentCase.BankAccountSignatoryLastName__c,
                 'type' => currentCase.Type,
-                'promessaPagamentoEnte' => 'FALSE'
+                'promessaPagamentoEnte' => 'FALSE',
+                'acconto' => currentCase.PaidAmount__c
             };
         }
 
