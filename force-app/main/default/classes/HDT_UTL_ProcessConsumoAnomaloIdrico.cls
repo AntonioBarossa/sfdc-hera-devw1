@@ -10,13 +10,14 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private List<HDT_WRP_ProcessObjects> processObjList;
     //private Map<String, String> accountContactMap = new Map<String, String>();
     //private Map<String, Contract> podContractMap = new Map<String, Contract>();
+    private Integer podIndex;
     /*
         mapRequiredByPosition posizioneElemento->header colonna csv, mapCaseFields header colonna csv -> api name campo
         mapCaseFields.get(mapRequiredByPosition.get(someIndex)) -> api name campo per la posizione someIndex; csvSplitted[someIndex] valore della colonna in posizione someIndex
     */
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
-
+        podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
         
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         //Carico mapping
@@ -60,7 +61,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert=new List<MassiveLoaderRequestItem__c>();
         for(HDT_WRP_ProcessObjects currentObj:processObjList){
-            currentObj.newCase=new Case(Phase__c='in attesa processo doc massivo', Status='In Lavorazione');
+            currentObj.newCase=new Case(Phase__c='in attesa processo doc massivo', Status='In Lavorazione',RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO);
             String fieldConversionError='';
             for(Integer headerIndex:mapHeaderByPosition.keySet()){
                 String fieldValue= String.isBlank(currentObj.csvSplitted[headerIndex]) ? '':currentObj.csvSplitted[headerIndex];
