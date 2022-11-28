@@ -208,9 +208,11 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         List<CampaignMember> campMembList = HDT_QR_CampaignMember.getCampMembByActivity(activityId);
         for(CampaignMember cm : campMembList){
-            if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
+            cm.Status = 'Rinuncia contratto';
+
+           /* if(String.isNotBlank(cm.Campaign.PositiveOutcomeDefaultStatus__c)){
                 cm.Status = cm.Campaign.PositiveOutcomeDefaultStatus__c;
-            }
+            }*/
         }
         campMembSrv.updateRecords(campMembList);
         if (campMembList!=null && campMembList.size()>0) {
