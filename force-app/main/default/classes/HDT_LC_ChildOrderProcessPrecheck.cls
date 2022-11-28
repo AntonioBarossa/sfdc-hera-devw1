@@ -154,6 +154,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'HDT_RT_SwitchIn' {
                     newOrder.PowerRequested__c  = order.PowerCommitted__c;
                     newOrder.WaiverRightAfterthought__c	= 'No';
+                    if ( 'Switch in Ripristinatorio'.equalsIgnoreCase(processType) ) {
+                        HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+                        newOrder.SignedDate__c = Date.today();
+                        newOrder.WaiverRightAfterthought__c = 'Si';
+                    }
                 }
                 /**@frpanico 2022-03-16
                  * Aggiunta Sconti Bonus
@@ -171,65 +176,48 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
                 }
-                when 'HDT_RT_CambioOfferte'
-                {
-                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
-                    {
-                        newOrder.EffectiveDate__c = System.Today();
-                    }
-                }
             }
 
-            switch on processType {
-                when 'Switch in Ripristinatorio'{
-                    HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
-                    newOrder.SignedDate__c = Date.today();
-                    newOrder.WaiverRightAfterthought__c = 'Si';
-                }
-                when 'Prima Attivazione'{
-                    switch on order.CommodityFormula__c {
-                        when 'Acqua' {
+            newOrder.NotDisconnectabilityCustomer__c = 'No';
+            newOrder.VAT__c = 'Iva 22% (Cod. 02)';
+        
+            switch on order.CommodityFormula__c {
+                when 'Acqua' {
+                    //Inizio: Predefault valido per tutti i processi
+                    newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
+                    //newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
+                    newOrder.ContractExpenses__c = 'Nessuno sconto';
+                    newOrder.SecurityDepositExcluded__c = 'N';
+                    //Fine: Predefault valido per tutti i processi
+
+                    //Inizio: Predefault secondo Processo
+                    switch on processType {
+                        when 'Prima Attivazione'{
                             newOrder.SecurityDepositExcluded__c  = 'Y';
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                             newOrder.PayPurification__c  = 'No - Esente';
                             newOrder.PaySewer__c  = 'No - Esente';
                         }
-                        when 'Gas' {
-                            processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
-                            processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
-                            newOrder.PressureLevel__c  = 'BP';
+                        when 'Connessione con Attivazione'{
+                            //vuoto perchè E1 non riuscirebbe a generare il plico
+                            newOrder.QuotationType__c = '';
+                            newOrder.VAT__c = 'Iva 10% (Cod. 01)';
+                            newOrder.PaySewer__c = 'No - Esente';
+                            newOrder.PayPurification__c = 'No - Esente';
+                            newOrder.ResidentDomesticHousingUnit__c = 1;
+                        }
+                        when 'Subentro'{
+                            newOrder.PaySewer__c = 'Si - Paga';
+                            newOrder.PayPurification__c = 'Si - Paga';
+                            newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                        }
+                        when 'Cambio Offerte'
+                        {
+                            newOrder.EffectiveDate__c = System.Today();
                         }
                     }
-                }
-                when 'Connessione con Attivazione'{
-                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
-                    {
-                        //vuoto perchè E1 non riuscirebbe a generare il plico
-                        newOrder.QuotationType__c = '';
-                        newOrder.VAT__c = 'Iva 10% (Cod. 01)';
-                        newOrder.PaySewer__c = 'No - Esente';
-                        newOrder.PayPurification__c = 'No - Esente';
-                        newOrder.ResidentDomesticHousingUnit__c = 1;
-                    }
-                }
-                when 'Subentro'{
-                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
-                    {
-                        newOrder.PaySewer__c = 'Si - Paga';
-                        newOrder.PayPurification__c = 'Si - Paga';
-                        newOrder.SeasonUse__c  = 'Nessuna stagionalita';
-                    }
-                }
-            }
-
-            newOrder.NotDisconnectabilityCustomer__c = 'No';
-            newOrder.VAT__c = order.SupplyType__c = 'Iva 22% (Cod. 02)';
-        
-            switch on order.CommodityFormula__c {
-                when 'Acqua' {
-                    newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
-                    newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
-                    newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
+                    //Fine: Predefault secondo Processo
 
                     //Inizio: Predefault secondo RateCategory
                     for (List<String> fieldToPredefault : predefaultRatecategories) {
@@ -243,9 +231,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             }
                         }
                     }
-
+                    //Per ogni ratecategory
                     newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
                     newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+
                     // Fine: Predefault secondo RateCategory
                     
                 }
@@ -258,6 +247,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     //Logica Superficie Servita Start
                     newOrder.SurfaceServed__c = 75;
                     //Logica Superficie Servita End
+                    if( 'Prima Attivazione'.equalsIgnoreCase(processType)  ) {
+                        processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                        processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                        newOrder.PressureLevel__c  = 'BP';
+                    }
                 }
             }
 
