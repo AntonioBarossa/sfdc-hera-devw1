@@ -707,9 +707,15 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                     currentCase.Status = 'Closed';
                     update currentCase;
                 }
-            }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(currentCase.Type) && 'Modifica Fognatura e Depurazione'.equalsIgnoreCase(currentCase.Subprocess__c) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && 'Esito OK da DBO'.equalsIgnoreCase(currentCase.Phase__c) && currentCase.RetroactiveDate__c != null){
+            }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(currentCase.Type) && 'Modifica Fognatura e Depurazione'.equalsIgnoreCase(currentCase.Subprocess__c) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && 'Esito OK da DBO'.equalsIgnoreCase(currentCase.Phase__c)){
                 //BBP W2 4.0 pg. 601 - Creazione Activity Gestione Rimborso in caso di Esito Positivo e Data Retroattiva valorizzata
-                HDT_UTL_Case.createActivity(currentCase.Id, '', 'Gestione Rimborso', 'Gestione Rimborso');
+                if(currentCase.RetroactiveDate__c != null) {
+                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'Gestione Rimborso', 'Gestione Rimborso');
+                }else{
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    update currentCase;
+                }
             }
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
