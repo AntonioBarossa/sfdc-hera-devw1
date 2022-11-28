@@ -8,9 +8,12 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private Map<String, String> mapCaseFields;
     private Map<String, String> mapWrapperCaseFields;
     private List<HDT_WRP_ProcessObjects> processObjList;
-    private Map<String, String> accountContactMap = new Map<String, String>();
-    private Map<String, Contract> podContractMap = new Map<String, Contract>();
-    
+    //private Map<String, String> accountContactMap = new Map<String, String>();
+    //private Map<String, Contract> podContractMap = new Map<String, Contract>();
+    /*
+        mapRequiredByPosition posizioneElemento->header colonna csv, mapCaseFields header colonna csv -> api name campo
+        mapCaseFields.get(mapRequiredByPosition.get(someIndex)) -> api name campo per la posizione someIndex; csvSplitted[someIndex] valore della colonna in posizione someIndex
+    */
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
 
@@ -27,7 +30,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         for(MassiveLoaderRequestItem__c item : requestItemList){
 
             tempSplitedFields = new List<String>();
-            tempSplitedFields = item.Data__c.split(splitCharacter, -1);
+            tempSplitedFields = item.Data__c.split(splitCharacter, -1);//valore dei campi
 
             checkRequiredFields(item, tempSplitedFields);
             System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
@@ -46,6 +49,56 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         }
 
 
+    }
+
+    public override void getRecords(){
+        //get PDR
+        // get contract via Contract.ServicePoint__c
+    }
+
+    public override void registryCreation(){
+        List<Case> caseToInsert = new List<Case>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsert=new List<MassiveLoaderRequestItem__c>();
+        for(HDT_WRP_ProcessObjects currentObj:processObjList){
+            currentObj.newCase=new Case(Phase__c='in attesa processo doc massivo', Status='In Lavorazione');
+            String fieldConversionError='';
+            for(Integer headerIndex:mapHeaderByPosition.keySet()){
+                String fieldValue= String.isBlank(currentObj.csvSplitted[headerIndex]) ? '':currentObj.csvSplitted[headerIndex];
+                fieldConversionError=mapTypeField(currentObj.newCase,mapCaseFields,headerIndex,fieldValue);
+                if(String.isNotBlank(fieldConversionError)){
+                    break;
+                }
+                //fieldValue=String.isBlank(currentObj.csvSplitted[headerIndex]) ? '' : currentObj.csvSplitted[headerIndex];
+                //currentCase.put(mapCaseFields.get(mapHeaderByPosition.get(headerIndex)),fieldValue);
+            }
+            if(String.isNotEmpty(fieldConversionError)){
+                itemsToSave.add(setErrorItem(currentObj.requestItem, fieldConversionError));
+                continue;
+            }
+
+            if(errorForPicklistValue('Case', 'Type', currentObj.newCase.Type)){
+                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Valore processo non corretto: ' + currentObj.newCase.Type));
+                continue;
+            }
+            caseToInsert.add(currentObj.newCase);
+            requestItemForUpsert.add(currentObj.requestItem);
+        }
+
+        if(caseToInsert.size()>0){
+            HDT_WRP_SaveResponse saveResponse=databaseUpsert(caseToInsert,requestItemForUpsert,'Case');
+            if(saveResponse.reponseItemList.size() > 0){
+                itemsToSave.addAll(saveResponse.reponseItemList);
+            }
+        }
+    }
+
+    //public override void makeProcess(){
+    //}
+
+    public override void finalUpdate(){
+        if(itemsToSave.size() > 0){
+            update itemsToSave;
+        }
     }
 
     private void mapFieldsObject(){
