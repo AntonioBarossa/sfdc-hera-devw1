@@ -278,4 +278,8 @@ public inherited sharing class HDT_QR_Contract {
         return [SELECT Id,EndDate, StartDate,(select Id,SBQQ__RequiredById__c from SBQQ__Subscriptions__r) FROM Contract WHERE ServicePoint__c =:servicePointId AND Status='Attivo' LIMIT 1];
     }
 
+    public List<Contract> getContractByContractCodeConsumoAnomaloIdrico(Set<String> sapCodes){
+        return [SELECT Id,SAPContractCode__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED];
+    }
+
 }

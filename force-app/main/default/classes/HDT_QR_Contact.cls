@@ -254,4 +254,8 @@ public inherited sharing class HDT_QR_Contact {
         return (List<Contact>)qrHelper.getListSObject();
 
     }
+
+    public List<Contact> getContactByAccountIdConsumoAnomaloMassivo(Set<Id> accountId){
+        return [SELECT Id,AccountId,Phone,MobilePhone,Account.PrimaryEmail__c,Email	FROM Contact WHERE AccountId IN: accountId WITH SECURITY_ENFORCED ];
+    }
 }
