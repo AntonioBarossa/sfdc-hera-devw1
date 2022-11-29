@@ -26,6 +26,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
 
     public class HDT_WRP_ResponseData{
         @AuraEnabled public String esito {get;set;}
+        @AuraEnabled public String noticeId {get;set;}
     }
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
