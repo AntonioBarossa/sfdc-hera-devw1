@@ -554,6 +554,11 @@
                 <label>In Attesa possibile contratto</label>
             </value>
             <value>
+                <fullName>in attesa processo doc massivo</fullName>
+                <default>false</default>
+                <label>in attesa processo doc massivo</label>
+            </value>
+            <value>
                 <fullName>In attesa risposta Mail</fullName>
                 <default>false</default>
                 <label>In attesa risposta Mail</label>
