@@ -32,7 +32,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'promessaPagamentoEnte' => 'TRUE',
                 'comuneEnte' => currentCase.CityOrInstitution__c,
                 'note' => currentCase.Note__c,
-                'acconto' => currentCase.PaidAmount__c
+                'acconto' => String.valueOf(currentCase.PaidAmount__c)
             };
         }else{
             caseMap = new Map<String, Object>{
@@ -45,7 +45,7 @@ public inherited sharing class HDT_SRV_PaymentCommunication {
                 'intestatarioContoOrdinante' => currentCase.BankAccountSignatoryFirstName__c + currentCase.BankAccountSignatoryLastName__c,
                 'type' => currentCase.Type,
                 'promessaPagamentoEnte' => 'FALSE',
-                'acconto' => currentCase.PaidAmount__c
+                'acconto' => String.valueOf(currentCase.PaidAmount__c)
             };
         }
 
