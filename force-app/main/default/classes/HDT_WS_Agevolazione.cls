@@ -50,7 +50,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         //Case caso = lcs[0];
         Case caseToUpdate = new Case(Id=lcs[0].Id);
 
-        HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
+        HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res);
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
