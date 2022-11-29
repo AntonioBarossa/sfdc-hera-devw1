@@ -802,6 +802,16 @@
                 <label>HC_CVMBO_MMSME_CFBS_Scarto Documentale_HC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_Linetech</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Switch Out per Voltura_Linetech</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Testo Contratto in Bolletta_HC</label>
@@ -1345,6 +1355,11 @@
                 <fullName>HS_DCSC_FI_Verifiche Fatturazione</fullName>
                 <default>false</default>
                 <label>HS_DCSC_FI_Verifiche Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Supporto alla Vendita</fullName>
+                <default>false</default>
+                <label>Supporto alla Vendita</label>
             </value>
         </valueSetDefinition>
     </valueSet>

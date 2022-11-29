@@ -3,6 +3,19 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
     private static String vowels='AEIUO';
     private static String[] vowelsLetters=new List<String>();
     private static String[] consonantsLetters=new List<String>();
+    private static Map<String, String> omocodiaMap = new Map<String, String>
+    {
+        'L' => '0',
+        'M' => '1',
+        'N' => '2',
+        'P' => '3',
+        'Q' => '4',
+        'R' => '5',
+        'S' => '6',
+        'T' => '7',
+        'U' => '8',
+        'V' => '9'
+    };
     
     @AuraEnabled
     public static String calculateFiscalCode(Map<String,String> infoData){
@@ -24,6 +37,70 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             fiscalCode += getControlLetter(fiscalCode);
         }
         return fiscalCode;
+    }
+    /* Nel calcolo del lead viene eseguito un controllo prima sulla validita' del codice fiscale
+    * Poi lo calcola nuovamente
+    * in caso di citta' con piu' codici belfiore e' necessario calcolare il codice fiscale 
+    * per ogni possibile citycode
+    */
+    public static Set<String> calculateSetFiscalCode(Map<String,String> infoData){
+        String city = infoData.get('birthPlace').toUpperCase();
+        Set<String> cityCodes = new Set<String>();
+        Set<String> fiscalCodes = new Set<String>();
+        List<City__c> checkCitta = [SELECT BelfioreCode__c FROM City__c WHERE Name = :city AND BelfioreCode__c != null WITH SECURITY_ENFORCED];
+        for(City__c singleCity : checkCitta)
+        {
+            cityCodes.add(singleCity.BelfioreCode__c);
+        }
+        for(String singleCode : cityCodes)
+        {
+            String fiscalCode='';
+            if(''.equals(singleCode)){
+                fiscalCode = null ;
+            }else{
+                
+                fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+                fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+
+                fiscalCode += getYear(infoData.get('birthDate'));
+                fiscalCode += getMonthLetter(infoData.get('birthDate'));
+                fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));
+                fiscalCode += singleCode;
+                System.debug(singleCode);
+                fiscalCode += getControlLetter(fiscalCode);
+            }
+            fiscalCodes.add(fiscalCode);
+        }
+        return fiscalCodes;
+    }
+
+    public static String cleanFiscalCodeFromOmocodia(String fiscalCode)
+    {
+        String newFiscalCode = '';
+        String name = fiscalCode.substring(0,6);
+        String year = cleanInfoFromOmocodia(fiscalCode.substring(6,8));
+        String month = fiscalCode.substring(8,9);
+        String day = cleanInfoFromOmocodia(fiscalCode.substring(9,11));
+        String cityCodeFirstChar =  fiscalCode.replaceAll( '\\s+', '').substring(11,12);
+        String cityCode =cleanInfoFromOmocodia(fiscalCode.replaceAll( '\\s+', '').substring(12,15));
+        newFiscalCode = name + year + month + day + cityCodeFirstChar + cityCode;
+        newFiscalCode += getControlLetter(newFiscalCode);
+        return newFiscalCode;
+    }
+    private static String cleanInfoFromOmocodia(String s)
+    {
+        String lastString = s;
+        String newString = '';
+        for(Integer i=0; i < s.length(); ++i)
+        {
+            String sub = s.substring(i, i+1);
+            if(!sub.isNumeric())
+            {
+                newString = lastString.replace(sub, omocodiaMap.get(sub));
+                lastString = newString;
+            }
+        }
+        return String.isBlank(newString) ? lastString : newString;
     }
     private static Boolean isVowel(String test, String letter){
         return test.contains(letter)?true:false;

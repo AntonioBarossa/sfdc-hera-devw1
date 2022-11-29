@@ -2624,10 +2624,6 @@
             <fullName>Supporto TL Front</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Supporto su migrazione</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

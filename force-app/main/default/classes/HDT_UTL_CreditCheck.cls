@@ -160,6 +160,25 @@ public with sharing class HDT_UTL_CreditCheck {
         }
     }
 
+    @future
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public static void updateOrderFuture(String orderDataJSON){
+        HDT_WRP_DataForUpdate orderData;
+        try{
+            Long startTime = Datetime.now().getTime();
+            Long actualTime;
+            do{
+                actualTime = Datetime.now().getTime();
+            }while (actualTime - startTime < 5000);
+            orderData = (HDT_WRP_DataForUpdate)JSON.deserialize(orderDataJSON, HDT_WRP_DataForUpdate.class); 
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
+        }catch (Exception e){
+            HDT_SRV_LogService logService = new HDT_SRV_LogService('CREDIT_CHECK_EXCEPTION');
+            logService.insertSingleLog('HDT_UTL_CreditCheck', 'updateOrderFuture', orderDataJSON, null, e.getMessage()+ ' line: '+ e.getLineNumber(), orderData != null ? orderData.orderId : null, null, null);
+            System.debug(LoggingLevel.ERROR, e.getMessage()+ ' line: '+ e.getLineNumber() );
+        }
+    }
+
     public static Boolean managedErrorCode(String errorCode){
         List<HDT_CreditCheckExcludedCode__mdt> codiceErroriGestiti = HDT_QR_GenericQuery.getGenericRecords('Label', 'HDT_CreditCheckExcludedCode__mdt', 'ErrorCode__c = \''+errorCode+ '\' AND IsActive__c = true');
         return !codiceErroriGestiti.isEmpty();

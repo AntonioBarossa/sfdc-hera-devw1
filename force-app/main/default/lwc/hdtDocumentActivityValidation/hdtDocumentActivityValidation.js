@@ -116,7 +116,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
                 if(result == 'Creata'){
                     const event = new ShowToastEvent({
                         title: 'Successo',
-                        message: 'Attività Non Validata, è stata generata l\'attivita di Documento non Validato',
+                        message: 'Attività Non Validata',
                         variant: 'success',
                     });
                     this.dispatchEvent(event);
@@ -128,7 +128,7 @@ export default class hdtDocumentActivityValidation extends LightningElement {
         }).catch(error =>{
             const event = new ShowToastEvent({
                 title: 'Errore',
-                message: 'Attività Non Validata: Non è stato possibile creare l\'attivita di Documento non Validato',
+                message: 'Non è stato possibile gestire l\'Attivita',
                 variant: 'error',
             });
             this.dispatchEvent(event);

@@ -201,6 +201,9 @@ public with sharing class HDT_UTL_CaseProcess {
                     List<wrts_prcgvr__Activity__c> activitiesToCancel = new List<wrts_prcgvr__Activity__c>();
                     for(wrts_prcgvr__Activity__c activity : caseQr.getCaseActivities(new List<String>{caseNew.Id}))
                     {
+                        if ('Autolettura'.equalsIgnoreCase(caseNew.Cluster__c) && 'Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                            continue;
+                        }
                         activity.wrts_prcgvr__Status__c = 'Annullata';
                         activitiesToCancel.add(activity);
                     }

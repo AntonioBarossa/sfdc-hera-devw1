@@ -1166,7 +1166,7 @@
         <name>Case_in_Bozza</name>
         <label>Case in Bozza?</label>
         <locationX>5110</locationX>
-        <locationY>383</locationY>
+        <locationY>382</locationY>
         <defaultConnector>
             <targetReference>ScreenInputFiscale_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -2155,6 +2155,17 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             ),
         TEXT({!GetInputCase.Type}))</expression>
     </formulas>
+    <formulas>
+        <name>VariazioneFiscaleProcessNonDraft</name>
+        <dataType>String</dataType>
+        <expression>IF(
+        ISPICKVAL({!GetInputCase.Type},&quot;Fiscale&quot;),
+        IF(CONTAINS(TEXT({!GetInputCase.Subprocess__c}), &quot;IVA&quot;),
+            &quot;Fiscale&quot; &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c} &amp; &quot; &quot; &amp;  &quot;IVA&quot;,
+            &quot;Fiscale&quot; &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c} &amp; &quot; &quot; &amp;  &quot;Accise&quot;
+            ),
+        TEXT({!GetInputCase.Type}))</expression>
+    </formulas>
     <interviewLabel>Gestione Variazioni {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Variazioni</label>
     <processMetadataValues>
@@ -2745,8 +2756,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordLookups>
         <name>GetInputCaseFiscale</name>
         <label>Get Input Case Fiscale</label>
-        <locationX>666</locationX>
-        <locationY>938</locationY>
+        <locationX>709</locationX>
+        <locationY>899</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetCaseStessoSottoprocessoFornitura</targetReference>
@@ -4914,7 +4925,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>VariazioneFiscaleProcess</elementReference>
+                    <elementReference>VariazioneFiscaleProcessNonDraft</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

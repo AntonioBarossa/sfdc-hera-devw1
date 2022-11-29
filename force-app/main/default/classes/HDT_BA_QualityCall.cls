@@ -95,7 +95,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
             for (ComfortQualityCall__c cqc : docValidList) {
                 if (
-                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c) && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
+                    String.isNotBlank(ord.PhaseStory__c) && ord.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
                 ) {
                     startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
                     break;
@@ -105,7 +105,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
                     ? orderToActivityMap.get(ord.ParentOrder__c) : orderToActivityMap.get(ord.Id);
 
-            if (startDate != null && startDate.daysBetween(dueDate) > 50) {
+            if ((startDate != null && startDate.daysBetween(dueDate) > 50) && activityQualityCall != null ){
                 
                 Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
 

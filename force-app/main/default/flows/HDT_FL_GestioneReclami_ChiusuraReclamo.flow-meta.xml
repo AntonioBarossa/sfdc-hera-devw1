@@ -119,13 +119,6 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>Get_Activity.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <connector>
             <targetReference>Aggiorna_Activity</targetReference>
         </connector>
@@ -149,7 +142,7 @@
     <decisions>
         <name>In_sospensione_o_chiusura</name>
         <label>In sospensione o chiusura?</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Richiesta_del_Cliente_accolta_0_0</targetReference>
@@ -290,7 +283,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -314,15 +307,18 @@
         <locationX>578</locationX>
         <locationY>878</locationY>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Reset_Transaction</targetReference>
         </connector>
+        <faultConnector>
+            <targetReference>Reset_Transaction</targetReference>
+        </faultConnector>
         <inputReference>Get_Activity</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -332,6 +328,28 @@
         <locationY>974</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
+    <screens>
+        <name>Reset_Transaction</name>
+        <label>Reset Transaction</label>
+        <locationX>578</locationX>
+        <locationY>998</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+        <fields>
+            <name>resetTransaction</name>
+            <extensionName>c:hdtResetTransaction</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Richiesta_del_Cliente_accolta_0</name>
         <label>Motivazione Sospensione</label>
@@ -430,7 +448,7 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0</name>
         <label>Screen Errore</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -549,7 +567,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>386</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>

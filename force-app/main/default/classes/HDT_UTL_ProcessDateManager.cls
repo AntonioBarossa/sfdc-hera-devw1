@@ -78,7 +78,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
                 }
     
                 Date dateSentToSii= null;
-                if(signedDate != null  && order.ProcessType__c.containsIgnoreCase('Switch In')){
+                if(signedDate != null  && order.ProcessType__c != null &&  order.ProcessType__c.containsIgnoreCase('Switch In')){
                     //if(order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale'){
                         // DIRITTO DI RINUNCIA DI RIPENSAMENTO
                         if (order.WaiverRightAfterthought__c == 'Si') { 
@@ -90,14 +90,14 @@ public with sharing class HDT_UTL_ProcessDateManager {
                         else{
                             Date dataRipensamento = order.MaxAfterthoughtDate__c;
                             if(dataRipensamento != null && order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale' ){
-								if(dataRipensamento > Date.Today()){
+								if(dataRipensamento >= Date.Today()){
 									dateSentToSii = dataRipensamento.addDays(1);
 								}else if(dataRipensamento < Date.Today()){
-									dateSentToSii = Date.today();
+									dateSentToSii = order.IsTransition__c? Date.today().addDays(1) : Date.today();
 								}
-								else {
+								/* else {
 									dateSentToSii = dataRipensamento;
-								}
+								} */
                             }else {
 								dateSentToSii = Date.today();
 							}
@@ -225,9 +225,9 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			
 			for(Order order : orderList){
 				//CAMBIO OFFERTA DATA FIRMA - SWITCH IN DATA INVIO SII
-				if(order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
-					dateToFrom = order.SignedDate__c;
-				}else if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
+				if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Cambio offerta')){
+					dateToFrom = Date.today() > order.SignedDate__c ? Date.today() : order.SignedDate__c;
+				}else if(order.DocumentalProcessType__c != null && order.DocumentalProcessType__c.equalsIgnoreCase('Switch In')){
 					dateToFrom = order.DateSentToSII__c;
 				}else if(order.EffectiveDate__c == null){
 					order.EffectiveDate__c = order.SignedDate__c;

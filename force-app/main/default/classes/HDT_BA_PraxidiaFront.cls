@@ -16,34 +16,58 @@ public class HDT_BA_PraxidiaFront implements Database.Batchable<HDT_WRP_Campaign
     String generateFile = header;
     public String queryDateCase='';
     public String queryDateOrder='';
+    public String startTm;
+    public String endTm;
+
+    public HDT_BA_PraxidiaFront(String start, String endTime){
+
+        startTm=start; 
+        endTm=endTime;
+     }
 
     public Iterable<HDT_WRP_CampaignPraxidia.wrapToIterate> start(Database.BatchableContext context) {
         List<Order> listOrder =new List<Order>();
         List<Case> listCase =new List<Case>();
+        try {
+            Datetime startDtCase;
+            Datetime endDCaset;
+            Datetime dt=Date.Today().addDays(-1);
+            string dtYesterday=dt.format('yyyy-MM-dd');
 
-        if(String.isNotBlank(queryDateCase)){
-            Datetime startDtCase=Datetime.valueOfGMT(queryDateCase + ' 00:00:00');
-            Datetime endDCaset=startDtCase.addDays(1);
+            if(String.isNotBlank(queryDateCase)){
+                startDtCase=Datetime.valueOfGMT(queryDateCase + ' ' + startTm + ':00:00');
+                endDCaset=Datetime.valueOfGMT(queryDateCase + ' ' + endTm + ':00:00');
+                //Datetime endDCaset=startDtCase.addDays(1);
+            }
+            else {
+                startDtCase=Datetime.valueOfGMT(dtYesterday + ' ' + startTm + ':00:00');
+                endDCaset=Datetime.valueOfGMT(dtYesterday + ' ' + endTm + ':00:00');
+                //listCase = caseQr.getRecordCreatedYesterdayDifferentBy('Reclami');
+            }
             listCase = caseQr.getRecordCreatedInRequestedDateDifferentBy('Reclami', startDtCase, endDCaset);
-        }
-        else {
-            listCase = caseQr.getRecordCreatedYesterdayDifferentBy('Reclami');
-        }
-        
-        if(String.isNotBlank(queryDateOrder)){
-            Datetime startDtOrd=Datetime.valueOfGMT(queryDateOrder + ' 00:00:00');
-            Datetime endDtOrd=startDtOrd.addDays(1);
-            listOrder = qrOrder.getOrderCreatedInRequestedDate(startDtOrd, endDtOrd);
-        }
-        else {
-            listOrder = qrOrder.getOrderCreatedYesterday();
-        }
 
-        for(Order ord : listOrder){
-            dtos.add(new HDT_WRP_CampaignPraxidia.wrapToIterate(ord,null));
-        }
-        for(Case ca : listCase){
-            dtos.add(new HDT_WRP_CampaignPraxidia.wrapToIterate(null,ca));
+            Datetime startDtOrd;
+            Datetime endDtOrd;
+            if(String.isNotBlank(queryDateOrder)){
+                startDtOrd=Datetime.valueOfGMT(queryDateOrder + ' ' + startTm + ':00:00');
+                endDtOrd=Datetime.valueOfGMT(queryDateOrder + ' ' + endTm + ':00:00');
+                //Datetime endDtOrd=startDtOrd.addDays(1);
+            }
+            else {
+                startDtOrd=Datetime.valueOfGMT(dtYesterday + ' ' + startTm + ':00:00');
+                endDtOrd=Datetime.valueOfGMT(dtYesterday + ' ' + endTm + ':00:00');
+                //listOrder = qrOrder.getOrderCreatedYesterday();
+            }
+            listOrder = qrOrder.getOrderCreatedInRequestedDate(startDtOrd, endDtOrd);
+    
+            for(Order ord : listOrder){
+                dtos.add(new HDT_WRP_CampaignPraxidia.wrapToIterate(ord,null));
+            }
+            for(Case ca : listCase){
+                dtos.add(new HDT_WRP_CampaignPraxidia.wrapToIterate(null,ca));
+            }
+        } catch (Exception ex) {
+            throw ex;
         }
         return this.dtos;
     }
