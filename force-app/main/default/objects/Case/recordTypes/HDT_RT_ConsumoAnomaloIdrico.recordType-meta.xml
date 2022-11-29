@@ -9927,6 +9927,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>in attesa processo doc massivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
