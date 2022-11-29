@@ -10,21 +10,23 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private List<HDT_WRP_ProcessObjects> processObjList;
     //private Map<String, String> accountContactMap = new Map<String, String>();
     //private Map<String, Contract> podContractMap = new Map<String, Contract>();
-    private Integer podIndex;
+    private Integer contractIndex;
+    private Integer accountIndex;
+    private Set<String>contractCodes=new Set<String>();
+    private Set<Id>accountIds=new Set<Id>();
+    private Map<String,Contract> contractCodePodMap=new Map<String,Contract>();
+    private Map<Id,Contact> accountIdContactMap=new Map<Id,Contact>();
     /*
         mapRequiredByPosition posizioneElemento->header colonna csv, mapCaseFields header colonna csv -> api name campo
         mapCaseFields.get(mapRequiredByPosition.get(someIndex)) -> api name campo per la posizione someIndex; csvSplitted[someIndex] valore della colonna in posizione someIndex
     */
     public override void checks(){
         System.debug(LoggingLevel.DEBUG, 'checks');
-        podIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('POD'));
-        
-        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         //Carico mapping
         mapFieldsObject();
-
-
-
+        contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
+        accountIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        itemsToSave = new List<MassiveLoaderRequestItem__c>();
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
@@ -40,7 +42,8 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 itemsToSave.add(item);
                 continue;
             }
-
+            contractCodes.add(tempSplitedFields[contractIndex]);
+            accountIds.add(tempSplitedFields[accountIndex]);
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = tempSplitedFields;
@@ -53,8 +56,14 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     }
 
     public override void getRecords(){
-        //get PDR
-        // get contract via Contract.ServicePoint__c
+        HDT_QR_Contact qrCont=new HDT_QR_Contact();
+        HDT_QR_Contract qrContract= new HDT_QR_Contract();
+        for(Contact tmpCont:qrCont.getContactByAccountIdConsumoAnomaloMassivo(accountIds)){
+            accountIdContactMap.put(tmpCont.AccountId,tmpCont);
+        }
+        for(Contract tmpContract:qrContract.getContractByContractCodeConsumoAnomaloIdrico(contractCodes)){
+            contractCodePodMap.put(tmpContract.SAPContractCode__c,tmpContract);
+        }
     }
 
     public override void registryCreation(){
@@ -69,18 +78,34 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 if(String.isNotBlank(fieldConversionError)){
                     break;
                 }
-                //fieldValue=String.isBlank(currentObj.csvSplitted[headerIndex]) ? '' : currentObj.csvSplitted[headerIndex];
-                //currentCase.put(mapCaseFields.get(mapHeaderByPosition.get(headerIndex)),fieldValue);
             }
             if(String.isNotEmpty(fieldConversionError)){
                 itemsToSave.add(setErrorItem(currentObj.requestItem, fieldConversionError));
                 continue;
             }
-
             if(errorForPicklistValue('Case', 'Type', currentObj.newCase.Type)){
                 itemsToSave.add(setErrorItem(currentObj.requestItem, 'Valore processo non corretto: ' + currentObj.newCase.Type));
                 continue;
             }
+            if(!ContractCodePodMap.containsKey(currentObj.csvSplitted[contractIndex])){
+                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Codice Contratto SAP non trovato: ' + currentObj.csvSplitted[contractIndex]));
+                continue;
+            }
+            if(String.isBlank(ContractCodePodMap.get(currentObj.csvSplitted[contractIndex]).ServicePoint__c)){
+                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Nessun POD relazionato al contratto: ' + currentObj.csvSplitted[contractIndex]));
+                continue;
+            }
+            if(!accountIdContactMap.containsKey(currentObj.csvSplitted[accountIndex])){
+                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Account Id non trovato: ' + currentObj.csvSplitted[accountIndex]));
+                continue;
+            }
+            currentObj.newCase.ServicePoint__c=ContractCodePodMap.get(currentObj.csvSplitted[contractIndex]).ServicePoint__c;
+            currentObj.newCase.Contract__c=ContractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
+            currentObj.newCase.AccountId=accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).AccountId;
+            currentObj.newCase.ContactId=accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Id;
+            currentObj.newCase.PhoneNumber__c= String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).MobilePhone;
+            currentObj.newCase.SuppliedEmail=String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Account.PrimaryEmail__c) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Account.PrimaryEmail__c : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Email;
+            currentObj.newCase.SuppliedPhone=String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).MobilePhone;
             caseToInsert.add(currentObj.newCase);
             requestItemForUpsert.add(currentObj.requestItem);
         }
