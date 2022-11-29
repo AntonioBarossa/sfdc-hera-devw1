@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_Sales {
      private static HDT_QR_RecordType rtQr = new HDT_QR_RecordType();
 
     public static map<String,String> mapMarcatura = new Map<String,String>{
-        'G1 - MMS Associazione' => 'MMS','G1 - MMS Azienda'=> 'MMS','G1 - MMS Condominio'=> 'MMS','G1 - MMS Ditta individuale'=> 'MMS','G1 - MMS Parti comuni'=> 'MMS','G1 - MMS Persona fisica'=> 'MMS'
+        'G6 - MMS Associazione' => 'MMS','G5 - MMS Condominio'=> 'MMS','G4 - MMS Parti comuni'=> 'MMS','G3 - MMS Azienda'=> 'MMS','G2 - MMS Ditta individuale'=> 'MMS','G1 - MMS Persona fisica'=> 'MMS'
     };//
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
         String getSDVComune = '';
