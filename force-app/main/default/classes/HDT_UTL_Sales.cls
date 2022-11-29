@@ -488,8 +488,10 @@ public with sharing class HDT_UTL_Sales {
         String contractId = '';
         String servicePointId = '';
         String parentOrderId = '';
+        String orderId = '';
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
         HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
                     
 
@@ -499,8 +501,9 @@ public with sharing class HDT_UTL_Sales {
                     contractId = order.ContractReference__c;
                     servicePointId = order.ServicePoint__c;
                     parentOrderId = order.ParentOrder__c;
+                    orderId = order.Id;
                 
-                    if(String.isNotBlank(contractId)){
+                    if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                         SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                         if(subscription != null){
                             order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
@@ -528,8 +531,10 @@ public with sharing class HDT_UTL_Sales {
         String contractId = '';
         String servicePointId = '';
         String parentOrderId = '';
+        String orderId = '';
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
         HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
                     
 
@@ -539,8 +544,9 @@ public with sharing class HDT_UTL_Sales {
                     contractId = orderOriginal.ContractReference__c;
                     servicePointId = orderOriginal.ServicePoint__c;
                     parentOrderId = orderOriginal.ParentOrder__c;
+                    orderId = order.Id;
                 
-                    if(String.isNotBlank(contractId)){
+                    if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                         SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                         if(subscription != null){
                             order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
