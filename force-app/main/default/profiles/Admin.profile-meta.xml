@@ -1141,6 +1141,10 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.AnnualTARIPayment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.Revoke__c</field>
         <readable>true</readable>
     </fieldPermissions>

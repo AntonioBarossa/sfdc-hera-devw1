@@ -1172,6 +1172,7 @@
 		<field>Order.UseSubCategory__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
         <field>Order.CreditAcquire__c</field>
         <readable>true</readable>
     </fieldPermissions>

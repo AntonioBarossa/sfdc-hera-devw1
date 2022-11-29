@@ -991,6 +991,7 @@
         <editable>true</editable>
         <field>Order.AnnualTARIPayment__c</field>
         <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.CreditAcquire__c</field>
