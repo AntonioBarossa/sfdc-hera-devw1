@@ -40,7 +40,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderToUpdate.Phase__c = 'Da Inviare'; 
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
-        
+        Set<String> rateCategoryLeggeOttantaSet = new Set<String>{'ACDOMRESP0','ACDOMNR000'};
 
         /**@frpanico 25/10/2021
          * Spostato in alto la sezione di codice in cui vengono inseriti i dati dell'ultimo step
@@ -90,7 +90,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
+                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
+                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
+                            orderToUpdate.DocumentLow80__c = 'Richiesto';
+                        }
+                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
                     {
                         orderToUpdate.DocumentLow80__c = 'Richiesto';
                     }
@@ -132,8 +136,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Attivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    //orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
+                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
+                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
+                            orderToUpdate.DocumentLow80__c = 'Richiesto';
+                        }
+                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
                     {
                         orderToUpdate.DocumentLow80__c = 'Richiesto';
                     }
@@ -183,11 +190,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    /**@frpanico 2022-04-27
-                     * Il documento di legge 80 va richiesto
-                     * Solo per forniture domestiche
-                     */
-                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
+                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
+                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
+                            orderToUpdate.DocumentLow80__c = 'Richiesto';
+                        }
+                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
                     {
                         orderToUpdate.DocumentLow80__c = 'Richiesto';
                     }
@@ -243,7 +250,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
             when 'HDT_RT_ConnessioneConAttivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
+                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
+                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
+                            orderToUpdate.DocumentLow80__c = 'Richiesto';
+                        }
+                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
                     {
                         orderToUpdate.DocumentLow80__c = 'Richiesto';
                     }
