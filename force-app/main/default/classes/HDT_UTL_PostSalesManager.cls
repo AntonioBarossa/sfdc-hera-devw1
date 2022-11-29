@@ -696,16 +696,25 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                         Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
                         if(totaleUnitServicePoint != totaleUnitCase){
                             HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
-                        }else{
+                        }else{ //se non viene variato il totale delle unità abitative, alla ricezione dell'Esito OK da DBO imposto fase Completata
                             currentCase.Phase__c = 'Completata';
                             currentCase.Status = 'Closed';
-                            update currentCase;
+                            updateFuture(JSON.serialize(currentCase));
                         }
                     }
                 }else{ //in caso di Domestico alla ricezione dell'Esito OK da DBO imposto fase Completata
                     currentCase.Phase__c = 'Completata';
                     currentCase.Status = 'Closed';
-                    update currentCase;
+                    updateFuture(JSON.serialize(currentCase));
+                }
+            }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(currentCase.Type) && 'Modifica Fognatura e Depurazione'.equalsIgnoreCase(currentCase.Subprocess__c) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && 'Esito OK da DBO'.equalsIgnoreCase(currentCase.Phase__c)){
+                //BBP W2 4.0 pg. 601 - Creazione Activity Gestione Rimborso in caso di Esito Positivo e Data Retroattiva valorizzata
+                if(currentCase.RetroactiveDate__c != null) {
+                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'Gestione Rimborso', 'Gestione Rimborso');
+                }else{
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    updateFuture(JSON.serialize(currentCase));
                 }
             }
         } catch (Exception e) {

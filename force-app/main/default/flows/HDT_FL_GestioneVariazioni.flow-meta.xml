@@ -1204,6 +1204,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_fase_In_attesa_Verifica</name>
+        <label>Assegna fase In attesa Verifica</label>
+        <locationX>18266</locationX>
+        <locationY>3590</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa di Verifica</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_6</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Nome_Processo</name>
         <label>Assegna Nome Processo</label>
         <locationX>20290</locationX>
@@ -2561,7 +2584,7 @@
         <locationX>18112</locationX>
         <locationY>3470</locationY>
         <defaultConnector>
-            <targetReference>GetActivityTemplate_0_1_0</targetReference>
+            <targetReference>Assegna_fase_In_attesa_Verifica</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -4227,7 +4250,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>CreateActivity_0_1_0</name>
         <label>CreateActivity</label>
         <locationX>18266</locationX>
-        <locationY>3710</locationY>
+        <locationY>3950</locationY>
         <inputAssignments>
             <field>Case__c</field>
             <value>
@@ -4684,7 +4707,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>GetActivityTemplate_0_1_0</name>
         <label>GetActivityTemplate</label>
         <locationX>18266</locationX>
-        <locationY>3590</locationY>
+        <locationY>3830</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreateActivity_0_1_0</targetReference>
@@ -5446,6 +5469,16 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <label>Aggiorna Case</label>
         <locationX>15978</locationX>
         <locationY>4070</locationY>
+        <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_6</name>
+        <label>Aggiorna Case</label>
+        <locationX>18266</locationX>
+        <locationY>3710</locationY>
+        <connector>
+            <targetReference>GetActivityTemplate_0_1_0</targetReference>
+        </connector>
         <inputReference>GetCaseAggiornatoModificaUnitaImmobiliari_0</inputReference>
     </recordUpdates>
     <recordUpdates>

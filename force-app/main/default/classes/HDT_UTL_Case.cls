@@ -109,7 +109,7 @@ public inherited sharing class HDT_UTL_Case {
         else if('getServicePointFromContract'.equalsIgnoreCase(process)){
             List<String> contractCodes = inputString.split(';');
             System.debug(loggingLevel.DEBUG, contractCodes);
-            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes WITH SECURITY_ENFORCED];
+            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes AND ServicePoint__r.CommoditySector__c != 'Ambiente' WITH SECURITY_ENFORCED];
             output.servicePointId = new List<String>();
             for(Contract contr : contractList){
                 if(!output.servicePointId.contains(contr.ServicePoint__c)){
