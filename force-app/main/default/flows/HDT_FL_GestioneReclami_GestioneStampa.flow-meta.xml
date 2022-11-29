@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Conferma_Indennizzo</name>
         <label>Conferma Indennizzo</label>
-        <locationX>1524</locationX>
+        <locationX>1565</locationX>
         <locationY>253</locationY>
         <actionName>HDT_SRV_IndemnityConfirmation</actionName>
         <actionType>apex</actionType>
@@ -58,7 +58,7 @@
     <actionCalls>
         <name>GetCaseContenuti</name>
         <label>GetCaseContenuti</label>
-        <locationX>1453</locationX>
+        <locationX>1494</locationX>
         <locationY>1335</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -87,7 +87,7 @@
     <assignments>
         <name>AggiornaFase</name>
         <label>AggiornaFase</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>1142</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
@@ -103,7 +103,7 @@
     <assignments>
         <name>Assegna_a_Collection</name>
         <label>Assegna a Collection</label>
-        <locationX>1127</locationX>
+        <locationX>1168</locationX>
         <locationY>2001</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
@@ -126,7 +126,7 @@
     <assignments>
         <name>Assegna_a_collection_0</name>
         <label>Assegna a collection</label>
-        <locationX>1953</locationX>
+        <locationX>1994</locationX>
         <locationY>1364</locationY>
         <assignmentItems>
             <assignToReference>CaseCollectionRIspostaInviata</assignToReference>
@@ -142,7 +142,7 @@
     <assignments>
         <name>Assegna_Indennizzo_Confermato</name>
         <label>Assegna Indennizzo Confermato</label>
-        <locationX>955</locationX>
+        <locationX>996</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
@@ -158,7 +158,7 @@
     <assignments>
         <name>Assegna_Indennizzo_Confermato_0</name>
         <label>Assegna Indennizzo Confermato</label>
-        <locationX>1219</locationX>
+        <locationX>1260</locationX>
         <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.IndemnityConfirmed__c</assignToReference>
@@ -175,7 +175,7 @@
         <name>Assegna_Societa_di_Vendita</name>
         <label>Assegna Societa di Vendita</label>
         <locationX>50</locationX>
-        <locationY>1272</locationY>
+        <locationY>1229</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SalesCompany__c</assignToReference>
             <operator>Assign</operator>
@@ -197,8 +197,8 @@
     <assignments>
         <name>Assegna_Societa_di_Vendita_0</name>
         <label>Assegna Societa di Vendita</label>
-        <locationX>269</locationX>
-        <locationY>1269</locationY>
+        <locationX>290</locationX>
+        <locationY>1226</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SalesCompany__c</assignToReference>
             <operator>Assign</operator>
@@ -220,7 +220,7 @@
     <assignments>
         <name>AssegnaActivityToLoop</name>
         <label>AssegnaActivityToLoop</label>
-        <locationX>871</locationX>
+        <locationX>912</locationX>
         <locationY>1959</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop</assignToReference>
@@ -236,7 +236,7 @@
     <assignments>
         <name>AssegnaCase</name>
         <label>AssegnaCase</label>
-        <locationX>1032</locationX>
+        <locationX>1073</locationX>
         <locationY>1435</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop</assignToReference>
@@ -252,7 +252,7 @@
     <assignments>
         <name>AssegnaCase_0</name>
         <label>AssegnaCase</label>
-        <locationX>1479</locationX>
+        <locationX>1520</locationX>
         <locationY>1535</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop</assignToReference>
@@ -272,7 +272,7 @@
     <assignments>
         <name>AssegnaCaseToLoop</name>
         <label>AssegnaCaseToLoop</label>
-        <locationX>1234</locationX>
+        <locationX>1275</locationX>
         <locationY>1941</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
@@ -288,7 +288,7 @@
     <assignments>
         <name>AssegnaFase</name>
         <label>AssegnaFase</label>
-        <locationX>765</locationX>
+        <locationX>806</locationX>
         <locationY>1665</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
@@ -311,7 +311,7 @@
     <assignments>
         <name>AssegnaFase_0</name>
         <label>AssegnaFase</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>1742</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
@@ -334,7 +334,7 @@
     <assignments>
         <name>AssegnaFase_0_0</name>
         <label>AssegnaFase</label>
-        <locationX>1292</locationX>
+        <locationX>1333</locationX>
         <locationY>1838</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
@@ -350,7 +350,7 @@
     <assignments>
         <name>AssegnaFase_1</name>
         <label>AssegnaFase</label>
-        <locationX>1824</locationX>
+        <locationX>1865</locationX>
         <locationY>1287</locationY>
         <assignmentItems>
             <assignToReference>LoopToUpdateInRIspostaInviata.Phase__c</assignToReference>
@@ -366,7 +366,7 @@
     <assignments>
         <name>AssegnaFlagToLoop</name>
         <label>AssegnaFlagToLoop</label>
-        <locationX>1579</locationX>
+        <locationX>1620</locationX>
         <locationY>1229</locationY>
         <assignmentItems>
             <assignToReference>ToLoop</assignToReference>
@@ -382,7 +382,7 @@
     <assignments>
         <name>AssegnaStatoActivity</name>
         <label>AssegnaStatoActivity</label>
-        <locationX>796</locationX>
+        <locationX>837</locationX>
         <locationY>2055</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop.wrts_prcgvr__Status__c</assignToReference>
@@ -447,7 +447,7 @@
     <assignments>
         <name>AssegnaToLoop</name>
         <label>AssegnaToLoop</label>
-        <locationX>1853</locationX>
+        <locationX>1894</locationX>
         <locationY>1952</locationY>
         <assignmentItems>
             <assignToReference>ToLoop</assignToReference>
@@ -463,7 +463,7 @@
     <assignments>
         <name>AssignSize</name>
         <label>AssignSize</label>
-        <locationX>1357</locationX>
+        <locationX>1398</locationX>
         <locationY>150</locationY>
         <assignmentItems>
             <assignToReference>LinkInputSize</assignToReference>
@@ -479,7 +479,7 @@
     <assignments>
         <name>CountContentDocumentLinkAfter</name>
         <label>CountContentDocumentLinkAfter</label>
-        <locationX>1724</locationX>
+        <locationX>1765</locationX>
         <locationY>911</locationY>
         <assignmentItems>
             <assignToReference>ContentDocumentLinkAfter</assignToReference>
@@ -495,7 +495,7 @@
     <decisions>
         <name>ActivityTrovata</name>
         <label>ActivityTrovata</label>
-        <locationX>989</locationX>
+        <locationX>1030</locationX>
         <locationY>1901</locationY>
         <defaultConnector>
             <targetReference>AssegnaCaseToLoop</targetReference>
@@ -527,7 +527,7 @@
     <decisions>
         <name>Contenitore</name>
         <label>Contenitore?</label>
-        <locationX>1371</locationX>
+        <locationX>1412</locationX>
         <locationY>347</locationY>
         <defaultConnector>
             <targetReference>Indennizzo_Confermato</targetReference>
@@ -552,7 +552,7 @@
     <decisions>
         <name>Contenitore_1</name>
         <label>Contenitore?</label>
-        <locationX>1323</locationX>
+        <locationX>1364</locationX>
         <locationY>1168</locationY>
         <defaultConnector>
             <targetReference>AggiornaFase</targetReference>
@@ -577,7 +577,7 @@
     <decisions>
         <name>Creazione_Activity</name>
         <label>Creazione Activity?</label>
-        <locationX>1667</locationX>
+        <locationX>1708</locationX>
         <locationY>1052</locationY>
         <defaultConnector>
             <targetReference>Contenitore_1</targetReference>
@@ -602,7 +602,7 @@
     <decisions>
         <name>Indennizzo_Confermato</name>
         <label>Indennizzo Confermato?</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>446</locationY>
         <defaultConnector>
             <targetReference>Assegna_Indennizzo_Confermato_0</targetReference>
@@ -627,7 +627,7 @@
     <decisions>
         <name>Quale_Fase</name>
         <label>Quale Fase</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>1624</locationY>
         <defaultConnector>
             <targetReference>AssegnaFase_0_0</targetReference>
@@ -710,8 +710,8 @@
     <decisions>
         <name>Record_Trovato</name>
         <label>Record Trovato</label>
-        <locationX>238</locationX>
-        <locationY>827</locationY>
+        <locationX>291</locationX>
+        <locationY>867</locationY>
         <defaultConnector>
             <targetReference>GetSocietaVendita_0</targetReference>
         </defaultConnector>
@@ -742,12 +742,12 @@
     <decisions>
         <name>SDV_valorizzata</name>
         <label>SDV valorizzata?</label>
-        <locationX>132</locationX>
-        <locationY>956</locationY>
+        <locationX>152</locationX>
+        <locationY>970</locationY>
         <defaultConnector>
             <targetReference>GetSocietaVendita_0</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Non Valorizzata</defaultConnectorLabel>
         <rules>
             <name>Valorizzata_0</name>
             <conditionLogic>and</conditionLogic>
@@ -774,8 +774,8 @@
     <decisions>
         <name>Societa_di_Vendita_Non_Valorizzata</name>
         <label>Societa di Vendita Non Valorizzata?</label>
-        <locationX>769</locationX>
-        <locationY>843</locationY>
+        <locationX>866</locationX>
+        <locationY>818</locationY>
         <defaultConnector>
             <targetReference>GetCity</targetReference>
         </defaultConnector>
@@ -806,7 +806,7 @@
     <decisions>
         <name>ToLoop_0</name>
         <label>ToLoop?</label>
-        <locationX>1452</locationX>
+        <locationX>1493</locationX>
         <locationY>1998</locationY>
         <defaultConnector>
             <targetReference>AggiornaActivityCollection</targetReference>
@@ -829,7 +829,6 @@
         </rules>
     </decisions>
     <description>Flow che simula l&apos;azione del tasto stampa e gestisce l&apos;avanzamento di fase</description>
-    <environments>Default</environments>
     <formulas>
         <name>ServiceGas</name>
         <dataType>Boolean</dataType>
@@ -840,7 +839,7 @@
     <loops>
         <name>AggiornamentoChildCases</name>
         <label>AggiornamentoChildCases</label>
-        <locationX>1695</locationX>
+        <locationX>1736</locationX>
         <locationY>1567</locationY>
         <collectionReference>CaseCollectionApex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -854,7 +853,7 @@
     <loops>
         <name>LoopToUpdateInRIspostaInviata</name>
         <label>LoopToUpdateInRIspostaInviata</label>
-        <locationX>1683</locationX>
+        <locationX>1724</locationX>
         <locationY>1330</locationY>
         <collectionReference>CaseCollectionApex</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -887,7 +886,7 @@
     <recordCreates>
         <name>CreateActivity</name>
         <label>CreateActivity</label>
-        <locationX>1979</locationX>
+        <locationX>2020</locationX>
         <locationY>1203</locationY>
         <connector>
             <targetReference>Contenitore_1</targetReference>
@@ -922,7 +921,7 @@
     <recordLookups>
         <name>GetActivityPraticaGestita</name>
         <label>GetActivityPraticaGestita</label>
-        <locationX>863</locationX>
+        <locationX>904</locationX>
         <locationY>1822</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -957,7 +956,7 @@
     <recordLookups>
         <name>GetActivityTemplate</name>
         <label>GetActivityTemplate</label>
-        <locationX>1804</locationX>
+        <locationX>1845</locationX>
         <locationY>1124</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -978,7 +977,7 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>902</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -999,7 +998,7 @@
     <recordLookups>
         <name>GetCaseInviato</name>
         <label>GetCaseInviato</label>
-        <locationX>933</locationX>
+        <locationX>974</locationX>
         <locationY>1321</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1020,8 +1019,8 @@
     <recordLookups>
         <name>GetCity</name>
         <label>GetCity</label>
-        <locationX>473</locationX>
-        <locationY>810</locationY>
+        <locationX>441</locationX>
+        <locationY>780</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Record_Trovato</targetReference>
@@ -1058,7 +1057,7 @@
     <recordLookups>
         <name>GetContentDocumentLinkAfter</name>
         <label>GetContentDocumentLinkAfter</label>
-        <locationX>1565</locationX>
+        <locationX>1606</locationX>
         <locationY>824</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1079,7 +1078,7 @@
     <recordLookups>
         <name>GetContentDocumentLinkInput</name>
         <label>GetContentDocumentLinkInput</label>
-        <locationX>1227</locationX>
+        <locationX>1268</locationX>
         <locationY>104</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1100,7 +1099,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>1092</locationX>
+        <locationX>1133</locationX>
         <locationY>152</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1121,8 +1120,8 @@
     <recordLookups>
         <name>GetSocietaVendita</name>
         <label>GetSocietaVendita</label>
-        <locationX>50</locationX>
-        <locationY>1109</locationY>
+        <locationX>56</locationX>
+        <locationY>1097</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Societa_di_Vendita</targetReference>
@@ -1166,8 +1165,8 @@
     <recordLookups>
         <name>GetSocietaVendita_0</name>
         <label>GetSocietaVendita</label>
-        <locationX>261</locationX>
-        <locationY>1110</locationY>
+        <locationX>300</locationX>
+        <locationY>1108</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Societa_di_Vendita_0</targetReference>
@@ -1211,7 +1210,7 @@
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>782</locationY>
         <connector>
             <targetReference>Societa_di_Vendita_Non_Valorizzata</targetReference>
@@ -1221,7 +1220,7 @@
     <recordUpdates>
         <name>AggiornaActivityCollection</name>
         <label>AggiornaActivityCollection</label>
-        <locationX>1406</locationX>
+        <locationX>1447</locationX>
         <locationY>2173</locationY>
         <connector>
             <targetReference>AggiornaCases</targetReference>
@@ -1234,7 +1233,7 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>1087</locationX>
+        <locationX>1128</locationX>
         <locationY>1262</locationY>
         <connector>
             <targetReference>GetCaseInviato</targetReference>
@@ -1244,14 +1243,14 @@
     <recordUpdates>
         <name>AggiornaCases</name>
         <label>AggiornaCases</label>
-        <locationX>1414</locationX>
+        <locationX>1455</locationX>
         <locationY>2376</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCollection</name>
         <label>AggiornaCollection</label>
-        <locationX>1736</locationX>
+        <locationX>1777</locationX>
         <locationY>1469</locationY>
         <connector>
             <targetReference>AggiornamentoChildCases</targetReference>
@@ -1261,8 +1260,8 @@
     <recordUpdates>
         <name>AggiornaInputCase</name>
         <label>AggiornaInputCase</label>
-        <locationX>358</locationX>
-        <locationY>1574</locationY>
+        <locationX>322</locationX>
+        <locationY>1512</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
         </connector>
@@ -1271,7 +1270,7 @@
     <screens>
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
-        <locationX>1417</locationX>
+        <locationX>1458</locationX>
         <locationY>923</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1394,7 +1393,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>654</locationX>
+        <locationX>695</locationX>
         <locationY>57</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -1404,7 +1403,7 @@
     <subflows>
         <name>GestioneIndennizzi</name>
         <label>Gestione Indennizzi</label>
-        <locationX>1199</locationX>
+        <locationX>1240</locationX>
         <locationY>1497</locationY>
         <connector>
             <targetReference>Quale_Fase</targetReference>
