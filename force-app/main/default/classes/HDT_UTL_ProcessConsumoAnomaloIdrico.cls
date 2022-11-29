@@ -24,8 +24,10 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         System.debug(LoggingLevel.DEBUG, 'checks');
         //Carico mapping
         mapFieldsObject();
-        contractIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CONTRATTO'));
-        accountIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('ACCOUNTID'));
+        contractIndex = mapHeaderForWrapper.get('CONTRATTO');
+        accountIndex = mapHeaderForWrapper.get('ACCOUNTID');
+        System.debug('contract index:'+contractIndex);
+        System.debug('account index: '+accountIndex);
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -34,16 +36,21 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
 
             tempSplitedFields = new List<String>();
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);//valore dei campi
+            System.debug('tempSplitedFields value: '+tempSplitedFields);
 
             checkRequiredFields(item, tempSplitedFields);
             System.debug(LoggingLevel.DEBUG, '>>> itemStatus' + item.Status__c);
 
-            if(item.Status__c.equalsIgnoreCase('Errore')){
+            if(String.isNotBlank(item.Status__c) && item.Status__c.equalsIgnoreCase('Errore')){
                 itemsToSave.add(item);
                 continue;
             }
+            System.debug('mapHeaderByPosition: '+mapHeaderByPosition);
+            System.debug('mapHeaderForWrapper: '+mapHeaderForWrapper);
             contractCodes.add(tempSplitedFields[contractIndex]);
+            system.debug('contract code added: '+tempSplitedFields[contractIndex]);
             accountIds.add(tempSplitedFields[accountIndex]);
+            system.debug('account id added: '+tempSplitedFields[accountIndex]);
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = tempSplitedFields;
@@ -67,17 +74,26 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     }
 
     public override void registryCreation(){
+        System.debug('registryCreation start');
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert=new List<MassiveLoaderRequestItem__c>();
+        System.debug('processObjList: '+processObjList);
         for(HDT_WRP_ProcessObjects currentObj:processObjList){
-            currentObj.newCase=new Case(Phase__c='in attesa processo doc massivo', Status='In Lavorazione',RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO);
+            currentObj.newCase=new Case(Phase__c='in attesa processo doc massivo', Status='In Lavorazione',RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO,Cluster__c='Segnalazioni');
             String fieldConversionError='';
-            for(Integer headerIndex:mapHeaderByPosition.keySet()){
-                String fieldValue= String.isBlank(currentObj.csvSplitted[headerIndex]) ? '':currentObj.csvSplitted[headerIndex];
-                fieldConversionError=mapTypeField(currentObj.newCase,mapCaseFields,headerIndex,fieldValue);
-                if(String.isNotBlank(fieldConversionError)){
-                    break;
+            Integer count = 0;
+            for (String tempField : currentObj.csvSplitted) {
+                //mapCaseFields.get(mapHeaderByPosition.get(count))
+                if(String.isNotBlank(mapCaseFields.get(mapHeaderByPosition.get(count))) && String.isNotBlank(tempField)){
+                    String fieldValue= String.isBlank(currentObj.csvSplitted[count]) ? '':currentObj.csvSplitted[count];
+                    System.debug(LoggingLevel.DEBUG, '>>> tempField: ' + tempField + ' # Header: ' + mapHeaderByPosition.get(count) + ' # CaseFields: ' + mapCaseFields.get(mapHeaderByPosition.get(count)));
+                    fieldConversionError = mapTypeField(currentObj.newCase, mapCaseFields, count, fieldValue);
+                    if(String.isNotBlank(fieldConversionError)){
+                        System.debug(fieldConversionError);
+                        break;
+                    }
                 }
+                count++;
             }
             if(String.isNotEmpty(fieldConversionError)){
                 itemsToSave.add(setErrorItem(currentObj.requestItem, fieldConversionError));
@@ -106,12 +122,14 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             currentObj.newCase.PhoneNumber__c= String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).MobilePhone;
             currentObj.newCase.SuppliedEmail=String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Account.PrimaryEmail__c) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Account.PrimaryEmail__c : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Email;
             currentObj.newCase.SuppliedPhone=String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).MobilePhone;
+            System.debug('new case created: '+currentObj.newCase);
             caseToInsert.add(currentObj.newCase);
             requestItemForUpsert.add(currentObj.requestItem);
         }
-
+        System.debug('outside for loop registryCreation');
         if(caseToInsert.size()>0){
             HDT_WRP_SaveResponse saveResponse=databaseUpsert(caseToInsert,requestItemForUpsert,'Case');
+            System.debug('inserted cases: '+caseToInsert);
             if(saveResponse.reponseItemList.size() > 0){
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
@@ -137,12 +155,14 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         listWrapperCaseFields = getMapFieldsObject('WrapperCase', this.processName);
 
         for(HDT_MassiveFieldsObjectMap__mdt temp : listCaseFields){
-            mapCaseFields.put(temp.labelField__c, temp.nameField__c);
+            mapCaseFields.put(temp.labelField__c, temp.nameField__c); //mappa header -> api
         }
+        System.debug('mapCaseFields: '+mapCaseFields);
 
         for(HDT_MassiveFieldsObjectMap__mdt temp : listWrapperCaseFields){
             mapWrapperCaseFields.put(temp.labelField__c, temp.nameField__c);
         }
+        System.debug('mapWrapperCaseFields: '+mapWrapperCaseFields);
 
     }
 
