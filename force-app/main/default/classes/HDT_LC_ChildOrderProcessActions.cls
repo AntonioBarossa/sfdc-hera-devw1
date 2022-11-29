@@ -592,8 +592,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         Id contractId = originalOrder.ContractReference__c;
         Id servicePointId = originalOrder.ServicePoint__c;
         Id parentOrderId = originalOrder.ParentOrder__c;
+        Id orderId = originalOrder.Id;
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
-            if(String.isNotBlank(contractId)){
+            if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                 HDT_QR_Contract qrContract = new HDT_QR_Contract();
                 SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                 if(subscription != null){
