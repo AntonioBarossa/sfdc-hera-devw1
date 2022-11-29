@@ -604,6 +604,7 @@ public inherited sharing class HDT_QR_Order {
             IncomingCreditCheckResult__c,
             OutgoingCreditCheckResult__c,
             OrderReference__c,
+            OrderReference__r.Surface__c,
             ProcessType__c,
             SBQQ__Quote__c,
             CommercialProductCode__c,
