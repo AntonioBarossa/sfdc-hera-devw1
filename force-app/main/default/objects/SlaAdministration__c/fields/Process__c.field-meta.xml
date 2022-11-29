@@ -117,6 +117,11 @@
                 <label>Aggiunta Sconti o Bonus VAS</label>
             </value>
             <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
+            </value>
+            <value>
                 <fullName>Subentro Gas</fullName>
                 <default>false</default>
                 <label>Subentro Gas</label>
@@ -896,6 +901,10 @@
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Aggiunta Sconti o Bonus VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
