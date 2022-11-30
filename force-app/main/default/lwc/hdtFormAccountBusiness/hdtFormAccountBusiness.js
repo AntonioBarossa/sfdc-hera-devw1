@@ -660,27 +660,19 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
 
         console.log("LOG4");
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<9 || mobilePhone.value.length > 10){
+            if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 10){
                 isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
-            }
-            if( String(mobilePhone.value).charAt(0)!='3' ){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre e deve iniziare per 3!";
             }
         }
         if(!(mobilephoneNumber.value=== undefined || mobilephoneNumber.value.trim()==='')){
-            if(mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 10){
+            if(mobilephoneNumber.value[0] != '3' || mobilephoneNumber.value.length<9 || mobilephoneNumber.value.length > 10){
                 isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre!";
+                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre e deve iniziare per 3!";
             }            
-            if( String(mobilephoneNumber.value).charAt(0)!='3' ){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve iniziare con il numero 3!";
-            }
         }
         if(!(contactPhoneNumber.value=== undefined || contactPhoneNumber.value.trim()==='')){
-            if(contactPhoneNumber[0] != '0' && (contactPhoneNumber.value.length<6 || contactPhoneNumber.value.length > 11)){
+            if(contactPhoneNumber.value[0] != '0' || contactPhoneNumber.value.length<6 || contactPhoneNumber.value.length > 11){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
@@ -693,12 +685,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         console.log("LOG5");
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
-        
-            if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
-                isValidated=false;
-                messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
-            }
-            if( String(phoneNumber.value).charAt(0)!='0'){
+            if(phoneNumber.value[0] != '0' || phoneNumber.value.length<6 || phoneNumber.value.length > 11){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }
