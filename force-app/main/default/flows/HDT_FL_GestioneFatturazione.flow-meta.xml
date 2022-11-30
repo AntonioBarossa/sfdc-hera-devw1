@@ -776,7 +776,7 @@
         <locationX>2701</locationX>
         <locationY>3494</locationY>
         <defaultConnector>
-            <targetReference>is_Errore_di_fatturazione_Acqua</targetReference>
+            <targetReference>Update_status_case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
@@ -796,7 +796,7 @@
         </rules>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -886,38 +886,6 @@
                 <targetReference>Set_Phase_Sospesa</targetReference>
             </connector>
             <label>Sospesa</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>is_Errore_di_fatturazione_Acqua</name>
-        <label>is Errore di fatturazione Acqua?</label>
-        <locationX>3779</locationX>
-        <locationY>3614</locationY>
-        <defaultConnector>
-            <targetReference>Set_Phase_In_Lavorazione</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>Errore_di_fatturazione_Acqua</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Query_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Errore di Fatturazione</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Acqua</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Set_Phase_In_Lavorazione_con_Stato</targetReference>
-            </connector>
-            <label>Errore di fatturazione Acqua</label>
         </rules>
     </decisions>
     <decisions>
@@ -1115,6 +1083,52 @@
                 <targetReference>Set_Fase</targetReference>
             </connector>
             <label>Turbobilling Energy</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_status_case</name>
+        <label>Update status case?</label>
+        <locationX>3779</locationX>
+        <locationY>3614</locationY>
+        <defaultConnector>
+            <targetReference>Set_Phase_In_Lavorazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Errore_di_fatturazione_Acqua</name>
+            <conditionLogic>1 OR (2 AND 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rettifica Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Lettura</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Phase_In_Lavorazione_con_Stato</targetReference>
+            </connector>
+            <label>Stato lavorazione ACQ</label>
         </rules>
     </decisions>
     <decisions>
