@@ -10,6 +10,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private List<HDT_WRP_ProcessObjects> processObjList;
     private Integer contractIndex;
     private Integer accountIndex;
+    private Integer pdrIndex;
     private Set<String>contractCodes=new Set<String>();
     private Set<Id>accountIds=new Set<Id>();
     private Map<String,Contract> contractCodePodMap=new Map<String,Contract>();
@@ -18,6 +19,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         mapFieldsObject();
         contractIndex = mapHeaderForWrapper.get('CONTRATTO');
         accountIndex = mapHeaderForWrapper.get('ACCOUNTID');
+        pdrIndex=mapHeaderForWrapper.get('POD');
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -79,7 +81,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             currentObj.contract=contractCodePodMap.get(currentObj.csvSplitted[contractIndex]);
             currentObj.newCase.ServicePoint__c=currentObj.contract.ServicePoint__c;
             currentObj.newCase.Contract__c=currentObj.contract.Id;
-            currentObj.newCase.AccountId=currentObj.contract.Contact__r.AccountId;
+            currentObj.newCase.AccountId=currentObj.contract.AccountId;
             currentObj.newCase.ContactId=currentObj.contract.Contact__c;
             currentObj.newCase.JointBottomAdhesion__c=currentObj.contract.ServicePoint__r.JointBottomAdhesion__c;
             currentObj.newCase.PaySewer__c=currentObj.contract.ServicePoint__r.PaySewer__c;
@@ -88,11 +90,9 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             currentObj.newCase.Commodity__c =currentObj.contract.ServicePoint__r.CommoditySector__c;
             currentObj.newCase.Distributor__c=currentObj.contract.ServicePoint__r.Distributor__c;
             currentObj.newCase.SupplyType__c=currentObj.contract.ServicePoint__r.SupplyType__c;
-            //currentObj.newCase.PhoneNumber__ccontractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
-            //currentObj.newCase.SuppliedEmailcontractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
-           //currentObj.newCase.SuppliedPhone=contractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
+            currentObj.newCase.DeliveryAddress__c=currentObj.contract.BillingProfile__r.InvoicingAddressFormula__c;
+            currentObj.newCase.SuppliedEmail=currentObj.contract.Account.PrimaryEmail__c;
             currentObj.newCase.BillingProfile__c=currentObj.contract.BillingProfile__c;
-
             caseToInsert.add(currentObj.newCase);
             requestItemForUpsert.add(currentObj.requestItem);
         }
@@ -113,9 +113,15 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__c)){
             retMap.put('errorMessage','Nessun POD relazionato al contratto: ' +csvSplitted[contractIndex]);
             retMap.put('checksAreValid',false);
+        } else if(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__r.ServicePointCode__c != csvSplitted[pdrIndex]){
+            retMap.put('errorMessage','Codice POD differente da quello del contratto');
+            retMap.put('checksAreValid',false);
         }
-        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).Contact__r.AccountId) || (contractCodePodMap.get(csvSplitted[contractIndex]).Contact__r.Account.SAPIntegrationID__c != csvSplitted[accountIndex])){
-            retMap.put('errorMessage','Account non trovato/differente');
+        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).AccountId) ){
+            retMap.put('errorMessage','Nessun Account presente sul contratto');
+            retMap.put('checksAreValid',false);
+        } else if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.SAPIntegrationID__c != csvSplitted[accountIndex]){
+            retMap.put('errorMessage','Il codice BP nel CSV è differente da quello sul contratto');
             retMap.put('checksAreValid',false);
         }
         if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__c)){
