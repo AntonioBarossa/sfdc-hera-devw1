@@ -13,7 +13,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private Set<String>contractCodes=new Set<String>();
     private Set<Id>accountIds=new Set<Id>();
     private Map<String,Contract> contractCodePodMap=new Map<String,Contract>();
-    private Map<Id,Contact> accountIdContactMap=new Map<Id,Contact>();
     public override void checks(){
         //Carico mapping
         mapFieldsObject();
@@ -41,11 +40,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     }
 
     public override void getRecords(){
-        HDT_QR_Contact qrCont=new HDT_QR_Contact();
         HDT_QR_Contract qrContract= new HDT_QR_Contract();
-        for(Contact tmpCont:qrCont.getContactByAccountIdConsumoAnomaloMassivo(accountIds)){
-            accountIdContactMap.put(tmpCont.AccountId,tmpCont);
-        }
         for(Contract tmpContract:qrContract.getContractByContractCodeConsumoAnomaloIdrico(contractCodes)){
             contractCodePodMap.put(tmpContract.SAPContractCode__c,tmpContract);
         }
@@ -76,25 +71,28 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 itemsToSave.add(setErrorItem(currentObj.requestItem, 'Valore processo non corretto: ' + currentObj.newCase.Type));
                 continue;
             }
-            if(!contractCodePodMap.containsKey(currentObj.csvSplitted[contractIndex])){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Codice Contratto SAP non trovato: ' + currentObj.csvSplitted[contractIndex]));
+            Map<String,Object>integrityResult=integrityChecks(currentObj.csvSplitted);
+            if(! (Boolean)integrityResult.get('checksAreValid')){
+                itemsToSave.add(setErrorItem(currentObj.requestItem, (String) integrityResult.get('errorMessage')));
                 continue;
             }
-            if(String.isBlank(contractCodePodMap.get(currentObj.csvSplitted[contractIndex]).ServicePoint__c)){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Nessun POD relazionato al contratto: ' + currentObj.csvSplitted[contractIndex]));
-                continue;
-            }
-            if(!accountIdContactMap.containsKey(currentObj.csvSplitted[accountIndex])){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Account Id non trovato: ' + currentObj.csvSplitted[accountIndex]));
-                continue;
-            }
-            currentObj.newCase.ServicePoint__c=contractCodePodMap.get(currentObj.csvSplitted[contractIndex]).ServicePoint__c;
-            currentObj.newCase.Contract__c=contractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
-            currentObj.newCase.AccountId=accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).AccountId;
-            currentObj.newCase.ContactId=accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Id;
-            currentObj.newCase.PhoneNumber__c= String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).MobilePhone;
-            currentObj.newCase.SuppliedEmail=String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Account.PrimaryEmail__c) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Account.PrimaryEmail__c : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Email;
-            currentObj.newCase.SuppliedPhone=String.isNotBlank(accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone) ? accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).Phone : accountIdContactMap.get(currentObj.csvSplitted[accountIndex]).MobilePhone;
+            currentObj.contract=contractCodePodMap.get(currentObj.csvSplitted[contractIndex]);
+            currentObj.newCase.ServicePoint__c=currentObj.contract.ServicePoint__c;
+            currentObj.newCase.Contract__c=currentObj.contract.Id;
+            currentObj.newCase.AccountId=currentObj.contract.Contact__r.AccountId;
+            currentObj.newCase.ContactId=currentObj.contract.Contact__c;
+            currentObj.newCase.JointBottomAdhesion__c=currentObj.contract.ServicePoint__r.JointBottomAdhesion__c;
+            currentObj.newCase.PaySewer__c=currentObj.contract.ServicePoint__r.PaySewer__c;
+            currentObj.newCase.PayPurification__c=currentObj.contract.ServicePoint__r.PayPurification__c;
+            currentObj.newCase.MeterCode__c=currentObj.contract.ServicePoint__r.MeterSN__c;
+            currentObj.newCase.Commodity__c =currentObj.contract.ServicePoint__r.CommoditySector__c;
+            currentObj.newCase.Distributor__c=currentObj.contract.ServicePoint__r.Distributor__c;
+            currentObj.newCase.SupplyType__c=currentObj.contract.ServicePoint__r.SupplyType__c;
+            //currentObj.newCase.PhoneNumber__ccontractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
+            //currentObj.newCase.SuppliedEmailcontractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
+           //currentObj.newCase.SuppliedPhone=contractCodePodMap.get(currentObj.csvSplitted[contractIndex]).Id;
+            currentObj.newCase.BillingProfile__c=currentObj.contract.BillingProfile__c;
+
             caseToInsert.add(currentObj.newCase);
             requestItemForUpsert.add(currentObj.requestItem);
         }
@@ -104,6 +102,27 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 itemsToSave.addAll(saveResponse.reponseItemList);
             }
         }
+    }
+
+    private Map<String,Object> integrityChecks(List<String>csvSplitted){
+        Map<String,Object> retMap=new Map<String,Object>{'errorMessage'=>'','checksAreValid'=>true};
+        if(!contractCodePodMap.containsKey(csvSplitted[contractIndex])){
+            retMap.put('errorMessage','Codice Contratto SAP non trovato: ' + csvSplitted[contractIndex]);
+            retMap.put('checksAreValid',false);
+        }
+        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__c)){
+            retMap.put('errorMessage','Nessun POD relazionato al contratto: ' +csvSplitted[contractIndex]);
+            retMap.put('checksAreValid',false);
+        }
+        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).Contact__r.AccountId) || (contractCodePodMap.get(csvSplitted[contractIndex]).Contact__r.Account.SAPIntegrationID__c != csvSplitted[accountIndex])){
+            retMap.put('errorMessage','Account non trovato/differente');
+            retMap.put('checksAreValid',false);
+        }
+        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__c)){
+            retMap.put('errorMessage','Billing profile non valorizzato');
+            retMap.put('checksAreValid',false);
+        }
+        return retMap;
     }
 
     public override void finalUpdate(){
@@ -132,7 +151,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
 
     private class HDT_WRP_ProcessObjects {
         private Case newCase;
-        //private Contract contract;
+        private Contract contract;
         private MassiveLoaderRequestItem__c requestItem;
         private List<String> csvSplitted;
     }
