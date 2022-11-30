@@ -55,9 +55,9 @@
                 <label>Totalmente Dal Cliente</label>
             </value>
             <value>
-                <fullName>Acconto Assistiti</fullName>
+                <fullName>Accordi Assistiti</fullName>
                 <default>false</default>
-                <label>Acconto Assistiti</label>
+                <label>Accordi Assistiti</label>
             </value>
             <value>
                 <fullName>Promessa di pagamento</fullName>

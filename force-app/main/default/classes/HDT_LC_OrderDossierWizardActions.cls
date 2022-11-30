@@ -101,6 +101,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
                 );
                 ordersToUpdate.add(o);//get CCheck Result from offer
+            }else if( 'HDT_RT_AgevolazioniAmbiente'== childOrd.RecordType.DeveloperName || 'HDT_RT_ModificaTariffaRimozione'==childOrd.RecordType.DeveloperName){
+                if(childOrd.OrderReference__c == null)    continue;
+                Order o = new Order(
+                    Id=childOrd.Id,
+                    Surface__c = childOrd.OrderReference__r.Surface__c
+                );
+                ordersToUpdate.add( o );
             }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
                 if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
                     ordersToUpdate.add(new Order( Id = childOrd.Id, isMultipleQuoteOffer__c=true));
@@ -194,7 +201,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
 
-        orderParent = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
+        orderParent = [SELECT Id, Sale__r.Channel__c,  Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
 
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderParent.Id);
         List<Order> ordersToUpdate = new List<Order>();
@@ -222,6 +229,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             }
         }
         else if(orderParent.Phase__c == 'Registrazione validata'){
+            if((orderParent.Sale__r.Channel__c == 'Telefono' || orderParent.Sale__r.Channel__c == 'Teleselling Inbound') && orderParent.SignatureMethod__c == 'Vocal Order')
+            {
+                orderToUpdate.SignedDate__c = Date.today();
+                orderToUpdate.DocumentalPhase__c = 'Plico firmato';
+            }
             orderToUpdate.Phase__c = 'Documentazione Gestita';
             orderToUpdate.status = 'Completed';
         }
@@ -256,7 +268,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-        for (Order childOrd : childOrders) {
+        /*for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 ordersToUpdate.add(
                     new Order(
@@ -265,7 +277,27 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     )
                 );
             }
+        }*/
+
+        //update CampaignMember Status From Stampa
+        /**@fvitiell 21/02/2022
+         * Implementato e commentato, utile laddove dovesse servire
+         * aggiornare alla pressione del tasto Stampa del Wizard
+         */
+        /*List<String> myCampaignListIds = new List<String>();
+        for (Order myChildOrder : childOrders){
+            Campaign myCampaign = new Campaign(
+                Id = myChildOrder.Campaign__c
+            );
+            myCampaignListIds.add(myChildOrder.Campaign__c);
         }
+        List<CampaignMember> myCampaignMemberList = [Select id, Campaign.PositiveOutcomeDefaultStatus__c from CampaignMember where CampaignId IN :myCampaignListIds WITH SECURITY_ENFORCED];
+        for(myCampaignMember : myCampaignMemberList){
+            String status = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
+            String CampaignMemberId = myCampaignMember.Id;
+            HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
+        }*/
+    
         ordersToUpdate.add(orderToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
 
@@ -456,7 +488,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order parentOrder = new Order();
         List<String> processList = new List<String>();
 
-        List<Order> orderList =[SELECT Account.Category__c, ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
+        List<Order> orderList =[SELECT Account.Category__c, CommodityFormula__c,ParentOrder__c, PhoneNumber__c, ShippingMail__c, Contact__r.HomePhone, Contact__r.Phone, Contact__r.Email, ProcessType__c, Channel__c, CustomerCategory__c
                                 FROM Order WHERE Id=:recordId OR ParentOrder__c = :recordId WITH SECURITY_ENFORCED];
         
         for(Order singleOrder : orderList)
@@ -524,10 +556,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         //email
         if( order.ShippingMail__c != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.ShippingMail__c AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }else if( order.Contact__r.Email != null ){
-            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
+            AggregateResult[] count = [SELECT Count(Id) FROM ContactPointEmail WHERE EmailAddress=:order.Contact__r.Email AND Type__c = 'E-mail Anagrafica' WITH SECURITY_ENFORCED GROUP BY EmailAddress ];
             maxCount = swapMax(maxCount, count );
         }
         return maxCount;
@@ -553,10 +585,18 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Order.ServicePointCode__c,
         Order.VasSubtype__c
         FROM OrderItem
-        WHERE Order.ParentOrder__c = :orderParentId
+        WHERE Order.ParentOrder__c = :orderParentId AND Order.Status NOT IN ('Annullato')
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();
+        /*@frpanico 2022-11-17 
+        * La list di quoteLine e' necessaria per dividere i chunk
+        * Salesforce ha il limite di 10 chunk
+        * se ho due oggetti A e B e ordino la lista A B A B A B Salesforce li considera singoli chunk andando in errore "Not more than 10 chunks..."
+        * se ordino la lista A A A A A B B B B B Salesforce li considera come due chunk
+        */
+        List<SBQQ__QuoteLine__c> quoteLineToUpdate = new List<SBQQ__QuoteLine__c>();
+        
 
         Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
         /* Build the map that groups orderItems for ServicePointCode of the related order */
@@ -596,9 +636,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
 
             sobjToUpdate.add(offertaCommerciale);
-            sobjToUpdate.add(offertaCommQl);
+            quoteLineToUpdate.add(offertaCommQl);
         }
-
+        if(!quoteLineToUpdate.isEmpty())
+        {
+            sobjToUpdate.addAll(quoteLineToUpdate);
+        }
         if(!sobjToUpdate.isEmpty())
         {
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);

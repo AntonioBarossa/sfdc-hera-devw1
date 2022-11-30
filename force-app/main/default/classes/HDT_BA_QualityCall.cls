@@ -5,6 +5,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     private HDT_QR_RecordType rctype = new  HDT_QR_RecordType();
     private final String HANDLE_ACTIVITY = 'Attività gestita';
     private final String HANDLE_DEADLINE = 'Scadenza gestita';
+    private final String LOG_SERVICE = String.valueOf(this).substring(0,String.valueOf(this).indexOf(':'));
 
     //public List<Order> ordersToUpdate = new List<Order>();
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
@@ -40,6 +41,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
         Map<String,Order> orderMap = new Map<String,Order>();
         Map<String,wrts_prcgvr__Activity__c> orderActivityMap = new Map<String,wrts_prcgvr__Activity__c>();
+        HDT_SRV_LogService logs = new HDT_SRV_LogService(LOG_SERVICE);
+
 
         Date dueDate = Date.today();
 
@@ -60,17 +63,14 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(ordersIdsList);
         List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
         Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
-        Set<Id> siebelOrderWithActivity = new Set<Id>();
-        Set<Id> sfdcOrderWithActivity = new Set<Id>();
+        Set<Id> orderWithActivity = new Set<Id>();
         Set<Id> ordersAlreadyAssigned = new Set<Id>();
         for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
             if ('HDT_RT_ComfortQualityCall'.equalsIgnoreCase(activityAssigned.RecordType.DeveloperName)){
                 ordersAlreadyAssigned.add(activityAssigned.Order__c);
                 orderToActivityMap.put(activityAssigned.Order__c, activityAssigned);
-            }else if (HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c)){
-                siebelOrderWithActivity.add(activityAssigned.Order__c);
-            }else if(HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
-                sfdcOrderWithActivity.add(activityAssigned.Order__c);
+            }else if ('Quality Scaduta'.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
+                orderWithActivity.add(activityAssigned.Order__c);
             }
         }
 
@@ -95,7 +95,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
             for (ComfortQualityCall__c cqc : docValidList) {
                 if (
-                    'Documentazione Validata'.equalsIgnoreCase(ord.Phase__c) && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
+                    String.isNotBlank(ord.PhaseStory__c) && ord.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
                 ) {
                     startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
                     break;
@@ -105,7 +105,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
                     ? orderToActivityMap.get(ord.ParentOrder__c) : orderToActivityMap.get(ord.Id);
 
-            if (startDate != null && startDate.daysBetween(dueDate) > 50) {
+            if ((startDate != null && startDate.daysBetween(dueDate) > 50) && activityQualityCall != null ){
                 
                 Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
 
@@ -129,7 +129,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 if (!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c) && canDeleteOrder 
                     && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
                     ordToUpd.Phase__c = 'Annullato';
-                    ordToUpd.Status = 'Activated';         
+                    ordToUpd.Status = 'Annullato';         
                 }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
                     needsActivity = true;
                 }
@@ -142,19 +142,19 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                 }
 
-                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, siebelOrderWithActivity, sfdcOrderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
+                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, orderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
                     
                     String ordIdToAssoc = ord.Id;
 
                     if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
                         ordIdToAssoc = ord.ParentOrder__c;
                     }
-                    String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
+                    //String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
                     activityVas.add(new wrts_prcgvr__Activity__c(
                         RecordTypeId = rc.Id,
                         Account__c = ord.AccountId,
                         Order__c = ordIdToAssoc,
-                        Type__c = activityType,
+                        Type__c = 'Quality Scaduta',
                         wrts_prcgvr__Status__c = 'Aperta',
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
@@ -212,6 +212,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
                         wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
                         actToClose.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToClose.ContactResult__c='Chiusa Per Fine Intervallo';
                         activitiesToClose.add(actToClose);
                     }
                 }
@@ -221,13 +222,16 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         callActivities.addAll(mapActivitiesParent.values());
 
         if (!ordersToUpdate.isEmpty()) {
-            Database.update(ordersToUpdate, false);
+            List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
+            this.setLogRecord(srList, ordersToUpdate, logs, 'update Order');
         }
         if (!callActivities.isEmpty()) {
-            Database.insert(callActivities, false);
+            List<Database.SaveResult> srList = Database.insert(callActivities, false);
+            this.setLogRecord(srList, callActivities, logs, 'insert activities');
         }
         if(activitiesToClose.size() > 0){
-            Database.update(activitiesToClose, false);
+            List<Database.SaveResult> srList = Database.update(activitiesToClose, false);
+            this.setLogRecord(srList, activitiesToClose, logs, 'update activities');
         }
 
         List<String> contactList = new List<String>();
@@ -286,7 +290,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                             PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
                             RelatedActivity__c = orderActivityMap.get(ordId).Id,
                             NumberingValidityStartDate__c = System.today(),
-                            NumberingValidityEndDate__c = System.today().addDays(30),
+                            NumberingValidityEndDate__c = System.today().addDays(50),
                             ExcludeFub__c = 'Si',
                             GenericField1__c = orderMap.get(ordId).AccountId
                         ));
@@ -298,20 +302,23 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
         List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
 
         if(!campNotDuplicateList.isEmpty()) {
-            Database.insert(notDuplicatedCampToIns.values(), false);
+            List<Database.SaveResult> srList = Database.insert(notDuplicatedCampToIns.values(), false);
+            this.setLogRecord(srList, notDuplicatedCampToIns.values(), logs, 'insert Campaign Member');
         }
         if(!campaignMembersUpdate.isEmpty()){
-            Database.update(campaignMembersUpdate.values(), false);
+            List<Database.SaveResult> srList = Database.update(campaignMembersUpdate.values(), false);
+            this.setLogRecord(srList, campaignMembersUpdate.values(), logs, 'update Campaign Member');
         }
         if (!activityVas.isEmpty()) {
-            Database.insert(activityVas, false);
+            List<Database.SaveResult> srList = Database.insert(activityVas, false);
+            this.setLogRecord(srList, activityVas, logs, 'insert activities VAS');
         }
+        logs.saveMassiveRecords();
     }
 
-    private Boolean skipActivityCreation(Id orderId, Id parentOrderId, Set<Id> siebelOrderWithActivity, Set<Id> sfdcOrderWithActivity){
-        return siebelOrderWithActivity.contains(orderId) 
-            || sfdcOrderWithActivity.contains(orderId) 
-            || (parentOrderId != null && (siebelOrderWithActivity.contains(parentOrderId) || sfdcOrderWithActivity.contains(parentOrderId)));
+    private Boolean skipActivityCreation(Id orderId, Id parentOrderId, Set<Id> orderWithActivity){
+        return orderWithActivity.contains(orderId) 
+            || (parentOrderId != null && orderWithActivity.contains(parentOrderId));
     }
 
     private Boolean notCancellableOrder(Order ord){
@@ -323,5 +330,26 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     @SuppressWarnings('PMD.AvoidDebugStatements')
     public void finish(Database.BatchableContext bc){
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - END');
+    }
+
+    private void setLogRecord(List<Database.SaveResult> srList, List<SObject> recordToWork, HDT_SRV_LogService logs, String method){
+        Integer index = 0;
+        for(Database.SaveResult sr :srList){
+            try{
+                if (!sr.isSuccess() || Test.isRunningTest()){
+                    SObject obj = recordToWork.get(index);
+                    String errorMessage = '';
+                    String request = JSON.serialize(obj);
+                    Id recordId = obj.get('Id') != null ? (Id)obj.get('Id') : null;
+                    for (Database.Error error :  sr.getErrors()){
+                        errorMessage += error.getMessage() +  '\n';
+                    }
+                    logs.addLog(LOG_SERVICE, method, request, null, errorMessage, recordId, null, null);
+                }  
+            }catch(Exception ex){
+                System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - crea Log ' +ex.getMessage());
+            }
+            
+        }
     }
 }

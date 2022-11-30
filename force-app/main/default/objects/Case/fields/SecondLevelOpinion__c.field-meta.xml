@@ -73,6 +73,14 @@
             <valueName>Gas</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
+            <valueName>Ambiente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
+            <valueName>Acqua</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
             <valueName>Supporto Pratiche legali</valueName>
         </valueSettings>
@@ -98,7 +106,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto HC</controllingFieldValue>
-            <valueName>Supporto HC</valueName>
+            <valueName>Contratti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto HC</controllingFieldValue>
+            <valueName>Post Vendita</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto responsabile HC</controllingFieldValue>

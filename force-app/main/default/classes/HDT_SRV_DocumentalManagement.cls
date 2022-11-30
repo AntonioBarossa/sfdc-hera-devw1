@@ -95,6 +95,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static void traceRequest(Map<String,String> resultMap, String body,String recordId){
+		String code = resultMap.get('code');
+		String result = resultMap.get('result');
+		Boolean enableTrace =  String.isNotBlank(System.Label.HDT_DocTraceEnable) && 'Y'.equalsIgnoreCase(System.Label.HDT_DocTraceEnable)?true:false;
+		if(enableTrace && String.isNotBlank(code) && String.isNotBlank(result) && result!='000'){
+			ContentVersion cv = HDT_UTL_DocumentalManagement.createContentVersion(body,'PayloadDocumentale','JSON');
+			HDT_UTL_DocumentalManagement.createContentLink(cv.Id,recordId);
+		}
+	}
+
 	public static String generateGetAttachmentRequest(String recordId){
 		if (String.isBlank(recordId)) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
@@ -103,6 +113,9 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
 		if (actMoga == null) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+		if(String.isNotBlank(actMoga.DocumentalSystem__c) && 'Intesa'.equalsIgnoreCase(actMoga.DocumentalSystem__c)){
+			throw new HDT_UTL_HeraException('I documenti gestiti in OTP sono visibili tramite il tasto Visualizza Plico');
 		}
 
 		if (String.isBlank(actMoga.AttachmentCode__c)) {
@@ -613,17 +626,19 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
+					orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
 						singleOrder.Id = childOrder.Id;
 						singleOrder.CIAccoutn__c = 'Validato';
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
+						singleOrder.DocumentPackage__c = 'Validato';
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
 						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
-						&& (!'Accettazione Voltura'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)childOrder.get('Phase__c')))){
+						&& (!'Annullato'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Accettazione Voltura'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)childOrder.get('Phase__c')))){
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
@@ -663,6 +678,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					
 				}catch(Exception ex){
+					HDT_UTL_IntegrationLog.handleGenericErrorRequest(JSON.serialize(listOfRadio),'POST', ex.getMessage()+' row number --> ' + ex.getLineNumber(), 'Handle Docusign Notify', (String)record.get('Id'));
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}

@@ -21,6 +21,46 @@
                 <default>false</default>
                 <label>Ok contattato</label>
             </value>
+            <value>
+                <fullName>Quality Call OK</fullName>
+                <default>false</default>
+                <label>Quality Call OK</label>
+            </value>
+            <value>
+                <fullName>Comfort Call OK</fullName>
+                <default>false</default>
+                <label>Comfort Call OK</label>
+            </value>
+            <value>
+                <fullName>Chiusa Per Fine Intervallo</fullName>
+                <default>false</default>
+                <label>Chiusa Per Fine Intervallo</label>
+            </value>
+            <value>
+                <fullName>Annullato Quality Call</fullName>
+                <default>false</default>
+                <label>Annullato Quality Call</label>
+            </value>
+            <value>
+                <fullName>Annullato Comfort Call</fullName>
+                <default>false</default>
+                <label>Annullato Comfort Call</label>
+            </value>
+            <value>
+                <fullName>Primo contatto fallito</fullName>
+                <default>false</default>
+                <label>Primo contatto fallito</label>
+            </value>
+            <value>
+                <fullName>Secondo contatto fallito</fullName>
+                <default>false</default>
+                <label>Secondo contatto fallito</label>
+            </value>
+            <value>
+                <fullName>Terzo contatto fallito</fullName>
+                <default>false</default>
+                <label>Terzo contatto fallito</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

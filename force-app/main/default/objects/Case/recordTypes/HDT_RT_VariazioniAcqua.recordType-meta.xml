@@ -370,6 +370,34 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
@@ -520,6 +548,34 @@
             <fullName>G650</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
@@ -582,6 +638,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
+        <values>
+            <fullName>Mancata corrispondenza Anagrafe</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
@@ -6996,7 +7056,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8122,6 +8182,36 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>PaymentType__c</picklist>
         <values>
             <fullName>In Compartecipazione</fullName>
@@ -8161,6 +8251,14 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>In attesa di Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
@@ -8193,7 +8291,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8261,7 +8367,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8289,6 +8403,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviata a SAP</fullName>
             <default>false</default>
         </values>
@@ -8310,6 +8428,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito consuntivazione KO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8404,17 +8526,21 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PurificationPay__c</picklist>
+        <picklist>PurificationInfoOnTheInvoice__c</picklist>
         <values>
-            <fullName>Esente</fullName>
+            <fullName>Utenza non servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Intera</fullName>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ridotta</fullName>
+            <fullName>Utenza servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza temporaneamente non servita</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8495,6 +8621,18 @@
     </picklistValues>
     <picklistValues>
         <picklist>Reason__c</picklist>
+        <values>
+            <fullName>Non allacciato/uso irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non allacciato</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accesso dei dati</fullName>
             <default>false</default>
@@ -9286,18 +9424,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
@@ -9339,17 +9465,6 @@
         </values>
         <values>
             <fullName>1411-Piscine e Palestre</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -9397,6 +9512,22 @@
     </picklistValues>
     <picklistValues>
         <picklist>SignalOutcome__c</picklist>
+        <values>
+            <fullName>Richiesta accolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accolta fognatura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accolta depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Accolta</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Eseguita riparazione</fullName>
             <default>false</default>
@@ -10379,6 +10510,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>DGRER569%2F19 non allacciato%2Fuso irriguo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Elementi di dettaglio</fullName>
             <default>false</default>
         </values>
@@ -10419,6 +10554,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Fognatura e Depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Recupero</fullName>
             <default>false</default>
         </values>
@@ -10436,6 +10575,14 @@
         </values>
         <values>
             <fullName>Variazione Gruppo IVA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Adesione Fondo Fughe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rinuncia Fondo Fughe</fullName>
             <default>false</default>
         </values>
     </picklistValues>

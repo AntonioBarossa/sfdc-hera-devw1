@@ -39,6 +39,11 @@
                 <label>Account e Billing Profile</label>
             </value>
             <value>
+                <fullName>Adesione Fondo Fughe</fullName>
+                <default>false</default>
+                <label>Adesione Fondo Fughe</label>
+            </value>
+            <value>
                 <fullName>Agevolazione</fullName>
                 <default>false</default>
                 <label>Agevolazione</label>
@@ -47,6 +52,11 @@
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
                 <label>Aggiunta Attacco</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Attacco senza Attivazione</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco senza Attivazione</label>
             </value>
             <value>
                 <fullName>Antincendio</fullName>
@@ -97,6 +107,11 @@
                 <fullName>Dati catastali</fullName>
                 <default>false</default>
                 <label>Dati catastali</label>
+            </value>
+            <value>
+                <fullName>DGRER569/19 non allacciato/uso irriguo</fullName>
+                <default>false</default>
+                <label>DGRER569/19 non allacciato/uso irriguo</label>
             </value>
             <value>
                 <fullName>DOM_Coabitazioni</fullName>
@@ -194,6 +209,11 @@
                 <label>Modifica Dati Fiscali</label>
             </value>
             <value>
+                <fullName>Modifica Fognatura e Depurazione</fullName>
+                <default>false</default>
+                <label>Modifica Fognatura e Depurazione</label>
+            </value>
+            <value>
                 <fullName>Mortis Causa</fullName>
                 <default>false</default>
                 <label>Mortis Causa</label>
@@ -257,6 +277,11 @@
                 <fullName>Rid. Agev. Dopo Accertamento</fullName>
                 <default>false</default>
                 <label>Rid. Agev. Dopo Accertamento</label>
+            </value>
+            <value>
+                <fullName>Rinuncia Fondo Fughe</fullName>
+                <default>false</default>
+                <label>Rinuncia Fondo Fughe</label>
             </value>
             <value>
                 <fullName>Sezionamento Allacciamento</fullName>
@@ -388,6 +413,11 @@
         <valueSettings>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Aggiunta Attacco senza Attivazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
             <valueName>Nuovo Allaccio</valueName>
         </valueSettings>
         <valueSettings>
@@ -443,10 +473,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
-            <valueName>Agevolazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
         </valueSettings>
         <valueSettings>
@@ -492,6 +518,22 @@
         <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Adesione Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Rinuncia Fondo Fughe</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Interventi con Verifica</controllingFieldValue>

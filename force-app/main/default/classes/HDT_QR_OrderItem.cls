@@ -211,6 +211,7 @@ public inherited sharing class HDT_QR_OrderItem {
             SELECT
             OrderId,
             Order.ServicePoint__r.ServicePointCode__c,
+            Order.RateCategory__c,
             Order.ServicePoint__c
             FROM
             OrderItem

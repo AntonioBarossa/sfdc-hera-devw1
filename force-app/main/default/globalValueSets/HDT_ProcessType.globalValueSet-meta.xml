@@ -311,9 +311,24 @@
         <label>Documentale/Copia contratto firmato o non ricevuto</label>
     </customValue>
     <customValue>
+        <fullName>Doppi pagamenti/Incassi</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi</label>
+    </customValue>
+    <customValue>
         <fullName>Doppi pagamenti/Incassi - EE</fullName>
         <default>false</default>
         <label>Doppi pagamenti/Incassi - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Doppi pagamenti/Incassi - ACQUA</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi - ACQUA</label>
+    </customValue>
+    <customValue>
+        <fullName>Doppi pagamenti/Incassi - AMB</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi - AMB</label>
     </customValue>
     <customValue>
         <fullName>Doppi pagamenti/Incassi - GAS</fullName>
@@ -351,6 +366,11 @@
         <label>Gestione Bonus Sociale - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Gestione Bonus Sociale - ACQ</fullName>
+        <default>false</default>
+        <label>Gestione Bonus Sociale - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione Calamità - EE</fullName>
         <default>false</default>
         <label>Gestione Calamità - EE</label>
@@ -374,6 +394,11 @@
         <fullName>Gestione disalimentabilità - GAS</fullName>
         <default>false</default>
         <label>Gestione disalimentabilità - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione rifiuti​ - AMB</fullName>
+        <default>false</default>
+        <label>Gestione rifiuti​ - AMB</label>
     </customValue>
     <customValue>
         <fullName>HVAC</fullName>
@@ -561,6 +586,11 @@
         <label>Processo VS2 - Trasmissione Dati Cliente Finale SII - EE</label>
     </customValue>
     <customValue>
+        <fullName>Promessa di Pagamento Ente</fullName>
+        <default>false</default>
+        <label>Promessa di Pagamento Ente</label>
+    </customValue>
+    <customValue>
         <fullName>Proroga connessione temporanea - EE</fullName>
         <default>false</default>
         <label>Proroga connessione temporanea - EE</label>
@@ -656,6 +686,11 @@
         <label>Ricostruzione Consumi - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Ricostruzione Consumi - ACQ</fullName>
+        <default>false</default>
+        <label>Ricostruzione Consumi - ACQ</label>
+    </customValue>
+    <customValue>
         <fullName>Rimborso</fullName>
         <default>false</default>
         <label>Rimborso</label>
@@ -724,6 +759,11 @@
         <fullName>Sconti e bonus - GAS</fullName>
         <default>false</default>
         <label>Sconti e bonus - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazioni varie/ambientali​ - AMB</fullName>
+        <default>false</default>
+        <label>Segnalazioni varie/ambientali​ - AMB</label>
     </customValue>
     <customValue>
         <fullName>Segnalazioni VAS</fullName>
@@ -879,6 +919,11 @@
         <fullName>Unificazione/ Separazione CA e Bolletta - EE</fullName>
         <default>false</default>
         <label>Unificazione/ Separazione CA e Bolletta - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta - ACQ</fullName>
+        <default>false</default>
+        <label>Unificazione/Separazione BP-CA-Bolletta - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Variazione anagrafica cliente</fullName>
@@ -1226,16 +1271,73 @@
         <label>Modifica post accertamento - AMB</label>
     </customValue>
     <customValue>
+        <fullName>Connessione con attivazione - ACQ</fullName>
+        <default>false</default>
+        <label>Connessione con attivazione - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Aggiunta Attacco con Attivazione - ACQ</fullName>
+        <default>false</default>
+        <label>Aggiunta Attacco con Attivazione - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Nuovo Impianto - GAS</fullName>
+        <default>false</default>
+        <label>Nuovo Impianto - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborso - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rimborso - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritorno a fatturazione Bimestrale / Mensile - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ritorno a fatturazione Bimestrale / Mensile - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritorno a fatturazione Bimestrale / Mensile - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Ritorno a fatturazione Bimestrale / Mensile - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>&quot;Sospensione a seguito di potenziale pericolo (A02.0151)</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>&quot;Sospensione a seguito di potenziale pericolo (A02.0151)</label>
+    </customValue>
+    <customValue>
+        <fullName>/ Riattivazione a seguito di cessato pericolo (A02.0151) - GAS&quot;</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>/ Riattivazione a seguito di cessato pericolo (A02.0151) - GAS&quot;</label>
+    </customValue>
+    <customValue>
+        <fullName>Split Payment - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Split Payment - EE</label>
+    </customValue>
+    <customValue>
         <fullName>Split Payment - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Split Payment - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Storno Rateizzazione - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Storno Rateizzazione - GAS</label>
     </customValue>
     <customValue>
         <fullName>Spostamento Contatore - Preventivo Rapido - EE</fullName>
@@ -1250,10 +1352,70 @@
         <label>Storno Rateizzazione - EE</label>
     </customValue>
     <customValue>
+        <fullName>Storno Rateizzazione - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Storno Rateizzazione - GAS</label>
+    </customValue>
+    <customValue>
         <fullName>Switch out dal SII - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Switch out dal SII - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica Generica GDM - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Verifica Generica GDM - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Errore di Fatturazione - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Errore di Fatturazione - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Lettura Acqua Avviso al Cliente</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Lettura Acqua Avviso al Cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Connessione con attivazione​  - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Connessione con attivazione​  - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Sospensione Fornitura - ACQUA</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Sospensione Fornitura - ACQUA</label>
+    </customValue>
+    <customValue>
+        <fullName>Consumo Anomalo Idrico - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Consumo Anomalo Idrico - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Consumo Anomalo Idrico - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Consumo Anomalo Idrico - EE</label>
+    </customValue>
+    <customValue>
+        <fullName>Switch in - GAS</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Switch in - GAS</label>
     </customValue>
     <customValue>
         <fullName>Testo contratto in bolletta - EE</fullName>
@@ -1304,40 +1466,40 @@
         <label>Variazione su amministratore - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Verifica Generica GDM - ACQ</fullName>
+        <fullName>Comunicazion di Fallimento - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Verifica Generica GDM - ACQ</label>
+        <label>Comunicazion di Fallimento - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Lettura Acqua Avviso al Cliente</fullName>
+        <fullName>Comunicazione di Fallimento - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Lettura Acqua Avviso al Cliente</label>
+        <label>Comunicazione di Fallimento - EE</label>
     </customValue>
     <customValue>
-        <fullName>Consumo Anomalo Idrico - GAS</fullName>
+        <fullName>Comunicazione pagamento - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Consumo Anomalo Idrico - GAS</label>
+        <label>Comunicazione pagamento - EE</label>
     </customValue>
     <customValue>
-        <fullName>Consumo Anomalo Idrico - EE</fullName>
+        <fullName>Comunicazione pagamento - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Consumo Anomalo Idrico - EE</label>
+        <label>Comunicazione pagamento - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
+        <fullName>Contenzioso in corso - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
+        <label>Contenzioso in corso - EE</label>
     </customValue>
     <customValue>
-        <fullName>Switch in - GAS</fullName>
+        <fullName>Contenzioso in corso - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Switch in - GAS</label>
+        <label>Contenzioso in corso - GAS</label>
     </customValue>
     <customValue>
         <fullName>BP-CA - Errata categoria - EE</fullName>
@@ -1410,42 +1572,6 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Caduta Linea / Chiamata Muta - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Comunicazion di Fallimento - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Comunicazion di Fallimento - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Comunicazione di Fallimento - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Comunicazione di Fallimento - EE</label>
-    </customValue>
-    <customValue>
-        <fullName>Comunicazione pagamento - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Comunicazione pagamento - EE</label>
-    </customValue>
-    <customValue>
-        <fullName>Comunicazione pagamento - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Comunicazione pagamento - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Contenzioso in corso - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Contenzioso in corso - EE</label>
-    </customValue>
-    <customValue>
-        <fullName>Contenzioso in corso - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Contenzioso in corso - GAS</label>
     </customValue>
     <customValue>
         <fullName>Copia bolletta/Bollettino - EE</fullName>
@@ -1628,64 +1754,16 @@
         <label>Revoca Domiciliazione - EE</label>
     </customValue>
     <customValue>
-        <fullName>Revoca Domiciliazione - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Revoca Domiciliazione - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Richiesta domiciliazione - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Richiesta domiciliazione - EE</label>
-    </customValue>
-    <customValue>
-        <fullName>Richiesta domiciliazione - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Richiesta domiciliazione - GAS</label>
-    </customValue>
-    <customValue>
         <fullName>Rimborso - EE</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Rimborso - EE</label>
     </customValue>
     <customValue>
-        <fullName>Rimborso - GAS</fullName>
+        <fullName>Revoca Domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Rimborso - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>Ritorno a fatturazione Bimestrale / Mensile - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Ritorno a fatturazione Bimestrale / Mensile - EE</label>
-    </customValue>
-    <customValue>
-        <fullName>Ritorno a fatturazione Bimestrale / Mensile - GAS</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Ritorno a fatturazione Bimestrale / Mensile - GAS</label>
-    </customValue>
-    <customValue>
-        <fullName>&quot;Sospensione a seguito di potenziale pericolo (A02.0151)</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>&quot;Sospensione a seguito di potenziale pericolo (A02.0151)</label>
-    </customValue>
-    <customValue>
-        <fullName>/ Riattivazione a seguito di cessato pericolo (A02.0151) - GAS&quot;</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>/ Riattivazione a seguito di cessato pericolo (A02.0151) - GAS&quot;</label>
-    </customValue>
-    <customValue>
-        <fullName>Split Payment - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Split Payment - EE</label>
+        <label>Revoca Domiciliazione - GAS</label>
     </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>

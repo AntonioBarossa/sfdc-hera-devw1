@@ -2,14 +2,22 @@ public with sharing class HDT_QBL_Holidays implements Queueable, Database.Allows
 {
     public void execute(QueueableContext context)
     {
+
+        List<TechnicalHolidaysCalendar__c> newHolidays = new List<TechnicalHolidaysCalendar__c>();
+        /* Query all TechnicalHolidaysCalendar__c*/
+        List<TechnicalHolidaysCalendar__c> existingHolidays = [SELECT HolidayDate__c, Year__c FROM TechnicalHolidaysCalendar__c];
         /* Get current year */
         Integer year = System.today().year();
-        /* Query all TechnicalHolidaysCalendar__c*/
-        List<TechnicalHolidaysCalendar__c> existingHolidays = [SELECT HolidayDate__c, Year__c FROM TechnicalHolidaysCalendar__c WHERE Year__c = :year];
-        /* Exeute Callout */
-        String response = makeRequest(year);
-        /* Handle Response */
-        List<TechnicalHolidaysCalendar__c> newHolidays = handleResponse(response, year, existingHolidays);
+
+        for( integer i = 0; i < 2; i++ )
+        {
+            year = year + i;
+            /* Exeute Callout */
+            String response = makeRequest(year);
+            /* Handle Response */
+            newHolidays.addAll(handleResponse(response, year, existingHolidays));
+        }
+
         if(!newHolidays.isEmpty())
         {
             HDT_UTL_DatabaseService.insertSObject(newHolidays);
@@ -29,7 +37,7 @@ public with sharing class HDT_QBL_Holidays implements Queueable, Database.Allows
         requestBody.callId = '';
         requestBody.dateFrom = Date.newInstance(year, 01, 01);
         requestBody.dateTo = Date.newInstance(year, 12, 31);
-        requestBody.year = year;
+        requestBody.year = String.valueOf(year);
 
         request.setEndpoint('Callout:MulesoftBasePath'+'/holidays-calendar/search');
         request.setMethod('POST');
@@ -109,7 +117,7 @@ public with sharing class HDT_QBL_Holidays implements Queueable, Database.Allows
         String callId;
         Date dateFrom;
         Date dateTo;
-        Integer year;
+        String year;
     }
     public class HDT_WRP_Response
     {

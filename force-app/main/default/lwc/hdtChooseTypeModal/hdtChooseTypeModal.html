@@ -1,0 +1,48 @@
+<template>
+
+    <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_xx-small" aria-labelledby="welcome-mat-403-label" aria-describedby="welcome-mat-403-content" aria-modal="true">
+        <div class="slds-modal__container">
+            <header class="slds-modal__header slds-modal__header_empty">
+                <button onclick={closeModal} class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                    <lightning-icon icon-name="utility:close" alternative-text="close" variant="inverse" size="small" ></lightning-icon>
+                    <span class="slds-assistive-text">Close</span>
+                </button>
+            </header>
+            <div class="slds-modal__content" id="welcome-mat-403-content">
+                <div class="slds-welcome-mat">
+                    <div class="slds-welcome-mat__content slds-grid">
+
+                        <ul class="slds-welcome-mat__tiles slds-size_1-of-1">
+                            <template iterator:it={stmtValue} >
+                                <li data-id={it.value.name} data-label={it.value.label} key={it.value.name} onclick={clickOperation} class="slds-welcome-mat__tile slds-m-left_small">
+                                    <a href="javascript:void(0);" class="slds-box slds-box_link slds-media">
+                                      <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                        <div class="slds-welcome-mat__tile-figure">
+                                          <div class="slds-welcome-mat__tile-icon-container">
+                                            <span class="slds-icon_container">
+                                                <lightning-icon icon-name={it.value.iconName} alternative-text={it.value.label} title={it.value.label} ></lightning-icon>
+                                            </span>
+                                          </div>
+                                        </div>
+                                      </div>
+                                      <div class="slds-media__body">
+                                        <div class="slds-welcome-mat__tile-body">
+                                          <h3 class="slds-welcome-mat__tile-title">{it.value.label}</h3>
+                                          <p class="slds-welcome-mat__tile-description">{it.value.desc}</p>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </li>
+
+                            </template>
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="slds-backdrop slds-backdrop_open"></div>
+
+</template>

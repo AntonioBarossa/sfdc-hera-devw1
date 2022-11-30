@@ -9,18 +9,27 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
 	@testSetup
 	static void setup(){
+		Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
+		insert internalUser;
 
-		HDT_UTL_DataFactoryTst.pClickInstance();
-		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        System.runAs(internalUser){
+			HDT_UTL_DataFactoryTst.pClickInstance();
+			HDT_UTL_DataFactoryTst.pClickOrderPhase();
+			HDT_UTL_DataFactoryTst.pClickCasePhase();
 
-		List<AtecoMatrix__c> atecoMatrix=new List<AtecoMatrix__c>();
-		AtecoMatrix__c atecMat=new AtecoMatrix__c();
-		atecMat.City__c='Roma';
-		atecMat.IstatCode__c='test';
+			List<AtecoMatrix__c> atecoMatrix=new List<AtecoMatrix__c>();
+			AtecoMatrix__c atecMat=new AtecoMatrix__c();
+			atecMat.City__c='Roma';
+			atecMat.IstatCode__c='test';
 
-		atecoMatrix.add(atecMat);
+			atecoMatrix.add(atecMat);
 
-		insert atecoMatrix;
+			insert atecoMatrix;
+
+			List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+		}
 	}
 
 	@isTest
@@ -49,11 +58,10 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 
 	@isTest
 	public static void saveAtecoCode(){
-
+		Id accId = [SELECT Id FROM Account LIMIT 1].Id;
 		Test.startTest();
 
-		List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].id, 'Bozza');
+		List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accId, 'Bozza');
         
         Map<String,String> params =  new Map<String,String>();
         params.put('atecoCode','atecoCode');
@@ -70,5 +78,79 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 		System.assertEquals('atecoCode', tOrder.AtecoCode__c, 'Order not updated');
 		System.assertNotEquals('', tOrder.AtecoCode__c, 'value of parameter is not matching');
 		Test.stopTest();
+	}
+
+	@isTest
+	public static void saveAtecoRonchiCode(){
+		Map<String,String> tempMap = new Map<String,String>{
+			'atecoCode'=>'1',
+			'istatCode'=>'2',
+			'ronchiCode'=>'3',
+			'ronchiSubcategory'=>'4',
+			'ronchiDescription'=>'5'
+		};
+
+		Id accId = [SELECT Id FROM Account LIMIT 1].Id;
+
+		List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1, true, accId, 'Bozza');
+
+		List<Order> currOrder = [SELECT Id,AtecoCode__c,HerAteco__c,RonchiCode__c,RonchiSubcat__c,RonchiDescription__c
+							FROM Order LIMIT 1];
+
+		Test.startTest();
+		try{
+			HDT_LC_CodiceAteco.saveAtecoRonchiCode(currOrder[0], tempMap);
+		}
+		catch(exception e){
+ 		}     
+		// HDT_LC_CodiceAteco.saveAtecoRonchiCode(currOrder[0], tempMap);
+		Test.stopTest();
+
+		currOrder = [SELECT Id,AtecoCode__c,HerAteco__c,RonchiCode__c,RonchiSubcat__c,RonchiDescription__c
+							FROM Order LIMIT 1];
+							  
+		system.assertEquals('1', currOrder[0].AtecoCode__c);
+		system.assertEquals('2', currOrder[0].HerAteco__c);
+		system.assertEquals('3', currOrder[0].RonchiCode__c);
+		system.assertEquals('4', currOrder[0].RonchiSubcat__c);
+		system.assertEquals('5', currOrder[0].RonchiDescription__c);
+
+	}
+
+	@isTest
+	public static void saveAtecoRonchiCodeCase(){
+		Map<String,String> tempMap = new Map<String,String>{
+			'atecoCode'=>'1',
+			'istatCode'=>'2',
+			'ronchiCode'=>'3',
+			'ronchiSubcategory'=>'4',
+			'ronchiDescription'=>'5'
+		};
+
+		Id accId = [SELECT Id FROM Account LIMIT 1].Id;
+
+		List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, true, accId, null, null, null, null);
+
+		List<Case> currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiCodeDescription__c
+							FROM Case LIMIT 1];
+
+		Test.startTest();
+		try{
+			HDT_LC_CodiceAteco.saveAtecoRonchiCodeCase(currCase[0], tempMap);
+		}
+		catch(exception e){
+ 		}     
+			// HDT_LC_CodiceAteco.saveAtecoRonchiCodeCase(currCase[0], tempMap);
+		Test.stopTest();
+
+		currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiCodeDescription__c
+		 					FROM Case LIMIT 1];
+
+		system.assertEquals('1', currCase[0].AtecoCode__c);
+		system.assertEquals('2', currCase[0].SupplyCityCode__c);
+		system.assertEquals('3', currCase[0].RonchiCode__c);
+		system.assertEquals('4', currCase[0].RonchiSubcategory__c);
+		system.assertEquals('5', currCase[0].RonchiCodeDescription__c);
+
 	}
 }

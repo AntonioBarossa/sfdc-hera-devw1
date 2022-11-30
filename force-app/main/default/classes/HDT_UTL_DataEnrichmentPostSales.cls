@@ -124,9 +124,13 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.writeBlockCode(position.valore, currentCase));
                             }
-                            when 'transCodeDoubleOppositeToDecimal' {
+                            /*when 'transCodeDoubleOppositeToDecimal' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
                                 depsSrv.transCodeDoubleOppositeToDecimal(position.valore));
+                            }*/
+                            when 'transCodeSiNo' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c,
+                                depsSrv.transCodeSiNo(position.valore));
                             }
                             when 'transCodeDoubleToString' {
                                 transcodeMap.put(transcodeConfig.SfdcField__c,
@@ -136,6 +140,12 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                                 Date dataGaa = depsSrv.alignGaaDate(String.valueOf(transcodeMap.get('DataUltimoAllineamentoGAA__c')), position.valore);
                                 transcodeMap.put(transcodeConfig.SfdcField__c, dataGaa);
                             }
+                            when 'transCodeSiNoConDescr' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c, depsSrv.transCodeSiNoConDescr(position.valore));
+                            }
+                            when 'transcodificaInfoDepurazione' {
+                                transcodeMap.put(transcodeConfig.SfdcField__c, depsSrv.transcodificaInfoDepurazione(position.valore));
+                            }
                             
                         }
                     } else {
@@ -144,6 +154,11 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
                 }
             }
         }
+
+        if(String.isBlank(String.valueOf(transcodeMap.get('Market__c'))) && ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) || 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c))){
+            transcodeMap.put('Market__c', 'Regolamentato');
+        }
+
         //BILLING PROFILE 
         try{
             BillingProfile__c billingRecord = depsQr.getBillingProfileIdBySapCode(billingProfileCode);

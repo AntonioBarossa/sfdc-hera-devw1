@@ -350,6 +350,101 @@
         <default>false</default>
         <label>WV150 - 300 mc</label>
     </customValue>
+    <customValue>
+        <fullName>1/2&quot; - 3X15 T</fullName>
+        <default>false</default>
+        <label>1/2&quot; - 3X15 T</label>
+    </customValue>
+    <customValue>
+        <fullName>3/4&quot; - 5X20 T</fullName>
+        <default>false</default>
+        <label>3/4&quot; - 5X20 T</label>
+    </customValue>
+    <customValue>
+        <fullName>DN40 (1&quot; 1/2)   16x40  MID</fullName>
+        <default>false</default>
+        <label>DN40 (1&quot; 1/2)   16x40  MID</label>
+    </customValue>
+    <customValue>
+        <fullName>DN 150</fullName>
+        <default>false</default>
+        <label>DN 150</label>
+    </customValue>
+    <customValue>
+        <fullName>DN15 (1/2&quot;)  2,5x15  MID</fullName>
+        <default>false</default>
+        <label>DN15 (1/2&quot;)  2,5x15  MID</label>
+    </customValue>
+    <customValue>
+        <fullName>DN20 (3/4&quot;)  4x20  MID</fullName>
+        <default>false</default>
+        <label>DN20 (3/4&quot;)  4x20  MID</label>
+    </customValue>
+    <customValue>
+        <fullName>DN30 (1&quot; 1/4)  10x30  MID</fullName>
+        <default>false</default>
+        <label>DN30 (1&quot; 1/4)  10x30  MID</label>
+    </customValue>
+    <customValue>
+        <fullName>DN25 (1&quot;)   6,3x25  MID</fullName>
+        <default>false</default>
+        <label>DN25 (1&quot;)   6,3x25  MID</label>
+    </customValue>
+    <customValue>
+        <fullName>3x15</fullName>
+        <default>false</default>
+        <label>3x15</label>
+    </customValue>
+    <customValue>
+        <fullName>80 W   MID</fullName>
+        <default>false</default>
+        <label>80 W   MID</label>
+    </customValue>
+    <customValue>
+        <fullName>65 W   MID</fullName>
+        <default>false</default>
+        <label>65 W   MID</label>
+    </customValue>
+    <customValue>
+        <fullName>DN50 (2&quot;)  30X50 MID</fullName>
+        <default>false</default>
+        <label>DN50 (2&quot;)  30X50 MID</label>
+    </customValue>
+    <customValue>
+        <fullName>6 x 20 - 4 mc</fullName>
+        <default>false</default>
+        <label>6 x 20 - 4 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>7 x 20 - 4 mc</fullName>
+        <default>false</default>
+        <label>7 x 20 - 4 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>11 x 30 - 10 mc</fullName>
+        <default>false</default>
+        <label>11 x 30 - 10 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>4 x 15 - 2.5 mc</fullName>
+        <default>false</default>
+        <label>4 x 15 - 2.5 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>5 x 15 - 2.5 mc</fullName>
+        <default>false</default>
+        <label>5 x 15 - 2.5 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>31 x 50 - 30 mc</fullName>
+        <default>false</default>
+        <label>31 x 50 - 30 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>32 x 50 - 30 mc</fullName>
+        <default>false</default>
+        <label>32 x 50 - 30 mc</label>
+    </customValue>
     <description>Classe contatore (Calibro)</description>
     <masterLabel>Caliber</masterLabel>
     <sorted>false</sorted>

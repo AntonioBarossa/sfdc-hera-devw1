@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_ScriptServizioIdrico {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ScriptServizioIdrico</label>
     <loops>
@@ -355,6 +356,18 @@
             <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
         <flowName>HDT_FL_Script_Gestione_Ordini</flowName>
+        <inputAssignments>
+            <name>famigliaProdottoOffertaInput</name>
+            <value>
+                <elementReference>offertaInput</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>idOrdinePadreInput</name>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
@@ -420,4 +433,18 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>idOrdinePadreInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>offertaInput</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
 </Flow>

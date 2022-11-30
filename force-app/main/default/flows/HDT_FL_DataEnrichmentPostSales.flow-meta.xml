@@ -34,12 +34,12 @@
     <actionCalls>
         <name>HandleResponseDataEnrichment</name>
         <label>Handle Response Data Enrichment</label>
-        <locationX>314</locationX>
+        <locationX>446</locationX>
         <locationY>1094</locationY>
         <actionName>HDT_UTL_DataEnrichmentPostSales</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assegna_Altri_Dati</targetReference>
+            <targetReference>Check_Processo</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -63,8 +63,8 @@
     <assignments>
         <name>Assegna_Altri_Dati</name>
         <label>Assegna Altri Dati</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationX>446</locationX>
+        <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -77,8 +77,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_parametri_servizio</name>
-        <label>Assegna parametri servizio</label>
+        <description>Assegnazione dei parametri di chiamata del servisio per service point Energy</description>
+        <name>Assegna_parametri_SP_Energy</name>
+        <label>Assegna parametri SP Energy</label>
         <locationX>50</locationX>
         <locationY>638</locationY>
         <assignmentItems>
@@ -100,8 +101,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Assegna_parametri_servizio</name>
-        <label>Copy 1 of Assegna parametri servizio</label>
+        <description>Valorizzazione dei parametri della chiamata verso il servizio per il non Energy</description>
+        <name>Assegna_parametri_SP_No_Energy</name>
+        <label>Assegna parametri SP No Energy</label>
         <locationX>314</locationX>
         <locationY>638</locationY>
         <assignmentItems>
@@ -122,13 +124,130 @@
             <targetReference>Arricchimento_Dati</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Assegna i valori per le variabili necessarie al sottoprocesso di adesione Fondo Fughe</description>
+        <name>Assegna_variabili_per_Adesione_Fondo</name>
+        <label>Assegna variabili per Adesione Fondo</label>
+        <locationX>446</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Adesione Fondo Fughe</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.JointBottomAdhesion__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Si</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Altri_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assegna i valori per le variabili necessarie al sottoprocesso di rinuncia Fondo Fughe</description>
+        <name>Assegna_variabili_per_Rinuncia_Fondo</name>
+        <label>Assegna variabili per Rinuncia Fondo</label>
+        <locationX>182</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rinuncia Fondo Fughe</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.JointBottomAdhesion__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Altri_Dati</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <description>Verifica del processo chiamate l&apos;arricchimento, per specifiche valorizzazioni post chiamata richieste dal processo</description>
+        <name>Check_Processo</name>
+        <label>Check Processo</label>
+        <locationX>446</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Altri_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
+        <rules>
+            <name>Rinuncia_Fondo_Fughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_variabili_per_Rinuncia_Fondo</targetReference>
+            </connector>
+            <label>Rinuncia Fondo Fughe</label>
+        </rules>
+        <rules>
+            <name>Adesione_Fondo_Fughe</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_variabili_per_Adesione_Fondo</targetReference>
+            </connector>
+            <label>Adesione Fondo Fughe</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Parametri_di_chiamata</name>
         <label>Parametri di chiamata</label>
         <locationX>182</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>Copy_1_of_Assegna_parametri_servizio</targetReference>
+            <targetReference>Assegna_parametri_SP_No_Energy</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Energy</defaultConnectorLabel>
         <rules>
@@ -149,7 +268,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_parametri_servizio</targetReference>
+                <targetReference>Assegna_parametri_SP_Energy</targetReference>
             </connector>
             <label>Energy</label>
         </rules>
@@ -271,8 +390,8 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>314</locationX>
-        <locationY>1334</locationY>
+        <locationX>446</locationX>
+        <locationY>1670</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
     <start>

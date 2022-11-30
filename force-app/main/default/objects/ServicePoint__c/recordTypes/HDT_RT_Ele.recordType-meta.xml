@@ -309,18 +309,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
@@ -561,18 +549,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1007,15 +983,19 @@
     <picklistValues>
         <picklist>PurificationInfoOnTheInvoice__c</picklist>
         <values>
-            <fullName>No - Esente</fullName>
+            <fullName>Utenza non servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Paga</fullName>
+            <fullName>Utenza servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Ridotta</fullName>
+            <fullName>Utenza temporaneamente non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

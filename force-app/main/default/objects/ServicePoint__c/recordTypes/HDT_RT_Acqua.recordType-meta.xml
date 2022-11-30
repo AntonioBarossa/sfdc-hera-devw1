@@ -380,6 +380,54 @@
             <fullName>WV150 - 300 mc</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>1/2&quot; - 3X15 T</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>3/4&quot; - 5X20 T</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN40 (1&quot; 1/2)   16x40  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN 150</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN15 (1/2&quot;)  2,5x15  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN20 (3/4&quot;)  4x20  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN30 (1&quot; 1/4)  10x30  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN25 (1&quot;)   6,3x25  MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>3x15</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>80 W   MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>65 W   MID</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>DN50 (2&quot;)  30X50 MID</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>MeterStatus__c</picklist>
@@ -543,15 +591,19 @@
     <picklistValues>
         <picklist>PurificationInfoOnTheInvoice__c</picklist>
         <values>
-            <fullName>No - Esente</fullName>
+            <fullName>Utenza non servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Paga</fullName>
+            <fullName>Utenza servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Ridotta</fullName>
+            <fullName>Utenza temporaneamente non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

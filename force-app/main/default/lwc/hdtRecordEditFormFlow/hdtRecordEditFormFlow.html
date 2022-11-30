@@ -157,12 +157,10 @@
 
                     </div>
                     <div class="actionsRight">
-                        <template if:true={saveButton}> 
-                            <lightning-button
-                                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                                variant={variantButton} type="submit" name="save" label={labelSaveButton}>
-                            </lightning-button>
-                        </template>
+                        <lightning-button
+                            data-id="submitButton" class={submitButtonClass}
+                            variant={variantButton} type="submit" name="save" label={labelSaveButton}>
+                        </lightning-button>
                         <template if:true={draftButton}>
                             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                                 variant="neutral" type="button" name="draft" label={labelDraftButton} onclick={handleDraft}>

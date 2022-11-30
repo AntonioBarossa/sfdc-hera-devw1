@@ -17,6 +17,7 @@ export default class HdtSocialBonusWsTable extends LightningElement {
 
     @api recordId;
     @api type;
+    @api relatedToId;
 
     connectedCallback(){
         console.log('# type: ' + this.type);
@@ -47,7 +48,7 @@ export default class HdtSocialBonusWsTable extends LightningElement {
     backendCall(){
         console.log('# Get data from SAP #');
     
-        callSap({recordId: this.recordId, type: this.type}).then(result => {
+        callSap({recordId: this.recordId, relatedToId: this.relatedToId,type: this.type}).then(result => {
             console.log('# SAP result #');
             var obj = JSON.parse(result);
             console.log('# success: ' + obj.status);

@@ -109,6 +109,9 @@ export default class HdtBillDeliveryChooser extends LightningElement {
                     // Display fresh data in the form
                     console.log('Record aggiornato');
                     if(this.availableActions.find(action => action === 'NEXT')){
+                        email = email!=null?email:'';
+                        pec = pec!=null?pec:'';
+                        presso = presso!=null?presso:'';
                         const modInvioChangeEvent = new FlowAttributeChangeEvent('modInvioBoll', this.modInvioBoll);
                         this.dispatchEvent(modInvioChangeEvent);
                         const emailChangeEvent = new FlowAttributeChangeEvent('email', email);

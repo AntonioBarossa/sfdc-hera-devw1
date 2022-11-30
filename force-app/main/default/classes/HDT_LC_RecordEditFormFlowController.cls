@@ -3,7 +3,6 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
     
     @AuraEnabled(cacheable=true)
     public static String getFields(String processType) {
-        String userInputFlow;
         List<HDT_UserInputFlow__mdt> userInputFlowList = HDT_QR_RecordEditFormFlowController.queryInput(processType);
         /*List<HDT_UserInputFlow__mdt> userInputFlowList = [
             SELECT FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c
@@ -11,12 +10,10 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
             WHERE ProcessType__c =: processType
             LIMIT 1
         ];*/
-
-        if(userInputFlowList.size() > 0 ){
-            userInputFlow = JSON.serialize(userInputFlowList);
-            
+        if(userInputFlowList.size() == 0 ){
+            throw new ListException(System.Label.no_configuration_found);
         }
-        return userInputFlow;
+        return JSON.serialize(userInputFlowList);
     }
 
     @AuraEnabled

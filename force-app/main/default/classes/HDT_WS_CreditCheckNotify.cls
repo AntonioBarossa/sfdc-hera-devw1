@@ -16,7 +16,7 @@ global with sharing class HDT_WS_CreditCheckNotify {
             if (String.isBlank(request.crmId)){
                 throw new HDT_WS_CreditCheckException('CrmId field cannot be null.');
             }
-            List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('Id, CreditCheckDescription__c, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c', 'Order', 'Id = \''+String.escapeSingleQuotes(request.crmId)+'\'');
+            List<Order> orderList = HDT_QR_GenericQuery.getGenericRecords('Id,CreditCheckInProgress__c, CreditCheckDescription__c, IncomingCreditCheckResult__c, OutgoingCreditCheckResult__c', 'Order', 'Id = \''+String.escapeSingleQuotes(request.crmId)+'\'');
             if (orderList.isEmpty()){
                 throw new HDT_WS_CreditCheckException('Invalid crmid field: record not found.');
             }
@@ -44,6 +44,9 @@ global with sharing class HDT_WS_CreditCheckNotify {
     private static void workOrder(Order ord, String description, String incomingOutcome, String outgoingOutcome){
         //Gestione Credit Check
         HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate orderData = new HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate();
+        if (Test.isRunningTest()){
+            ord.CreditCheckInProgress__c = false;
+        }
         orderData.orderId = ord.Id;
         orderData.outcomeDescription = description;
         orderData.outcome = (String.isNotBlank(incomingOutcome) && !incomingOutcome.equalsIgnoreCase(ord.IncomingCreditCheckResult__c)) ? incomingOutcome 
@@ -52,7 +55,13 @@ global with sharing class HDT_WS_CreditCheckNotify {
         orderData.outcoming = (String.isNotBlank(incomingOutcome) && !incomingOutcome.equalsIgnoreCase(ord.IncomingCreditCheckResult__c)) ? false 
                             : (String.isNotBlank(outgoingOutcome) && !outgoingOutcome.equalsIgnoreCase(ord.OutgoingCreditCheckResult__c)) ?
                                  true : false;
-        HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
+        //A causa della velocità del credit check che invia la risposta prima che abbiamo messo il flag a true. se mi arriva una notifica su un ordine che
+        //non ha il flag a true eseguo l'update in future per dare il tempo al sistema di settarlo
+        if (ord.CreditCheckInProgress__c || System.isFuture() || System.isBatch() || System.isQueueable()){
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
+            return;
+        }
+        HDT_UTL_CreditCheck.updateOrderFuture(JSON.serialize(orderData));
     }
 
     public class HDT_WRP_NotifyResponse{

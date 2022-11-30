@@ -25,6 +25,15 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.DocumentSendTracking__c.HDT_SendContract</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Order__r.OrderNumber}</leftValue>
+                                    <operator>NE</operator>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>

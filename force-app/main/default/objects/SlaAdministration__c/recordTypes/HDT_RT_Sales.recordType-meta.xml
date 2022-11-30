@@ -555,112 +555,63 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Ato__c</picklist>
+        <values>
+            <fullName>AATO 1 MARCHE NORD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Bacchiglione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Orientale Triestino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>CaseField__c</picklist>
         <values>
-            <fullName>Data Inserimento Richiesta</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Pagamento</fullName>
+            <fullName>PaymentDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data Ricezione Richiesta</fullName>
+            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
-            <fullName>Ambiente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Annullamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Canone Rai</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disattivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generiche Attivazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Generiche VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Indennizzi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Informative</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifiche Anagrafiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Notifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PostSales VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reclami</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1909,38 +1860,178 @@
     <picklistValues>
         <picklist>OrderField__c</picklist>
         <values>
-            <fullName>Data consenso E-mail PEC Invio Bolletta</fullName>
+            <fullName>CancellationRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data decorrenza</fullName>
+            <fullName>ChangePhaseDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data differita</fullName>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data inizio Validità Codice Destinatario</fullName>
+            <fullName>DocumentReceiptDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data invio richiesta</fullName>
+            <fullName>EffectiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data lettura Attuale</fullName>
+            <fullName>RetroactiveDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Data lettura retroattiva</fullName>
+            <fullName>SapContractActivationDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SendRequestDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SendToDistributorDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SignedDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SubjectCodeEndDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TerminationDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ValidityDateEstimate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WizardCompletedDate%5F%5Fc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Process__c</picklist>
         <values>
+            <fullName>Aggiunta Sconti o Bonus VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Aggiunta Sconti o Bonus VAS Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Uso Tecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione In delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione con modifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Fittizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Reseller</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Winback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in con voltura tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Tutti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Switch</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1975,6 +2066,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -11,7 +11,7 @@ public inherited sharing class HDT_UTL_WaterSocialBonus extends HDT_SRV_AccountD
             success = false;
         }
 
-        body = '{"bp": "' + accList[0].CustomerCode__c + '",';
+        body = '{"codiceBp": "' + accList[0].CustomerCode__c + '",';
         body += '"codiceFiscaleRichiedente": "' + accList[0].FiscalCode__c + '"';
         body += '}';
 
