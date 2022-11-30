@@ -5,6 +5,7 @@
     <label>Stato Apparecchiatura</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
+    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
