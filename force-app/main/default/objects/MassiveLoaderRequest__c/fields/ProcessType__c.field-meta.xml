@@ -107,7 +107,7 @@
             <value>
                 <fullName>Caricamento Iniziativa DGRER</fullName>
                 <default>false</default>
-                <label>CaricamentoIniziativaDGRER</label>
+                <label>CaricamentoIniziativaDgrer</label>
             </value>
         </valueSetDefinition>
     </valueSet>
