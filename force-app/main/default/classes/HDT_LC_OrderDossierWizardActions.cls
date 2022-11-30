@@ -245,7 +245,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-        for (Order childOrd : childOrders) {
+        /*for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 ordersToUpdate.add(
                     new Order(
@@ -254,7 +254,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     )
                 );
             }
-        }
+        }*/
 
         //update CampaignMember Status From Stampa
         /**@fvitiell 21/02/2022
