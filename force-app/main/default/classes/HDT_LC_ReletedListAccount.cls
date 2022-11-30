@@ -96,7 +96,7 @@ public with sharing class HDT_LC_ReletedListAccount {
             n.contactId             = temp.ContactId                ;
             n.contactName           = temp.Contact.name             ;
             n.roles                 = temp.Roles                    ;
-            n.contactHomePhone      = temp.Contact.HomePhone        ;
+            n.contactHomePhone      = temp.Contact.Phone            ;
             n.contactMobilePhone    = temp.Contact.MobilePhone      ;
             n.contactEmail          = temp.Contact.Email            ;
             n.contactIndividualId   = temp.Contact.IndividualId     ;
