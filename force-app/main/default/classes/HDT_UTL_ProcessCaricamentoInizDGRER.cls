@@ -4,7 +4,7 @@
  * 
  **/
 @SuppressWarnings('PMD.AvoidDebugStatements')
-public inherited sharing class HDT_UTL_ProcessCaricamentoInizDGRER extends HDT_UTL_ProcessExecution {
+public inherited sharing class HDT_UTL_ProcessCaricamentoInizDgrer extends HDT_UTL_ProcessExecution {
     private Map<String, String> mapWrapperContractFields;
     private Integer contractIndex;
     private Integer dgrerIndex;

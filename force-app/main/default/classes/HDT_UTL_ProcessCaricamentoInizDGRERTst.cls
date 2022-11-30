@@ -1,5 +1,5 @@
 @isTest
-public with sharing class HDT_UTL_ProcessCaricamentoInizDGRERTst {
+public with sharing class HDT_UTL_ProcessCaricamentoInizDgrerTst {
     @testSetup
     static void setup(){
 
@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_ProcessCaricamentoInizDGRERTst {
         MassiveLoaderRequest__c request = new MassiveLoaderRequest__c();
         request.TotalRequest__c = 1;
         request.Priority__c = 1;
-        request.ProcessType__c = 'CaricamentoIniziativaDGRER';
+        request.ProcessType__c = 'CaricamentoIniziativaDgrer';
         request.Status__c = 'In attesa di lavorazione';
         insert request;
 

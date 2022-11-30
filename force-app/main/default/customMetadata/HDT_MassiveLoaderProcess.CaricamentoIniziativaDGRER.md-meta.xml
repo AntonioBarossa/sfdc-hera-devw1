@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>ApexClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_ProcessCaricamentoInizDGRER</value>
+        <value xsi:type="xsd:string">HDT_UTL_ProcessCaricamentoInizDgrer</value>
     </values>
     <values>
         <field>BatchSize__c</field>

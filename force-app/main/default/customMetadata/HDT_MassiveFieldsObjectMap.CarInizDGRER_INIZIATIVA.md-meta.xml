@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>processType__c</field>
-        <value xsi:type="xsd:string">CaricamentoIniziativaDGRER</value>
+        <value xsi:type="xsd:string">CaricamentoIniziativaDgrer</value>
     </values>
 </CustomMetadata>
