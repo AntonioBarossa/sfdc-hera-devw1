@@ -133,35 +133,35 @@
         <locationX>3172</locationX>
         <locationY>6038</locationY>
         <assignmentItems>
-            <assignToReference>tryGet.FirstName__c</assignToReference>
+            <assignToReference>getPreSecondForm.FirstName__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.FirstName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tryGet.LastName__c</assignToReference>
+            <assignToReference>getPreSecondForm.LastName__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.LastName__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tryGet.Birthday__c</assignToReference>
+            <assignToReference>getPreSecondForm.Birthday__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.BirthDate__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tryGet.Birthcity__c</assignToReference>
+            <assignToReference>getPreSecondForm.Birthcity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.BirthProvince__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>tryGet.AlternativeAddress__c</assignToReference>
+            <assignToReference>getPreSecondForm.AlternativeAddress__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.Account.BillingAddressFormula__c</elementReference>
@@ -464,35 +464,35 @@
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tryGet.SupplyCity__c</elementReference>
+                <elementReference>getPreSecondForm.SupplyCity__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.cluster</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tryGet.Cluster__c</elementReference>
+                <elementReference>getPreSecondForm.Cluster__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.processType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tryGet.Type</elementReference>
+                <elementReference>getPreSecondForm.Type</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.subProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tryGet.Subprocess__c</elementReference>
+                <elementReference>getPreSecondForm.Subprocess__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.productCode</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>tryGet.Contract__r.CommercialProduct__c</elementReference>
+                <elementReference>getPreSecondForm.Contract__r.CommercialProduct__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1701,35 +1701,35 @@
             <name>concatenazioneToDo_0_0</name>
             <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.Type</leftValueReference>
+                <leftValueReference>getPreSecondForm.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>DOM_Componenti non residenti</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>DOM_Componenti residenti</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>DOM_Coabitazioni</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Subprocess__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Domiciliato in nucleo residente</stringValue>
@@ -1780,35 +1780,35 @@
             <name>Si_Generalita</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.FirstName__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.FirstName__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.LastName__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.LastName__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.AlternativeAddress__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.AlternativeAddress__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Birthday__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.Birthday__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Birthcity__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.Birthcity__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -2050,7 +2050,7 @@
             <name>SoggettoPassivo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.SubscriberType__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.SubscriberType__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Soggetto passivo</stringValue>
@@ -2126,21 +2126,21 @@
             <name>Si_SecondScreen</name>
             <conditionLogic>(1 AND 2) OR 3</conditionLogic>
             <conditions>
-                <leftValueReference>tryGet.RequestSource__c</leftValueReference>
+                <leftValueReference>getPreSecondForm.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>D’ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Type</leftValueReference>
+                <leftValueReference>getPreSecondForm.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>tryGet.Type</leftValueReference>
+                <leftValueReference>getPreSecondForm.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Modifica post accertamento</stringValue>
@@ -2158,7 +2158,7 @@
         <locationX>4278</locationX>
         <locationY>4766</locationY>
         <defaultConnector>
-            <targetReference>tryGet</targetReference>
+            <targetReference>getPreSecondForm</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -2442,6 +2442,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getPreSecondForm</name>
+        <label>getPreSecondForm</label>
+        <locationX>4278</locationX>
+        <locationY>5558</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>showSecondScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getPreUpdateAddress</name>
         <label>getPreUpdateAddress</label>
         <locationX>50</locationX>
@@ -2497,27 +2518,6 @@
         <object>SBQQ__Subscription__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>tryGet</name>
-        <label>tryGet</label>
-        <locationX>4278</locationX>
-        <locationY>5558</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>showSecondScreen</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Case</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>commitPostForm</name>
         <label>commitPostForm</label>
@@ -2526,7 +2526,7 @@
         <connector>
             <targetReference>SecondFormDipendenti_0</targetReference>
         </connector>
-        <inputReference>tryGet</inputReference>
+        <inputReference>getPreSecondForm</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>finalUpdate</name>
@@ -2708,7 +2708,7 @@
         <locationX>4278</locationX>
         <locationY>5246</locationY>
         <connector>
-            <targetReference>tryGet</targetReference>
+            <targetReference>getPreSecondForm</targetReference>
         </connector>
         <inputReference>getPreLandRegistry</inputReference>
     </recordUpdates>
@@ -2781,7 +2781,7 @@
         </connector>
         <fields>
             <name>hdtCheckRavvedimentoOperoso_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!tryGet.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!tryGet.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getPreSecondForm.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255);&quot;&gt;Sottoprocesso {!getPreSecondForm.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2909,13 +2909,13 @@
             <inputParameters>
                 <name>caseProcess</name>
                 <value>
-                    <elementReference>tryGet.Type</elementReference>
+                    <elementReference>getPreSecondForm.Type</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>caseSubProcess</name>
                 <value>
-                    <elementReference>tryGet.Subprocess__c</elementReference>
+                    <elementReference>getPreSecondForm.Subprocess__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3216,7 +3216,7 @@
         </connector>
         <fields>
             <name>documentaleHeader</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!tryGet.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!tryGet.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!getPreSecondForm.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Sottoprocesso {!getPreSecondForm.Subprocess__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
