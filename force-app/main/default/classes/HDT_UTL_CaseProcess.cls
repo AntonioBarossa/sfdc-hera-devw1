@@ -23,6 +23,57 @@ public with sharing class HDT_UTL_CaseProcess {
         //update accountsToUpdate; 
     }
 
+    public static void predefaultCaseValues(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        //variable allocation
+        String servicePoint = '';
+        String servicePointOld = '';
+        String commodity = '';
+        Boolean enableSearch = false;
+        Map<Id,String> spCommodityMap = new Map<Id,String>();
+        List<Id> spIds = new List<Id>();
+        Map<Id,Boolean> needUpdate = new Map<Id,Boolean>();
+        //First check if is from Insert or Update
+        //1. Is From insert
+        if(caseList != null && !caseList.isEmpty() && caseOldMap == null){
+            //Commodity Management
+            for(Case singleNewCase : caseList){
+                servicePoint = singleNewCase.ServicePoint__c;
+                commodity = singleNewCase.Commodity__c;
+                if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
+                    spIds.add(servicePoint);
+                    needUpdate.put(servicePoint, true);
+                }
+            }
+        }
+        //2. Is From Updated
+        else if(caseList != null && !caseList.isEmpty() && caseOldMap != null) {
+            //Commodity Management
+            for(Case singleCase : caseList){
+                Case caseNew = singleCase;
+                Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                servicePoint = caseNew.ServicePoint__c;
+                servicePointOld = caseOld.ServicePoint__c;
+                if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
+                    spIds.add(servicePoint);
+                    needUpdate.put(servicePoint, true);
+                }
+            }
+        }
+        if(spIds!=null && !spIds.isEmpty()){
+            HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
+            List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c');
+            if(!spList.isEmpty()){
+                Map<Id, ServicePoint__c> spMap = new Map<Id, ServicePoint__c>(spList);
+                for(Case singleCaseToUpdate : caseList){
+                    if(needUpdate.get(singleCaseToUpdate.ServicePoint__c) != null && needUpdate.get(singleCaseToUpdate.ServicePoint__c)){
+                        singleCaseToUpdate.Commodity__c = spMap.get(singleCaseToUpdate.ServicePoint__c).CommoditySector__c;
+                    }
+                }
+            }
+        }
+    }
+
+
     public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
         Set<Id> accountIdsBpca = new Set<Id>();
         for(Case caseNew : (List<Case>) newCasesMap.values()){
