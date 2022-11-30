@@ -11,7 +11,6 @@ D-Altri usi</description>
     <label>Tipo Fornitura</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
         <controllingField>CommoditySector__c</controllingField>
