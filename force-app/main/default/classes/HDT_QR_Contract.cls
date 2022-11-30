@@ -279,7 +279,9 @@ public inherited sharing class HDT_QR_Contract {
     }
 
     public List<Contract> getContractByContractCodeConsumoAnomaloIdrico(Set<String> sapCodes){
-        return [SELECT Id,SAPContractCode__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,Contact__c,Contact__r.Phone,
+        return [SELECT Id,SAPContractCode__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.JointBottomAdhesion__c,
+                ServicePoint__r.PaySewer__c, ServicePoint__r.PayPurification__c, ServicePoint__r.MeterSN__c, ServicePoint__r.CommoditySector__c,
+                ServicePoint__r.Distributor__c, ServicePoint__r.SupplyType__c, Contact__c,Contact__r.Phone,
                 Contact__r.MobilePhone,Contact__r.AccountId,Contact__r.Account.PrimaryEmail__c,Contact__r.Account.SAPIntegrationID__c ,Contact__r.Email
                 FROM Contract
                 WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED];
