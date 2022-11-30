@@ -26,7 +26,7 @@ public with sharing class HDT_QR_ProcessPostSales {
         ];
         return contractList;
     }
-    public static List<Contract> getContractsByCodSAPGDRER(List<Contract> contractList, Set<String> codeSet){
+    public static List<Contract> getContractsByCodSapDgrer(List<Contract> contractList, Set<String> codeSet){
         contractList = new List<Contract>();
         contractList = [
             SELECT Id, ServicePoint__c, BillingProfile__c, AccountId, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, SAPContractCode__c,Iniziativa__c

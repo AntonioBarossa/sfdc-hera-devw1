@@ -11,13 +11,13 @@ public inherited sharing class HDT_UTL_ProcessCaricamentoInizDgrer extends HDT_U
     private List<HDT_WRP_ProcessObjects> processObjList;
     private Set<String> contractCodeSet = new Set<String>();
     private List<Contract> contractList;
-    private Map<String,String> mapContractDGRER;
+    private Map<String,String> mapContractDgrer;
     private List<MassiveLoaderRequestItem__c> itemsToSave;
 
     public override void checks(){
         /* CARICAMENTO DEI DATI UTILI AL PROCESSO E CONTROLLI PRELIMINARI*/
         itemsToSave=new List<MassiveLoaderRequestItem__c>();
-        mapContractDGRER=new Map<String,String>();
+        mapContractDgrer=new Map<String,String>();
         HDT_WRP_ProcessObjects processObj;
         processObjList=new List<HDT_WRP_ProcessObjects>();
         mapFieldsObject();
@@ -45,7 +45,7 @@ public inherited sharing class HDT_UTL_ProcessCaricamentoInizDgrer extends HDT_U
             String contractCode=processObj.csvSplitted[contractIndex];
             String dgrer=processObj.csvSplitted[dgrerIndex];
             contractCodeSet.add(contractCode);
-            mapContractDGRER.put(contractCode, dgrer);
+            mapContractDgrer.put(contractCode, dgrer);
             processObjList.add(processObj);
 
            
@@ -58,7 +58,7 @@ public inherited sharing class HDT_UTL_ProcessCaricamentoInizDgrer extends HDT_U
         System.debug(LoggingLevel.DEBUG, 'getRecords');
         /* RECUPERO I CONTRATTI E CREO MAPPE*/
         Map<String,Contract> mapContract=new Map<String,Contract>();
-        contractList=HDT_QR_ProcessPostSales.getContractsByCodSAPGDRER(contractList, contractCodeSet);
+        contractList=HDT_QR_ProcessPostSales.getContractsByCodSapDgrer(contractList, contractCodeSet);
         
         for(Contract cnt:contractList){
             mapContract.put(cnt.SAPContractCode__c, cnt);
@@ -83,7 +83,7 @@ public inherited sharing class HDT_UTL_ProcessCaricamentoInizDgrer extends HDT_U
         /*PREPARAZIONE DATI PER UPDATE*/
         for(HDT_WRP_ProcessObjects procObj:processObjList){
             String contractCode=procObj.contract.SAPContractCode__c;
-            String dgrer=mapContractDGRER.get(contractCode);
+            String dgrer=mapContractDgrer.get(contractCode);
             procObj.contract.Iniziativa__c=dgrer;
             contractToUpdate.add(procObj.contract);
             requestItemForUpsert.add(procObj.requestItem);
