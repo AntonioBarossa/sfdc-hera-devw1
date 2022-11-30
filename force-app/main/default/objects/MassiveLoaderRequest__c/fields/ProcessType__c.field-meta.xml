@@ -105,9 +105,9 @@
                 <label>Allineamento Anagrafica</label>
             </value>
             <value>
-                <fullName>Caricamento Iniziativa DGRER</fullName>
+                <fullName>CaricamentoIniziativaDgrer</fullName>
                 <default>false</default>
-                <label>CaricamentoIniziativaDgrer</label>
+                <label>Caricamento Iniziativa DGRER</label>
             </value>
         </valueSetDefinition>
     </valueSet>
