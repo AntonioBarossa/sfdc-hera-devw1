@@ -2,6 +2,7 @@ import { LightningElement, track,wire,api} from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getFields';
+import getRelatedFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getRelatedFields';
 import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.validateRecord';
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -47,11 +48,16 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @track error;
     @track fieldsJSON;
     @track fieldsJSONReadOnly;
+    @track fieldsRelatedReadOnly;
     @track wiredResponse;
     @track firstColumn = [];
     @track secondColumn = [];
     @track firstColumnReadOnly = [];
     @track secondColumnReadOnly = [];
+    @track firstColumnRelatedReadOnly = [];
+    @track secondColumnRelatedReadOnly = [];
+    @track allRelatedFieldsList = [];
+    @track fieldRelatedToQuery;
     @track validateClass="";
     @track contentDocument;
     @track formats=[];
@@ -110,6 +116,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
                 if(this.showReadOnly){
                     this.fieldsJSONReadOnly = JSON.parse(this.wiredResponse[0].ReadOnlyFields__c);
+                    if(this.wiredResponse[0].ReadOnlyRelatedFields__c)
+                        this.fieldsRelatedReadOnly = JSON.parse(this.wiredResponse[0].ReadOnlyRelatedFields__c);
                     this.fieldsJSONReadOnly.forEach(obj => {
                         if(obj.Column == 1){
                             this.firstColumnReadOnly.push(obj);
@@ -117,6 +125,17 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                             this.secondColumnReadOnly.push(obj);
                         }
                     });
+                    if(this.fieldsRelatedReadOnly){
+                        this.fieldsRelatedReadOnly.forEach(obj => {
+                            if(obj.column == 1){
+                                this.firstColumnRelatedReadOnly.push(obj);
+                            }else{
+                                this.secondColumnRelatedReadOnly.push(obj);
+                            }
+                            this.allRelatedFieldsList.push(obj.relatedObject + '.' + obj.apiName);
+                        });
+                        this.handleRelatedFieldsReadOnly();
+                    }
                 }
                 
                 if(this.processType.localeCompare('Richiesta Parere') === 0
@@ -144,6 +163,36 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 this.errorMessage = error;
                 this.errorMessage = error.message;
             }
+        }
+
+        handleRelatedFieldsReadOnly(){
+            var fieldsSplitted = this.allRelatedFieldsList.join();
+            getRelatedFields({
+                recordId:this.recordId,
+                fields:fieldsSplitted,
+                objectType:this.objectName
+                })
+                .then(result => {
+                    console.log('# related field ' + JSON.stringify(result));
+                    var object = JSON.parse(result);
+
+                    console.log('# related field 2 ' + object.ServicePoint__r);
+                    console.log('# related field 3 ' + object['ServicePoint__r']);
+                    this.firstColumnRelatedReadOnly.forEach(obj => {
+                        var relatedObj = object[obj.relatedObject];
+                        var fieldValue = relatedObj[obj.apiName];
+                        obj.value = fieldValue;
+                    });
+
+                    this.secondColumnRelatedReadOnly.forEach(obj => {
+                        var relatedObj = object[obj.relatedObject];
+                        var fieldValue = relatedObj[obj.apiName];
+                        obj.value = fieldValue;
+                    });
+                })
+                .catch(error => {
+                    this.error = error;
+                });
         }
 
         updateRecordView(recordId) {
