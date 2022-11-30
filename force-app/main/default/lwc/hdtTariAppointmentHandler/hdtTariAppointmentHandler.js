@@ -44,7 +44,7 @@ export default class HdtTariAppointmentHandler extends LightningElement{
         const { data, error } = value; 
         console.log('value ->'+ value);
         if (data){
-            this.case = JSON.parse(data);
+            this.case = data;
             console.log('case ->' + this.case);
             if(this.case.Outcome__c == 'Empty_Slots') {
                 this.isRendered = false;
