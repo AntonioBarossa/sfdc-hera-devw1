@@ -679,6 +679,20 @@
                     <stringValue>Richiesta di ricalcolo fuga acqua</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Screen_Selezione_Tipo_Modifica</targetReference>
             </connector>

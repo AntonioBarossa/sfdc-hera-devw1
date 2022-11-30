@@ -14,4 +14,8 @@ public with sharing class HDT_TRH_Interaction extends HDT_TRH_TriggerHandler {
             interactionsMap.get(activity.Interaction__c).addError('Impossibile chiudere l\'Interazione corrente, in quanto associata ad Attività ancora aperte.');
         }*/
     }
+
+    protected override void beforeInsert() {
+        HDT_UTL_Utils.setUsersField(trigger.new);
+    }
 }

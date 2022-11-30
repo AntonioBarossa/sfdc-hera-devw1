@@ -356,7 +356,7 @@ public inherited sharing class HDT_LC_SaleVas {
                     From SBQQ__Subscription__c 
                     WHERE  
                         SBQQ__Contract__r.Status = 'Attivo' AND SBQQ__Account__c=:searchString 
-                        AND ServicePoint__r.CommoditySector__c='Ambiente'
+                        AND SBQQ__Contract__r.ServicePoint__r.CommoditySector__c='Ambiente'
                     WITH SECURITY_ENFORCED
                     Group by SBQQ__Contract__c 
                     HAVING Count(Id)>1
