@@ -40,7 +40,7 @@ public inherited sharing class HDT_UTL_ConsActivityListController {
         //}
 
         req.setHeader('Content-Type', 'application/json');
-        //req.setbody(httpBody);
+        req.setbody(httpBody);
         req.setTimeout(120000);
 
         System.debug(LoggingLevel.DEBUG, '>>> ' + String.valueOf(req));

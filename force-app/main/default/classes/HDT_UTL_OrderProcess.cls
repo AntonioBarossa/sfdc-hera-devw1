@@ -958,9 +958,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      **/
     public static void creditCheckManager2(Map<Id,SObject>  newOrdersMap, Map<Id,SObject> oldOrdersMap) {
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
-        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
-        List<Order> orderListOldCustomer = new List<Order>();                        
-        List<Order> orderListNewCustomer = new List<Order>();   
+        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>{
+            'oldCustomer' => new List<Order>(),
+            'newCustomer' => new List<Order>()
+        };
         List<Order> orderListcreditCheckPhaseManager = new List<Order>();
         List<Id> orderParentList = new List<Id>();                        
 
@@ -981,14 +982,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     in asincrono.
                     if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
                     */
-                    if('KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c)){                            
-                        orderListOldCustomer.add(newOrder);
+                    if(!'Annullato'.equalsIgnoreCase(newOrder.Phase__c) && !'Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && 'KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c)){                            
+                        orderMapNew.get('oldCustomer').add(newOrder);
                     }
                     /* 
                     @ealpi: vedi precedente commento
                     if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){ */
-                    if('KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c)){
-                        orderListNewCustomer.add(newOrder);
+                    if(!'Annullato'.equalsIgnoreCase(newOrder.Phase__c) && !'Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && 'KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c)){
+                        orderMapNew.get('newCustomer').add(newOrder);
                     }                                      
                 }
                 if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
@@ -1001,13 +1002,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        if (!orderListOldCustomer.isEmpty() || !orderListNewCustomer.isEmpty()){
-            orderMapNew.put('oldCustomer',orderListOldCustomer);
-            orderMapNew.put('newCustomer',orderListNewCustomer); 
-        }
           
         
-        if(!orderMapNew.isEmpty()){
+        if(!orderMapNew.get('newCustomer').isEmpty() || !orderMapNew.get('newCustomer').isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
         }        
         if(!orderListcreditCheckPhaseManager.isEmpty()){

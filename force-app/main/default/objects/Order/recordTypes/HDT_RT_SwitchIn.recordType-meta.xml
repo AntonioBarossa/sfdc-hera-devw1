@@ -116,6 +116,28 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>CreditAcquire__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Revoke__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>AutorizationVolturaThirdTrader__c</picklist>
         <values>
             <fullName>Non Validato</fullName>

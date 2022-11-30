@@ -311,6 +311,11 @@
         <label>Documentale/Copia contratto firmato o non ricevuto</label>
     </customValue>
     <customValue>
+        <fullName>Doppi pagamenti/Incassi</fullName>
+        <default>false</default>
+        <label>Doppi pagamenti/Incassi</label>
+    </customValue>
+    <customValue>
         <fullName>Doppi pagamenti/Incassi - EE</fullName>
         <default>false</default>
         <label>Doppi pagamenti/Incassi - EE</label>

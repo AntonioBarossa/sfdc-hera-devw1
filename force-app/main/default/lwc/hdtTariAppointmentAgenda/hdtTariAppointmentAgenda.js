@@ -62,7 +62,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     @track columnsView = COLUMNSVIEW;
     @track records = [];
     refreshRecord = false;
-    disableConfirmButton = false;
+    disableConfirmButton = true;
+    hideConfirmButton = false;
+    disableManageButton = true;
     isCommunity = false;
     searchType;
     newDateLabel;
@@ -123,13 +125,17 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                 let data = result;
                 if(data.status.localeCompare('success') === 0){
                     this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
+                    this.case.Phase__c = 'Inviata a SAP';
+                    this.createNewActivityAndUpdateCase(this.case, true, null);
                     this.refreshPage(true);
                 }else{ 
                     this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
                     this.showSpinner = false;
+                    this.closeModal();
                 }
             }
         }).catch(error =>{
+            this.closeModal();
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
         });
@@ -163,13 +169,16 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             this.closeModal();
         }else if (event.target.name === 'newDate'){
             this.getNewDate();
-        }
+        }else if (event.target.name === 'Dsa'){
+            this.case.Phase__c = 'Da inviare';
+            this.createNewActivityAndUpdateCase(this.case, true, null);
+            this.refreshPage(true);
+        }    
     }
 
     closeModal(){
         this.showSpinner = true;
         this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
-        this.refreshPage(true);
     }
 
     getAppointmentDate(){
@@ -240,8 +249,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             if(!equalsIgnoreCase(result?.status, 'success')){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
-                this.disableConfirmButton = true; 
-                this.createNewActivityAndUpdateCase(this.case, false, 'Contattare Cliente');
+                this.createNewActivityAndUpdateCase(this.case, false, null);
             }else{
                 //let data = JSON.parse(result);
                 let data = result;
@@ -252,7 +260,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     if(slots.length == 0){
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
                         this.case.Outcome__c ='Empty_Slots';
-                        this.disableConfirmButton = true; 
+                        this.hideConfirmButton = true; 
+                        this.disableManageButton = false;
                     }else{
                         slots.forEach(element => {
                             this.addRecord({
@@ -260,6 +269,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                                 endDate : element.endDate
                             });
                         });
+                        this.disableConfirmButton = false; 
                         this.case.Outcome__c='Recived_Slots';
                         this.createNewActivityAndUpdateCase(this.case, true, null);
                         this.disableCancelButton = false; 

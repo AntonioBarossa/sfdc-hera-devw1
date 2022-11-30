@@ -8,7 +8,7 @@ public with sharing class HDT_UTL_Sales {
      private static HDT_QR_RecordType rtQr = new HDT_QR_RecordType();
 
     public static map<String,String> mapMarcatura = new Map<String,String>{
-        'G1 - MMS Associazione' => 'MMS','G1 - MMS Azienda'=> 'MMS','G1 - MMS Condominio'=> 'MMS','G1 - MMS Ditta individuale'=> 'MMS','G1 - MMS Parti comuni'=> 'MMS','G1 - MMS Persona fisica'=> 'MMS'
+        'G6 - MMS Associazione' => 'MMS','G5 - MMS Condominio'=> 'MMS','G4 - MMS Parti comuni'=> 'MMS','G3 - MMS Azienda'=> 'MMS','G2 - MMS Ditta individuale'=> 'MMS','G1 - MMS Persona fisica'=> 'MMS'
     };//
     public static String getCityAgency(String comune,boolean isEle, boolean isGas){
         String getSDVComune = '';
@@ -488,8 +488,10 @@ public with sharing class HDT_UTL_Sales {
         String contractId = '';
         String servicePointId = '';
         String parentOrderId = '';
+        String orderId = '';
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
         HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
                     
 
@@ -499,8 +501,9 @@ public with sharing class HDT_UTL_Sales {
                     contractId = order.ContractReference__c;
                     servicePointId = order.ServicePoint__c;
                     parentOrderId = order.ParentOrder__c;
+                    orderId = order.Id;
                 
-                    if(String.isNotBlank(contractId)){
+                    if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                         SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                         if(subscription != null){
                             order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
@@ -528,8 +531,10 @@ public with sharing class HDT_UTL_Sales {
         String contractId = '';
         String servicePointId = '';
         String parentOrderId = '';
+        String orderId = '';
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
         HDT_QR_OrderItem qrOrderItems = new HDT_QR_OrderItem();
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
                     
 
@@ -539,8 +544,9 @@ public with sharing class HDT_UTL_Sales {
                     contractId = orderOriginal.ContractReference__c;
                     servicePointId = orderOriginal.ServicePoint__c;
                     parentOrderId = orderOriginal.ParentOrder__c;
+                    orderId = order.Id;
                 
-                    if(String.isNotBlank(contractId)){
+                    if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                         SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                         if(subscription != null){
                             order.CommercialProduct__c = subscription.SBQQ__ProductName__c;
