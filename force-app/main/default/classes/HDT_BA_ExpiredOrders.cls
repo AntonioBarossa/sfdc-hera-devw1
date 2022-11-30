@@ -16,11 +16,11 @@ public with sharing class HDT_BA_ExpiredOrders implements Database.Batchable<sOb
         //Set<String> recordTypeSet = new Set<String>{'HDT_RT_VAS','HDT_RT_ScontiBonus'};
         //Marco Ficorella - 11/11/2022 GestioneAnnullamentoOrdiniNonFirmati --> Recupero Parametri filtro da custom metadata
         List<HDT_NotSignedOrderFilterBatch__mdt> customMtdList = [SELECT ChildOrdersStatus__c,ParentOrdersStatus__c,SignatureMethod__c FROM HDT_NotSignedOrderFilterBatch__mdt where DeveloperName='NotSignedOrders' LIMIT 1];
-        List<String>ChildOrdersStatus=customMtdList[0].ChildOrdersStatus__c.split('\n');
-        List<String>ParentOrdersStatus=customMtdList[0].ParentOrdersStatus__c.split('\n');
-        List<String>SignatureMethod=customMtdList[0].SignatureMethod__c.split('\n');
+        List<String>childOrdersStatus=customMtdList[0].ChildOrdersStatus__c.split('\n');
+        List<String>parentOrdersStatus=customMtdList[0].ParentOrdersStatus__c.split('\n');
+        List<String>signatureMethod=customMtdList[0].SignatureMethod__c.split('\n');
 
-        return Database.getQueryLocator('SELECT Id,Status, DocusignExpirationDate__c,SignatureMethod__c,Phase__c,CancellationReason__c,(select id,Status,Phase__c from Orders__r where Phase__c NOT IN :ChildOrdersStatus ) FROM Order WHERE (DocusignExpirationDate__c != null AND DocusignExpirationDate__c < TODAY ) and Phase__c NOT IN :ParentOrdersStatus and SignatureMethod__c IN :SignatureMethod  ');
+        return Database.getQueryLocator('SELECT Id,Status, DocusignExpirationDate__c,SignatureMethod__c,Phase__c,CancellationReason__c,(select id,Status,Phase__c from Orders__r where Phase__c NOT IN :childOrdersStatus ) FROM Order WHERE (DocusignExpirationDate__c != null AND DocusignExpirationDate__c < TODAY ) and Phase__c NOT IN :parentOrdersStatus and SignatureMethod__c IN :signatureMethod  ');
     }
     
     //BATCH EXECUTE
