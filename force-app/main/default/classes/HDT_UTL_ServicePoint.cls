@@ -419,6 +419,9 @@ public with sharing class HDT_UTL_ServicePoint {
         {
             spNew.SupplyisAddressVerified__c = true;
         }
+        if(mapRes.get('AFNCOMP')!=null && !String.isBlank(mapRes.get('AFNCOMP'))){
+            spNew.NumberOfFamilyMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNCOMP')));
+        }
         Map<String, Account> accBpMap = new Map<String, Account>();
         if(mapRes.get('BP') != null){
             List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
