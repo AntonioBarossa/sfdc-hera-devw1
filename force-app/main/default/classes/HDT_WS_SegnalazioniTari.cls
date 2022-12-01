@@ -48,7 +48,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             Map<String,String> mapObj = new Map<String,String>();
             for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
                 for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                    mapObj.put(f.name, f.value);
+                    if('_' != f.name){ mapObj.put(f.name, f.value);}
                 }
             }
             HDT_UTL_GenerateMultilevelJson gen = new HDT_UTL_GenerateMultilevelJson(mapObj);
@@ -56,8 +56,8 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             system.debug(LoggingLevel.DEBUG, json.serializePretty(mapToSendCallout));
             HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
-            if(STRING.isNotBlank(res.data.noticeId)){
-                HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, NoticeId__c=res.data.noticeId));
+            if(STRING.isNotBlank(res?.data?.noticeId)){
+                HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res.data.noticeId));
             }
 
         } catch (Exception ex) {
