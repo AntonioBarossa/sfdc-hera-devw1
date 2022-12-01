@@ -5247,7 +5247,7 @@
             <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Operatore&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;: Le ricordo che dovrà inviarci l&apos;Istanza di attivazione, al ricevimento richiederemo l&apos;apertura al distributore locale. La data di apertura rappresenterà la decorrenza del suo contratto. Nella prima bolletta le saranno addebitati i diritti fissi di attivazione previsti dalle Condizioni Generali di Contratto.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
                     <operator>EqualTo</operator>
