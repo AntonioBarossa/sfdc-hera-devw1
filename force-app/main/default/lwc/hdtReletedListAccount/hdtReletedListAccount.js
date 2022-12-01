@@ -342,9 +342,11 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             isValidated=false;
         }
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 12){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre ed iniziare per 3!";
+            if(mobilePhonePrefix.value == '+39'){
+                if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                    isValidated=false;
+                    messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre ed iniziare per 3!";
+                }
             }
         }
         if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){

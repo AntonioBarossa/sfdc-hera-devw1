@@ -560,9 +560,11 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
             }
         }
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 10){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre e deve iniziare con 3!";
+            if(mobilePhonePrefix.value == '+39'){
+                if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 10){
+                    isValidated=false;
+                    messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 10 cifre e deve iniziare con 3!";
+                }
             }
         }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
