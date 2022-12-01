@@ -1043,4 +1043,67 @@
         <shortDescription>no configuration found</shortDescription>
         <value>No configuration record found</value>
     </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoDefaultPhase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoDefaultPhase</shortDescription>
+        <value>in attesa processo doc massivo</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoDefaultStatus</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoDefaultStatus</shortDescription>
+        <value>In Lavorazione</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoDefaultCluster</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoDefaultCluster</shortDescription>
+        <value>Segnalazioni</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoDefaultMissingContract</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoDefaultMissingContract</shortDescription>
+        <value>Codice Contratto SAP non trovato:</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoMissingPOD</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoMissingPOD</shortDescription>
+        <value>Nessun POD relazionato al contratto:</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoPODCodeMismatch</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoPODCodeMismatch</shortDescription>
+        <value>Codice POD differente da quello del contratto.</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoAccountCodeMismatch</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoAccountCodeMismatch</shortDescription>
+        <value>Il codice BP nel CSV è differente da quello sul contratto.</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoMissingBillingProf</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoMissingBillingProf</shortDescription>
+        <value>Billing profile non valorizzato.</value>
+    </labels>
+    <labels>
+        <fullName>caseTypeError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>caseTypeError</shortDescription>
+        <value>Valore processo non corretto:</value>
+    </labels>
 </CustomLabels>
