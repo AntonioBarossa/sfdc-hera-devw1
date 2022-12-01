@@ -25,13 +25,36 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
     public override void beforeInsert(){
         Map<String,String> mapResBlacklist = HDT_UTL_Lead.getBlackListMap();
         List<Lead> listNew = trigger.new;
+        List<Lead> leadToCheck = new List<Lead>();
+
        // List<Lead> leadToCheck = new List<Lead>();
         //Map<String,String> leadDomain = new Map<String,String>();
         for(Lead l : listNew){
+
+            if (String.isNotBlank(l.FiscalCode__c)) {
+                l.FiscalCode__c = l.FiscalCode__c.toUpperCase();
+                leadToCheck.add(l);
+            }
+            
             if(l.Country == null || l.Country == '')
             {
                 l.Country = 'ITALIA';
             }
+
+            if (leadToCheck.size()>0) {
+
+                for (Lead tempLead : leadToCheck) {
+                    String fiscalCode = tempLead.FiscalCode__c;
+                    String lastLetter = fiscalCode.right(1);
+                    String fiscalCodeToCheck = fiscalCode.left(15);
+                    String letterControled = HDT_UTL_CalculateFiscalCode.getControlLetter(fiscalCodeToCheck);
+
+                    if(lastLetter != letterControled ){
+                        tempLead.addError('Codice fiscale non valido');
+                    }
+                }
+            }
+            
             if(String.isNotBlank(l.FirstName)){
                 l.FirstName = l.FirstName.toUpperCase();
             }
@@ -266,11 +289,12 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                         l.addError('Error:' + mapResBlacklist.get(s.toUpperCase()));
                     }
                 }
-                if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c)     ) {
+                if (String.isNotBlank(l.FiscalCode__c) && mapOld.get(l.Id)!=null && (mapOld.get(l.Id).FiscalCode__c!=l.FiscalCode__c || mapOld.get(l.Id).Gender__c!=l.Gender__c || mapOld.get(l.Id).Birthcity__c!=l.Birthcity__c || mapOld.get(l.Id).Birthdate__c!=l.Birthdate__c || mapOld.get(l.Id).FirstName!=l.FirstName || mapOld.get(l.Id).LastName!=l.LastName)) {
                     l.FiscalCode__c = l.FiscalCode__c.toUpperCase();
                     setFiscalCodes.add(l.FiscalCode__c);
                     leadToCheck.add(l);
                 }
+
                 if(l.Country == null || l.Country == '')
                 {
                     l.Country = 'ITALIA';
@@ -286,6 +310,7 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject wrp = new HDT_UTL_CheckFiscalCodeTaxNumber.HDT_WRP_FiscalObject();
                     if (mapCodeToCheck.get(tempLead.FiscalCode__c)!=null ) {
                         wrp=mapCodeToCheck.get(tempLead.FiscalCode__c);
+
                        
                        try { // Start RDTR-00_HRAWRM-491 08/09/2021
                             if ( wrp.isValid) {
@@ -305,6 +330,16 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                                 if ( ! HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData,tempLead.FiscalCode__c)) {
                                     tempLead.addError('Inserire un codice fiscale valido');
                                 }
+                                
+                                String fiscalCode = tempLead.FiscalCode__c;
+                                String lastLetter = fiscalCode.right(1);
+                                String fiscalCodeToCheck = fiscalCode.left(15);
+                                String letterControled = HDT_UTL_CalculateFiscalCode.getControlLetter(fiscalCodeToCheck);
+
+                                if(lastLetter != letterControled ){
+                                    tempLead.addError('Inserire un codice fiscale valido');
+                                }
+                                
                                 //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato
 
                             }
