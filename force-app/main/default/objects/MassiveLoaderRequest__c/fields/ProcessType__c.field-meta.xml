@@ -104,6 +104,11 @@
                 <default>false</default>
                 <label>Allineamento Anagrafica</label>
             </value>
+            <value>
+                <fullName>CaricamentoIniziativaDgrer</fullName>
+                <default>false</default>
+                <label>Caricamento Iniziativa DGRER</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
