@@ -434,6 +434,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Product__r.Name,
             SBQQ__Product__r.ProductCode,
             SBQQ__Product__r.Version__c,
+            SBQQ__Product__r.ReferenceMarket__c,
             DelayEffectiveDate__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
