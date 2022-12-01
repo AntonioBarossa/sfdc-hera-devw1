@@ -60,6 +60,11 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         acc.CustomerMarking__c = 'D1 - Persona Fisica';
         acc.Category__C = 'Famiglie';
+        acc.FiscalCode__c = 'SXSRLA45H28H5' + String.valueOf(101);
+        acc.BillingCityCode__c='Roma';
+        acc.BillingStreetName__c='via roma'; 
+        acc.BillingStreetNumber__c='55';
+        acc.CompanyOwner__c='HERA COMM';
         HDT_UTL_DatabaseService.updateSObject(acc);
 
         ordParent.SignatureMethod__c = 'Vocal Order';
@@ -93,6 +98,11 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         acc.CustomerMarking__c = 'D1 - Persona Fisica';
         acc.Category__C = 'Famiglie';
+        acc.FiscalCode__c = 'SXSRLA45H28H5' + String.valueOf(101);
+        acc.BillingCityCode__c='Roma';
+        acc.BillingStreetName__c='via roma'; 
+        acc.BillingStreetNumber__c='55';
+        acc.CompanyOwner__c='HERA COMM';
         HDT_UTL_DatabaseService.updateSObject(acc);
 
         ordParent.SignatureMethod__c = 'Vocal Order';
