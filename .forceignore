@@ -33,3 +33,43 @@ force-app/main/default/customMetadata/HDT_Informative_Configuration*
 
 # This permissionset can only be deployed in Production orgs
 force-app/main/default/permissionsets/HDT_CASB_Permission.permissionset-meta.xml
+
+# Temporary exclusion for Intrawave deploy
+
+force-app/main/default/classes/HDT_LC_MeterReadingController.cls*
+force-app/main/default/classes/HDT_QR_MeterReading.cls*
+force-app/main/default/classes/HDT_SRV_DataEnrichmentPostSales.cls*
+force-app/main/default/classes/HDT_WRP_MeterReading.cls*
+force-app/main/default/classes/HDT_WS_MulesoftCaller.cls*
+force-app/main/default/classes/HDT_SRV_DataEnrichmentPostSales.cls*
+force-app/main/default/classes/HDT_UTL_CalculateTransition.cls*
+force-app/main/default/classes/HDT_UTL_Case.cls*
+force-app/main/default/classes/HDT_UTL_SelfReadings.cls*
+
+force-app/main/default/classes/HDT_LC_ConsActivityListController.cls*
+force-app/main/default/classes/HDT_LC_MeterReadingControllerHelper.cls*
+force-app/main/default/classes/HDT_UTL_ConsActivityListController.cls*
+
+force-app/main/default/customMetadata/HDT_AccountDataEnrichment*
+force-app/main/default/customMetadata/HDT_NotSignedOrderFilterBatch*
+force-app/main/default/customMetadata/HDT_AppointmentSetting*
+force-app/main/default/objects/HDT_NotSignedOrderFilterBatch__mdt
+
+force-app/main/default/flexipages/Contract_Record_Page.flexipage-meta.xml
+force-app/main/default/flexipages/Contract_Record_Page1.flexipage-meta.xml
+
+force-app/main/default/flows/HDT_FL_GestioneAutoletture.flow-meta.xml
+force-app/main/default/flows/HDT_FL_PostSalesMasterDispatch.flow-meta.xml
+force-app/main/default/flows/HDT_FL_GestionePreventivi.flow-meta.xml
+
+force-app/main/default/labels/CustomLabels.labels-meta.xml
+
+force-app/main/default/layouts/HDT_NotSignedOrderFilterBatch__mdt-HDT_FiltroOrdiniNonFirmatiBatch Layout.layout-meta.xml
+
+force-app/main/default/lwc/hdtChooseTypeModal**
+force-app/main/default/lwc/hdtConsActivityListModal**
+force-app/main/default/lwc/hdtConsumptionActivityList**
+force-app/main/default/lwc/hdtMeterReading**
+force-app/main/default/lwc/hdtMeterReadingDetailTable**
+
+force-app/main/default/objects/Contract/Contract.object-meta.xml
