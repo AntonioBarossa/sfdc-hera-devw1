@@ -12,7 +12,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private Integer accountIndex;
     private Integer pdrIndex;
     private Set<String>contractCodes=new Set<String>();
-    private Set<Id>accountIds=new Set<Id>();
     private Map<String,Contract> contractCodePodMap=new Map<String,Contract>();
     public override void checks(){
         //Carico mapping
@@ -33,7 +32,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 continue;
             }
             contractCodes.add(tempSplitedFields[contractIndex]);
-            accountIds.add(tempSplitedFields[accountIndex]);
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
             processObj.csvSplitted = tempSplitedFields;
@@ -52,7 +50,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert=new List<MassiveLoaderRequestItem__c>();
         for(HDT_WRP_ProcessObjects currentObj:processObjList){
-            currentObj.newCase=new Case(Phase__c='in attesa processo doc massivo', Status='In Lavorazione',RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO,Cluster__c='Segnalazioni');
+            currentObj.newCase=new Case(Phase__c=Label.consumoAnomaloIdricoDefaultPhase, Status=Label.consumoAnomaloIdricoDefaultStatus,RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO,Cluster__c=Label.consumoAnomaloIdricoDefaultCluster);
             String fieldConversionError='';
             Integer count = 0;
             for (String tempField : currentObj.csvSplitted) {
@@ -70,7 +68,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 continue;
             }
             if(errorForPicklistValue('Case', 'Type', currentObj.newCase.Type)){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, 'Valore processo non corretto: ' + currentObj.newCase.Type));
+                itemsToSave.add(setErrorItem(currentObj.requestItem, Label.caseTypeError + currentObj.newCase.Type));
                 continue;
             }
             Map<String,Object>integrityResult=integrityChecks(currentObj.csvSplitted);
@@ -106,28 +104,27 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
 
     private Map<String,Object> integrityChecks(List<String>csvSplitted){
         Map<String,Object> retMap=new Map<String,Object>{'errorMessage'=>'','checksAreValid'=>true};
-        if(!contractCodePodMap.containsKey(csvSplitted[contractIndex])){
-            retMap.put('errorMessage','Codice Contratto SAP non trovato: ' + csvSplitted[contractIndex]);
+        if(contractCodePodMap.containsKey(csvSplitted[contractIndex])){
+            if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__c)){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingPOD +csvSplitted[contractIndex]);
+                retMap.put('checksAreValid',false);
+            } else if(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__r.ServicePointCode__c != csvSplitted[pdrIndex]){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoPODCodeMismatch);
+                retMap.put('checksAreValid',false);
+            }
+            if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.SAPIntegrationID__c != csvSplitted[accountIndex]){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoAccountCodeMismatch);
+                retMap.put('checksAreValid',false);
+            }
+            if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__c)){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingBillingProf);
+                retMap.put('checksAreValid',false);
+            }
+        }else{
+            retMap.put('errorMessage',Label.consumoAnomaloIdricoDefaultMissingContract + csvSplitted[contractIndex]);
             retMap.put('checksAreValid',false);
         }
-        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__c)){
-            retMap.put('errorMessage','Nessun POD relazionato al contratto: ' +csvSplitted[contractIndex]);
-            retMap.put('checksAreValid',false);
-        } else if(contractCodePodMap.get(csvSplitted[contractIndex]).ServicePoint__r.ServicePointCode__c != csvSplitted[pdrIndex]){
-            retMap.put('errorMessage','Codice POD differente da quello del contratto');
-            retMap.put('checksAreValid',false);
-        }
-        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).AccountId) ){
-            retMap.put('errorMessage','Nessun Account presente sul contratto');
-            retMap.put('checksAreValid',false);
-        } else if( contractCodePodMap.get(csvSplitted[contractIndex]).Account.SAPIntegrationID__c != csvSplitted[accountIndex]){
-            retMap.put('errorMessage','Il codice BP nel CSV è differente da quello sul contratto');
-            retMap.put('checksAreValid',false);
-        }
-        if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__c)){
-            retMap.put('errorMessage','Billing profile non valorizzato');
-            retMap.put('checksAreValid',false);
-        }
+
         return retMap;
     }
 
