@@ -5173,6 +5173,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WS_GarbageMan</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WS_GenericSapIntegrationAdapter</apexClass>
         <enabled>true</enabled>
     </classAccesses>
