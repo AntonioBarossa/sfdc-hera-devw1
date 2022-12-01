@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>Ambiente</label>
             </value>
+            <value>
+                <fullName>Acqua</fullName>
+                <default>false</default>
+                <label>Acqua</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
