@@ -15,6 +15,7 @@
     &quot;FieldName&quot;: &quot;OperationGroup__c&quot;,
     &quot;Required&quot;: true,
     &quot;Column&quot;: 1,
+    &quot;Label&quot;:&quot;Comune&quot;,
     &quot;ReadOnly&quot;: true
   },
   {

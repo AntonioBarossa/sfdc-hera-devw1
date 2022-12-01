@@ -19,7 +19,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
     /* Il Metodo Save viene chiamato nelle casistiche in cui non si esegue la Stampa Documentale */
     @AuraEnabled
-    public static void save(Order orderParent){ 
+    public static void save(Order orderParent){
 
         updateCommodityWithConsumptionAnalisi(orderParent.Id);
         Order orderParentRetreived = [SELECT Id, Phase__c, ContractSigned__c, SignMode__c, SignatureMethod__c,WasteCommodityType__c,RequestSource__c,DeliveredDocumentation__c FROM Order WHERE Id = :orderParent.Id WITH SECURITY_ENFORCED];
@@ -29,25 +29,18 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         /**@frpanico 2022-04-29
          * Aggiunta gestione del contratto gia firmato
          */
-        if(orderParentRetreived.SignatureMethod__c != null && orderParentRetreived.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+
+
+        if('Ambiente'.equalsIgnoreCase(wasteCommodityType))
+        {
+            handleTariOrder(orderParentRetreived);
+            return;
+        } else if( 'Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c))
         {
             Order parentOrderToUpdate = new Order();
             parentOrderToUpdate.Id = orderParent.Id;
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
-            HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
-            return;
-        }
-        //if(rtName.equalsIgnoreCase('HDT_RT_SubentroAmbiente') ||  rtName.equalsIgnoreCase('HDT_RT_AttivazioneAmbiente') || rtName.equalsIgnoreCase('HDT_RT_CambioTariffa')){
-        if(wasteCommodityType != null && wasteCommodityType.equalsIgnoreCase('Ambiente')){
-            Order parentOrderToUpdate = new Order();
-            parentOrderToUpdate.Id = orderParent.Id;
-            if(orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c.equalsIgnoreCase('Y')){
-                parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
-                parentOrderToUpdate.Status = 'Completed';
-            }else{
-                parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
-            }
             HDT_UTL_DatabaseService.updateSObject(parentOrderToUpdate);
             return;
         }
@@ -79,7 +72,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         orderToUpdate.DocumentPackage__c = 'Richiesto';
         Map<id, Order> quoteIdsMap = new Map<id, Order>();
         Set<Id> quoteIdsDuplicates = new Set<Id>();//if quote is in this set and sp!=null, blank quote
-
+        
         for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 Order o = new Order(
@@ -101,13 +94,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     OutgoingCreditCheckResult__c=mapChildOrders.get(childOrd?.OrderReference__c)?.OutgoingCreditCheckResult__c                        
                 );
                 ordersToUpdate.add(o);//get CCheck Result from offer
-            /*}else if( 'HDT_RT_AgevolazioniAmbiente'== childOrd.RecordType.DeveloperName || 'HDT_RT_ModificaTariffaRimozione'==childOrd.RecordType.DeveloperName){
-                if('3 - Nessuna'.equalsIgnoreCase(childOrd.ApprovalType__c))    continue;
-                Order o = new Order(
-                    Id=childOrd.Id,
-                    Phase__c = 'In attesa Approvazione'
-                );
-                ordersToUpdate.add( o );*/
             }else if(childOrd.RecordType.DeveloperName != 'HDT_RT_ScontiBonus'){
                 if(quoteIdsMap.containsKey(childOrd.SBQQ__Quote__c)){
                     ordersToUpdate.add(new Order( Id = childOrd.Id, isMultipleQuoteOffer__c=true));
@@ -647,6 +633,30 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
         }
 
+    }
+
+    private static void handleTariOrder(Order orderParentRetreived){
+        Order parentOrderToUpdate = new Order();
+        parentOrderToUpdate.Id = orderParentRetreived.Id;
+        if('Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c) || orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c.equalsIgnoreCase('Y')){
+            parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
+            parentOrderToUpdate.Status = 'Completed';
+        }else{
+            parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
+        }
+
+        List<Order> ordersToUpdate = new List<Order>{parentOrderToUpdate};
+
+        for(Order childOrd : orderQr.getChildOrdersByParentId(orderParentRetreived.Id)){
+            if( 'HDT_RT_AgevolazioniAmbiente' == childOrd.RecordType.DeveloperName && childOrd.OrderReference__c != null){
+                Order o = new Order(
+                    Id=childOrd.Id,
+                    Surface__c = childOrd.OrderReference__r.Surface__c
+                );
+                ordersToUpdate.add( o );
+            }
+        }
+        orderSrv.updateRecords(ordersToUpdate);
     }
 
 }
