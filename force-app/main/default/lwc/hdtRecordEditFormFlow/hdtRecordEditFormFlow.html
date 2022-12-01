@@ -106,6 +106,9 @@
                                                 </div>
                                             </template>
                                         </template>
+                                        <template for:each={firstColumnRelatedReadOnly} for:item="field">
+                                            <lightning-input type="text" key={field.apiName} label={field.label} id={field.apiName} value={field.value} readonly></lightning-input>
+                                        </template>
                                     </div>
                                     <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
                                     </div>
@@ -123,6 +126,9 @@
                                                     </lightning-output-field>
                                                 </div>
                                             </template>
+                                        </template>
+                                        <template for:each={secondColumnRelatedReadOnly} for:item="field">
+                                            <lightning-input type="text" key={field.apiName} label={field.label} id={field.apiName} value={field.value} readonly></lightning-input>
                                         </template>
                                     </div>
                                 </div>
