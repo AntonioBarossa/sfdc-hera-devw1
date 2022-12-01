@@ -110,8 +110,8 @@ private class HDT_UTL_ProcessConsumoAnomaloIdricoTst {
         Test.stopTest();
         List<Case> caseList=[SELECT Id FROM Case WHERE Type='Consumo Anomalo Idrico' WITH SECURITY_ENFORCED];
         MassiveLoaderRequest__c myBulkRequestCheck=[SELECT Id,ProcessType__c,RequestKO__c,RequestOK__c FROM MassiveLoaderRequest__c WHERE ProcessType__c='ConsumoAnomaloIdrico' WITH SECURITY_ENFORCED LIMIT 1];
-        System.assertEquals(2,myBulkRequestCheck.RequestOK__c,'2 request is ok');
+        System.assertEquals(2,myBulkRequestCheck.RequestOK__c,'2 requests are ok');
         System.assertEquals(6,myBulkRequestCheck.RequestKO__c,'6 requests are ko');
-        System.assertEquals(2,caseList.size() ,'2 request is ok');
+        System.assertEquals(2,caseList.size() ,'2 cases have been created');
     }
 }
