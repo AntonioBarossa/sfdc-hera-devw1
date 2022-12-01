@@ -220,13 +220,6 @@
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>Get_Activity.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <assignmentItems>
             <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -810,7 +803,7 @@
             <field>Type__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>In gestione</stringValue>
+                <stringValue>Reclamo da Riclassificare</stringValue>
             </value>
         </filters>
         <filters>
