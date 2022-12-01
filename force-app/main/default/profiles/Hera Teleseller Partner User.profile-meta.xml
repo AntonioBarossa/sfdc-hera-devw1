@@ -610,7 +610,12 @@
         <editable>false</editable>
         <field>ProcessMatrix__c.RecordTypeName__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RateCategory__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.Fornitura__c</field>
