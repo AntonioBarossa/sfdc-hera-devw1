@@ -163,6 +163,8 @@ public with sharing class HDT_UTL_ServicePoint {
             else if(mapRes.get('DESCRCOMM')== 'Acqua'){
                 spNew.CommoditySector__c = 'Acqua';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Acqua');
+                //Per la commodity Acqua l'impianto è sempre presente in SAP
+                spNew.PlugPresence__c = 'Si';
             }
             else if(mapRes.get('DESCRCOMM')== 'Ambiente'){
                 spNew.CommoditySector__c = 'Ambiente';
@@ -418,6 +420,9 @@ public with sharing class HDT_UTL_ServicePoint {
            && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA')))
         {
             spNew.SupplyisAddressVerified__c = true;
+        }
+        if(mapRes.get('AFNCOMP')!=null && !String.isBlank(mapRes.get('AFNCOMP'))){
+            spNew.NumberOfFamilyMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNCOMP')));
         }
         Map<String, Account> accBpMap = new Map<String, Account>();
         if(mapRes.get('BP') != null){
