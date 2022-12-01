@@ -42,6 +42,72 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
     }
 
     @isTest
+    static void testSignatureMethodSwitchIn(){
+        Order ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
+        Order ordChild = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, VolturaThirdTrader__c FROM Order WHERE Name='testChildOrderName' LIMIT 1];  
+        Test.startTest();
+        ordChild.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_SwitchIn').getRecordTypeId();
+        ordChild.VolturaThirdTrader__c = true;
+        ordParent.SignatureMethod__c = 'Cartacea';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c, 'next did not work correctly');
+		System.assertNotEquals(null,ordChild.ParentOrder__c, 'next did not work correctly');
+        ordParent.SignatureMethod__c = 'Vocal Order';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+        Account acc = new Account(Id = ordParent.AccountId);
+        acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        acc.CustomerMarking__c = 'D1 - Persona Fisica';
+        acc.Category__C = 'Famiglie';
+        HDT_UTL_DatabaseService.updateSObject(acc);
+
+        ordParent.SignatureMethod__c = 'Vocal Order';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+
+        ordParent.SignatureMethod__c = 'Cartacea';
+        ordChild.SignatureMethod__c = 'Vocal Order';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+
+        Test.stopTest();
+    }
+
+    @isTest
+    static void testSignatureMethodVolturaConSwitch(){
+        Order ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
+        Order ordChild = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, VolturaThirdTrader__c FROM Order WHERE Name='testChildOrderName' LIMIT 1];  
+        Test.startTest();
+        ordChild.RecordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId();
+        ordChild.VolturaThirdTrader__c = true;
+        ordParent.SignatureMethod__c = 'Cartacea';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c, 'next did not work correctly');
+		System.assertNotEquals(null,ordChild.ParentOrder__c, 'next did not work correctly');
+        ordParent.SignatureMethod__c = 'Vocal Order';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+        Account acc = new Account(Id = ordParent.AccountId);
+        acc.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
+        acc.CustomerMarking__c = 'D1 - Persona Fisica';
+        acc.Category__C = 'Famiglie';
+        HDT_UTL_DatabaseService.updateSObject(acc);
+
+        ordParent.SignatureMethod__c = 'Vocal Order';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+
+        ordParent.SignatureMethod__c = 'Cartacea';
+        ordChild.SignatureMethod__c = 'Vocal Order';
+        HDT_UTL_DatabaseService.updateSObject(ordChild);
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+
+        Test.stopTest();
+    }
+
+    @isTest
     static void testEdit(){
         Order ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE Name='testOrderName0' LIMIT 1];
         Order ordChild = [SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE Name='testChildOrderName' LIMIT 1];
