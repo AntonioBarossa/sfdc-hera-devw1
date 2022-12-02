@@ -275,10 +275,21 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.CIAccoutn__c = 'Richiesto';
             }
             when 'HDT_RT_CambioOfferta'{
-                if(String.isNotBlank(order.ServicePoint__r.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(order.ServicePoint__r.CommoditySector__c)){
+                if(String.isNotBlank(currentOrder.ServicePoint__r.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c)){
                     order.EffectiveDate__c = System.today();
                 }else if(order.SignedDate__c != null){                    
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
+                }
+                /**Ribaltamento letture su Order per Cambio offerta Acqua*/
+                if(String.isNotBlank(currentOrder.ServicePoint__r.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c)){
+                    HDT_QR_SelfReadings qrReading = new HDT_QR_SelfReadings();
+                    try {
+                        Reading__c selfRead = qrReading.getReading('Order',currentOrder.Id,'Acqua','ReadingValueMeter__c,ReadingDate__c');
+                        orderToUpdate.ReadingValueMeter__c = selfRead.ReadingValueMeter__c;
+                        orderToUpdate.ReadingCustomerDate__c = selfRead.ReadingDate__c;
+                    } catch (Exception ex) {
+                        //no record
+                    }
                 }
             }
             when 'HDT_RT_VAS'
