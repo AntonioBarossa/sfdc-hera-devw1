@@ -160,11 +160,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         newOrder.WaiverRightAfterthought__c = 'Si';
                     }
                 }
-                /**@frpanico 2022-03-16
-                 * Aggiunta Sconti Bonus
-                 * Predefault Data Decorrenza 
-                 * al primo giorno del mese successivo
-                 */
                 when 'HDT_RT_ScontiBonus'
                 {
                     newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
@@ -183,12 +178,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         
             switch on order.CommodityFormula__c {
                 when 'Acqua' {
-                    //Inizio: Predefault valido per tutti i processi
-                    newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    //Inizio: Predefault valido per tutti i processinewOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
                     newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
-                    //newOrder.Resident__c = ( 'Non Domestico'.equalsIgnoreCase(order.SupplyType__c) && order.ImplantType__c.containsIgnoreCase('promiscuo') );
                     newOrder.ContractExpenses__c = 'Nessuno sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
+                    newOrder.PayPurification__c = order.ServicePoint__r.PayPurification__c;
+                    newOrder.PaySewer__c = order.ServicePoint__r.PaySewer__c;
                     //Fine: Predefault valido per tutti i processi
 
                     //Inizio: Predefault secondo Processo
@@ -196,20 +191,22 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         when 'Prima Attivazione'{
                             newOrder.SecurityDepositExcluded__c  = 'Y';
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
-                            newOrder.PayPurification__c  = 'No - Esente';
-                            newOrder.PaySewer__c  = 'No - Esente';
+                            if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
+                                newOrder.PayPurification__c = 'No - Esente';
+                                newOrder.PaySewer__c = 'No - Esente';
+                            }
+                            else{
+                                newOrder.PayPurification__c = 'Si - Paga';
+                                newOrder.PaySewer__c = 'Si - Paga';
+                            }
                         }
                         when 'Connessione con Attivazione'{
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
                             newOrder.VAT__c = 'Iva 10% (Cod. 01)';
-                            newOrder.PaySewer__c = 'No - Esente';
-                            newOrder.PayPurification__c = 'No - Esente';
                             newOrder.ResidentDomesticHousingUnit__c = 1;
                         }
                         when 'Subentro'{
-                            newOrder.PaySewer__c = 'Si - Paga';
-                            newOrder.PayPurification__c = 'Si - Paga';
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                         }
                         when 'Cambio Offerta'
@@ -234,7 +231,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     //Per ogni ratecategory
                     newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
                     newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
-
                     // Fine: Predefault secondo RateCategory
                     
                 }
