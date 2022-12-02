@@ -25,7 +25,8 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
     }
 
     public class HDT_WRP_ResponseData{
-        @AuraEnabled public String esito {get;set;}
+        @AuraEnabled public String outcome {get;set;}
+        @AuraEnabled public String errorMessage {get;set;}
         @AuraEnabled public String noticeId {get;set;}
     }
 

@@ -117,9 +117,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(cluster.equalsIgnoreCase('Attivazioni'))
         {
             result = validateAttivazioniPostSales(fields);
-        }else if(caseType=='Cessazione' || caseType=='Cessazione post accertamento')   
+        }else if(   'Cessazione'.equalsIgnoreCase(caseType) || 'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
+                    'Modifica dati contrattuali'.equalsIgnoreCase(caseType) || 'Modifica post accertamento'.equalsIgnoreCase(caseType) )   
         {
-            result = cessazioneValidate(currentCase, fields);
+            result = cessazioneVariazioneValidate(currentCase, fields);
         }else if(caseType=='Errore di Fatturazione'){
             result = validateErroreFatturazione(currentCase, fields);
         }else {
@@ -132,7 +133,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    private String cessazioneValidate(Case currCase, String fields){
+    private String cessazioneVariazioneValidate(Case currCase, String fields){
         //system.debug('init validate');
         //String result = '';
         HDT_UTL_CityDataTariValidation cityDataTariValidation = new HDT_UTL_CityDataTariValidation();
