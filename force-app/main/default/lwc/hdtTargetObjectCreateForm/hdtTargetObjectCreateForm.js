@@ -171,7 +171,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         mapFieldReq = this.fieldRequiredMapping();
         var fieldReqParse = fieldsDataReq.toString();
         let fieldReq = fieldReqParse.split(",");
-
+        console.log('### this.fieldsData --> ' + fieldsData)
         fieldsDataReq.forEach(element => {
             console.log('this.fieldsDataReq --> '+fieldsDataReq);
             mapFieldReq.set(element, true);
@@ -182,7 +182,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('this.recordtype.label --> '+this.recordtype.label);
         fieldsData.forEach(element => {
             console.log('this.element --> '+element);
-
             if (this.selectedservicepoint != undefined && this.processtype == '') {
 
                 if (element == 'CommoditySector__c') {
@@ -534,6 +533,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
+        console.log('### Obj --> ' + JSON.stringify(fieldsDataObject))
+        let accountIndex = fieldsDataObject.findIndex(el => el.fieldname === 'Account__c');
+        console.log('### Account Index --> ' + accountIndex);
+        if(accountIndex > -1)
+        {
+            fieldsDataObject[accountIndex].required = false;
+            fieldsDataObject[accountIndex].disabled = true;
+        }
         return fieldsDataObject;
     }
 
