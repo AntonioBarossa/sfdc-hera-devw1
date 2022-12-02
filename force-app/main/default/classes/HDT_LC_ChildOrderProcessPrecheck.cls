@@ -212,7 +212,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             newOrder.PayPurification__c = 'Si - Paga';
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                         }
-                        when 'Cambio Offerte'
+                        when 'Cambio Offerta'
                         {
                             newOrder.EffectiveDate__c = System.Today();
                         }

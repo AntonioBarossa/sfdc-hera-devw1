@@ -197,6 +197,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if('si'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Completata', 'Annullato');
             if('no'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Annullato');
         }
+        if('HDT_RT_VerificheAcqua'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName) && 'Inviare Resoconto Verifica'.equalsIgnoreCase(activityType)){
+            return new HDT_WRP_UpdateSobj('Inviato resoconto');
+        }
         return null;
     }
     
