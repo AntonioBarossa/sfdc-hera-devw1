@@ -533,9 +533,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
-        console.log('### Obj --> ' + JSON.stringify(fieldsDataObject))
         let accountIndex = fieldsDataObject.findIndex(el => el.fieldname === 'Account__c');
-        console.log('### Account Index --> ' + accountIndex);
         if(accountIndex > -1)
         {
             fieldsDataObject[accountIndex].required = false;
