@@ -1020,7 +1020,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             update newOrderList;
 
-            System.assertEquals(2, HDT_QR_ActivityCustom.getActivityListCrediCheck(ordersId).size(), 'Le Activity di credit check non sono state create');
+            System.assertEquals(2, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non sono state create');
 
             Test.startTest();
 
@@ -1030,7 +1030,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             
             Test.stopTest();
 
-            System.assertEquals(0, HDT_QR_ActivityCustom.getActivityListCrediCheck(ordersId).size(), 'Le Activity di credit check non si sono chiuse');
+            System.assertEquals(0, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non si sono chiuse');
         }
     }
 
