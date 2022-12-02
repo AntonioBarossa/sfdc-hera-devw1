@@ -199,21 +199,6 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
         }
 
         List<Case> automaticDiscard = new List<Case>();
-        /* if (!casesToUpdate.isEmpty()){
-            List<Database.SaveResult> dsList = Database.update(casesToUpdate, false);
-            for (Database.SaveResult ds : dsList){
-                if (ds.isSuccess() && isAutomaticDiscardCasesMap.containsKey(ds.getId()) && isAutomaticDiscardCasesMap.get(ds.getId())){
-                    automaticDiscard.add(
-                        new Case(
-                            Id = ds.getId(),
-                            Phase__c = 'Annullato'
-                        )
-                    );
-                }else if (!ds.isSuccess()){
-                    this.setErrorMap(errorMessageRequestMap, ds.getId(), ds.getErrors());
-                }
-            }
-        } */
 
         for (List<Case> casesToUpdate : phaseToCaseMap.values()){
             this.updateCaseList(casesToUpdate, isAutomaticDiscardCasesMap, automaticDiscard, errorMessageRequestMap);
