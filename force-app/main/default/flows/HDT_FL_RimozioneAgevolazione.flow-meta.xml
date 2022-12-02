@@ -3,8 +3,8 @@
     <actionCalls>
         <name>check_Resulting_Orderitems</name>
         <label>check Resulting Orderitems</label>
-        <locationX>358</locationX>
-        <locationY>1334</locationY>
+        <locationX>440</locationX>
+        <locationY>1454</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -28,7 +28,7 @@
     <actionCalls>
         <name>checkCommunity</name>
         <label>checkCommunity</label>
-        <locationX>358</locationX>
+        <locationX>176</locationX>
         <locationY>734</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -47,8 +47,8 @@
     <actionCalls>
         <name>RedirectToCase</name>
         <label>RedirectToCase</label>
-        <locationX>358</locationX>
-        <locationY>2726</locationY>
+        <locationX>440</locationX>
+        <locationY>2846</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -64,8 +64,8 @@
     <assignments>
         <name>Annullamento</name>
         <label>Annullamento</label>
-        <locationX>754</locationX>
-        <locationY>2054</locationY>
+        <locationX>704</locationX>
+        <locationY>2174</locationY>
         <assignmentItems>
             <assignToReference>Annulla_Ordini.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -108,7 +108,7 @@
     <assignments>
         <name>AssignFornitura</name>
         <label>AssignFornitura</label>
-        <locationX>446</locationX>
+        <locationX>264</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>theCase.Contract__c</assignToReference>
@@ -131,8 +131,8 @@
     <assignments>
         <name>Populate_ChildOrder</name>
         <label>Populate ChildOrder</label>
-        <locationX>138</locationX>
-        <locationY>2174</locationY>
+        <locationX>352</locationX>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>Assign_Parent_Order.ParentOrder__c</assignToReference>
             <operator>Assign</operator>
@@ -173,11 +173,37 @@
         </connector>
     </assignments>
     <decisions>
+        <name>Check_If_Quote_Found</name>
+        <label>Check If Quote Found</label>
+        <locationX>176</locationX>
+        <locationY>1214</locationY>
+        <defaultConnector>
+            <targetReference>CreatingOrders</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OK</defaultConnectorLabel>
+        <rules>
+            <name>QuoteIdNull</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetQuote</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>schermata_errore</targetReference>
+            </connector>
+            <label>QuoteId null</label>
+        </rules>
+    </decisions>
+    <decisions>
         <description>Amend solo negativo</description>
         <name>Is_Amendment_Valid</name>
         <label>Is Amendment Valid</label>
-        <locationX>358</locationX>
-        <locationY>1814</locationY>
+        <locationX>440</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Annulla_Ordini</targetReference>
         </defaultConnector>
@@ -197,27 +223,11 @@
             </connector>
             <label>Amend Ok</label>
         </rules>
-        <rules>
-            <name>QuoteId_null</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetQuote</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <isGoTo>true</isGoTo>
-                <targetReference>schermata_errore</targetReference>
-            </connector>
-            <label>QuoteId null</label>
-        </rules>
     </decisions>
     <decisions>
         <name>riprendi_processo</name>
         <label>riprendi processo</label>
-        <locationX>358</locationX>
+        <locationX>176</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Selezione_Contratto_Agev</targetReference>
@@ -257,8 +267,8 @@
     <loops>
         <name>Annulla_Ordini</name>
         <label>Annulla Ordini</label>
-        <locationX>666</locationX>
-        <locationY>1934</locationY>
+        <locationX>616</locationX>
+        <locationY>2054</locationY>
         <collectionReference>getOrdersCreated</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -271,8 +281,8 @@
     <loops>
         <name>Assign_Parent_Order</name>
         <label>Assign_Parent_Order</label>
-        <locationX>50</locationX>
-        <locationY>2054</locationY>
+        <locationX>264</locationX>
+        <locationY>2174</locationY>
         <collectionReference>getOrdersCreated</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -304,8 +314,8 @@
     <recordCreates>
         <name>CreateParentOrder</name>
         <label>CreateParentOrder</label>
-        <locationX>50</locationX>
-        <locationY>1934</locationY>
+        <locationX>264</locationX>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Assign_Parent_Order</targetReference>
         </connector>
@@ -357,7 +367,7 @@
     <recordCreates>
         <name>insert_the_case_rimozioneAgev</name>
         <label>insert the case</label>
-        <locationX>446</locationX>
+        <locationX>264</locationX>
         <locationY>518</locationY>
         <connector>
             <targetReference>checkCommunity</targetReference>
@@ -367,7 +377,7 @@
     <recordLookups>
         <name>ContrattoAgevolazione</name>
         <label>ContrattoAgevolazione</label>
-        <locationX>358</locationX>
+        <locationX>176</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -388,8 +398,8 @@
     <recordLookups>
         <name>getOrdersCreated</name>
         <label>getOrdersCreated</label>
-        <locationX>358</locationX>
-        <locationY>1454</locationY>
+        <locationX>440</locationX>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordTypeChild</targetReference>
@@ -409,11 +419,11 @@
     <recordLookups>
         <name>GetQuote</name>
         <label>GetQuote</label>
-        <locationX>358</locationX>
+        <locationX>176</locationX>
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CreatingOrders</targetReference>
+            <targetReference>Check_If_Quote_Found</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -444,8 +454,8 @@
     <recordLookups>
         <name>getRecordTypeChild</name>
         <label>getRecordTypeChild</label>
-        <locationX>358</locationX>
-        <locationY>1574</locationY>
+        <locationX>440</locationX>
+        <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordTypeParent</targetReference>
@@ -472,8 +482,8 @@
     <recordLookups>
         <name>getRecordTypeParent</name>
         <label>getRecordTypeParent</label>
-        <locationX>358</locationX>
-        <locationY>1694</locationY>
+        <locationX>440</locationX>
+        <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Amendment_Valid</targetReference>
@@ -500,8 +510,8 @@
     <recordUpdates>
         <name>CreatingOrders</name>
         <label>CreatingOrders</label>
-        <locationX>358</locationX>
-        <locationY>1214</locationY>
+        <locationX>440</locationX>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>check_Resulting_Orderitems</targetReference>
         </connector>
@@ -534,8 +544,8 @@
     <recordUpdates>
         <name>In_Lavorazione</name>
         <label>In Lavorazione</label>
-        <locationX>50</locationX>
-        <locationY>2510</locationY>
+        <locationX>264</locationX>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>RedirectToCase</targetReference>
         </connector>
@@ -564,8 +574,8 @@
     <recordUpdates>
         <name>Update_orders</name>
         <label>Update orders</label>
-        <locationX>50</locationX>
-        <locationY>2390</locationY>
+        <locationX>264</locationX>
+        <locationY>2510</locationY>
         <connector>
             <targetReference>In_Lavorazione</targetReference>
         </connector>
@@ -574,8 +584,8 @@
     <recordUpdates>
         <name>Update_orders_KO</name>
         <label>Update orders KO</label>
-        <locationX>666</locationX>
-        <locationY>2270</locationY>
+        <locationX>616</locationX>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>schermata_errore</targetReference>
         </connector>
@@ -584,7 +594,7 @@
     <screens>
         <name>amendContract</name>
         <label>amendContract</label>
-        <locationX>358</locationX>
+        <locationX>176</locationX>
         <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -618,8 +628,8 @@
     <screens>
         <name>schermata_errore</name>
         <label>schermata errore</label>
-        <locationX>666</locationX>
-        <locationY>2390</locationY>
+        <locationX>616</locationX>
+        <locationY>2510</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -637,7 +647,7 @@
     <screens>
         <name>Selezione_Contratto_Agev</name>
         <label>Selezione Contratto Agev</label>
-        <locationX>446</locationX>
+        <locationX>264</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -669,7 +679,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>232</locationX>
+        <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>riprendi_processo</targetReference>
