@@ -141,13 +141,14 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    createNewActivityAndUpdateCase(caso, updateCase, templateName){
+    createNewActivityAndUpdateCase(caso, updateCase, templateName, refreshPage){
         handleNewActivityCreationAndCaseUpdate({
             caso : caso,
             updateCase : updateCase,
             templateName : templateName
         }).then(result =>{
             console.log(result);
+            if(refreshPage) this.refreshPage(true);
         }).catch(error =>{
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
@@ -170,9 +171,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         }else if (event.target.name === 'newDate'){
             this.getNewDate();
         }else if (event.target.name === 'Dsa'){
-            this.case.Phase__c = 'Da inviare';
-            this.createNewActivityAndUpdateCase(this.case, true, null);
-            this.refreshPage(true);
+            this.case.Phase__c = 'Da Inviare';
+            this.createNewActivityAndUpdateCase(this.case, true, null, true);
         }    
     }
 

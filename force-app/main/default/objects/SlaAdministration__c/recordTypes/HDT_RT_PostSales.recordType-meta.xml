@@ -242,6 +242,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione procedurale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Back Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestire fuga</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione dati discordanti</fullName>
             <default>false</default>
         </values>
@@ -1642,6 +1654,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
@@ -1814,19 +1830,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Profiles Chamber</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Quality Call KO</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Quality Call OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Quicklinks</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1988,6 +1996,10 @@
         </values>
         <values>
             <fullName>Autolettura da processo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura Acqua Avviso al Cliente - Acqua</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2446,6 +2458,29 @@
             <fullName>Verifica Tensione - Pressione</fullName>
             <default>false</default>
         </values>
+        
+        
+        
+        
+    
+        <values>
+            <fullName>Interventi con Verifica - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Pressione - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Integrita Sigilli - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Fuga Idrica - Acqua</fullName>
+            <default>false</default>
+        </values>
+
+
         <values>
             <fullName>Verifica Titolarità POD%2FPDR</fullName>
             <default>false</default>
@@ -3443,6 +3478,10 @@
         </values>
         <values>
             <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>

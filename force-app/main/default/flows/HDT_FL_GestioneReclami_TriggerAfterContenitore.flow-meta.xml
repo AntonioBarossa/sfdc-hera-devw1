@@ -254,12 +254,19 @@
         </rules>
         <rules>
             <name>Annullato</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Loop_sui_case_nel_Contenitore.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Annullato</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Loop_sui_case_nel_Contenitore.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Bozza Annullata</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -410,10 +417,17 @@
             <name>Contenitore_Chiuso</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CounterChiuso</leftValueReference>
+                <leftValueReference>CounterChiusoAnnullato</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <elementReference>CounterElements</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CounterChiuso</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -439,6 +453,13 @@
     </decisions>
     <description>Trigger Flow che gestisce l&apos;avanzamento della fase del Case Contenitore all&apos;interno del Cluster Reclami</description>
     <environments>Default</environments>
+    <formulas>
+        <description>Conteggio di tutti i reclami chiusi e annullati all&apos;interno di un contenitore</description>
+        <name>CounterChiusoAnnullato</name>
+        <dataType>Number</dataType>
+        <expression>{!CounterAnnullato} + {!CounterChiuso}</expression>
+        <scale>0</scale>
+    </formulas>
     <interviewLabel>GestioneReclami_TriggerAfterContenitore {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Trigger After Contenitore</label>
     <loops>
