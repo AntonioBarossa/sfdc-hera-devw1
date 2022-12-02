@@ -1535,7 +1535,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 String oldPhase = ((Order) oldObjectMap.get(newOrd.Id)).Phase__c;
                 String newPhase = newOrd.Phase__c;
                 if (String.isNotBlank(newPhase) && !newPhase.equalsIgnoreCase(oldPhase) && orderPhaseToCheck.contains(newPhase.toUpperCase()) && String.isNotBlank(creditCheckOutcome) &&
-                (String.isBlank(newOrd.PhaseStory__c) || !newOrd.PhaseStory__c.containsIgnoreCase('Annullato'))){
+                (String.isBlank(newOrd.PhaseStory__c) || (!newOrd.PhaseStory__c.containsIgnoreCase('Annullato') && !newOrd.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata')))){
                     ordersId.add(newOrd.Id);
                 }
             }
