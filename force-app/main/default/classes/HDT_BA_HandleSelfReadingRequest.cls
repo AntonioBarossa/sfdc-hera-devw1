@@ -37,7 +37,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
 
     public void execute(Database.BatchableContext context, List<SObject> scope){
         Map<Id,List<String>> errorMessageRequestMap = new Map<Id,List<String>>();
-        List<Case> casesToUpdate = new List<Case>();
+        Map<String,List<Case>> phaseToCaseMap = new Map<String,List<Case>>();
         Map<Id,wrts_prcgvr__Activity__c> activitiesToCreateMap = new Map<Id,wrts_prcgvr__Activity__c>();
         List<SelfReadingOutcomeRequest__c> requestToUpdate = new List<SelfReadingOutcomeRequest__c>();
         List<Id> requestToDelete = new List<Id>();
@@ -180,7 +180,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
                  */
                 if (isAutomaticDiscard || !mapCaseInAnnulato.containsKey(caseToUpdate.Id)){
                     isAutomaticDiscardCasesMap.put(caseToUpdate.Id, isAutomaticDiscard);
-                    casesToUpdate.add(caseToUpdate);
+                    this.orderCaseByPhase(caseToUpdate, phaseToCaseMap);
                 }
             }catch (Exception e){
                 selfReadingRequest.Status__c = 'ERROR';
@@ -199,7 +199,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
         }
 
         List<Case> automaticDiscard = new List<Case>();
-        if (!casesToUpdate.isEmpty()){
+        /* if (!casesToUpdate.isEmpty()){
             List<Database.SaveResult> dsList = Database.update(casesToUpdate, false);
             for (Database.SaveResult ds : dsList){
                 if (ds.isSuccess() && isAutomaticDiscardCasesMap.containsKey(ds.getId()) && isAutomaticDiscardCasesMap.get(ds.getId())){
@@ -213,6 +213,10 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
                     this.setErrorMap(errorMessageRequestMap, ds.getId(), ds.getErrors());
                 }
             }
+        } */
+
+        for (List<Case> casesToUpdate : phaseToCaseMap.values()){
+            this.updateCaseList(casesToUpdate, isAutomaticDiscardCasesMap, automaticDiscard, errorMessageRequestMap);
         }
         if (!automaticDiscard.isEmpty()){
             List<Database.SaveResult> dsList = Database.update(automaticDiscard, false);
@@ -287,6 +291,34 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
         for (Database.Error error : errors){
             if (String.isNotBlank(error.getMessage())){
                 errorMessageRequestMap.get(caseId).add(error.getMessage());
+            }
+        }
+    }
+
+    private void orderCaseByPhase(Case caseToUpdate, Map<String,List<Case>> phaseToCaseMap){
+        if (caseToUpdate == null){
+            return;
+        }
+        if (!phaseToCaseMap.containsKey(caseToUpdate.Phase__c)){
+            phaseToCaseMap.put(caseToUpdate.Phase__c, new List<Case>());
+        }
+        phaseToCaseMap.get(caseToUpdate.Phase__c).add(caseToUpdate);
+    }
+
+    private void updateCaseList(List<Case> casesToUpdate, Map<Id,Boolean> isAutomaticDiscardCasesMap,List<Case> automaticDiscard,Map<Id,List<String>> errorMessageRequestMap ){
+        if (!casesToUpdate.isEmpty()){
+            List<Database.SaveResult> dsList = Database.update(casesToUpdate, false);
+            for (Database.SaveResult ds : dsList){
+                if (ds.isSuccess() && isAutomaticDiscardCasesMap.containsKey(ds.getId()) && isAutomaticDiscardCasesMap.get(ds.getId())){
+                    automaticDiscard.add(
+                        new Case(
+                            Id = ds.getId(),
+                            Phase__c = 'Annullato'
+                        )
+                    );
+                }else if (!ds.isSuccess()){
+                    this.setErrorMap(errorMessageRequestMap, ds.getId(), ds.getErrors());
+                }
             }
         }
     }
