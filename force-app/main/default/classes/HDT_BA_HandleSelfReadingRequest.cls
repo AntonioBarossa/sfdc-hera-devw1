@@ -292,7 +292,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
     }
 
     private void updateCaseList(List<Case> casesToUpdate, Map<Id,Boolean> isAutomaticDiscardCasesMap,List<Case> automaticDiscard,Map<Id,List<String>> errorMessageRequestMap ){
-        if (caseToUpdate != null && !casesToUpdate.isEmpty()){
+        if (casesToUpdate != null && !casesToUpdate.isEmpty()){
             List<Database.SaveResult> dsList = Database.update(casesToUpdate, false);
             for (Database.SaveResult ds : dsList){
                 if (ds.isSuccess() && isAutomaticDiscardCasesMap.containsKey(ds.getId()) && isAutomaticDiscardCasesMap.get(ds.getId())){
