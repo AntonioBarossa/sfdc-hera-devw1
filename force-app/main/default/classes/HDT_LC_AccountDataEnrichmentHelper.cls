@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 02-12-2022
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
 
@@ -131,6 +138,9 @@ public inherited sharing class HDT_LC_AccountDataEnrichmentHelper {
             }	
             when 'ServicePoint__c' {
                 fieldApiName = 'Account__c';
+            }
+            when 'Case' {
+                fieldApiName = 'AccountId';
             }
         }
 
