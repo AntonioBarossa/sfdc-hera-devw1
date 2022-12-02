@@ -686,6 +686,11 @@
                 <label>Rapporti con i distributori e SII</label>
             </value>
             <value>
+                <fullName>Reclamo da Riclassificare</fullName>
+                <default>false</default>
+                <label>Reclamo da Riclassificare</label>
+            </value>
+            <value>
                 <fullName>Recupero contratto da Postel</fullName>
                 <default>false</default>
                 <label>Recupero contratto da Postel</label>
