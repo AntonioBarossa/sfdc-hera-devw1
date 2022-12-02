@@ -1004,7 +1004,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
           
         
-        if(!orderMapNew.get('newCustomer').isEmpty() || !orderMapNew.get('newCustomer').isEmpty()){
+        if(!orderMapNew.get('newCustomer').isEmpty() || !orderMapNew.get('oldCustomer').isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
         }        
         if(!orderListcreditCheckPhaseManager.isEmpty()){
