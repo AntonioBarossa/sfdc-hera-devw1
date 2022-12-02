@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 16-11-2022
+ * @last modified on  : 02-12-2022
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -89,19 +89,6 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
     }
 
     @isTest
-    public static void newActivityTest() {
-
-        Case caso = new Case();
-        insert caso;
-        caso.Outcome__c='test';
-        Test.startTest();
-        String templateName= 'Contattare Cliente';
-        HDT_LC_AppointmentTariAgenda.handleNewActivityCreationAndCaseUpdate(caso, true , 'Contattare Cliente');
-        System.assertEquals(templateName, 'Contattare Cliente', 'test');
-        Test.stopTest();
-    }
-
-    @isTest
     public static void viewTest() {
 
         Case caso = new Case();
@@ -116,7 +103,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         appView.correlationId='';
         appView.timestamp='';
         HDT_LC_AppointmentTariAgenda.HDT_WRP_AppointmentView data = new HDT_LC_AppointmentTariAgenda.HDT_WRP_AppointmentView();
-        data.stanoticeNumbertus='';
+        data.noticeNumber='';
         data.appointmentType='';
         data.startDate='';
         data.endDate='';
@@ -184,7 +171,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         Test.startTest();
         List<Case> cases = new List<Case>();
         cases.add(caso);
-        HDT_LC_AppointmentTariAgenda.updateCase(cases);
+        insert cases;
 
         List<String> fields = new List<String>();
         fields.add('Id');
