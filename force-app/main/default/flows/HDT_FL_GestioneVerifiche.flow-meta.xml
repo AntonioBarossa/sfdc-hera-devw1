@@ -417,13 +417,6 @@
                     <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Get_Case.Type</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Verifica GDM</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Aggiorna_Amount_0</targetReference>
             </connector>
@@ -734,13 +727,6 @@
                     <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>Get_Case.Type</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Verifica GDM</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>OperationCode_Valorizzato</targetReference>
             </connector>
@@ -764,13 +750,6 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>MMS</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Case.Type</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Verifica GDM</stringValue>
                 </rightValue>
             </conditions>
             <connector>
