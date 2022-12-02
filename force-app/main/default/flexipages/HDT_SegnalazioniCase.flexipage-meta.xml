@@ -543,6 +543,15 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>Case.HDT_OdlAds</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Account.Name}</leftValue>
+                                    <operator>NE</operator>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
