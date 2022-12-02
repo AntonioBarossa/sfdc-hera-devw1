@@ -200,9 +200,10 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
 
         List<Case> automaticDiscard = new List<Case>();
 
-        for (List<Case> casesToUpdate : phaseToCaseMap.values()){
-            this.updateCaseList(casesToUpdate, isAutomaticDiscardCasesMap, automaticDiscard, errorMessageRequestMap);
-        }
+        this.updateCaseList(phaseToCaseMap.get('Esito OK da SAP'), isAutomaticDiscardCasesMap, automaticDiscard, errorMessageRequestMap);
+        this.updateCaseList(phaseToCaseMap.get('Esito KO pre-MDM'), isAutomaticDiscardCasesMap, automaticDiscard, errorMessageRequestMap);
+        this.updateCaseList(phaseToCaseMap.get('Esito KO da SAP'), isAutomaticDiscardCasesMap, automaticDiscard, errorMessageRequestMap);
+        
         if (!automaticDiscard.isEmpty()){
             List<Database.SaveResult> dsList = Database.update(automaticDiscard, false);
             for (Database.SaveResult ds : dsList){
