@@ -1002,6 +1002,39 @@ public with sharing class HDT_UTL_OrderProcessTst {
     }
 
     @isTest
+    public static void testCreditCheckActivityManagement() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> newOrderList = [SELECT Id 
+                                        FROM Order WHERE IsTransition__c = false LIMIT 2];
+        
+            newOrderList[0].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[1].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[0].CreditCheckDescription__c = 'TEST';
+            newOrderList[1].CreditCheckDescription__c = 'TEST';
+
+            Set<Id> ordersId = new Set<Id>{newOrderList[0].Id,newOrderList[1].Id};
+
+            update newOrderList;
+
+            System.assertEquals(2, HDT_QR_ActivityCustom.getActivityListCrediCheck(ordersId).size(), 'Le Activity di credit check non sono state create');
+
+            Test.startTest();
+
+            newOrderList[0].Phase__c = 'Annullato';
+            newOrderList[1].Phase__c = 'Annullato';
+            update newOrderList;
+            
+            Test.stopTest();
+
+            System.assertEquals(0, HDT_QR_ActivityCustom.getActivityListCrediCheck(ordersId).size(), 'Le Activity di credit check non si sono chiuse');
+        }
+    }
+
+    @isTest
     public static void testUpdateChildOrderIvr() {
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
