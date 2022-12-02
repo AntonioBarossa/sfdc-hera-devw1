@@ -314,6 +314,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 famils.add((String) ag.get('fam'));
         }
         famils.add('Promozione');
+        //aggiunto per gestire il link degli order in caso di Amend di aggiunta agevolazione
+        famils.add('Opzioni TARI');
         return famils;
     }
 
