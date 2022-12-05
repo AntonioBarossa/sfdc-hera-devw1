@@ -38,7 +38,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
 
         List<HDT_WRP_HerokuPostSalesManager> wrpResponses = new List<HDT_WRP_HerokuPostSalesManager>();
         Map<String, Object> argsMap = (Map<String, Object>) args;
-        SObject obj = (SObject) argsMap.get('sender');
+        Case caso = (Case) argsMap.get('sender');
         Map<String, String> parameters = (Map<String, String>) argsMap.get(
             'parameters'
         );
@@ -52,13 +52,15 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                     if('_' != f.name){ mapObj.put(f.name, f.value);}
                 }
             }
+            handleModifyRequest(caso, mapObj);
+
             HDT_UTL_GenerateMultilevelJson gen = new HDT_UTL_GenerateMultilevelJson(mapObj);
             Map<String, Object> mapToSendCallout = gen.generateMap();
             system.debug(LoggingLevel.DEBUG, json.serializePretty(mapToSendCallout));
             HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
-            if(STRING.isNotBlank(res?.data?.noticeId)){
-                HDT_UTL_DatabaseService.updateSObject(new Case(Id=obj.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res.data.noticeId));
+            if(STRING.isNotBlank(res?.data?.noticeId) && STRING.isBlank(caso.NoticeId__c)){
+                HDT_UTL_DatabaseService.updateSObject(new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res.data.noticeId));
             }
 
         } catch (Exception ex) {
@@ -74,5 +76,18 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         response.success = true;
         response.message = 'OK';
         return response;
+    }
+
+    private static void handleModifyRequest(Case caso, Map<String, String> mapObj){
+        /*  HANDLE BP FITTIZIO  */
+        if(caso.AccountId == null){
+            mapObj.putAll(new Map<String, String>
+                {
+                    'accountIntegrationId' => '1000000000',
+                    'csn' => '1000000000'                    
+                }
+            );
+        }
+        /*  HANDLE BP FITTIZIO  */
     }
 }

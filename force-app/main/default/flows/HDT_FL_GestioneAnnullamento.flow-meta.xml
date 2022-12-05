@@ -1339,8 +1339,8 @@
     <decisions>
         <name>InviataHeroku</name>
         <label>Inviata ad Heroku?</label>
-        <locationX>1172</locationX>
-        <locationY>2080</locationY>
+        <locationX>1170</locationX>
+        <locationY>2081</locationY>
         <defaultConnector>
             <targetReference>Close_Activity_Case</targetReference>
         </defaultConnector>
@@ -1436,7 +1436,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>GetCase.Type</leftValueReference>
-                <operator>EqualTo</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Switch Out SII</stringValue>
                 </rightValue>
