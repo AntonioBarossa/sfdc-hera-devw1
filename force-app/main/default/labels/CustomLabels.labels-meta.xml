@@ -1113,7 +1113,6 @@
         <shortDescription>consumoAnomaloIdricoE1KOPhase</shortDescription>
         <value>Comunicazionee EngageOne KO</value>
     </labels>
-
     <labels>
         <fullName>consumoAnomaloIdricoE1WaitPhase</fullName>
         <language>en_US</language>
@@ -1121,12 +1120,39 @@
         <shortDescription>consumoAnomaloIdricoE1WaitPhase</shortDescription>
         <value>In attesa esito EngageOne</value>
     </labels>
-
     <labels>
         <fullName>caseTypeConsumoAnomaloIdro</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>caseTypeConsumoAnomaloIdro</shortDescription>
         <value>Consumo Anomalo Idrico</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoMissingEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoMissingEmail</shortDescription>
+        <value>Indirizzo email assente nel CSV.</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoShipmentDataMissing</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoShipmentDataMissing</shortDescription>
+        <value>Dati di spedizione assenti nel CSV.</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoShipmentTypeEmail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoShipmentTypeEmail</shortDescription>
+        <value>E-Mail</value>
+    </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoShipmentTypePaperMail</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoShipmentTypePaperMail</shortDescription>
+        <value>Posta Cartacea</value>
     </labels>
 </CustomLabels>
