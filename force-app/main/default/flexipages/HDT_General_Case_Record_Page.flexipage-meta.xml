@@ -1107,7 +1107,7 @@
                 <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
                 <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_02</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <booleanFilter>1 AND (2 OR 3 OR 4)</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Commodity__c}</leftValue>
                         <operator>EQUAL</operator>
@@ -1122,6 +1122,11 @@
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>HDT_RT_RichiestaParere</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_PagamentoUnicoAnnualeTARI</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
