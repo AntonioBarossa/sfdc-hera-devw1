@@ -185,7 +185,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         mapFieldReq = this.fieldRequiredMapping();
         var fieldReqParse = fieldsDataReq.toString();
         let fieldReq = fieldReqParse.split(",");
-
+        console.log('### this.fieldsData --> ' + fieldsData)
         fieldsDataReq.forEach(element => {
             console.log('XXX toObject: this.fieldsDataReq -> '+fieldsDataReq);
             mapFieldReq.set(element, true);
@@ -660,6 +660,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
+        let accountIndex = fieldsDataObject.findIndex(el => el.fieldname === 'Account__c');
+        if(accountIndex > -1)
+        {
+            fieldsDataObject[accountIndex].required = false;
+            fieldsDataObject[accountIndex].disabled = true;
+        }
         return fieldsDataObject;
     }
 

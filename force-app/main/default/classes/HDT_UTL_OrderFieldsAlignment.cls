@@ -393,6 +393,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.IntegratedSAP__c          = orderItemList[0].Product2.IntegratedSAP__c;
             orderToUpdate.Surface__c                = orderItemList[0].Surface__c;
             orderToUpdate.EmploymentMonthsInYear__c = orderItemList[0].MonthsOccupYear__c;
+            orderToUpdate.Market__c = orderItemList[0].Product2.ReferenceMarket__c;
+            if(orderItemList[0].Product2.ReferenceMarket__c == null)
+            {
+                OrderItem offerItem = orderItemQr.getOfferActivationItem(orderItemList[0].Order.ParentOrder__c, orderItemList[0].Order.ServicePoint__c);
+                orderToUpdate.Market__c = offerItem?.Product2?.ReferenceMarket__c;
+            }
         }
         
     }
