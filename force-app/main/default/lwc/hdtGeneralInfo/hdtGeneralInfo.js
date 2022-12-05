@@ -13,6 +13,7 @@ export default class HdtGeneralInfo extends LightningElement {
     @api campaignId;
     @api campaignCommissioningId;
     disabledInput = false;
+    requiredInput = false;
     hiddenEdit = true;
     loading = false;
     dataToSubmit = {};
@@ -137,12 +138,17 @@ export default class HdtGeneralInfo extends LightningElement {
             }else{
                 this.createTable([]);
             }
-            if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'){
+
+            console.log('Channel --> '+Channel);
+            if(Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound'|| Channel == 'Telefono'){
                 this.isServiceCommissioning = true;
+                this.requiredInput = true;
             }
             else{
                 this.isServiceCommissioning = false;
+                this.requiredInput = false;
             }
+            
             if (this.userRole !== 'HDT_BackOffice' && (Channel == 'Telefono' || Channel == 'Teleselling Inbound' || Channel == 'Teleselling Outbound' || Channel == 'Sportello' )) {
                 this.hiddenAgency = true;
                 handleAutomaticAgentAssign ({Channel:Channel,saleId:this.saleRecord.Id }).then(data =>{
@@ -296,7 +302,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        console.log('PUNTO 1');
         if (this.template.querySelector("[data-id='Agency__c']") !== null
             && (this.template.querySelector("[data-id='Agency__c']").value === ''
                 || this.template.querySelector("[data-id='Agency__c']").value === null)) {
@@ -310,7 +316,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        console.log('PUNTO 2');
         if (this.template.querySelector("[data-id='CommercialId']") !== null
             && (this.template.querySelector("[data-id='CommercialId']").value === ''
                 || this.template.querySelector("[data-id='CommercialId']").value === null)) {
@@ -324,7 +330,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.dispatchEvent(toastErrorMessage);
             return;
         }
-
+        console.log('PUNTO 3');
         if (this.template.querySelector("[data-id='Channel__c']") !== null
             && (this.template.querySelector("[data-id='Channel__c']").value === ''
                 || this.template.querySelector("[data-id='Channel__c']").value === null)) {
@@ -337,6 +343,67 @@ export default class HdtGeneralInfo extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
             return;
+        }
+        console.log('PUNTO 4');
+        if (this.requiredInput == true && this.template.querySelector("[data-id='DocumentType__c']") !== null
+            && (this.template.querySelector("[data-id='DocumentType__c']").value === ''
+                || this.template.querySelector("[data-id='DocumentType__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Tipo Documento',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+        console.log('PUNTO 5');
+        if (this.requiredInput == true && this.template.querySelector("[data-id='DocumentNumber__c']") !== null
+            && (this.template.querySelector("[data-id='DocumentNumber__c']").value === ''
+                || this.template.querySelector("[data-id='DocumentNumber__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Numero Documento',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+        console.log('PUNTO 6');
+        if (this.requiredInput == true && this.template.querySelector("[data-id='DocumentDate__c']") !== null
+            && (this.template.querySelector("[data-id='DocumentDate__c']").value === ''
+                || this.template.querySelector("[data-id='DocumentDate__c']").value === null)) {
+            this.loading = false;
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: 'Popolare il campo Data Documento',
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+            return;
+        }
+        if(this.template.querySelector("[data-id='DocumentDate__c']").value != null){
+            let docDate = new Date(this.template.querySelector("[data-id='DocumentDate__c']").value);
+            let today = new Date();
+
+            console.log('DATE : docDate --> '+docDate);
+            console.log('DATE : today --> '+today);
+
+            if (this.requiredInput == true && docDate > today) {
+                this.loading = false;
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Valore non valido nel campo "Data documento".',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+            }
         }
         this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
         console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
@@ -360,12 +427,14 @@ export default class HdtGeneralInfo extends LightningElement {
         {
             this.valueObj = this.saleRecord.SalesContact__r.Name;
         }
-       if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound'){
+        if(this.saleRecord.Channel__c == 'Teleselling Inbound' || this.saleRecord.Channel__c == 'Teleselling Outbound' || this.saleRecord.Channel__c == 'Telefono'){
             this.isServiceCommissioning = true;
+            this.requiredInput = true;
             console.log('Channel:::::::true');
         }
         else{
             this.isServiceCommissioning = false;
+            this.requiredInput = false;
         }
         console.log('hdtGeneralInfo - connectedCallback - campaignId: ', this.campaignId);
 
@@ -666,6 +735,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
             this.channelDisabled = true;
+            this.requiredInput = true;
             handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;
@@ -694,6 +764,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
             this.channelDisabled = true;
+            this.requiredInput = true;
             handleAutomaticAgentAssign ({Channel:'Telefono',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;
