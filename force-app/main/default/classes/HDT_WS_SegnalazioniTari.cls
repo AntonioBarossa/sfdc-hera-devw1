@@ -59,9 +59,10 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             system.debug(LoggingLevel.DEBUG, json.serializePretty(mapToSendCallout));
             HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
-            if(STRING.isNotBlank(res?.data?.noticeId) && STRING.isBlank(caso.NoticeId__c)){
-                HDT_UTL_DatabaseService.updateSObject(new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res.data.noticeId));
-            }
+            //if(STRING.isNotBlank(res?.data?.noticeId) && STRING.isBlank(caso.NoticeId__c)){
+                
+                HDT_UTL_DatabaseService.updateSObject(new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res?.data?.noticeId, Outcome__c = formatEsito(res?.data)));
+            //}
 
         } catch (Exception ex) {
             //Error Handling
@@ -78,6 +79,12 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         return response;
     }
 
+    private static String formatEsito(HDT_WRP_ResponseData data){
+        if(STRING.isBlank(data?.outcome)){      return 'KO - Mulesoft'; }
+        String esito = data?.outcome + String.isBlank(data?.errorMessage)? ''  : ' '+data.errorMessage;
+        return esito.abbreviate(100);
+    }
+
     private static void handleModifyRequest(Case caso, Map<String, String> mapObj){
         /*  HANDLE BP FITTIZIO  */
         if(caso.AccountId == null){
@@ -89,5 +96,15 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             );
         }
         /*  HANDLE BP FITTIZIO  */
+        /*  HANDLE APPUNTAMENTO STABS     */
+        if(STRING.isNotBlank(caso.NoticeId__c)){
+            mapObj.putAll(new Map<String, String>
+                {
+                    'heraActionsr.0.hertypeDisplayed' => 'Appuntamento',
+                    'heraActionsr.0.herstatusDisplayed' => 'Aperto'                    
+                }
+            );
+        }
+        /*  HANDLE APP DATA     */
     }
 }
