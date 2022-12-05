@@ -277,7 +277,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 if(!oldActivity.Type__c.Account__r.Category__c.equalsIgnoreCase('Famiglie'))
+                 if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
                  {
                     ord.SignedDate__c = Date.today();
                  }

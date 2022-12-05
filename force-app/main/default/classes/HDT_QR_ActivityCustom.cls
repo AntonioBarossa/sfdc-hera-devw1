@@ -126,7 +126,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             order__c,
-            Order__r.Account__r.Category__c,
+            Order__r.Account.Category__c,
             Account__c,
             Type__c,
             DiscardCount__c,
