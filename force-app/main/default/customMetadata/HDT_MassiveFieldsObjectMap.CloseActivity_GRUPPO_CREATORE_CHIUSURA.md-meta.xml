@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>GRUPPO_CREATORE_CHIUSURA</label>
+    <protected>false</protected>
+    <values>
+        <field>labelField__c</field>
+        <value xsi:type="xsd:string">GRUPPO_CREATORE_CHIUSURA</value>
+    </values>
+    <values>
+        <field>nameField__c</field>
+        <value xsi:type="xsd:string">GRUPPO_CREATORE_CHIUSURA</value>
+    </values>
+    <values>
+        <field>objectType__c</field>
+        <value xsi:type="xsd:string">WrapperActivity</value>
+    </values>
+    <values>
+        <field>processType__c</field>
+        <value xsi:type="xsd:string">ChiusuraMassivaActivity</value>
+    </values>
+</CustomMetadata>

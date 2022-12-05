@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>FASE_PROCESSO</label>
+    <protected>false</protected>
+    <values>
+        <field>labelField__c</field>
+        <value xsi:type="xsd:string">FASE_PROCESSO</value>
+    </values>
+    <values>
+        <field>nameField__c</field>
+        <value xsi:type="xsd:string">FASE_PROCESSO</value>
+    </values>
+    <values>
+        <field>objectType__c</field>
+        <value xsi:type="xsd:string">WrapperCase</value>
+    </values>
+    <values>
+        <field>processType__c</field>
+        <value xsi:type="xsd:string">ChiusuraMassivaActivity</value>
+    </values>
+</CustomMetadata>
