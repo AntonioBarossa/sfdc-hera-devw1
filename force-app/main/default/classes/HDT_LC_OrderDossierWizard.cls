@@ -31,8 +31,8 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         Boolean check = false;
 
         //Get Sale
-        saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Interaction__c,UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c');
+        saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Interaction__c,UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         //Get Orders
@@ -80,6 +80,9 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     LoginChannel__c = sale.CreatedBy.LoginChannel__c,
                     VendorLastName__c = sale.VendorLastName__c,
                     VendorFirstName__c = sale.VendorFirstName__C,
+                    DocumentDate__c = sale.DocumentDate__c,
+                    DocumentNumber__c = sale.DocumentNumber__c,
+                    DocumentType__c = sale.DocumentType__c,
                     CommercialId__c = sale.CommercialId__c,
                     AgencyCode__c = sale.AgencyCode__c,
                     Agency__c = sale.Agency__c,
