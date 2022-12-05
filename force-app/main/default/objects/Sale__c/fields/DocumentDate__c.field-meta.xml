@@ -1,12 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>BuildingFloor__c</fullName>
+    <fullName>DocumentDate__c</fullName>
     <externalId>false</externalId>
-    <label>Piano[Residenziale/Sede Legale]</label>
-    <length>10</length>
+    <label>Data Documento</label>
     <required>false</required>
-    <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
-    <type>Text</type>
-    <unique>false</unique>
+    <trackTrending>false</trackTrending>
+    <type>Date</type>
 </CustomField>
