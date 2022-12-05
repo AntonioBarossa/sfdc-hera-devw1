@@ -29,6 +29,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         if(orderParent.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
         {
             Order parentOrderToUpdate = new Order();
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            List<Order> childs = [SELECT Id, SignedDate__c FROM Order WHERE ParentOrder__c = :orderParent.Id AND ProcessType__c = 'Switch in Fittizio' WITH SECURITY_ENFORCED];
+            if(!childs.isEmpty())
+            {
+                parentOrderToUpdate.SignedDate__c = childs[0].SignedDate__c;
+            }
             parentOrderToUpdate.Id = orderParent.Id;
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
