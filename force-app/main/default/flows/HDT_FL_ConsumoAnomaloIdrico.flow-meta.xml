@@ -34,6 +34,15 @@
                 <elementReference>Tipo_Comunicazione</elementReference>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Company_Owner_per_Scostamento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Scostamento_HERA</name>
+        <label>Assegna Scostamento HERA</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.DeviationOver2000mc__c</assignToReference>
             <operator>Assign</operator>
@@ -46,10 +55,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Scostamento_MMS_o_AAA</name>
+        <label>Assegna Scostamento MMS o AAA</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.DeviationOver2000mc__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Scostamento_2000mc_OnlyNo</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiornamento_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Settaggio_Fase_Case_Attesa_Risposta_Cliente_0_0_0</name>
         <label>Settaggio Fase Case &quot;Attesa Risposta Cliente&quot;</label>
         <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -72,7 +97,7 @@
         <name>Settaggio_Fase_Case_Risposta_ricevuta</name>
         <label>Settaggio Fase Case &quot;Risposta ricevuta&quot;</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -164,6 +189,14 @@
         </value>
     </choices>
     <choices>
+        <name>Scostamento_2000mc_No</name>
+        <choiceText>No</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>No</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Si</name>
         <choiceText>Si</choiceText>
         <dataType>String</dataType>
@@ -180,10 +213,42 @@
         </value>
     </choices>
     <decisions>
+        <name>Company_Owner_per_Scostamento</name>
+        <label>Company Owner per Scostamento?</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Scostamento_MMS_o_AAA</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>MMS O AAA</defaultConnectorLabel>
+        <rules>
+            <name>HERA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>AAA-EBT</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>MMS</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Scostamento_HERA</targetReference>
+            </connector>
+            <label>HERA</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Provenienza_da_Gestore</name>
         <label>Provenienza da Gestore?</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Settaggio_Fase_Case_Risposta_ricevuta</targetReference>
         </defaultConnector>
@@ -259,7 +324,7 @@
         <name>Aggiornamento_Case</name>
         <label>Aggiornamento Case</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>854</locationY>
         <connector>
             <targetReference>Provenienza_da_Gestore</targetReference>
         </connector>
@@ -269,14 +334,14 @@
         <name>Aggiornamento_Record_Case_0_0_0</name>
         <label>Aggiornamento Record Case</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>1214</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiornamento_Record_Case_0_0_0_0</name>
         <label>Aggiornamento Record Case</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>1214</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
@@ -374,6 +439,67 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <elementReference>Gestore</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>MMS</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>AAA-EBT</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Scostamento_2000mc_OnlyNo</name>
+            <choiceReferences>Scostamento_2000mc_No</choiceReferences>
+            <dataType>String</dataType>
+            <defaultSelectedChoiceReference>Scostamento_2000mc_No</defaultSelectedChoiceReference>
+            <fieldText>Scostamento &gt; 2000mc</fieldText>
+            <fieldType>DropdownBox</fieldType>
+            <isRequired>true</isRequired>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>Provenienza</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <elementReference>Gestore</elementReference>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>AAA-EBT</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>MMS</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
