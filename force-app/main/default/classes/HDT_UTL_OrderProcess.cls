@@ -36,6 +36,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             system.debug(Logginglevel.Debug, e);
         }
     }
+    public static Boolean isChangedPhase(List<Order> orderList, Map<Id,SObject> orderOldMap){
+        Order orderNew = orderList[0];
+		Order caseOld = (Order) orderOldMap.get(orderNew.Id);
+		String phaseNew = orderNew.Phase__c != null? orderNew.Phase__c:'';
+		String phaseOld = caseOld.Phase__c != null? caseOld.Phase__c:'';
+        if(
+            (String.isNotBlank(phaseNew) && String.isNotBlank(phaseOld) && phaseNew != phaseOld) || 
+            (String.isBlank(phaseOld) && String.isNotBlank(phaseNew))
+        )return true;
+        return false;
+    }
 
     public static List<Order> updateChildOrderIvr(Map<String,Order> oldMap, Map<String,Order> newMap) {
         List<String> orderParentList = new List<String>();
