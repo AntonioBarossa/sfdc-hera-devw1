@@ -10,6 +10,7 @@ public with sharing class HDT_UTL_DocumentalManagementTst {
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
         ordList[0].Pricebook2Id=pricebookId;
         ordList[0].ServicePoint__c = servPointList[0].Id;
+        ordList[0].SignatureMethod__c = 'OTP Remoto';
         insert ordList;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
