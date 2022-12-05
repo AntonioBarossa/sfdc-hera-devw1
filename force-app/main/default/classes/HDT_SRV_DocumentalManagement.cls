@@ -740,6 +740,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
+			HDT_QR_Case qrCase=new HDT_QR_Case();
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
 			
 			Id recordId = (Id)processRecord.get('Id');
@@ -750,7 +751,6 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 				}
 			}
-			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
 					String msg = response.deliverPackageResponse.message;
@@ -762,6 +762,14 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						String dateStr = dToday.day() + '/' + dToday.month() + '/' + dToday.year();
 						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
 					}
+				}
+				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result != '000' && context=='Case'){
+					List<Case> errCases= qrCase.getCasesByCaseNumbers(new List<String>{response.deliverPackageResponse.requestId});
+					if(!errCases.isEmpty() && errCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						errCases[0].Phase__c=Label.consumoAnomaloIdricoE1KOPhase;
+						HDT_UTL_DatabaseService.updateSObject(errCases);
+					}
+
 				}
 			}
 		}catch(Exception ex){
