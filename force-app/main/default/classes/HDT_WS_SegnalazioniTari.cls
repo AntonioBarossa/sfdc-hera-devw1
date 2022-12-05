@@ -81,7 +81,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
 
     private static String formatEsito(HDT_WRP_ResponseData data){
         if(STRING.isBlank(data?.outcome)){      return 'KO - Mulesoft'; }
-        String esito = data?.outcome + String.isBlank(data?.errorMessage)? ''  : ' '+data.errorMessage;
+        String esito = data?.outcome + (String.isBlank(data?.errorMessage)? ''  : ' '+data.errorMessage);
         return esito.abbreviate(100);
     }
 
