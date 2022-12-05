@@ -1106,4 +1106,27 @@
         <shortDescription>caseTypeError</shortDescription>
         <value>Valore processo non corretto:</value>
     </labels>
+    <labels>
+        <fullName>consumoAnomaloIdricoE1KOPhase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoE1KOPhase</shortDescription>
+        <value>Comunicazionee EngageOne KO</value>
+    </labels>
+
+    <labels>
+        <fullName>consumoAnomaloIdricoE1WaitPhase</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>consumoAnomaloIdricoE1WaitPhase</shortDescription>
+        <value>In attesa esito EngageOne</value>
+    </labels>
+
+    <labels>
+        <fullName>caseTypeConsumoAnomaloIdro</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>caseTypeConsumoAnomaloIdro</shortDescription>
+        <value>Consumo Anomalo Idrico</value>
+    </labels>
 </CustomLabels>
