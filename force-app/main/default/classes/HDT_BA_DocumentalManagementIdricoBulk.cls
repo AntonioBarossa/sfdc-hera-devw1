@@ -19,7 +19,7 @@ public with sharing class HDT_BA_DocumentalManagementIdricoBulk implements Datab
         params.put('mode', 'Print');
         params.put('Archiviato', 'Y');
         HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(singleCase.Id, 'Case',JSON.serialize(params));
-        singleCase.Phase__c='In attesa esito EngageOne';
+        singleCase.Phase__c=Label.consumoAnomaloIdricoE1WaitPhase;
         HDT_UTL_DatabaseService.updateSObject(singleCase);
     }
     public void finish(Database.BatchableContext bc){
