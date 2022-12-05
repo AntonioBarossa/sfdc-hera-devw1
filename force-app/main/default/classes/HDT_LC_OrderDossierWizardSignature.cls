@@ -60,7 +60,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
                     orderUpdates.RelatedPractice__c = (String)objMap.get(key);
                 }
             }
-
+            checkSignatureMethod(childOrderToUpdate, childOrder);
             system.debug('childOrderToUpdate: ' + childOrderToUpdate);
             ordersToUpdate.add(childOrderToUpdate);
         }
@@ -80,6 +80,64 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         system.debug('childOrdersToUpdate before update: ' + ordersToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
         system.debug('childOrdersToUpdate after update: ' + ordersToUpdate);
+    }
+
+    private static void checkSignatureMethod(Order newOrder, Order oldOrder){
+
+        switch on oldOrder.RecordType.DeveloperName {
+            when 'HDT_RT_SwitchIn' {
+                if(oldOrder.Account.RecordType.DeveloperName == 'HDT_RT_Business'){
+                    if(oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && !newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        if (oldOrder.VolturaThirdTrader__c == true) {
+                            newOrder.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                        }
+                        newOrder.CILegalRepresentative__c = 'Richiesto';
+                    }
+                    else if(!oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        if (oldOrder.VolturaThirdTrader__c == true) {
+                            newOrder.AutorizationVolturaThirdTrader__c = '';
+                        }
+                        newOrder.CILegalRepresentative__c = '';
+                    }
+                }
+                else{
+                    if(oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && !newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        if (oldOrder.VolturaThirdTrader__c == true) {
+                            newOrder.AutorizationVolturaThirdTrader__c = 'Richiesto';
+                        }
+                        newOrder.CIAccoutn__c = 'Richiesto';
+                    }
+                    else if(!oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        if (oldOrder.VolturaThirdTrader__c == true) {
+                            newOrder.AutorizationVolturaThirdTrader__c = '';
+                        }
+                        newOrder.CIAccoutn__c = '';
+                    }
+                }
+                
+            }
+            when 'HDT_RT_VolturaConSwitch' {
+
+                if(oldOrder.Account.RecordType.DeveloperName == 'HDT_RT_Business'){
+
+                    if(oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && !newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        newOrder.CILegalRepresentative__c = '';
+                    }
+                    else if(!oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        newOrder.CILegalRepresentative__c = 'Richiesto';
+                    }
+                }
+                else {
+                    if(oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && !newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        newOrder.CIAccoutn__c = '';
+                    }
+                    else if(!oldOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order') && newOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order')){
+                        newOrder.CIAccoutn__c = 'Richiesto';
+                    }
+                }
+            }
+        }
+
     }
 
     /**

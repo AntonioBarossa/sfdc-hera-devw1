@@ -2,6 +2,7 @@
 public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
     public override void beforeInsert(){
+        HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, null);
         HDT_UTL_CaseProcess.setCloseStatusForAll(Trigger.new);
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
@@ -15,6 +16,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
         try{
+            HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, Trigger.oldMap);
             for(Case caseNew : (List<Case>) Trigger.new){
                 if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){
                     caseNew.CancellationNote__c = caseNew.CancellationNote__c.substring(0,255);

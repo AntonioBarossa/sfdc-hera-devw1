@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_CaseProcess {
             //Commodity Management
             for(Case singleCase : caseList){
                 Case caseNew = singleCase;
-		        Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                Case caseOld = (Case) caseOldMap.get(caseNew.Id);
                 servicePoint = caseNew.ServicePoint__c;
                 servicePointOld = caseOld.ServicePoint__c;
                 if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
@@ -71,6 +71,8 @@ public with sharing class HDT_UTL_CaseProcess {
             }
         }
     }
+
+
     public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
         Set<Id> accountIdsBpca = new Set<Id>();
         for(Case caseNew : (List<Case>) newCasesMap.values()){
