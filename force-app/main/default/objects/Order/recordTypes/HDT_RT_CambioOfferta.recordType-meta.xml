@@ -2285,6 +2285,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Errore invio a DL/SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
