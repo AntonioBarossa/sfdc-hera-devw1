@@ -501,7 +501,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }
             
         }*/
-        if(this.type == 'Comunicazione Pagamento'){
+        if(this.type == 'Comunicazione Pagamento'
+        && this.processType != 'Comunicazione Pagamento TARI'){
             let canalePagamento = this.selector('ChannelOfPayment__c');
             if(canalePagamento && canalePagamento.value === 'Banca BONIFICO'){
                 this.labelSaveButton  = 'Avanti';
