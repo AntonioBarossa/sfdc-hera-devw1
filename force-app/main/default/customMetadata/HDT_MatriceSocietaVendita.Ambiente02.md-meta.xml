@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Ambiente01</label>
+    <protected>false</protected>
+    <values>
+        <field>Comune__c</field>
+        <value xsi:type="xsd:string">ALTRO</value>
+    </values>
+    <values>
+        <field>Marcatura__c</field>
+        <value xsi:type="xsd:string">MMS</value>
+    </values>
+    <values>
+        <field>Offerta__c</field>
+        <value xsi:type="xsd:string">ALTRO</value>
+    </values>
+    <values>
+        <field>SalesCompanyCode__c</field>
+        <value xsi:type="xsd:string">1200000000</value>
+    </values>
+    <values>
+        <field>SellerCompany__c</field>
+        <value xsi:type="xsd:string">Marche Multiservizi S.p.A</value>
+    </values>
+    <values>
+        <field>Service__c</field>
+        <value xsi:type="xsd:string">Ambiente</value>
+    </values>
+    <values>
+        <field>distributor__c</field>
+        <value xsi:type="xsd:string">ALTRO</value>
+    </values>
+    <values>
+        <field>isActive__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+</CustomMetadata>

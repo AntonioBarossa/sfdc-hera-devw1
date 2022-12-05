@@ -235,7 +235,7 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         return dayAndGenderCode;
     }   
     
-    private static String getControlLetter(String s){
+    public static String getControlLetter(String s){
 		List<String> evenChars=new List<String>();
 		List<String> oddChars= new List<String>();
         String letter='';

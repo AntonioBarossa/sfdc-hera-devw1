@@ -13,7 +13,7 @@ public with sharing class HDT_SRV_SalesHandler {
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
-    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas'};
+    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas', 'Cambio Tariffa'};
     private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
     private static String annullatoPhase = 'Annullato';
     private static String annullatoStatus = 'Annullato';
@@ -584,6 +584,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                                    accToUpdate.CustomerCode__c = ord.CustomerCode__c;
                                                 }
                                                     accountSrv.updateRecord(accToUpdate);
+                                            }else if('Ambiente'.equalsIgnoreCase(ordRetrieved.Commodity__c) && STRING.isNotBlank(mapRequestFields.get('PARTNER'))){
+                                                Account accToUpdate = new Account();
+                                                accToUpdate.Id = ordRetrieved.AccountId;
+                                                accToUpdate.CustomerCode__c = mapRequestFields.get('PARTNER');
+                                                accountSrv.updateRecord(accToUpdate);
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);

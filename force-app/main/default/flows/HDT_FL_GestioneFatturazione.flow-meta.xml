@@ -61,7 +61,7 @@
         <name>Clona_Reading_Case_Padre</name>
         <label>Clona Reading Case Padre</label>
         <locationX>3207</locationX>
-        <locationY>4670</locationY>
+        <locationY>4790</locationY>
         <actionName>HDT_SRV_SelfReadings</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -82,7 +82,7 @@
         <name>Crea_Case_Autolettura</name>
         <label>Crea Case Autolettura</label>
         <locationX>3207</locationX>
-        <locationY>3734</locationY>
+        <locationY>3854</locationY>
         <actionName>HDT_UTL_CreateGenericCase</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -110,7 +110,7 @@
         <inputParameters>
             <name>recordTypeId</name>
             <value>
-                <stringValue>0121X000001j2h6QAA</stringValue>
+                <elementReference>Get_RT_Autolettura.Id</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -120,7 +120,7 @@
         <name>Assegna_Codice_Causale</name>
         <label>Assegna Codice Causale</label>
         <locationX>3207</locationX>
-        <locationY>4430</locationY>
+        <locationY>4550</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -309,7 +309,7 @@
         <name>Set_Fase</name>
         <label>Set Fase Inviata a SAP</label>
         <locationX>3207</locationX>
-        <locationY>4214</locationY>
+        <locationY>4334</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -325,7 +325,7 @@
         <name>Set_Fase_In_attesa</name>
         <label>Set Fase Attesa check preliminari</label>
         <locationX>2943</locationX>
-        <locationY>4214</locationY>
+        <locationY>4334</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -679,6 +679,20 @@
                     <stringValue>Richiesta di ricalcolo fuga acqua</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>SaveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>CancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Screen_Selezione_Tipo_Modifica</targetReference>
             </connector>
@@ -762,7 +776,7 @@
         <locationX>2701</locationX>
         <locationY>3494</locationY>
         <defaultConnector>
-            <targetReference>Set_Phase_In_Lavorazione</targetReference>
+            <targetReference>Update_status_case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>In Lavorazione</defaultConnectorLabel>
         <rules>
@@ -782,7 +796,7 @@
         </rules>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>(1 AND 2) OR 3</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (2 AND 3)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -953,7 +967,7 @@
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
         <locationX>3779</locationX>
-        <locationY>3734</locationY>
+        <locationY>3950</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Avvisare_Cliente</name>
@@ -1014,7 +1028,7 @@
         <name>Turbobilling_Decision</name>
         <label>Turbobilling Decision</label>
         <locationX>3207</locationX>
-        <locationY>4094</locationY>
+        <locationY>4214</locationY>
         <defaultConnector>
             <targetReference>Assegna_Codice_Causale</targetReference>
         </defaultConnector>
@@ -1069,6 +1083,52 @@
                 <targetReference>Set_Fase</targetReference>
             </connector>
             <label>Turbobilling Energy</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Update_status_case</name>
+        <label>Update status case?</label>
+        <locationX>3779</locationX>
+        <locationY>3614</locationY>
+        <defaultConnector>
+            <targetReference>Set_Phase_In_Lavorazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Errore_di_fatturazione_Acqua</name>
+            <conditionLogic>1 OR (2 AND 3) AND 4</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rettifica Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Lettura</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Phase_In_Lavorazione_con_Stato</targetReference>
+            </connector>
+            <label>Stato lavorazione ACQ</label>
         </rules>
     </decisions>
     <decisions>
@@ -1231,7 +1291,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <name>Copy_1_of_Calcolo_Codice_Causale</name>
         <label>Calcolo Codice Causale</label>
         <locationX>3207</locationX>
-        <locationY>3974</locationY>
+        <locationY>4094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Turbobilling_Decision</targetReference>
@@ -1266,7 +1326,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <name>Get_Case_Autolettura</name>
         <label>Get Case Autolettura</label>
         <locationX>3207</locationX>
-        <locationY>3854</locationY>
+        <locationY>3974</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_Calcolo_Codice_Causale</targetReference>
@@ -1281,6 +1341,34 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RT_Autolettura</name>
+        <label>Get RT Autolettura</label>
+        <locationX>3207</locationX>
+        <locationY>3734</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Case_Autolettura</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_Autolettura</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>SobjectType</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Case</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -1385,7 +1473,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <name>Aggiorna_Case_Autolettura</name>
         <label>Aggiorna Case Autolettura</label>
         <locationX>3207</locationX>
-        <locationY>4550</locationY>
+        <locationY>4670</locationY>
         <connector>
             <targetReference>Clona_Reading_Case_Padre</targetReference>
         </connector>
@@ -1559,8 +1647,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>3779</locationX>
-        <locationY>3614</locationY>
+        <locationX>3911</locationX>
+        <locationY>3734</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1581,12 +1669,42 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Set_Phase_In_Lavorazione_con_Stato</name>
+        <label>Set Phase In Lavorazione con Stato</label>
+        <locationX>3647</locationX>
+        <locationY>3734</locationY>
+        <connector>
+            <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Query_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Set_Phase_Sospesa</name>
         <label>Set Phase Sospesa</label>
         <locationX>3207</locationX>
         <locationY>3614</locationY>
         <connector>
-            <targetReference>Crea_Case_Autolettura</targetReference>
+            <targetReference>Get_RT_Autolettura</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2159,7 +2277,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>processTypeFormula</elementReference>
+                    <elementReference>CustomMetadataProcessType</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2931,7 +3049,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
         <locationX>3647</locationX>
-        <locationY>3854</locationY>
+        <locationY>4070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

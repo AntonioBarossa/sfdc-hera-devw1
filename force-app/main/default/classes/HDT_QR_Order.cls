@@ -604,6 +604,7 @@ public inherited sharing class HDT_QR_Order {
             IncomingCreditCheckResult__c,
             OutgoingCreditCheckResult__c,
             OrderReference__c,
+            OrderReference__r.Surface__c,
             ProcessType__c,
             SBQQ__Quote__c,
             CommercialProductCode__c,
@@ -611,6 +612,7 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             IntegratedSAP__c,
             CommercialProduct__c,
+            SignatureMethod__c,
             Type
             FROM
             Order
@@ -946,6 +948,9 @@ public inherited sharing class HDT_QR_Order {
     * @param accountId - String
     * @return List<Order>
     */
+    /*@frpanico 2022-11-30 Viene filtrato ulteriormente per ProcessType__c != 'VAS'
+    * In quanto il solo controllo sulla quote non e' sufficiente nel caso di vendita Offerta + VAS
+    */
     public List<Order> getRecordsForVasSelection(String accountId){
         return [
             SELECT
@@ -976,6 +981,7 @@ public inherited sharing class HDT_QR_Order {
             AND RecordType.DeveloperName != null
             AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
             AND SBQQ__Quote__r.IsVAS__c != true
+            AND ProcessType__c != 'VAS'
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
             AND Status IN ('In Lavorazione')
             WITH SECURITY_ENFORCED
@@ -1061,6 +1067,7 @@ public inherited sharing class HDT_QR_Order {
         AccountId,
         IsTechnicalTransfer__c,
         Sale__c,
+        Commodity__c,
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
@@ -1155,6 +1162,7 @@ public inherited sharing class HDT_QR_Order {
         SupplyCityCode__c,
         SupplyCity__c,
         SupplyState__c,
+        Commodity__c,
         SupplyCountry__c,
         PowerCommitted__c,
         PowerAvailable__c,
@@ -1276,11 +1284,11 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<order> getOrderCreatedYesterday(){
-        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED LIMIT 3000];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     public List<order> getOrderCreatedInRequestedDate(Datetime startDt, Datetime endDt){
-        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where CreatedDate >=: startDt and CreatedDate <:endDt  WITH SECURITY_ENFORCED LIMIT 3000];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where CreatedDate >=: startDt and CreatedDate <:endDt  WITH SECURITY_ENFORCED];
     }
 
     /**

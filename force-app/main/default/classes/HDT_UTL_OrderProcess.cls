@@ -958,9 +958,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      **/
     public static void creditCheckManager2(Map<Id,SObject>  newOrdersMap, Map<Id,SObject> oldOrdersMap) {
         Map<Id,Schema.RecordTypeInfo> rtMap = Order.sobjectType.getDescribe().getRecordTypeInfosById();
-        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>();
-        List<Order> orderListOldCustomer = new List<Order>();                        
-        List<Order> orderListNewCustomer = new List<Order>();   
+        Map<String,List<Order>> orderMapNew = new Map<String,List<Order>>{
+            'oldCustomer' => new List<Order>(),
+            'newCustomer' => new List<Order>()
+        };
         List<Order> orderListcreditCheckPhaseManager = new List<Order>();
         List<Id> orderParentList = new List<Id>();                        
 
@@ -981,14 +982,14 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     in asincrono.
                     if(newOrder.OutgoingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){
                     */
-                    if('KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c)){                            
-                        orderListOldCustomer.add(newOrder);
+                    if(!'Annullato'.equalsIgnoreCase(newOrder.Phase__c) && !'Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && 'KO'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c) && !newOrder.OutgoingCreditCheckResult__c.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c)){                            
+                        orderMapNew.get('oldCustomer').add(newOrder);
                     }
                     /* 
                     @ealpi: vedi precedente commento
                     if(newOrder.IncomingCreditCheckResult__c == 'KO' && newOrder.CreditCheckDescription__c != oldOrder.CreditCheckDescription__c){ */
-                    if('KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c)){
-                        orderListNewCustomer.add(newOrder);
+                    if(!'Annullato'.equalsIgnoreCase(newOrder.Phase__c) && !'Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && 'KO'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c) && !newOrder.IncomingCreditCheckResult__c.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c)){
+                        orderMapNew.get('newCustomer').add(newOrder);
                     }                                      
                 }
                 if((oldOrder.IncomingCreditCheckResult__c!=null && oldOrder.IncomingCreditCheckResult__c.contains('KO')) && (newOrder.IncomingCreditCheckResult__c != null && newOrder.IncomingCreditCheckResult__c.contains('OK'))){
@@ -1001,13 +1002,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
 
-        if (!orderListOldCustomer.isEmpty() || !orderListNewCustomer.isEmpty()){
-            orderMapNew.put('oldCustomer',orderListOldCustomer);
-            orderMapNew.put('newCustomer',orderListNewCustomer); 
-        }
           
         
-        if(!orderMapNew.isEmpty()){
+        if(!orderMapNew.get('newCustomer').isEmpty() || !orderMapNew.get('oldCustomer').isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
         }        
         if(!orderListcreditCheckPhaseManager.isEmpty()){
@@ -1585,6 +1582,48 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }
         }
     }
+
+    public static void creditCheckActivityManagement(List<SObject> newObjectList, Map<Id,SObject> oldObjectMap){
+        Set<String> orderPhaseToCheck = new Set<String>{'ANNULLATO','VOLTURA RIFIUTATA'};
+        Set<Id> ordersId = new Set<Id>();        
+        HDT_SRV_LogService logService = new HDT_SRV_LogService('CREDIT_CHECK_EXCEPTION');
+        Id recordId;
+        try{
+            for (SObject newObject : newObjectList){
+                Order newOrd = (Order) newObject;
+                recordId = newOrd.Id;
+                String creditCheckOutcome = String.isNotBlank(newOrd.IncomingCreditCheckResult__c)? newOrd.IncomingCreditCheckResult__c :newOrd.OutgoingCreditCheckResult__c;
+                String oldPhase = ((Order) oldObjectMap.get(newOrd.Id)).Phase__c;
+                String newPhase = newOrd.Phase__c;
+                if (String.isNotBlank(newPhase) && !newPhase.equalsIgnoreCase(oldPhase) && orderPhaseToCheck.contains(newPhase.toUpperCase()) && String.isNotBlank(creditCheckOutcome) &&
+                (String.isBlank(newOrd.PhaseStory__c) || (!newOrd.PhaseStory__c.containsIgnoreCase('Annullato') && !newOrd.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata')))){
+                    ordersId.add(newOrd.Id);
+                }
+            }
+            if(ordersId.isEmpty()){
+                return;
+            }
+            List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getActivityListCrediCheck(ordersId)){
+                activities.add(
+                    new wrts_prcgvr__Activity__c(Id = act.Id,Note__c = 'Annullato Ordine di riferimento.', wrts_prcgvr__Status__c = 'Annullata')
+                );
+            }
+            if (!activities.isEmpty()){
+                if (Limits.getLimitDmlStatements() - Limits.getDmlStatements() > 0){
+                    HDT_UTL_DatabaseService.updateSObject(activities);
+                    return;
+                }
+                if (!System.isBatch() && !System.isFuture() && !System.isQueueable()){
+                    updateFutureList(JSON.serialize(activities));
+                }
+            }
+        }catch (Exception e){
+            logService.insertSingleLog('HDT_UTL_OrderProcess', 'creditCheckActivityManagement', JSON.serialize(newObjectList), null, e.getStackTraceString(), recordId, null, null);
+        }
+        
+    }
+
     @future
     private static void updateFutureList(String serializedList)
     {

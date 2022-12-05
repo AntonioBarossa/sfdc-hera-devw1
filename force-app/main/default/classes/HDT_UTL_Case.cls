@@ -109,7 +109,7 @@ public inherited sharing class HDT_UTL_Case {
         else if('getServicePointFromContract'.equalsIgnoreCase(process)){
             List<String> contractCodes = inputString.split(';');
             System.debug(loggingLevel.DEBUG, contractCodes);
-            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes WITH SECURITY_ENFORCED];
+            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes AND ServicePoint__r.CommoditySector__c != 'Ambiente' WITH SECURITY_ENFORCED];
             output.servicePointId = new List<String>();
             for(Contract contr : contractList){
                 if(!output.servicePointId.contains(contr.ServicePoint__c)){
@@ -124,8 +124,8 @@ public inherited sharing class HDT_UTL_Case {
             for(OrderItem item : items){
                 if(item.SBQQ__OrderedQuantity__c>0){result=false;break;}
             }
-            result&=items.isEmpty();
-            output.isCompatible = result? '' : 'NO';
+            result&=!items.isEmpty();
+            output.isCompatible = result? 'Si' : 'NO';
         }else if ('Adesione Rinuncia Fondo Fughe'.equalsIgnoreCase(currentCase.Type)){     
             // Logica valorizzazione della data inizio variazione BBP w2 v4.0 pag 607
             List<Case> caseRetrieved = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];

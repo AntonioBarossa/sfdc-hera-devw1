@@ -570,6 +570,18 @@ export default class HdtSelfReading extends LightningElement {
                         })
                         .catch(error => { console.log(error) });
                     }
+                }else{ 
+                    //gestione creazione record Reading__c al Riprendi Case da Bozza, in questo caso infatti non è presente il record di Reading e va creato
+                    if(!this.isSaved && this.resumedFromDraft && this.object === 'case'){
+                        console.log('Inserimento nuovo record oggetto Reading__c');
+                        insertSelfReading({fields : JSON.stringify(this.outputObj)})
+                        .then(result => { 
+                            
+                            this.isSaved = true;
+                        
+                        })
+                        .catch(error => { console.log(error) });
+                    }
                 }
             })
             .catch(error => { console.log(error) });

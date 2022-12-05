@@ -91,7 +91,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_VoltureChangeManager.cancelTechnicalVolture((List<Order>)Trigger.New);
 
-
+        //Lasciare come ultima istruzione dell'afterupdate
+        HDT_UTL_OrderProcess.creditCheckActivityManagement(Trigger.new,Trigger.oldMap);
         system.debug(LoggingLevel.DEBUG,'Fine afterUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         
     }

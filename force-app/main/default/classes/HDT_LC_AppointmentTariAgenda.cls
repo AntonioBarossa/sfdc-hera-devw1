@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 16-11-2022
+ * @last modified on  : 02-12-2022
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions, PMD.AvoidDebugStatements')
@@ -165,9 +165,11 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             res.status = 'success';
         }
 
-        if(res.status.equalsIgnoreCase('success')){
+        if(STRING.isNotBlank(res?.data?.noticeNumber)){
             theCase.StartAppointment__c = wrap.startDate;
             theCase.EndAppointment__c = wrap.endDate;
+            theCase.JobCenterCode__c = res.data.workCenterId;
+            theCase.NoticeId__c = res.data.noticeNumber;
             theCase.Phase__c = 'Da Inviare';
             theCase.Outcome__c ='Recived_Slots';
 
@@ -208,31 +210,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     }
     
     @AuraEnabled
-    public static void handleNewActivityCreationAndCaseUpdate(Case caso, Boolean updateCase, String templateName){    
+    public static void updateCase(Case caso){    
         
-        System.debug(LoggingLevel.DEBUG,'templateName ->' + templateName); 
-        wrts_prcgvr__Activity__c actToIns = null;
-        Boolean isNoActivityUncompleted = [ SELECT Count() FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c!='Chiusa' AND wrts_prcgvr__ActivityTemplate__r.Name = 'Contattare Cliente' ] == 0;
-        if(templateName!=null && isNoActivityUncompleted){
-            actToIns = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateName(caso.Id, templateName);
-            actToIns.wrts_prcgvr__IsRequired__c=true;
-        }
-        
-        if(updateCase){
-            HDT_UTL_DatabaseService.updateSObject(caso);
-        }
+        HDT_UTL_DatabaseService.updateSObject(caso);
 
-        if(actToIns!=null){
-            HDT_UTL_DatabaseService.insertSObject(actToIns);
-        }
-    }
-
-    @AuraEnabled
-    public static void updateCase(List<Case> cases){ 
-        if(cases?.size()>0){
-            System.debug(LoggingLevel.DEBUG, 'cases.size ->' + cases.size());
-            HDT_UTL_DatabaseService.insertSObject(cases);
-        }
     }
 
     public static HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento initAppointmentRequestCase(Id caseId,requestType requestMethod){

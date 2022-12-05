@@ -16,7 +16,8 @@
     export const AFUNDA =  { evaluationType: 'visible', rateCategories: ['ACAGRICO00','ACPROMIBI0'] };
     export const AFUNDC =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0','ACPROMISC0','ACPROMIBI0'] };
     export const AFUNDI =  { evaluationType: 'visible', rateCategories: ['ACINDSTR00','ACAUGRUNI0','ACPROMIBI0'] };
-    export const AFUNDZ =  { evaluationType: 'visible', rateCategories: ['ACZOOTECN0','ACPROMIBI0'] };
+    export const AFUNDZ =  { evaluationType: 'visible', rateCategories: ['ACZOOTECN0','ACAGRIZOO0','ACPROMIBI0'] };
+    export const AFUNAC =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0','ACAUGRUNC0'] };
     export const N_A =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0'] };
 
     //Rate Category Required

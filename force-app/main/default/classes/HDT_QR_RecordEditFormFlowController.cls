@@ -4,14 +4,14 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
 
         List<HDT_UserInputFlow__mdt> userInputFlowList = new List<HDT_UserInputFlow__mdt>();
 
-        HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess('HDT_UserInputFlow__mdt','FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c','read');
+        HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess('HDT_UserInputFlow__mdt','FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c,ReadOnlyRelatedFields__c','read');
 
         securityClass.checkSecurityAccess();
 
         try {
             
             userInputFlowList = [
-            SELECT FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c
+            SELECT FieldsJSON__c, ValidateClass__c,ReadOnlyFields__c,ReadOnlyRelatedFields__c
             FROM HDT_UserInputFlow__mdt
             WHERE ProcessType__c =: processType 
             WITH SECURITY_ENFORCED           
