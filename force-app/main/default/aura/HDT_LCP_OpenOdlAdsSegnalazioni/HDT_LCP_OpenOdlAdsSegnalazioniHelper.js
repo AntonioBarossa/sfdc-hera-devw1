@@ -1,7 +1,7 @@
 ({
     openTabWithSubtab : function(component, event, helper) {
         
-        var accountId = component.get("v.recordId");
+        var accountId = component.get("v.accountId");
         var workspaceAPI = component.find("workspace");
 
         console.log('>>> accountId ' + accountId);
@@ -42,7 +42,7 @@
 
         var action = component.get("c.getAccountDetail");
         action.setParams({
-            "caseId": component.get("v.recordId")
+            "recordId": component.get("v.recordId")
         });
 
         action.setCallback(this, function(response) {
@@ -50,6 +50,7 @@
             if(state === "SUCCESS") {
                 var accountId = response.getReturnValue();
                 component.set("v.accountId", accountId);
+                helper.openTabWithSubtab(component, event, helper);
             } else {
                 console.error("getCaseData ERROR");
                 console.error(JSON.stringify(response) + " <== response");
