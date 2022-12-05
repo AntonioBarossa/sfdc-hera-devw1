@@ -1019,6 +1019,16 @@
                 <default>false</default>
                 <label>In attesa di Verifica</label>
             </value>
+            <value>
+                <fullName>Comunicazionee EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazionee EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>In attesa esito EngageOne</fullName>
+                <default>false</default>
+                <label>In attesa esito EngageOne</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
