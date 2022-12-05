@@ -11,6 +11,16 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private Integer contractIndex;
     private Integer accountIndex;
     private Integer pdrIndex;
+    private Integer shipmentTypeIndex;
+    private Integer shipmentEmailIndex;
+    private Integer shipmentAddressIndex;
+    private Integer shipmentStreetNameIndex;
+    private Integer shipmentStreetNumberIndex;
+    private Integer shipmentPlaceIndex;
+    private Integer shipmentProvinceIndex;
+    private Integer shipmentCityIndex;
+    private Integer shipmentPostalCodeIndex;
+    private Integer shipmentCountryIndex;
     private Set<String>contractCodes=new Set<String>();
     private Map<String,Contract> contractCodePodMap=new Map<String,Contract>();
     public override void checks(){
@@ -19,6 +29,16 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         contractIndex = mapHeaderForWrapper.get('CONTRATTO');
         accountIndex = mapHeaderForWrapper.get('ACCOUNTID');
         pdrIndex=mapHeaderForWrapper.get('POD');
+        shipmentTypeIndex=mapHeaderForWrapper.get('MODALITASPEDIZIONE');
+        shipmentEmailIndex=mapHeaderForWrapper.get('EMAILSPEDIZIONE');
+        shipmentAddressIndex=mapHeaderForWrapper.get('INDIRIZZOSPEDIZIONE');
+        shipmentStreetNameIndex=mapHeaderForWrapper.get('NOMEVIA');
+        shipmentStreetNumberIndex=mapHeaderForWrapper.get('CIVICO');
+        shipmentPlaceIndex=mapHeaderForWrapper.get('LOCALITA');
+        shipmentProvinceIndex=mapHeaderForWrapper.get('PROVINCIA');
+        shipmentCityIndex=mapHeaderForWrapper.get('COMUNE');
+        shipmentPostalCodeIndex=mapHeaderForWrapper.get('CAP');
+        shipmentCountryIndex=mapHeaderForWrapper.get('STATO');
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -122,7 +142,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         caseToEnrich.SupplyStreetCode__c=dataSource.ServicePoint__r.SupplySAPStreetCode__c;
         caseToEnrich.SupplyStreetName__c=dataSource.ServicePoint__r.SupplyStreet__c;
         caseToEnrich.SupplyStreetNumber__c=dataSource.ServicePoint__r.SupplyStreetNumber__c;
-        caseToEnrich.DeliveryAddress__c=dataSource.BillingProfile__r.InvoicingAddressFormula__c;
         caseToEnrich.SuppliedEmail=dataSource.Account.PrimaryEmail__c;
         caseToEnrich.BillingProfile__c=dataSource.BillingProfile__c;
         return caseToEnrich;
@@ -146,12 +165,27 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingBillingProf);
                 retMap.put('checksAreValid',false);
             }
+            if(csvSplitted[shipmentTypeIndex]=='E-Mail' && String.isBlank(csvSplitted[shipmentEmailIndex])){
+                retMap.put('errorMessage','Indirizzo email assente nel CSV.');
+                retMap.put('checksAreValid',false);
+            }
+            if(csvSplitted[shipmentTypeIndex]=='Posta Cartacea' && AddressFieldsInvalid(csvSplitted)){
+                retMap.put('errorMessage','Dati di spedizione assenti nel CSV.');
+                retMap.put('checksAreValid',false);
+            }
         }else{
             retMap.put('errorMessage',Label.consumoAnomaloIdricoDefaultMissingContract + csvSplitted[contractIndex]);
             retMap.put('checksAreValid',false);
         }
 
         return retMap;
+    }
+
+    private Boolean AddressFieldsInvalid(List<String>csvSplitted){
+        return String.isBlank(csvSplitted[shipmentStreetNameIndex]) ||
+                String.isBlank(csvSplitted[shipmentStreetNumberIndex]) || String.isBlank(csvSplitted[shipmentPlaceIndex]) ||
+                String.isBlank(csvSplitted[shipmentProvinceIndex]) || String.isBlank(csvSplitted[shipmentCityIndex]) ||
+                String.isBlank(csvSplitted[shipmentPostalCodeIndex]) || String.isBlank(csvSplitted[shipmentCountryIndex]);
     }
 
     public override void finalUpdate(){
