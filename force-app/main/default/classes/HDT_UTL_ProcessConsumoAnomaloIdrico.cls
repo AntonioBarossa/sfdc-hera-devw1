@@ -165,12 +165,12 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingBillingProf);
                 retMap.put('checksAreValid',false);
             }
-            if(csvSplitted[shipmentTypeIndex]=='E-Mail' && String.isBlank(csvSplitted[shipmentEmailIndex])){
-                retMap.put('errorMessage','Indirizzo email assente nel CSV.');
+            if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypeEmail && String.isBlank(csvSplitted[shipmentEmailIndex])){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingEmail);
                 retMap.put('checksAreValid',false);
             }
-            if(csvSplitted[shipmentTypeIndex]=='Posta Cartacea' && AddressFieldsInvalid(csvSplitted)){
-                retMap.put('errorMessage','Dati di spedizione assenti nel CSV.');
+            if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypePaperMail && AddressFieldsInvalid(csvSplitted)){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoShipmentDataMissing);
                 retMap.put('checksAreValid',false);
             }
         }else{
