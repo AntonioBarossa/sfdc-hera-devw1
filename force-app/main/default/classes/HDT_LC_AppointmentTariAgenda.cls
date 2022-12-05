@@ -165,9 +165,11 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             res.status = 'success';
         }
 
-        if(res.status.equalsIgnoreCase('success')){
+        if(STRING.isNotBlank(res?.data?.noticeNumber)){
             theCase.StartAppointment__c = wrap.startDate;
             theCase.EndAppointment__c = wrap.endDate;
+            theCase.JobCenterCode__c = res.data.workCenterId;
+            theCase.NoticeId__c = res.data.noticeNumber;
             theCase.Phase__c = 'Da Inviare';
             theCase.Outcome__c ='Recived_Slots';
 
