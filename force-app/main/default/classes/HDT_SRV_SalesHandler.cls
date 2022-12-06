@@ -534,7 +534,20 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }else{
 
                                             if(mapRequestFields.get('FASE') == 'Esito OK da DBO'){
-                                                futurePhase = 'Completata';
+                                                if(previousPhase.indexOf('Annullamento') > -1) {
+                                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                                    Datetime nowDate = Datetime.now();
+                                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != ''){
+                                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                                        ord.DiscardReason__c = mapRequestFields.get('NOTE_ANN');
+                                                    }
+                                                    futurePhase = 'Annullato';
+                                                }else{
+                                                    futurePhase = 'Completata';
+                                                }
+                                                
                                             }
                                             /**@frpanico 04/01/2022
                                              * Aggiunto MoveOut
