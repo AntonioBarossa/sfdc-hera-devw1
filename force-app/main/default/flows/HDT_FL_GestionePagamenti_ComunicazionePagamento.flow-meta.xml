@@ -1332,7 +1332,7 @@
     <formulas>
         <name>ConfrontoPagato_Dapagare</name>
         <dataType>Currency</dataType>
-        <expression>{!refresh_Case.PaidAmount__c}-{!refresh_Case.DocumentAmount__c}</expression>
+        <expression>{!refresh_Case.TotalResidue__c}-{!refresh_Case.PaidAmount__c}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
