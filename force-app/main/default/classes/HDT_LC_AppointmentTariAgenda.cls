@@ -39,8 +39,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.street = street;
             this.housenumber = housenumber;
             this.typeInt = typeInt;
-            this.indicator = indicator;
-            this.numberOfLines = numberOfLines;
+            this.indicator = 'Y';
+            this.numberOfLines = null;
             this.city = city;
             //this.startDate = startDate;
             //this.endDate = endDate;
