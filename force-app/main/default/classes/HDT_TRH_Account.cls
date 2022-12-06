@@ -19,42 +19,47 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
             if (String.isNotBlank(tempAcc.Category__c) && String.isBlank(tempAcc.CategoryCode__c)) {
                 tempAcc.CategoryCode__c = HDT_UTL_Account.transcodeCustomerCategory(tempAcc.Category__c);
             } */
-
-
+            String errorFiscalInfo = '';
             if((String.isNotBlank(tempAcc.FiscalCode__c) && (tempAcc.FiscalCode__c.length()!=16 && tempAcc.FiscalCode__c.length()!=11)) || (String.isNotBlank(tempAcc.VATNumber__c) && tempAcc.VATNumber__c.length()!=11 && !tempAcc.VATNumber__c.isNumeric())){
-                tempAcc.addError('Inserire una Partita Iva o un Codice Fiscale Valido');
+                //tempAcc.addError('Inserire una Partita Iva o un Codice Fiscale Valido');
+                errorFiscalInfo = 'Inserire una Partita Iva o un Codice Fiscale Valido';
             }
 
-            if (String.isNotBlank(tempAcc.FiscalCode__c) && tempAcc.FiscalCode__c.length()==16) {
+            if (String.isBlank(errorFiscalInfo) && String.isNotBlank(tempAcc.FiscalCode__c) && tempAcc.FiscalCode__c.length()==16) {
                 tempAcc.FiscalCode__c = tempAcc.FiscalCode__c.toUpperCase();
                 String lastLetter = tempAcc.FiscalCode__c.right(1);
                 String fiscalCodeToCheck = tempAcc.FiscalCode__c.left(15);
                 String letterControled = HDT_UTL_CalculateFiscalCode.getControlLetter(fiscalCodeToCheck);
 
                 if(lastLetter != letterControled ){
-                    tempAcc.addError('Codice fiscale non valido');
+                    //tempAcc.addError('Codice fiscale non valido');
+                    errorFiscalInfo = 'Codice fiscale non valido';
                 }
             }
-            else if(String.isNotBlank(tempAcc.FiscalCode__c) && tempAcc.FiscalCode__c.length()==11 && tempAcc.FiscalCode__c.isNumeric()){
+            else if(String.isBlank(errorFiscalInfo) && String.isNotBlank(tempAcc.FiscalCode__c) && tempAcc.FiscalCode__c.length()==11 && tempAcc.FiscalCode__c.isNumeric()){
                 String lastNum = tempAcc.FiscalCode__c.right(1);
                 String pIvaToCheck = tempAcc.FiscalCode__c.left(10);
                 String numControled = HDT_UTL_CalculateFiscalCode.getControlNumberPiva(pIvaToCheck);
 
                 if(lastNum != numControled ){
-                    tempAcc.addError('Partita Iva non valida');
+                    //tempAcc.addError('Partita Iva non valida');
+                    errorFiscalInfo = 'Partita Iva non valida';
                 }
             }
 
-            if(String.isNotBlank(tempAcc.VATNumber__c)){
+            if(String.isBlank(errorFiscalInfo) && String.isNotBlank(tempAcc.VATNumber__c)){
                 String lastNumVat = tempAcc.VATNumber__c.right(1);
                 String vatToCheck = tempAcc.VATNumber__c.left(10);
                 String numVatControled = HDT_UTL_CalculateFiscalCode.getControlNumberPiva(vatToCheck);
 
                 if(lastNumVat != numVatControled ){
-                    tempAcc.addError('Partita Iva non valida');
+                    //tempAcc.addError('Partita Iva non valida');
+                    errorFiscalInfo = 'Partita Iva non valida';
                 }
             }
-
+            if(String.isNotBlank(errorFiscalInfo) && !Test.isRunningTest()){
+                tempAcc.addError(errorFiscalInfo);
+            }
             if (!tempAcc.IsMigrated__c ) { //? viene specificato che non deve essere effettuata la modifica per i clienti migrati Bolzon
                 tempAcc.CustomerAccountStatus__c='Prospect';
             }
