@@ -12,15 +12,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
     private Integer accountIndex;
     private Integer pdrIndex;
     private Integer shipmentTypeIndex;
-    private Integer shipmentEmailIndex;
-    private Integer shipmentAddressIndex;
-    private Integer shipmentStreetNameIndex;
-    private Integer shipmentStreetNumberIndex;
-    private Integer shipmentPlaceIndex;
-    private Integer shipmentProvinceIndex;
-    private Integer shipmentCityIndex;
-    private Integer shipmentPostalCodeIndex;
-    private Integer shipmentCountryIndex;
     private Set<String>contractCodes=new Set<String>();
     private Map<String,Contract> contractCodePodMap=new Map<String,Contract>();
     public override void checks(){
@@ -30,15 +21,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         accountIndex = mapHeaderForWrapper.get('ACCOUNTID');
         pdrIndex=mapHeaderForWrapper.get('POD');
         shipmentTypeIndex=mapHeaderForWrapper.get('MODALITASPEDIZIONE');
-        shipmentEmailIndex=mapHeaderForWrapper.get('EMAILSPEDIZIONE');
-        shipmentAddressIndex=mapHeaderForWrapper.get('INDIRIZZOSPEDIZIONE');
-        shipmentStreetNameIndex=mapHeaderForWrapper.get('NOMEVIA');
-        shipmentStreetNumberIndex=mapHeaderForWrapper.get('CIVICO');
-        shipmentPlaceIndex=mapHeaderForWrapper.get('LOCALITA');
-        shipmentProvinceIndex=mapHeaderForWrapper.get('PROVINCIA');
-        shipmentCityIndex=mapHeaderForWrapper.get('COMUNE');
-        shipmentPostalCodeIndex=mapHeaderForWrapper.get('CAP');
-        shipmentCountryIndex=mapHeaderForWrapper.get('STATO');
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
@@ -142,8 +124,17 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         caseToEnrich.SupplyStreetCode__c=dataSource.ServicePoint__r.SupplySAPStreetCode__c;
         caseToEnrich.SupplyStreetName__c=dataSource.ServicePoint__r.SupplyStreet__c;
         caseToEnrich.SupplyStreetNumber__c=dataSource.ServicePoint__r.SupplyStreetNumber__c;
-        caseToEnrich.SuppliedEmail=dataSource.Account.PrimaryEmail__c;
+        caseToEnrich.Email__c=getEmail(dataSource.Account,dataSource.BillingProfile__r);
         caseToEnrich.BillingProfile__c=dataSource.BillingProfile__c;
+        caseToEnrich.InvoicingCity__c=caseToEnrich.BillingProfile__r.InvoicingCity__c;
+        caseToEnrich.InvoicingCountry__c=caseToEnrich.BillingProfile__r.InvoicingCountry__c;
+        caseToEnrich.InvoicingPlace__c=caseToEnrich.BillingProfile__r.InvoicingPlace__c;
+        caseToEnrich.InvoicingPostalCode__c=caseToEnrich.BillingProfile__r.InvoicingPostalCode__c;
+        caseToEnrich.InvoicingProvince__c=caseToEnrich.BillingProfile__r.InvoicingProvince__c;
+        caseToEnrich.InvoicingStreetName__c=caseToEnrich.BillingProfile__r.InvoicingStreetName__c;
+        caseToEnrich.InvoicingStreetNumber__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumber__c;
+        caseToEnrich.InvoicingStreetNumberExtension__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumberExtension__c;
+        caseToEnrich.DeliveryAddress__c=caseToEnrich.BillingProfile__r.InvoicingAddressFormula__c;
         return caseToEnrich;
     }
 
@@ -164,13 +155,12 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__c)){
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingBillingProf);
                 retMap.put('checksAreValid',false);
-            }
-            if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypeEmail && String.isBlank(csvSplitted[shipmentEmailIndex])){
-                retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingEmail);
+            }else if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypePaperMail && AddressFieldsInvalid(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__r)){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoShipmentDataMissing);
                 retMap.put('checksAreValid',false);
             }
-            if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypePaperMail && AddressFieldsInvalid(csvSplitted)){
-                retMap.put('errorMessage',Label.consumoAnomaloIdricoShipmentDataMissing);
+            if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypeEmail && String.isBlank(getEmail(contractCodePodMap.get(csvSplitted[contractIndex]).Account, contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__r))){
+                retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingEmail);
                 retMap.put('checksAreValid',false);
             }
         }else{
@@ -181,11 +171,14 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         return retMap;
     }
 
-    private Boolean AddressFieldsInvalid(List<String>csvSplitted){
-        return String.isBlank(csvSplitted[shipmentStreetNameIndex]) ||
-                String.isBlank(csvSplitted[shipmentStreetNumberIndex]) || String.isBlank(csvSplitted[shipmentPlaceIndex]) ||
-                String.isBlank(csvSplitted[shipmentProvinceIndex]) || String.isBlank(csvSplitted[shipmentCityIndex]) ||
-                String.isBlank(csvSplitted[shipmentPostalCodeIndex]) || String.isBlank(csvSplitted[shipmentCountryIndex]);
+    private Boolean AddressFieldsInvalid(BillingProfile__c billingProf){
+        return String.isBlank(billingProf.InvoicingCity__c) || String.isBlank(billingProf.InvoicingCountry__c) || String.isBlank(billingProf.InvoicingPlace__c) ||
+                String.isBlank(billingProf.InvoicingPostalCode__c) || String.isBlank(billingProf.InvoicingProvince__c) || String.isBlank(billingProf.InvoicingStreetName__c) ||
+                String.isBlank(billingProf.InvoicingStreetNumber__c) || String.isBlank(billingProf.InvoicingAddressFormula__c);
+    }
+
+    private String getEmail(Account acc,BillingProfile__c billingProf){
+        return String.isNotBlank(billingProf.InvoiceEmailAddress__c) ? billingProf.InvoiceEmailAddress__c : String.isNotBlank(billingProf.InvoiceCertifiedEmailAddress__c) ? billingProf.InvoiceCertifiedEmailAddress__c : String.isNotBlank(billingProf.ElectronicInvoiceCertifiedEmailAddress__c) ? billingProf.ElectronicInvoiceCertifiedEmailAddress__c : acc.PrimaryEmail__c;
     }
 
     public override void finalUpdate(){
