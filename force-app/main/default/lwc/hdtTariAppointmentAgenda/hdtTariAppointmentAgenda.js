@@ -268,7 +268,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                             });
                         });
                         this.disableConfirmButton = false; 
-                        this.case.Outcome__c='Recived_Slots';
+                        //this.case.Outcome__c='Recived_Slots';
                         this.updateCase(this.case);
                         this.disableCancelButton = false; 
                     }
