@@ -661,8 +661,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     public void handleSelfReadings(SObject inputCase)
     {
-        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL'};
-        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata'};
+        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL', 'Esito KO da DBO'};
+        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata', 'Esito OK da DBO'};
         Case currentCase = (Case) inputCase;
         
         try {
