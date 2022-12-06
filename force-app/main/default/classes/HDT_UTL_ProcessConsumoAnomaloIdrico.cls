@@ -2,7 +2,6 @@
  * richiamata dal batch HDT_BA_ProcessOrderCreation dinamicamente in base la configurazione del metadata HDT_MassiveLoaderProcess__mdt
  * e utilizzando il mapping field nel metadata HDT_MassiveFieldsObjectMap__mdt.
  **/
-@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_UTL_ProcessExecution {
     private List<MassiveLoaderRequestItem__c> itemsToSave;
     private Map<String, String> mapCaseFields;
