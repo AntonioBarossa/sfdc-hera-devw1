@@ -28,6 +28,14 @@ private class HDT_UTL_ProcessConsumoAnomaloIdricoTst {
         List<BillingProfile__c>billingProfList=HDT_UTL_DataFactoryTst.createBillingProfile(amount, false, accs[0].Id);
         for(BillingProfile__c tmpBill:billingProfList){
             tmpBill.Account__c=accs[k].Id;
+            tmpBill.InvoicingCity__c='Roma';
+            tmpBill.InvoicingCountry__c='Italia';
+            tmpBill.InvoicingPlace__c='Test';
+            tmpBill.InvoicingPostalCode__c='00160';
+            tmpBill.InvoicingProvince__c='RM';
+            tmpBill.InvoicingStreetName__c='Via test';
+            tmpBill.InvoicingStreetNumber__c='15';
+            tmpBill.InvoiceEmailAddress__c='testinvoice@gmail.com';
             k++;
         }
         insert billingProfList;
@@ -61,35 +69,35 @@ private class HDT_UTL_ProcessConsumoAnomaloIdricoTst {
             switch on n {
                 when 0 {
                     //ok
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-20|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-20|Y|Posta Cartacea|Cartacea';
                 }
                 when 1 {
                     //ko on sap code
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'Invalid'+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-21|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'Invalid'+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-21|Y|Posta Cartacea|Cartacea';
                 }
                 when 2{
                     //ko con BP code (Account.SAPIntegrationID__c)
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n-1].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-22|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n-1].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-22|Y|Posta Cartacea|Cartacea';
                 }
                 when 3 {
                     //ko missing required field accountId
-                    item.Data__c='Consumo Anomalo Idrico|'+''+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-23|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+''+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-23|Y|Posta Cartacea|Cartacea';
                 }
                 when 4 {
                     //Contract.ServicePoint__c is null
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n-1].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-24|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n-1].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-24|Y|Posta Cartacea|Cartacea';
                 }
                 when 5 {
                     //ok
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-25|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-25|Y|E-Mail|Cartacea';
                 }
                 when 6 {
                     //Missing billing profile
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-26|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-26|Y|Posta Cartacea|Cartacea';
                 }
                 when 7 {
                     //ko pod mismatch
-                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n-1].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-27|Y';
+                    item.Data__c='Consumo Anomalo Idrico|'+accs[n].SAPIntegrationID__c+'|'+cont[n].SAPContractCode__c+'|'+servPoint[n-1].ServicePointCode__c+'|Protocollo|Da Gestore|Forte Consumo|12331134|2022-11-27|Y|Posta Cartacea|Cartacea';
                 }
             }
             itemsList.add(item);
