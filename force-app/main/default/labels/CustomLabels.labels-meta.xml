@@ -1132,14 +1132,14 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>consumoAnomaloIdricoMissingEmail</shortDescription>
-        <value>Indirizzo email assente nel CSV.</value>
+        <value>Indirizzo email assente nel Billing Profile e Account.</value>
     </labels>
     <labels>
         <fullName>consumoAnomaloIdricoShipmentDataMissing</fullName>
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>consumoAnomaloIdricoShipmentDataMissing</shortDescription>
-        <value>Dati di spedizione assenti nel CSV.</value>
+        <value>Dati di spedizione non congrui nel Billing Profile</value>
     </labels>
     <labels>
         <fullName>consumoAnomaloIdricoShipmentTypeEmail</fullName>
