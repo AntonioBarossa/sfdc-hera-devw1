@@ -3,17 +3,15 @@
  */
 
 public with sharing class HDT_BA_DocumentalManagementIdricoBulk implements Database.Batchable<sObject>, Database.Stateful{
-     private HDT_SignModeSettings__mdt docMode=HDT_SignModeSettings__mdt.getInstance('Cartacea_Default');
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id, Phase__c,SendMode__c FROM Case Where Phase__c =\''+Label.consumoAnomaloIdricoDefaultPhase+'\'';
-        System.debug('query value: '+query);
+        String query = 'SELECT Id, Phase__c,SendMode__c,SignMode__c FROM Case Where Phase__c =\''+Label.consumoAnomaloIdricoDefaultPhase+'\'';
         return Database.getQueryLocator(query);
     }
     public void execute(Database.BatchableContext bc, List<Case> scope){
         Case singleCase = (Case) scope[0];
         Map<String,String> params = new Map<String,String>();
         //String modInvio = singleCase.SendMode__c == Label.consumoAnomaloIdricoShipmentTypePaperMail ? 'Sportello':singleCase.SendMode__c;
-        params.put('signMode', docMode.SignMode__c);
+        params.put('signMode', singleCase.SignMode__c);
         params.put('sendMode', singleCase.SendMode__c);
         params.put('Contesto', 'Case');
         params.put('mode', 'Print');
