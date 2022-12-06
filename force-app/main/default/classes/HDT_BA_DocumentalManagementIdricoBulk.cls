@@ -10,7 +10,6 @@ public with sharing class HDT_BA_DocumentalManagementIdricoBulk implements Datab
     public void execute(Database.BatchableContext bc, List<Case> scope){
         Case singleCase = (Case) scope[0];
         Map<String,String> params = new Map<String,String>();
-        //String modInvio = singleCase.SendMode__c == Label.consumoAnomaloIdricoShipmentTypePaperMail ? 'Sportello':singleCase.SendMode__c;
         params.put('signMode', singleCase.SignMode__c);
         params.put('sendMode', singleCase.SendMode__c);
         params.put('Contesto', 'Case');
