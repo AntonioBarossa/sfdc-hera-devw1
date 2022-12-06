@@ -464,7 +464,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
-        if(listOfRadio != null && listOfRadio.size()>0){
+        Set<String> phaseNoUpdate = new Set<String>{'Completata', 'Annullato', 'Accettazione Voltura', 'Credit Check KO', 'Attesa Credit Check', 'Voltura Rifiutata'};
+		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
@@ -636,7 +637,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
-					Map<Id,Order> orderMap = new Map<Id,Order>(HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
+					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
 						Order ordRefresh = orderMap.get(childOrder.Id);
@@ -649,7 +650,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
 						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
-						&& (!'Annullato'.equalsIgnoreCase((String)ordRefresh.get('Phase__c')) && !'Accettazione Voltura'.equalsIgnoreCase((String)ordRefresh.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)ordRefresh.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)ordRefresh.get('Phase__c')))){
+						&& (!phaseNoUpdate.contains((String)ordRefresh.get('Phase__c'))))
+						{
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
