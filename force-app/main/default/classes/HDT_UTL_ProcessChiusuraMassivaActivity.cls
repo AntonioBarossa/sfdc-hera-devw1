@@ -131,11 +131,14 @@ public inherited sharing class HDT_UTL_ProcessChiusuraMassivaActivity extends HD
     }
 
     public override void registryCreation(){
-        List<MassiveLoaderRequestItem__c> requestItemForUpsert;
-        requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsertAct = new List<MassiveLoaderRequestItem__c>();
+        Map<Id,MassiveLoaderRequestItem__c> mapRequestItemForUpsertNext = new Map<Id,MassiveLoaderRequestItem__c>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsertOrd = new List<MassiveLoaderRequestItem__c>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsertCase = new List<MassiveLoaderRequestItem__c>();
         getLimitDetails('START registryCreation');
         actToSave = new List<wrts_prcgvr__Activity__c>();
-
+        orderToSave = new List<Order>();
+        caseToSave = new List<Case>();
         for(HDT_WRP_ProcessObjects procObj:processObjList){
             wrts_prcgvr__Activity__c act=procObj.activity;
             String usrAdn=mapUserActId.get(act.Id);
@@ -146,35 +149,90 @@ public inherited sharing class HDT_UTL_ProcessChiusuraMassivaActivity extends HD
             }
 
             User usr=mapUserAdn.get(usrAdn);
-            Id relOrdId;
-            Id relCaseId;
-
-            if(mapActivityOrderId.containsKey(act.Id)){
-                relOrdid=mapActivityOrderId.get(act.Id);
-                if(errorForPicklistValue('Order', 'Phase__c', procObj.fase)){
-                    itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore fase non corretto: ' + procObj.fase));
-                    continue;
-                }
-                Order refOrder=new Order(Id=relOrdid,Phase__c=procObj.fase);
-                orderToSave.add(refOrder);
-            }
-
-            if(mapActivityCaseId.containsKey(act.Id)){
-                relCaseId=mapActivityCaseId.get(act.Id);
-                if(errorForPicklistValue('Case', 'Phase__c', procObj.fase)){
-                    itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore fase non corretto: ' + procObj.fase));
-                    continue;
-                }
-                Case refCase=new Case(Id=relCaseId  ,Phase__c=procObj.fase);
-                caseToSave.add(refCase);
-            }
             
+
             act.ClosingUserChannel__c = usr.LoginChannel__c;
             act.ClosingCreatorGroup__c = usr.CreatorGroup__c;
             act.ClosedByUsername__c = usr.Username;
+
+            actToSave.add(act);           
             
-            actToSave.add(act);
-            requestItemForUpsert.add(procObj.requestItem);
+            requestItemForUpsertAct.add(procObj.requestItem);
+        }
+
+        if(!actToSave.isEmpty()){
+            HDT_WRP_SaveResponse saveResponse;
+            saveResponse = databaseUpsert(actToSave, requestItemForUpsertAct, 'wrts_prcgvr__Activity__c');
+            actToSave.clear();
+            getLimitDetails('AFTER ACT CLOSE');
+            
+            Map<Id, String> errorItemMap=saveResponse.errorItemMap;
+            for( MassiveLoaderRequestItem__c requestItem:saveResponse.reponseItemList){
+                if(errorItemMap.containsKey(requestItem.Id)){
+                    itemsToSave.add(setErrorItem(requestItem, errorItemMap.get(requestItem.Id)));
+                } else {
+                    mapRequestItemForUpsertNext.put(requestItem.Id,requestItem);
+                }
+            }
+
+            for(HDT_WRP_ProcessObjects procObj:processObjList){
+                if(!mapRequestItemForUpsertNext.containsKey(procObj.requestItem.Id)){
+                    continue;
+                }
+
+                wrts_prcgvr__Activity__c act=procObj.activity;
+
+                Id relOrdId;
+                if(mapActivityOrderId.containsKey(act.Id)){
+                    relOrdid=mapActivityOrderId.get(act.Id);
+                    if(errorForPicklistValue('Order', 'Phase__c', procObj.fase)){
+                        itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore fase Order non corretto: ' + procObj.fase));
+                        continue;
+                    }
+                    Order refOrder=new Order(Id=relOrdid,Phase__c=procObj.fase);
+                    orderToSave.add(refOrder);
+                    requestItemForUpsertOrd.add(procObj.requestItem);
+                }
+                
+                
+                Id relCaseId;
+                if(mapActivityCaseId.containsKey(act.Id)){
+                    relCaseId=mapActivityCaseId.get(act.Id);
+                    if(errorForPicklistValue('Case', 'Phase__c', procObj.fase)){
+                        itemsToSave.add(setErrorItem(processObj.requestItem, 'Valore fase Case non corretto: ' + procObj.fase));
+                        continue;
+                    }
+                    Case refCase=new Case(Id=relCaseId  ,Phase__c=procObj.fase);
+                    caseToSave.add(refCase);
+                    requestItemForUpsertCase.add(procObj.requestItem);
+                }
+                
+            }
+
+            if(!orderToSave.isEmpty()){
+                HDT_WRP_SaveResponse saveResponseOrd;
+                saveResponseOrd = databaseUpsert(orderToSave, requestItemForUpsertOrd, 'Order');
+                orderToSave.clear();
+                getLimitDetails('AFTER Order UPDATE');
+
+                if(saveResponseOrd.reponseItemList.size() > 0){
+                    itemsToSave.addAll(saveResponseOrd.reponseItemList);
+                }
+
+            }
+
+            if(!caseToSave.isEmpty()){
+                HDT_WRP_SaveResponse saveResponseCase;
+                saveResponseCase = databaseUpsert(caseToSave, requestItemForUpsertCase, 'Case');
+                caseToSave.clear();
+                getLimitDetails('AFTER Case UPDATE');
+
+                if(saveResponseCase.reponseItemList.size() > 0){
+                    itemsToSave.addAll(saveResponseCase.reponseItemList);
+                }
+
+            }
+
         }
 
 
