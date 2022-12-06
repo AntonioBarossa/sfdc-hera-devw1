@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>nameField__c</field>
-        <value xsi:type="xsd:string">Outcome__c</value>
+        <value xsi:type="xsd:string">ActivityOutcome__c</value>
     </values>
     <values>
         <field>objectType__c</field>
-        <value xsi:type="xsd:string">Case</value>
+        <value xsi:type="xsd:string">wrts_prcgvr__Activity__c</value>
     </values>
     <values>
         <field>processType__c</field>

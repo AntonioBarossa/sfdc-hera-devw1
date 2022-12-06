@@ -8,11 +8,11 @@
     </values>
     <values>
         <field>nameField__c</field>
-        <value xsi:type="xsd:string">GRUPPO_CREATORE_CHIUSURA</value>
+        <value xsi:type="xsd:string">ClosingCreatorGroup__c</value>
     </values>
     <values>
         <field>objectType__c</field>
-        <value xsi:type="xsd:string">WrapperActivity</value>
+        <value xsi:type="xsd:string">wrts_prcgvr__Activity__c</value>
     </values>
     <values>
         <field>processType__c</field>
