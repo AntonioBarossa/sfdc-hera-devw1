@@ -46,11 +46,10 @@ class Wrapper{
         this.streetCoding = streetCoding;
         this.street = street;
         this.housenumber = housenumber;
-        this.indicator = indicator;
+        this.indicator = "Y";
         this.city = city;
         this.typeInt = typeInt?.toUpperCase();
-        this.numberOfLines = numberOfLines;
-
+        this.numberOfLines = "50";
     }
 }
 
@@ -108,10 +107,10 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     confirmAppointment(){
         this.showSpinner = true;
-        let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
+        let rows = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
         const wrap = this.createWrapper();
-        wrap.startDate=row.startDate;
-        wrap.endDate=row.endDate;
+        wrap.startDate=new Date(rows[0].startDate);
+        wrap.endDate=new Date(rows[0].endDate);
         handleConfirm({
             theCase : this.case,
             wrap : wrap
@@ -257,7 +256,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                     this.records = [];
                     if(slots.length == 0){
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
-                        this.case.Outcome__c ='Empty_Slots';
+                        //this.case.Outcome__c ='Empty_Slots';
+                        this.showAlert('Attenzione',data?.data?.outcome? data?.data?.text : 'Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
                         this.hideConfirmButton = true; 
                         this.disableManageButton = false;
                     }else{
@@ -268,8 +268,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                             });
                         });
                         this.disableConfirmButton = false; 
-                        this.case.Outcome__c='Recived_Slots';
-                        this.updateCase(this.case);
+                        //this.case.Outcome__c='Recived_Slots';
+                        //this.updateCase(this.case);
                         this.disableCancelButton = false; 
                     }
                 }catch(e){
