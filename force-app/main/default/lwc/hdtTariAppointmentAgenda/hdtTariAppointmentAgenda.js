@@ -107,10 +107,10 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     confirmAppointment(){
         this.showSpinner = true;
-        let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
+        let rows = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
         const wrap = this.createWrapper();
-        wrap.startDate=row.startDate;
-        wrap.endDate=row.endDate;
+        wrap.startDate=new Date(rows[0].startDate);
+        wrap.endDate=new Date(rows[0].endDate);
         handleConfirm({
             theCase : this.case,
             wrap : wrap
@@ -269,7 +269,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                         });
                         this.disableConfirmButton = false; 
                         //this.case.Outcome__c='Recived_Slots';
-                        this.updateCase(this.case);
+                        //this.updateCase(this.case);
                         this.disableCancelButton = false; 
                     }
                 }catch(e){

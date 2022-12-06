@@ -99,8 +99,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String typeInt;
         String indicator;
         String numberOfLines;
-        Datetime startDate;
-        Datetime endDate;
+        String startDate;
+        String endDate;
         
         public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap) {
 
@@ -111,9 +111,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.typeInt = wrap.typeInt;
             this.indicator = wrap.indicator;
             this.numberOfLines = wrap.numberOfLines;
-            this.startDate = wrap.startDate;
-            this.endDate = wrap.endDate;
-
+            this.startDate = wrap.startDate.format('yyyy-MM-dd hh:mm:ss');
+            this.endDate = wrap.endDate.format('yyyy-MM-dd hh:mm:ss');
         }
     }
 
@@ -159,6 +158,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap) {
         HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap);
+        system.debug(json.serialize(req));
         HDT_WS_AppointmentConfirmResponse res = (HDT_WS_AppointmentConfirmResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_CONFIRM,'POST', req, HDT_WS_AppointmentConfirmResponse.class);
         
         if(Test.isRunningTest()){
