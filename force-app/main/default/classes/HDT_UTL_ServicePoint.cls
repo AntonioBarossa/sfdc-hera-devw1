@@ -12,6 +12,16 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
    
+
+    @InvocableMethod(label='Invoke ServicePoint Enrichment')
+    public static List<ServicePoint__c> servicePointEnrichment( List<HDT_UTL_FlowInput> inputs){
+        //  List<ServicePoint__c> sp, List<String> responseSerialized
+
+        HDT_WS_ArrichmentDataEntityResponse response = (HDT_WS_ArrichmentDataEntityResponse) JSON.deserialize(inputs[0].responseSerialized, HDT_WS_ArrichmentDataEntityResponse.class);
+        List<ServicePoint__c> ret = extractDataFromArriccDataServiceWithExistingSp(inputs[0].servicePoint, response); 
+
+        return ret;
+    }
     
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
@@ -636,5 +646,14 @@ public with sharing class HDT_UTL_ServicePoint {
         else{
             return false;
         }
+    }
+
+    public class HDT_UTL_FlowInput{
+
+        @InvocableVariable
+        public ServicePoint__c servicePoint;
+        @InvocableVariable
+        public String responseSerialized;
+
     }
 }
