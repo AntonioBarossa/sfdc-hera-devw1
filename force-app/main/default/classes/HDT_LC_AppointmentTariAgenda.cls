@@ -174,6 +174,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             theCase.Outcome__c ='Recived_Slots';
 
             if(!theCase.WithdrawalFee__c){
+                if(theCase.ServicePoint__c == null){    throw new HDT_UTL_HeraException('ServicePointId Null when creating MasterDetail');     }
                 Date dataRitiro = Date.newinstance(theCase.CreatedDate.year(), theCase.CreatedDate.month(), theCase.CreatedDate.day());
                 FreeWithdraw__c ritiro = new FreeWithdraw__c();
                 ritiro.ServicePoint__c = theCase.ServicePoint__c;
