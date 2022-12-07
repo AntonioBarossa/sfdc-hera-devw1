@@ -621,6 +621,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						Order singleOrder = new Order();
 						singleOrder.Id = childOrder.Id;
 						singleOrder.CIAccoutn__c = 'Validato';
+						singleOrder.CILegalRepresentative__c = 'Validato';
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
 						singleOrder.DocumentPackage__c = 'Validato';
