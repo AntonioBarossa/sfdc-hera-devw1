@@ -20,6 +20,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 			orders[0].Channel__c='testChannel';
 			orders[0].CustomerCategory__c='Aziende';
 			orders[0].MarketOrigin__c='Default';
+			orders[0].Market__c = 'Libero';
 			orders[0].RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
 			insert orders;
 
@@ -27,7 +28,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 			comfQualCallList[0].Process__c='HDT_RT_Vas';
 			comfQualCallList[0].Channel__c=orders[0].Channel__c;
 			comfQualCallList[0].CustomerType__c=orders[0].CustomerCategory__c;
-			comfQualCallList[0].MarketType__c=orders[0].MarketOrigin__c;
+			comfQualCallList[0].MarketType__c=orders[0].Market__c;
 			comfQualCallList[0].ComfortSignatureMethod__c=orders[0].SignatureMethod__c;
 			comfQualCallList[0].DocumentValidation__c=true;
 			comfQualCallList[0].ComfortEnabled__c=true;
@@ -48,7 +49,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 
 			test.startTest();
 
-			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName, CustomerCategory__c, MarketOrigin__c, SignatureMethod__c
+			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName, CustomerCategory__c,Market__c, MarketOrigin__c, SignatureMethod__c
 			                    FROM Order
 			                    WHERE Channel__c='testChannel'];
 
@@ -73,7 +74,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 
 			test.startTest();
 
-			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName, CustomerCategory__c, MarketOrigin__c, SignatureMethod__c, DocSendingMethod__c
+			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName,Market__c, CustomerCategory__c, MarketOrigin__c, SignatureMethod__c, DocSendingMethod__c
 			                    FROM Order
 			                    WHERE Channel__c='testChannel'];
 
