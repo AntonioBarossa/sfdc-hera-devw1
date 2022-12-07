@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 /**
 * @author Luca Molino (luca.molino@engdb.com.br)
 * @date 23/03/2021
@@ -204,7 +205,7 @@ public with sharing class HDT_UTL_ServicePoint {
                             landReg.ServicePoint__c = spNew.Id;
                             landReg.StartDate__c = dataEnrich.getDateFromString(mapRes.get('DATAATTIVAZIONE'));
                             landReg.EndDate__c = dataEnrich.getDateFromString('99991231'.equals(mapRes.get('DATACESSAZIONE'))? null: mapRes.get('DATACESSAZIONE'));
-                            landReg.GlobalMigrationKey__c = 'DC_'+ spNew.SAPImplantCode__c + '_' + landReg.DestinationUsage__c + '_' + landReg.SapProgressive__c + '_' + String.valueof(landReg.StartDate__c);
+                            landReg.GlobalMigrationKey__c = 'DC_'+ spNew.SAPImplantCode__c + '_' + landReg.DestinationUsage__c + '_' + landReg.SapProgressive__c;
                             landLstToInsert.add(landReg);
                             
                         }

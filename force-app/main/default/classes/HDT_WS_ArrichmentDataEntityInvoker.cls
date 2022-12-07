@@ -21,19 +21,15 @@ public class HDT_WS_ArrichmentDataEntityInvoker {
 
     @InvocableMethod(label='Invoke Data Enrichment')
     public static List<String> submitEnrichmentRequest(List<HDT_WRP_ArricchimentoFlowInputs> request){
- 
-        List<String> ret = new List<String>(); 
-        System.debug('invocable method params: '+request);
+        List<String> ret = new List<String>();
         HDT_WS_ArrichmentDataEntityResponse res = callService(request[0].contractCode,request[0].pod ,request[0].impianto); //
-        
-        System.debug(res);
+    
 
         if(res.statusCode != 200){
             ret.add('');
             return ret;
         }
-        ret.add(JSON.serialize(res)); 
-        
+        ret.add(JSON.serialize(res));
         return ret;
     }
 
