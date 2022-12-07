@@ -3,7 +3,7 @@
     <actionCalls>
         <name>checkTariProcess</name>
         <label>checkTariProcess</label>
-        <locationX>3531</locationX>
+        <locationX>3658</locationX>
         <locationY>878</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
@@ -35,8 +35,8 @@
     <assignments>
         <name>Assegna_Mod_Pag_VA</name>
         <label>Assegna Mod Pag VA</label>
-        <locationX>2849</locationX>
-        <locationY>4910</locationY>
+        <locationX>2976</locationX>
+        <locationY>5126</locationY>
         <assignmentItems>
             <assignToReference>ModalitaPagamento</assignToReference>
             <operator>Assign</operator>
@@ -51,8 +51,8 @@
     <assignments>
         <name>assegna_tipo_acconto</name>
         <label>assegna tipo acconto</label>
-        <locationX>2426</locationX>
-        <locationY>3278</locationY>
+        <locationX>2602</locationX>
+        <locationY>3398</locationY>
         <assignmentItems>
             <assignToReference>Copy_1_of_refresh_Case.PaymentType__c</assignToReference>
             <operator>Assign</operator>
@@ -67,8 +67,8 @@
     <assignments>
         <name>Assegna_Titolare_Conto_From_Case</name>
         <label>Assegna Titolare Conto From Case</label>
-        <locationX>2849</locationX>
-        <locationY>5246</locationY>
+        <locationX>2976</locationX>
+        <locationY>5462</locationY>
         <assignmentItems>
             <assignToReference>NomeIntestatario_CC</assignToReference>
             <operator>Assign</operator>
@@ -97,8 +97,8 @@
     <assignments>
         <name>Assegna_Titolare_Conto_From_Flow_Screen</name>
         <label>Assegna Titolare Conto From Flow Screen</label>
-        <locationX>3113</locationX>
-        <locationY>5246</locationY>
+        <locationX>3240</locationX>
+        <locationY>5462</locationY>
         <assignmentItems>
             <assignToReference>NomeIntestatario_CC</assignToReference>
             <operator>Assign</operator>
@@ -127,8 +127,8 @@
     <assignments>
         <name>Assegna_Valori_Abi_Mod_Pagamento</name>
         <label>Assegna Valori Abi - Mod Pagamento</label>
-        <locationX>2981</locationX>
-        <locationY>4670</locationY>
+        <locationX>3108</locationX>
+        <locationY>4886</locationY>
         <assignmentItems>
             <assignToReference>AbiCode</assignToReference>
             <operator>Assign</operator>
@@ -143,7 +143,7 @@
     <assignments>
         <name>Assegna_Versato_all_Ente_sbagliato_1</name>
         <label>Assegna Versato all’Ente sbagliato 1</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>versatoEnteS</assignToReference>
@@ -180,7 +180,7 @@
     <assignments>
         <name>Assegna_Versato_all_Ente_sbagliato_2</name>
         <label>Assegna Versato all’Ente sbagliato 2</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>refresh_Case.Note__c</assignToReference>
@@ -196,7 +196,7 @@
     <assignments>
         <name>AssegnaPredefault</name>
         <label>AssegnaPredefault</label>
-        <locationX>1790</locationX>
+        <locationX>1854</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.Amount__c</assignToReference>
@@ -216,8 +216,8 @@
     <assignments>
         <name>AssegnaVariabili</name>
         <label>AssegnaVariabili</label>
-        <locationX>3355</locationX>
-        <locationY>5798</locationY>
+        <locationX>3482</locationX>
+        <locationY>6014</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -309,7 +309,7 @@
     <assignments>
         <name>AssegnaVariabili_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>GetCaseNonBozza.Phase__c</assignToReference>
@@ -332,8 +332,8 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>3091</locationX>
-        <locationY>5918</locationY>
+        <locationX>3218</locationX>
+        <locationY>6134</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -383,8 +383,8 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>4059</locationX>
-        <locationY>4550</locationY>
+        <locationX>4186</locationX>
+        <locationY>4766</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -413,8 +413,8 @@
     <assignments>
         <name>AssegnaVariabili_0_0_0_0_0_0</name>
         <label>AssegnaVariabili</label>
-        <locationX>3795</locationX>
-        <locationY>4670</locationY>
+        <locationX>3922</locationX>
+        <locationY>4886</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -443,8 +443,8 @@
     <assignments>
         <name>ModalitaPagamentoNoVA</name>
         <label>ModalitaPagamentoNoVA</label>
-        <locationX>3113</locationX>
-        <locationY>4910</locationY>
+        <locationX>3240</locationX>
+        <locationY>5126</locationY>
         <assignmentItems>
             <assignToReference>ModalitaPagamento</assignToReference>
             <operator>Assign</operator>
@@ -459,7 +459,7 @@
     <assignments>
         <name>prevalorizzazione_campi</name>
         <label>prevalorizzazione campi</label>
-        <locationX>2085</locationX>
+        <locationX>2162</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>CaseInput.ContactPhone</assignToReference>
@@ -489,7 +489,7 @@
     <assignments>
         <name>Valorizzazione_comune</name>
         <label>Valorizzazione comune</label>
-        <locationX>4450</locationX>
+        <locationX>4626</locationX>
         <locationY>2774</locationY>
         <assignmentItems>
             <assignToReference>Get_Commodity.SupplyCity__c</assignToReference>
@@ -569,8 +569,8 @@
     <decisions>
         <name>Assegna_Account_Erede_Beneficiario</name>
         <label>Assegna Account Erede Beneficiario</label>
-        <locationX>2981</locationX>
-        <locationY>5126</locationY>
+        <locationX>3108</locationX>
+        <locationY>5342</locationY>
         <defaultConnector>
             <targetReference>Assegna_Titolare_Conto_From_Flow_Screen</targetReference>
         </defaultConnector>
@@ -594,8 +594,8 @@
     <decisions>
         <name>Bonifico_da_effettuare_verso_VA</name>
         <label>Bonifico da effettuare verso VA?</label>
-        <locationX>2981</locationX>
-        <locationY>4790</locationY>
+        <locationX>3108</locationX>
+        <locationY>5006</locationY>
         <defaultConnector>
             <targetReference>ModalitaPagamentoNoVA</targetReference>
         </defaultConnector>
@@ -619,8 +619,8 @@
     <decisions>
         <name>Canale_di_Pagamento</name>
         <label>Canale di Pagamento?</label>
-        <locationX>3179</locationX>
-        <locationY>4430</locationY>
+        <locationX>3306</locationX>
+        <locationY>4646</locationY>
         <defaultConnector>
             <targetReference>CalcoloCodiceCausale</targetReference>
         </defaultConnector>
@@ -651,7 +651,7 @@
     <decisions>
         <name>Case_In_Bozza_Question</name>
         <label>Case In Bozza?</label>
-        <locationX>3868</locationX>
+        <locationX>3988</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Screen_Review_Dati_0</targetReference>
@@ -691,8 +691,8 @@
     <decisions>
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
-        <locationX>3531</locationX>
-        <locationY>4310</locationY>
+        <locationX>3658</locationX>
+        <locationY>4526</locationY>
         <defaultConnector>
             <targetReference>Ok_Tari_0</targetReference>
         </defaultConnector>
@@ -723,7 +723,7 @@
     <decisions>
         <name>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi_0</name>
         <label>Comunicazione Pagamento o Doppi Pagamenti/Incassi?</label>
-        <locationX>2085</locationX>
+        <locationX>2162</locationX>
         <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati_TARI_Start</targetReference>
@@ -746,9 +746,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>confronto_zero</name>
+        <label>confronto zero</label>
+        <locationX>2250</locationX>
+        <locationY>2918</locationY>
+        <defaultConnector>
+            <targetReference>Valore_Motivo_differenza_importi_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>zero</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Copy_1_of_refresh_Case.ComparePaidToPay__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetCaseAggiornato</targetReference>
+            </connector>
+            <label>zero</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Copy_1_of_Copy_1_of_Salva_In_Bozza_o_vai_Avanti</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>1370</locationX>
+        <locationX>1326</locationX>
         <locationY>1838</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_check_comune_gestito</targetReference>
@@ -785,7 +810,7 @@
     <decisions>
         <name>Copy_1_of_Documenti_Selezionati_presenti</name>
         <label>Copy 1 of Documenti Selezionati presenti?</label>
-        <locationX>5550</locationX>
+        <locationX>5726</locationX>
         <locationY>518</locationY>
         <defaultConnectorLabel>Presenti</defaultConnectorLabel>
         <rules>
@@ -807,7 +832,7 @@
     <decisions>
         <name>Copy_1_of_Salva_In_Bozza_o_vai_Avanti</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>4186</locationX>
+        <locationX>4362</locationX>
         <locationY>2414</locationY>
         <defaultConnector>
             <targetReference>check_comune_gestito</targetReference>
@@ -844,7 +869,7 @@
     <decisions>
         <name>Documenti_Selezionati_presenti</name>
         <label>Documenti Selezionati presenti?</label>
-        <locationX>1790</locationX>
+        <locationX>1854</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>checkTariProcess</targetReference>
@@ -869,8 +894,8 @@
     <decisions>
         <name>Ok_Tari</name>
         <label>Ok Tari</label>
-        <locationX>3179</locationX>
-        <locationY>5678</locationY>
+        <locationX>3306</locationX>
+        <locationY>5894</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili</targetReference>
         </defaultConnector>
@@ -894,8 +919,8 @@
     <decisions>
         <name>Ok_Tari_0</name>
         <label>Ok Tari</label>
-        <locationX>3883</locationX>
-        <locationY>4430</locationY>
+        <locationX>4010</locationX>
+        <locationY>4646</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -919,7 +944,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma_0</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>4978</locationX>
+        <locationX>5154</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
@@ -956,7 +981,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>3328</locationX>
+        <locationX>3504</locationX>
         <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Nuova_Motivazione</targetReference>
@@ -993,7 +1018,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>3790</locationX>
+        <locationX>3966</locationX>
         <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>inserimentoComune</targetReference>
@@ -1044,7 +1069,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>842</locationX>
+        <locationX>820</locationX>
         <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Copy_2_of_inserimentoComune</targetReference>
@@ -1081,7 +1106,7 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>2678</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_refresh_Case</targetReference>
@@ -1118,8 +1143,8 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti_0_0_0_0_0_0_0_0_0_0</name>
         <label>Salva In Bozza o vai Avanti?</label>
-        <locationX>2162</locationX>
-        <locationY>3158</locationY>
+        <locationX>2338</locationX>
+        <locationY>3278</locationY>
         <defaultConnector>
             <targetReference>assegna_tipo_acconto</targetReference>
         </defaultConnector>
@@ -1155,8 +1180,8 @@
     <decisions>
         <name>Se_In_Lavorazione</name>
         <label>Se In Lavorazione</label>
-        <locationX>3003</locationX>
-        <locationY>5798</locationY>
+        <locationX>3130</locationX>
+        <locationY>6014</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1180,8 +1205,8 @@
     <decisions>
         <name>Se_In_Lavorazione_0</name>
         <label>Se In Lavorazione</label>
-        <locationX>3707</locationX>
-        <locationY>4550</locationY>
+        <locationX>3834</locationX>
+        <locationY>4766</locationY>
         <defaultConnector>
             <targetReference>AssegnaVariabili_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1205,7 +1230,7 @@
     <decisions>
         <name>Validazione_Check_Tari</name>
         <label>Validazione Check Tari</label>
-        <locationX>3531</locationX>
+        <locationX>3658</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Screen_Inserimento_Dati</targetReference>
@@ -1230,7 +1255,7 @@
     <decisions>
         <name>Valore_Motivazione</name>
         <label>Valore Motivazione</label>
-        <locationX>3790</locationX>
+        <locationX>3966</locationX>
         <locationY>1838</locationY>
         <defaultConnectorLabel>Altro</defaultConnectorLabel>
         <rules>
@@ -1267,8 +1292,8 @@
     <decisions>
         <name>Valore_Motivo_differenza_importi_0_0</name>
         <label>Valore Motivo differenza importi</label>
-        <locationX>2426</locationX>
-        <locationY>2918</locationY>
+        <locationX>2602</locationX>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>GetCaseAggiornato</targetReference>
         </defaultConnector>
@@ -1307,7 +1332,7 @@
     <formulas>
         <name>ConfrontoPagato_Dapagare</name>
         <dataType>Currency</dataType>
-        <expression>{!refresh_Case.PaidAmount__c}-{!refresh_Case.DocumentAmount__c}</expression>
+        <expression>{!refresh_Case.TotalResidue__c}-{!refresh_Case.PaidAmount__c}</expression>
         <scale>2</scale>
     </formulas>
     <formulas>
@@ -1339,7 +1364,7 @@
     <recordLookups>
         <name>Aggiorna_Case_Nuova_Motivazione</name>
         <label>Aggiorna Case Nuova Motivazione</label>
-        <locationX>3790</locationX>
+        <locationX>3966</locationX>
         <locationY>1718</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1360,8 +1385,8 @@
     <recordLookups>
         <name>CalcoloCodiceCausale</name>
         <label>CalcoloCodiceCausale</label>
-        <locationX>3179</locationX>
-        <locationY>5558</locationY>
+        <locationX>3306</locationX>
+        <locationY>5774</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ok_Tari</targetReference>
@@ -1402,7 +1427,7 @@
     <recordLookups>
         <name>Copy_1_of_Query_Documento_Selezionato</name>
         <label>Copy 1 of Query Documento Selezionato</label>
-        <locationX>5550</locationX>
+        <locationX>5726</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1423,11 +1448,11 @@
     <recordLookups>
         <name>Copy_1_of_refresh_Case</name>
         <label>Copy 1 of refresh Case</label>
-        <locationX>2426</locationX>
+        <locationX>2250</locationX>
         <locationY>2798</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Valore_Motivo_differenza_importi_0_0</targetReference>
+            <targetReference>confronto_zero</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1444,7 +1469,7 @@
     <recordLookups>
         <name>Get_Commodity</name>
         <label>Get Commodity</label>
-        <locationX>4450</locationX>
+        <locationX>4626</locationX>
         <locationY>2654</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1465,8 +1490,8 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>3531</locationX>
-        <locationY>4190</locationY>
+        <locationX>3658</locationX>
+        <locationY>4406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi</targetReference>
@@ -1486,7 +1511,7 @@
     <recordLookups>
         <name>GetCaseNonBozza</name>
         <label>GetCaseNonBozza</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1507,7 +1532,7 @@
     <recordLookups>
         <name>Query_Documento_Selezionato_1</name>
         <label>Query Documento Selezionato</label>
-        <locationX>1790</locationX>
+        <locationX>1854</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1528,7 +1553,7 @@
     <recordLookups>
         <name>refresh_Case</name>
         <label>refresh Case</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>2078</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1549,7 +1574,7 @@
     <recordUpdates>
         <name>aggiorna_campi_prevalorizzati</name>
         <label>aggiorna campi prevalorizzati</label>
-        <locationX>2085</locationX>
+        <locationX>2162</locationX>
         <locationY>1238</locationY>
         <connector>
             <targetReference>Comunicazione_Pagamento_o_Doppi_Pagamenti_Incassi_0</targetReference>
@@ -1559,14 +1584,14 @@
     <recordUpdates>
         <name>Aggiorna_In_Lavorazione</name>
         <label>Aggiorna In Lavorazione</label>
-        <locationX>3883</locationX>
-        <locationY>4982</locationY>
+        <locationX>4010</locationX>
+        <locationY>5198</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>1790</locationX>
+        <locationX>1854</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Inserire_altri_documenti_0_0_0</targetReference>
@@ -1576,7 +1601,7 @@
     <recordUpdates>
         <name>AggiornaCase_0_0_0</name>
         <label>AggiornaCase</label>
-        <locationX>4450</locationX>
+        <locationX>4626</locationX>
         <locationY>2894</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
@@ -1586,7 +1611,7 @@
     <recordUpdates>
         <name>AggiornaCase_0_0_0_0</name>
         <label>AggiornaCase</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>2438</locationY>
         <connector>
             <targetReference>Dettaglio_documento_fattura_0_0_0_0_0_0_0</targetReference>
@@ -1596,8 +1621,8 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>3179</locationX>
-        <locationY>6230</locationY>
+        <locationX>3306</locationX>
+        <locationY>6446</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -1606,7 +1631,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Fine_Bozza_0</name>
         <label>Aggiornamento In Da Inviare</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>638</locationY>
         <connector>
             <targetReference>Loading_Screen_0</targetReference>
@@ -1616,8 +1641,8 @@
     <recordUpdates>
         <name>update_tipo_acconto</name>
         <label>update tipo acconto</label>
-        <locationX>2426</locationX>
-        <locationY>3398</locationY>
+        <locationX>2602</locationX>
+        <locationY>3518</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
         </connector>
@@ -1626,7 +1651,7 @@
     <screens>
         <name>Copy_1_of_Inserire_altri_documenti</name>
         <label>Copy 1 of Inserire altri documenti?</label>
-        <locationX>5550</locationX>
+        <locationX>5726</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1713,7 +1738,7 @@
     <screens>
         <name>Copy_1_of_Screen_Errore_Documento_Non_Selezionato</name>
         <label>Copy 1 of Screen Errore Documento Non Selezionato</label>
-        <locationX>5418</locationX>
+        <locationX>5594</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>false</allowFinish>
@@ -1734,7 +1759,7 @@
     <screens>
         <name>Copy_2_of_inserimentoComune</name>
         <label>inserimentoComune</label>
-        <locationX>1370</locationX>
+        <locationX>1326</locationX>
         <locationY>1718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1832,7 +1857,7 @@
     <screens>
         <name>Dettaglio_documento_fattura_0_0_0_0_0_0</name>
         <label>Dettaglio documento/fattura</label>
-        <locationX>842</locationX>
+        <locationX>820</locationX>
         <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1965,7 +1990,7 @@
     <screens>
         <name>Dettaglio_documento_fattura_0_0_0_0_0_0_0</name>
         <label>Dettaglio documento/fattura</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>2558</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2088,8 +2113,8 @@
     <screens>
         <name>Dettaglio_documento_fattura_0_0_0_0_0_0_0_0</name>
         <label>Dettaglio documento/fattura</label>
-        <locationX>2162</locationX>
-        <locationY>3038</locationY>
+        <locationX>2338</locationX>
+        <locationY>3158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2220,7 +2245,7 @@
     <screens>
         <name>inserimentoComune</name>
         <label>inserimentoComune</label>
-        <locationX>4186</locationX>
+        <locationX>4362</locationX>
         <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2318,7 +2343,7 @@
     <screens>
         <name>Inserire_altri_documenti_0_0_0</name>
         <label>Inserire altri documenti?</label>
-        <locationX>1790</locationX>
+        <locationX>1854</locationX>
         <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2405,8 +2430,8 @@
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>3179</locationX>
-        <locationY>6350</locationY>
+        <locationX>3306</locationX>
+        <locationY>6566</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2436,7 +2461,7 @@
     <screens>
         <name>Loading_Screen_0</name>
         <label>Loading Screen</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2488,7 +2513,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>4978</locationX>
+        <locationX>5154</locationX>
         <locationY>1118</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2617,7 +2642,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_TARI_Required</name>
         <label>Screen Inserimento Dati TARI Required</label>
-        <locationX>3526</locationX>
+        <locationX>3702</locationX>
         <locationY>1958</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2746,7 +2771,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_TARI_Start</name>
         <label>Screen Inserimento Dati TARI Start</label>
-        <locationX>3328</locationX>
+        <locationX>3504</locationX>
         <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2875,7 +2900,7 @@
     <screens>
         <name>Screen_Inserimento_Dati_TARI_Start_NoRequired</name>
         <label>Screen Inserimento Dati TARI NoRequired</label>
-        <locationX>3790</locationX>
+        <locationX>3966</locationX>
         <locationY>1958</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3004,7 +3029,7 @@
     <screens>
         <name>Screen_Review_Dati_0</name>
         <label>Screen Review Dati</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3109,8 +3134,8 @@
     <screens>
         <name>Virtual_Account_0</name>
         <label>Virtual Account</label>
-        <locationX>2981</locationX>
-        <locationY>4550</locationY>
+        <locationX>3108</locationX>
+        <locationY>4766</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3272,7 +3297,7 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>3742</locationX>
+        <locationX>3862</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Case_In_Bozza_Question</targetReference>
@@ -3282,7 +3307,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>4978</locationX>
+        <locationX>5154</locationX>
         <locationY>1358</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -3307,7 +3332,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>3130</locationX>
+        <locationX>3306</locationX>
         <locationY>1718</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -3332,7 +3357,7 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>3658</locationX>
+        <locationX>3834</locationX>
         <locationY>2294</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -3407,8 +3432,8 @@
     <subflows>
         <name>Annullamento_Prestazione_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Annullamento Prestazione</label>
-        <locationX>1898</locationX>
-        <locationY>3278</locationY>
+        <locationX>2074</locationX>
+        <locationY>3398</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3432,7 +3457,7 @@
     <subflows>
         <name>check_comune_gestito</name>
         <label>check comune gestito</label>
-        <locationX>4450</locationX>
+        <locationX>4626</locationX>
         <locationY>2534</locationY>
         <connector>
             <targetReference>Get_Commodity</targetReference>
@@ -3467,7 +3492,7 @@
     <subflows>
         <name>Copy_1_of_Annullamento_Prestazione</name>
         <label>Copy 1 of Annullamento Prestazione</label>
-        <locationX>4186</locationX>
+        <locationX>4362</locationX>
         <locationY>2534</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -3492,7 +3517,7 @@
     <subflows>
         <name>Copy_1_of_check_comune_gestito</name>
         <label>Copy 1 of check comune gestito</label>
-        <locationX>1898</locationX>
+        <locationX>1810</locationX>
         <locationY>1958</locationY>
         <connector>
             <targetReference>refresh_Case</targetReference>

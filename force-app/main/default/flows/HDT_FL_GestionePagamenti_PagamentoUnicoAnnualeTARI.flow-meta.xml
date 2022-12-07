@@ -3,7 +3,7 @@
     <actionCalls>
         <name>calcAnnualita</name>
         <label>calcAnnualita</label>
-        <locationX>941</locationX>
+        <locationX>957</locationX>
         <locationY>1766</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
@@ -29,7 +29,7 @@
     <assignments>
         <name>Aggiorna_Case_In_attesa</name>
         <label>Aggiorna Case In attesa</label>
-        <locationX>743</locationX>
+        <locationX>726</locationX>
         <locationY>3638</locationY>
         <assignmentItems>
             <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
@@ -46,8 +46,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>Copy_1_of_Salva_Case</targetReference>
+            <targetReference>Copy_2_of_Salva_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -76,8 +75,38 @@
     <assignments>
         <name>Copy_1_of_Aggiorna_Case_Da_Inviare</name>
         <label>Copy 1 of Aggiorna Case Da Inviare</label>
-        <locationX>941</locationX>
-        <locationY>4106</locationY>
+        <locationX>1254</locationX>
+        <locationY>2702</locationY>
+        <assignmentItems>
+            <assignToReference>get_case_aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>get_case_aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_3_of_Salva_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Aggiorna_Case_In_attesa</name>
+        <label>Copy 1 of Aggiorna Case In attesa</label>
+        <locationX>990</locationX>
+        <locationY>3638</locationY>
+        <assignmentItems>
+            <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa validazione</stringValue>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>get_case_dopo_doc.Status</assignToReference>
             <operator>Assign</operator>
@@ -85,21 +114,14 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Da Inviare</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Copy_1_of_Salva_Case</targetReference>
+            <targetReference>Copy_2_of_Salva_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>stringa_attiva</name>
         <label>stringa attiva</label>
-        <locationX>413</locationX>
+        <locationX>396</locationX>
         <locationY>2822</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Note__c</assignToReference>
@@ -115,7 +137,7 @@
     <assignments>
         <name>stringa_disattiva</name>
         <label>stringa disattiva</label>
-        <locationX>677</locationX>
+        <locationX>660</locationX>
         <locationY>2822</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Note__c</assignToReference>
@@ -181,7 +203,7 @@
     <decisions>
         <name>Avviso_anno_prossimo</name>
         <label>Avviso anno prossimo</label>
-        <locationX>941</locationX>
+        <locationX>957</locationX>
         <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Inserimento_allegato</targetReference>
@@ -206,10 +228,10 @@
     <decisions>
         <name>controllo_risultato_documentale</name>
         <label>controllo risultato documentale</label>
-        <locationX>875</locationX>
+        <locationX>858</locationX>
         <locationY>3518</locationY>
         <defaultConnector>
-            <targetReference>Copy_1_of_Aggiorna_Case_Da_Inviare</targetReference>
+            <targetReference>Copy_1_of_Aggiorna_Case_In_attesa</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -256,7 +278,7 @@
     <decisions>
         <name>Quale_fase</name>
         <label>Perfezionamento documentazione</label>
-        <locationX>941</locationX>
+        <locationX>957</locationX>
         <locationY>2582</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_Aggiorna_Case_Da_Inviare</targetReference>
@@ -313,7 +335,7 @@
     <decisions>
         <name>quale_step</name>
         <label>quale bottone</label>
-        <locationX>677</locationX>
+        <locationX>660</locationX>
         <locationY>3278</locationY>
         <defaultConnector>
             <targetReference>get_case_dopo_doc</targetReference>
@@ -338,7 +360,7 @@
     <decisions>
         <name>quale_stringa</name>
         <label>quale stringa</label>
-        <locationX>677</locationX>
+        <locationX>660</locationX>
         <locationY>2702</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -397,7 +419,7 @@
     <recordLookups>
         <name>get_case_aggiornato</name>
         <label>get case aggiornato</label>
-        <locationX>941</locationX>
+        <locationX>957</locationX>
         <locationY>2462</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -418,7 +440,7 @@
     <recordLookups>
         <name>get_case_dopo_doc</name>
         <label>get case dopo doc</label>
-        <locationX>875</locationX>
+        <locationX>858</locationX>
         <locationY>3398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -465,16 +487,23 @@
         <inputReference>Get_Process_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Copy_1_of_Salva_Case</name>
-        <label>Salva Case</label>
-        <locationX>941</locationX>
-        <locationY>4226</locationY>
+        <name>Copy_2_of_Salva_Case</name>
+        <label>Copy 2 of Salva Case</label>
+        <locationX>858</locationX>
+        <locationY>3854</locationY>
         <inputReference>get_case_dopo_doc</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Copy_3_of_Salva_Case</name>
+        <label>Copy 3 of Salva Case</label>
+        <locationX>1254</locationX>
+        <locationY>2822</locationY>
+        <inputReference>get_case_aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>update_case</name>
         <label>update case</label>
-        <locationX>677</locationX>
+        <locationX>660</locationX>
         <locationY>3038</locationY>
         <connector>
             <targetReference>screenDocumentale</targetReference>
@@ -578,7 +607,7 @@
     <screens>
         <name>Inserimento_allegato</name>
         <label>Inserimento allegato</label>
-        <locationX>941</locationX>
+        <locationX>957</locationX>
         <locationY>2342</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -674,7 +703,7 @@
     <screens>
         <name>Screen_avviso_anno_prossimo</name>
         <label>Screen avviso anno prossimo</label>
-        <locationX>809</locationX>
+        <locationX>825</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -695,7 +724,7 @@
     <screens>
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
-        <locationX>677</locationX>
+        <locationX>660</locationX>
         <locationY>3158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -759,7 +788,7 @@
     <screens>
         <name>View_annualit</name>
         <label>View annualità</label>
-        <locationX>941</locationX>
+        <locationX>957</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -857,7 +886,7 @@
     <subflows>
         <name>annulla_processo_0</name>
         <label>annulla processo</label>
-        <locationX>149</locationX>
+        <locationX>132</locationX>
         <locationY>1766</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -921,7 +950,7 @@
     <subflows>
         <name>Copy_1_of_annulla_processo</name>
         <label>annulla processo</label>
-        <locationX>479</locationX>
+        <locationX>462</locationX>
         <locationY>3398</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

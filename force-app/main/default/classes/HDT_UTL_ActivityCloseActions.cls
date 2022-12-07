@@ -197,6 +197,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if('si'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Completata', 'Annullato');
             if('no'.equalsIgnoreCase(approved))     return new HDT_WRP_UpdateSobj('Annullato');
         }
+        if('HDT_RT_VerificheAcqua'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName) && 'Inviare Resoconto Verifica'.equalsIgnoreCase(activityType)){
+            return new HDT_WRP_UpdateSobj('Inviato resoconto');
+        }
         return null;
     }
     
@@ -205,14 +208,17 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         String outcome = activity.ActivityOutcome__c;
         //String activityName=STRING.isNotBlank(activity.Name)? activity.Name : ''; 
         //String orderActualPhase=STRING.isNotBlank(selectedOrder.Phase__c)? selectedOrder.Phase__c : '';
-        String orderType = selectedOrder.ProcessType__c;
         
-        if( 'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 
+        String orderType = selectedOrder?.ProcessType__c;
+
+        if( String.isNotEmpty(activityType) && String.isNotEmpty(orderType) &&
+            'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 
             new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType) )
         {
             if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, null);
             if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
+        
         return null;
     }
 

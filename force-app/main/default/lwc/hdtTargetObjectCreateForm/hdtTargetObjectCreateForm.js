@@ -185,7 +185,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         mapFieldReq = this.fieldRequiredMapping();
         var fieldReqParse = fieldsDataReq.toString();
         let fieldReq = fieldReqParse.split(",");
-
+        console.log('### this.fieldsData --> ' + fieldsData)
         fieldsDataReq.forEach(element => {
             console.log('XXX toObject: this.fieldsDataReq -> '+fieldsDataReq);
             mapFieldReq.set(element, true);
@@ -660,6 +660,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
+        let accountIndex = fieldsDataObject.findIndex(el => el.fieldname === 'Account__c');
+        if(accountIndex > -1)
+        {
+            fieldsDataObject[accountIndex].required = false;
+            fieldsDataObject[accountIndex].disabled = true;
+        }
         return fieldsDataObject;
     }
 
@@ -1134,14 +1140,14 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     }
 
     updateServicePoint() {
-
-        if (this.servicePointRetrievedData != undefined) {
-
+        console.log('XXX updateServicePoint: servicePointRetrievedData --> '+JSON.stringify(this.servicePointRetrievedData));
+        console.log('XXX updateServicePoint: theRecord --> '+JSON.stringify(this.theRecord));       
+        if (this.servicePointRetrievedData != undefined && this.theRecord != undefined) {
             if (this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']) {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
             }
-            if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune']) {
+            if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune'] && this.theRecord['Comune']) {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyCity__c'] = this.theRecord['Comune'];
             }
@@ -1161,11 +1167,11 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyProvince__c'] = this.theRecord['Provincia'];
             }
-            if (this.servicePointRetrievedData['SupplySAPCityCode__c'] != this.theRecord['Codice Comune SAP']) {
+            if (this.servicePointRetrievedData['SupplySAPCityCode__c'] != this.theRecord['Codice Comune SAP'] && this.theRecord['Codice Comune SAP']) {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplySAPCityCode__c'] = this.theRecord['Codice Comune SAP'];
             }
-            if (this.servicePointRetrievedData['SupplySAPStreetCode__c'] != this.theRecord['Codice Via Stradario SAP']) {
+            if (this.servicePointRetrievedData['SupplySAPStreetCode__c'] != this.theRecord['Codice Via Stradario SAP'] && this.theRecord['Codice Via Stradario SAP']) {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplySAPStreetCode__c'] = this.theRecord['Codice Via Stradario SAP'];
             }

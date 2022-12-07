@@ -51,7 +51,6 @@ const DATA_ACCESS_MAP = {
         columns: [
             {label: 'Codice Contratto Sap', fieldName: 'SAPContractCode__c', type: 'text'},
             {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
-            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },

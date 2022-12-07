@@ -62,7 +62,7 @@
         <description>Assegna process type specifico per la commodity acqua e valorizzazioen default per campo &quot;da non eseguire prima del&quot;</description>
         <name>Assegna_Campi_Processo_Acqua</name>
         <label>Assegna Campi Processo Acqua</label>
-        <locationX>3082</locationX>
+        <locationX>2950</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -85,7 +85,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>3214</locationX>
+        <locationX>3082</locationX>
         <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -129,7 +129,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>3610</locationX>
+        <locationX>3478</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -173,7 +173,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>3874</locationX>
+        <locationX>3742</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -217,7 +217,7 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0_0_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>4402</locationX>
+        <locationX>4534</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
@@ -268,13 +268,57 @@
     <assignments>
         <name>Assegna_Dati_Recapito_0_0_0_0</name>
         <label>Assegna Dati Recapito</label>
-        <locationX>4138</locationX>
+        <locationX>4006</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>ModInvioBollValue</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>BillDeliveryChooser_0_0_0_0.modInvioBoll</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>email</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BillDeliveryChooser_0_0_0_0.email</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>pec</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BillDeliveryChooser_0_0_0_0.pec</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>presso</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BillDeliveryChooser_0_0_0_0.presso</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>indirizzo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BillDeliveryChooser_0_0_0_0.indirizzo</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Modifica_Dati_di_recapito</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Dati_Recapito_CSP</name>
+        <label>Assegna Dati Recapito_CSP</label>
+        <locationX>4270</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>ModInvioBollValue</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>BillDeliveryChooser_CSP.modInvioBoll</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -427,7 +471,7 @@
     <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>3346</locationX>
+        <locationX>3214</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -443,7 +487,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>3610</locationX>
+        <locationX>3478</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -459,7 +503,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>4402</locationX>
+        <locationX>4534</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -482,7 +526,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>3874</locationX>
+        <locationX>3742</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -498,7 +542,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>4138</locationX>
+        <locationX>4006</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -509,6 +553,29 @@
         </assignmentItems>
         <connector>
             <targetReference>Case_Layout_0_0_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Process_Type_CSP</name>
+        <label>Assegna Process Type CSP</label>
+        <locationX>4270</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Cessazione Scarichi Produttivi</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Disattivazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_1_of_Case_Layout</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -849,7 +916,7 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.productCode</assignToReference>
-            <operator>Assign</operator>
+            <operator>Add</operator>
             <value>
                 <elementReference>getPreAttachments.Contract__r.CommercialProduct__c</elementReference>
             </value>
@@ -1178,7 +1245,7 @@
         <description>Selezione in base alla commodity del case</description>
         <name>Commodity</name>
         <label>Commodity ?</label>
-        <locationX>3214</locationX>
+        <locationX>3082</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type</targetReference>
@@ -1675,6 +1742,21 @@
             </connector>
             <label>Recesso per Ripensamento</label>
         </rules>
+        <rules>
+            <name>Cessazione_Scarichi_Produttivi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cessazione Scarichi Produttivi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type_CSP</targetReference>
+            </connector>
+            <label>Cessazione Scarichi Produttivi</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Qualit_DelSottoscrittore</name>
@@ -2029,7 +2111,7 @@
         <defaultConnectorLabel>Non Votive</defaultConnectorLabel>
         <rules>
             <name>Votive_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2037,10 +2119,17 @@
                     <stringValue>Votive Modena Cessazione</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Cessazione Scarichi Produttivi</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssegnaValori</targetReference>
             </connector>
-            <label>Votive</label>
+            <label>Votive O Cess Scarichi Produttivi</label>
         </rules>
     </decisions>
     <decisions>
@@ -2437,7 +2526,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordLookups>
         <name>GetRecordTypeVotiveModena</name>
         <label>GetRecordTypeVotiveModena</label>
-        <locationX>4402</locationX>
+        <locationX>4534</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2528,7 +2617,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordUpdates>
         <name>Aggiorna_Cluster_per_Votive</name>
         <label>Aggiorna Cluster per Votive</label>
-        <locationX>4402</locationX>
+        <locationX>4534</locationX>
         <locationY>1238</locationY>
         <connector>
             <targetReference>Modifica_Dati_di_recapito</targetReference>
@@ -2538,7 +2627,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <recordUpdates>
         <name>Aggiorna_Default_Processo_Acqua</name>
         <label>Aggiorna Default Processo Acqua</label>
-        <locationX>3082</locationX>
+        <locationX>2950</locationX>
         <locationY>998</locationY>
         <connector>
             <targetReference>Case_Layout_0_0</targetReference>
@@ -2885,7 +2974,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0</name>
         <label>Case Layout</label>
-        <locationX>3214</locationX>
+        <locationX>3082</locationX>
         <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2930,7 +3019,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>3610</locationX>
+        <locationX>3478</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2975,7 +3064,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>3874</locationX>
+        <locationX>3742</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3020,7 +3109,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>4402</locationX>
+        <locationX>4534</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3065,7 +3154,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
     <screens>
         <name>Case_Layout_0_0_0_0_0_0</name>
         <label>Case Layout</label>
-        <locationX>4138</locationX>
+        <locationX>4006</locationX>
         <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3080,6 +3169,51 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         </fields>
         <fields>
             <name>BillDeliveryChooser_0_0_0_0</name>
+            <extensionName>c:hdtBillDeliveryChooser</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Account.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>Get_Input_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Copy_1_of_Case_Layout</name>
+        <label>Copy 1 of Case Layout</label>
+        <locationX>4270</locationX>
+        <locationY>878</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Dati_Recapito_CSP</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_DisplayHeader_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Confermare l&apos;indirizzo di recapito della bolletta di chiusura o selezionarne uno differente.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>BillDeliveryChooser_CSP</name>
             <extensionName>c:hdtBillDeliveryChooser</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
