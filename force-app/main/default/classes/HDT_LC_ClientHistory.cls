@@ -98,9 +98,13 @@ public with sharing class HDT_LC_ClientHistory {
         }
         else return null;
     }
-    
+
     @AuraEnabled
     public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby, String silos) {
+        return getExternalCustomer(searchKey, sortBy, sortDirection, filterby, silos, '');
+    }
+    
+    public static List<HDT_LC_Customer> getExternalCustomer( String searchKey, String sortBy, String sortDirection, String filterby, String silos, String whatToMock) {
         
         List <HDT_LC_Customer> wrapperToreturn = new List <HDT_LC_Customer>();
 
@@ -136,7 +140,9 @@ public with sharing class HDT_LC_ClientHistory {
             if (sortBy != null && sortDirection != null ) {
                 queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
-            List<SiebelCustomer__x> listSiebelCustomer = HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )); 
+            List<SiebelCustomer__x> listSiebelCustomer = 'SiebelCustomer__x'.equalsIgnoreCase(whatToMock) ? 
+                                                         HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )) :
+                                                         Database.query( String.escapeSingleQuotes(queryStoricizzati) );
 
             for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
                 wrapperToreturn.add(
@@ -169,7 +175,9 @@ public with sharing class HDT_LC_ClientHistory {
             if (sortBy != null && sortDirection != null ) {
                 querySvecchiati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
-            List<SalesforceCustomer__x> listSalesforceCustomer = HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(querySvecchiati) )); 
+            List<SalesforceCustomer__x> listSalesforceCustomer = 'SalesforceCustomer__x'.equalsIgnoreCase(whatToMock) ? 
+                                                                 HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(querySvecchiati) )) :
+                                                                 Database.query( String.escapeSingleQuotes(querySvecchiati) ); 
 
             for(SalesforceCustomer__x salesforceCustomer : listSalesforceCustomer){
                 wrapperToreturn.add(
