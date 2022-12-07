@@ -992,7 +992,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>HDT_ActivityCompleteProcess</shortDescription>
-        <value>Comunicazioni con DL;Elaborazione Manuale;Esito OK da DL;Gestione M02;Gestione M03;Gestione manuale;Recupero contratto da Postel;Gestione Rimborso</value>
+        <value>Comunicazioni con DL;Elaborazione Manuale;Esito OK da DL;Gestione M02;Gestione M03;Recupero contratto da Postel;Gestione Rimborso</value>
     </labels>
     <labels>
         <fullName>invio_sollecito</fullName>
