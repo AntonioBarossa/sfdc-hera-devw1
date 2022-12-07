@@ -206,7 +206,8 @@ public with sharing class HDT_UTL_Account {
             else{
                 HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
                 HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-                if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
+                /*@2022-12-07 Aggiunto Null Control in quanto potrebbe causare eventuali errori "Attempt to de-reference null object"*/
+                if ('success'.equalsIgnoreCase(res.status) && res.data?.codiceBp != null && String.isNotBlank(res.data.codiceBP)) {
                     acc.CustomerCode__c = res.data.codiceBP;
                     sobjToUpdate.add(acc);
                 }       
@@ -221,9 +222,10 @@ public with sharing class HDT_UTL_Account {
                 HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
             }
         }
+        /**@frpanico 2022-12-07 Aggiunto Log Eccezione per monitorare gli scarti */
         catch(Exception e){
             HDT_SRV_LogService log = new HDT_SRV_LogService('HDT_BPCA_CREATE');
-            log.insertSingleLog('BpCaRequest', 'makeRequest', 'N/A', 'N/A', e.getMessage() + '. At line: ' + e.getLineNumber(), acc.Id, System.now(), system.now());
+            log.insertSingleLog('BpCaRequest', 'makeRequest', UserInfo.getUserName(), UserInfo.getProfileId(), e.getMessage() + '. At line: ' + e.getLineNumber(), acc.Id, System.now(), system.now());
         }
     }
     
@@ -432,14 +434,16 @@ public with sharing class HDT_UTL_Account {
                 }
                 //HRADTR_GV Modifiche 31/03/2022 - Fine
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+                /*@2022-12-07 Aggiunto Null Control in quanto potrebbe causare eventuali errori "Attempt to de-reference null object"*/
+                if ('success'.equalsIgnoreCase(resCreate.status) && resCreate.data?.codiceBp != null && String.isNotBlank(resCreate.data.codiceBP) ) {
                     acc.CustomerCode__c = resCreate.data.codiceBP;
                 } // TODO gestire l'errore 
 
                 if((acc.Category__c.equalsIgnoreCase('Grandi Condomini') || acc.Category__c.equalsIgnoreCase('Piccoli Condomini')) && isAmministratore ){
                     req = callAmCaCreate(acc,cont);
                     resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                    if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
+                    /*@2022-12-07 Aggiunto Null Control in quanto potrebbe causare eventuali errori "Attempt to de-reference null object"*/
+                    if ('success'.equalsIgnoreCase(resCreate.status) && resCreate.data?.codiceBp != null && String.isNotBlank(resCreate.data.codiceBP) ) {
                         cont.ContactCode__c = resCreate.data.codiceBP;
                     } // TODO gestire l'errore 
                 }
@@ -453,10 +457,11 @@ public with sharing class HDT_UTL_Account {
             }
             //HRADTR_GV Modifiche 03/02/2022 - Fine
         }
+        /**@frpanico 2022-12-07 Aggiunto Log Eccezione per monitorare gli scarti */
         catch(Exception e)
         {  
             HDT_SRV_LogService log = new HDT_SRV_LogService('HDT_BPCA_SALE');
-            log.insertSingleLog('BpCaRequest', 'createBpCa', 'N/A', 'N/A', e.getMessage() + '. At line: ' + e.getLineNumber(), saleId, System.now(), system.now());
+            log.insertSingleLog('BpCaRequest', 'createBpCa', UserInfo.getUserName(), UserInfo.getProfileId(), e.getMessage() + '. At line: ' + e.getLineNumber(), saleId, System.now(), system.now());
         }
     }
     @TestVisible
