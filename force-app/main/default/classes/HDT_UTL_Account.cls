@@ -170,7 +170,6 @@ public with sharing class HDT_UTL_Account {
     
   
     public static void makeRequest( Account acc,Contact cont){
-
         //Nuova Versione
         string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
@@ -180,47 +179,54 @@ public with sharing class HDT_UTL_Account {
         String vatNumber = acc.VATNumber__c;
         String fiscalCode = acc.FiscalCode__c;
         Boolean archive = false;
-        
-        Contact contRelation = new Contact();
+        try{            
+            Contact contRelation = new Contact();
 
-        /* Query account archive */
-        String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
-        if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
-        {
-            query += ' AND TAX_IDEN_NUM__c = :fiscalCode';
-        }
-        if(acc.VATNumber__c != null && acc.VATNumber__c != '')
-        {
-            query += ' AND VAT_REGN_NUM__c = :vatNumber';
-        }
-        query += ' WITH SECURITY_ENFORCED';
+            /* Query account archive */
+            String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
+            if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
+            {
+                query += ' AND TAX_IDEN_NUM__c = :fiscalCode';
+            }
+            if(acc.VATNumber__c != null && acc.VATNumber__c != '')
+            {
+                query += ' AND VAT_REGN_NUM__c = :vatNumber';
+            }
+            query += ' WITH SECURITY_ENFORCED';
 
-        siebelCustomer = Database.query(query);
-        /* If query returns results update account */
-        if(!siebelCustomer.isEmpty()){
-            archive = true;
-            acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
-            acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
-            sobjToUpdate.add(acc);
-        }
-        /* If query does not return results call BpCaSearch */
-        else{
-            HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
-            HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-            if ('success'.equalsIgnoreCase(res.status) && String.isNotBlank(res.data.codiceBP)) {
-                acc.CustomerCode__c = res.data.codiceBP;
+            siebelCustomer = Database.query(query);
+            /* If query returns results update account */
+            if(!siebelCustomer.isEmpty()){
+                archive = true;
+                acc.CustomerCode__c = siebelCustomer[0].OU_NUM__c;
+                acc.CustomerMarking__c = siebelCustomer[0].X_MARCATURA_CLIENTE__c;
                 sobjToUpdate.add(acc);
-            }       
+            }
+            /* If query does not return results call BpCaSearch */
+            else{
+                HDT_WS_RicCreBpCaRequest   req = callBpCaSearch(acc,cont);
+                HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
+                /*@2022-12-07 Aggiunto Null Control in quanto potrebbe causare eventuali errori "Attempt to de-reference null object"*/
+                if ('success'.equalsIgnoreCase(res.status) && res.data?.codiceBp != null && String.isNotBlank(res.data.codiceBP)) {
+                    acc.CustomerCode__c = res.data.codiceBP;
+                    sobjToUpdate.add(acc);
+                }       
+            }
+            contRelation = registerAmmCondominio(cont, archive);
+            if(contRelation.ContactCode__c != null)
+            {
+                sobjToUpdate.add(contRelation);
+            }
+            if(!sobjToUpdate.isEmpty())
+            {
+                HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            }
         }
-        contRelation = registerAmmCondominio(cont, archive);
-        if(contRelation.ContactCode__c != null)
-        {
-            sobjToUpdate.add(contRelation);
+        /**@frpanico 2022-12-07 Aggiunto Log Eccezione per monitorare gli scarti */
+        catch(Exception e){
+            HDT_SRV_LogService log = new HDT_SRV_LogService('HDT_BPCA_CREATE');
+            log.insertSingleLog('BpCaRequest', 'makeRequest', UserInfo.getUserName(), UserInfo.getProfileId(), e.getMessage() + '. At line: ' + e.getLineNumber(), acc.Id, System.now(), system.now());
         }
-        if(!sobjToUpdate.isEmpty())
-        {
-            HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
-        }    
     }
     
     public static Account massiveRequest( Account acc,Contact cont){
@@ -387,68 +393,76 @@ public with sharing class HDT_UTL_Account {
 
         Map<String, SObject> accountContactMap = new Map<String, SObject>();
         Boolean isAmministratore = false;
-
-        for(AccountContactRelation accountContactRel : accountContactRelList){
-            //AccountContactRelation del Amm. o del Legale se presenti
-            if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio') || accountContactRel.Roles.equalsIgnoreCase('Legale rappresentante')){
-                accountContactMap = generateAccountContact(accountContactRel);
-                if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio')){
-                    isAmministratore = true;
-                }
-                break;
-            }else if( accountContactRel.Roles == 'Titolare' || accountContactRel.Roles == 'Familiare'){
-                //if AccountId not in the list yet, insert
-                if( !accountContactMap.containsKey('Account')){
+        try{
+            for(AccountContactRelation accountContactRel : accountContactRelList){
+                //AccountContactRelation del Amm. o del Legale se presenti
+                if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio') || accountContactRel.Roles.equalsIgnoreCase('Legale rappresentante')){
                     accountContactMap = generateAccountContact(accountContactRel);
+                    if( accountContactRel.Roles.equalsIgnoreCase('Amministratore condominio')){
+                        isAmministratore = true;
+                    }
+                    break;
+                }else if( accountContactRel.Roles == 'Titolare' || accountContactRel.Roles == 'Familiare'){
+                    //if AccountId not in the list yet, insert
+                    if( !accountContactMap.containsKey('Account')){
+                        accountContactMap = generateAccountContact(accountContactRel);
+                    }
                 }
             }
-        }
-        /**@frpanico 09/02/2022
-         * Se presente il customer code
-         * Non viene registrato su sap l'account
-         */
-        if(String.isBlank(((String)((Account)accountContactMap.get('Account')).get('CustomerCode__c'))))
-        {
-            //CustomerMarking D* and update
-            Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
-            Contact cont = (Contact)accountContactMap.get('Contact');
-        
-            //HRADTR_GV Modifiche 03/02/2022 - Inizio
-            List<SObject> listToUpdate = new List<SObject>();
-            HDT_WS_RicCreBpCaRequest   req;
-            HDT_WS_RichCreBpCaResponse resCreate;
-            //HRADTR_GV Modifiche 31/03/2022 - Inizio
-            if(searchToUse){
-                req = callBpCaSearch(acc,cont);
-                acc.Description = System.now() + ' : Account ricercato su SAP';
-            }
-            else{
-                req = callBpCaCreate(acc,cont);
-                acc.Description = System.now() + ' : Account creato';
-            }
-            //HRADTR_GV Modifiche 31/03/2022 - Fine
-            resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-            if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                acc.CustomerCode__c = resCreate.data.codiceBP;
-            } // TODO gestire l'errore 
-
-            if((acc.Category__c.equalsIgnoreCase('Grandi Condomini') || acc.Category__c.equalsIgnoreCase('Piccoli Condomini')) && isAmministratore ){
-                req = callAmCaCreate(acc,cont);
+            /**@frpanico 09/02/2022
+             * Se presente il customer code
+             * Non viene registrato su sap l'account
+             */
+            if(String.isBlank(((String)((Account)accountContactMap.get('Account')).get('CustomerCode__c'))))
+            {
+                //CustomerMarking D* and update
+                Account acc = checkCustomerMarking( (Account)accountContactMap.get('Account') , saleId );
+                Contact cont = (Contact)accountContactMap.get('Contact');
+            
+                //HRADTR_GV Modifiche 03/02/2022 - Inizio
+                List<SObject> listToUpdate = new List<SObject>();
+                HDT_WS_RicCreBpCaRequest   req;
+                HDT_WS_RichCreBpCaResponse resCreate;
+                //HRADTR_GV Modifiche 31/03/2022 - Inizio
+                if(searchToUse){
+                    req = callBpCaSearch(acc,cont);
+                    acc.Description = System.now() + ' : Account ricercato su SAP';
+                }
+                else{
+                    req = callBpCaCreate(acc,cont);
+                    acc.Description = System.now() + ' : Account creato';
+                }
+                //HRADTR_GV Modifiche 31/03/2022 - Fine
                 resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
-                if ('success'.equalsIgnoreCase(resCreate.status) && String.isNotBlank(resCreate.data.codiceBP) ) {
-                    cont.ContactCode__c = resCreate.data.codiceBP;
+                /*@2022-12-07 Aggiunto Null Control in quanto potrebbe causare eventuali errori "Attempt to de-reference null object"*/
+                if ('success'.equalsIgnoreCase(resCreate.status) && resCreate.data?.codiceBp != null && String.isNotBlank(resCreate.data.codiceBP) ) {
+                    acc.CustomerCode__c = resCreate.data.codiceBP;
                 } // TODO gestire l'errore 
-            }
-            listToUpdate.add(acc);
-            listToUpdate.add(cont); 
-            HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
-        }
-        else
-        {
-            return;    
-        }
-        //HRADTR_GV Modifiche 03/02/2022 - Fine
 
+                if((acc.Category__c.equalsIgnoreCase('Grandi Condomini') || acc.Category__c.equalsIgnoreCase('Piccoli Condomini')) && isAmministratore ){
+                    req = callAmCaCreate(acc,cont);
+                    resCreate = HDT_WS_RicCreBpCaInvoker.invokeCall(req); //  chiamata insert
+                    /*@2022-12-07 Aggiunto Null Control in quanto potrebbe causare eventuali errori "Attempt to de-reference null object"*/
+                    if ('success'.equalsIgnoreCase(resCreate.status) && resCreate.data?.codiceBp != null && String.isNotBlank(resCreate.data.codiceBP) ) {
+                        cont.ContactCode__c = resCreate.data.codiceBP;
+                    } // TODO gestire l'errore 
+                }
+                listToUpdate.add(acc);
+                listToUpdate.add(cont); 
+                HDT_UTL_DatabaseService.updateSObject( listToUpdate ); 
+            }
+            else
+            {
+                return;    
+            }
+            //HRADTR_GV Modifiche 03/02/2022 - Fine
+        }
+        /**@frpanico 2022-12-07 Aggiunto Log Eccezione per monitorare gli scarti */
+        catch(Exception e)
+        {  
+            HDT_SRV_LogService log = new HDT_SRV_LogService('HDT_BPCA_SALE');
+            log.insertSingleLog('BpCaRequest', 'createBpCa', UserInfo.getUserName(), UserInfo.getProfileId(), e.getMessage() + '. At line: ' + e.getLineNumber(), saleId, System.now(), system.now());
+        }
     }
     @TestVisible
     private static Account checkCustomerMarking( Account acc , string saleId)
