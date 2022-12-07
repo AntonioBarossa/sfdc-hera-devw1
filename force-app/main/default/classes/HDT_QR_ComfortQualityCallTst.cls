@@ -49,7 +49,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 
 			test.startTest();
 
-			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName, CustomerCategory__c, MarketOrigin__c, SignatureMethod__c
+			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName, CustomerCategory__c,Market__c, MarketOrigin__c, SignatureMethod__c
 			                    FROM Order
 			                    WHERE Channel__c='testChannel'];
 
@@ -74,7 +74,7 @@ public with sharing class HDT_QR_ComfortQualityCallTst{
 
 			test.startTest();
 
-			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName, CustomerCategory__c, MarketOrigin__c, SignatureMethod__c, DocSendingMethod__c
+			List<Order> tOrder=[SELECT Id, Channel__c, RecordType.DeveloperName,Market__c, CustomerCategory__c, MarketOrigin__c, SignatureMethod__c, DocSendingMethod__c
 			                    FROM Order
 			                    WHERE Channel__c='testChannel'];
 
