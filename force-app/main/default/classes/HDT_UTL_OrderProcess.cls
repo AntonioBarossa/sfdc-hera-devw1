@@ -38,9 +38,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
     public static Boolean isChangedPhase(List<Order> orderList, Map<Id,SObject> orderOldMap){
         Order orderNew = orderList[0];
-		Order caseOld = (Order) orderOldMap.get(orderNew.Id);
+		Order orderOld = (Order) orderOldMap.get(orderNew.Id);
 		String phaseNew = orderNew.Phase__c != null? orderNew.Phase__c:'';
-		String phaseOld = caseOld.Phase__c != null? caseOld.Phase__c:'';
+		String phaseOld = orderOld.Phase__c != null? orderOld.Phase__c:'';
         if(
             (String.isNotBlank(phaseNew) && String.isNotBlank(phaseOld) && phaseNew != phaseOld) || 
             (String.isBlank(phaseOld) && String.isNotBlank(phaseNew))
@@ -930,6 +930,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             }           
         }
         return newOrdersList;
+    }
+
+    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
+        List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
+        for(Order singleChild : childOrderList){
+            singleChild.Phase__c = 'Annullato';
+            singleChild.Status = 'Annullato';
+            singleChild.CancellationReason__c = 'Annullamento da cliente';
+        }
+        return childOrderList;
     }
 
       /**
