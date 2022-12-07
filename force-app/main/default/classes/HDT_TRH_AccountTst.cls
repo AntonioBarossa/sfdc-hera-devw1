@@ -23,10 +23,14 @@ public class HDT_TRH_AccountTst {
 		insert internalUser;
 
         System.runAs(internalUser){
-                       
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME');
             
-            System.assertEquals(1, [Select id from Account].size(), 'One Account not inserted');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'HERA COMM','Azienda','Aziende SME');
+            accs[0].VATNumber__c='13288870150';
+            accs[0].FiscalCode__c='KNMKST92D20Z100D';
+            accs[1].VATNumber__c='13288870150';
+            accs[1].FiscalCode__c='13288870150';
+            insert accs;
+            System.assertEquals(2, [Select id from Account].size(), 'One Account not inserted');
             
             accs[0].BirthDate__c = System.today();
             accs[0].isPartner = true;

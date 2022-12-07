@@ -87,7 +87,7 @@ public with sharing class HDT_LC_EscalationController {
 
                     orderList = [SELECT id, Status FROM Order WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
 
-                    if(orderList.Status == 'Draft' || orderList.Status == 'In Lavorazione'){
+                    if(orderList.Status == 'Draft' || orderList.Status == 'In Lavorazione' || orderList.Status=='Annullato'){
                         recordTypeName = 'HDT_RT_EscalationOrder';
                         parentEntityField = 'Order__c';
                         showPriorityField = 'false';
