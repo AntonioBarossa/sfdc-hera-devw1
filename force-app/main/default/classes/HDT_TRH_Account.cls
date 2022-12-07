@@ -75,10 +75,12 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
          feedBillingCountry(Trigger.new);
          createKpiExtension();
          HDT_UTL_Account.handleFiscalCodeUppercase(Trigger.new);
+         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKeyDistributor(Trigger.new);
     }
  
     protected override void beforeUpdate() {
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKeyDistributor(Trigger.new);
         feedBillingCountry(Trigger.new);
         checkAccountName();
         createKpiExtension();
