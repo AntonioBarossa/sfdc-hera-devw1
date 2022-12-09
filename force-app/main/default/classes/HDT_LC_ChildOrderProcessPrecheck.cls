@@ -175,15 +175,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
             newOrder.NotDisconnectabilityCustomer__c = 'No';
             newOrder.VAT__c = 'Iva 22% (Cod. 02)';
+            newOrder.AggregateBilling__c = 'Si';
         
             switch on order.CommodityFormula__c {
                 when 'Acqua' {
-                    //Inizio: Predefault valido per tutti i processinewOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    //Inizio: Predefault valido per tutti i processi
+                    newOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
                     newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
                     newOrder.ContractExpenses__c = 'Nessuno sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
                     newOrder.PayPurification__c = order.ServicePoint__r.PayPurification__c;
                     newOrder.PaySewer__c = order.ServicePoint__r.PaySewer__c;
+                    newOrder.AggregateBilling__c = 'No';
                     //Fine: Predefault valido per tutti i processi
 
                     //Inizio: Predefault secondo Processo
@@ -257,7 +260,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.Deliberation__c = deliberate;
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
-            newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
 
             //Update RateCategory sul Service Point
