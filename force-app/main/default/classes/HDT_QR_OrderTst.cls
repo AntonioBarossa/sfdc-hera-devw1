@@ -688,4 +688,135 @@ public class HDT_QR_OrderTst{
 
 	}
 
+	@IsTest
+	static void testGetChildOrdersForDateCalculation(){
+
+		List<Order> orders = [SELECT Id, ParentOrder__c FROM Order];
+		orders.get(0).ParentOrder__c = orders.get(1).Id;
+		
+		update orders;
+
+		Test.startTest();
+		
+		Order ord = (new HDT_QR_Order()).getChildOrdersForDateCalculation(new List<String>{orders.get(1).Id})[0];
+
+		System.assertEquals(orders.get(0).Id, ord.Id, 'Thr correct Child Order was not retrieved');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetRecordsByAccountIdInPhases(){
+
+		Account acc = [SELECT Id FROM Account LIMIT 1];
+		
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getRecordsByAccountIdInPhases(acc.Id, new List<String>{'Bozza'});
+
+		System.assertEquals(false, orders.isEmpty(), 'The Orders were not retrieved correctly');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetRecordsNotActivated(){
+
+		Account acc = [SELECT Id FROM Account LIMIT 1];
+		
+		Test.startTest();
+
+		List<Order> orders = (new HDT_QR_Order()).getRecordsNotActivated(acc.Id);
+
+		System.assertEquals(false, orders.isEmpty(), 'The inactive orders were not retrieved');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetRecordByVasPracticeCode(){
+
+		Order ord = [SELECT Id, VasPracticeCode__c FROM Order LIMIT 1];
+
+		ord.VasPracticeCode__c = 'GG42069';
+		update ord;
+		
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getRecordByVasPracticeCode('GG42069');
+
+		System.assertEquals(ord.Id, orders.get(0).Id, 'The correct Order was not retrieved based on the Vas Practice Code');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetOrdersByOrderNumber(){
+
+		Order ord = [SELECT OrderNumber FROM Order LIMIT 1];
+		
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getOrdersByOrderNumber(new List<String>{ord.OrderNumber});
+
+		System.assertEquals(ord.Id, orders.get(0).Id, 'The correct Order was not retrieved based on the Order Number');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetRecordWithDocByOrderId(){
+
+		Order ord = [SELECT Id FROM Order LIMIT 1];
+		
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getRecordWithDocByOrderId(ord.Id);
+
+		System.assertEquals(ord.Id, orders.get(0).Id, 'The correct Order was not retrieved based on the Id');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetOrderCreatedInRequestedDate(){
+
+		Datetime startDateT = DateTime.now().addDays(-1);
+		Datetime endDateT = DateTime.now().addDays(1);
+		
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getOrderCreatedInRequestedDate(startDateT, endDateT);
+
+		System.assertEquals(false, orders.isEmpty(), 'No orders were retrieved for the specified DateTime Range');
+
+		Test.stopTest();
+		
+	}
+
+	@IsTest
+	static void testGetAllOrdersForComfort(){
+
+		List<Order> ords = [SELECT Id, ParentOrder__c, QualityCall__c FROM Order];
+		ords.get(0).ParentOrder__c = ords.get(1).Id;
+		ords.get(0).QualityCall__c = true;
+
+		update ords;
+		
+		Test.startTest();
+		
+		List<Order> orders = (new HDT_QR_Order()).getAllOrdersForComfort(ords.get(1).Id);
+
+		System.assertEquals(false, orders.isEmpty(), 'No quality call orders were retrieved for the specified Parent Order');
+
+		Test.stopTest();
+		
+	}
+
 }
