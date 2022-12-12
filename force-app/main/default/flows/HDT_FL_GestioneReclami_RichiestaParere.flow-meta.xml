@@ -1898,7 +1898,7 @@
                 <leftValueReference>GetParentCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>GetParentCase.Type</elementReference>
+                    <stringValue>Errore di Fatturazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
