@@ -31821,6 +31821,16 @@
         <readable>false</readable>
     </fieldPermissions>
 <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+<fieldPermissions>
         <editable>false</editable>
         <field>ContentVersion.URL__c</field>
         <readable>false</readable>
