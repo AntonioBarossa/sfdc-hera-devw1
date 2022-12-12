@@ -430,8 +430,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
 
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
         Set<String> sconti = HDT_UTL_OrderProcessAssignment.getFamilySconto();
+        sconti.remove('Opzioni TARI');
 
-        
         if(originalOrder.ServicePoint__c != null){
             OrderItem mainScontiItem = null;
             for(OrderItem item : mainItems){
