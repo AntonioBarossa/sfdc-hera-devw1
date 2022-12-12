@@ -347,6 +347,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 if ('VAS Fatturabili'.equalsIgnoreCase(currentOrder.VASType__c) && String.isBlank(currentOrder.CommercialProductCode__c) && 'Analisi Consumi'.equalsIgnoreCase(currentOrder.CommercialProduct__c)&& 'Energia Elettrica'.equalsIgnoreCase(currentOrder.CommodityFormula__c)){
                         setVasProductField(orderToUpdate, currentOrder);
                 }
+
+                /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+                List<Order> dummySwitch = [SELECT Id, SignedDate__c FROM Order WHERE ProcessType__c = 'Switch in Fittizio' AND ServicePoint__c = :currentOrder.ServicePoint__c WITH SECURITY_ENFORCED];
+                if(!dummySwitch.isEmpty() && dummySwitch[0]?.SignedDate__c != null)
+                {
+                    orderToUpdate.SignedDate__c = dummySwitch[0].SignedDate__c;
+                }
             }
             /*when 'HDT_RT_CambioOfferta' {
                 
