@@ -265,9 +265,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'BillingStreetNumberExtension__c,CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        if(!orderOld.isTransition__c){
+        /*if(!orderOld.isTransition__c){
             changeCustomerMarking(account);
-        }
+        } */
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         // String customerName = null;
         // String customerLastName = null;
@@ -662,7 +662,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }*/
     }
 
-    private static void changeCustomerMarking(Account account){
+    /* private static void changeCustomerMarking(Account account){
         Map<String, String> customerMarkingTranscode = 
                 new  Map<String, String>{
                     'Persona fisica'=> 'D1 - ',
@@ -675,7 +675,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             account.customerMarking__c = appendix+account.customerMarking__c;
             accountSrv.updateRecord(account);
         }
-    }
+    } */
 
     private inherited sharing class HDT_WRP_Data{
         public String servicePointStatus ='';
