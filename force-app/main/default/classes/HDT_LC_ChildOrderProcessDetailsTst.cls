@@ -36,6 +36,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			accounts[0].FiscalCode__c='SXSRLA45H28H6';
 			accounts[0].VATNumber__c='12345689';
 			accounts[0].CustomerCode__c='1003616211';
+            
 
 
 			List<Account> accDist = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME'); 
@@ -46,8 +47,15 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
 			List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, accounts[0].Id);
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(6, true, accounts[0].Id, 'Attiva');
+            Id pricebookIdSTD = Test.getStandardPricebookId();
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(6, false, accounts[0].Id, sales, pricebook[0].Id);
+            List<ServicePoint__c> sP =HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(6, false, accounts[0].Id, sales, pricebookIdSTD);
+            List<Product2> products=HDT_UTL_DataFactoryTst.createProduct2(1, true);
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebookIdSTD);
+            
+            
+            
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
 			id orderTemporaneaNuovaAtt=utlConstants.ORDER_RECORDTYPEID_TEMPORANEANUOVAATT;
 			id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
@@ -62,7 +70,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[0].CreditCheckDescription__c='test1';
 			orders[0].ProcessCode__c='PN1';
 			orders[0].QuotationType__c = 'Rapido';
-
+            
+            
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
 			orders[1].ProcessCode__c='PN1';
@@ -103,7 +112,9 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			orders[5].PowerCommitted__c=2;
 
 			insert orders;
-
+			
+            
+            
 			List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, false, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
 			childOrders[0].QualityCall__c=true;
 			insert childOrders;
@@ -119,6 +130,19 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			quotes[0].IsVAS__c=false;
 			quotes[0].AmendmentAllowed__c=false;
 			insert quotes;
+            
+            List<SBQQ__QuoteLine__c> qL = HDT_UTL_DataFactoryTst.createQuoteLines(products[0].Id, quotes[0].Id, 1, true);
+            
+            
+            List<OrderItem> orderItems=HDT_UTL_DataFactoryTst.createOrderItem(1, false, orders[0].Id, sP[0].Id, products[0].Id, entries[0].Id);
+            orderItems[0].Description = '1';
+            orderItems[0].OwnerAC__c = 'Si';
+            orderItems[0].DwellingType__c = 'Appartamento';
+            orderItems[0].OccupantsNumber__c = 2;
+            orderItems[0].Surface__c = 50;
+            orderItems[0].SBQQ__QuoteLine__c = qL[0].Id;
+            
+            insert orderItems;
 
 			orders[1].ServicePoint__c=servPoints[1].Id;
 			orders[0].ServicePoint__c=servPoints[0].Id;
@@ -323,6 +347,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c, 'retrieveOrderCreditCheck did not work correctly');
 		}
 	}
+    
 
 	@isTest
 	static void testvoltureEffectiveDateCheck(){
@@ -349,7 +374,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Integer voltureEffectiveDataCheckKo=HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck(tOrder[0].EffectiveDate__c);
 
-
+			
+            
 			Test.stopTest();
 
 			System.assertEquals(0, voltureEffectiveDataCheckKo, 'Effective Date Check is wrong');
@@ -395,7 +421,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrder1=[SELECT Id, Name, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder1=[SELECT Id, Name, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, TemporaryConnectionEndDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
 			                    FROM Order
 								WHERE RecordType.DeveloperName != 'HDT_RT_TemporaneaNuovaAtt'
 								AND ImplantType__c != null
@@ -411,6 +437,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 				System.debug('tOrder updateProcessStep Exception : '+e.getMessage());
 
 			}
+            
 			Test.stopTest();
 
 
@@ -433,6 +460,35 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.stopTest();
 			System.assertEquals(true, tipoPreventivo, 'Order non preventivo');
+	}
+    
+    @isTest
+	static void testretrieveOrderCreditCheckTwo(){
+
+		User tUser=[SELECT Id, Alias
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			Test.startTest();
+
+			List<OrderItem> tOrderItem=[SELECT id, ServicePoint__c, OrderId, Product2Id, PricebookEntryId, UnitPrice, Quantity, Description, OwnerAC__c, DwellingType__c, Surface__c, OccupantsNumber__c, SBQQ__QuoteLine__c
+			                    FROM OrderItem
+			                    LIMIT 1];
+
+			HDT_LC_ChildOrderProcessDetails.updateProcessStep(tOrderItem[0], false, false, false, false, date.today());
+
+			List<Order> orders = [SELECT Id, Step__c FROM Order WHERE Id=:tOrderItem[0].OrderId LIMIT 1];
+
+			Test.stopTest();
+            
+            
+
+			System.assertEquals(1, orders[0].Step__c, 'Wrong Step');
+			//System.assertNotEquals('', retrievedOrderCreditCheck.CreditCheckDescription__c, 'retrieveOrderCreditCheck did not work correctly');
+		}
 	}
 
 }
