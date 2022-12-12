@@ -12,12 +12,14 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
-        String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
+        String query = 'SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
         'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\'';
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
+
+        Set<String> orderToCancel = new Set<String>();
 
         List<String> notCancelNonBillable = new List<String>{
             'Completata',
@@ -91,7 +93,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
 
             for (Order ord : orders) {
-
+                System.debug('@@@@@@ ord Id ' + ord.Id);
+                System.debug('@@@@@@ isMonitoring ' + isMonitoringList);
+                Integer newSkipCall = ord.Skip_Callout__c == null ? -1 : null; 
                 Date startDate;
 
                 for (ComfortQualityCall__c cqc : docValidList) {
@@ -105,6 +109,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 if (startDate == null){
                     startDate = ord.WizardCompletedDate__c;
                 }
+                System.debug('@@@@@@ startDate ' + startDate);
+
 
                 wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
                         ? orderToActivityMap.get(ord.ParentOrder__c) : orderToActivityMap.get(ord.Id);
@@ -114,6 +120,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
 
                     if (activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
+                        ordToUpd.Skip_Callout__c = newSkipCall;
                         ordersToUpdate.add(ordToUpd);
                         continue;
                     }
@@ -134,8 +141,12 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
                         ordToUpd.Phase__c = 'Annullato';
                         ordToUpd.Status = 'Annullato';         
+                        orderToCancel.add((String)ordToUpd.Id);     
                     }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
                         needsActivity = true;
+                    }
+                    if (!orderToCancel.contains((String)ordToUpd.Id)){
+                        ordToUpd.Skip_Callout__c = newSkipCall;
                     }
                     //DV: VADO A CREARMI UNA MAPPA DI TUTTI GLI ORDINI VECCHI, CORRELATI AL PARENT
                     if(parentToChildOrderMap.get(ord.ParentOrder__c) != null){
@@ -165,10 +176,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     }                
                     ordersToUpdate.add(ordToUpd);
                 }else if (HANDLE_ACTIVITY.equalsIgnoreCase(ord.QualityCallStatus__c) && activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
-                    Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
+                    Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE, Skip_Callout__c = newSkipCall );
                     ordersToUpdate.add(ordToUpd);
                 }else if (String.isBlank(ord.QualityCallStatus__c)){
-                    ordersToUpdate.add(new Order(Id=ord.Id, QualityCallStatus__c = HANDLE_ACTIVITY));
+                    ordersToUpdate.add(new Order(Id=ord.Id, QualityCallStatus__c = HANDLE_ACTIVITY, Skip_Callout__c = newSkipCall));
                     if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
                         orderMap.put(ord.Id, ord);
             
@@ -206,7 +217,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     for(String parent : parentQualCallMap.keySet()){
                         Boolean allCanceled = true;
                         //Per ogni parent vado a controllare che tutti i suoi figli stiano passando in annullato
-                        for(String child : allChildByParent.get(parent)){
+                        List<String> allChildByParentOrderNumber = allChildByParent.containsKey(parent) ? allChildByParent.get(parent) : new List<String>();
+                        for(String child : allChildByParentOrderNumber){
                             if(!parentToChildOrderMap.get(parent).contains(child)){
                                 allCanceled = false;
                                 break;
@@ -224,6 +236,24 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             }
 
             callActivities.addAll(mapActivitiesParent.values());
+            if (!orderToCancel.isEmpty()){
+                HDT_QR_Order qrOrder = new HDT_QR_Order();
+                for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel)){
+                    if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
+                        activitiesToClose.add(
+                            new wrts_prcgvr__Activity__c(
+                                Id = activity.Id,
+                                wrts_prcgvr__Status__c = 'Annullata'
+                            )
+                        );
+                    }
+                }
+            }
+
+            if(activitiesToClose.size() > 0){
+                List<Database.SaveResult> srList = Database.update(activitiesToClose, false);
+                this.setLogRecord(srList, activitiesToClose, logs, 'update activities');
+            }
 
             if (!ordersToUpdate.isEmpty()) {
                 List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
@@ -233,10 +263,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 List<Database.SaveResult> srList = Database.insert(callActivities, false);
                 this.setLogRecord(srList, callActivities, logs, 'insert activities');
             }
-            if(activitiesToClose.size() > 0){
-                List<Database.SaveResult> srList = Database.update(activitiesToClose, false);
-                this.setLogRecord(srList, activitiesToClose, logs, 'update activities');
-            }
+            
 
             List<String> contactList = new List<String>();
             for (Order orderCm : orderMap.values()) {
