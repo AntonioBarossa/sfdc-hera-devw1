@@ -195,17 +195,17 @@
         <default>false</default>
         <label>Hera Ricarica Privata</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Hera Ricarica Pubblica</fullName>
         <default>false</default>
         <label>Hera Ricarica Pubblica</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Hera Sanifica Aria</fullName>
         <default>false</default>
         <label>Hera Sanifica Aria</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Hera Sanifica Aria Business</fullName>
         <default>false</default>
         <label>Hera Sanifica Aria Business</label>
@@ -235,12 +235,12 @@
         <default>false</default>
         <label>Offerta Gas</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Offerte Luce</fullName>
         <default>false</default>
         <label>Offerte Luce</label>
     </customValue>
-	<customValue>
+    <customValue>
         <fullName>Offerte Luce e Gas</fullName>
         <default>false</default>
         <label>Offerte Luce e Gas</label>
@@ -299,6 +299,51 @@
         <fullName>Hera Monopattino</fullName>
         <default>false</default>
         <label>Hera Monopattino</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Active Special Lavoro Gas</fullName>
+        <default>false</default>
+        <label>PiuControllo Active Special Lavoro Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Active Special Lavoro Luce</fullName>
+        <default>false</default>
+        <label>PiuControllo Active Special Lavoro Luce</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Active Special Lavoro Dual</fullName>
+        <default>false</default>
+        <label>PiuControllo Active Special Lavoro Dual</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Active Special Casa Gas</fullName>
+        <default>false</default>
+        <label>PiuControllo Active Special Casa Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Active Special Casa Luce</fullName>
+        <default>false</default>
+        <label>PiuControllo Active Special Casa Luce</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Active Special Casa Dual</fullName>
+        <default>false</default>
+        <label>PiuControllo Active Special Casa Dual</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Flat Special Casa Luce</fullName>
+        <default>false</default>
+        <label>PiuControllo Flat Special Casa Luce</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Flat Special Casa Gas</fullName>
+        <default>false</default>
+        <label>PiuControllo Flat Special Casa Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>PiuControllo Flat Special Casa Dual</fullName>
+        <default>false</default>
+        <label>PiuControllo Flat Special Casa Dual</label>
     </customValue>
     <masterLabel>Prodotti di Interesse</masterLabel>
     <sorted>false</sorted>

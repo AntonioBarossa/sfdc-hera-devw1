@@ -1,0 +1,44 @@
+<aura:component implements="lightning:isUrlAddressable,force:lightningQuickActionWithoutHeader,flexipage:availableForAllPageTypes,force:appHostable,force:hasRecordId" access="global" >
+  
+    <aura:attribute name="recordId" type="String" />
+    <aura:attribute name="spinner" type="Boolean" />
+    <aura:attribute name="onLoadValue" type="Boolean" />
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+
+    <lightning:recordEditForm
+        aura:id="recordFormId"
+        recordId="{!v.recordId}"
+        objectApiName="Product2"
+        onsubmit="{!c.handleSubmit}"
+        onsuccess="{!c.handleSuccess}"
+        onerror="{!c.handleError}"
+        onload="{!c.handleCreateLoad}">
+
+        <lightning:card >
+
+            <aura:set attribute="title">
+                <lightning:icon iconName="standard:product_warranty_term" size="medium"/>
+                Vendibilità Prodotto
+            </aura:set>
+            <aura:set attribute="footer">
+                <lightning:button iconName="utility:save" iconPosition="left" variant="brand" type="submit" label="Salva" />
+            </aura:set>
+
+
+            <p class="slds-p-horizontal_small slds-var-m-around_xx-large">
+                <lightning:messages />
+                <!--<lightning:outputField fieldName="ProductCode" />-->
+                <lightning:inputField aura:id="noSellable" fieldName="NoSellable__c" variant="label-inline"/>
+            </p>
+
+            <aura:if isTrue="{!v.spinner}">
+                <div class="slds-align_absolute-center spinnerBox">
+                    <lightning:spinner alternativeText="Loading" size="large" />
+                </div>
+            </aura:if> 
+
+        </lightning:card>
+
+    </lightning:recordEditForm>
+
+ </aura:component>

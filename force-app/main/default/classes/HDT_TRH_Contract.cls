@@ -58,25 +58,31 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
       
             if (mapOrder!=null && !mapOrder.isEmpty() ) {
                 for (Contract tempContract :listContract) {
-                    if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) &&mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
-                        tempContract.ServicePoint__c   = mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
-                        tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
-                        tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
-                        tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
-                        tempContract.ActivatedDate      = mapOrder.get(tempContract.SBQQ__Order__c).EffectiveDate__c ; //HRAWRM-638  17/09/2021
-                        tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
-                        tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                        tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                        tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c ;  //08/09/2021 HRAWRM-251
-                        /*@frpanico 14/02/2022
-                        * Aggiunta scrittura della EndDate
-                        * Nel caso di Temporanea - Nuova Attivazione
-                        */ 
-                        if( mapOrder.get(tempContract.SBQQ__Order__c) != null && ((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')).equalsIgnoreCase('Temporanea - Nuova Attivazione')
-                            && String.isNotBlank(String.valueOf(mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c'))))
-                            {
-                                tempContract.EndDate = (Date) mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c');
-                            }
+                    try{
+                        if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) &&mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
+                            tempContract.ServicePoint__c   = mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
+                            tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
+                            tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
+                            tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
+                            tempContract.ActivatedDate      = mapOrder.get(tempContract.SBQQ__Order__c).EffectiveDate__c ; //HRAWRM-638  17/09/2021
+                            tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
+                            tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
+                            tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
+                            tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c;  //08/09/2021 HRAWRM-251
+                            tempContract.ContractSalesCompany__c = mapOrder.get(tempContract.SBQQ__Order__c).SalesCompany__c;
+                            /*@frpanico 14/02/2022
+                            * Aggiunta scrittura della EndDate
+                            * Nel caso di Temporanea - Nuova Attivazione
+                            */ 
+                            if( mapOrder.get(tempContract.SBQQ__Order__c) != null && ((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')).equalsIgnoreCase('Temporanea - Nuova Attivazione')
+                                && String.isNotBlank(String.valueOf(mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c'))))
+                                {
+                                    tempContract.EndDate = (Date) mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c');
+                                }
+                        }
+                    } catch (Exception e){
+                        System.debug(LoggingLevel.DEBUG, '>>> HDT_TRH_Contract.beforeUpdate ' + e.getMessage());
+                        tempContract.addError(e.getMessage());
                     }
                 }
             }

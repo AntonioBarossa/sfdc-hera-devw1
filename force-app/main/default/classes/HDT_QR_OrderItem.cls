@@ -175,6 +175,8 @@ public inherited sharing class HDT_QR_OrderItem {
         return [
             SELECT 
             OrderId,
+            Order.ServicePoint__c,
+            Order.ParentOrder__c,
             BillingProfile__c,
             Product2Id,
             Product2.Family,
@@ -182,6 +184,7 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.ProductCode,
             Product2.Name,
             Product2.DescriptionSAP__c,
+            Product2.ReferenceMarket__c,
             VASBillingMode__c,
             SBQQ__QuoteLine__r.SBQQ__RequiredBy__c,
             SBQQ__QuoteLine__r.ServicePointLinkItem__r.ServicePoint__c,
@@ -211,6 +214,7 @@ public inherited sharing class HDT_QR_OrderItem {
             SELECT
             OrderId,
             Order.ServicePoint__r.ServicePointCode__c,
+            Order.RateCategory__c,
             Order.ServicePoint__c
             FROM
             OrderItem
@@ -285,20 +289,27 @@ public inherited sharing class HDT_QR_OrderItem {
     * @return List<OrderItem>
     */
     public OrderItem getOfferActivationItem(String parentOrderId, String servicePoint){
-        return [
-            SELECT 
-            Id,
-            Product2.Name,
-            Product2.ProductCode,
-            Product2.Version__c
-            FROM
-            OrderItem
-            WHERE  Product2.Family = 'Offerta commerciale'
-            AND Order.ServicePoint__c =:servicePoint 
-            AND Order.ParentOrder__c =:parentOrderId
-            WITH SECURITY_ENFORCED
-            LIMIT 1
-        ];
+        try{
+            return [
+                SELECT 
+                Id,
+                Product2.Name,
+                Product2.ProductCode,
+                Product2.ReferenceMarket__c,
+                Product2.Version__c
+                FROM
+                OrderItem
+                WHERE  Product2.Family = 'Offerta commerciale'
+                AND Order.ServicePoint__c =:servicePoint 
+                AND Order.ParentOrder__c =:parentOrderId
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+        }
+        catch(Exception e)
+        {
+            return null;
+        }
     }
     
     public static List<OrderItem> getItemFromOrderIdList(List<String> ordIdList){

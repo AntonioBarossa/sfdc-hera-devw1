@@ -242,6 +242,13 @@
         <value>E&apos; possibile configurare dei criteri solamente nello stato &quot;In Sviluppo&quot;</value>
     </labels>
     <labels>
+        <fullName>HDT_DocusignPhaseNoUpdate</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_DocusignPhaseNoUpdate</shortDescription>
+        <value>Completata;Annullato;Accettazione Voltura;Credit Check KO;Attesa Credit Check;Voltura Rifiutata;Esportazione VS Siebel;Caricamento Siebel OK</value>
+    </labels>
+    <labels>
         <fullName>HDT_EligCriteria_ProductType</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -939,13 +946,6 @@
         <value>The certification request was created successfully</value>
     </labels>
     <labels>
-        <fullName>TRB_Enable</fullName>
-        <language>en_US</language>
-        <protected>false</protected>
-        <shortDescription>Enable Turbobilling</shortDescription>
-        <value>Y</value>
-    </labels>
-    <labels>
         <fullName>HDT_DocTraceEnable</fullName>
         <language>en_US</language>
         <protected>false</protected>
@@ -986,5 +986,68 @@
         <protected>false</protected>
         <shortDescription>HDT_DeleteServicePointDays</shortDescription>
         <value>10</value>
+    </labels>
+    <labels>
+        <fullName>TRB_Enable</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Enable Turbobilling</shortDescription>
+        <value>N</value>
+    </labels>
+    <labels>
+        <fullName>HDT_ActivityCompleteProcess</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_ActivityCompleteProcess</shortDescription>
+        <value>Comunicazioni con DL;Elaborazione Manuale;Esito OK da DL;Gestione M02;Gestione M03;Recupero contratto da Postel;Gestione Rimborso</value>
+    </labels>
+    <labels>
+        <fullName>invio_sollecito</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>invio sollecito</shortDescription>
+        <value>Invio Sollecito</value>
+    </labels>
+    <labels>
+        <fullName>failed</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>failed</shortDescription>
+        <value>failed</value>
+    </labels>
+    <labels>
+        <fullName>Note_Ultimo_Sollecito</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Note Ultimo Sollecito</shortDescription>
+        <value>Note Ultimo Sollecito:</value>
+    </labels>
+    <labels>
+        <fullName>CaseTypeAmbientali</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Type Ambientali</shortDescription>
+        <value>Segnalazioni Ambientali</value>
+    </labels>
+    <labels>
+        <fullName>CaseTypeRifiuti</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Type Rifiuti</shortDescription>
+        <value>Gestione Rifiuti</value>
+    </labels>
+    <labels>
+        <fullName>CaseTypeScontoZona</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Case Type Sconto Zona</shortDescription>
+        <value>Agevolazione: Sconto Fuori Zona</value>
+    </labels>
+    <labels>
+        <fullName>no_configuration_found</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>no configuration found</shortDescription>
+        <value>No configuration record found</value>
     </labels>
 </CustomLabels>

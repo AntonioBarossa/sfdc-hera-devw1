@@ -18,6 +18,11 @@
                 <label>Accettato Motore VAS</label>
             </value>
             <value>
+                <fullName>Inviato resoconto</fullName>
+                <default>false</default>
+                <label>Inviato resoconto</label>
+            </value>
+            <value>
                 <fullName>Accettazione Voltura Tecnica</fullName>
                 <default>false</default>
                 <label>Accettazione Voltura Tecnica</label>
@@ -78,6 +83,11 @@
                 <label>Annullamento - Da inviare</label>
             </value>
             <value>
+                <fullName>Annullamento - Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL</label>
@@ -86,6 +96,11 @@
                 <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito OK da DL</fullName>
@@ -383,6 +398,11 @@
                 <label>Errore tecnico invio a SAP</label>
             </value>
             <value>
+                <fullName>Esito consuntivazione KO</fullName>
+                <default>false</default>
+                <label>Esito consuntivazione KO</label>
+            </value>
+            <value>
                 <fullName>Esito KO</fullName>
                 <default>false</default>
                 <label>Esito KO</label>
@@ -390,7 +410,6 @@
             <value>
                 <fullName>Esito KO da DBO</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Esito KO da DBO</label>
             </value>
             <value>
@@ -432,6 +451,11 @@
                 <fullName>Esito OK</fullName>
                 <default>false</default>
                 <label>Esito OK</label>
+            </value>
+            <value>
+                <fullName>Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Esito OK da DL</fullName>
@@ -550,6 +574,11 @@
                 <label>In attesa validazione</label>
             </value>
             <value>
+                <fullName>In attesa validazione BO</fullName>
+                <default>false</default>
+                <label>In attesa validazione BO</label>
+            </value>
+            <value>
                 <fullName>In Classificazione</fullName>
                 <default>false</default>
                 <label>In Classificazione</label>
@@ -579,6 +608,11 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>In sequenzializzazione</label>
+            </value>
+            <value>
+                <fullName>Intermedia</fullName>
+                <default>false</default>
+                <label>Intermedia</label>
             </value>
             <value>
                 <fullName>Inviare preventivo</fullName>
@@ -729,6 +763,11 @@
                 <fullName>Pratica Riclassificata</fullName>
                 <default>false</default>
                 <label>Pratica Riclassificata</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico</fullName>
+                <default>false</default>
+                <label>Presa in Carico</label>
             </value>
             <value>
                 <fullName>Presa in Carico KO</fullName>
@@ -974,6 +1013,11 @@
                 <fullName>Verifica in laboratorio</fullName>
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
+            </value>
+            <value>
+                <fullName>In attesa di Verifica</fullName>
+                <default>false</default>
+                <label>In attesa di Verifica</label>
             </value>
         </valueSetDefinition>
     </valueSet>

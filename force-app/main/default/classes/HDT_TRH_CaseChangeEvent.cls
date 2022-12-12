@@ -32,7 +32,7 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
                 }
 
                 List<String> objFields;
-                objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Order', 'ChangeEventFields');
+                objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
 
                 //switch on header.changeType {
                 //    when 'CREATE' {

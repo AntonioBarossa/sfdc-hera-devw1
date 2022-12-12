@@ -141,6 +141,7 @@ export default class hdtCreateTargetObject extends LightningElement {
      * @param {*} event 
      */
     handleNewServicePoint(event){
+        console.log('XXXX handleNewServicePoint: event.detail -> ' + JSON.stringify(event.detail));
         this.dispatchEvent(new CustomEvent('newservicepoint', {detail: event.detail}));
     }
 
@@ -149,6 +150,7 @@ export default class hdtCreateTargetObject extends LightningElement {
      */
     handleConfirmServicePoint(event){
         let servicePoint = event.detail;
+        console.log('XXXX handleConfirmServicePoint: ServicePoint -> ' + JSON.stringify(this.servicePoint));
         this.dispatchEvent(new CustomEvent('confirmservicepoint', {detail: servicePoint}));
     }
 }

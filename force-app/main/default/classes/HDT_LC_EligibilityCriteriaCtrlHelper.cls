@@ -160,7 +160,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             List<EligibleMunicipality__c> newItemsList = new List<EligibleMunicipality__c>();
             EligibleMunicipality__c newItem;
             for(EligibleMunicipality__c itemToClone : crtiteriaToClone.Comuni_Eleggibili__r){
-                newItem = itemToClone.clone(false, true, false, false);
+                //newItem = itemToClone.clone(false, true, false, false);
+                newItem = new EligibleMunicipality__c();
+                newItem.Name = itemToClone.Name;
+                newItem.AreaCode__c = itemToClone.AreaCode__c;
+                newItem.JSONCode__c = itemToClone.JSONCode__c;
                 newItem.EligibilityCriteria__c = newCriteria.Id;
                 newItemsList.add(newItem);
             }

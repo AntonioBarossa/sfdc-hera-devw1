@@ -652,7 +652,7 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void sendDocumentFileTest(){
 
-        Order currentOrder = [SELECT Id, ParentOrder__c FROM Order LIMIT 1];
+        Order currentOrder = [SELECT Id, ParentOrder__c, Cluster__c FROM Order LIMIT 1];
 
         Test.startTest();
 

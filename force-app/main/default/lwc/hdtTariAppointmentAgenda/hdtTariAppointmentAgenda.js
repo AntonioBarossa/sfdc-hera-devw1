@@ -4,38 +4,52 @@ import handleSearch from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleSe
 import handleView from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleView';
 import handleConfirm from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleConfirm';
 import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
-import handleNewActivityCreationAndCaseUpdate from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.handleNewActivityCreationAndCaseUpdate';
+import updateCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.updateCase';
+import {equalsIgnoreCase} from 'c/hdtChildOrderProcessDetailsUtl';
 
 
 const OBJECT_FIELDS =[
     'CaseNumber',
     'Outcome__c',
-    'AppointmentCode__c',
-    'JobCenterCode__c',
-    'SotCode__c',
     'StartAppointment__c',
-    'EndAppointment__c'
+    'EndAppointment__c',
+    'WithdrawalFee__c',
+    'ServicePoint__c',
+    'CreatedDate',
+    'SupplyPostalCode__c',
+    'SupplyStreetName__c',
+    'SupplyStreetNumber__c',
+    'SupplyStreetCode__c',
+    'InvoicingPostalCode__c',
+    'InvoicingStreetNumber__c',
+    'InvoicingStreetName__c',
+    'InvoicingCity__c',
+    'InvoicingStreetCode__c',
+    'TypeOperation__c'
 ];
 
 const COLUMNS = [
-    { label: 'Data appuntamento', fieldName: 'data', type: 'text' },
-    { label: 'Fascia oraria', fieldName: 'fascia', type: 'text' },
-    { label: 'Stima durata', fieldName: 'stima', type: 'text' },
-    { label: 'Codice Appuntamento', fieldName: 'codice', type: 'text' },
-    { label: 'Data limite modifica', fieldName: 'dataLimite', type: 'text' },
-    { label: 'Ora limite validità', fieldName: 'oraLimite', type: 'text' }
+    { label: 'Data Inizio Appuntamento', fieldName: 'startDate', type: 'text' },
+    { label: 'Data Fine Appuntamento', fieldName: 'endDate', type: 'text' },
 ];
 
-class Objectfields{
-    constructor(appointmentCode,jobCenterCode,sotCode,startAppointment,endAppointment,phase,note,outcome){
-        this.appointmentCode = appointmentCode;
-        this.jobCenterCode = jobCenterCode;
-        this.sotCode = sotCode;
-        this.startAppointment = startAppointment;
-        this.endAppointment = endAppointment;
-        this.phase = phase;
-        this.note = note;
-        this.outcome = outcome;
+const COLUMNSVIEW = [
+    { label: 'noticeNumber', fieldName: 'noticeNumber', type: 'text' },
+    { label: 'appointmentType', fieldName: 'appointmentType', type: 'text' },
+    { label: 'Data Inizio Appuntamento', fieldName: 'startDate', type: 'text' },
+    { label: 'Data Fine Appuntamento', fieldName: 'endDate', type: 'text' },
+];
+
+class Wrapper{
+    constructor(purchaseOrderNumber,streetCoding,street,housenumber,typeInt, city, indicator, numberOfLines){
+        this.purchaseOrderNumber = purchaseOrderNumber;
+        this.streetCoding = streetCoding;
+        this.street = street;
+        this.housenumber = housenumber;
+        this.indicator = "Y";
+        this.city = city;
+        this.typeInt = typeInt?.toUpperCase();
+        this.numberOfLines = "50";
     }
 }
 
@@ -44,15 +58,17 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     @api params;
     @track case;
     @track columns = COLUMNS;
+    @track columnsView = COLUMNSVIEW;
     @track records = [];
     refreshRecord = false;
-    disableConfirmButton = false;
+    disableConfirmButton = true;
+    hideConfirmButton = false;
+    disableManageButton = true;
     isCommunity = false;
     searchType;
     newDateLabel;
-    selectedCode;
     showSpinner = true;
-    @track fieldsToRetrieve;
+    @track fieldsToRetrieve=OBJECT_FIELDS;
     @track isView = false;
 
     @wire(getCase,{caseId : '$caseid', fields : '$fieldsToRetrieve'})
@@ -65,7 +81,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             console.error('status body: ' + JSON.stringify(error.body));
         }
         if (data && this.params){
-            this.case = JSON.parse(data);
+            this.case = {...data};
                 this.searchType = this.params.searchType;
                 this.showSpinner = false;
                 this.refreshRecord = false;
@@ -86,66 +102,50 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             if (this.params.userCommunity === true || this.params.userCommunity === 'true'){
                 this.isCommunity = true;
             }
-            this.fieldsToRetrieve = OBJECT_FIELDS;
         }
     }
 
     confirmAppointment(){
         this.showSpinner = true;
-        let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
+        let rows = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
+        const wrap = this.createWrapper();
+        wrap.startDate=new Date(rows[0].startDate);
+        wrap.endDate=new Date(rows[0].endDate);
         handleConfirm({
-            caseId : this.caseid,
-            appointmentJson : JSON.stringify(row[0])
+            theCase : this.case,
+            wrap : wrap
         }).then(result =>{
             
-            if (!result){
+            if (!equalsIgnoreCase(result?.status, 'success')){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
-            }else if (result.localeCompare('OK') === 0){
-                this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
-                /*Alla pressione del pulsante “Conferma appuntamento”, viene inviato il flusso in uscita verso sap di conferma appuntamento TODO
-                this.case.AppointmentCode__c = result.AppointmentCode__c;
-                this.case.JobCenterCode__c = result.JobCenterCode__c; // da creare
-                this.case.SotCode__c = result.SotCode__c; //da creare
-                this.case.StartAppointment__c = result.StartAppointment__c; //da creare
-                this.case.EndAppointment__c = result.EndAppointment__c; //da creare
-                this.case.Phase__c = 'Da Inviare';
-                this.updateTheCase(this.case);
-                */
-                this.case.AppointmentCode__c = '1';
-                this.case.JobCenterCode__c = '1';
-                this.case.SotCode__c = '1';
-                this.case.StartAppointment__c = '2022-12-31';
-                this.case.EndAppointment__c = '2022-12-31';
-                this.case.Phase__c = 'Da Inviare';
-                this.case.Outcome__c ='Recived_Slots';
-
-                var caseFields = new Objectfields(this.case.AppointmentCode__c,this.case.JobCenterCode__c,this.case.SotCode__c,
-                    this.formatData(this.case.StartAppointment__c),this.formatData(this.case.EndAppointment__c),this.case.Phase__c,null,this.case.Outcome__c);
-
-                var activityFields = new Objectfields(this.case.AppointmentCode__c,this.case.JobCenterCode__c,this.case.SotCode__c,
-                    this.formatData(this.case.StartAppointment__c),this.formatData(this.case.EndAppointment__c),null,null,null);
-
-                this.createNewActivityAndUpdateCase(this.case.Id, caseFields, null, activityFields);
-                this.refreshPage(true);
-            }else if (result.localeCompare('ERRORE CONFERMA') === 0){ 
-                this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
-                this.showSpinner = false;
+            }else{
+                //let data = JSON.parse(result);
+                let data = result;
+                if(data.status.localeCompare('success') === 0){
+                    this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
+                    this.case.Phase__c = 'Inviata a SAP';
+                    this.updateCase(this.case, true);
+                }else{ 
+                    this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
+                    this.showSpinner = false;
+                    this.closeModal();
+                }
             }
         }).catch(error =>{
+            this.closeModal();
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
         });
     }
 
-    createNewActivityAndUpdateCase(caseId, caseFields, templateName, activityFields){
-        handleNewActivityCreationAndCaseUpdate({
-            caseId : caseId,
-            caseFields : JSON.stringify(caseFields),
-            templateName : templateName,
-            activityFields : JSON.stringify(activityFields)
+    updateCase(caso, refreshPage){
+        updateCase({
+            caso : caso
         }).then(result =>{
             console.log(result);
+            if(refreshPage) this.refreshPage(true);
+            this.showSpinner = false;
         }).catch(error =>{
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
@@ -167,13 +167,16 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             this.closeModal();
         }else if (event.target.name === 'newDate'){
             this.getNewDate();
-        }
+        }else if (event.target.name === 'Dsa'){
+            this.showSpinner = true;
+            this.case.Phase__c = 'Da Inviare';
+            this.updateCase(this.case, true);
+        }    
     }
 
     closeModal(){
         this.showSpinner = true;
         this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
-        this.refreshPage(true);
     }
 
     getAppointmentDate(){
@@ -181,46 +184,54 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     getNewDate(){
-        let appointment = '2022-12-31';
-        console.log('appointment ->' + appointment);
-        let preferentialTime = '15:00/16:00';
-        console.log('preferentialTime -> ' + preferentialTime);
-        this.handleSearchMethod(appointment,preferentialTime);
+        const wrap = this.createWrapper();
+        this.handleSearchMethod(wrap);
+    }
+
+    createWrapper(){
+        let purchaseOrderNumber = this.caseid;
+        let streetCoding = this.case.InvoicingStreetCode__c
+        let housenumber = this.case.InvoicingStreetNumber__c
+        let typeInt = this.case.TypeOperation__c;
+        let indicator = '';
+        let numberOfLines = '';
+        let city = this.case.InvoicingCity__c;
+        let street = `${this.case.InvoicingStreetName__c}, ${housenumber} ${this.case.InvoicingPostalCode__c} ${city}`;
+
+        return new Wrapper(purchaseOrderNumber, streetCoding, street, housenumber, typeInt, city, indicator, numberOfLines);
     }
 
     handleViewMethod(){
         this.showSpinner = true;
         handleView({
-            caseId : this.caseid
+            purchaseOrderNumber : this.caseid
         }).then(result =>{
-            if (!result){
+            if (!equalsIgnoreCase(result?.status, 'success')){
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
             }else{
-                let data = JSON.parse(result);
-                let slots = [];
-                try{
-                    slots = data.appuntamento;
-                    this.records = [];
-                    if(slots.length == 0){
-                    }else{
-                        slots.forEach(element => {
-                            this.addRecord({
-                                codice : element.codiceApp, 
-                                data : this.formatData(element.appData), 
-                                fascia : element.appFasciaOrario, 
-                                stima: element.zStimaDurApp, 
-                                dataLimite : this.formatData(element.zLimApp),
-                                oraLimite : element.zLimAppOra 
-                            });
-                        });
+                //let data = JSON.parse(result);
+                let data = result;
+                if(data.status.localeCompare('success') === 0){
+                    try{
+                        let slots = data.data;
+                        this.records = [];
+                                this.addRecord({
+                                    noticeNumber : slots.noticeNumber,
+                                    appointmentType : slots.appointmentType,
+                                    startDate : slots.startDate,
+                                    endDate : slots.endDate
+                                });
+                    }catch(e){
+                        console.error(e);
+                        this.showAlert('Attenzione','Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
                     }
-                }catch(e){
-                    console.error(e);
-                    this.showAlert('Attenzione','Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
+                    this.showSpinner = false;
+                    this.refreshRecord = false;
+                }else{ 
+                    this.showAlert('Errore','Si è verificato un errore','error');
+                    this.showSpinner = false;
                 }
-                this.showSpinner = false;
-                this.refreshRecord = false;
             } 
         }).catch(error =>{
             this.showSpinner = false;
@@ -228,44 +239,37 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         });
     }
 
-    handleSearchMethod(appointment,preferentialTime){
+    handleSearchMethod(wrap){
         this.showSpinner = true;
         handleSearch({
-            caseId : this.caseid,
-            searchType : 'FirstSearch',
-            preferedDate : appointment,
-            preferedTimeSlot : preferentialTime
+            wrap : wrap
         }).then(result =>{
-            if (!result){
+            if(!equalsIgnoreCase(result?.status, 'success')){ 
                 this.showAlert('Attenzione','Nessuna risposta dal server.','error');
                 this.showSpinner = false;
-                this.disableConfirmButton = true; 
-                this.createNewActivityAndUpdateCase(this.caseid, null, 'Contattare Cliente', null);
             }else{
-                let data = JSON.parse(result);
+                //let data = JSON.parse(result);
+                let data = result;
                 let slots = [];
                 try{
-                    slots = data.appuntamento;
+                    slots = data.data.appointmentData;
                     this.records = [];
                     if(slots.length == 0){
                         this.case.Note__c = 'l’appuntamento non può essere preso perché l’agenda non restituisce alcuna data - ricontattare il cliente';
-                        this.case.Outcome__c ='Empty_Slots';
-                        var caseFields = new Objectfields(null,null,null,null,null,null,this.case.Note__c,this.case.Outcome__c);
-                        this.disableConfirmButton = true; 
+                        //this.case.Outcome__c ='Empty_Slots';
+                        this.showAlert('Attenzione',data?.data?.outcome? data?.data?.text : 'Errore nella chiamata al server. Non è stato ricevuto un appuntamento valido.','error');
+                        this.hideConfirmButton = true; 
+                        this.disableManageButton = false;
                     }else{
                         slots.forEach(element => {
                             this.addRecord({
-                                codice : element.codiceApp, 
-                                data : this.formatData(element.appData), 
-                                fascia : element.appFasciaOrario, 
-                                stima: element.zStimaDurApp, 
-                                dataLimite : this.formatData(element.zLimApp),
-                                oraLimite : element.zLimAppOra 
+                                startDate : element.startDate,
+                                endDate : element.endDate
                             });
                         });
-                        this.case.Outcome__c='Recived_Slots';
-                        var caseFields = new Objectfields(null,null,null,null,null,null,null,this.case.Outcome__c);
-                        this.createNewActivityAndUpdateCase(this.caseid, caseFields, null, null);
+                        this.disableConfirmButton = false; 
+                        //this.case.Outcome__c='Recived_Slots';
+                        //this.updateCase(this.case);
                         this.disableCancelButton = false; 
                     }
                 }catch(e){
@@ -285,7 +289,6 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         try{
             let row = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
             if (row.length > 0 ){
-                this.selectedCode = row.codice;
                 return true;
             }else{
                 return false;
@@ -313,11 +316,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
     }
 
     async refreshPage(flagCommunity){
-        let userCommunity;
         if (!flagCommunity){
             setTimeout(function(){window.location.reload()},3000);
         }else{
-            userCommunity = flagCommunity;
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : true}));
         }
     }

@@ -89,6 +89,7 @@
                                     service-point-id={order.ServicePoint__r.Id}
                                     pre-selected-land-registry-id={order.LandRegistry__c}
                                     onselection={landSelected}
+                                    order-id={order.Id}
                                     ></c-hdt-land-registry>
                                 </template>
 
@@ -133,7 +134,7 @@
                                             <c-hdt-attachment-manager-button record-id={section.value.recordId} parent-record-id={order.ParentOrder__c} onvalidate_attachments={handleValidateAttachments} onclose_attachment_manager={handleCloseAttachment} additional-attachments={additionalAttachments}></c-hdt-attachment-manager-button>
                                         </template>
                                         <template if:true={section.value.hasVerificaRavv}>
-                                           <c-hdt-active-repentant city={order.ServicePoint__r.SupplyCity__c} sottotipo={order.ProcessType__c} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
+                                           <c-hdt-active-repentant company-owner={order.Account.CompanyOwner__c} record-id={order.Id} hide-fields="true" city={order.ServicePoint__r.SupplyCity__c} sottotipo={order.ProcessType__c} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
                                         </template>
                                         <lightning-button data-section-index={section.index} if:false={section.value.lastStep} value={section.value.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>

@@ -112,6 +112,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_DoubleCalloutPrevention__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_ExciseTranscode__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -148,6 +152,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_HiddenSearchBarPostSales__mdt</name>
+	</customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_ImageURL__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -173,6 +181,10 @@
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
         <name>HDT_LocalDispatcherInrete__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_LogMappingRecord__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
@@ -386,6 +398,21 @@
         <editable>true</editable>
         <field>AbiCode__c.BankName__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Comune__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Frequenza__c</field>
+        <readable>true</readable>
+    </fieldPermissions>    
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>AllineamentoGAA__c.Rate_Category__c</field>
+        <readable>true</readable>
     </fieldPermissions>   
     <fieldPermissions>
         <editable>true</editable>
@@ -402,6 +429,21 @@
         <field>Case.IntendedUse__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.LastNoticeDay__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoticeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoticeNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>Case.CartographyDetail__c</field>
@@ -415,6 +457,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.Unita_Abitative__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ResidentDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NotResidentDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.RetroactiveDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -450,6 +507,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>TownATOTable__c.Town__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TownATOTable__c.CompanyOwner__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -580,6 +642,26 @@
         <field>VocalOrderPublicConfirm__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.CubicMeters__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.Description__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>VolumetricEstimate__c.Typology__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>RateCategory__c.Market__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>RateCategory__c.Fornitura__c</field>
@@ -627,6 +709,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.SMS_Tracking__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Phase__c</field>
         <readable>true</readable>
     </fieldPermissions> 
@@ -643,6 +735,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.IsAddressChanged__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -772,6 +869,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.IstatCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.RonchiCategoryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.RonchiSubCategoryCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -887,6 +999,31 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.CreditAcquire__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ComPostiLetto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.UseSubCategory__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IntendedUse__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Revoke__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.CommercialProductLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -928,6 +1065,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DocumentalVat__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DocumentType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1121,6 +1273,21 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.CreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.LoginGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Interaction__c.LoginWorkstation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Interaction__c.IsDigitalMarking__c</field>
         <readable>true</readable>
@@ -1209,6 +1376,11 @@
         <editable>true</editable>
         <field>AbiCode__c.IbanABI__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Account.BillingStreetToponym__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -2015,6 +2187,11 @@
 		<field>ContactPointPhone.IsArchived__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PurificationInfoOnTheInvoice__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ContentVersion.IsArchived__c</field>
@@ -2358,6 +2535,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>VisitAssignmentRules__c.Consumption__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.CreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.LoginGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.LoginWorkstation__c</field>
         <readable>true</readable>
     </fieldPermissions>
      <fieldPermissions>
@@ -3892,6 +4084,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AssignmentRule__c.ATO__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AssignmentRule__c.CaseOrderCreatorGroup__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -4099,6 +4296,41 @@
         <editable>true</editable>
         <field>AuthorizationFormText.SummaryAuthFormText</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BatchExecutionKpi__c.EndTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BatchExecutionKpi__c.ExecutionTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BatchExecutionKpi__c.NumOfKoRecords__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BatchExecutionKpi__c.NumOfOkRecords__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BatchExecutionKpi__c.NumOfRecords__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>BatchExecutionKpi__c.StartTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>BillingProfile__c.InvoicingStreetToponym__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
@@ -4865,6 +5097,21 @@
 		<field>Order.RonchiDescription__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.CreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.LoginGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Opportunity.LoginWorkstation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>opportunity.CampaignEleggibilityGroup__c</field>
@@ -5655,6 +5902,11 @@
 		<field>Case.Birthday__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.BpToBeMerged__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.ClientType__c</field>
@@ -5770,6 +6022,21 @@
 		<field>Case.NotResidentMembers__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoteDescription__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.NoteCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.ActivityCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.NumberMembers__c</field>
@@ -7310,21 +7577,6 @@
         <field>ServicePoint__c.AreaDeclaredTARI__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.CommercialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	    <fieldPermissions>
-        <editable>true</editable>
-        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
 	    <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.SupplySubtype__c</field>
@@ -7349,7 +7601,12 @@
         <editable>true</editable>
         <field>Case.SupplyUseType__c</field>
         <readable>true</readable>
-    </fieldPermissions>
+    </fieldPermissions>	
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SupplyUseType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>	
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.MeterRelation__c</field>
@@ -7363,6 +7620,16 @@
 	<fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.MeterRelation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.MaxFreeWithdrawDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CountFreeWithdraw__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7538,6 +7805,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.PaymentType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PayPurification__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.PaySewer__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8493,17 +8770,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Case.PurificationPay__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Case.SelfReadingDate__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Case.SewerPay__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -8519,6 +8786,16 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.WithdrawalFee__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Case.WithdrawalPrivateArea__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>
@@ -8920,6 +9197,11 @@
         <editable>true</editable>
         <field>ConsumptionSchedule.UnitOfMeasure</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Contact.MailingStreetToponym__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -9616,13 +9898,21 @@
         <field>ContactPointTypeConsent.EngagementChannelTypeId</field>
         <readable>true</readable>
     </fieldPermissions>
-    <!--Start HRAWRM-251 08/09/2021 -->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.CommercialProduct__c</field>
         <readable>true</readable>
     </fieldPermissions>
-    <!--Start HRAWRM-251 08/09/2021 -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Contract.ExciseEle__c</field>
@@ -9666,6 +9956,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contract.CollectedDifference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contract.CommoditySectorFormula__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10170,6 +10465,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DiscardAnnullmentRule__c.DiscardReason__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.IsActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -10271,6 +10571,21 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DistributorPointCode__c.PointCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.DocumentalSystem__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.EnvelopeId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSelected__c.IssuingCompanyCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11140,6 +11455,11 @@
     </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>ExpRavv__c.Case__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>ExpRavv__c.CheckArea__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -11170,6 +11490,11 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
+		<field>ExpRavv__c.Order__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
 		<field>ExpRavv__c.SapTariCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -11191,6 +11516,66 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>ExpRavv__c.Type__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdraw__c.Canceled__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdraw__c.LastFreeWithdrawDate__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.FreeWithdrawCalculation__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.Municipality__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PayIfIsPrivateAreaDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PayIfIsPrivateAreaNotDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToPayIfVolumeEqualOrHigherDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToPayIfVolumeEqualOrHigherNotDom__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.PicklistRestriction__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToBePaidWithinMonthsDomestic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.ToBePaidWithinMonthsNotDomestic__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>FreeWithdrawConfig__c.TypeOperation__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>
@@ -11854,6 +12239,31 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.Arguments__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.CheckOnPhaseStory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.ObjectName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_DoubleCalloutPrevention__mdt.PhaseToCheck__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>HDT_ExciseTranscode__mdt.Active__c</field>
         <readable>true</readable>
@@ -12040,6 +12450,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>HDT_HiddenSearchBarPostSales__mdt.TargetObject__c</field>
+        <readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_HiddenSearchBarPostSales__mdt.ProcessType__c</field>
+        <readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>HDT_Informative_Configuration__mdt.Account__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12186,6 +12606,56 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_LocalDispatcherInrete__mdt.DispatcherDesc__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.Error__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.IsActive__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.Method__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.Object__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.RecordId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.Request__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.RequestDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.Response__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.ResponseDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_LogMappingRecord__mdt.Service__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13156,6 +13626,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>LandRegistry__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>LandRegistry__c.CRMPracticeNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14333,6 +14808,16 @@
         <field>OpportunityLineItem.TotalPrice</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.FlagSending__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+	<fieldPermissions>
+		<editable>true</editable>
+		<field>Order.SubscriberPlace__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Order.RonchiCode__c</field>
@@ -16110,12 +16595,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.AgriculturalHousingUnit__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.CommercialHousingUnit__c</field>
+        <field>Order.CohabitantsNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16131,11 +16611,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.HydrantMouthsNumber__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.IndustrialHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16176,11 +16651,6 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SeasonUse__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
-        <field>Order.ZootechnicalHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -16471,6 +16941,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Order.SiebelCatalog__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Order.SiebelWithdrawal__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22495,6 +22970,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SBQQ__ProductOption__c.CommercialId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SBQQ__ProductOption__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -23567,6 +24047,16 @@
         <editable>true</editable>
         <field>SBQQ__QuoteLinePricingGuidance__c.SBQQ__Target__c</field>
         <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.CommercialId__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SBQQ__QuoteLine__c.Opportunity__c</field>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -25400,7 +25890,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.CreatorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.LoginGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.LoginWorkstation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -29745,6 +30245,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Sale__c.DocumentDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.DocumentNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Sale__c.DocumentType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Sale__c.FriendCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31410,6 +31925,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SurveyResponse__c.Lead__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SurveyResponse__c.Response10__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -31729,11 +32249,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>TechnicalOffer__c.NunmberDaysMonthsYears__c</field>
+        <readable>false</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOffer__c.AdmittingProfileModification__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOffer__c.Discount__c</field>
         <readable>true</readable>
@@ -31996,10 +32521,32 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>TechnicalOffer__c.DailyContribution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>User.UserAgencyCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <!--SFDC-OIG/OIM 17/09/2021-->
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.WeeklyContribution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <!--SFDC-OIG/OIM 17/09/2021-->
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.FiscalCode__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <fieldPermissions>
+            <editable>true</editable>
+            <field>User.UserAgencyCode__c</field>
+            <readable>true</readable>
+        </fieldPermissions>
+        <!--SFDC-OIG/OIM 17/09/2021-->
     <fieldPermissions>
         <editable>true</editable>
         <field>User.HerokuUser__c</field>
@@ -34692,6 +35239,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.NoteRicontattoCliente__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Contact__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -36149,7 +36701,57 @@
         <editable>true</editable>
         <field>Order.WasteCommodityType__c</field>
         <readable>true</readable>
-    </fieldPermissions>  
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Activity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Case__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.EndDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Order__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaAdministration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.SlaValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.StartDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <layoutAssignments>
         <layout>Case-HDT_ConsumoAnomaloIdrico</layout>
         <recordType>Case.HDT_RT_ConsumoAnomaloIdrico</recordType>
@@ -36276,6 +36878,10 @@
         <recordType>Case.HDT_RT_Subentro_GAS</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_VariazioniTari</layout>
+        <recordType>Case.HDT_RT_VariazioniTari</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_VerificaDatiAlDl</layout>
         <recordType>Case.HDT_RT_VerificaDatiAlDl</recordType>
     </layoutAssignments>
@@ -36314,6 +36920,10 @@
     <layoutAssignments>
         <layout>Case-HDT_Disattivazioni</layout>
         <recordType>Case.HDT_RT_Disattivazioni</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_DisattivazioniTari</layout>
+        <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Domiciliazione</layout>
@@ -36356,12 +36966,24 @@
         <recordType>Case.HDT_RT_PianoRateizzazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_PosizionamentoContenitore</layout>
+        <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_PreventiviEle</layout>
         <recordType>Case.HDT_RT_PreventiviEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_PreventiviGas</layout>
         <recordType>Case.HDT_RT_PreventiviGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamiScrittiTARI</layout>
+        <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_ReclamoDaCittadino</layout>
+        <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_Rimborso</layout>
@@ -36414,6 +37036,10 @@
     <layoutAssignments>
         <layout>Case-HDT_PraticaInVolo</layout>
         <recordType>Case.HDT_RT_FlyingRequest</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_Segnalazioni</layout>
+        <recordType>Case.HDT_RT_Segnalazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
@@ -36559,6 +37185,26 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazione Ambiente</layout>
+        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Dossier</layout>
@@ -36848,6 +37494,69 @@
         <layout>Reading__c-HDT_LetturaAcqua</layout>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
     </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>VolumetricEstimate__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>StaticStringForDocuments__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>AllineamentoGAA__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>true</modifyAllRecords>
+        <object>BatchExecutionKpi__c</object>
+        <viewAllRecords>true</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CaseVolumetricaJunction__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>FreeWithdraw__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>true</allowCreate>
+        <allowDelete>true</allowDelete>
+        <allowEdit>true</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>FreeWithdrawConfig__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
@@ -38883,6 +39592,24 @@
         <viewAllRecords>true</viewAllRecords>
     </objectPermissions>
     <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SlaAdministration__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>SlaTracking__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>
         <allowEdit>true</allowEdit>
@@ -39746,6 +40473,16 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>DiscardAnnullmentRule__c.HDT_RT_Automatic</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>DiscardAnnullmentRule__c.HDT_RT_NotAutomatic</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_Competitivo</recordType>
         <visible>true</visible>
@@ -39808,6 +40545,16 @@
     <recordTypeVisibilities>
         <default>false</default>
         <recordType>Knowledge__kav.HDT_RT_TroubleshootingReclamiSecondario</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <recordTypeVisibilities>
@@ -40160,7 +40907,7 @@
 	<recordTypeVisibilities>
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
-        <recordType>Case.HDT_RT_PagamentoUnicoAnnuale_TARI</recordType>
+        <recordType>Case.HDT_RT_PagamentoUnicoAnnualeTARI</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
 	<recordTypeVisibilities>
@@ -40197,6 +40944,16 @@
         <default>false</default>
         <personAccountDefault>true</personAccountDefault>
         <recordType>Case.HDT_RT_VariazioniTari</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>false</default>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <visible>true</visible>
+    </recordTypeVisibilities>
+    <recordTypeVisibilities>
+        <default>true</default>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>

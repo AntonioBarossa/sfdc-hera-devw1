@@ -3,6 +3,7 @@
     <fullName>HDT_RT_ConsumoAnomaloIdrico</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Consumo Anomalo Idrico</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -155,6 +156,36 @@
         </values>
         <values>
             <fullName>Stesso Sottoscrittore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -530,6 +561,34 @@
         </values>
         <values>
             <fullName>G6500</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1008,6 +1067,34 @@
         </values>
         <values>
             <fullName>G6500</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>31 x 50 - 30 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>32 x 50 - 30 mc</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8228,7 +8315,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9776,6 +9863,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approvazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Attesa risposta cliente</fullName>
             <default>false</default>
         </values>
@@ -9828,7 +9923,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In attesa allegati</fullName>
+            <fullName>In Attesa Approvazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9959,21 +10054,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PurificationPay__c</picklist>
-        <values>
-            <fullName>Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Intera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ridotta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10909,18 +10989,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>1401-Risc amb singoli</fullName>
             <default>false</default>
         </values>
@@ -10986,17 +11054,6 @@
         </values>
         <values>
             <fullName>G_ICD-Imposta Usi Domestici</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SewerPay__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>

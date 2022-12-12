@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>Value1__c</field>
-        <value xsi:type="xsd:string">PrimaAttivazione</value>
+        <value xsi:type="xsd:string">Attivazione</value>
     </values>
     <values>
         <field>Value2__c</field>
@@ -25,5 +25,9 @@
     <values>
         <field>Value3__c</field>
         <value xsi:type="xsd:string">Acqua</value>
+    </values>
+    <values>
+        <field>Value4__c</field>
+        <value xsi:nil="true"/>
     </values>
 </CustomMetadata>

@@ -162,18 +162,8 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>ServicePoint__c.HDT_ServiceCatalog</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_InformativeCallNotification</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Traccia_Informativa</actionName>
-            <actionType>QuickAction</actionType>
+            <actionName>HDT_InfoTracking</actionName>
+            <actionType>CustomButton</actionType>
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
@@ -246,6 +236,21 @@
             <actionType>QuickAction</actionType>
             <sortOrder>16</sortOrder>
         </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ServicePoint__c.HDT_Vista_Dati_Catastali</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>17</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ServicePoint__c.HDT_ServiceCatalog</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>HDT_InformativeCallNotification</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
@@ -292,13 +297,24 @@
         <fields>OriginalOrderItem</fields>
         <relatedList>OrderItem.ServicePoint__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>LastFreeWithdrawDate__c</fields>
+        <fields>Canceled__c</fields>
+        <fields>CREATED_DATE</fields>
+        <relatedList>FreeWithdraw__c.ServicePoint__c</relatedList>
+        <sortField>LastFreeWithdrawDate__c</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000003d5iY</masterLabel>
+        <masterLabel>00h1w000000TS8k</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

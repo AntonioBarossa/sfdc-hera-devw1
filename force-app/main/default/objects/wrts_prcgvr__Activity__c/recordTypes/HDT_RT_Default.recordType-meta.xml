@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Default</fullName>
     <active>true</active>
@@ -2792,13 +2792,21 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Type__c</picklist>
+        <picklist>Type__c</picklist>        
+        <values>
+            <fullName>Modifica Indirizzo Fornitura</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accettazione Voltura</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Gestione Fuga</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2885,7 +2893,10 @@
             <fullName>Errore Comunicazione e-BDM</fullName>
             <default>false</default>
         </values>
-        
+        <values>
+            <fullName>Esito approvazione</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Esito Da Gestire</fullName>
             <default>false</default>
@@ -2910,6 +2921,10 @@
             <fullName>Esito OK Riduzione Potenza</fullName>
             <default>false</default>
         </values>   
+        <values>
+            <fullName>Gestione blocco sollecito</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
@@ -2991,6 +3006,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risposta Inviata - Attesa Rettifica</fullName>
             <default>false</default>
         </values>
@@ -2998,11 +3017,6 @@
             <fullName>Risposta Motivata Con Allegato</fullName>
             <default>false</default>
         </values>
-
-
-
-
-        
         <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
             <default>false</default>

@@ -1,6 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>crea_records_SIE</name>
+        <label>crea records SIE</label>
+        <locationX>182</locationX>
+        <locationY>854</locationY>
+        <actionName>HDT_UTL_ExpSieRavv</actionName>
+        <actionType>apex</actionType>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>caso</name>
+            <value>
+                <elementReference>getCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>ord</name>
+            <value>
+                <elementReference>getOrder</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>wrap</name>
+            <value>
+                <elementReference>wrapperSie</elementReference>
+            </value>
+        </inputParameters>
+    </actionCalls>
     <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>assign_Wrapper_Sie</name>
+        <label>assign Wrapper Sie</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>wrapperSie</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>hdtActiveRepentant_Ord.outputExportSie</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>crea_records_SIE</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_assign_Wrapper_Sie</name>
+        <label>Copy 1 of assign Wrapper Sie</label>
+        <locationX>314</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>wrapperSie</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputExportSie</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>crea_records_SIE</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Order_id_popolato</name>
+        <label>Order id popolato</label>
+        <locationX>182</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>getCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Case</defaultConnectorLabel>
+        <rules>
+            <name>Popolato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>OrderId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OrderId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OrderId</leftValueReference>
+                <operator>NotEqualTo</operator>
+            </conditions>
+            <connector>
+                <targetReference>getOrder</targetReference>
+            </connector>
+            <label>Popolato</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_ActiveRepentant {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ActiveRepentant</label>
     <processMetadataValues>
@@ -23,10 +119,31 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>getCase</name>
+        <label>getCase</label>
+        <locationX>314</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Ravvedimento_Operoso_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getOrder</name>
         <label>getOrder</label>
-        <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ravvedimento_Operoso</targetReference>
@@ -44,10 +161,67 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
+        <name>updateCase</name>
+        <label>updateCase</label>
+        <locationX>314</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Copy_1_of_assign_Wrapper_Sie</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>BlockOnComputation__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputWrp.bloccoCalcolo</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>CustomerRepentanceRefusal__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputWrp.declineSupport</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DeclarationDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputWrp.dateDichiarazione</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EffectiveDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputWrp.dateDecorrenza</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OnerousReviewableStartDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputWrp.dateX</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OnerousUnreviewableStartDate__c</field>
+            <value>
+                <elementReference>hdtActiveRepentant_Case.outputWrp.dateY</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateOrder</name>
         <label>updateOrder</label>
-        <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>assign_Wrapper_Sie</targetReference>
+        </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -59,43 +233,43 @@
         <inputAssignments>
             <field>BlockOnComputation__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.bloccoCalcolo</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.bloccoCalcolo</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>DeclarationDate__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.dateDichiarazione</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.dateDichiarazione</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>DeclineComputationSupport__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.declineSupport</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.declineSupport</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>EffectiveDate__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.dateDecorrenza</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.dateDecorrenza</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>MissingDueAmount__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.missedDue</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.missedDue</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>OnerousReviewableStartDate__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.dateX</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.dateX</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <field>OnerousUnreviewableStartDate__c</field>
             <value>
-                <elementReference>hdtActiveRepentant.outputWrp.dateY</elementReference>
+                <elementReference>hdtActiveRepentant_Ord.outputWrp.dateY</elementReference>
             </value>
         </inputAssignments>
         <object>Order</object>
@@ -103,8 +277,8 @@
     <screens>
         <name>Ravvedimento_Operoso</name>
         <label>Ravvedimento Operoso</label>
-        <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -117,7 +291,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtActiveRepentant</name>
+            <name>hdtActiveRepentant_Ord</name>
             <extensionName>c:hdtActiveRepentant</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
@@ -144,6 +318,18 @@
                     <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>sottotipo</name>
+                <value>
+                    <elementReference>getOrder.ProcessType__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>companyOwner</name>
+                <value>
+                    <elementReference>getOrder.Account.CompanyOwner__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -151,11 +337,79 @@
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>Ravvedimento_Operoso_0</name>
+        <label>Ravvedimento Operoso</label>
+        <locationX>314</locationX>
+        <locationY>398</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>updateCase</targetReference>
+        </connector>
+        <fields>
+            <name>title_0</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 20px;&quot;&gt;Ravvedimento Operoso&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtActiveRepentant_Case</name>
+            <extensionName>c:hdtActiveRepentant</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>city</name>
+                <value>
+                    <elementReference>getCase.SupplyCity__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectApiName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sottotipo</name>
+                <value>
+                    <stringValue>Subentro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>companyOwner</name>
+                <value>
+                    <elementReference>getCase.Account.CompanyOwner__c</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>ravvDisplayText</name>
+            <fieldText>&lt;p&gt;Ravvedimento operoso:&lt;/p&gt;&lt;p&gt;&lt;a href=&quot;https://gerav.bingest.net/&quot; rel=&quot;noopener noreferrer&quot; target=&quot;_blank&quot;&gt;GE*RAV Gestione Ravvedimento Operoso&lt;/a&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getOrder</targetReference>
+            <targetReference>Order_id_popolato</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -171,6 +425,14 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>wrapperSie</name>
+        <apexClass>HDT_WRP_SieRavvExport</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>

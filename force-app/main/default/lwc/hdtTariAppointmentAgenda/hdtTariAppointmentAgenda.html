@@ -2,7 +2,7 @@
   @description       : 
   @author            : Giacinto Florio
   @group             : 
-  @last modified on  : 30-05-2022
+  @last modified on  : 29-11-2022
   @last modified by  : Giacinto Florio
 -->
 <template>
@@ -39,7 +39,7 @@
                         data-id="dtAppointment"
                         key-field="codice"
                         data={records}
-                        columns={columns}
+                        columns={columnsView}
                         max-row-selection = "1"
                         hide-checkbox-column="true">
                       </lightning-datatable>
@@ -52,7 +52,8 @@
         <footer class="slds-modal__footer slds-text-align_center">
           <lightning-button label="Indietro" name="Cancel" onclick={handleClick} ></lightning-button>
           <template if:false={isView}>
-            <lightning-button icon-name="utility:save" variant="brand" label="Conferma Appuntamento" name="Save" onclick={handleClick} class="slds-m-left_x-small" disabled={disableConfirmButton}></lightning-button>
+            <lightning-button icon-name="utility:save" variant="brand" label="Conferma Appuntamento" name="Save" onclick={handleClick} class="slds-m-left_x-small" hidden={hideConfirmButton} disabled={disableConfirmButton}></lightning-button>
+            <lightning-button icon-name="utility:save" variant="brand" label="Gestione Dsa" name="Dsa" onclick={handleClick} class="slds-m-left_x-small" hidden={disableManageButton} diabled={disableManageButton}></lightning-button>
           </template>
           </footer>
       </div>

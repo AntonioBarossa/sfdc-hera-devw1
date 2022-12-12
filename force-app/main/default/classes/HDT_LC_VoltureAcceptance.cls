@@ -16,12 +16,23 @@ public with sharing class HDT_LC_VoltureAcceptance {
     public static String updateOrder(String activityId, String orderId, String operation){
         String response = 'OK';
         if (String.isNotEmpty(operation)){
+            String note = 'accepted'.equals(operation) ? 'Voltura Accettata' : 'Voltura Rifiutata';
             String newPhase = 'accepted'.equals(operation) ? (HDT_LC_OrderDossierWizardActions.checkRequiredDocs( orderQr.getRecordWithDocByOrderId(orderId)[0] ) ? 'Documentazione Validata': 'In attesa validazione') : 'Voltura Rifiutata';
-            Order orderToUpdate = new Order(Id = orderId, Phase__c = newPhase);
+            Order orderToUpdate = new Order(Id = orderId, Phase__c = newPhase, Note__c = note);
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(Id = activityId, ClosingNote__c = note);
+            List<SObject> sobjToUpdate = new List<SObject>();
+            sobjToUpdate.add(orderToUpdate);
+            sobjToUpdate.add(activity);
             System.Savepoint sp = Database.setSavePoint();
             try {
+                if ('Voltura Rifiutata'.equalsIgnoreCase(newPhase)){
+                    for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getActivityListCrediCheck(new Set<Id>{orderId})){
+                        wrts_prcgvr__Activity__c actToClose = new wrts_prcgvr__Activity__c(Id = act.Id,Note__c = 'Annullata per rifiuto voltura.', wrts_prcgvr__Status__c = 'Annullata');
+                        sobjToUpdate.add(actToClose);
+                    }
+                }
                 
-                if (HDT_UTL_Scarti.updateCloseDiscardActivity(activityId) && !HDT_UTL_DatabaseService.updateSObject(orderToUpdate)){
+                if (HDT_UTL_Scarti.updateCloseDiscardActivity(activityId) && !HDT_UTL_DatabaseService.updateSObject(sobjToUpdate)){
                     response = 'Errore nell\'aggiornamento della fase dell\'ordine.';
                     Database.rollback(sp);
                 }

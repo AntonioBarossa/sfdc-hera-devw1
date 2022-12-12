@@ -43,9 +43,9 @@ public with sharing class HDT_LC_ActiveRepentant {
     public Date dateDichiarazione {get;set;}
 
     @AuraEnabled
-    public static List<TermTable__c> getPeriods(String comune, String sottotipo){
+    public static List<TermTable__c> getPeriods(String comune, String searchKey){
         List<TermTable__c> periods =  [SELECT Id, CriteriaX__c, EffectiveDate__c, DayX__c, CriteriaY__c, DayY__c, PopupY__c, PopupZ__c 
-                                            FROM TermTable__c WHERE City__c = :comune AND Subtype__c =:sottotipo WITH SECURITY_ENFORCED LIMIT 1];
+                                            FROM TermTable__c WHERE City__c = :comune AND (Subtype__c =:searchKey OR Type__c=:searchKey) WITH SECURITY_ENFORCED LIMIT 1];
         return periods;
     }
 
@@ -56,14 +56,14 @@ public with sharing class HDT_LC_ActiveRepentant {
     }
 
     public static List<CityTechnicalData__c> getCityTecData(String comune){
-        List<CityTechnicalData__c> cityData =  [SELECT Id, TARIManagingStartDate__c, TARIManagingEndDate__c, CityNotManagedAlert__c, CutOverEndDate__c, TARIManaged__c FROM CityTechnicalData__c WHERE CadastralCity__c = :comune WITH SECURITY_ENFORCED LIMIT 1];
+        List<CityTechnicalData__c> cityData =  [SELECT Id, TARIManagingStartDate__c, TARIManagingEndDate__c, CityNotManagedAlert__c, CutOverEndDate__c, TARIManaged__c, CityCode__c FROM CityTechnicalData__c WHERE CadastralCity__c = :comune WITH SECURITY_ENFORCED LIMIT 1];
         return cityData;
     }
 
     @AuraEnabled
     public static HDT_WRP_Data getTables(String comune, String sottotipo){
-        //return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
-        return new HDT_WRP_Data(null, getPeriods(comune, sottotipo), getCityTecData(comune));
+        return new HDT_WRP_Data(getTerms(comune), getPeriods(comune, sottotipo), getCityTecData(comune));
+        //return new HDT_WRP_Data(null, getPeriods(comune, sottotipo), getCityTecData(comune));
     }
 
 }

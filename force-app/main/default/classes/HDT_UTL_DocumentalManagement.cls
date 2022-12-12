@@ -193,6 +193,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String quotationType = '';
 		Boolean isMassive = false;
 		String signatureMethod = '';
+		String signMode='';
 		if(context.equalsIgnoreCase('Order')){
 			isMassive = (Boolean) processRecord.get('isMassive__c');
 		}
@@ -205,15 +206,19 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 				}else {
 					processRecord.put('DocumentalPhase__c','Plico inviato');
 				}
+				
 				if(context.equalsIgnoreCase('Case')){
+					signMode = (String) processRecord.get('SignMode__c');
 					cluster = (String) processRecord.get('Cluster__c');
 					quotationType = (String) processRecord.get('QuotationType__c');
 					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
 						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
 					}
+				} else {
+					signMode = (String) processRecord.get('SignatureMethod__c');
 				}
 				// Oltre alla DocusignExpirationDate__c, settiamo anche il campo DocusignExpirationDate__c se necessario.
-				String signMode = (String) processRecord.get('SignMode__c');
+			
 				if (signMode != null && signMode.containsIgnoreCase('OTP')) {
 					List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
 					if (!daysToExpiration.isEmpty()) {
@@ -496,6 +501,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
 			mapStringObjectRecords.put('Order', orderList);
+
+			//DATI CATASTALI
+			List<LandRegistry__c> landList = new List<LandRegistry__c>();
+			for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) singleOrder.Dati_Catastali__r){
+				landList.add(singleLandRegistry);
+			}
+			mapStringObjectRecords.put('LandRegistry', landList);
 			
 			//PROCESSING ORDER ITEMS
 			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){

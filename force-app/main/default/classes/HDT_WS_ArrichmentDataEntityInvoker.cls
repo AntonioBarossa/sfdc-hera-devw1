@@ -18,4 +18,32 @@ public class HDT_WS_ArrichmentDataEntityInvoker {
         
         return res;
     }
+
+    @InvocableMethod(label='Invoke Data Enrichment')
+    public static List<String> submitEnrichmentRequest(List<HDT_WRP_ArricchimentoFlowInputs> request){
+        List<String> ret = new List<String>();
+        HDT_WS_ArrichmentDataEntityResponse res = callService(request[0].contractCode,request[0].pod ,request[0].impianto); //
+    
+
+        if(res.statusCode != 200){
+            ret.add('');
+            return ret;
+        }
+        ret.add(JSON.serialize(res));
+        return ret;
+    }
+
+    //input details that comes to apex from flow
+    public class HDT_WRP_ArricchimentoFlowInputs{
+    
+        @InvocableVariable
+        public String contractCode;
+        
+        @InvocableVariable
+        public String pod;
+
+        @InvocableVariable
+        public String impianto;
+        
+    }
 }

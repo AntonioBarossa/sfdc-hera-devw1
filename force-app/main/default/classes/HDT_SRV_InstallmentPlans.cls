@@ -64,8 +64,14 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         //SetExpirationDate at CreatedDate+20businessDay
         DateTime createdCase = installmentsQr.getCaseById(recordId).CreatedDate;
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans created date -> ' + createdCase);
-        currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
-        currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
+        // Expiration Date should be empty for TARI process
+        if (inputs[0].isTariProcess == null || !inputs[0].isTariProcess) {
+
+            currentCase.ExpirationDate__c = Date.valueOf(createdCase) + 19;
+            currentCase.ExpirationDate__c = paymentsUtl.addBusinessDay(currentCase.ExpirationDate__c, 1);
+            
+        }
+        
         System.debug(LoggingLevel.DEBUG, 'SRV_InstallmentPlans expiration date -> ' + currentCase.ExpirationDate__c);
 
         //Set AmountToPayInstallments to TotalPay
@@ -178,6 +184,10 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
             'modalitaPagamentoAcconto' => depositPaymentMode
         };
 
+        //START 07/11/2022 - costanzo.lomele@webresults.it
+        if('Ambiente'.equalsIgnoreCase(currentCase.Commodity__c)) caseMap.put('tipoPiano', 'r002');
+        //END 07/11/2022 - costanzo.lomele@webresults.it
+
         caseListMap.add(caseMap);
 
         caseInput.isParent = true;
@@ -262,10 +272,16 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         for(RentProcessRule__c rule : ruleList){
             Map<String,Object> notFoundMap = new Map<String,Object>();
             for(String fieldName : criteriaMap.keySet()){
-                if(fieldName == 'SuspensionInThePastTwelveMonths__c'){
-                    fineTuningField = 'SuspensionInPastTwelveMonths__c';
-                }else{
-                    fineTuningField = fieldName;
+                switch on fieldName {
+                    when 'SuspensionInThePastTwelveMonths__c' {
+                        fineTuningField = 'SuspensionInPastTwelveMonths__c';
+                    }
+                    when 'BillingCity__c' {
+                        fineTuningField = 'City__c';
+                    }
+                    when else {
+                        fineTuningField = fieldName;
+                    }
                 }
                 if(!(rule.get(fineTuningField) == criteriaMap.get(fieldName))){
                     notFoundMap.put(fieldName, criteriaMap.get(fieldName));
@@ -334,6 +350,9 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
 
         @InvocableVariable
         public Boolean applicazioneInteressi;
+
+        @InvocableVariable
+        public Boolean isTariProcess;
     }
 
 

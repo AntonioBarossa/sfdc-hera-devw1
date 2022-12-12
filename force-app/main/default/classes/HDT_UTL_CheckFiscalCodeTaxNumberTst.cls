@@ -89,7 +89,23 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumberTst {
 
         System.assertEquals(false, HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData,testAccount.FiscalCode__c),'codice fiscale valido');
         Test.stopTest();
-    }  
+    }
+
+    @isTest
+    public static void testMatchSetEstimatedFiscalCodeKo(){
+
+        Account testAccount = [SELECT id, FiscalCode__c, Name, LastName__c, BirthDate__c, BirthProvince__c, Gender__c FROM Account LIMIT 1];
+        Test.startTest();
+        Map<String, String> infoData = new Map<String, String>();
+        infoData.put('lastName'     , testAccount.LastName__c);
+        infoData.put('firstName'    , testAccount.Name);
+        infoData.put('birthDate'    , '1995-12-20');
+        infoData.put('birthPlace'   , testAccount.BirthProvince__c);
+        infoData.put('gender'       , testAccount.Gender__c);
+
+        System.assertEquals(false, HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData,testAccount.FiscalCode__c),'codice fiscale valido');
+        Test.stopTest();
+    }
 
     @isTest
     public static void testGetDataFromFiscalCodeDataFail(){
@@ -153,5 +169,14 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumberTst {
         Test.stopTest();
         System.assert(testFiscalCode.size() != null, 'Data From FiscalCode Success');
         System.assertNotEquals(null, testFiscalCode, 'Data From FiscalCode Success');
+    }
+    @isTest
+    public static void getBirthDayFromCodeTst()
+    {
+        String testCode = 'MRCMRC80A41H501Y';
+        Test.startTest();
+            Date result = HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(testCode);
+        Test.stopTest();
+        System.assertEquals(Date.newInstance(1980, 1, 1), result, 'Date calcolate correttamente');
     }
 }
