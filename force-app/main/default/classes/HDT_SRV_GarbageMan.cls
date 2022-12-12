@@ -22,17 +22,17 @@ public with sharing class HDT_SRV_GarbageMan {
     public virtual class HDT_WRP_GarbageManRequest extends HDT_WS_Request
     {
 
-        public String  caseId {get;set;}
+        public String caseId {get;set;}
 
-        public String  codiceIdRichiesta {get;set;}
+        public String codiceRichiesta {get;set;}
         
-        public Date  dataInizioAppuntamento {get;set;}
+        public Datetime dataInizioAppuntamento {get;set;}
     
-        public Date  dataFineAppuntamento {get;set;}
+        public Datetime dataFineAppuntamento {get;set;}
     
-        public String  codiceEsito {get;set;}
+        public String codiceEsito {get;set;}
         
-        public String  descrizioneEsito {get;set;}
+        public String descrizioneEsito {get;set;}
     
         @TestVisible
         private HDT_WRP_GarbageManRequest(Case currentCase) {
@@ -47,7 +47,7 @@ public with sharing class HDT_SRV_GarbageMan {
         @TestVisible
         private HDT_WRP_GarbageManRequest(Case currentCase, String codiceEsito) {
             this.caseId = currentCase.Id;
-            this.codiceRichiesta = currentCase.AppointmentCode__c;
+            this.codiceRichiesta = currentCase.WasterCode__c;
             this.dataInizioAppuntamento = null;
             this.dataFineAppuntamento = null;
             this.codiceEsito = codiceEsito;
