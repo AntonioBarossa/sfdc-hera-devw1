@@ -114,7 +114,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
-                        if(resp.result[0].effectiveDate != null){
+                        if(resp.result[0].effectiveDate != null && !resp.result[0]?.effectiveDate.equalsIgnoreCase('0000-00-00')){
                             servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                         }
                     }
@@ -145,7 +145,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                     if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                         if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                             servicePo.SwitchInWinback__c = true;
-                            if(resp.result[0].effectiveDate != null){
+                            if(resp.result[0].effectiveDate != null && !resp.result[0]?.effectiveDate.equalsIgnoreCase('0000-00-00')){
                                 servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                             }
                         }
