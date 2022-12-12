@@ -932,16 +932,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         return newOrdersList;
     }
 
-    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
-        List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
-        for(Order singleChild : childOrderList){
-            singleChild.Phase__c = 'Annullato';
-            singleChild.Status = 'Annullato';
-            singleChild.CancellationReason__c = 'Annullamento da cliente';
-        }
-        return childOrderList;
-    }
-
       /**
      * @description 
      * HRDTR-00_HRAWRM-638
