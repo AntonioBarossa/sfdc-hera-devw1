@@ -72,4 +72,21 @@ public with sharing class HDT_UTL_GlobalMigrationKeyTst {
         String migrationKey = (String) [SELECT id, GlobalMigrationKey__c FROM Contract LIMIT 1].get(0).get('GlobalMigrationKey__c');
         System.assertEquals('CO_2222222222', migrationKey, 'Il Contratto non è stato aggiornato');
     }
+    @IsTest
+    public static void testDistributor(){
+        Test.startTest();
+            Account distributor = new Account();
+            distributor.Code__c = 'DISTRIBUTOR';
+            distributor.Name = 'DISTRIBUTOR';
+            distributor.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Distributore').getRecordTypeId();
+            distributor.CompanyOwner__c = 'MMS';
+            insert distributor;
+            distributor = [SELECT Id,Code__c,GlobalMigrationKey__c FROM Account WHERE Code__c = 'DISTRIBUTOR' LIMIT 1];
+            System.assertEquals(distributor.Code__c, distributor.GlobalMigrationKey__c, 'Il Distributore è stato aggiornato');
+            distributor.Code__c = 'DISTRIBUTOR_2';
+            update distributor;
+            distributor = [SELECT Id,Code__c,GlobalMigrationKey__c FROM Account WHERE Code__c = 'DISTRIBUTOR_2' LIMIT 1];
+            System.assertEquals(distributor.Code__c, distributor.GlobalMigrationKey__c, 'Il Distributore è stato aggiornato');
+        Test.stopTest();
+    }
 }

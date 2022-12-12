@@ -298,6 +298,10 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.Contact__c = oldOrder.Contact__c;
         orderToUpdate.OrderReference__c = oldOrder.Id;
         orderToUpdate.AggregateBilling__c = oldOrder.AggregateBilling__c;
+        /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+        orderToUpdate.SignedDate__c = oldOrder.SignedDate__c;
+        orderToUpdate.DateSentToSII__c = oldOrder.DateSentToSII__c;
+        orderToUpdate.EffectiveDate__c = oldOrder.EffectiveDate__c;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 

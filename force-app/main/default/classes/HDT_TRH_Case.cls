@@ -38,6 +38,11 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                     caseNew.Phase__c = caseNew.TecnicalPhase__c;
                     caseNew.TecnicalPhase__c = null;
                 }
+
+                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+                    DateTime dt = caseNew.CreatedDate;
+                    caseNew.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
+                }
             }   
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'Error ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
@@ -100,6 +105,16 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     public override void afterInsert(){
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+                Case caseToUpdate = new Case(Id = caseNew.Id);
+                DateTime dt = caseNew.CreatedDate;
+                caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
+
+                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            }
+        }
     }
 
     /**
