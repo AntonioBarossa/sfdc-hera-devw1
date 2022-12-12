@@ -451,7 +451,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
-        Set<String> phaseNoUpdate = new Set<String>{'Completata', 'Annullato', 'Accettazione Voltura', 'Credit Check KO', 'Attesa Credit Check', 'Voltura Rifiutata'};
+        String phaseNoUpdate = System.Label.HDT_DocusignPhaseNoUpdate;//new Set<String>{'Completata', 'Annullato', 'Accettazione Voltura', 'Credit Check KO', 'Attesa Credit Check', 'Voltura Rifiutata'};
 		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
@@ -631,6 +631,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						Order ordRefresh = orderMap.get(childOrder.Id);
 						singleOrder.Id = childOrder.Id;
 						singleOrder.CIAccoutn__c = 'Validato';
+						singleOrder.CILegalRepresentative__c = 'Validato';
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
 						singleOrder.DocumentPackage__c = 'Validato';
@@ -638,42 +639,13 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
 							(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
-							&& (!phaseNoUpdate.contains((String)ordRefresh.get('Phase__c'))))
+							&& (!phaseNoUpdate.containsIgnoreCase((String)ordRefresh.get('Phase__c'))))
 						{
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
 						childToUpdate.add(singleOrder);
 					}
-					/**
-					 * AF Fix Accettazione Voltura.
-					 * E' necessario chiudere l'attività prima di settare Documentazione Validata
-					 */
-					/*try {
-						if(!orderList.isEmpty()){
-							Set<Id> voltOrdSet = new Set<Id>();
-							String processTypeVol = '';
-							String phase = '';
-							for (SObject voltOrder : orderList) {
-								processTypeVol = (String)voltOrder.get('DocumentalProcessType__c');
-								phase = orderPhaseMap.get((Id)voltOrder.get('Id')) != null? orderPhaseMap.get((Id)voltOrder.get('Id')):'';
-								if(String.isNotBlank(processTypeVol) && processTypeVol.containsIgnoreCase('Voltura') && String.isNotBlank(phase) && phase.equalsIgnoreCase('Documentazione Validata')){
-									voltOrdSet.add((Id)voltOrder.get('Id'));
-								}
-							}
-							if(!voltOrdSet.isEmpty()){
-								voltureActList = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN:voltOrdSet AND wrts_prcgvr__Status__c = 'Aperta' AND Type__c = 'Accettazione Voltura'  WITH SECURITY_ENFORCED];
-								for(wrts_prcgvr__Activity__c singleAct : voltureActList){
-									singleAct.wrts_prcgvr__Status__c = 'Chiusa';
-								}
-								if(!voltureActList.isEmpty()){
-									HDT_UTL_DatabaseService.updateSObject(voltureActList);
-								}
-							}
-						}
-					} catch (Exception ex) {
-						//no throws
-					}*/
 					if(!childToUpdate.isEmpty()){
 						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
 					}
