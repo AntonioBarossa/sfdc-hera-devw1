@@ -93,8 +93,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
 
             for (Order ord : orders) {
-                System.debug('@@@@@@ ord Id ' + ord.Id);
-                System.debug('@@@@@@ isMonitoring ' + isMonitoringList);
                 Integer newSkipCall = ord.Skip_Callout__c == null ? -1 : null; 
                 Date startDate;
 
@@ -109,7 +107,6 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 if (startDate == null){
                     startDate = ord.WizardCompletedDate__c;
                 }
-                System.debug('@@@@@@ startDate ' + startDate);
 
 
                 wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
