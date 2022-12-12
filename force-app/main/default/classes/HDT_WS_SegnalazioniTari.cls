@@ -60,8 +60,11 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
             //if(STRING.isNotBlank(res?.data?.noticeId) && STRING.isBlank(caso.NoticeId__c)){
-                
-                HDT_UTL_DatabaseService.updateSObject(new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res?.data?.noticeId, Outcome__c = formatEsito(res?.data)));
+            Case caseToUpdate = new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res?.data?.noticeId, Outcome__c = formatEsito(res?.data));
+            if(STRING.isNotBlank(res?.data?.noticeId)){
+                caseToUpdate.NoticeId__c = res?.data?.noticeId;
+            }
+            HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
             //}
 
         } catch (Exception ex) {
@@ -79,7 +82,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         return response;
     }
 
-    private static String formatEsito(HDT_WRP_ResponseData data){
+    private String formatEsito(HDT_WRP_ResponseData data){
         if(STRING.isBlank(data?.outcome)){      return 'KO - Mulesoft'; }
         String esito = data?.outcome + (String.isBlank(data?.errorMessage)? ''  : ' '+data.errorMessage);
         return esito.abbreviate(100);
