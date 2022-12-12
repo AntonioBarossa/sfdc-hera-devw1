@@ -2178,6 +2178,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>DueDate__c</field>
+            <value>
+                <elementReference>GetParentCase.EndDate__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type__c</field>
             <value>
                 <elementReference>Get_Template.Name</elementReference>
