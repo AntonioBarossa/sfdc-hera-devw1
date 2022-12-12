@@ -18,14 +18,15 @@ public with sharing class HDT_UTL_DoubleCalloutPrevention {
         this.jobItemCalloutMap = new Map<Id, List<wrts_prcgvr__AsyncJob__c>>();
         for (SObject newRecord : newRecordList){
             Id recordId = (Id) newRecord.get('Id');
+            if (String.isBlank(objectName) || !objectName.equalsIgnoreCase(newRecord.getSObjectType().getDescribe().getName())){
+                this.newOldRecordMap.put(newRecord, oldRecordMap.get(recordId));
+                continue;
+            }
             String skipCallField = 'Case'.equalsIgnoreCase(objectName) ? this.CASE_SKIP_FIELD :  'Order'.equalsIgnoreCase(objectName)? this.ORDER_SKIP_FIELD : ''; 
             if (String.isNotBlank(skipCallField) && newRecord.get(skipCallField) != oldRecordMap.get(recordId).get(skipCallField)){
                 continue;
             }
             this.newOldRecordMap.put(newRecord, oldRecordMap.get(recordId));
-            if (String.isBlank(objectName) || !objectName.equalsIgnoreCase(newRecord.getSObjectType().getDescribe().getName())){
-                continue;
-            }
             recordIdSet.add(recordId);
             String processTypeField = 'Case'.equalsIgnoreCase(objectName) ? 'Type' :  'Order'.equalsIgnoreCase(objectName)? 'ProcessType__c' : ''; 
             if (String.isNotEmpty(processTypeField) && newRecord.get(processTypeField) != null){

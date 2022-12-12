@@ -60,7 +60,7 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
     }
 
     @isTest
-    private static void noSkipCalloutCase(){
+    private static void skipCalloutCase(){
         List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case];
         Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case]);
         for (SObject record : newRecord){
@@ -68,7 +68,7 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
             record.put('OpinionRequestNumber__c',-1);
         }
         HDT_UTL_DoubleCalloutPrevention prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Case');
-        System.assertEquals(false, prevention.skipIntegrationCall(), 'noCalloutRecord: case prevention doesn\'t Work');
+        System.assertEquals(true, prevention.skipIntegrationCall(), 'skipCalloutCase: case prevention doesn\'t Work');
         newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order];
         oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order]);
         for (SObject record : newRecord){
@@ -76,7 +76,7 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
             record.put('Skip_Callout__c',-1);
         }
         prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Order');
-        System.assertEquals(false, prevention.skipIntegrationCall(), 'noCalloutRecord: order prevention doesn\'t Work');
+        System.assertEquals(true, prevention.skipIntegrationCall(), 'skipCalloutCase: order prevention doesn\'t Work');
     }
 
     @isTest
