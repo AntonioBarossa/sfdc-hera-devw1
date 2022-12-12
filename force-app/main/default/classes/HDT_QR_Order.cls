@@ -366,7 +366,8 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             AdditionalAttachments__c,
             WasteCommodityType__c,
-            VASType__c
+            VASType__c,
+            DateSentToSII__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -637,6 +638,8 @@ public inherited sharing class HDT_QR_Order {
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             AND CommodityFormula__c != 'Acqua'
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            AND ProcessType__c NOT IN ('Switch in Fittizio')
             /* AND ProcessType__c != ''
             AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED

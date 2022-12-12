@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>LoginGroup__c</fullName>
-    <description>il gruppo di user associato al dato record di product option.</description>
+    <fullName>Description__c</fullName>
     <externalId>false</externalId>
-    <label>Raggruppamento Login</label>
+    <label>Descrizione</label>
     <length>255</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
