@@ -1447,10 +1447,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato.'));
             }
         }
-        
-        if ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) && 'Rimborso retroattivo importo fognatura e depurazione'.equals(argument) && String.isBlank(note)){
-            return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per l\'argomento selezionato occorre specificare sul campo note la Data di Inizio Rimborso.'));
-        }
 
         return result;
     }

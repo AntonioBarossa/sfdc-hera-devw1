@@ -7967,6 +7967,14 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
