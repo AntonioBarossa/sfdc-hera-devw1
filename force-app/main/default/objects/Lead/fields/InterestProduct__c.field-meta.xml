@@ -251,5 +251,41 @@
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Monopattino</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Lavoro Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Lavoro Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Lavoro Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Active Special Casa Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Special Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Special Casa Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Special Casa Dual</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

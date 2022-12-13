@@ -397,21 +397,53 @@
             <value>
                 <fullName>Bolletta Fuga H2O</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
                 <label>Bolletta Fuga H2O</label>
             </value>
             <value>
                 <fullName>Servizio Avviso Sms/mail</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
                 <label>Servizio Avviso Sms/mail</label>
             </value>
             <value>
                 <fullName>Delibera 2018</fullName>
                 <default>false</default>
-                <isActive>true</isActive>
                 <label>Delibera 2018</label>
-            </value>	
+            </value>
+            <value>
+                <fullName>Ricalcolo consumi</fullName>
+                <default>false</default>
+                <label>Ricalcolo consumi</label>
+            </value>
+            <value>
+                <fullName>Monitoraggio</fullName>
+                <default>false</default>
+                <label>Monitoraggio</label>
+            </value>
+            <value>
+                <fullName>Autorità idrico 655</fullName>
+                <default>false</default>
+                <label>Autorità idrico 655</label>
+            </value>
+            <value>
+                <fullName>Costituzione in mora (REMSI)</fullName>
+                <default>false</default>
+                <label>Costituzione in mora (REMSI)</label>
+            </value>
+            <value>
+                <fullName>Non allacciato</fullName>
+                <default>false</default>
+                <label>Non allacciato</label>
+            </value>
+            <value>
+                <fullName>Uso irriguo</fullName>
+                <default>false</default>
+                <label>Uso irriguo</label>
+            </value>
+            <value>
+                <fullName>Non allacciato/uso irriguo</fullName>
+                <default>false</default>
+                <label>Non allacciato/uso irriguo</label>
+            </value>
             <value>
                 <fullName>Cessazione utilizzo apparecchiatura elettromedicale</fullName>
                 <default>false</default>
@@ -456,24 +488,8 @@
             </value>
         </valueSetDefinition>
         <valueSettings>
-            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
-            <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
-            <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
             <valueName>Edificio in ristrutturazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
-            <valueName>Servizio Avviso Sms/mail</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
-            <valueName>Delibera 2018</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica/Azzeramento Consumo Annuo</controllingFieldValue>
@@ -549,14 +565,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Assistenza Sociale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
-            <valueName>Bolletta Fuga H2O</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
             <valueName>Calamità Naturali</valueName>
         </valueSettings>
         <valueSettings>
@@ -624,12 +632,36 @@
             <valueName>Assistenza sociale (ente)</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Assistenza Sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Bolletta Fuga H2O</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Autorità idrico 655</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Piano Rateizzazione</controllingFieldValue>
+            <valueName>Costituzione in mora (REMSI)</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
             <valueName>Malfunzionamento</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
             <valueName>Blocco per frode</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Ricalcolo consumi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ricostruzione Consumi</controllingFieldValue>
+            <valueName>Monitoraggio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Sollecito Emissione Bolletta</controllingFieldValue>
@@ -660,12 +692,40 @@
             <valueName>Permanenza condizioni di disagio</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Bonus integrativo solo per non Energy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Gestione Bonus Sociale</controllingFieldValue>
+            <valueName>Agevolazioni non Energy indirette</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
             <valueName>Volontà estorta</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratto Non Richiesto</controllingFieldValue>
             <valueName>Firma falsa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Servizio Avviso Sms/mail</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lettura Acqua Avviso al Cliente</controllingFieldValue>
+            <valueName>Delibera 2018</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non allacciato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Non allacciato/uso irriguo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
@@ -690,6 +750,14 @@
         <valueSettings>
             <controllingFieldValue>Esercizio Diritti Privacy</controllingFieldValue>
             <valueName>Opposizione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
+            <valueName>Ripristino Sigilli / Piombi Rotti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Integrita Sigilli</controllingFieldValue>
+            <valueName>Ripiombatura Post Collaudo Antincendio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Caduta Linea/Chiamata Muta</controllingFieldValue>

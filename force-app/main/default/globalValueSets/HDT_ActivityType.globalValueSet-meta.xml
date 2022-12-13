@@ -381,6 +381,11 @@
         <label>Gestione processi Ultima Istanza</label>
     </customValue>
     <customValue>
+        <fullName>Gestione richiesta social</fullName>
+        <default>false</default>
+        <label>Gestione richiesta social</label>
+    </customValue>
+    <customValue>
         <fullName>Gestione sblocco al calcolo</fullName>
         <default>false</default>
         <label>Gestione sblocco al calcolo</label>
@@ -411,6 +416,11 @@
         <label>In gestione</label>
     </customValue>
     <customValue>
+        <fullName>Integrazione richiesta social</fullName>
+        <default>false</default>
+        <label>Integrazione richiesta social</label>
+    </customValue>
+    <customValue>
         <fullName>Inviare Comunicazione Disconoscimento</fullName>
         <default>false</default>
         <label>Inviare Comunicazione Disconoscimento</label>
@@ -439,6 +449,11 @@
         <fullName>Invio registrazione</fullName>
         <default>false</default>
         <label>Invio registrazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Istruttoria Back Office</fullName>
+        <default>false</default>
+        <label>Istruttoria Back Office</label>
     </customValue>
     <customValue>
         <fullName>Istruttoria Creata</fullName>
@@ -604,6 +619,11 @@
         <fullName>Quality Call</fullName>
         <default>false</default>
         <label>Quality Call</label>
+    </customValue>
+    <customValue>
+        <fullName>Inviare Resoconto Verifica</fullName>
+        <default>false</default>
+        <label>Inviare Resoconto Verifica</label>
     </customValue>
     <customValue>
         <fullName>Rapporti con i distributori e SII</fullName>
@@ -991,16 +1011,27 @@
         <label>Riaperture urgenti errori DL</label>
     </customValue>
     <customValue>
-        <fullName>Segnalazioni VAS</fullName>
+        <fullName>Quality Scaduta</fullName>
+        <default>false</default>
+        <label>Quality Scaduta</label>
+    </customValue>
+    <customValue>
+        <fullName>Approvazione Quote</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Segnalazioni VAS</label>
+        <label>Approvazione Quote</label>
     </customValue>
     <customValue>
         <fullName>Morosità Business</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Morosità Business</label>
+    </customValue>
+    <customValue>
+        <fullName>Protocollo - Reclami</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Protocollo - Reclami</label>
     </customValue>
     <customValue>
         <fullName>Ammissibilità KO, Esito KO da DL</fullName>
@@ -1201,12 +1232,6 @@
         <label>Amm. Precheck KO SII, Precheck KO precedente intestatario</label>
     </customValue>
     <customValue>
-        <fullName>Approvazione Quote</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Approvazione Quote</label>
-    </customValue>
-    <customValue>
         <fullName>Gestione Votive</fullName>
         <default>false</default>
         <isActive>false</isActive>
@@ -1255,10 +1280,10 @@
         <label>Supporto Verifiche contratti</label>
     </customValue>
     <customValue>
-        <fullName>Protocollo - Reclami</fullName>
+        <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
-        <label>Protocollo - Reclami</label>
+        <label>Segnalazioni VAS</label>
     </customValue>
     <description>Tipi Attività.</description>
     <masterLabel>Tipo Attività</masterLabel>

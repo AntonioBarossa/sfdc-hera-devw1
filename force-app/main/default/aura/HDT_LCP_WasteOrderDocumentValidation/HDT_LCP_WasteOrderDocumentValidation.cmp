@@ -1,0 +1,9 @@
+<aura:component
+    implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName"
+    access="global">
+    <c:hdtWasteOrderDocumentValidation
+        recordId="{!v.recordId}" 
+        oncloseaction="{!c.handleCancel}" 
+        oncomplete="{!c.handleComplete}">
+    </c:hdtWasteOrderDocumentValidation>
+</aura:component>

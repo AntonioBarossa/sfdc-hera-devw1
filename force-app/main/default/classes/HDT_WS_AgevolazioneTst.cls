@@ -2,13 +2,13 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 26-08-2022
+ * @last modified on  : 21-10-2022
  * @last modified by  : Giacinto Florio
 **/
 @isTest
 public with sharing class HDT_WS_AgevolazioneTst{
     
-	private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
+    private static HDT_UTL_Constants constants=new HDT_UTL_Constants();
     
 	@TestSetup
 	static void makeData(){
@@ -74,18 +74,24 @@ public with sharing class HDT_WS_AgevolazioneTst{
             HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', 'test', 'test', 'C', 'prova', 'calloutParameters', 'apexCalloutAction');
 		}
 	}
+
+
+    @isTest 
+    public static void testExecuteObjectNull() {		
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
+        Test.setMock(HttpCalloutMock.class, mock);
     
-    @isTest public static void testExecuteObjectNull(){		
-        
         Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
         Case myCase = [Select id, DiscardDescription__c from case];
-        
+
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
-                                                      wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
-                                                      From wrts_prcgvr__CalloutTemplate__c];
+                                                        wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
+                                                        From wrts_prcgvr__CalloutTemplate__c];
         
         wrts_prcgvr__PhaseTransition__c myTransition = [Select id, wrts_prcgvr__RecordTypeId__c, wrts_prcgvr__CalloutTemplate__c, wrts_prcgvr__Code__c,
                                                         wrts_prcgvr__DestinationPhase__c, wrts_prcgvr__OriginPhase__c, wrts_prcgvr__Type__c, wrts_prcgvr__RecordTypeName__c
@@ -110,14 +116,19 @@ public with sharing class HDT_WS_AgevolazioneTst{
         args.put('multirequest', myOrderItem);
         
         Test.startTest();
-        
-        HDT_WS_Agevolazione wsAgevolazione = new HDT_WS_Agevolazione();
-        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)wsAgevolazione.execute(args);
-        
-        System.assertEquals('KO',  responseReturn.message, 'HDT_WS_Agevolazione did not work correctly');
-        
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)agevolazione.execute(args);
+
+        HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse res = new  HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse();
+        res.status='';
+        res.correlationId='';
+        res.timestamp='';
+        res.data = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
+
+        HDT_WS_Agevolazione.HDT_WRP_ResponseData resData = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
+        resData.esito='';
+
+        System.assertEquals('KO', responseReturn.message, 'The call was not successful');
         Test.stopTest();
-   
     }
 
 }

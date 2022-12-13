@@ -277,11 +277,6 @@
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
-    <relatedLists>
-        <fields>NAME</fields>
-        <fields>DocumentNumber__c</fields>
-        <relatedList>CaseItem__c.Case__c</relatedList>
-    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>

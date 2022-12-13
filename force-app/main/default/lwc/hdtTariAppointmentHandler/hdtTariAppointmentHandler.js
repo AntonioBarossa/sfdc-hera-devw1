@@ -1,5 +1,5 @@
 import { LightningElement, api, track,wire } from 'lwc';
-import getCase from '@salesforce/apex/HDT_LC_AppointmentAgenda.getCase';
+import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
@@ -11,6 +11,7 @@ const OBJECT_FIELDS =[
     'Phase__c',
     'StartAppointment__c',
     'Outcome__c',
+    'NoticeId__c',
     'PhaseStory__c'
 ];
 
@@ -30,8 +31,8 @@ export default class HdtTariAppointmentHandler extends LightningElement{
     
     @track tempList = [
         {label: 'Prendi Appuntamento ', name: 'newDate', iconName: 'utility:retail_execution', desc: 'Prendi un nuovo appuntamento con il DL', enable : false, visible : true},
-        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_lookup', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true},
-        {label: 'Annulla Appuntamento', name: 'cancelDate', iconName: 'utility:record_delete', desc: 'Cancella il tuo appuntamento', enable : false, visible : true}
+        {label: 'Visualizza Appuntamento', name: 'viewDate', iconName: 'utility:record_lookup', desc: 'Visualizza il tuo appuntamento', enable : false, visible : true}
+        // {label: 'Annulla Appuntamento', name: 'cancelDate', iconName: 'utility:record_delete', desc: 'Cancella il tuo appuntamento', enable : false, visible : true}
     ];
     
     get stmtValue(){
@@ -44,9 +45,9 @@ export default class HdtTariAppointmentHandler extends LightningElement{
         const { data, error } = value; 
         console.log('value ->'+ value);
         if (data){
-            this.case = JSON.parse(data);
+            this.case = data;
             console.log('case ->' + this.case);
-            if(this.case.Outcome__c == 'Empty_Slots') {
+            if(this.case.NoticeId__c) {
                 this.isRendered = false;
             }
             if(this.confirmed==false){
@@ -63,14 +64,14 @@ export default class HdtTariAppointmentHandler extends LightningElement{
                                     item.enable = true;
                                 }
                             break;
-                            case 'cancelDate':
-                                if(
-                                    this.case.Phase__c == 'Da Inviare' 
-                                    && this.case?.PhaseStory__c?.split(/\|\||@@/)?.some(str=>str?.toLowerCase()?.startsWith("in attesa appuntamento"))
-                                ){
-                                    item.enable = true;
-                                }
-                            break;
+                            // case 'cancelDate':
+                            //     if(
+                            //         this.case.Phase__c == 'Da Inviare' 
+                            //         && this.case?.PhaseStory__c?.split(/\|\||@@/)?.some(str=>str?.toLowerCase()?.startsWith("in attesa appuntamento"))
+                            //     ){
+                            //         item.enable = true;
+                            //     }
+                            // break;
                         }
                 });
             }

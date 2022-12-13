@@ -6,6 +6,7 @@ import saveAtecoCode from '@salesforce/apex/HDT_LC_CodiceAteco.saveAtecoCode';
 export default class HdtCodiceAteco extends LightningElement {
     @api order; 
     @api title;
+    @track buttonLabel;
     visible = false;
     filterType = '';
     disabledInput = true;
@@ -221,5 +222,9 @@ export default class HdtCodiceAteco extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    connectedCallback(){
+        this.buttonLabel = 'Cerca codice ateco';
     }
 }

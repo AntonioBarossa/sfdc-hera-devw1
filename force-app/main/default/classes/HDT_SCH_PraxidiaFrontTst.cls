@@ -34,7 +34,7 @@ public class HDT_SCH_PraxidiaFrontTst {
         String CRON_EXP = '20 30 8 10 2 ?';
         
         Test.startTest();
-        HDT_SCH_PraxidiaFront pf = new HDT_SCH_PraxidiaFront();
+        HDT_SCH_PraxidiaFront pf = new HDT_SCH_PraxidiaFront('00','24');
         System.schedule('Label of the job', CRON_EXP , pf);
         Test.stopTest();
         

@@ -41,6 +41,11 @@
                     </div>
                 </div>
             </aura:if>
+            <aura:set attribute="else">
+                <div class="slds-spinner_container" style="margin-top:2em;">
+                    <lightning:spinner alternativeText="Loading" size="large" />
+                </div>
+            </aura:set>
         </aura:if>
     </div>
 </aura:component>

@@ -18,7 +18,7 @@
     &quot;iconName&quot;: &quot;standard:endorsement&quot;,
     &quot;columns&quot;: [
       {
-        &quot;label&quot;: &quot;Codice richiesta s gate&quot;,
+        &quot;label&quot;: &quot;Codice Richiesta&quot;,
         &quot;fieldName&quot;: &quot;codiceRichiestaSgate&quot;
       },
       {
@@ -27,39 +27,23 @@
         &quot;sortable&quot;: true
       },
       {
-        &quot;label&quot;: &quot;Data fineValidità bonus&quot;,
+        &quot;label&quot;: &quot;Data fine validità bonus&quot;,
         &quot;fieldName&quot;: &quot;dataFineValiditaBonus&quot;,
         &quot;sortable&quot;: true
       },
       {
-        &quot;label&quot;: &quot;Tipo domanda&quot;,
+        &quot;label&quot;: &quot;Tipo Domanda&quot;,
         &quot;fieldName&quot;: &quot;tipoDomanda&quot;,
         &quot;initialWidth&quot;: 160
       },
       {
-        &quot;label&quot;: &quot;tipoCliente&quot;,
+        &quot;label&quot;: &quot;Tipo Cliente&quot;,
         &quot;fieldName&quot;: &quot;tipoCliente&quot;,
         &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;Numero componenti&quot;,
+        &quot;label&quot;: &quot;Numero Componenti&quot;,
         &quot;fieldName&quot;: &quot;numeroComponenti&quot;
-      },
-      {
-        &quot;label&quot;: &quot;Contratto&quot;,
-        &quot;fieldName&quot;: &quot;contratto&quot;,
-        &quot;initialWidth&quot;: 220,
-        &quot;sortable&quot;: true
-      },
-      {
-        &quot;label&quot;: &quot;Data inizio voltura&quot;,
-        &quot;fieldName&quot;: &quot;dataInizioVoltura&quot;,
-        &quot;initialWidth&quot;: 220,
-        &quot;sortable&quot;: true
-      },
-      {
-        &quot;label&quot;: &quot;BP&quot;,
-        &quot;fieldName&quot;: &quot;bp&quot;
       }
     ]
   }

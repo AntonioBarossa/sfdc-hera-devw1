@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SuspensionDueDateC__c</fullName>
+    <description>SuspensionDueDateC</description>
+    <externalDeveloperName>SuspensionDueDateC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Data Scadenza Sospensione</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

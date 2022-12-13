@@ -1,11 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Arricchimento_Dati</name>
-        <label>Arricchimento Dati</label>
-        <locationX>182</locationX>
+        <name>HandleResponseDataEnrichment</name>
+        <label>Handle Response Data Enrichment</label>
+        <locationX>578</locationX>
+        <locationY>1094</locationY>
+        <actionName>HDT_UTL_DataEnrichmentPostSales</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Invoke_ServicePoint_Enrichment</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>serializedResponse</name>
+            <value>
+                <elementReference>Invoke_Data_Enrichment_Invoker</elementReference>
+            </value>
+        </inputParameters>
+        <outputParameters>
+            <assignToReference>GetInputCase</assignToReference>
+            <name>output</name>
+        </outputParameters>
+    </actionCalls>
+    <actionCalls>
+        <name>Invoke_Data_Enrichment_Invoker</name>
+        <label>Invoke Data Enrichment Invoker</label>
+        <locationX>314</locationX>
         <locationY>854</locationY>
-        <actionName>HDT_WS_ArricchimentoDatiTemp</actionName>
+        <actionName>HDT_WS_ArrichmentDataEntityInvoker</actionName>
         <actionType>apex</actionType>
         <connector>
             <targetReference>Response_Vuota</targetReference>
@@ -32,30 +60,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>HandleResponseDataEnrichment</name>
-        <label>Handle Response Data Enrichment</label>
-        <locationX>314</locationX>
-        <locationY>1094</locationY>
-        <actionName>HDT_UTL_DataEnrichmentPostSales</actionName>
+        <name>Invoke_ServicePoint_Enrichment</name>
+        <label>Invoke ServicePoint Enrichment</label>
+        <locationX>578</locationX>
+        <locationY>1214</locationY>
+        <actionName>HDT_UTL_ServicePoint</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Assegna_Altri_Dati</targetReference>
+            <targetReference>Check_Processo</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
-            <name>currentCase</name>
+            <name>responseSerialized</name>
             <value>
-                <elementReference>GetInputCase</elementReference>
+                <elementReference>Invoke_Data_Enrichment_Invoker</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
-            <name>serializedResponse</name>
+            <name>servicePoint</name>
             <value>
-                <elementReference>Arricchimento_Dati</elementReference>
+                <elementReference>GetServicePoint</elementReference>
             </value>
         </inputParameters>
         <outputParameters>
-            <assignToReference>GetInputCase</assignToReference>
+            <assignToReference>GetServicePoint</assignToReference>
             <name>output</name>
         </outputParameters>
     </actionCalls>
@@ -63,8 +91,8 @@
     <assignments>
         <name>Assegna_Altri_Dati</name>
         <label>Assegna Altri Dati</label>
-        <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationX>578</locationX>
+        <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SupplyType__c</assignToReference>
             <operator>Assign</operator>
@@ -77,9 +105,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_parametri_servizio</name>
-        <label>Assegna parametri servizio</label>
-        <locationX>50</locationX>
+        <description>Assegnazione dei parametri di chiamata del servisio per service point Energy</description>
+        <name>Assegna_parametri_SP_Energy</name>
+        <label>Assegna parametri SP Energy</label>
+        <locationX>182</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>pod</assignToReference>
@@ -96,13 +125,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati</targetReference>
+            <targetReference>Invoke_Data_Enrichment_Invoker</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Assegna_parametri_servizio</name>
-        <label>Copy 1 of Assegna parametri servizio</label>
-        <locationX>314</locationX>
+        <description>Valorizzazione dei parametri della chiamata verso il servizio per il non Energy</description>
+        <name>Assegna_parametri_SP_No_Energy</name>
+        <label>Assegna parametri SP No Energy</label>
+        <locationX>446</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>pod</assignToReference>
@@ -119,16 +149,133 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Arricchimento_Dati</targetReference>
+            <targetReference>Invoke_Data_Enrichment_Invoker</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assegna i valori per le variabili necessarie al sottoprocesso di adesione Fondo Fughe</description>
+        <name>Assegna_variabili_per_Adesione_Fondo</name>
+        <label>Assegna variabili per Adesione Fondo</label>
+        <locationX>578</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Adesione Fondo Fughe</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.JointBottomAdhesion__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Si</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Altri_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assegna i valori per le variabili necessarie al sottoprocesso di rinuncia Fondo Fughe</description>
+        <name>Assegna_variabili_per_Rinuncia_Fondo</name>
+        <label>Assegna variabili per Rinuncia Fondo</label>
+        <locationX>314</locationX>
+        <locationY>1454</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Subprocess__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rinuncia Fondo Fughe</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.JointBottomAdhesion__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>No</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Altri_Dati</targetReference>
         </connector>
     </assignments>
     <decisions>
+        <description>Verifica del processo chiamate l&apos;arricchimento, per specifiche valorizzazioni post chiamata richieste dal processo</description>
+        <name>Check_Processo</name>
+        <label>Check Processo</label>
+        <locationX>578</locationX>
+        <locationY>1334</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Altri_Dati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
+        <rules>
+            <name>Rinuncia_Fondo_Fughe</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_variabili_per_Rinuncia_Fondo</targetReference>
+            </connector>
+            <label>Rinuncia Fondo Fughe</label>
+        </rules>
+        <rules>
+            <name>Adesione_Fondo_Fughe</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Adesione Rinuncia Fondo Fughe</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>No</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.JointBottomAdhesion__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_variabili_per_Adesione_Fondo</targetReference>
+            </connector>
+            <label>Adesione Fondo Fughe</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Parametri_di_chiamata</name>
         <label>Parametri di chiamata</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>Copy_1_of_Assegna_parametri_servizio</targetReference>
+            <targetReference>Assegna_parametri_SP_No_Energy</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Energy</defaultConnectorLabel>
         <rules>
@@ -149,7 +296,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_parametri_servizio</targetReference>
+                <targetReference>Assegna_parametri_SP_Energy</targetReference>
             </connector>
             <label>Energy</label>
         </rules>
@@ -157,7 +304,7 @@
     <decisions>
         <name>Response_Vuota</name>
         <label>Response Vuota?</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>HandleResponseDataEnrichment</targetReference>
@@ -167,23 +314,27 @@
             <name>Vuota</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Arricchimento_Dati</leftValueReference>
+                <leftValueReference>Invoke_Data_Enrichment_Invoker</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Arricchimento_Dati</leftValueReference>
+                <leftValueReference>Invoke_Data_Enrichment_Invoker</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Error_screen</targetReference>
+            </connector>
             <label>Vuota</label>
         </rules>
     </decisions>
     <description>Flow per la gestione dell&apos;arricchimento dati postSales</description>
+    <environments>Default</environments>
     <interviewLabel>Arricchimento Dati PostSales {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Arricchimento Dati PostSales</label>
     <processMetadataValues>
@@ -208,7 +359,7 @@
     <recordLookups>
         <name>GetContract</name>
         <label>GetContract</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -229,7 +380,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>GetInputCase</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -250,7 +401,7 @@
     <recordLookups>
         <name>GetServicePoint</name>
         <label>GetServicePoint</label>
-        <locationX>182</locationX>
+        <locationX>314</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -271,12 +422,38 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>314</locationX>
-        <locationY>1334</locationY>
+        <locationX>578</locationX>
+        <locationY>1790</locationY>
+        <connector>
+            <targetReference>Update_Service_Point</targetReference>
+        </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>Update_Service_Point</name>
+        <label>Update Service Point</label>
+        <locationX>578</locationX>
+        <locationY>1910</locationY>
+        <inputReference>GetServicePoint</inputReference>
+    </recordUpdates>
+    <screens>
+        <name>Error_screen</name>
+        <label>Error screen</label>
+        <locationX>50</locationX>
+        <locationY>1094</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>error_message</name>
+            <fieldText>&lt;p style=&quot;text-align: center;&quot;&gt;&lt;strong style=&quot;font-size: 14px; color: rgb(0, 0, 0);&quot;&gt;Il servizio di arricchimento dati ha risposto con un &apos;KO&apos;&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>188</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetContract</targetReference>

@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_EscalationInteraction</fullName>
     <active>true</active>
@@ -2601,15 +2601,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripresa formativa CC</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Ripresa formativa CC cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2621,15 +2621,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto TL Front</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto su migrazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>

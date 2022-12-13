@@ -15,6 +15,18 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
+    private static List<List<String>> predefaultRatecategories = new List<List<String>>{
+        new List<String>{'NotDisconnectabilityCustomer__c','Si','ACANTINC00','ACPUBNDIS0','ACANTIN000'}, //altrimenti N
+        new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
+        new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
+        new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
+        new List<String>{'AgriculturalHousingUnit__c','1','ACAGRICO00'},
+        new List<String>{'CommercialHousingUnit__c','1','ACARTCOMM0','ACAUGRUNC0'},
+        new List<String>{'IndustrialHousingUnit__c','1','ACINDSTR00','ACAUGRUNI0'},
+        new List<String>{'ZootechnicalHousingUnit__c','1','ACAGRIZOO0','ACZOOTECN0'},
+        new List<String>{'SeasonUse__c','Nessuna stagionalita','ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITMINDAP0','AITMINDBP0','AITMNDOME0'}
+    };
+
     @AuraEnabled
     public static List<ProcessMatrix__c> init(Order order){
         List<ProcessMatrix__c> processesList = new List<ProcessMatrix__c>();
@@ -57,6 +69,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     @AuraEnabled
     public static String next(Order order,String orderId, Map<String,String> selectedProcessObject, String deliberate, Map<String,String> extraParams, ServiceRequest__c srRequest){
 
+        List<SObject> objToUpdate = new List<SObject>();
         String compatibility='';
         ServiceRequest__c srvReq = new ServiceRequest__c();
         srvReq.ServicePointCode__c= srRequest.ServicePointCode__c;
@@ -118,14 +131,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     processType = selectedProcessObject.get('RecordTypeName__c').equalsIgnoreCase('HDT_RT_Voltura') ? 'Voltura' : 'Voltura con Switch';
                     newOrder.Subprocess__c = 'Standard';
                     newOrder.VoltureType__c = 'Ordinaria';
-                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : 'VTG';
-                    newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Ele'? 'VT1' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Gas'? 'VTG' : processCode;
+                    processCode = extraParams.get('servicePointType') == 'HDT_RT_Acqua'? 'MA1' : processCode;
+                    newOrder.EffectiveDate__c = processCode!= 'MA1'?orderSrv.addBusinessDay(System.today(), 3):System.today();
                     newOrder.SapContractCode__c = sapCode;
                     newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
                     callDataEnrichment(order.SAPImplantCode__c,sapCode,JSON.serialize(newOrder));
-                    //newOrder = orderUtl.enrichOrder(newOrder);
-                    //orderSrv.updateRecord(newOrder);
                     String tax = order.CommodityFormula__c == 'Energia Elettrica' ? newOrder.ExciseEle__c : newOrder.ExciseGAS__c;
                     String city = order.SupplyCity__c;
                     String region = '';
@@ -141,12 +154,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'HDT_RT_SwitchIn' {
                     newOrder.PowerRequested__c  = order.PowerCommitted__c;
                     newOrder.WaiverRightAfterthought__c	= 'No';
+                    if ( 'Switch in Ripristinatorio'.equalsIgnoreCase(processType) ) {
+                        HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
+                        newOrder.SignedDate__c = Date.today();
+                        newOrder.WaiverRightAfterthought__c = 'Si';
+                    }
                 }
-                /**@frpanico 2022-03-16
-                 * Aggiunta Sconti Bonus
-                 * Predefault Data Decorrenza 
-                 * al primo giorno del mese successivo
-                 */
                 when 'HDT_RT_ScontiBonus'
                 {
                     newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
@@ -157,41 +170,87 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     {
                         newOrder.EffectiveDate__c = getEffectiveDateBonus(orderId);
                     }
-                }                
-                when 'HDT_RT_CambioOfferte'
-                {
-                    if('Acqua'.equalsIgnoreCase(order.Commodity__c))
-                    {
-                        newOrder.EffectiveDate__c = System.Today();
+                }
+            }
+
+            newOrder.NotDisconnectabilityCustomer__c = 'No';
+            newOrder.VAT__c = 'Iva 22% (Cod. 02)';
+        
+            switch on order.CommodityFormula__c {
+                when 'Acqua' {
+                    //Inizio: Predefault valido per tutti i processinewOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
+                    newOrder.ContractExpenses__c = 'Nessuno sconto';
+                    newOrder.SecurityDepositExcluded__c = 'N';
+                    newOrder.PayPurification__c = order.ServicePoint__r.PayPurification__c;
+                    newOrder.PaySewer__c = order.ServicePoint__r.PaySewer__c;
+                    //Fine: Predefault valido per tutti i processi
+
+                    //Inizio: Predefault secondo Processo
+                    switch on processType {
+                        when 'Prima Attivazione'{
+                            newOrder.SecurityDepositExcluded__c  = 'Y';
+                            newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                            if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
+                                newOrder.PayPurification__c = 'No - Esente';
+                                newOrder.PaySewer__c = 'No - Esente';
+                            }
+                            else{
+                                newOrder.PayPurification__c = 'Si - Paga';
+                                newOrder.PaySewer__c = 'Si - Paga';
+                            }
+                        }
+                        when 'Connessione con Attivazione'{
+                            //vuoto perchè E1 non riuscirebbe a generare il plico
+                            newOrder.QuotationType__c = '';
+                            newOrder.VAT__c = 'Iva 10% (Cod. 01)';
+                            newOrder.ResidentDomesticHousingUnit__c = 1;
+                        }
+                        when 'Subentro'{
+                            newOrder.SeasonUse__c  = 'Nessuna stagionalita';
+                        }
+                        when 'Cambio Offerta'
+                        {
+                            newOrder.EffectiveDate__c = System.Today();
+                        }
+                    }
+                    //Fine: Predefault secondo Processo
+
+                    //Inizio: Predefault secondo RateCategory
+                    for (List<String> fieldToPredefault : predefaultRatecategories) {
+                        if( fieldToPredefault.contains(order.RateCategory__c) ){
+                            String defaultValue = fieldToPredefault.get(1);
+                            if (defaultValue.isNumeric()){
+                                newOrder.put( fieldToPredefault.get(0), Integer.valueof(defaultValue) );
+                            } 
+                            else {
+                                newOrder.put( fieldToPredefault.get(0), defaultValue );
+                            }
+                        }
+                    }
+                    //Per ogni ratecategory
+                    newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+                    newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+                    // Fine: Predefault secondo RateCategory
+                    
+                }
+                when 'Energia Elettrica' {
+                    newOrder.VAT__c = order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)';
+                }
+                when 'Gas' {
+                    newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
+                    newOrder.PressureLevel__c = 'BP';
+                    //Logica Superficie Servita Start
+                    newOrder.SurfaceServed__c = 75;
+                    //Logica Superficie Servita End
+                    if( 'Prima Attivazione'.equalsIgnoreCase(processType)  ) {
+                        processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
+                        processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
+                        newOrder.PressureLevel__c  = 'BP';
                     }
                 }
-
             }
 
-            switch on processType {
-                when 'Switch in Ripristinatorio'{
-                    HDT_UTL_OrderProcessAssignment.switchInRipristinatorioAction(order);
-                    newOrder.SignedDate__c = Date.today();
-                    newOrder.WaiverRightAfterthought__c = 'Si';
-                }
-                when 'Prima Attivazione'{
-                    processType = 'Prima Attivazione ' + ('In Delibera'.equalsIgnoreCase(deliberate) ? 'In delibera' : 'Fuori delibera');
-                    processCode = 'In Delibera'.equalsIgnoreCase(deliberate) ? 'A40' : 'A01';
-                    newOrder.PressureLevel__c  = 'BP';
-                }
-            }
-
-                newOrder.VAT__c = 
-                    order.CommodityFormula__c == 'Energia Elettrica' ?
-                        order.SupplyType__c == 'Domestico' ? 'Iva 10% (Cod. 01)' : 'Iva 22% (Cod. 02)'
-                    : 'Iva 22% (Cod. 02)';
-            
-            if(order.CommodityFormula__c == 'Gas')
-            {
-                newOrder.ExciseGAS__c = (order.SupplyType__c == 'A-Domestico' || order.SupplyType__c == 'B-Condominio') ? 'Imposta Usi Domestici (Cod. G_ICD)' : 'Imposta usi non domestici iva 22% (Cod. G_ICC)';
-            }
-
-            //EVERIS: MODIFICATA LOGICA DI UPDATE PER GESTIRE I PREDEFAULT
             newOrder.Id = orderId;
             newOrder.RecordTypeId = recordTypeId;
             newOrder.Step__c = 2;
@@ -200,12 +259,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
-            newOrder.PressureLevel__c =  (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 'BP' : null;
-            //Logica Superficie Servita Start
-            newOrder.SurfaceServed__c = (extraParams.get('servicePointType') == 'HDT_RT_Gas') ? 75 : null;
-            //Logica Superficie Servita End
-            orderSrv.updateRecord(newOrder);
-            //EVERIS 
+
+            //Update RateCategory sul Service Point
+            order.ServicePoint__r.RateCategory__c = order.RateCategory__c;
+
+            objToUpdate.add(newOrder);
+            objToUpdate.add(order.ServicePoint__r);
+            HDT_UTL_DatabaseService.updateSObject(objToUpdate);
+            
         }
         return compatibility;
 

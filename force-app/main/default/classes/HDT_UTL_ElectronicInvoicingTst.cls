@@ -49,6 +49,7 @@ public with sharing class HDT_UTL_ElectronicInvoicingTst {
             myElectronicInvoicing.sendMode = 'XML + carta/email';
             myElectronicInvoicing.xmlType = 'Sintetico';
             myElectronicInvoicing.accountRecordTypeName = 'HDT_RT_Business';
+            myElectronicInvoicing.customerMarking = 'D1-Persona fisica';
             myElectronicInvoicing.officeCode = '';
             myElectronicInvoicing.certifiedEmail = '';
             myElectronicInvoicing.billSendMode = 'Cartaceo';

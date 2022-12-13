@@ -26,7 +26,7 @@
     </div>
         </lightning-layout-item>
     </lightning-layout>
-    <lightning-layout>
+    <lightning-layout if:false={hiddenSearchBarMod}>
         <lightning-layout-item padding="around-small" size="6">
             <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
             <lightning-input
@@ -75,11 +75,11 @@
                     <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1" if:true={isLoaded}>
                         <lightning-layout>
                             <lightning-layout-item padding="around-small" size="5">
-                                <c-hdt-advanced-search-selection-feild-radio-group onselected={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
+                                <c-hdt-advanced-search-selection-feild-radio-group disabledinput={disabledinput} onchangevalue={onselected} value={queryType} ></c-hdt-advanced-search-selection-feild-radio-group>
                             </lightning-layout-item>
                             <lightning-layout-item padding="around-small" size="6">
                                     <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
-                                    <div onclick={openModalDatiCatastali}>
+                                    <div>
                                         <lightning-input
                                                 onkeyup={handleSearchInputKeyChange}
                                                 name="enter-search"

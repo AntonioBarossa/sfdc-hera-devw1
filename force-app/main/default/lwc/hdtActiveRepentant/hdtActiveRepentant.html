@@ -1,5 +1,5 @@
 <template>
-    <template if:true={recordId}>
+    <template if:false={hideFields}>
         <template if:true={showSpinner}>
             <lightning-spinner alternative-text="Loading"></lightning-spinner>
         </template>
@@ -19,8 +19,8 @@
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
                 <lightning-input-field name="OnerousUnreviewableStartDate__c" field-name="OnerousUnreviewableStartDate__c" data-id='OnerousUnreviewableStartDate__c' disabled value={outputWrp.dateY}
                     class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
-                <!--<lightning-input-field if:false={isCase} name="MissingDueAmount__c" field-name="MissingDueAmount__c" data-id='MissingDueAmount__c' value={outputWrp.missedDue}
-                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>-->
+                <lightning-input-field if:false={isCase} name="MissingDueAmount__c" field-name="MissingDueAmount__c" data-id='MissingDueAmount__c' value={outputWrp.missedDue}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
             </div>
         </lightning-record-edit-form>
     </template>

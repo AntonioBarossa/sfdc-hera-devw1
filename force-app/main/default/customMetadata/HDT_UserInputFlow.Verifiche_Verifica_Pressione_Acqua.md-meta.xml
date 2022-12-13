@@ -4,13 +4,13 @@
     <protected>false</protected>
     <values>
         <field>Commodity__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica</value>
+        <value xsi:type="xsd:string">Acqua</value>
     </values>
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
-&quot;FieldName&quot; : &quot;SupplyUseType&quot;,
+&quot;FieldName&quot; : &quot;SupplyUseType__c&quot;,
 &quot;Required&quot; : true,
 &quot;Column&quot; : 1
 },
@@ -28,7 +28,7 @@
     </values>
     <values>
         <field>ProcessType__c</field>
-        <value xsi:type="xsd:string">Verifica Pressione</value>
+        <value xsi:type="xsd:string">Verifica Tensione - Pressione</value>
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
@@ -78,8 +78,16 @@
 &quot;Column&quot; : 2
 },
 {
+&quot;FieldName&quot; : &quot;Market__c&quot;,
+&quot;Column&quot; : 2
+},
+{
 &quot;FieldName&quot; : &quot;ExistCorrector__c&quot;,
 &quot;Column&quot; : 1
+},
+{
+&quot;FieldName&quot; : &quot;ServicePointType__c&quot;,
+&quot;Column&quot; : 2
 },
 {
 &quot;FieldName&quot; : &quot;UseSubCategory__c&quot;,

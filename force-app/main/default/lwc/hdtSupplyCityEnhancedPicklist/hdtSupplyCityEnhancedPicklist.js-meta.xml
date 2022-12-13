@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage">
+            <property name="label" type="String"/>
+            <property name="inputSupplyCity" type="String"/>
+            <property name="required" type="Boolean"/>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="label" type="String" label="label" description="Label of the field" role="inputOnly"/>
+            <property name="inputSupplyCity" type="String" label="Pre-Selected City" description="Pre-Selected City" role="inputOnly"/>
+            <property name="required" type="Boolean" label="Required" description="If the fields has to be required" role="inputOnly"/>
+            <property name="outputSupplyCity" type="String" label="Output City" description="Selected city" role="outputOnly"/>
+            <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

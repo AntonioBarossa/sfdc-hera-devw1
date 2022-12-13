@@ -32,12 +32,12 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         Case recordCase = new Case();
         try {
             if(recordId instanceOf Id){
-                recordCase = [SELECT Id,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,ContractAccountCode__c,CausalCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c,CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id, Commodity__c, TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,ContractAccountCode__c,CausalCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c,CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c, ServicePoint__r.SAPImplantCode__c, ServicePoint__r.Status__c, Contract__r.SAPContractCode__c, servicePoint__r.SapContractStatus__c,Contract__r.Status FROM Case WHERE Id =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }else if(recordId.containsIgnoreCase('1-')){
                 String likeSiebelNumber = '%' + recordId + '%';
-                recordCase = [SELECT Id,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c FROM Case WHERE GlobalMigrationKey__c LIKE :likeSiebelNumber WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id, Commodity__c, TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, BillingProfile__c, Subprocess__c, ServicePoint__r.SAPImplantCode__c, ServicePoint__r.Status__c, Contract__r.SAPContractCode__c, servicePoint__r.SapContractStatus__c, Contract__r.Status FROM Case WHERE GlobalMigrationKey__c LIKE :likeSiebelNumber WITH SECURITY_ENFORCED LIMIT 1];
             }else {
-                recordCase = [SELECT Id,BillingProfile__c,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, Subprocess__c FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
+                recordCase = [SELECT Id, Commodity__c, BillingProfile__c,TotalResidue__c,RefundMethod__c,Type,Cluster__c, AccountCode__c,CausalCode__c,ContractAccountCode__c,ContractCode__c, QuotationType__c,ServicePoint__c, RecordTypeId, AccountId, ContactId, ParentId, Parent.CaseNumber, Description, Phase__c,CaseNumber,HerokuPracticeCode__c,CancellationHerokuPracticeCode__c, CalculationBlock__c,CancellationNote__c, CommodityFormula__c, PODPDRFormula__c, Status,DistributorNote__c,Note__c,DocumentNumber__c,BillNumber__c,IbanIsForeign__c, Subprocess__c, ServicePoint__r.SAPImplantCode__c, ServicePoint__r.Status__c, Contract__r.SAPContractCode__c, servicePoint__r.SapContractStatus__c, Contract__r.Status FROM Case WHERE CaseNumber =:recordId WITH SECURITY_ENFORCED LIMIT 1];
             }
             
         } catch (DmlException ex) {
@@ -64,9 +64,12 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     public ServicePoint__c getServicePoint(String code){
         return [SELECT Id, CommoditySector__c FROM ServicePoint__c WHERE ServicePointCode__c=:code WITH SECURITY_ENFORCED LIMIT 1];
     }
-
+    /* è necessario far creare la pratica di richiesta passiva per contratto cessato
+    * In modo che si abbia traccia che la cessazione e' gia' avvenuta
+    * tramite errore sulla pratica stessa
+    */
     public Contract getContract(String servicePointId){
-        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
+        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status IN ('Attivo','Cessato') WITH SECURITY_ENFORCED ORDER BY Status ASC  LIMIT 1 ];
     }
 
     public HDT_CausalCodeCalculation__mdt getCausalCode(String cluster, String process, String commodity){
@@ -81,7 +84,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         LIMIT 1];
     }
 
-    public Case getRelatedCase(String recordId){
+    public List<Case> getRelatedCase(String recordId){
         return [SELECT Id,
         Type,
         Phase__c,

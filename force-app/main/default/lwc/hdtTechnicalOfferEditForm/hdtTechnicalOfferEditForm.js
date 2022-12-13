@@ -44,6 +44,8 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         {fieldName: 'K__c', required: false},
         {fieldName: 'I0__c', required: false},
         {fieldName: 'Lambda__c', required: false},
+        {fieldName: 'DailyContribution__c', required: false},
+        {fieldName: 'WeeklyContribution__c', required: false},
         {fieldName: 'ProductIdentifier__c', required: false}
 
     ];
@@ -195,29 +197,43 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         }
 
         if(this.checkIsNotNull(techOffObj.P0__c)){
-            if(techOffObj.P0__c >= 10){
+            if(techOffObj.P0__c >= 10 || this.checkDecimals(techOffObj.P0__c, 7)){
                 returnObj.message = 'Incremento non valido per P0';
                 return returnObj;             
             }
         }
 
         if(this.checkIsNotNull(techOffObj.K__c)){
-            if(techOffObj.K__c >= 10){
+            if(techOffObj.K__c >= 10 || this.checkDecimals(techOffObj.K__c, 7)){
                 returnObj.message = 'Incremento non valido per K';
                 return returnObj;             
             }
         }
 
         if(this.checkIsNotNull(techOffObj.I0__c)){
-            if(techOffObj.I0__c >= 10){
+            if(techOffObj.I0__c >= 10 || this.checkDecimals(techOffObj.I0__c, 7)){
                 returnObj.message = 'Incremento non valido per I0';
                 return returnObj;             
             }
         }
         
         if(this.checkIsNotNull(techOffObj.Lambda__c)){
-            if(techOffObj.Lambda__c >= 100){
+            if(techOffObj.Lambda__c >= 100 || this.checkDecimals(techOffObj.Lambda__c, 6)){
                 returnObj.message = 'Incremento non valido per Lambda';
+                return returnObj;             
+            }
+        }
+
+        if(this.checkIsNotNull(techOffObj.DailyContribution__c)){
+            if(techOffObj.DailyContribution__c >= 10){
+                returnObj.message = 'Incremento non valido per CONT_GG';
+                return returnObj;             
+            }
+        }
+        
+        if(this.checkIsNotNull(techOffObj.WeeklyContribution__c)){
+            if(techOffObj.WeeklyContribution__c >= 10){
+                returnObj.message = 'Incremento non valido per CONT_SETT';
                 return returnObj;             
             }
         }
@@ -241,6 +257,18 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
 
         returnObj.success = true;
         return returnObj;
+    }
+
+    checkDecimals(value, decimals){
+        const numStr = String(value);
+        if (numStr.includes('.')) {
+            if(numStr.split('.')[1].length > decimals){
+                return true;
+            } else {
+                return false;
+            }
+        };
+        return false;
     }
 
     checkIsNotNull(valueToCheck){

@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ExpirationOpinion__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(OR(ISPICKVAL(FirstLevelOpinion__c, &quot;Supporto responsabile HC&quot;), ISPICKVAL(SecondLevelOpinion__c, &quot;Morosità riattivazione&quot;),ISPICKVAL(SecondLevelOpinion__c, &quot;Morosità Sospensione&quot;)), DATEVALUE(CreatedDate) + 5, DATEVALUE(CreatedDate) + 10)</formula>
+    <formula>EndDate__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Scadenza Parere</label>
     <required>false</required>
