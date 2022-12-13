@@ -352,7 +352,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.Phone,
             Contact__r.MobilePhone,
             Subprocess__c,
-            VASType__c
+            VASType__c,
+            DateSentToSII__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -621,6 +622,8 @@ public inherited sharing class HDT_QR_Order {
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            AND ProcessType__c NOT IN ('Switch in Fittizio')
             /* AND ProcessType__c != ''
             AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
@@ -917,6 +920,9 @@ public inherited sharing class HDT_QR_Order {
     * @param accountId - String
     * @return List<Order>
     */
+    /*@frpanico 2022-11-30 Viene filtrato ulteriormente per ProcessType__c != 'VAS'
+    * In quanto il solo controllo sulla quote non e' sufficiente nel caso di vendita Offerta + VAS
+    */
     public List<Order> getRecordsForVasSelection(String accountId){
         return [
             SELECT
@@ -947,6 +953,7 @@ public inherited sharing class HDT_QR_Order {
             AND RecordType.DeveloperName != null
             AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
             AND SBQQ__Quote__r.IsVAS__c != true
+            AND ProcessType__c != 'VAS'
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
             AND Status IN ('In Lavorazione')
             WITH SECURITY_ENFORCED
@@ -1385,7 +1392,12 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return this.getOpenActivitiesByListOrderId(new Set<String>{orderId});
+    }
+
+    public List<wrts_prcgvr__Activity__c> getOpenActivitiesByListOrderId(Set<String> orderIdList)
+    {
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c IN :orderIdList WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {

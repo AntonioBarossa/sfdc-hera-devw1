@@ -2,6 +2,7 @@
 public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
     public override void beforeInsert(){
+        HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, null);
         HDT_UTL_CaseProcess.setCloseStatusForAll(Trigger.new);
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
@@ -15,6 +16,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
         try{
+            HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, Trigger.oldMap);
             for(Case caseNew : (List<Case>) Trigger.new){
                 if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){
                     caseNew.CancellationNote__c = caseNew.CancellationNote__c.substring(0,255);
@@ -33,6 +35,11 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                 if(caseNew.TecnicalPhase__c	!= null && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c){
                     caseNew.Phase__c = caseNew.TecnicalPhase__c;
                     caseNew.TecnicalPhase__c = null;
+                }
+
+                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+                    DateTime dt = caseNew.CreatedDate;
+                    caseNew.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
                 }
             }   
         } catch (Exception ex) {
@@ -89,6 +96,16 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     public override void afterInsert(){
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+                Case caseToUpdate = new Case(Id = caseNew.Id);
+                DateTime dt = caseNew.CreatedDate;
+                caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
+
+                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            }
+        }
     }
 
     /**

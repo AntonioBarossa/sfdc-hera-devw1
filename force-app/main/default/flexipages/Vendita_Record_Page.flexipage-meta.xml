@@ -101,6 +101,22 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>displayText</name>
+                    <value>Transitorio: Non è possibile proseguire la vendita su SFDC, è necessario gestirla in SIebel come indicato nell&apos;attività correlata</value>
+                </componentInstanceProperties>
+                <componentName>hdtAlertRecord</componentName>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CurrentStep__c}</leftValue>
+                        <operator>GE</operator>
+                        <rightValue>50</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>tabs</name>
                     <value>maintabs</value>
                 </componentInstanceProperties>

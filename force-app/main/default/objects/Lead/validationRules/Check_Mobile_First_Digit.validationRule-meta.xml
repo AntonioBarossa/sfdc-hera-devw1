@@ -2,6 +2,9 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>Check_Mobile_First_Digit</fullName>
     <active>true</active>
-    <errorConditionFormula>IF(ISBLANK(MobilePhone),false,IF(BEGINS(MobilePhone,&apos;3&apos;),false,true))</errorConditionFormula>
-    <errorMessage>Il numero di cellulare deve iniziare con il numero 3</errorMessage>
+    <errorConditionFormula>IF(ISBLANK(MobilePhone),false,
+        IF(ISPICKVAL(MobilePhonePrefix__c,&apos;+39&apos;),
+            IF(BEGINS(MobilePhone,&apos;3&apos;), false, true),
+        false))</errorConditionFormula>
+    <errorMessage>Il numero di cellulare deve iniziare con il numero 3 solo se il prefisso è +39</errorMessage>
 </ValidationRule>

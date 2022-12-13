@@ -277,7 +277,11 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 //ord.SignedDate__c = Date.today();
+                 if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
+                 {
+                    ord.SignedDate__c = Date.today();
+                 }
+                 //
                  //ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
@@ -287,7 +291,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                  {
                      ord.phase__c = 'Documentazione Gestita';
                      ord.status = 'Completed';
-                 
                  }
                  orderSrv.updateRecord(ord);
              }

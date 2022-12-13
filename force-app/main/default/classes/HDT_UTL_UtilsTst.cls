@@ -144,4 +144,14 @@ public class HDT_UTL_UtilsTst{
 		Test.stopTest();
 		
 	}
+
+	@IsTest
+	static void exctrPhaseTransDateFromStory(){
+		String phaseStory = 'Documentazione Validata@@Ammissibilità OK@@1663575122289@@A||Accettazione Voltura@@In attesa validazione@@1663575087285@@A||Da Inviare@@Accettazione Voltura@@1663575026402@@A||Bozza@@Da Inviare@@1663574640395@@A||';
+		Date datePhase = HDT_UTL_Utils.exctrPhaseTransDateFromStory(phaseStory, 'Documentazione Validata');
+		System.assertEquals(null, datePhase, 'Calcolo exctrPhaseTransDateFromStory non valido');
+		phaseStory = 'Documentazione Validata@@Ammissibilità OK@@1663575122289@@A||In attesa validazione@@Documentazione Validata@@1663575122289@@A||Accettazione Voltura@@In attesa validazione@@1663575087285@@A||Da Inviare@@Accettazione Voltura@@1663575026402@@A||Bozza@@Da Inviare@@1663574640395@@A||';
+		datePhase = HDT_UTL_Utils.exctrPhaseTransDateFromStory(phaseStory, 'Documentazione Validata');
+		System.assert(datePhase != null, 'Calcolo exctrPhaseTransDateFromStory non valido');
+	}
 }

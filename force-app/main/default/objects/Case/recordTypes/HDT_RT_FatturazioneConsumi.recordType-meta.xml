@@ -204,10 +204,11 @@
             <fullName>CMOR</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!-- TK 939502C -->
+        <!--<values>
             <fullName>Commissioni</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Deposito cauzionale</fullName>
             <default>false</default>
@@ -1183,7 +1184,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata Picklist esclusa da CI/CD -->
+    <!--<picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1745,7 +1747,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -9040,7 +9042,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata Picklist esclusa da CI/CD -->
+    <!--<picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -10098,7 +10101,7 @@
             <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>
