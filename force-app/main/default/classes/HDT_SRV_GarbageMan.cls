@@ -63,6 +63,12 @@ public with sharing class HDT_SRV_GarbageMan {
             set;
         }
 
+        public HDT_QBL_NotifyService(){}
+
+        private HDT_QBL_NotifyService(Id caseId){
+            this.caseId=caseId;
+        }
+
         public void execute(QueueableContext ctx){
 
             //HDT_SRV_GarbageMan.HDT_QBL_NotifyService currentClassInstance = new HDT_SRV_GarbageMan.HDT_QBL_NotifyService();
