@@ -177,7 +177,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         for (Id orderId : oldOrderMap.keySet()){
             Order oldOrder = oldOrderMap.get(orderId);
             //La prima volta che eseguo questo metodo, gli ordini sono in HDT_RT_Default. Quindi vengono saltati perché il calcolo della comfort/quality verrà eseguito direttamente nel wizard.
-            if ('HDT_RT_Default'.equalsIgnoreCase(oldOrder.RecordType.DeveloperName)){
+            if ('HDT_RT_Default'.equalsIgnoreCase(oldOrder.RecordType.DeveloperName)||'HDT_RT_OrderDossier'.equalsIgnoreCase(oldOrder.RecordType.DeveloperName)){
                 ordersToUpdate.add(newOrderMap.get(orderId));
                 continue;
             }
@@ -269,7 +269,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         String docSendingMethod = String.isNotBlank(newOrderMap.values()[0].DocSendingMethod__c) ? newOrderMap.values()[0].DocSendingMethod__c :  oldOrders[0].DocSendingMethod__c;
 
         List<ComfortQualityCall__c> myComfortQualityList = executeQuery(oldOrders,signatureMethod,docSendingMethod);
-        
+        Integer numberChild = ordersToUpdate.size() + newOrderMap.keySet().size() -1;
         for (Order oldOrder : oldOrders){
             List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
             Order orderForQuery = oldOrder.clone();
@@ -288,6 +288,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
             ComfortQualityCall__c comforQualityRes = new ComfortQualityCall__c();
             newOrder.QualityCall__c = true;
+            newOrder.ComfortCallDaysDue__c = null;
+            newOrder.DateComfortCall__c = null;
+            newOrder.QualityCallUnique__c = numberChild > 1;
 
             if (comfortQualityList.size() > 1) {
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
@@ -308,10 +311,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             if (comforQualityRes.ComfortEnabled__c) {
                 newOrder.ComfortCallDaysDue__c = comforQualityRes.DaysComfort__c;
                 newOrder.DateComfortCall__c = Date.today();
-            }
-            if (comforQualityRes.QualityEnabled__c) {
-                newOrder.ComfortCallDaysDue__c = null;
-                newOrder.DateComfortCall__c = null;
             }
             ordersToUpdate.add(newOrder);
         }
