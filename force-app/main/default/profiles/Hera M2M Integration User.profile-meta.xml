@@ -13219,6 +13219,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LoginGroup__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>MacroActivityEasyCIM__c.idMacroActivityEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32582,6 +32587,16 @@
 <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.CampaignMemberLeadAssigment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
         <readable>true</readable>
     </fieldPermissions>
 <fieldPermissions>
