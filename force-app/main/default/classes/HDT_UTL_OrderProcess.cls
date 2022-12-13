@@ -1414,7 +1414,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             Order oldOrder = (Order) oldOrderMap.get(newOrder.Id);
             DateTime nowDateTime = DateTime.now();
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
-                && (oldOrder.SiebelStatus__c == null || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))))
+                && (oldOrder.SiebelStatus__c == null 
+                    || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c'))) 
+                    || negativeOutcomes.contains(newOrder.get('SiebelStatus__c'))
+                    || positiveOutcomes.contains(newOrder.get('SiebelStatus__c'))
+                    )
+                )
             {
                 String newPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Completata'
