@@ -16,19 +16,10 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         return;
     }
 
-    public class HDT_WS_AgevolazioneResponse extends HDT_WS_Response{
-        @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
-        @AuraEnabled public String status {get;set;}
-        @AuraEnabled public String correlationId {get;set;}
-        @AuraEnabled public String timestamp {get;set;}
-        @AuraEnabled public HDT_WRP_ResponseData data {get;set;}
+    public class HDT_WS_AgevolazioneResponse extends HDT_WS_SegnalazioniTari.HDT_WRP_SegnalazioniTariResponse {
+        
     }
 
-    public class HDT_WRP_ResponseData{
-        @AuraEnabled public String outcome {get;set;}
-        @AuraEnabled public String errorMessage {get;set;}
-        @AuraEnabled public String noticeId {get;set;}
-    }
     global Object execute(Object args) {
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject obj = (sObject) argsMap.get('sender');
@@ -58,7 +49,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         
         try{
             if(STRING.isNotBlank(res?.data?.noticeId)){
-                Case caseToUpdate = new Case(Id=lcs[0].Id, Phase__c = PHASE, Outcome__c = formatEsito(res?.data));
+                Case caseToUpdate = new Case(Id=lcs[0].Id, Phase__c = PHASE, Outcome__c = HDT_WS_SegnalazioniTari.formatEsito(res?.data));
                 caseToUpdate.NoticeId__c = res?.data?.noticeId;
                 HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
             }
@@ -74,11 +65,5 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         response.success = true;
         response.message = 'OK';
         return response;
-    }
-
-    private String formatEsito(HDT_WRP_ResponseData data){
-        if(STRING.isBlank(data?.outcome)){      return 'KO - Mulesoft'; }
-        String esito = data?.outcome + (String.isBlank(data?.errorMessage)? ''  : ' '+data.errorMessage);
-        return esito.abbreviate(100);
     }
 }

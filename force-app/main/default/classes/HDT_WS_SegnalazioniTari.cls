@@ -16,7 +16,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         return;
     }
 
-    public class HDT_WRP_SegnalazioniTariResponse extends HDT_WS_Response{
+    public virtual class HDT_WRP_SegnalazioniTariResponse extends HDT_WS_Response{
         @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
         @AuraEnabled public String status {get;set;}
         @AuraEnabled public String correlationId {get;set;}
@@ -82,7 +82,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         return response;
     }
 
-    private String formatEsito(HDT_WRP_ResponseData data){
+    public static String formatEsito(HDT_WRP_ResponseData data){
         if(STRING.isBlank(data?.outcome)){      return 'KO - Mulesoft'; }
         String esito = data?.outcome + (String.isBlank(data?.errorMessage)? ''  : ' '+data.errorMessage);
         return esito.abbreviate(100);
