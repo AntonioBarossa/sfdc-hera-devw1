@@ -1294,7 +1294,7 @@ public inherited sharing class HDT_QR_Order {
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
         AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
-        AND Phase__c NOT IN ('Completata','Annullato')
+        AND Phase__c NOT IN ('Annullato') //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
         WITH SECURITY_ENFORCED
         ];
     }
