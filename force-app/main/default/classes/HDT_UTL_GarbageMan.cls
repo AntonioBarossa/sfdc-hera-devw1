@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_GarbageMan {
                 ];
     }
 
-    public void launchCalloutTemplateSync(Id sobjId, Id tasactionId){
+    public void launchCalloutTemplateSync(Id sobjId, Id transitionId){
         //Select all fields from a Sobject START
         Schema.DescribeSObjectResult descSobj = ((Id) sobjId).getSobjectType().getDescribe();
 
@@ -35,7 +35,7 @@ public with sharing class HDT_UTL_GarbageMan {
         //Select All Fields From a Sobject END
 
 
-        String transQuery = 'SELECT '+ STRING.join(new List<String>(Schema.SObjectType.wrts_prcgvr__PhaseTransition__c.fields.getMap().keySet()), ', ') + ' FROM wrts_prcgvr__PhaseTransition__c WHERE Id=:idTransition LIMIT 1';
+        String transQuery = 'SELECT '+ STRING.join(new List<String>(Schema.SObjectType.wrts_prcgvr__PhaseTransition__c.fields.getMap().keySet()), ', ') + ' FROM wrts_prcgvr__PhaseTransition__c WHERE Id=:transitionId LIMIT 1';
 
         wrts_prcgvr__PhaseTransition__c transition = Database.Query(String.escapeSingleQuotes(transQuery));
         Matcher matcher=Pattern.compile('^(.+)\\(method="(.+)"\\);').matcher(transition.wrts_prcgvr__ApexCalloutActions__c);
@@ -58,7 +58,10 @@ public with sharing class HDT_UTL_GarbageMan {
     public List<Case> getCurrentCase(Id caseId){
         return [  
                     SELECT Id, WasterCode__c, StartAppointment__c, 
-                    EndAppointment__c, RecordTypeId, Outcome__c
+                    EndAppointment__c, RecordTypeId, Outcome__c,
+                    Phase__c, Status, InvoicingStreetName__c, 
+                    InvoicingStreetNumber__c, InvoicingPostalCode__c, InvoicingCity__c, 
+                    InvoicingStreetCode__c, TypeOperation__c
                     FROM Case
                     WHERE Id =: caseId 
                     WITH SECURITY_ENFORCED

@@ -54,7 +54,7 @@ public with sharing class HDT_SRV_GarbageMan {
 	}
 
     @TestVisible 
-    private class HDT_QBL_NotifyService implements Finalizer, Queueable, Database.AllowsCallouts{
+    private class HDT_QBL_NotifyService implements Finalizer, Queueable, Database.AllowsCallouts {
 
         private Id caseId {get;set;}
 
@@ -115,5 +115,69 @@ public with sharing class HDT_SRV_GarbageMan {
     }
 
     
+    private class HDT_QBL_ScheduleAppointment implements Finalizer, Queueable, Database.AllowsCallouts {
 
+        Id caseId {get;set;}
+        String errorCode {
+            get{if(STRING.isBlank(errorCode)) errorCode = '99';return errorCode;}
+            set;
+        }
+
+        HDT_QBL_ScheduleAppointment(Id caseId){
+            this.caseId = caseId;
+        }
+
+        public HDT_QBL_ScheduleAppointment(){
+            return;
+        }
+
+        public void execute(QueueableContext ctx){
+
+            System.attachFinalizer(this);
+
+            Case currentCase = utlGarbage.getCurrentCase(caseId)[0];
+            
+            //Chiamata al servizio Ricerca Appuntamento 
+            String street = currentCase.InvoicingStreetName__c + currentCase.InvoicingStreetNumber__c + currentCase.InvoicingPostalCode__c + currentCase.InvoicingCity__c;
+            HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrpDataApp = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp (this.caseid, currentCase.InvoicingStreetCode__c, 
+            street, currentCase.InvoicingStreetNumber__c, currentCase.TypeOperation__c, currentCase.InvoicingCity__c);
+            HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse response = HDT_LC_AppointmentTariAgenda.handleSearch(wrpDataApp);
+
+            if(response?.data?.appointmentData?.isEmpty()){
+                errorCode= '06';
+                throw new HDT_UTL_HeraException('Slot not found'); 
+            }else{
+                wrpDataApp.startDate = Datetime.newInstance(Long.valueOf(response.data.appointmentData[0].startDate));
+                wrpDataApp.endDate = Datetime.newInstance(Long.valueOf(response.data.appointmentData[0].endDate));
+                HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(currentCase, wrpDataApp);
+                if(String.isBlank(res?.data?.noticeNumber)){
+                    errorCode= '07';
+                    throw new HDT_UTL_HeraException('Unable to confirm appointment'); 
+                }
+            }
+            return;
+        }
+            
+        public void execute(FinalizerContext ctx){
+
+            Case currentCase = utlGarbage.getCurrentCase(caseId)[0];
+
+            //se queueable success accodare la queueable HDT_QBL_NotifyService passandogli il CaseId
+            if(ctx.getResult() == ParentJobResult.SUCCESS){
+                System.enqueueJob(new HDT_QBL_NotifyService(currentCase.Id));
+            }else{
+                //se queueable fallita chiamare servizio deda con case e error code
+                doCallout(new HDT_WRP_GarbageManRequest(currentCase, this.errorCode));
+                //aggiornare il Case in Fase Annullata e Stato Chiuso
+                currentCase.Phase__c = 'Annullato';
+                currentCase.Status = 'Closed';
+                HDT_UTL_DatabaseService.updateSObject(currentCase);
+            }
+        }
+    }
+
+    public static void scheduleAppointment(Id caseId){
+        HDT_QBL_ScheduleAppointment runJob = new HDT_QBL_ScheduleAppointment(caseId);
+        System.enqueueJob(runJob);
+    }
 }
