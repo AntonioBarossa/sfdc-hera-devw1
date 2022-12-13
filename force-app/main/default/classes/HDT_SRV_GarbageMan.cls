@@ -63,7 +63,9 @@ public with sharing class HDT_SRV_GarbageMan {
             set;
         }
 
-        public HDT_QBL_NotifyService(){}
+        public HDT_QBL_NotifyService(){
+            return;
+        }
 
         private HDT_QBL_NotifyService(Id caseId){
             this.caseId=caseId;
