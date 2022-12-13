@@ -62,6 +62,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
                     orderUpdates.RelatedPractice__c = (String)objMap.get(key);
                 }
             }
+            checkSignatureMethod(childOrderToUpdate, childOrder);
             try{
                 if ((String.isNotBlank(childOrderToUpdate.DocSendingMethod__c) && !childOrderToUpdate.DocSendingMethod__c.equalsIgnoreCase(childOrder.DocSendingMethod__c)) 
                 || (String.isNotBlank(childOrderToUpdate.SignatureMethod__c) && !childOrderToUpdate.SignatureMethod__c.equalsIgnoreCase(childOrder.SignatureMethod__c))){
@@ -72,7 +73,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             }catch (Exception e){
                 system.debug('ChangeSignature exception: ' + e.getMessage());
             }
-            checkSignatureMethod(childOrderToUpdate, childOrder);
             system.debug('childOrderToUpdate: ' + childOrderToUpdate);
             ordersToUpdate.add(childOrderToUpdate);
         }
@@ -176,6 +176,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         List<Order> ordersVasToWork= new List<Order>();
         for (Id orderId : oldOrderMap.keySet()){
             Order oldOrder = oldOrderMap.get(orderId);
+            //La prima volta che eseguo questo metodo, gli ordini sono in HDT_RT_Default. Quindi vengono saltati perché il calcolo della comfort/quality verrà eseguito direttamente nel wizard.
             if ('HDT_RT_Default'.equalsIgnoreCase(oldOrder.RecordType.DeveloperName)){
                 ordersToUpdate.add(newOrderMap.get(orderId));
                 continue;
@@ -290,11 +291,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
 
             if (comfortQualityList.size() > 1) {
                 for (ComfortQualityCall__c cqc : comfortQualityList) {
-                    if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == oldOrder.SignatureMethod__c && cqc.ComfortDocSendingChannel__c == oldOrder.DocSendingMethod__c){
+                    if(cqc.ComfortEnabled__c && cqc.ComfortSignatureMethod__c == signatureMethod && cqc.ComfortDocSendingChannel__c == docSendingMethod){
                         comforQualityRes = cqc;
                         break;
                     }
-                    else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == oldOrder.SignatureMethod__c) {
+                    else if (cqc.QualityEnabled__c && cqc.QualitySignatureMethod__c == signatureMethod) {
                         comforQualityRes = cqc;
                         break;
                     }
@@ -303,7 +304,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             else {
                 comforQualityRes = comfortQualityList[0];
             }
-
+            System.debug('@@@@@comforQualityRes ' + comforQualityRes);
             if (comforQualityRes.ComfortEnabled__c) {
                 newOrder.ComfortCallDaysDue__c = comforQualityRes.DaysComfort__c;
                 newOrder.DateComfortCall__c = Date.today();

@@ -46,10 +46,12 @@ public with sharing class HDT_BA_QualityCallTst {
             parentOrders[0].Contact__c = contactId;
             parentOrders[0].VASType__c = 'VAS Fatturabili';
             parentOrders[0].phase__c = 'Comunicazione verso Heroku';
+            parentOrders[0].Status = 'Completed';
             parentOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             parentOrders[1].Contact__c = contactId;
             parentOrders[1].VASType__c = 'VAS Fatturabili';
             parentOrders[1].phase__c = 'Comunicazione verso Heroku';
+            parentOrders[1].Status = 'Completed';
             parentOrders[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             update parentOrders;
 
