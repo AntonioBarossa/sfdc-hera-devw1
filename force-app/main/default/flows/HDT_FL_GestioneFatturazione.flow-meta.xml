@@ -60,8 +60,8 @@
     <actionCalls>
         <name>Clona_Reading_Case_Padre</name>
         <label>Clona Reading Case Padre</label>
-        <locationX>3141</locationX>
-        <locationY>4886</locationY>
+        <locationX>3537</locationX>
+        <locationY>5222</locationY>
         <actionName>HDT_SRV_SelfReadings</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -81,8 +81,8 @@
     <actionCalls>
         <name>Crea_Case_Autolettura</name>
         <label>Crea Case Autolettura</label>
-        <locationX>3141</locationX>
-        <locationY>3950</locationY>
+        <locationX>3537</locationX>
+        <locationY>4286</locationY>
         <actionName>HDT_UTL_CreateGenericCase</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -119,8 +119,8 @@
     <assignments>
         <name>Assegna_Codice_Causale</name>
         <label>Assegna Codice Causale</label>
-        <locationX>3141</locationX>
-        <locationY>4646</locationY>
+        <locationX>3537</locationX>
+        <locationY>4982</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -133,10 +133,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Note</name>
+        <label>Assegna Note</label>
+        <locationX>2690</locationX>
+        <locationY>3350</locationY>
+        <assignmentItems>
+            <assignToReference>UpdatedCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Valorizza_Campo_Note_Fatturazione_Acq</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Valori</name>
         <label>Assegna Valori</label>
-        <locationX>2250</locationX>
-        <locationY>2918</locationY>
+        <locationX>2338</locationX>
+        <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>UpdatedCase.StartDate__c</assignToReference>
             <operator>Assign</operator>
@@ -151,15 +167,8 @@
                 <elementReference>Data_Fine_Fuga</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>UpdatedCase.Note__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Valorizza_Campo_Note_Fatturazione_Acq</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_2</targetReference>
+            <targetReference>Assegna_Note</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -197,7 +206,7 @@
     <assignments>
         <name>Predefault_Telefono</name>
         <label>Predefault Telefono</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Query_Case.PhoneNumber__c</assignToReference>
@@ -308,8 +317,8 @@
     <assignments>
         <name>Set_Fase</name>
         <label>Set Fase Inviata a SAP</label>
-        <locationX>3141</locationX>
-        <locationY>4430</locationY>
+        <locationX>3537</locationX>
+        <locationY>4766</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -324,8 +333,8 @@
     <assignments>
         <name>Set_Fase_In_attesa</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>2877</locationX>
-        <locationY>4430</locationY>
+        <locationX>3273</locationX>
+        <locationY>4766</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -356,7 +365,7 @@
     <assignments>
         <name>Set_Tipo_Processo</name>
         <label>Set Tipo Processo</label>
-        <locationX>1898</locationX>
+        <locationX>2294</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>CustomMetadataProcessType</assignToReference>
@@ -418,6 +427,46 @@
         </value>
     </choices>
     <decisions>
+        <name>Argomento</name>
+        <label>Argomento?</label>
+        <locationX>2690</locationX>
+        <locationY>2798</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Note</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri Argomenti</defaultConnectorLabel>
+        <rules>
+            <name>Richiesta_di_ricalcolo_fuga_acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdatedCase.BillingErrorArgument__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di ricalcolo fuga acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Modifica_Campi</targetReference>
+            </connector>
+            <label>Richiesta di ricalcolo fuga acqua</label>
+        </rules>
+        <rules>
+            <name>Rimborso_retroattivo_importo_fognatura_e_depurazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdatedCase.BillingErrorArgument__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rimborso retroattivo importo fognatura e depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>is_Data_Inizio_Rimborso_Required</targetReference>
+            </connector>
+            <label>Rimborso retroattivo importo fognatura e depurazione</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Case_da_annullare</name>
         <label>Case da annullare?</label>
         <locationX>1513</locationX>
@@ -471,7 +520,7 @@
     <decisions>
         <name>Check_Input_Case</name>
         <label>Got Input Case?</label>
-        <locationX>974</locationX>
+        <locationX>1172</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Query_Case</targetReference>
@@ -496,7 +545,7 @@
     <decisions>
         <name>Check_Inserire_Letture</name>
         <label>Inserire Letture?</label>
-        <locationX>1942</locationX>
+        <locationX>2030</locationX>
         <locationY>2918</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
@@ -547,7 +596,7 @@
     <decisions>
         <name>Check_Motivo_Richiesta</name>
         <label>Check Motivo Richiesta</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>2798</locationY>
         <defaultConnector>
             <targetReference>Rimozione_Data_Termine_Agevolazione</targetReference>
@@ -619,7 +668,7 @@
     <decisions>
         <name>Check_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>1898</locationX>
+        <locationX>2294</locationX>
         <locationY>2678</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
@@ -673,13 +722,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>UpdatedCase.BillingErrorArgument__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Richiesta di ricalcolo fuga acqua</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>SaveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -694,7 +736,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Screen_Modifica_Campi</targetReference>
+                <targetReference>Argomento</targetReference>
             </connector>
             <label>Errore Fatturazione Acqua</label>
         </rules>
@@ -702,7 +744,7 @@
     <decisions>
         <name>Check_Record_Type</name>
         <label>Quale Processo?</label>
-        <locationX>1898</locationX>
+        <locationX>2294</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
@@ -769,12 +811,56 @@
             </connector>
             <label>Inversione del Contatore</label>
         </rules>
+        <rules>
+            <name>Ricostruzione_Consumi_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Input_Campi_Ricostruzione_Consumi</targetReference>
+            </connector>
+            <label>Ricostruzione Consumi Acqua</label>
+        </rules>
+        <rules>
+            <name>Gestione_Bonus_Sociale_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gestione Bonus Sociale</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Query_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Input_Campi_Gestione_Bonus_Sociale</targetReference>
+            </connector>
+            <label>Gestione Bonus Sociale Acqua</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Choose_Next_Phase</name>
         <label>Next Phase?</label>
-        <locationX>2767</locationX>
-        <locationY>3470</locationY>
+        <locationX>3163</locationX>
+        <locationY>3806</locationY>
         <defaultConnector>
             <targetReference>Update_status_case</targetReference>
         </defaultConnector>
@@ -896,10 +982,68 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Commodity</name>
+        <label>Commodity?</label>
+        <locationX>2998</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>InputFieldsFatturazione</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altre Commodity</defaultConnectorLabel>
+        <rules>
+            <name>Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Query_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Input_Campi_Inversione_del_Contatore</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>is_Data_Inizio_Rimborso_Required</name>
+        <label>is Data Inizio Rimborso Required And Empty?</label>
+        <locationX>2734</locationX>
+        <locationY>2918</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Note</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Data_Inizio_Rimborso_Non_Valorizzata_e_Obbligatoria</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>UpdatedCase.BillingErrorArgument__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rimborso retroattivo importo fognatura e depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Data_Inizio_Rimborso</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Alert_Valorizzazione_Obbligatoria_Data_Inizio_Rimborso</targetReference>
+            </connector>
+            <label>Data Inizio Rimborso Non Valorizzata e Obbligatoria</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Is_Sottoprocesso_Errore_Stima_Consumi</name>
         <label>Is Sottoprocesso Errore Stima Consumi?</label>
-        <locationX>3361</locationX>
-        <locationY>3710</locationY>
+        <locationX>3757</locationX>
+        <locationY>4046</locationY>
         <defaultConnectorLabel>Altri Casi</defaultConnectorLabel>
         <rules>
             <name>Errore_Stima_Consumi_1</name>
@@ -927,8 +1071,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>1898</locationX>
-        <locationY>3350</locationY>
+        <locationX>2294</locationX>
+        <locationY>3686</locationY>
         <defaultConnector>
             <targetReference>Choose_Next_Phase</targetReference>
         </defaultConnector>
@@ -1002,8 +1146,8 @@
     <decisions>
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
-        <locationX>3977</locationX>
-        <locationY>3926</locationY>
+        <locationX>4373</locationX>
+        <locationY>4262</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Avvisare_Cliente</name>
@@ -1063,8 +1207,8 @@
     <decisions>
         <name>Turbobilling_Decision</name>
         <label>Turbobilling Decision</label>
-        <locationX>3141</locationX>
-        <locationY>4310</locationY>
+        <locationX>3537</locationX>
+        <locationY>4646</locationY>
         <defaultConnector>
             <targetReference>Assegna_Codice_Causale</targetReference>
         </defaultConnector>
@@ -1124,8 +1268,8 @@
     <decisions>
         <name>Update_status_case</name>
         <label>Update status case?</label>
-        <locationX>3977</locationX>
-        <locationY>3590</locationY>
+        <locationX>4373</locationX>
+        <locationY>3926</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -1270,7 +1414,8 @@
         <name>Valorizza_Campo_Note_Fatturazione_Acq</name>
         <dataType>String</dataType>
         <expression>{!UpdatedCase.Note__c} &amp;
-BR() &amp; &quot;Tipo Modifica: &quot; &amp; {!Tipo_Modifica_1} &amp;
+IF(!ISBLANK({!Data_Inizio_Rimborso}),BR() &amp; &quot;Data Inizio Rimborso: &quot; &amp; TEXT(DAY({!Data_Inizio_Rimborso})) +&quot;/&quot;+ TEXT(MONTH({!Data_Inizio_Rimborso})) +&quot;/&quot; +TEXT(YEAR({!Data_Inizio_Rimborso})), &apos;&apos;) &amp;
+IF(!ISBLANK({!Tipo_Modifica_1}),BR() &amp; &quot;Tipo Modifica: &quot; &amp; {!Tipo_Modifica_1}, &apos;&apos;) &amp;
 IF(!ISBLANK({!Medie_consumo_standard_applicato}),BR() &amp; &quot;Medie consumo standard applicato: &quot; &amp; {!Medie_consumo_standard_applicato}, &apos;&apos;) &amp;
 IF(!ISBLANK({!Titolo_Dettaglio}),BR() &amp; &quot;Titolo Dettaglio: &quot; &amp; {!Titolo_Dettaglio}, &apos;&apos;) &amp;
 IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione: &quot; &amp; {!Dettaglio_informazione}, &apos;&apos;)</expression>
@@ -1327,8 +1472,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Copy_1_of_Calcolo_Codice_Causale</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>3141</locationX>
-        <locationY>4190</locationY>
+        <locationX>3537</locationX>
+        <locationY>4526</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Turbobilling_Decision</targetReference>
@@ -1362,8 +1507,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Get_Case_Autolettura</name>
         <label>Get Case Autolettura</label>
-        <locationX>3141</locationX>
-        <locationY>4070</locationY>
+        <locationX>3537</locationX>
+        <locationY>4406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_Calcolo_Codice_Causale</targetReference>
@@ -1383,8 +1528,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Get_RT_Autolettura</name>
         <label>Get RT Autolettura</label>
-        <locationX>3141</locationX>
-        <locationY>3830</locationY>
+        <locationX>3537</locationX>
+        <locationY>4166</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Autolettura</targetReference>
@@ -1433,7 +1578,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Query_Case</name>
         <label>Query Case</label>
-        <locationX>1898</locationX>
+        <locationX>2294</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1454,7 +1599,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>UpdatedCase</name>
         <label>Refresh Case</label>
-        <locationX>1898</locationX>
+        <locationX>2294</locationX>
         <locationY>2558</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1499,8 +1644,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Aggiorna_Case_2</name>
         <label>Aggiorna Case</label>
-        <locationX>2250</locationX>
-        <locationY>3038</locationY>
+        <locationX>2690</locationX>
+        <locationY>3470</locationY>
         <connector>
             <targetReference>Next_Step</targetReference>
         </connector>
@@ -1509,8 +1654,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Aggiorna_Case_Autolettura</name>
         <label>Aggiorna Case Autolettura</label>
-        <locationX>3141</locationX>
-        <locationY>4766</locationY>
+        <locationX>3537</locationX>
+        <locationY>5102</locationY>
         <connector>
             <targetReference>Clona_Reading_Case_Padre</targetReference>
         </connector>
@@ -1519,8 +1664,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Copy_1_of_Set_Phase_In_Lavorazione</name>
         <label>Copy 1 of Set Phase In Lavorazione</label>
-        <locationX>1557</locationX>
-        <locationY>3590</locationY>
+        <locationX>1953</locationX>
+        <locationY>3926</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1546,7 +1691,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Predefault_Data_Termine_Agevolazione</name>
         <label>Predefault Data Termine Agevolazione</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>2918</locationY>
         <connector>
             <targetReference>Campi_Comunicazione_Cessazione</targetReference>
@@ -1570,7 +1715,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Predefault_Email_Rimozione_Data_Termine_Bonus</name>
         <label>Predefault Email + Rimozione Data Termine Bonus</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>2918</locationY>
         <connector>
             <targetReference>Campi_Richiesta_Documentazione</targetReference>
@@ -1597,7 +1742,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Rimozione_Data_Termine_Agevolazione</name>
         <label>Rimozione Data Termine Agevolazione</label>
-        <locationX>1546</locationX>
+        <locationX>1634</locationX>
         <locationY>2918</locationY>
         <connector>
             <targetReference>Next_Step</targetReference>
@@ -1618,8 +1763,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Comunicazioni_con_il_DL</name>
         <label>Set Phase Comunicazioni con il DL</label>
-        <locationX>2349</locationX>
-        <locationY>3590</locationY>
+        <locationX>2745</locationX>
+        <locationY>3926</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1639,8 +1784,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>2085</locationX>
-        <locationY>3590</locationY>
+        <locationX>2481</locationX>
+        <locationY>3926</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1663,8 +1808,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Elaborazione_Manuale</name>
         <label>Set Phase Elaborazione Manuale</label>
-        <locationX>1821</locationX>
-        <locationY>3590</locationY>
+        <locationX>2217</locationX>
+        <locationY>3926</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1684,8 +1829,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>4109</locationX>
-        <locationY>3710</locationY>
+        <locationX>4505</locationX>
+        <locationY>4046</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1708,8 +1853,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione_con_Stato</name>
         <label>Set Phase In Lavorazione con Stato</label>
-        <locationX>3845</locationX>
-        <locationY>3710</locationY>
+        <locationX>4241</locationX>
+        <locationY>4046</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1738,8 +1883,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Sospesa</name>
         <label>Set Phase Sospesa</label>
-        <locationX>3361</locationX>
-        <locationY>3590</locationY>
+        <locationX>3757</locationX>
+        <locationY>3926</locationY>
         <connector>
             <targetReference>Is_Sottoprocesso_Errore_Stima_Consumi</targetReference>
         </connector>
@@ -1768,11 +1913,10 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Update_Case_Inversione</name>
         <label>Update Case Inversione</label>
-        <locationX>2866</locationX>
+        <locationX>2998</locationX>
         <locationY>758</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>InputFieldsFatturazione</targetReference>
+            <targetReference>Commodity</targetReference>
         </connector>
         <inputReference>Query_Case</inputReference>
     </recordUpdates>
@@ -1787,9 +1931,33 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <inputReference>Query_Case</inputReference>
     </recordUpdates>
     <screens>
+        <name>Alert_Valorizzazione_Obbligatoria_Data_Inizio_Rimborso</name>
+        <label>Alert Valorizzazione Obbligatoria Data Inizio Rimborso</label>
+        <locationX>2602</locationX>
+        <locationY>3038</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>false</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Assegna_Note</targetReference>
+        </connector>
+        <fields>
+            <name>Header</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Processo di {!Query_Case.Type}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Messaggio_Warning</name>
+            <fieldText>&lt;p&gt;Per l&apos;argomento selezionato occorre valorizzare obbligatoriamente la Data di Inizio Rimborso.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Campi_Comunicazione_Cessazione</name>
         <label>Campi Comunicazione Cessazione</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>3038</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1907,7 +2075,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Campi_Richiesta_Documentazione</name>
         <label>Campi Richiesta Documentazione</label>
-        <locationX>1282</locationX>
+        <locationX>1370</locationX>
         <locationY>3038</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2118,6 +2286,63 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
             </visibilityRule>
         </fields>
         <fields>
+            <name>Copy_1_of_Input_Campi_Fatturazione_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Copy_1_of_Input_Campi_Fatturazione_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Data_Inizio_Rimborso</name>
+                    <dataType>Date</dataType>
+                    <fieldText>Data Inizio Rimborso</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Copy_1_of_Input_Campi_Fatturazione_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Copy_1_of_Input_Campi_Fatturazione_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Copy_1_of_Input_Campi_Fatturazione_Section1_Column4</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
             <name>Copy_1_of_recordEditFormFatturazione</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -2131,6 +2356,558 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
                 <name>processType</name>
                 <value>
                     <elementReference>processTypeFormula</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Dati di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <elementReference>NextButtonLabel</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variantSaveButton</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Input_Campi_Gestione_Bonus_Sociale</name>
+        <label>Input Campi Gestione Bonus Sociale</label>
+        <locationX>3658</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdatedCase</targetReference>
+        </connector>
+        <fields>
+            <name>WizardDisplayText_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DTInversioneContatore_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere nel campo Note per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Inversione del Contatore</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DT_ESC_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Se la partita selezionata è multicontratto e occorre rettificare più documenti della stessa bolletta, selezionare il flag &apos;Rettifica più contratti su stessa fattura&apos;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Errore Stima Consumi</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtGenericAddressChooserFlow_0_0_0_0</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di spedizione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Verifica Titolarità POD/PDR</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>recordEditFormFatturazione_0_0_0_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Gestione Bonus Sociale Acqua</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Dati di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <elementReference>NextButtonLabel</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variantSaveButton</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Input_Campi_Inversione_del_Contatore</name>
+        <label>Input Campi Inversione del Contatore</label>
+        <locationX>2866</locationX>
+        <locationY>998</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdatedCase</targetReference>
+        </connector>
+        <fields>
+            <name>WizardDisplayText_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DTInversioneContatore_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere nel campo Note per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Inversione del Contatore</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DT_ESC_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Se la partita selezionata è multicontratto e occorre rettificare più documenti della stessa bolletta, selezionare il flag &apos;Rettifica più contratti su stessa fattura&apos;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Errore Stima Consumi</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtGenericAddressChooserFlow_0_0_0</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di spedizione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Verifica Titolarità POD/PDR</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>recordEditFormFatturazione_0_0_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Inversione del Contatore Acqua</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Dati di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <elementReference>NextButtonLabel</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variantSaveButton</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <outputParameters>
+                <assignToReference>SaveInDraft</assignToReference>
+                <name>saveInDraft</name>
+            </outputParameters>
+            <outputParameters>
+                <assignToReference>CancelCase</assignToReference>
+                <name>cancelCase</name>
+            </outputParameters>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Input_Campi_Ricostruzione_Consumi</name>
+        <label>Input Campi Ricostruzione Consumi</label>
+        <locationX>3394</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>UpdatedCase</targetReference>
+        </connector>
+        <fields>
+            <name>WizardDisplayText_0_0</name>
+            <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>DTInversioneContatore_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Scrivere nel campo Note per le forniture interessate: POD/PDR - matricola- indirizzo fornitura - recapito telefonico - codice cliente e dato fiscale intestatario&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Inversione del Contatore</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>DT_ESC_0_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Se la partita selezionata è multicontratto e occorre rettificare più documenti della stessa bolletta, selezionare il flag &apos;Rettifica più contratti su stessa fattura&apos;&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Errore Stima Consumi</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>hdtGenericAddressChooserFlow_0_0</name>
+            <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>Query_Case.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressLabel</name>
+                <value>
+                    <stringValue>Indirizzo di spedizione</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addressType</name>
+                <value>
+                    <stringValue>BillingProfile</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>Query_Case.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Query_Case.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Verifica Titolarità POD/PDR</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>recordEditFormFatturazione_0_0</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Ricostruzione Consumi Acqua</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -2745,7 +3522,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Inserire_letture</name>
         <label>Inserire letture?</label>
-        <locationX>1942</locationX>
+        <locationX>2030</locationX>
         <locationY>2798</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2774,7 +3551,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Screen_Letture</name>
         <label>Screen Letture</label>
-        <locationX>1810</locationX>
+        <locationX>1898</locationX>
         <locationY>3038</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2874,8 +3651,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Screen_Modifica_Campi</name>
         <label>Screen Modifica Campi</label>
-        <locationX>2250</locationX>
-        <locationY>2798</locationY>
+        <locationX>2338</locationX>
+        <locationY>2918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3066,8 +3843,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
-        <locationX>3845</locationX>
-        <locationY>4046</locationY>
+        <locationX>4241</locationX>
+        <locationY>4382</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -3087,8 +3864,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>2085</locationX>
-        <locationY>3710</locationY>
+        <locationX>2481</locationX>
+        <locationY>4046</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3116,7 +3893,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>848</locationX>
+        <locationX>1046</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Input_Case</targetReference>

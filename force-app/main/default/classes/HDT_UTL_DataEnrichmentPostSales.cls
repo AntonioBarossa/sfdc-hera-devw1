@@ -23,7 +23,7 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
         HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
         HDT_QR_AnagAlignment anagAlignQr = new HDT_QR_AnagAlignment();
-        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> positions = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
+        List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject> positions = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
         List<HDT_DataEnrichmentTransocode__mdt> transcodeConfigList = new List<HDT_DataEnrichmentTransocode__mdt>();
         Map<String, Object> transcodeMap = new Map<String, Object>();
         String billingProfileCode;
@@ -40,20 +40,15 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompany;
         String method;
         String sottoTipologiaDuso;
-
         /*
 			@Author: Davide Viola - 20/10/2021
 			Description: PMD -> Commentata variabile non utilizzata.
 		*/
-		//String value;
         Decimal decValue;
-
-        positions = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
-            JSON.deserialize(serializedResponse, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
-
+        HDT_WS_ArrichmentDataEntityResponse resp= (HDT_WS_ArrichmentDataEntityResponse) JSON.deserialize(serializedResponse, HDT_WS_ArrichmentDataEntityResponse.class);
+        positions = resp.data.posizioni;
         transcodeConfigList = depsQr.getTranscodeConfig();
-
-        for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni position : positions){
+        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject position : positions){
             for(HDT_DataEnrichmentTransocode__mdt transcodeConfig : transcodeConfigList){
                if(position.campo == transcodeConfig.SapField__c){
                     if(transcodeConfig.IsNumber__c){

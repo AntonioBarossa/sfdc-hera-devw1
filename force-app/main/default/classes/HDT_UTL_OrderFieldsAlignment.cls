@@ -265,9 +265,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'BillingStreetNumberExtension__c,CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        if(!orderOld.isTransition__c){
+        /*if(!orderOld.isTransition__c){
             changeCustomerMarking(account);
-        }
+        } */
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         // String customerName = null;
         // String customerLastName = null;
@@ -431,7 +431,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
         Set<String> sconti = HDT_UTL_OrderProcessAssignment.getFamilySconto();
 
-        
         if(originalOrder.ServicePoint__c != null){
             OrderItem mainScontiItem = null;
             for(OrderItem item : mainItems){
@@ -449,7 +448,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             return;
         }
         if(!sconti.contains(mainItems[0].Product2.Family)){
-            
+
             
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
@@ -473,15 +472,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
                 orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
-            }
-            if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)){
-                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
-                if(!orderItemsPod.isEmpty() && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c != null){
-                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
-                    orderToUpdate.RateCategory__c = orderItemsPod[0].Order.RateCategory__c;
-                }else{
-                    orderToUpdate.RateCategory__c = getTariCommercialProductCodeFromSub(originalOrder.ContractReference__c);
-                }
             }
         }
         
@@ -540,6 +530,15 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                             orderToUpdate.ServicePoint__c = quoteLine[0].ServicePoint__c;
                         }
                     }
+                }
+            }
+            if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)){
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
+                if(!orderItemsPod.isEmpty() && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c != null){
+                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                    orderToUpdate.RateCategory__c = orderItemsPod[0].Order.RateCategory__c;
+                }else{
+                    orderToUpdate.RateCategory__c = getTariCommercialProductCodeFromSub(originalOrder.ContractReference__c);
                 }
             }
         }
@@ -663,7 +662,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }*/
     }
 
-    private static void changeCustomerMarking(Account account){
+    /* private static void changeCustomerMarking(Account account){
         Map<String, String> customerMarkingTranscode = 
                 new  Map<String, String>{
                     'Persona fisica'=> 'D1 - ',
@@ -676,7 +675,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             account.customerMarking__c = appendix+account.customerMarking__c;
             accountSrv.updateRecord(account);
         }
-    }
+    } */
 
     private inherited sharing class HDT_WRP_Data{
         public String servicePointStatus ='';
