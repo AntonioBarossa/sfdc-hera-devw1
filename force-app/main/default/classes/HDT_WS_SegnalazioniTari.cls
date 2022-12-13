@@ -60,7 +60,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             HDT_WRP_SegnalazioniTariResponse res = (HDT_WRP_SegnalazioniTariResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', mapToSendCallout, HDT_WRP_SegnalazioniTariResponse.class);
             System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
             //if(STRING.isNotBlank(res?.data?.noticeId) && STRING.isBlank(caso.NoticeId__c)){
-            Case caseToUpdate = new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', NoticeId__c=res?.data?.noticeId, Outcome__c = formatEsito(res?.data));
+            Case caseToUpdate = new Case(Id=caso.Id, Phase__c = 'Inviata a SAP', Outcome__c = formatEsito(res?.data));
             if(STRING.isNotBlank(res?.data?.noticeId)){
                 caseToUpdate.NoticeId__c = res?.data?.noticeId;
             }
