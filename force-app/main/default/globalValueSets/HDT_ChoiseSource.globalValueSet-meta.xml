@@ -325,6 +325,11 @@
         <default>false</default>
         <label>Social</label>
     </customValue>
+    <customValue>
+        <fullName>Loyalty</fullName>
+        <default>false</default>
+        <label>Loyalty</label>
+    </customValue>
     <masterLabel>Fonti Consenso</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
