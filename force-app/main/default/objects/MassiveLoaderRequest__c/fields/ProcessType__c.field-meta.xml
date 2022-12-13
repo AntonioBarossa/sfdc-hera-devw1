@@ -114,6 +114,11 @@
                 <default>false</default>
                 <label>Chiusura Massiva Activity</label>
             </value>
+            <value>
+                <fullName>ChiusuraOrderCase</fullName>
+                <default>false</default>
+                <label>Chiusura Order Case</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
