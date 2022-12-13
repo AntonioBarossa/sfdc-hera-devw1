@@ -39,14 +39,15 @@ public class HDT_BA_PostSalesMasterBatchTst {
 
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].id, 'Bozza');
+        List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         ordList[0].EffectiveDate__c = Date.today()-5;
+        ordList[1].EffectiveDate__c = Date.today().addMonths(1);
         insert ordList;
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(6, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(8, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
         Datetime oneDayAgo = Datetime.now().addDays(-5);
         Test.setCreatedDate(caseList[3].Id, oneDayAgo);
@@ -83,8 +84,45 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[5].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
         caseList[5].Type = 'Voltura Tecnica';
         caseList[5].Phase__c = 'In attesa Data Decorrenza';
+        caseList[5].Subject = 'Test no ricalcolo';
+        caseList[5].EffectiveDate__c = Date.today();
         caseList[5].SuspensionDate__c = Date.today()-10;
+
+
+        caseList[6].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_FatturazioneConsumi').getRecordTypeId();
+        caseList[6].Type = 'Ricostruzione Consumi';
+        caseList[6].Phase__c = 'Bozza';
+        caseList[6].Reason__c = 'Ricalcolo consumi';
+        caseList[6].BillingProfile__c = billingProfileList[0].Id;
+        caseList[6].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AltriProcessiPagamenti').getRecordTypeId();
+        caseList[6].Type = 'Blocco Sollecito/Interessi';
+        caseList[6].Phase__c = 'Pratica In Attesa';
+        caseList[6].SuspensionDate__c = Date.today()-10;
+        caseList[6].SuspensionDays__c = 5;
+        caseList[6].DepositPaymentMode__c = 'Bonifico';
+
+        caseList[7].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+        caseList[7].Type = 'Voltura Tecnica';
+        caseList[7].Phase__c = 'In attesa Data Decorrenza';
+        caseList[7].Subject = 'Test ricalcolo';
+        caseList[7].SuspensionDate__c = Date.today()-10;
+        caseList[7].EffectiveDate__c = Date.today();
+        caseList[7].Order__c = ordList[1].Id;
+
         update caseList;        
+
+        wrts_prcgvr__Activity__c actOne = new wrts_prcgvr__Activity__c();
+        actOne.Case__c = caseList[6].Id;
+        actOne.Type__c = 'In attesa risposta cliente';
+        Datetime activityDatetime = Datetime.newInstance(2021, 10, 10);
+        insert actOne;
+        actOne.ActivityStartTime__c = activityDatetime;
+        update actOne;
+
+        wrts_prcgvr__ActivityTemplate__c elabTemplate = new wrts_prcgvr__ActivityTemplate__c();
+        elabTemplate.Name = 'Elaborazione Manuale';
+        elabTemplate.wrts_prcgvr__Subject__c = 'Elaborazione Manuale';
+        insert elabTemplate;
 
         Knowledge__kav kArt = new Knowledge__kav();
         kArt.Title = 'Test Original Title';
@@ -115,8 +153,10 @@ public class HDT_BA_PostSalesMasterBatchTst {
         Case myCase3 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Contratto Non Richiesto' LIMIT 1];
         Case myCase4 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Autolettura' LIMIT 1];
         Case myCase5 = [SELECT Id, Phase__c, Cluster__c FROM Case WHERE Phase__c = 'Bozza' and Cluster__c = 'Pagamenti' LIMIT 1];
-        Case myCase6 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Voltura Tecnica' LIMIT 1];
-        
+        Case myCase6 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Voltura Tecnica' AND Subject = 'Test no ricalcolo' LIMIT 1];
+		Case myCase7 = [SELECT Id, Type FROM Case WHERE Type = 'Ricostruzione Consumi'];
+        Case myCase8 = [SELECT Id, Phase__c, Type, EffectiveDate__c  FROM Case WHERE Type = 'Voltura Tecnica' AND Subject = 'Test ricalcolo' LIMIT 1];
+
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -148,26 +188,41 @@ public class HDT_BA_PostSalesMasterBatchTst {
         }
 
         Case updatedCase1 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase1.Id LIMIT 1];
-        // System.assertEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
-        System.assertNotEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
+        System.debug(LoggingLevel.DEBUG, 'UpdatedCase1: ' + updatedCase1.Phase__c);
+        System.assertEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
+        // System.assertNotEquals('Preventivo scaduto', updatedCase1.Phase__c, 'Phase != Preventivo scaduto');
 
         Case updatedCase2 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase2.Id LIMIT 1];
-        // System.assertEquals('Da Inviare', updatedCase2.Phase__c, 'Phase != Da Inviare');
-        System.assertNotEquals('Da Inviare', updatedCase2.Phase__c, 'Phase != Da Inviare');
+        System.debug(LoggingLevel.DEBUG, 'updatedCase2: ' + updatedCase2.Phase__c);
+        System.assertEquals('Da Inviare', updatedCase2.Phase__c, 'Phase != Da Inviare');
+        // System.assertNotEquals('Da Inviare', updatedCase2.Phase__c, 'Phase != Da Inviare');
 
         Case updatedCase3 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase3.Id LIMIT 1];
-        // System.assertEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
-        System.assertNotEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
+        System.debug(LoggingLevel.DEBUG, 'updatedCase3: ' + updatedCase3.Phase__c);
+        System.assertEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
+        // System.assertNotEquals('Da Inviare', updatedCase3.Phase__c, 'Phase != Da Inviare');
 
         Case updatedCase4 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase4.Id LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase4: ' + updatedCase4.Phase__c);
         // System.assertEquals('Bozza Annullata', updatedCase4.Phase__c, 'Phase != Bozza Annullata');
 
         Case updatedCase5 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase5.Id LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase5: ' + updatedCase5.Phase__c);
         // System.assertEquals('Bozza Annullata', updatedCase5.Phase__c, 'Phase != Bozza Annullata');
 
         Case updatedCase6 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase6.Id LIMIT 1];
-        // System.assertEquals('Da Inviare', updatedCase6.Phase__c, 'Phase != Da Inviare');
-        System.assertNotEquals('Da Inviare', updatedCase6.Phase__c, 'Phase != Da Inviare');
+        System.debug(LoggingLevel.DEBUG, 'updatedCase6: ' + updatedCase6.Phase__c);
+        System.assertEquals('Da Inviare', updatedCase6.Phase__c, 'Phase != Da Inviare');
+        // System.assertNotEquals('Da Inviare', updatedCase6.Phase__c, 'Phase != Da Inviare');
+
+        Case updatedCase7 = [SELECT Id, Phase__c FROM Case WHERE Id =: myCase7.Id LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase7: ' + updatedCase7.Phase__c);
+
+
+        Case updatedCase8 = [SELECT Id, Phase__c, EffectiveDate__c FROM Case WHERE Id =: myCase8.Id LIMIT 1];
+        
+        System.assertEquals(true, updatedCase8.EffectiveDate__c > myCase8.EffectiveDate__c , 'Data decorrenza non ricalcolata');
+        System.assertEquals('In attesa Data Decorrenza', updatedCase8.Phase__c , 'Phase != In attesa Data Decorrenza');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
         // System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');

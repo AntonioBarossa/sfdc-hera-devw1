@@ -45,7 +45,7 @@
         &quot;Column&quot;: 2
     }, {
         &quot;FieldName&quot;: &quot;ServicePointType__c&quot;,
-        &quot;Required&quot;: false,
+        &quot;Required&quot;: true,
         &quot;Column&quot;: 2
     }, {
         &quot;FieldName&quot;: &quot;VATPercentage__c&quot;,

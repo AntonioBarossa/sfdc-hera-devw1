@@ -7,12 +7,12 @@
     <duplicateRuleFilter xsi:nil="true"/>
     <duplicateRuleMatchRules>
         <matchRuleSObjectType>Contact</matchRuleSObjectType>
-        <matchingRule>Contact_Matching</matchingRule>
+        <matchingRule>Contact_Matching_2</matchingRule>
         <objectMapping xsi:nil="true"/>
     </duplicateRuleMatchRules>
     <isActive>true</isActive>
     <masterLabel>Contact Duplicated</masterLabel>
     <operationsOnUpdate>Alert</operationsOnUpdate>
     <securityOption>BypassSharingRules</securityOption>
-    <sortOrder>3</sortOrder>
+    <sortOrder>1</sortOrder>
 </DuplicateRule>

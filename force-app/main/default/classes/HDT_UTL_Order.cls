@@ -52,18 +52,10 @@ public inherited sharing class HDT_UTL_Order {
 
 
     }*/
-    @auraEnabled
-    public static boolean calculateRateCategory(Order ord){
-        HDT_QR_Order orQr = new HDT_QR_Order();
-        Order o = orQr.getRecordById(ord.id);
-
-        if( 'Acqua'.equalsIgnoreCase(o.Commodity__c) ) {
-            return true;
-        }
-        
+    private static Map<String,Object> rateCategoryAlgo(List<RateCategory__c> listRate, Order o)
+    {
         boolean res = false;
         String code = '';
-        List<RateCategory__c> listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
         for(RateCategory__c r : listRate){
             if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                 code = r.CalculatedValue__c;
@@ -101,8 +93,35 @@ public inherited sharing class HDT_UTL_Order {
                 }
             }
         }
-        System.debug('**********:' + listRate);
-        Map<String,String> mapCal = new Map<String,String>();
+
+        return new Map<String, Object>{'code'=> code, 'res'=>res};
+    }
+
+    @auraEnabled
+    public static boolean calculateRateCategory(Order ord){
+        HDT_QR_Order orQr = new HDT_QR_Order();
+        Order o = orQr.getRecordById(ord.id);
+        boolean res = false;
+        String code = '';
+        List<RateCategory__c> listRate = new List<RateCategory__c>();
+
+        if( 'Acqua'.equalsIgnoreCase(o.Commodity__c) || 'Ambiente'.equalsIgnoreCase(o.Commodity__c)) {
+            return true;
+        }
+
+        if(o.Market__c != null && o.Market__c.equalsIgnoreCase('Regolamentato'))
+        {
+            listRate = HDT_QR_RateCategory.getRecordByMarket(o.Market__c);
+        }
+        else
+        {
+            listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,o.CommercialProduct__c,o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
+        }
+        Map<String, Object> rateResult = rateCategoryAlgo(listRate, o);
+        code = (String) rateResult.get('code');
+        res = (Boolean) rateResult.get('res');
+        //System.debug('**********:' + listRate);
+        //Map<String,String> mapCal = new Map<String,String>();
         Order oUp = new Order();
         oUp.id = o.id;
         oUp.rateCategory__c = code;
@@ -279,6 +298,10 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.Contact__c = oldOrder.Contact__c;
         orderToUpdate.OrderReference__c = oldOrder.Id;
         orderToUpdate.AggregateBilling__c = oldOrder.AggregateBilling__c;
+        /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+        orderToUpdate.SignedDate__c = oldOrder.SignedDate__c;
+        orderToUpdate.DateSentToSII__c = oldOrder.DateSentToSII__c;
+        orderToUpdate.EffectiveDate__c = oldOrder.EffectiveDate__c;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 

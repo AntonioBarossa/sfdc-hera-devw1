@@ -2,166 +2,227 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 14-09-2022
+ * @last modified on  : 02-12-2022
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity')
+@SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.pmdAvoidDebugStatements, PMD.CyclomaticComplexity, PMD.ClassNamingConventions, PMD.AvoidDebugStatements')
 public with sharing class HDT_LC_AppointmentTariAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();
     private static final String FIELDS_FOR_QUERY_CASE = 'Id, CaseNumber';
+
+    private static final String REQUEST_PATH_SEARCH = '/appointments/search';
+    private static final String REQUEST_PATH_CONFIRM = '/appointments/confirm';
+    private static final String REQUEST_PATH_VIEW = '/appointments';
+
+    public class HDT_WRP_DataApp{
+        @AuraEnabled public String purchaseOrderNumber {get;set;}
+        @AuraEnabled public String streetCoding {get;set;}
+        @AuraEnabled public String street {get;set;}
+        @AuraEnabled public String housenumber {get;set;}
+        @AuraEnabled public String typeInt {get;set;}
+        @AuraEnabled public String indicator {get;set;}
+        @AuraEnabled public String numberOfLines {get;set;}
+        @AuraEnabled public String city {get;set;}
+        @AuraEnabled public Datetime startDate {get;set;}
+        @AuraEnabled public Datetime endDate {get;set;}
+
+        public HDT_WRP_DataApp(){
+            return;
+        }
+
+        public HDT_WRP_DataApp(String purchaseOrderNumber, String streetCoding, String street,
+                                String housenumber, String typeInt, String city) {
+        
+            this.purchaseOrderNumber = purchaseOrderNumber;
+            this.streetCoding = streetCoding;
+            this.street = street;
+            this.housenumber = housenumber;
+            this.typeInt = typeInt;
+            this.indicator = 'Y';
+            this.numberOfLines = null;
+            this.city = city;
+            //this.startDate = startDate;
+            //this.endDate = endDate;
+        }
+
+    }
+                                
+
+    public virtual class HDT_WRP_AppointmentReqSearch extends HDT_WS_Request{
+        String purchaseOrderNumber;
+        String streetCoding;
+        String street;
+        String housenumber;
+        String typeInt;
+        String indicator;
+        String numberOfLines;
+        String city;
+
+        public HDT_WRP_AppointmentReqSearch(HDT_WRP_DataApp wrap) {
+        
+            this.purchaseOrderNumber = wrap.purchaseOrderNumber;
+            this.streetCoding = wrap.streetCoding;
+            this.street = wrap.street;
+            this.housenumber = wrap.housenumber;
+            this.typeInt = wrap.typeInt;
+            this.indicator = wrap.indicator;
+            this.numberOfLines = wrap.numberOfLines;
+            this.city = wrap.city;
+        }
+    }
+
+    
+    public class HDT_WS_AppointmentSearchResponse extends HDT_WS_Response{
+        @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
+        @AuraEnabled public String status {get;set;}
+        @AuraEnabled public String correlationId {get;set;}
+        @AuraEnabled public String timestamp {get;set;}
+        @AuraEnabled public HDT_WRP_Data_Search data {get;set;}
+    }
+    public class HDT_WRP_Data_Search{
+		@AuraEnabled public String outcome {get;set;}
+        @AuraEnabled public String text {get;set;}
+		@AuraEnabled public List<HDT_WRP_AppointmentDate> appointmentData {get;set;}
+	}
+    public class HDT_WRP_AppointmentDate{
+		@AuraEnabled public String startDate {get;set;}
+        @AuraEnabled public String endDate {get;set;}
+	}
+
+
+    public virtual class HDT_WRP_AppointmentReqConfirm extends HDT_WS_Request{
+        String purchaseOrderNumber;
+        String streetCoding;
+        String street;
+        String housenumber;
+        String typeInt;
+        String indicator;
+        String numberOfLines;
+        String city;
+        String startDate;
+        String endDate;
+        
+        public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap) {
+
+            this.purchaseOrderNumber = wrap.purchaseOrderNumber;
+            this.streetCoding = wrap.streetCoding;
+            this.street = wrap.street;
+            this.housenumber = wrap.housenumber;
+            this.typeInt = wrap.typeInt;
+            this.indicator = wrap.indicator;
+            this.city = wrap.city;
+            this.numberOfLines = wrap.numberOfLines;
+            this.startDate = wrap.startDate.format('yyyyMMddhhmmss');
+            this.endDate = wrap.endDate.format('yyyyMMddhhmmss');
+        }
+    }
+
+    public class HDT_WS_AppointmentConfirmResponse extends HDT_WS_Response {
+        @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
+        @AuraEnabled public String status {get;set;}
+        @AuraEnabled public String correlationId {get;set;}
+        @AuraEnabled public String timestamp {get;set;}
+        @AuraEnabled public HDT_WRP_Data_Confirm data {get;set;}
+    }
+
+    public class HDT_WRP_Data_Confirm{
+        @AuraEnabled public String noticeNumber {get;set;}
+        @AuraEnabled public String workCenterId {get;set;}
+        @AuraEnabled public String division {get;set;}
+        @AuraEnabled public String startDate {get;set;}
+        @AuraEnabled public String endDate {get;set;}
+    }
+
+    public class HDT_WS_AppointmentViewResponse extends HDT_WS_Response{
+        @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
+        @AuraEnabled public String status {get;set;}
+        @AuraEnabled public String correlationId {get;set;}
+        @AuraEnabled public String timestamp {get;set;}
+        @AuraEnabled public List<HDT_WRP_AppointmentView> data {get;set;}
+    }
+        
+    public class HDT_WRP_AppointmentView{
+        @AuraEnabled public String noticeNumber {get;set;}
+        @AuraEnabled public String appointmentType {get;set;}
+        @AuraEnabled public String startDate {get;set;}
+        @AuraEnabled public String endDate {get;set;}
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static HDT_WS_AppointmentSearchResponse handleSearch(HDT_WRP_DataApp wrap) {
+        HDT_WRP_AppointmentReqSearch req = new HDT_WRP_AppointmentReqSearch(wrap);
+        HDT_WS_AppointmentSearchResponse res = (HDT_WS_AppointmentSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_SEARCH,'POST', req, HDT_WS_AppointmentSearchResponse.class);
+        System.Debug(LoggingLevel.DEBUG,'search res -> ' + res); 
+        return res;
+    }
+
+    @AuraEnabled
+    public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap) {
+        HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap);
+        //system.debug(json.serialize(req));
+        HDT_WS_AppointmentConfirmResponse res = (HDT_WS_AppointmentConfirmResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_CONFIRM,'POST', req, HDT_WS_AppointmentConfirmResponse.class);
+        //system.debug(json.serialize(res));
+        if(Test.isRunningTest()){
+            res.status = 'success';
+        }
+
+        if(STRING.isNotBlank(res?.data?.noticeNumber)){
+            theCase.StartAppointment__c = wrap.startDate;
+            theCase.EndAppointment__c = wrap.endDate;
+            theCase.JobCenterCode__c = res.data.workCenterId;
+            theCase.NoticeId__c = res.data.noticeNumber;
+            //theCase.Phase__c = 'Da Inviare';
+            theCase.Phase__c = 'Inviata a SAP';
+            //theCase.Outcome__c ='Recived_Slots';
+
+            if(!theCase.WithdrawalFee__c && theCase.ServicePoint__c != null){
+                //if(theCase.ServicePoint__c == null){    throw new HDT_UTL_HeraException('ServicePointId Null when creating MasterDetail');     }
+                Date dataRitiro = Date.newinstance(theCase.CreatedDate.year(), theCase.CreatedDate.month(), theCase.CreatedDate.day());
+                FreeWithdraw__c ritiro = new FreeWithdraw__c();
+                ritiro.ServicePoint__c = theCase.ServicePoint__c;
+                ritiro.LastFreeWithdrawDate__c = dataRitiro;
+                System.debug(LoggingLevel.DEBUG, 'ritiro -> ' + ritiro);
+                HDT_UTL_DatabaseService.insertSObject(ritiro);
+            }
+            HDT_UTL_DatabaseService.updateSObject(theCase);
+        }
+        return res;
+    }
+
+    @AuraEnabled
+    public static HDT_WS_AppointmentViewResponse handleView(String purchaseOrderNumber) {
+        // HDT_WRP_AppointmentReqView req = new HDT_WRP_AppointmentReqView(purchaseOrderNumber);
+        string path = purchaseOrderNumber != null ? REQUEST_PATH_VIEW+'?purchaseOrderNumber='+purchaseOrderNumber : REQUEST_PATH_VIEW;
+        HDT_WS_AppointmentViewResponse res = (HDT_WS_AppointmentViewResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',path,'GET', (HDT_WS_Request)null, HDT_WS_AppointmentViewResponse.class);
+        return res;
+    }
 
     public enum requestType {
         CANCELLATION,CONFIRM,EDIT,NEW_SLOT,FIRST_SEARCH
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getCase(String caseId,List<String> fields){
-        String response = '';
+    public static Case getCase(String caseId,List<String> fields){
+        Case caseToRet;
         try{
-            response = JSON.serialize(HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,',')));
+            caseToRet= HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,','));
         }catch (exception e){
             throw new AuraHandledException(e.getMessage());
         }
-        return response;
-    }
-
-    @AuraEnabled
-    public static String handleConfirm(String caseId,String appointmentJson) { //questo
-        String response = '';
-        try{
-            // HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento request = initAppointmentRequestCase(caseId, requestType.CONFIRM);
-            // Map<String,String> mapAppointment = (Map<String,String>) JSON.deserialize(appointmentJson, Map<String,String>.class);
-            // HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_SlotAppuntamento();
-            // appointment.codiceApp = mapAppointment.get('codice');
-            // appointment.appData = HDT_UTL_AppointmentAgenda.dateConverter(mapAppointment.get('data'));
-            // appointment.appFasciaOrario = mapAppointment.get('fascia');
-            // appointment.zLimApp= mapAppointment.get('dataLimite');
-            // appointment.zLimAppOra = mapAppointment.get('oraLimite');
-            // appointment.zStimaDurApp = mapAppointment.get('stima');
-            // request.appData = appointment.appData;
-            // request.appFasciaOrario = appointment.appFasciaOrario;
-            // HDT_UTL_AppointmentAgenda.setAppointmentCode(request, appointment.codiceApp);
-
-            //HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
-            // response = '{"data" : "31/12/2022","fascia" : "15:00/16:00","codice" : "2222","dataLimite" : "28/12/2021","oraLimite" : "19:00","stima" :"00:30:00"}';
-            response = 'OK';
-            return response;
-        }catch (exception e){
-            throw new AuraHandledException(e.getMessage());
-        }
-        // return response;
+        return caseToRet;
     }
     
     @AuraEnabled
-    public static void handleNewActivityCreationAndCaseUpdate(String caseId, String caseFields, String templateName, String activityFields){    
-        System.debug('caseId -> ' + caseId);
-        System.debug('activityFields -> ' + JSON.deserializeUntyped(activityFields));
-        System.debug('caseFields -> ' + JSON.deserializeUntyped(caseFields));
-
-        Map<String,Object> activityObj = (Map<String,Object>)JSON.deserializeUntyped(activityFields);
-        Map<String,Object> caseObj = (Map<String,Object>)JSON.deserializeUntyped(caseFields);
-
-        System.debug('templateName ->' + templateName); 
-        List<wrts_prcgvr__Activity__c> activitiesToInsert = null;
+    public static void updateCase(Case caso){    
         
-        if(templateName!=null){
-            activitiesToInsert = HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(new List<String>{caseId}, templateName);
-            for(wrts_prcgvr__Activity__c activity : activitiesToInsert){
-                activity.wrts_prcgvr__IsRequired__c=true;
-                if(JSON.deserializeUntyped(activityFields)!= null){
-                    activity.AppointmentCode__c = (String) activityObj.get('appointmentCode');
-                    activity.JobCenterCode__c = (String) activityObj.get('jobCenterCode');
-                    activity.SotCode__c = (String) activityObj.get('sotCode');
-                    activity.StartAppointment__c = Date.parse((String) activityObj.get('startAppointment'));
-                    activity.EndAppointment__c = Date.parse((String) activityObj.get('endAppointment'));
-                }
-            }
-        }
+        HDT_UTL_DatabaseService.updateSObject(caso);
 
-        if(JSON.deserializeUntyped(caseFields)!=null){
-            Case theCase = [SELECT Id FROM Case WHERE Id =:caseId];
-            if(theCase!=null){
-                System.debug('theCase ->' + theCase);
-                if((String) caseObj.get('appointmentCode') !=null)  theCase.AppointmentCode__c = (String) caseObj.get('appointmentCode');
-                if((String) caseObj.get('jobCenterCode') !=null) theCase.JobCenterCode__c = (String) caseObj.get('jobCenterCode');
-                if((String) caseObj.get('sotCode') !=null) theCase.SotCode__c = (String) caseObj.get('sotCode');
-                if((String) caseObj.get('startAppointment') != null) theCase.StartAppointment__c = Date.parse((String) caseObj.get('startAppointment'));
-                if((String) caseObj.get('endAppointment') != null) theCase.EndAppointment__c = Date.parse((String) caseObj.get('endAppointment'));
-                if((String) caseObj.get('phase') != null) theCase.Phase__c = (String) caseObj.get('phase');
-                if((String) caseObj.get('note') != null) theCase.Note__c = (String) caseObj.get('note');
-                if((String) caseObj.get('outcome') != null) theCase.Outcome__c = (String) caseObj.get('outcome');
-                
-                HDT_UTL_DatabaseService.updateSObject(theCase);
-            }
-        }
-
-        if(activitiesToInsert?.size()>0){
-            System.debug('activitiesToInsert.size ->' + activitiesToInsert.size());
-            HDT_UTL_DatabaseService.insertSObject(activitiesToInsert);
-        }
     }
-
-    @AuraEnabled
-    public static void updateCase(List<Case> cases){ 
-        if(cases?.size()>0){
-            System.debug('cases.size ->' + cases.size());
-            HDT_UTL_DatabaseService.insertSObject(cases);
-        }
-    }
-
-    @AuraEnabled
-    public static String handleView(String caseId) { //questo
-        String response = '';
-        try{
-                //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
-                // return handleSearc(caseId, preferedDate, preferedTimeSlot, requestType.FIRST_SEARCH);
-                // return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
-                return '{"appuntamento" : {"id" : "1","tipo" : "Primo Appuntamento","inizio" : "2022-12-31","fine" : "2022-12-31"}}';
-               
-        }catch (exception e){
-            throw new AuraHandledException(e.getMessage());
-        }
-        // return response;
-    }
-
-    @AuraEnabled
-    public static String handleSearch(String caseId, String searchType, Date preferedDate, String preferedTimeSlot) { //questo
-        String response = '';
-        try{
-                //response = srvAgenda.handleFirstSearch(caseId,preferedDate,preferedTimeSlot);
-                // return handleSearc(caseId, preferedDate, preferedTimeSlot, requestType.FIRST_SEARCH);
-                
-                // Nessun Appuntamento Restituito
-                //return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : []}';
-               
-                return '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
-
-        }catch (exception e){
-            throw new AuraHandledException(e.getMessage());
-        }
-        // return response;
-    }
-
-    // private static String handleSearc(Id caseId, Date preferedDate, String preferedTimeSlot,requestType reqType){ // MOCK
-    //     HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento request = initAppointmentRequestCase(caseId, reqType);
-    //     HDT_UTL_AppointmentAgenda.setRequestFieldsForDateSearch(request, preferedDate, preferedTimeSlot);
-    //     System.debug('request -> ' + request);
-    //     // HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = HDT_UTL_AppointmentAgenda.executeCallout(request);
-    //     // return manageResponse(response, caseId, reqType); 
-       
-       
-    //     String bodyString = '{"codCaus" : "test" ,"codFlusso" : "0160" ,"desEsitoConf" : "1" ,"documentkey" : "test" ,"errInvioDis" : "TEST MESSAGGIO DI ERRORE" ,"extAnnotazioni" : "test" ,"rifExt" : "xxx" ,"rifRich" : "x" ,"zCodCausApp" : "x" ,"zGestApp" : "0" ,"appuntamento" : [{"appData" : "2022-12-31","appFasciaOrario" : "15:00/16:00","codiceApp" : "2222","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "16:00/17:00","codiceApp" : "3333","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "17:00/18:00","codiceApp" : "4444","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "18:00/19:00","codiceApp" : "5555","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"},{"appData" : "2022-12-31","appFasciaOrario" : "19:00/20:00","codiceApp" : "6666","zLimApp" : "2022-12-28","zLimAppOra" : "19:00:00","zStimaDurApp" :"00:30:00"}]}';
-    //      Map<String, Object> responseBodyMap = (Map<String, Object>) JSON.deserializeUntyped(bodyString);
-    //     // HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response = new HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento();
-    //     //return JSON.deserialize(JSON.serialize(responseBodyMap.get('responseAppuntamento')));
-    //     return bodyString;
-    // }
-
 
     public static HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento initAppointmentRequestCase(Id caseId,requestType requestMethod){
         HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento appointment = new HDT_WRP_Appuntamento.HDT_WRP_RequestAppuntamento();
-        Case caso = HDT_UTL_AppointmentAgenda.getCase(caseId,FIELDS_FOR_QUERY_CASE);
+        //Case caso = HDT_UTL_AppointmentAgenda.getCase(caseId,FIELDS_FOR_QUERY_CASE);
         appointment.documentkey = 'test';
         appointment.rifRich = 'test';
         String modApp = 'test';
@@ -177,9 +238,5 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         appointment.self = '';
         return appointment;
     }
-
-    // public static String manageResponse(HDT_WRP_Appuntamento.HDT_WRP_ResponseAppuntamento response,Id activityId,requestType requestMethod){
-    //     return '';
-    // }
 
 }

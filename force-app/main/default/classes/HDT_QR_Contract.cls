@@ -71,6 +71,7 @@ public inherited sharing class HDT_QR_Contract {
             Name,
             AccountId,
             ContractNumber,
+            SAPContractCode__c,
             Status,
             BillingProfile__c,
             SBQQ__Order__r.BillingProfile__c,
@@ -119,6 +120,7 @@ public inherited sharing class HDT_QR_Contract {
     * @return List<Contract>
     */
     public List<Contract> getTempNewActivationContractsByAccountId(String accountId){
+        Date maxDate = Date.newInstance(2099, 1, 1);
         contractSrv.checkReadAccess('Name,AccountId,ContractNumber,Status,SAPContractCode__c'); 
         return [
             SELECT
@@ -134,7 +136,7 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId									 
             AND Status IN ('Activated', 'Attivo')
-            AND SBQQ__Order__r.ProcessType__c = 'Temporanea - Nuova Attivazione'
+            AND EndDate < :maxDate
             WITH SECURITY_ENFORCED
         ];
     }

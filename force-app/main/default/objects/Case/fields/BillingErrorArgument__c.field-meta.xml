@@ -78,6 +78,41 @@
                 <default>false</default>
                 <label>Rimborso retroattivo importo fognatura e depurazione</label>
             </value>
+            <value>
+                <fullName>Periodo calcolato non di competenza</fullName>
+                <default>false</default>
+                <label>Periodo calcolato non di competenza</label>
+            </value>
+            <value>
+                <fullName>Superficie non corretta</fullName>
+                <default>false</default>
+                <label>Superficie non corretta</label>
+            </value>
+            <value>
+                <fullName>Componenti non corretti</fullName>
+                <default>false</default>
+                <label>Componenti non corretti</label>
+            </value>
+            <value>
+                <fullName>Categoria Tariffaria non corretta</fullName>
+                <default>false</default>
+                <label>Categoria Tariffaria non corretta</label>
+            </value>
+            <value>
+                <fullName>Agevolazione non corretta</fullName>
+                <default>false</default>
+                <label>Agevolazione non corretta</label>
+            </value>
+            <value>
+                <fullName>Diversi parametri non corretti</fullName>
+                <default>false</default>
+                <label>Diversi parametri non corretti</label>
+            </value>
+            <value>
+                <fullName>Argomento non censito</fullName>
+                <default>false</default>
+                <label>Argomento non censito</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

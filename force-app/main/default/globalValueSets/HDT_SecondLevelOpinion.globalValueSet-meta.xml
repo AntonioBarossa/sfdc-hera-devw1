@@ -205,6 +205,16 @@
         <default>false</default>
         <label>Verifiche portali</label>
     </customValue>
+    <customValue>
+        <fullName>Acqua</fullName>
+        <default>false</default>
+        <label>Acqua</label>
+    </customValue>
+    <customValue>
+        <fullName>Ambiente</fullName>
+        <default>false</default>
+        <label>Ambiente</label>
+    </customValue>
     <masterLabel>Pareri 2° Livello</masterLabel>
     <sorted>true</sorted>
 </GlobalValueSet>

@@ -16,5 +16,5 @@
     <protected>false</protected>
     <showsLocation>false</showsLocation>
     <showsStatus>false</showsStatus>
-    <url>/lightning/cmp/c__HDT_LCP_CheckAssessments?c__accId={!Account.Id}&amp;c__fiscalCode={!Account.FiscalCode__c}&amp;c__supplyCity={!Account.BillingCity}&amp;c__customerMarking={!Account.CustomerMarking__c}</url>
+    <url>/lightning/cmp/c__HDT_LCP_CheckAssessments?c__accId={!Account.Id}&amp;c__fiscalCode={!Account.FiscalCode__c}&amp;c__supplyCity={!Account.BillingCityCode__c}&amp;c__customerMarking={!Account.CustomerType__c}</url>
 </WebLink>

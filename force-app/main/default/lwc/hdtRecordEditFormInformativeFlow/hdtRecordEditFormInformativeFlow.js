@@ -159,6 +159,14 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                                 {
                                                     label:'Multi',
                                                     value:'Multi'
+                                                },
+                                                {
+                                                    label:'Acqua',
+                                                    value:'Acqua'
+                                                },
+                                                {
+                                                    label:'Ambiente',
+                                                    value:'Ambiente'
                                                 }
                                             ];
                                             console.log('#Servizio -> ' + JSON.stringify(result));
@@ -345,6 +353,14 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 {
                     label:'Multi',
                     value:'Multi'
+                },
+                {
+                    label:'Acqua',
+                    value:'Acqua'
+                },
+                {
+                    label:'Ambiente',
+                    value:'Ambiente'
                 }
             ];
             console.log('#Servizio -> '+JSON.stringify(result));

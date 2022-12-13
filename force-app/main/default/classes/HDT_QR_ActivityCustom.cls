@@ -126,6 +126,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             order__c,
+            Order__r.Account.Category__c,
             Account__c,
             Type__c,
             DiscardCount__c,
@@ -332,7 +333,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
                                                              Order__r.Account.RecordType.DeveloperName                                                             
                                                        FROM wrts_prcgvr__Activity__c 
                                                        WHERE  (RecordType.DeveloperName = 'HDT_RT_CreditCheckKO' or RecordType.DeveloperName = 'HDT_RT_KoPrecedeteCliente') 
-                                                                and wrts_prcgvr__Status__c = 'Aperta' and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
+                                                                and wrts_prcgvr__IsClosed__c = false and Order__c IN :orderSetId WITH SECURITY_ENFORCED];
 
         return actList;}
 
@@ -624,7 +625,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
          * @return List<wrts_prcgvr__Activity__c>
         */
         public static List<wrts_prcgvr__Activity__c> getActivityCreatedByQualityBatch(List<String> orderList){
-            Set<String> activityTypes = new Set<String>{HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL,HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO};
+            Set<String> activityTypes = new Set<String>{HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL,HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO,'Quality Scaduta'};
             return [SELECT 
                     Id,
                     Account__c,

@@ -32,10 +32,13 @@ public inherited sharing class HDT_QR_Payments {
         DocumentPaymentMethod__c,
         IbanABI__c,
         BeneficiaryAccount__r.Name,
+        BankAccountSignatoryFirstName__c,
+        BankAccountSignatoryLastName__c,
         BillingProfile__r.ContractAccountCode__c,
         Type,
         CityOrInstitution__c,
-        Note__c
+        Note__c,
+        PaidAmount__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

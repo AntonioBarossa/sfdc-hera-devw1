@@ -80,7 +80,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].SupplyType__c = 'Domestico';
-            spList[0].ImplantType__c = '13Z0-Grossisti';
+            spList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
             spList[0].Account__c = accList[0].Id;
             insert spList;
 
@@ -259,6 +259,21 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             System.assertEquals(orders[0].PraxidiaOverrallSatisfaction__c, acc.SatisfactionIndexCtrl__c, 'Account Updated.');
             System.assertNotEquals(null, acc.SatisfactionIndexCtrl__c, 'Account update failed.');
+        }
+    }
+
+    @isTest
+    public static void testCancellAllEligibleOrder() {
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+        System.runAs(u){
+            List<Order> orders = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+            Contact__c, ParentOrder__c, PhaseStory__c 
+            FROM Order WHERE ParentOrder__c = null];
+            Test.startTest();
+            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id);
+            Test.stopTest();
+            System.assertEquals(false, ordChildList.isEmpty(), 'child returned');
         }
     }
 
@@ -918,38 +933,56 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
     @isTest
     public static void testTransitoryPhaseManagement() {
- 
+
+        delete [SELECT Id FROM ServiceRequest__c];
+
+        List<Order> orders = [SELECT Id,AccountId,ParentOrder__c FROM Order WHERE ParentOrder__r.RecordTypeId = :constants.ORDER_RECORDTYPEID_ORDERDOSSIER];
+        Sale__c sale  = HDT_UTL_DataFactoryTst.createSale(1, true, orders[0].AccountId,'Attiva')[0];
+        Opportunity opp = HDT_UTL_DataFactoryTst.createOpportunity(1, true)[0];
+        List<SBQQ__Quote__c> qList = HDT_UTL_DataFactoryTst.createQuote(2, true, orders[0].Id, opp.Id, sale.Id, 'Quote');
+        Integer i = 0;
+        Id orderId = null; 
+        List<ServiceRequest__c> myServiceRequestList = new List<ServiceRequest__c>();
+        for (Order o : orders){
+            o.isTransition__c = true;
+            if (i<2){
+                o.SBQQ__Quote__c = qList[i].Id;
+                o.RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
+            }else{
+                o.SBQQ__Quote__c = qList[Math.mod(i, 2)].Id;
+                o.RecordTypeId = constants.ORDER_RECORDTYPEID_VAS;
+            }
+            if(o.SBQQ__Quote__c == qList[1].Id && o.RecordTypeId == constants.ORDER_RECORDTYPEID_VAS){
+                orderId = o.Id;
+            }
+            ServiceRequest__c sr = HDT_UTL_DataFactoryTst.createServiceRequest(1, false)[0];
+            sr.Order__c = o.Id;
+            sr.NextPhase__c = 'Esportazione VS Siebel';
+            myServiceRequestList.add(sr);
+            i++;
+        }
+        insert myServiceRequestList;
+        update orders;
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
         System.runAs(u){
 
-            List<Order> ordTestUno = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Phase__c = 'Sequenzializzato' LIMIT 1];
-
-
-            List<Order> orderList = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId, isTransition__c FROM Order WHERE ParentOrder__c != null AND Phase__c = 'Documentazione Validata' LIMIT 1];
-            orderList[0].SiebelStatus__c = 'Annullato';
-
-            Order helpOrd = new Order();
-            helpOrd.Id  = orderList[0].Id ;
-            Map<Id,SObject> oldOrderMap = new Map<Id,SObject>();
-            oldOrderMap.put(helpOrd.Id,helpOrd);
-
-            System.debug('NewOrder0>>>>>>'+ orderList[0]);
-
-            List<Order> newOrderList = new List<Order>();
-            newOrderList.add(orderList[0]);
-
             Test.startTest();
 
-            HDT_UTL_OrderProcess.transitoryPhaseManagement(newOrderList, oldOrderMap);
-            
-            Test.stopTest();
-            
-            List<Order> ordTest = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :newOrderList[0].Id LIMIT 1];
-            ordTestUno = [SELECT Id, Phase__c, SiebelStatus__c, ParentOrder__c, Status, PhaseStory__c, SBQQ__Contracted__c, recordTypeId FROM Order WHERE Id = :ordTestUno[0].Id LIMIT 1];
+                orders[0].SiebelStatus__c ='KO definitivo';
+                update orders[0];
+                
+                update new Order(Id = orderId, SiebelStatus__c ='Pratica rifiutata');
 
-            System.assertEquals('Annullato', ordTestUno[0].Phase__c, 'Fase non aggiornata correttamente.');
-            System.assertEquals('Annullato', ordTestUno[0].Status, 'Status non aggiornata correttamente.');
+                orders[1].SiebelStatus__c ='Eliminato';
+                update orders[1];
+            Test.stopTest();
+        }
+
+        i = 1;
+        for (Order o : [SELECT Id,OrderNumber,SBQQ__Quote__c,Phase__c,Status,AccountId,RecordTypeId FROM Order WHERE ParentOrder__r.RecordTypeId = :constants.ORDER_RECORDTYPEID_ORDERDOSSIER]){
+            System.assertEquals(true, ('Annullato'.equalsIgnoreCase(o.Status) && 'Annullato'.equalsIgnoreCase(o.Phase__c)),i+') Order ' + o.OrderNumber+' Phase__c '+o.Phase__c +' status ' +o.status+ ' quote ' + o.SBQQ__Quote__c+ '(orderId = '+orderId+' quote= '+qList[0].Id+'/'+qList[1].Id+')');
+            i++;
         }
     }
 
@@ -980,6 +1013,39 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.stopTest();
 
             System.assertEquals('Documentazione Validata', newOrderList[0].Phase__c, 'Activity Custom created');
+        }
+    }
+
+    @isTest
+    public static void testCreditCheckActivityManagement() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> newOrderList = [SELECT Id 
+                                        FROM Order WHERE IsTransition__c = false LIMIT 2];
+        
+            newOrderList[0].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[1].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[0].CreditCheckDescription__c = 'TEST';
+            newOrderList[1].CreditCheckDescription__c = 'TEST';
+
+            Set<Id> ordersId = new Set<Id>{newOrderList[0].Id,newOrderList[1].Id};
+
+            update newOrderList;
+
+            System.assertEquals(2, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non sono state create');
+
+            Test.startTest();
+
+            newOrderList[0].Phase__c = 'Annullato';
+            newOrderList[1].Phase__c = 'Annullato';
+            update newOrderList;
+            
+            Test.stopTest();
+
+            System.assertEquals(0, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non si sono chiuse');
         }
     }
 

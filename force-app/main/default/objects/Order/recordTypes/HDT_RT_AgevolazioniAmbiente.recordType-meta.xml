@@ -2,15 +2,50 @@
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_AgevolazioniAmbiente</fullName>
     <active>true</active>
-    <label>HDT_RT_AgevolazioniAmbiente</label>
+    <label>Agevolazioni Ambiente</label>
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
             <fullName>Da contribuente</fullName>
-            <default>false</default>
+            <default>true</default>
         </values>
         <values>
             <fullName>D'ufficio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2614,6 +2649,10 @@
 			<fullName>Documentazione Validata</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
 		<values>
 			<fullName>Esito KO Da SAP</fullName>
 			<default>false</default>
@@ -2632,6 +2671,10 @@
 		</values>
 		<values>
 			<fullName>In attesa perfezionamento documentazione sollecitata</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>In Lavorazione</fullName>
 			<default>false</default>
 		</values>
 		<values>
@@ -2988,6 +3031,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

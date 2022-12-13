@@ -1,0 +1,86 @@
+<template>
+  <template if:false={allegatiPresenti}>
+    <article class="slds-card">
+      <div class="slds-card__header slds-grid" style="background-color:#f3f3f3; border-bottom: 1px solid #c7c7c7;">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate" style="margin-bottom: 5px;">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-file" title="file">
+                <lightning-icon icon-name="standard:file" size="small"></lightning-icon>
+            </span>
+          </div>
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <a href={relatedUrl} class="slds-card__header-link slds-truncate" title={cardTitle} target="_self">
+                <span>{cardTitle}</span>
+              </a>
+            </h2>
+          </div>
+          <div class="slds-no-flex">
+            <lightning-button-menu alternative-text="Show menu" menu-alignment="center" icon-size="x-small" variant="border-filled" onselect={handleOnselect}>
+              <lightning-menu-item if:true={allegatiPresenti} label="Add Files"></lightning-menu-item>
+              <lightning-menu-item if:false={allegatiPresenti} label="View Files"></lightning-menu-item>
+            </lightning-button-menu>            
+          </div>
+          <br><br>
+        </header>
+      </div>
+      <div align="center" style="margin-bottom:2rem;">
+        <lightning-file-upload
+          record-id={recordId}
+          accept={acceptedFormats}
+          class="file-selector"
+          onuploadfinished={handleUploadFinished}
+          multiple
+        >
+        </lightning-file-upload>
+      </div>
+    </article>
+  </template>
+
+  <template if:true={allegatiPresenti}>
+    <article class="slds-card">
+      <div class="slds-card__header slds-grid" style="background-color:#f3f3f3; border-bottom: 1px solid #c7c7c7;">
+        <header class="slds-media slds-media_center slds-has-flexi-truncate" style="margin-bottom: 5px;">
+          <div class="slds-media__figure">
+            <span class="slds-icon_container slds-icon-standard-file" title="file">
+                <lightning-icon icon-name="standard:file" size="small"></lightning-icon>
+            </span>
+          </div>
+          <div class="slds-media__body">
+            <h2 class="slds-card__header-title">
+              <a href={relatedUrl} class="slds-card__header-link slds-truncate" title={cardTitle} target="_self">
+                <span>{cardTitle}</span>
+              </a>
+            </h2>
+          </div>
+          <div class="slds-no-flex">
+            <lightning-button-menu alternative-text="Show menu" menu-alignment="center" icon-size="x-small" variant="border-filled" onselect={handleOnselect}>
+              <lightning-menu-item if:true={allegatiPresenti} label="Add Files"></lightning-menu-item>
+              <lightning-menu-item if:false={allegatiPresenti} label="View Files"></lightning-menu-item>
+            </lightning-button-menu>            
+          </div>
+          <br><br>
+        </header>
+      </div>
+      <div style="margin-left:3rem;">
+          <template if:true={files}>
+            <template for:each={files} for:item="file">
+              <div key={file.Id}>
+                <div key={file.Id} style="display: inline-block;">
+                  <p key={file.Id}><lightning-formatted-url value={file.Url} label={file.Title} target="_self" ></lightning-formatted-url></p>
+                  <h2 key={file.Id}>{file.LastModifiedDate}  •  {file.ContentSize}B  •  {file.FileExtension}</h2>
+                  <h2 key={file.Id}> </h2>
+                </div>
+                <lightning-button-menu value={file.Id} style="display: inline-block; float: right; margin-right: 1rem;" alternative-text="Show menu" menu-alignment="center" icon-size="x-small" variant="border-filled" onselect={handleDelete}>
+                  <lightning-menu-item if:true={allegatiPresenti} label="Delete File"></lightning-menu-item>
+                </lightning-button-menu>
+              </div>
+            </template>
+          </template>
+      </div>
+      <footer class="slds-card__footer">
+        <lightning-formatted-url value={relatedUrl} label="View All" target="_self"></lightning-formatted-url>
+      </footer>
+    </article>
+  </template>
+</template>

@@ -4,11 +4,13 @@ import getContracts from '@salesforce/apex/HDT_LC_AdvancedSearch.getContracts';
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import getForniture from '@salesforce/apex/HDT_LC_AdvancedSearch.getForniture';
 import getCustomMetadata from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadata';
+import getCustomMetadataList from '@salesforce/apex/HDT_QR_FiltriProcessi.getCustomMetadataList';
 import callService from '@salesforce/apex/HDT_WS_ArrichmentDataEntityInvoker.callService';
 import extractDataFromArriccDataServiceWithExistingSp from '@salesforce/apex/HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp';
 import isInBlacklist from '@salesforce/apex/HDT_LC_AdvancedSearch.isInBlacklist';
 import permissionForFlagContract from '@salesforce/apex/HDT_LC_AdvancedSearch.permissionForFlagContract';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
+import getCustomMetadataTwo from '@salesforce/apex/HDT_QR_HiddenSearchBarPostSales.getCustomMetadataTwo';
 
 
 export default class HdtAdvancedSearch extends LightningElement {
@@ -69,6 +71,7 @@ export default class HdtAdvancedSearch extends LightningElement {
     postSales=false;
     isSerialNumber = false;
     openMeterSearchModal = false;
+    hiddenSearchBarMod=true;
 
     connectedCallback() {
         permissionForFlagContract().then(data =>{
@@ -80,107 +83,79 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.showbuttonforniture=true;
         }
 
-        else { 
-            this.postSales = true;
-            console.log('targetObject'+ JSON.stringify(this.targetobject));
+        else {            
             console.log('processType'+ JSON.stringify(this.processtype));
             
-            getCustomMetadata({processType:this.processtype}).then(data =>{
-                console.log('data custom metadata '+JSON.stringify(data));
-                console.log('data.FornitureCliente__c  '+JSON.stringify(data.FornitureCliente__c ));
-                console.log('data.StatoContratto__c  '+JSON.stringify(data.StatoContratto__c ));
-                console.log('data.ContrattiCliente__c '+ JSON.stringify(data.ContrattiCliente__c ));
-                console.log('data.statoFornitura '+ JSON.stringify(data.StatoFornitura__c ));
-                console.log('data.Disalimentable__c '+ JSON.stringify(data.Disalimentable__c ));
-                console.log('data.RateCategory__c '+ JSON.stringify(data.RateCategory__c ));
+            this.postSales = true;
+            this.additionalfilter = (this.additionalfilter===undefined) ? '' : this.additionalfilter;
+                       
+            getCustomMetadataList({processType:this.processtype}).then(dataArray =>{    
+                console.log('LOG ==> DataArray custom metadata: '+JSON.stringify(dataArray));
+                let dataFilters = [];
+                dataArray.forEach(data =>{              
+            
+                    let statusSplit=[];
+                    let contractStatusSplit=[];
+                    let TipoServizioSplit=[];
+                    let RateCategorySplit=[];
+                    let singleFilter=[];
 
-                let statusSplit=[];
-                let TipoServizioSplit=[];
-                let RateCategorySplit=[];
+                    if(data.FornitureCliente__c == 'SI') {
+                        console.log('entra in forniture cliente == SI');
 
-                if(this.additionalfilter===undefined){
-                    this.additionalfilter='';
-                }
-                console.log('additionalFilter'+ JSON.stringify(this.additionalfilter));
-
-                if(data.FornitureCliente__c == 'SI')
-                {
-                    console.log('entra in forniture cliente == SI');
-
-                    if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='')
-                    {
-                        statusSplit = data.StatoFornitura__c.split(",");
-                        console.log('statusSplit in statoFornitura *****'+JSON.stringify(statusSplit));
-                        
-                        this.additionalfilter+=' AND MeterStatus__c IN('
-                        for(let i=0; i<statusSplit.length-1;i++) {
-                            this.additionalfilter+='\''+ statusSplit[i]+'\',';
+                        if(data.StatoFornitura__c != undefined && data.StatoFornitura__c!='') {
+                            statusSplit = data.StatoFornitura__c.split(",");
+                            singleFilter.push(" MeterStatus__c IN('" + statusSplit.join("','") + "') ");
                         }
-                        this.additionalfilter+= '\''+ statusSplit[statusSplit.length-1]+'\'';
-                        this.additionalfilter+=')';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                    
-                    if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='')
-                    {
-                        TipoServizioSplit = data.TipoServizio__c.split(",");
-                        console.log('TipoServizioSplit *****'+JSON.stringify(TipoServizioSplit));
-                        
-                        this.additionalfilter+=' AND CommoditySector__c IN('
-                        for(let i=0; i<TipoServizioSplit.length-1;i++) {
-                            this.additionalfilter+='\''+ TipoServizioSplit[i]+'\',';
+
+                        if(data.StatoContratto__c != undefined && data.StatoContratto__c != '') {
+                            contractStatusSplit = data.StatoContratto__c.split(",");
+                            if(contractStatusSplit.includes("Bozza")){
+                                contractStatusSplit.push("");
+                            }
+                            singleFilter.push(" SapContractStatus__c IN('" + contractStatusSplit.join("','") + "') "); 
                         }
-                        this.additionalfilter+= '\''+ TipoServizioSplit[TipoServizioSplit.length-1]+'\'';
-                        this.additionalfilter+=')';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                            
-                    if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!=''){
-                        this.additionalfilter+=' AND Disconnectable__c = \''+data.Disalimentabile__c+'\'';
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
-                        RateCategorySplit = data.RateCategory__c.split(",");
-                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
+                        if(data.TipoServizio__c!= undefined && data.TipoServizio__c!='') {
+                            TipoServizioSplit = data.TipoServizio__c.split(",");
+                            singleFilter.push(" CommoditySector__c IN('" + TipoServizioSplit.join("','") + "') ");
+                        }
+                                
+                        if(data.Disalimentabile__c!= undefined && data.Disalimentabile__c!='') {
+                            singleFilter.push(" Disconnectable__c = '"+data.Disalimentabile__c+"' ");
+                        }
 
-                            this.additionalfilter+=' AND RateCategory__c IN('
-                            for(let i=0; i<RateCategorySplit.length-1;i++) {
-                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
+                        if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione') {
+                            RateCategorySplit = data.RateCategory__c.split(",");
+                            if(this.processtype !='Chiusura Contatore' && this.processtype != 'Esenzione Modifica Fognatura Depurazione'){
+                                singleFilter.push(" RateCategory__c IN('" + RateCategorySplit.join("','") + "') ");
+                            }else{
+                                singleFilter.push(" RateCategory__c NOT IN('" + RateCategorySplit.join("','") + "') ");                            
                             }
-                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
-                            this.additionalfilter+=')';
-                            console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
+                        }
                     }
 
-                    if(data.RateCategory__c!=undefined && data.RateCategory__c!='' && (this.processtype ==='Chiusura Contatore' || this.processtype === 'Esenzione Modifica Fognatura Depurazione')){
-                        RateCategorySplit = data.RateCategory__c.split(",");
-                        console.log('RateCategorySplit *****'+JSON.stringify(RateCategorySplit));
-
-                            this.additionalfilter+=' AND RateCategory__c NOT IN('
-                            for(let i=0; i<RateCategorySplit.length-1;i++) {
-                                this.additionalfilter+='\''+ RateCategorySplit[i]+'\',';
-                            }
-                            this.additionalfilter+= '\''+ RateCategorySplit[RateCategorySplit.length-1]+'\'';
-                            this.additionalfilter+=')';
-
-                        console.log('AdditionalFilter**********'+JSON.stringify(this.additionalfilter));
-                    }
-                    
-                    console.log('additionalFilter pre final :  '+ this.additionalfilter);
-                    this.additionalFilterFinal = this.additionalfilter;
-                    console.log('additionalFilter post final :  '+ this.additionalFilterFinal);
-                    this.submitFornitura();
+                    if (singleFilter.length > 0) {
+                        dataFilters.push( " (" + singleFilter.join(" AND ") + ") ");
+                    }                   
+                }); 
+                if (dataFilters.length > 0) {
+                    this.additionalFilterFinal = " AND (" + dataFilters.join(" OR ") + ") ";
                 }
-
+                console.log('LOG ==> this.additionalFilterFinal: '+ this.additionalFilterFinal);
+                this.submitFornitura();
             });
         }
+        this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
 
-        if (this.maxRowSelected ===false){
-            this.maxRowSelected= 1
-        }else {
-            this.maxRowSelected = this.originalData.length
-        }
+        getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
+            console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
+            console.log('processType XXX'+ JSON.stringify(this.processtype));
+            this.hiddenSearchBarMod=false;
+            if(data==='List is populated'){
+                this.hiddenSearchBarMod=true;
+            }
+        });
         
     }
 
@@ -378,7 +353,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         let columnsUniq = [...new Set(columns)];
         columnsUniq.forEach(field => 
             {
-                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible'){
+                if(field != 'iconCompatibility' && field != 'compatibilityMessage' && field != 'Id' && field != 'serviceRequestId' && field != 'isCompatible' && field !== 'ServicePointId'){
                     this.tableColumns.push({label: field, fieldName: field});
                 }                 
             });
@@ -414,9 +389,9 @@ export default class HdtAdvancedSearch extends LightningElement {
      * Create Data-Table
      */
     createTable(data) {
-        let i, j, temporary, chunk = 5;
+        let i, temporary, chunk = 5;
         this.pages = [];
-        for (i = 0, j = data.length; i < j; i += chunk) {
+        for (i = 0; i < data.length; i += chunk) {
             temporary = data.slice(i, i + chunk);
             this.pages.push(temporary);
         }
@@ -426,9 +401,7 @@ export default class HdtAdvancedSearch extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
-
         console.log('tableData********'+ JSON.stringify(this.tableData));
-
     }
 
     nextPage() {
@@ -493,9 +466,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     this.alert('Dati tabella','Nessun record trovato','warn')
                     this.tableData = data;
                 }
-            });
-       
-        
+            });       
     }
 
 @api
@@ -508,7 +479,7 @@ export default class HdtAdvancedSearch extends LightningElement {
             this.preloading = false;
             if (data.length > 0) {
                 this.originalData = JSON.parse(JSON.stringify(data));
-                console.log('this.originalData ' + this.originalData);
+                console.log('this.originalData ' + JSON.stringify(this.originalData));
                 for(var i=0; i<this.originalData.length; i++){
                     this.originalData[i].Id=i.toString();
                 }
@@ -544,25 +515,37 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.confirmButtonDisabled = true;
             });
         }
-
     }
 
     callApi(event, isFrom){
         return new Promise((resolve) => {
             this.preloading = true;
             this.isRicercainSAP= true;
-            this.searchInputValue = event;
-            console.log('#Length Event >>> ' + this.searchInputValue.length);
+            this.searchInputValue = event
+            /**
+             * NTT 02112022
+             * Introdotto check sul queryType (checkbox) in quanto per l'h2o il pod ha una lunghezza inferiore ai 14
+             * E' possibile modificare il codice valorizzando il contractCode solo se il valore inizia per 3
+            */
             let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
             let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
             let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
+            if(this.queryType != null){
+                if(this.queryType.includes('pod')){
+                    contractCode = '';
+                    servicePointCode = this.searchInputValue;
+                }
+            }
+            //let contractCode = this.searchInputValue.length >= 14 ? '' : this.searchInputValue;
+            //let servicePointCode = this.searchInputValue.length >= 14 ? this.searchInputValue : '';
+            //let implantCode = this.searchInputValue.length === 10 && this.searchInputValue.startsWith("4")? this.searchInputValue:'';
             this.dispatchEvent(new CustomEvent('ricercainsap', {
                 detail: this.isRicercainSAP
             }));
             callService({contratto:contractCode, pod:servicePointCode,impianto:implantCode}).then(data =>{            
+                console.log('XXX callService (dataEnrichment): data --> '+JSON.stringify(data));
                 if(data.statusCode=='200' || this.postSales === true){
-                    if(data.statusCode != '200')
-                    {
+                    if(data.statusCode != '200'){
                         resolve();
                         return;
                     }
@@ -570,6 +553,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                     extractDataFromArriccDataServiceWithExistingSp({sp:'',response:data}).then(datas =>{
                         let sp = datas;
                         this.sp=sp;
+                        console.log('XXX extractDataFromArriccDataServiceWithExistingSp: datas --> '+JSON.stringify(datas));
                         if(sp!= undefined|| sp != null){
                             this.rowToSend = datas;
                             this.preloading = false;
@@ -658,6 +642,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         if(this.processtype != ''){
             let srvRequest= {
                 'servicePointCode': this.rowToSend['Codice Punto'],
+                'servicePoint': this.rowToSend['ServicePointId'],
                 'commoditySector': this.rowToSend['Servizio'],
                 'processType': this.processtype,
                 'type': 'Case'
@@ -691,7 +676,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }
                     }
                 }
-                console.log(this.originalData);
+                console.log('this.originalData >>> ' + this.originalData);
                 this.createTable(this.originalData); 
                 this.formatTableHeaderColumns(this.originalData);
                 var my_ids = [];

@@ -216,6 +216,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.NotCancellable__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase_0_0_0_0_0</targetReference>
         </connector>
@@ -375,6 +382,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetContenitoreStessoContratto.ParentId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.PartialOutcome__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetContenitoreStessoContratto.PartialOutcome__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

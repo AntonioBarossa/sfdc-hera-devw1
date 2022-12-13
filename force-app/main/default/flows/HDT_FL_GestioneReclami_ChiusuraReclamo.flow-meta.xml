@@ -1,5 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <actionCalls>
+        <name>Calculate_Expiration_Date</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssegnaFase_0</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Case_Aggiornato</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
         <name>Assegna_Motivo_Sospensione</name>
@@ -53,19 +90,26 @@
         <name>AssegnaFase_0</name>
         <label>Assegna Fase</label>
         <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.Phase__c</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Completata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetInputCase.Status</assignToReference>
+            <assignToReference>Get_Case_Aggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Closed</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Aggiornato.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -76,7 +120,7 @@
         <name>Chiusura_Activity</name>
         <label>Chiusura Activity</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -116,16 +160,23 @@
             <assignToReference>Get_Activity.ClosingCreatorGroup__c</assignToReference>
             <operator>Assign</operator>
             <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Activity.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
                 <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
-        <!--assignmentItems>
-            <assignToReference>Get_Activity.Place__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>$User.Station__c</elementReference>
-            </value>
-        </assignmentItems-->
         <connector>
             <targetReference>Aggiorna_Activity</targetReference>
         </connector>
@@ -149,7 +200,7 @@
     <decisions>
         <name>In_sospensione_o_chiusura</name>
         <label>In sospensione o chiusura?</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Richiesta_del_Cliente_accolta_0_0</targetReference>
@@ -233,10 +284,16 @@
         <picklistField>CustomerRequestAccomplished__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>ClosureProcessType</name>
         <dataType>String</dataType>
         <expression>IF(TEXT({!GetInputCase.Phase__c})=&quot;Risposta Inviata&quot;,&quot;Reclami Chiusura&quot;,&quot;Reclami Chiusura Rettifica&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SupplyCityFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!Get_Case_Aggiornato.SupplyCity__c}), {!Get_Case_Aggiornato.ServicePoint__r.SupplyCity__c},{!Get_Case_Aggiornato.SupplyCity__c})</expression>
     </formulas>
     <interviewLabel>GestioneReclami_ChiusuraCase {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Chiusura/Sospensione Reclamo</label>
@@ -263,7 +320,7 @@
         <name>Get_Activity</name>
         <label>Get Activity</label>
         <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Chiusura_Activity</targetReference>
@@ -288,9 +345,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_Aggiornato</name>
+        <label>Get Case Aggiornato</label>
+        <locationX>578</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Calculate_Expiration_Date</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -312,18 +390,22 @@
         <name>Aggiorna_Activity</name>
         <label>Aggiorna Activity</label>
         <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <connector>
-            <targetReference>Aggiorna_Case</targetReference>
+            <targetReference>Reset_Transaction</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Reset_Transaction</targetReference>
+        </faultConnector>
         <inputReference>Get_Activity</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>578</locationX>
-        <locationY>998</locationY>
-        <inputReference>GetInputCase</inputReference>
+        <locationY>1358</locationY>
+        <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
@@ -332,6 +414,28 @@
         <locationY>974</locationY>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
+    <screens>
+        <name>Reset_Transaction</name>
+        <label>Reset Transaction</label>
+        <locationX>578</locationX>
+        <locationY>1238</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Aggiorna_Case</targetReference>
+        </connector>
+        <fields>
+            <name>resetTransaction</name>
+            <extensionName>c:hdtResetTransaction</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <screens>
         <name>Richiesta_del_Cliente_accolta_0</name>
         <label>Motivazione Sospensione</label>
@@ -430,7 +534,7 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0</name>
         <label>Screen Errore</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -452,7 +556,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>AssegnaFase_0</targetReference>
+            <targetReference>Get_Case_Aggiornato</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_0_0_0</name>
@@ -549,7 +653,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>386</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -568,13 +672,6 @@
     </variables>
     <variables>
         <name>InputCase</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>true</isInput>
-        <isOutput>false</isOutput>
-    </variables>
-    <variables>
-        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

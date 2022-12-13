@@ -10,6 +10,7 @@ public inherited sharing class HDT_TRH_Quote extends HDT_TRH_TriggerHandler {
         system.debug('Quote beforeInsert START');
         HDT_UTL_QuoteProcess.amendProcessManagementBefore(Trigger.New);
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
+        HDT_UTL_Utils.setUsersField(trigger.new);
         system.debug('Quote beforeInsert END');
     }
 

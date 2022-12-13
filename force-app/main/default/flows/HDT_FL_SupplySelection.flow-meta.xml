@@ -2,22 +2,38 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>50.0</apiVersion>
     <assignments>
-        <name>Assegna_Variabili_Output</name>
-        <label>Assegna Variabili Output</label>
-        <locationX>182</locationX>
-        <locationY>974</locationY>
+        <name>Assegna_Service_Point_Id</name>
+        <label>Assegna Service Point Id</label>
+        <locationX>50</locationX>
+        <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>ServicePointId</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ServicePointOutcome.Id</elementReference>
+                <elementReference>InputServicePointId</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Service_Point</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Variabili_Output</name>
+        <label>Assegna Variabili Output</label>
+        <locationX>182</locationX>
+        <locationY>734</locationY>
+        <assignmentItems>
+            <assignToReference>ServicePointId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>Commodity</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>ServicePointOutcome.CommoditySector__c</elementReference>
+                <elementReference>Get_Service_Point.CommoditySector__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -27,45 +43,6 @@
                 <elementReference>Get_Contract.Id</elementReference>
             </value>
         </assignmentItems>
-    </assignments>
-    <assignments>
-        <name>AssegnaServicePoint</name>
-        <label>AssegnaServicePoint</label>
-        <locationX>50</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>ServicePointOutcome</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Service_Point_0</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ServicePointCode</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Service_Point_0.ServicePointCode__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Service_Point</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssegnaServicePoint_0</name>
-        <label>AssegnaServicePoint</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>ServicePointOutcome</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Service_Point_0_0</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Get_Service_Point</targetReference>
-        </connector>
     </assignments>
     <decisions>
         <name>InputServicePoint</name>
@@ -90,11 +67,11 @@
                 <leftValueReference>InputServicePointId</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Service_Point_0</targetReference>
+                <targetReference>Assegna_Service_Point_Id</targetReference>
             </connector>
             <label>Innesco ServicePoint</label>
         </rules>
@@ -124,7 +101,7 @@
         <name>Get_Contract</name>
         <label>Get Contract</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>614</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Variabili_Output</targetReference>
@@ -134,7 +111,7 @@
             <field>ServicePoint__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>ServicePointOutcome.Id</elementReference>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </filters>
         <filters>
@@ -152,70 +129,21 @@
         <name>Get_Service_Point</name>
         <label>Get Service Point</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>494</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_Contract</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>ServicePointCode__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>ServicePointCode</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>ServicePoint__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CommoditySector__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Service_Point_0</name>
-        <label>Get Service Point</label>
-        <locationX>50</locationX>
-        <locationY>278</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaServicePoint</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputServicePointId</elementReference>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>ServicePoint__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CommoditySector__c</queriedFields>
-        <queriedFields>ServicePointCode__c</queriedFields>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>Get_Service_Point_0_0</name>
-        <label>Get Service Point</label>
-        <locationX>314</locationX>
-        <locationY>398</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>AssegnaServicePoint_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ServicePointCode__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>ServicePointCode</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>ServicePoint__c</object>
-        <queriedFields>Id</queriedFields>
-        <queriedFields>CommoditySector__c</queriedFields>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -227,7 +155,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Get_Service_Point_0_0</targetReference>
+            <targetReference>Get_Service_Point</targetReference>
         </connector>
         <fields>
             <name>Intestazione_0</name>
@@ -277,7 +205,7 @@
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
-                <assignToReference>ServicePointCode</assignToReference>
+                <assignToReference>ServicePointId</assignToReference>
                 <name>selectedServicePointFlow</name>
             </outputParameters>
             <outputParameters>

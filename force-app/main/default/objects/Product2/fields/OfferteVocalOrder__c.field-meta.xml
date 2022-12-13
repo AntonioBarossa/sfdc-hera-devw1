@@ -107,6 +107,46 @@
                 <label>Prezzo Netto Natura Casa Luce</label>
             </value>
             <value>
+                <fullName>Prezzo Netto PiuControllo Lavoro Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Lavoro Luce</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Lavoro Gas</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Special Lavoro Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Special Lavoro Luce</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Special Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Special Lavoro Gas</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Casa Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Casa Luce</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Casa Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Casa Gas</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Special Casa Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Special Casa Gas</label>
+            </value>
+			<value>
+                <fullName>Prezzo Netto PiuControllo Special Casa Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Special Casa Luce</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Special Web Gas</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Special Web Gas</label>

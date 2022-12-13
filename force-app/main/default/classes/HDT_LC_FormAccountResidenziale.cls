@@ -97,7 +97,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
         infoData.put('birthDate'    , dataAccount.get('birthDate')  );
         infoData.put('birthPlace'   , dataAccount.get('birthplace') );
         infoData.put('gender'       , dataAccount.get('gender')     );
-        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedFCode(infoData, dataAccount.get('fiscalCode') )) {
+        if (!HDT_UTL_CheckFiscalCodeTaxNumber.matchEstimatedSetFiscalCode(infoData, dataAccount.get('fiscalCode') )) {
             throw new AuraHandledException('Inserire un codice fiscale valido');
         }
         //HRAWRM-491 End 27/09/2021 Controllo codice fiscale stimato

@@ -87,6 +87,12 @@
             
             <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
 
+            <property name="freeWithdrawConfig" type="@salesforce/schema/FreeWithdrawConfig__c[]" label="Ritiri Gratuiti" description="Free Withdraw Configuration" role="inputOnly"/>
+
+            <property name="lastWithdrawDate" type="String" label="Data Ultimo Ritiro" description="Last Withdraw Date" role="inputOnly"/>
+
+            <!-- <propertyType name="T" extends="SObject" label="Input Type" description="Generic sObject data type used for input sObject properties" />
+            <property name="accountss" type="{T[]}" label="Ritiri Gratuiti Configs" role="inputOnly" />         -->
         </targetConfig>
         
         

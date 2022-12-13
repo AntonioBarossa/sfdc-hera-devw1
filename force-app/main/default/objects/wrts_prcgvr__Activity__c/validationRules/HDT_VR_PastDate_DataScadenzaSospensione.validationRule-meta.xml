@@ -2,10 +2,13 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_VR_PastDate_DataScadenzaSospensione</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(
-		ISPICKVAL(wrts_prcgvr__Status__c, &apos;Sospesa&apos;),
-		NOT(ISCHANGED(OwnerId)),
-		SuspensionDueDate__c &lt; TODAY()
+    <errorConditionFormula>AND (
+    SuspensionDueDate__c &lt; TODAY(),
+				ISPICKVAL(wrts_prcgvr__Status__c, &apos;Sospesa&apos;),
+				OR(
+				    ISCHANGED(SuspensionDueDate__c),
+								ISCHANGED(wrts_prcgvr__Status__c)
+				)
 )</errorConditionFormula>
     <errorDisplayField>SuspensionDueDate__c</errorDisplayField>
     <errorMessage>Impossibile inserire una Data Scadenza Sospensione nel passato</errorMessage>

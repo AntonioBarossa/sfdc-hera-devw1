@@ -27,6 +27,7 @@
                     <value>3</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -52,6 +53,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -77,6 +79,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -102,6 +105,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer3</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -127,6 +131,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer4</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
@@ -159,6 +164,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer5</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -176,6 +182,7 @@
                     <value>Contact.UpdateContactCase</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -189,6 +196,7 @@
                     <value>AttachedContentDocuments</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer6</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -199,6 +207,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -224,6 +233,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer7</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -249,6 +259,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer8</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CommodityFormula__c}</leftValue>
@@ -281,6 +292,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer9</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.CommodityFormula__c}</leftValue>
@@ -318,6 +330,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer10</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-4762fefa-be02-4fa2-86fb-6288bbdaddd4</name>
@@ -327,6 +340,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>forceChatter:recordFeedContainer</componentName>
+                <identifier>forceChatter_recordFeedContainer</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -357,6 +371,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer11</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-655b0fb3-733b-494d-b9a3-1d6eca1d73ee</name>
@@ -378,6 +393,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -391,6 +407,7 @@
                     <value>Standard.Tab.activity</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>activityTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -408,6 +425,7 @@
                     <value>Standard.Tab.feed</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>feedTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -421,6 +439,7 @@
                     <value>Case Correlati</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -543,6 +562,31 @@
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.Case.Invio_Sollecito</value>
+                            <visibilityRule>
+                                <booleanFilter>1 OR 2</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Gestione Rifiuti</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Segnalazioni Ambientali</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>Case.HDT_OdlAds</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Account.Name}</leftValue>
+                                    <operator>NE</operator>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
                     </valueList>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -562,6 +606,7 @@
                     <value>4</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -575,6 +620,7 @@
                     <value>--None--</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:PhaseChevronPathLtgCmp_1_0</componentName>
+                <identifier>wrts_prcgvr_PhaseChevronPathLtgCmp_1_0</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -584,6 +630,7 @@
                     <value>tabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -606,11 +653,13 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>wrts_prcgvr:ProcessActionListLtgCmp_1_0</componentName>
+                <identifier>wrts_prcgvr_ProcessActionListLtgCmp_1_0</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtAccountSelector</componentName>
+                <identifier>hdtAccountSelector</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Channel__c}</leftValue>
@@ -623,6 +672,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>hdtTariAppointmentHandler</componentName>
+                <identifier>hdtTariAppointmentHandler</identifier>
                 <visibilityRule>
                     <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6</booleanFilter>
                     <criteria>
@@ -661,6 +711,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>HDT_LCP_CaseTabManagement</componentName>
+                <identifier>HDT_LCP_CaseTabManagement</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>

@@ -95,6 +95,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return body;
 	}
 
+	public static void traceRequest(Map<String,String> resultMap, String body,String recordId){
+		String code = resultMap.get('code');
+		String result = resultMap.get('result');
+		Boolean enableTrace =  String.isNotBlank(System.Label.HDT_DocTraceEnable) && 'Y'.equalsIgnoreCase(System.Label.HDT_DocTraceEnable)?true:false;
+		if(enableTrace && String.isNotBlank(code) && String.isNotBlank(result) && result!='000'){
+			ContentVersion cv = HDT_UTL_DocumentalManagement.createContentVersion(body,'PayloadDocumentale','JSON');
+			HDT_UTL_DocumentalManagement.createContentLink(cv.Id,recordId);
+		}
+	}
+
 	public static String generateGetAttachmentRequest(String recordId){
 		if (String.isBlank(recordId)) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
@@ -103,6 +113,9 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		DocumentalActivity__c actMoga = HDT_QR_DocumentalConfiguration.getDocumentalActivityById(recordId);
 		if (actMoga == null) {
 			throw new HDT_UTL_HeraException('Necessario passare in input un Id di DocumentalActivity__c per visualizzare il documento.');
+		}
+		if(String.isNotBlank(actMoga.DocumentalSystem__c) && 'Intesa'.equalsIgnoreCase(actMoga.DocumentalSystem__c)){
+			throw new HDT_UTL_HeraException('I documenti gestiti in OTP sono visibili tramite il tasto Visualizza Plico');
 		}
 
 		if (String.isBlank(actMoga.AttachmentCode__c)) {
@@ -401,10 +414,19 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					// La DocumentalPhase__c per l'Order verrà valorizzata nel method handleRadioGroup() in base ai radio button (Legge 80 ecc.)
 					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
+				}else if(status.equalsIgnoreCase('declined')){
+					List<Order> ordList = new List<Order>();
+					record.put('DocumentalPhase__c','Plico rifiutato');
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'));
+					ordList.add((Order)record);
+					HDT_UTL_DatabaseService.updateSObject(ordList);
+					return;
 				}
 			}
-			handleRadioGroup(record,listOfRadio,envelopeId);
-			handleLandRegistry(record,listOfData,listOfRadio);
+			if(!status.equalsIgnoreCase('declined')){
+				handleRadioGroup(record,listOfRadio,envelopeId);
+				handleLandRegistry(record,listOfData,listOfRadio);
+			}
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -441,7 +463,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
-        if(listOfRadio != null && listOfRadio.size()>0){
+        String phaseNoUpdate = System.Label.HDT_DocusignPhaseNoUpdate;//new Set<String>{'Completata', 'Annullato', 'Accettazione Voltura', 'Credit Check KO', 'Attesa Credit Check', 'Voltura Rifiutata'};
+		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
@@ -613,56 +636,34 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
+					//orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
+						Order ordRefresh = orderMap.get(childOrder.Id);
 						singleOrder.Id = childOrder.Id;
 						singleOrder.CIAccoutn__c = 'Validato';
+						singleOrder.CILegalRepresentative__c = 'Validato';
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
+						singleOrder.DocumentPackage__c = 'Validato';
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
-						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
-						&& (!'Accettazione Voltura'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)childOrder.get('Phase__c')))){
+							(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
+							&& (!phaseNoUpdate.containsIgnoreCase((String)ordRefresh.get('Phase__c'))))
+						{
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
 						childToUpdate.add(singleOrder);
 					}
-					/**
-					 * AF Fix Accettazione Voltura.
-					 * E' necessario chiudere l'attività prima di settare Documentazione Validata
-					 */
-					/*try {
-						if(!orderList.isEmpty()){
-							Set<Id> voltOrdSet = new Set<Id>();
-							String processTypeVol = '';
-							String phase = '';
-							for (SObject voltOrder : orderList) {
-								processTypeVol = (String)voltOrder.get('DocumentalProcessType__c');
-								phase = orderPhaseMap.get((Id)voltOrder.get('Id')) != null? orderPhaseMap.get((Id)voltOrder.get('Id')):'';
-								if(String.isNotBlank(processTypeVol) && processTypeVol.containsIgnoreCase('Voltura') && String.isNotBlank(phase) && phase.equalsIgnoreCase('Documentazione Validata')){
-									voltOrdSet.add((Id)voltOrder.get('Id'));
-								}
-							}
-							if(!voltOrdSet.isEmpty()){
-								voltureActList = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN:voltOrdSet AND wrts_prcgvr__Status__c = 'Aperta' AND Type__c = 'Accettazione Voltura'  WITH SECURITY_ENFORCED];
-								for(wrts_prcgvr__Activity__c singleAct : voltureActList){
-									singleAct.wrts_prcgvr__Status__c = 'Chiusa';
-								}
-								if(!voltureActList.isEmpty()){
-									HDT_UTL_DatabaseService.updateSObject(voltureActList);
-								}
-							}
-						}
-					} catch (Exception ex) {
-						//no throws
-					}*/
 					if(!childToUpdate.isEmpty()){
 						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
 					}
 					
 				}catch(Exception ex){
+					HDT_UTL_IntegrationLog.handleGenericErrorRequest(JSON.serialize(listOfRadio),'POST', ex.getMessage()+' row number --> ' + ex.getLineNumber(), 'Handle Docusign Notify', (String)record.get('Id'));
 					System.debug(LoggingLevel.DEBUG, 'Errore DML: ' + ex.getMessage());
 				}
 			}

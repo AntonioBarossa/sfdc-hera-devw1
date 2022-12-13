@@ -104,6 +104,16 @@
                 <default>false</default>
                 <label>Allineamento Anagrafica</label>
             </value>
+            <value>
+                <fullName>CaricamentoIniziativaDgrer</fullName>
+                <default>false</default>
+                <label>Caricamento Iniziativa DGRER</label>
+            </value>
+            <value>
+                <fullName>ChiusuraMassivaActivity</fullName>
+                <default>false</default>
+                <label>Chiusura Massiva Activity</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

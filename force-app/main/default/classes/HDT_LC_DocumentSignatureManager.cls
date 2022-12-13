@@ -7,9 +7,28 @@ public with sharing class HDT_LC_DocumentSignatureManager {
     }
     @AuraEnabled
     public static void sendDocumentFile(String recordId,String context,String formParams){
+        if( 'Order'.equalsIgnoreCase(context) )
+        {
+            createActivityForChangeAddress(recordId);
+        }
         HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, context,formParams);
         HDT_SRV_DocumentalManagementFacade.checkEnvelopeForDiscard(recordId, formParams);
         HDT_UTL_Scarti.closeDocumentalManagementActivity(formParams);
+    }
+
+    @future
+    public static void createActivityForChangeAddress(String recordId){
+        List<Order> ordIdList = [ SELECT Id FROM Order WHERE ParentOrder__c = :recordId 
+                                            AND ServicePoint__r.IsAddressChanged__c = true 
+                                            AND ( Process__c = 'Subentro' OR Process__c = 'Subentro Cambio Cat.Tariffa' ) WITH SECURITY_ENFORCED ];
+        
+        if ( !ordIdList.isEmpty())
+        {
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.Order__c = ordIdList[0].Id;
+            activity.Type__c = 'Modifica Indirizzo Fornitura';
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        }
     }
 
     @AuraEnabled

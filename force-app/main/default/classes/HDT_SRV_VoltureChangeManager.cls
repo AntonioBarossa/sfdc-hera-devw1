@@ -96,7 +96,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
          * set the outcome phase from the accountCheck method
          */
         List<Account> orderAccount = voltureChangeQr.getAccountInfoById(clonedOrder.AccountId);
-        accountCheckParams.put('accountType',orderAccount[0]?.RecordType.DeveloperName);
+        //ticket 911622C: solo Marcatura D1 - Persona Fisica RESIDENZIALE, Tutti gli altri sono BUSINESS (per impostare la fase )
+        accountCheckParams.put('accountType',orderAccount.isEmpty()? '' : ('D1 - Persona fisica'.equalsIgnoreCase(orderAccount[0].CustomerMarking__c) && 'Famiglie'.equalsIgnoreCase(orderAccount[0].Category__c))? 'HDT_RT_Residenziale' : 'HDT_RT_Business');
         accountCheckParams.put('orderId', clonedOrder.get('Id'));
         accountCheckParams.put('dataDecorrenza',inputOrder?.EffectiveDate__c);
         accountCheckParams.put('preavvisoRecesso',inputOrder?.RecessNotice__c);

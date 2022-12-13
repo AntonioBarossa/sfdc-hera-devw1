@@ -7,7 +7,7 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
     public Database.QueryLocator start(Database.BatchableContext bc) {
 
         Set<String> rtNameSet = new Set<String>{'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_TemporaneaNuovaAtt'};
-        return Database.getQueryLocator([SELECT Id, Phase__c FROM Order WHERE Phase__c IN ('Attesa conferma preventivo cliente', 'Ammissibilità OK') AND RecordType.DeveloperName IN :rtNameSet AND ValidityDateEstimate__c < :today]);
+        return Database.getQueryLocator([SELECT Id, Phase__c FROM Order WHERE Phase__c IN ('Attesa conferma preventivo cliente') AND RecordType.DeveloperName IN :rtNameSet AND ValidityDateEstimate__c < :today]);
     }
 
 
@@ -22,8 +22,8 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
     }
 
     public void finish(Database.BatchableContext bc){
-        Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
-        instance.execute(null);
+        //Schedulable instance = (Schedulable) wrts_prcgvr.VersionManager.newClassInstance('AsyncJobBatchSchedule');
+        //instance.execute(null);
 	}
 
     public void execute(SchedulableContext ctx){

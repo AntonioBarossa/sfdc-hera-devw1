@@ -72,6 +72,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Bozza','Da Inviare',utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONE,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Accettazione Voltura','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_VAS,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VAS);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_VOLTURA,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_VOLTURA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SUBENTRO,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
@@ -133,14 +134,20 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             HDT_UTL_DataFactoryTst.createComfortQualityCall(2,true);
             List<BillingProfile__c> billing =HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accounts[0].Id);
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(7, true, accounts[0].Id, 'Attiva');
+			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(9, true, accounts[0].Id, 'Attiva');
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
             List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             sp[0].RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_GAS;
             sp[0].CommoditySector__c = 'Gas';
             insert sp;
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(7, false, accounts[0].Id, sales, pricebook[0].Id);
-            
+			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(9, false, accounts[0].Id, sales, pricebook[0].Id);
+            Integer index = 0;
+            for(order ord : orders){
+                if(index < 4){
+                    ord.SignatureMethod__c = 'OTP Remoto';
+                }
+                index++;
+            }
             
             id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
             id orderSubentro=utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
@@ -149,6 +156,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             id orderAttivazioneConModifica=utlConstants.ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA;
 			id orderConnessioneConAttiv=utlConstants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
 			id orderDossier=utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            Id orderVas = utlConstants.ORDER_RECORDTYPEID_VAS;
             
             
             Id accId = accounts[0].id;
@@ -264,7 +272,27 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[5].SupplyType__c = 'Domestico';
             orders[5].CustomerCategory__c = 'Famiglie';
             orders[5].ImplantType__c = '13A0-Usi di Abitazione BT';
-            orders[5].WithdrawalClass__c = '001 - 7 giorni';           
+            orders[5].WithdrawalClass__c = '001 - 7 giorni';     
+            
+            orders[7].RecordTypeId=orderVas;
+            orders[7].VasSubtype__c = 'Analisi Consumi';
+			orders[7].VoltageLevel__c='BT';
+			orders[7].ProcessCode__c='E02';
+			orders[7].UseTypeEnergy__c='Manifest (Temp Straord 16h)';
+			orders[7].CreditCheckDescription__c='test6Temporanea';
+			orders[7].RequestOption__c='Domestici-TD';
+			orders[7].PowerRequested__c=2;
+			orders[7].PowerCommitted__c=2;
+            orders[7].Contact__c = contactId;
+            orders[7].IsActivationDeferred__c=true;
+            orders[7].VATfacilitationFlag__c=false;
+            orders[7].Commodity__c='Gas';
+            orders[7].ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+            orders[7].UseCategory__c='003-CotturaCibi+AcquaCalda';
+            orders[7].SupplyType__c = 'Domestico';
+            orders[7].CustomerCategory__c = 'Famiglie';
+            orders[7].ImplantType__c = '13A0-Usi di Abitazione BT';
+            orders[7].WithdrawalClass__c = '001 - 7 giorni';    
 
 			upsert orders;
 
@@ -301,6 +329,30 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             ordersResidenziale[0].ParentOrder__c = orders[6].Id;
             ordersResidenziale[0].BillingProfile__c = billing[0].Id;
             insert ordersResidenziale;
+
+            List<Order> ordersResidenzialeSwitchIn=HDT_UTL_DataFactoryTst.createOrder(1, false, myAccountResidenzialeList[0].Id,'Bozza');
+			ordersResidenzialeSwitchIn[0].Name = 'orderResidenzialeSwitchIn';
+            ordersResidenzialeSwitchIn[0].ServicePoint__c = servPoints[0].Id;
+            ordersResidenzialeSwitchIn[0].Contact__c = contactId;
+            ordersResidenzialeSwitchIn[0].ParentOrder__c = orders[6].Id;
+            ordersResidenzialeSwitchIn[0].BillingProfile__c = billing[0].Id;
+            ordersResidenzialeSwitchIn[0].PowerCommitted__c=2;
+			ordersResidenzialeSwitchIn[0].CreditCheckDescription__c = 'test3';
+			ordersResidenzialeSwitchIn[0].VoltureType__c='In Continuità';
+			ordersResidenzialeSwitchIn[0].RecordTypeId = orderSwitchIn;
+			ordersResidenzialeSwitchIn[0].IsActivationDeferred__c=true;
+            ordersResidenzialeSwitchIn[0].ProcessType__c = 'Switch in Ripristinatorio';
+            ordersResidenzialeSwitchIn[0].SignedDate__c = null;
+            ordersResidenzialeSwitchIn[0].VATfacilitationFlag__c=true;
+            ordersResidenzialeSwitchIn[0].ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+            ordersResidenzialeSwitchIn[0].UseCategory__c='003-CotturaCibi+AcquaCalda';
+            ordersResidenzialeSwitchIn[0].SupplyType__c = 'Domestico';
+            ordersResidenzialeSwitchIn[0].CustomerCategory__c = 'Famiglie';
+            ordersResidenzialeSwitchIn[0].ImplantType__c = '13A0-Usi di Abitazione BT';
+            ordersResidenzialeSwitchIn[0].WithdrawalClass__c = '001 - 7 giorni';
+            ordersResidenzialeSwitchIn[0].SignatureMethod__c = 'OTP Remoto';
+            insert ordersResidenzialeSwitchIn;
+
 
 			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');
 			quotes[0].IsVAS__c=false;
@@ -543,6 +595,51 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         Test.stopTest();
 
     }
+
+    @isTest
+	static void testSaveSwitchInResidenziale(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, Contact__c, Contact__r.Id, Account.Id, Account.RecordType.Id, Account.RecordType.DeveloperName, RecordType.Id, RecordType.DeveloperName, Commodity__c,
+        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,
+        Channel__c, CustomerCategory__c, MarketOrigin__c, IsCloned__c, SignedDate__c,VolturaThirdTrader__c FROM Order WHERE Name = 'orderResidenzialeSwitchIn'];
+        
+
+        Test.startTest();
+
+        //Test AttivazioneConModifica
+        // system.debug('Test AttivazioneConModifica');
+        Map<String,Object> m3 = new Map<String,Object>();
+
+        m3.put('EffectiveDate__c', Date.today().addDays(11));
+        tOrder2[0].VATfacilitationFlag__c=true;
+        tOrder2[0].VolturaThirdTrader__c=true;
+        tOrder2[0].QuotationType__c='Rapido';
+        tOrder2[0].Commodity__c = 'Energia Elettrica';
+        tOrder2[0].ProcessType__c = 'Switch in Ele';
+        Order myOrder = [Select Id from Order where RecordType.Name = 'Order Dossier'];
+        tOrder2[0].ParentOrder__c = myOrder.Id;
+        tOrder2[0].EffectiveDate__c = Date.today();
+        tOrder2[0].SupplyType__c = 'Domestico';
+        tOrder2[0].SignatureMethod__c = 'OTP Remoto';
+        update tOrder2;
+        system.debug('PUNTO 1 --> '+tOrder2[0].Account.RecordType.DeveloperName);
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+
+        m3.put('VATfacilitationFlag__c',true);
+        try{
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        }
+ 
+        catch(Exception e){ 
+            System.assertEquals(true, true, 'Caricare documento per iva e accise');
+
+        }
+        Test.stopTest();
+
+    }
+
     @isTest
 	static void testSaveM2(){
         
@@ -720,6 +817,33 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
         System.assertEquals( m4.get('EffectiveDate__c'),expectedResult,  m4.get('EffectiveDate__c'));
 
+        Test.stopTest();
+
+    }
+
+    @isTest
+	static void testSaveVas(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
+        FROM Order WHERE Name Like 'testOrderName%' and RecordTypeId = :utlConstants.ORDER_RECORDTYPEID_VAS ORDER BY Name asc];
+               
+        Test.startTest();
+
+        //Test Attivazione
+      // system.debug('Test Attivazione');
+        //Map<String,Object> m4 = new Map<String,Object>();
+        //m4.put('EffectiveDate__c', Date.today().addDays(11));
+
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],null);
+        Boolean result = true;
+        //Date expectedResult = [SELECT EffectiveDate__c  FROM Order WHERE Id =: tOrder2[0].Id].EffectiveDate__c;
+        System.assertEquals(true,result,  'result');
+        
         Test.stopTest();
 
     }

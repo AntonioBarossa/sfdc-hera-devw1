@@ -25,6 +25,41 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ActivationType__c</picklist>
         <values>
             <fullName>Primo soggetto passivo</fullName>
@@ -74,6 +109,28 @@
         <values>
             <fullName>No</fullName>
             <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CreditAcquire__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Revoke__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>true</default>
         </values>
         <values>
             <fullName>Si</fullName>
@@ -410,6 +467,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
@@ -454,6 +515,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Delibera ARERA 155%2F2020</fullName>
             <default>false</default>
         </values>
@@ -467,6 +532,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2771,6 +2840,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

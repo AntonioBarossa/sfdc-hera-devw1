@@ -13,7 +13,9 @@ public class HDT_QR_RateCategoryTst{
 		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
 
 		System.runAs(internalUser){
-			HDT_UTL_DataFactoryTst.createRateCategoty(1, true);
+			List<RateCategory__c> rates = HDT_UTL_DataFactoryTst.createRateCategoty(2, false);
+			rates[1].Market__c = 'Regolamentato';
+			insert rates;
 		}
 	}
 
@@ -31,11 +33,13 @@ public class HDT_QR_RateCategoryTst{
 
 			List<RateCategory__c> tRateCat=HDT_QR_RateCategory.getRateList('testCommodity', 'testDistCode', 'testProduct', 'testFornitura');
 			List<RateCategory__c> tRateCatAll=HDT_QR_RateCategory.getAllRecords();
+			List<RateCategory__c> tRateCatMarket = HDT_QR_RateCategory.getRecordByMarket('Regolamentato');
 
 			test.stopTest();
 
 			System.assertEquals(true, tRateCat[0].Id!=null, 'RateCategory not found');
-			System.assertNotEquals(false, tRateCat[0].Id!=null, 'Value of parameter is not matching');
+			System.assertEquals(true, tRateCatAll[0].Id!=null, 'RateCategoryAll not found');
+			System.assertEquals(true, tRateCatMarket[0].Id!=null, 'RateCategoryMarket not found');
 		}
 	}
 }

@@ -98,21 +98,6 @@
         <valueSettings>
             <controllingFieldValue>includesValues</controllingFieldValue>
             <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>13X0-Usi interni BT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>13Y0-Usi interni MT</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
-            <valueName>13Z0-Grossisti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>includesValues</controllingFieldValue>
-            <controllingFieldValue>excludesValues</controllingFieldValue>
             <valueName>1101-Domestico</valueName>
         </valueSettings>
         <valueSettings>

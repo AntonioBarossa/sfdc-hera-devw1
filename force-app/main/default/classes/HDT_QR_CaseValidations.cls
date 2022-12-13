@@ -31,7 +31,10 @@ public inherited sharing class HDT_QR_CaseValidations {
         Description,
         SupplyCity__c,
         InvoicingCity__c,
-        ContractAccountCode__c
+        ContractAccountCode__c,
+        RateCategory__c,
+        BillingIsAddressVerified__c,
+        SalesCompany__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
@@ -66,7 +69,7 @@ public inherited sharing class HDT_QR_CaseValidations {
 
     public String getUserSessionRole(){
 
-        String userId= UserInfo.getSessionId();
+        String userId= UserInfo.getUserId();
         String roleName;
 
         rolename = [SELECT UserRole.Name
