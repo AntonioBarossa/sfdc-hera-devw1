@@ -1898,7 +1898,7 @@
                 <leftValueReference>GetParentCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>GetParentCase.Type</elementReference>
+                    <stringValue>Errore di Fatturazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2175,6 +2175,12 @@
             <field>Case__c</field>
             <value>
                 <elementReference>Get_Parere_Aggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DueDate__c</field>
+            <value>
+                <elementReference>GetParentCase.EndDate__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
