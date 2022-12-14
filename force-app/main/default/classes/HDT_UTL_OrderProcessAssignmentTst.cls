@@ -164,6 +164,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     Sale__c sale = [SELECT Id FROM Sale__c WHERE Name='testSaleName0' LIMIT 1];
     ServicePoint__c sptest = [SELECT Id,PlugPresence__c FROM ServicePoint__c LIMIT 1];
     sptest.PlugPresence__c = 'Si';
+    sptest.PowerRequested__c = null;
     update sptest;
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
   
