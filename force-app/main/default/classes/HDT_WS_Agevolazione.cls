@@ -27,13 +27,12 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
 
         Map<String,String> mapObj = new Map<String,String>();
-
         for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
             for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                mapObj.put(f.name, f.value);
+                if('_' != f.name){ mapObj.put(f.name, f.value);}
             }
         }
-        mapObj.put('srid', lcs[0].Id);
+        mapObj.put('srnumber', lcs[0].Id);
         
         HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
         Map<String, Object> request = generate.generateMap();
@@ -43,7 +42,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         //Case caso = lcs[0];
 
         HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
-        System.debug(LoggingLevel.DEBUG,'response -> ' + res);
+        System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         
