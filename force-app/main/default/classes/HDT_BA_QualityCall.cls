@@ -11,8 +11,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-
-        String query = 'SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
+        String query = 'SELECT Id,Skip_Callout__c, ParentOrder__r.Status, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
         'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\'';
         return Database.getQueryLocator(query);
     }
@@ -175,7 +174,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 }else if (HANDLE_ACTIVITY.equalsIgnoreCase(ord.QualityCallStatus__c) && activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
                     Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE, Skip_Callout__c = newSkipCall );
                     ordersToUpdate.add(ordToUpd);
-                }else if (String.isBlank(ord.QualityCallStatus__c)){
+                }else if (String.isBlank(ord.QualityCallStatus__c) && 'Completed'.equalsIgnoreCase(ord.ParentOrder__r.Status)){
                     ordersToUpdate.add(new Order(Id=ord.Id, QualityCallStatus__c = HANDLE_ACTIVITY, Skip_Callout__c = newSkipCall));
                     if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
                         orderMap.put(ord.Id, ord);
