@@ -980,67 +980,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
 
     public static Case dataEnrichment(String pod, String contractCOde, Case currentCase){
-        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
-        return HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
+        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(contractCode, pod);
+        return HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), currentCase);
     }
-
-    /*@future(callout=true)
-    private static void dataEnrichment(String pod, String contractCode,String caseId, String cluster){
-        Case currentCase = new Case();
-        Case updateCase = new Case();
-        currentCase.Id = caseId;
-        updateCase.Id = caseId;
-        try{
-            String response = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
-            updateCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(response, currentCase);
-        }catch(Exception e){
-            System.debug(e.getMessage());
-        }
-        if (updateCase != null) {
-            if(cluster.containsIgnoreCase('Morosità')){
-                updateCase.Phase__c = 'Da Inviare';
-                updateCase.Status = 'In Lavorazione';
-            }
-           
-        } else {
-            if(cluster.containsIgnoreCase('Morosità')){
-                updateCase.Phase__c = 'Da Inviare';
-                updateCase.Status = 'In Lavorazione';
-            }
-
-        }
-        HDT_UTL_DatabaseService.updateSObject(updateCase); 
-    }*/
 
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
-        /*
-        wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
-        String result;
-
-        asyncJobRec = hpsmQr.getAsyncJobByJobItem(recordId);
-
-        if(asyncJobRec != null){
-            if(asyncJobRec.wrts_prcgvr__Status__c == 'Chiusa'){
-
-                result = 'OK';
-
-            }else if(asyncJobRec.wrts_prcgvr__Status__c == 'Queued' && asyncJobRec.wrts_prcgvr__Details__c != null){
-                
-                result = 'Error';
-
-            } else {
-
-                result = 'KO';
-
-            }
-        } else {
-
-            result = 'KO';
-
-        }
-        */
-
         String result = 'KO';
         List<Case> caseList = [SELECT Id,Phase__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED];
         if(!caseList.isEmpty() && (!caseList[0].Phase__c.equalsIgnoreCase('Da Inviare') && !caseList[0].Phase__c.equalsIgnoreCase('In Lavorazione')))
