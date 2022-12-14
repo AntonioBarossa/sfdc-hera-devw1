@@ -152,4 +152,19 @@ public with sharing class HDT_QR_ProcessPostSales {
         ];
     }
 
+    public static List<Case> getAllCaseId(){
+        return [
+            SELECT Id 
+            FROM Case
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public static List<Order> getAllOrderId(){
+        return [
+            SELECT Id 
+            FROM Order
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
 }
