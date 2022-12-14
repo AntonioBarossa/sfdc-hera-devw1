@@ -594,7 +594,11 @@ public inherited sharing class HDT_QR_Order {
             CommercialProductCode__c,
             DocumentPackage__c,
             CommercialProduct__c,
+            DocSendingMethod__c,
             SignatureMethod__c,
+            Channel__c,
+            CustomerCategory__c,
+            MarketOrigin__c,
             Type,
             ShippingMail__c,
             PhoneNumber__c
