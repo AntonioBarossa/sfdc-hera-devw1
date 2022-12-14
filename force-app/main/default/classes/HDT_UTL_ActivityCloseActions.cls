@@ -219,7 +219,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 
             new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType) )
         {
-            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, null);
+            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, '');
             if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
         }
         
