@@ -599,7 +599,9 @@ public inherited sharing class HDT_QR_Order {
             Channel__c,
             CustomerCategory__c,
             MarketOrigin__c,
-            Type
+            Type,
+            ShippingMail__c,
+            PhoneNumber__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
