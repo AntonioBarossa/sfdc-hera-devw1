@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>Richiesta non accolta</fullName>
+                <default>false</default>
+                <label>Richiesta non accolta</label>
+            </value>
+            <value>
                 <fullName>Annullamento da cliente</fullName>
                 <default>true</default>
                 <label>Annullamento da cliente</label>

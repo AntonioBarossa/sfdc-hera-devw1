@@ -149,7 +149,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
         if (allActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
-        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Case__r.Subprocess__c, Case__r.RecordType.DeveloperName,
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Case__r.Subprocess__c, Case__r.RequestSource__c , Case__r.ModuleFromContributor__c, Case__r.RecordType.DeveloperName,
                                                             Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, 
                                                             wrts_prcgvr__ActivityTemplate__r.Name 
                                                      FROM wrts_prcgvr__Activity__c 
@@ -250,7 +250,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                     return new HDT_WRP_UpdateSobj('Da Inviare');
                 }
             }else{
-                Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), CancellationReason__c = 'Annullamento per Parere Negativo', Status = 'Closed' );
                 return new HDT_WRP_UpdateSobj(caseUpdate);
             }
         }
@@ -262,7 +262,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             if('Positivo'.equalsIgnoreCase(outcome)){
                 return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
             }else{
-                Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), Status = 'Closed');
                 return new HDT_WRP_UpdateSobj(caseUpdate);
             }
         }
@@ -276,7 +276,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                     if('Positivo'.equalsIgnoreCase(outcome)){
                         return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
                     }else{
-                        Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                        Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), Status = 'Closed');
                         return new HDT_WRP_UpdateSobj(caseUpdate);
                     }
                 }
@@ -284,7 +284,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                     if('Positivo'.equalsIgnoreCase(outcome)){
                         return new HDT_WRP_UpdateSobj('Da Inviare'); //aggiorna la fase del case
                     }else{
-                        Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today());
+                        Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), Status = 'Closed');
                         return new HDT_WRP_UpdateSobj(caseUpdate);
                     }
                 }

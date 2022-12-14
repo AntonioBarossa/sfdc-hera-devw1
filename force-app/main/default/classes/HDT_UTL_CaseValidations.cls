@@ -1058,11 +1058,13 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         Date requestDate   = (String.isNotBlank(getFieldValue(fields, 'WrittenReceiptRequestDate__c'))) ? Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c')) : null;
         Boolean requiredAttachment = false;
         Boolean isAcqua = false;
-
+        String salesCompanyNoAttachment = 'Marche Multiservizi S.p.A';
         if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
             isAcqua = true;
-            List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
-            requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?true:false;
+            if(!salesCompanyNoAttachment.containsIgnoreCase(currentCase.SalesCompany__c)){
+                List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+                requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?false:true;    
+            }else{}
         }
         if(notBeforeDate < System.today()){
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" non può essere nel passato'));
@@ -1073,7 +1075,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             Date upBoundary = requestDate.addDays(60);
             Boolean isInBoundary = (notBeforeDate >= lowBoundary && notBeforeDate <= upBoundary);
             result = (!isInBoundary) ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" deve essere compresa fra '+lowBoundary.format()+' e '+upBoundary.format())) : result;
-        } else if(isAcqua && !requiredAttachment){
+        } else if(isAcqua && requiredAttachment){
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire un allegato'));
         }
         return result;
@@ -1444,10 +1446,6 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             if(attachedDocument.size() == 0){
                 return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato.'));
             }
-        }
-        
-        if ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) && 'Rimborso retroattivo importo fognatura e depurazione'.equals(argument) && String.isBlank(note)){
-            return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per l\'argomento selezionato occorre specificare sul campo note la Data di Inizio Rimborso.'));
         }
 
         return result;

@@ -209,6 +209,285 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>InterestProduct__c</picklist>
+        <values>
+            <fullName>Hera Bebè Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Bebè Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Bebè Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Caldaia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Caldaia Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Caldaia Sicura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Caldaia Sicura Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Clima</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Clima Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Contawatt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Contawatt Lavoro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera E-bike</fullName>
+            <default>false</default>
+        </values>
+        <values>
+			<fullName>Hera E-Bike Business</fullName>
+			<default>false</default>
+		</values>
+        <values>
+            <fullName>Hera EtàPiù Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera EtàPiù Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera EtàPiù Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Fotovoltaico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Fotovoltaico Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+			<fullName>Hera Fotovoltaico Kit fai da te</fullName>
+			<default>false</default>
+		</values>
+        <values>
+            <fullName>Hera Impronta Zero Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Impronta Zero Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Impronta Zero Lavoro Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Impronta Zero Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Impronta Zero Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Impronta Zero Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Led</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Led Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Monopattino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera No Problem</fullName>
+            <default>false</default>
+        </values>
+        <values>
+			<fullName>Hera No Problem Acqua</fullName>
+			<default>false</default>
+		</values>
+        <values>
+            <fullName>Hera No Problem Lavoro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Fissa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Fissa Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Fissa Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Fissa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Variabile Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Variabile Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Variabile Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Placet Variabile Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+			<fullName>Hera Ricarica Business</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Ricarica Privata</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Ricarica Pubblica</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Hera Sanifica Aria</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Hera Sanifica Aria Business</fullName>
+			<default>false</default>
+		</values>
+        <values>
+            <fullName>Hera Scaldacqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Scaldacqua Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Thermo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+			<fullName>Noleggio Auto Elettrica</fullName>
+			<default>false</default>
+		</values>
+        <values>
+            <fullName>Offerta Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Offerte Luce e Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo Netto Special Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo Netto Special Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo Netto Special Lavoro Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo Netto Special Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo Netto Special Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prezzo Netto Special Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Welcome Hera Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Welcome Hera Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Welcome Hera Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Dual</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MobilePhonePrefix__c</picklist>
         <values>
             <fullName>%2B1</fullName>

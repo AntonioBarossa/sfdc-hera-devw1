@@ -9649,6 +9649,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rifiutologo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>SMS</fullName>
             <default>false</default>
         </values>

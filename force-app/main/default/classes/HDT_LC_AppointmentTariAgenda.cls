@@ -39,8 +39,8 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.street = street;
             this.housenumber = housenumber;
             this.typeInt = typeInt;
-            this.indicator = indicator;
-            this.numberOfLines = numberOfLines;
+            this.indicator = 'Y';
+            this.numberOfLines = null;
             this.city = city;
             //this.startDate = startDate;
             //this.endDate = endDate;
@@ -99,8 +99,9 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String typeInt;
         String indicator;
         String numberOfLines;
-        Datetime startDate;
-        Datetime endDate;
+        String city;
+        String startDate;
+        String endDate;
         
         public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap) {
 
@@ -110,10 +111,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.housenumber = wrap.housenumber;
             this.typeInt = wrap.typeInt;
             this.indicator = wrap.indicator;
+            this.city = wrap.city;
             this.numberOfLines = wrap.numberOfLines;
-            this.startDate = wrap.startDate;
-            this.endDate = wrap.endDate;
-
+            this.startDate = wrap.startDate.format('yyyyMMddhhmmss');
+            this.endDate = wrap.endDate.format('yyyyMMddhhmmss');
         }
     }
 
@@ -159,8 +160,9 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap) {
         HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap);
+        //system.debug(json.serialize(req));
         HDT_WS_AppointmentConfirmResponse res = (HDT_WS_AppointmentConfirmResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_CONFIRM,'POST', req, HDT_WS_AppointmentConfirmResponse.class);
-        
+        //system.debug(json.serialize(res));
         if(Test.isRunningTest()){
             res.status = 'success';
         }
@@ -170,11 +172,12 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             theCase.EndAppointment__c = wrap.endDate;
             theCase.JobCenterCode__c = res.data.workCenterId;
             theCase.NoticeId__c = res.data.noticeNumber;
-            theCase.Phase__c = 'Da Inviare';
-            theCase.Outcome__c ='Recived_Slots';
+            //theCase.Phase__c = 'Da Inviare';
+            theCase.Phase__c = 'Inviata a SAP';
+            //theCase.Outcome__c ='Recived_Slots';
 
-            if(!theCase.WithdrawalFee__c){
-                if(theCase.ServicePoint__c == null){    throw new HDT_UTL_HeraException('ServicePointId Null when creating MasterDetail');     }
+            if(!theCase.WithdrawalFee__c && theCase.ServicePoint__c != null){
+                //if(theCase.ServicePoint__c == null){    throw new HDT_UTL_HeraException('ServicePointId Null when creating MasterDetail');     }
                 Date dataRitiro = Date.newinstance(theCase.CreatedDate.year(), theCase.CreatedDate.month(), theCase.CreatedDate.day());
                 FreeWithdraw__c ritiro = new FreeWithdraw__c();
                 ritiro.ServicePoint__c = theCase.ServicePoint__c;

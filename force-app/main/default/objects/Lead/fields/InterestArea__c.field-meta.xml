@@ -13,16 +13,11 @@
         <restricted>true</restricted>
         <valueSetName>HDT_InterestArea</valueSetName>
         <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
             <controllingFieldValue>Hera Contawatt</controllingFieldValue>
             <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
             <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
@@ -33,12 +28,30 @@
             <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
             <controllingFieldValue>Hera Led</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
             <controllingFieldValue>Hera No Problem</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
             <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
             <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
@@ -57,24 +70,14 @@
             <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
             <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-            <controllingFieldValue>Hera E-bike</controllingFieldValue>
-            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
             <valueName>Green</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
             <controllingFieldValue>Hera Contawatt</controllingFieldValue>
             <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
             <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
@@ -85,11 +88,314 @@
             <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Led</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
+            <controllingFieldValue>Hera Thermo</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
+            <valueName>Digitale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Led</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
+            <controllingFieldValue>Hera Thermo</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
+            <valueName>Assicurazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Led</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
+            <controllingFieldValue>Hera Thermo</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
+            <valueName>E-mobility</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
             <controllingFieldValue>Hera Led</controllingFieldValue>
             <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
+            <controllingFieldValue>Hera Thermo</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
+            <valueName>Offerta EE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Led</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
+            <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
+            <controllingFieldValue>Hera Thermo</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
+            <valueName>Offerta GAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
+            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
+            <controllingFieldValue>Hera E-bike</controllingFieldValue>
+            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
+            <controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
+            <controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Led</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Led Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
             <controllingFieldValue>Hera No Problem</controllingFieldValue>
             <controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
             <controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
@@ -109,277 +415,27 @@
             <controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
             <controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-            <controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-            <controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-            <controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-            <controllingFieldValue>Hera E-bike</controllingFieldValue>
-            <controllingFieldValue>Hera Monopattino</controllingFieldValue>
-            <valueName>Digitale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
-            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
-            <valueName>HVAC</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
-            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
-            			<controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Led</controllingFieldValue>
-			<controllingFieldValue>Hera Led Business</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
-			<controllingFieldValue>Hera Thermo</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-			<controllingFieldValue>Hera E-bike</controllingFieldValue>
-			<controllingFieldValue>Hera Monopattino</controllingFieldValue>
-            <valueName>Assicurazioni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            			<controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Led</controllingFieldValue>
-			<controllingFieldValue>Hera Led Business</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
-			<controllingFieldValue>Hera Thermo</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-			<controllingFieldValue>Hera E-bike</controllingFieldValue>
-			<controllingFieldValue>Hera Monopattino</controllingFieldValue>
-            <valueName>E-mobility</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
-            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
-            			<controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Led</controllingFieldValue>
-			<controllingFieldValue>Hera Led Business</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
-			<controllingFieldValue>Hera Thermo</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-			<controllingFieldValue>Hera E-bike</controllingFieldValue>
-			<controllingFieldValue>Hera Monopattino</controllingFieldValue>
-            <valueName>Offerta EE</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
-            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
-            			<controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Led</controllingFieldValue>
-			<controllingFieldValue>Hera Led Business</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
-			<controllingFieldValue>Hera Thermo</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-			<controllingFieldValue>Hera E-bike</controllingFieldValue>
-			<controllingFieldValue>Hera Monopattino</controllingFieldValue>
-            <valueName>Offerta GAS</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
-            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Business</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura</controllingFieldValue>
-            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
-            <controllingFieldValue>Hera Clima</controllingFieldValue>
-            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
-            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
-            			<controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Dual</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Gas</controllingFieldValue>
-			<controllingFieldValue>Hera EtàPiù Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico</controllingFieldValue>
-			<controllingFieldValue>Hera Fotovoltaico Business</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Impronta Zero Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Led</controllingFieldValue>
-			<controllingFieldValue>Hera Led Business</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem</controllingFieldValue>
-			<controllingFieldValue>Hera No Problem Lavoro</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Fissa Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
-			<controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
-			<controllingFieldValue>Hera Thermo</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Luce</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Dual</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Gas</controllingFieldValue>
-			<controllingFieldValue>Prezzo Netto Special Lavoro Luce</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Dual</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Gas</controllingFieldValue>
-			<controllingFieldValue>Welcome Hera Luce</controllingFieldValue>
-			<controllingFieldValue>Hera E-bike</controllingFieldValue>
-			<controllingFieldValue>Hera Monopattino</controllingFieldValue>
             <valueName>Offerta Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Hera Contawatt</controllingFieldValue>
+            <controllingFieldValue>Hera Contawatt Lavoro</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Dual</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Gas</controllingFieldValue>
+            <controllingFieldValue>Hera Bebè Luce</controllingFieldValue>
+            <controllingFieldValue>Hera Caldaia Sicura Business</controllingFieldValue>
+            <controllingFieldValue>Hera Clima</controllingFieldValue>
+            <controllingFieldValue>Hera Clima Business</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Lavoro Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Active Special Casa Dual</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Luce</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Gas</controllingFieldValue>
+            <controllingFieldValue>PiuControllo Flat Special Casa Dual</controllingFieldValue>
+            <valueName>HVAC</valueName>
         </valueSettings>
     </valueSet>
     <visibleLines>5</visibleLines>

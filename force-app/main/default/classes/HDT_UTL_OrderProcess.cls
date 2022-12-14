@@ -38,9 +38,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
     public static Boolean isChangedPhase(List<Order> orderList, Map<Id,SObject> orderOldMap){
         Order orderNew = orderList[0];
-		Order caseOld = (Order) orderOldMap.get(orderNew.Id);
+		Order orderOld = (Order) orderOldMap.get(orderNew.Id);
 		String phaseNew = orderNew.Phase__c != null? orderNew.Phase__c:'';
-		String phaseOld = caseOld.Phase__c != null? caseOld.Phase__c:'';
+		String phaseOld = orderOld.Phase__c != null? orderOld.Phase__c:'';
         if(
             (String.isNotBlank(phaseNew) && String.isNotBlank(phaseOld) && phaseNew != phaseOld) || 
             (String.isBlank(phaseOld) && String.isNotBlank(phaseNew))
@@ -375,7 +375,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked && !myOrder.Commodity__c.containsIgnoreCase('Acqua')? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
                     newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
                     if('Documentazione Validata'== newPhase && STRING.isNotBlank(myOrder.ApprovalType__c) && !'3 - Nessuna'.equalsIgnoreCase(myOrder.ApprovalType__c)){
-                        newPhase = 'In Attesa Approvazione';//Approvazione Agevolazione
+                        newPhase = '1 - Avviso di servizio'.equalsIgnoreCase(myOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'In Lavorazione';//Approvazione Agevolazione
                     }
 
                     childOrdersDocValid.add(new Order(
@@ -962,7 +962,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             update  mapObjToUpdate.values();
         }
     }
-
+    /**
+     * NTTDATA
+     * Annulla gli ordini figli
+     * **/
+    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
+        List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
+        for(Order singleChild : childOrderList){
+            singleChild.Phase__c = 'Annullato';
+            singleChild.Status = 'Annullato';
+            singleChild.CancellationReason__c = 'Annullamento da cliente';
+        }
+        return childOrderList;
+    }
     /**
      * @description  FIX METODO DEFELICE
      * @param newOrdersMap

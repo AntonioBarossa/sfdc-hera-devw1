@@ -49,6 +49,8 @@ global with sharing class HDT_WS_IntermediateResults {
                 Case caseToUpdate = new Case();
                 caseToUpdate.Id= calloutCaseDt.caseId;
 
+                HDT_WRP_Field fieldInfos = calloutCaseDt.field[calloutCaseDt.field.size()-1];
+
                 // popola phase con condizione
                 Map<String, String> codToPhase = new Map<String, String>{
                     '0050'=>'Approvata',
@@ -56,19 +58,19 @@ global with sharing class HDT_WS_IntermediateResults {
                     '0060'=>'Presa In Carico'
                 };
                 // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
-                //     caseToUpdate.Phase__c = codToPhase.get(calloutCaseDt.field[0].codNota);
-                // else caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
-                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
+                //     caseToUpdate.Phase__c = codToPhase.get(fieldInfos.codNota);
+                // else caseToUpdate.Phase__c = fieldInfos.phase;
+                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(fieldInfos.codNota) : fieldInfos.phase;
 
                 // mergiate "descNota" e "textNota" all’interno del campo “Description”
-                caseToUpdate.Description = //'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
-                                           //'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
-                                           'Descrizione Nota: '+calloutCaseDt.field[0].descNota+'\n'+
-                                           'Testo Nota: '+calloutCaseDt.field[0].textNota;
+                caseToUpdate.Description = //'Codice Activity: '+fieldInfos.codActivity+'\n'+
+                                           //'Codice Nota: *'+fieldInfos.codNota+'*'+'\n'+
+                                           'Descrizione Nota: '+fieldInfos.descNota+'\n'+
+                                           'Testo Nota: '+fieldInfos.textNota;
 
                 // passati "codActivity" e "codNota" nei rispettivi campi su Case
-                caseToUpdate.ActivityCode__c = calloutCaseDt.field[0].codActivity;
-                caseToUpdate.NoteCode__c = calloutCaseDt.field[0].codNota;
+                caseToUpdate.ActivityCode__c = fieldInfos.codActivity;
+                caseToUpdate.NoteCode__c = fieldInfos.codNota;
 
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
