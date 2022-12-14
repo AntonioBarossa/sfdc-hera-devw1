@@ -410,7 +410,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             /**@frpanico 2022-12-14 nel caso di Service Point non innescabile per transitorio e punto gas innescabile a transitorio
              * Verrebbe sovrascritto la stringa res perdendo traccia della non innescabilita' del punto
              */
-            if(r && res != null && String.isNotBlank(res)){
+            if(r && (res == null || String.isBlank(res))){
                 res = 'Subentro';
             }
         }
