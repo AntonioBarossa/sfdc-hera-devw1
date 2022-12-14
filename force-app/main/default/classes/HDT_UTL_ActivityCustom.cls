@@ -272,27 +272,41 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordid);
             oldActivityToUpdate.validation__c = validazione;
             activityCustomSrv.updateRecord(oldActivityToUpdate);
+            List<Order> orderToUpd = new List<Order>();
             if(validazione == 'Si'){
                 // res = true;
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
-                 {
-                    ord.SignedDate__c = Date.today();
-                 }
                  //
                  //ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
-                     ord.Phase__c = 'Registrazione validata';
+                    ord.Phase__c = 'Registrazione validata';
+                    if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
+                    {
+                        ord.SignedDate__c = Date.today();
+                    }
+                    else
+                    {
+                        /* Per evitare eventuali ordini per cui manca la configurazione CC */
+                        List<Order> ol = [SELECT Id,SignedDate__c FROM Order WHERE ComfortCallDaysDue__c = null AND ParentOrder__c = :ord.id WITH SECURITY_ENFORCED];
+                        for(order o : ol)
+                        {
+                            o.SignedDate__c = Date.today();
+                            o.ConfirmCustomerContract__c = 'Comfort call';
+                            orderToUpd.add(o);
+                        }
+                    }   
                  }
                  else
                  {
                      ord.phase__c = 'Documentazione Gestita';
                      ord.status = 'Completed';
+                     ord.SignedDate__c = Date.today();
                  }
-                 orderSrv.updateRecord(ord);
+                 orderToUpd.add(ord);  
+                 HDT_UTL_DatabaseService.updateSObject(orderToUpd);
              }
              else{
                  // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');

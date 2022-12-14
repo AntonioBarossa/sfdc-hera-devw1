@@ -46,13 +46,17 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderUpdates.Id);
         List<Order> ordersToUpdate = new List<Order>();
         Map<String,Object> objMap = orderUpdates.getPopulatedFieldsAsMap();
-
+        String childFieldSkip = 'PhoneNumber__c,ShippingMail__c';
         for (Order childOrder : childOrders) {
             Order childOrderToUpdate = new Order(
                 Id = childOrder.Id
             );
 
             for (String key : objMap.keySet()) {
+                if(childFieldSkip.containsIgnoreCase(key) && childOrder.get(key) != null)
+                {
+                    continue;
+                }
                 if (key != 'Id') {
                     childOrderToUpdate.put(key, objMap.get(key));
                 }
