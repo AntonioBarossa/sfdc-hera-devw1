@@ -8770,6 +8770,11 @@
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>
+		<editable>true</editable>
+		<field>Case.WasterCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Case.WithdrawalFee__c</field>
         <readable>true</readable>
