@@ -162,6 +162,9 @@ private class HDT_UTL_OrderProcessAssignmentTst {
   @isTest 
   static void testFieldsTransition() {     
     Sale__c sale = [SELECT Id FROM Sale__c WHERE Name='testSaleName0' LIMIT 1];
+    ServicePoint__c sptest = [SELECT Id,PlugPresence__c FROM ServicePoint__c LIMIT 1];
+    sptest.PlugPresence__c = 'Si';
+    update sptest;
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
   
     System.assertEquals('Subentro_Remi', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
