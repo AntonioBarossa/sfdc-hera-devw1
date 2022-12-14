@@ -106,7 +106,7 @@ public with sharing class HDT_SRV_GarbageMan {
 
             //se queueable success chiamare servizio deda con case
             if(ctx.getResult() == ParentJobResult.SUCCESS){
-                HDT_WRP_GarbageManResponse responseDeda = doCallout(new HDT_WRP_GarbageManRequest(currentCase[0]));
+                HDT_WRP_GarbageManResponse responseDeda = (HDT_WRP_GarbageManResponse) doCallout(new HDT_WRP_GarbageManRequest(currentCase[0]));
             }else{
                 //se queueable fallita chiamare servizio deda con case e error code
                 HDT_WRP_GarbageManResponse responseDeda = (HDT_WRP_GarbageManResponse) doCallout(new HDT_WRP_GarbageManRequest(currentCase[0], this.errorCode));
