@@ -294,6 +294,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                         for(order o : ol)
                         {
                             o.SignedDate__c = Date.today();
+                            o.ConfirmCustomerContract__c = 'Comfort call';
                             orderToUpd.add(o);
                         }
                     }   
