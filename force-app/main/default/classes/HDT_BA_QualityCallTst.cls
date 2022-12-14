@@ -68,6 +68,7 @@ public with sharing class HDT_BA_QualityCallTst {
             orderss[0].ComfortCallDaysDue__c=null;
             orderss[0].WizardCompletedDate__c=date.today().addDays(-60);
             orderss[0].ParentOrder__c = parentOrders[1].Id;
+            orderss[0].Channel__c = 'Agenzia';
             orderss[0].Contact__c = contactId;
             orderss[0].QualityCallUnique__c=true;
             orderss[0].AgencyCode__c='001';
@@ -85,6 +86,7 @@ public with sharing class HDT_BA_QualityCallTst {
             moreOrders[0].ComfortCallDaysDue__c = 6.2;
             moreOrders[0].ParentOrder__c = parentOrderId;
             moreOrders[0].Contact__c = anotherContactId;
+            moreOrders[0].Channel__c = 'Agenzia';
             moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             moreOrders[0].Phase__c = 'Bozza';
             insert moreOrders;
@@ -107,6 +109,7 @@ public with sharing class HDT_BA_QualityCallTst {
             ordersToday[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             ordersToday[0].VASType__c = 'VAS Fatturabili';
             ordersToday[0].Phase__c = 'Comunicazione verso Heroku';
+            ordersToday[0].Channel__c = 'Agenzia';
             
             ordersToday[1].Username__c='test2';
             ordersToday[1].Password__c='test21';
@@ -125,6 +128,7 @@ public with sharing class HDT_BA_QualityCallTst {
             ordersToday[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             ordersToday[1].VASType__c = 'VAS Fatturabili';
             ordersToday[1].Phase__c = 'Comunicazione verso Heroku';
+            ordersToday[1].Channel__c = 'Agenzia';
             insert ordersToday;
 
             wrts_prcgvr__Activity__c activityVas=new wrts_prcgvr__Activity__c(

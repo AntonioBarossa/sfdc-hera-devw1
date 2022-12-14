@@ -4,7 +4,7 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        String query = 'SELECT Id,ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c, Account.CompanyOwner__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true AND ParentOrder__r.Status = \'Completed\'';
+        String query = 'SELECT Id,  ParentOrder__r.Status, ComfortCallDaysDue__c,DateComfortCall__c,ParentOrder__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c, Account.CompanyOwner__c FROM Order Where Phase__c = \'In attesa conferma cliente\' AND QualityCall__c = true';
         return Database.getQueryLocator(query);
     }
 
@@ -47,7 +47,8 @@ public with sharing class HDT_BA_ComfortCall implements Database.Batchable<sObje
 
             if (ord.ComfortCallDaysDue__c <= startDate.daysBetween(dueDate)) {
 
-                if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))){
+                if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c)) 
+                && 'Completed'.equalsIgnoreCase(ord.ParentOrder__r.Status)){
 
                     orderMap.put(ord.ParentOrder__c, ord);
 
