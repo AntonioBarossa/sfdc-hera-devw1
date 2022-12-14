@@ -272,6 +272,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordid);
             oldActivityToUpdate.validation__c = validazione;
             activityCustomSrv.updateRecord(oldActivityToUpdate);
+            List<Order> orderToUpd = new List<Order>();
             if(validazione == 'Si'){
                 // res = true;
                  Order ord = new Order();
@@ -286,6 +287,16 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                     {
                         ord.SignedDate__c = Date.today();
                     }
+                    else
+                    {
+                        /* Per evitare eventuali ordini per cui manca la configurazione CC */
+                        List<Order> ol = [SELECT Id, SignedDate FROM Order WHERE ComfortDaysDue__c = null WITH SECURITY_ENFORCED];
+                        for(order o : ol)
+                        {
+                            o.SignedDate__c = Date.today();
+                            orderToUpd.add(o);
+                        }
+                    }   
                  }
                  else
                  {
@@ -293,7 +304,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                      ord.status = 'Completed';
                      ord.SignedDate__c = Date.today();
                  }
-                 orderSrv.updateRecord(ord);
+                 orderToUpd.add(ord);  
+                 HDT_UTL_DatabaseService.updateSObject(orderToUpd);
              }
              else{
                  // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
