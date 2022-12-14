@@ -290,7 +290,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                     else
                     {
                         /* Per evitare eventuali ordini per cui manca la configurazione CC */
-                        List<Order> ol = [SELECT Id, SignedDate FROM Order WHERE ComfortDaysDue__c = null WITH SECURITY_ENFORCED];
+                        List<Order> ol = [SELECT Id, SignedDate FROM Order WHERE ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
                         for(order o : ol)
                         {
                             o.SignedDate__c = Date.today();
