@@ -277,20 +277,21 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
-                 {
-                    ord.SignedDate__c = Date.today();
-                 }
                  //
                  //ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
-                     ord.Phase__c = 'Registrazione validata';
+                    ord.Phase__c = 'Registrazione validata';
+                    if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
+                    {
+                        ord.SignedDate__c = Date.today();
+                    }
                  }
                  else
                  {
                      ord.phase__c = 'Documentazione Gestita';
                      ord.status = 'Completed';
+                     ord.SignedDate__c = Date.today();
                  }
                  orderSrv.updateRecord(ord);
              }
