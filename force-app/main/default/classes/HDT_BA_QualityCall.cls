@@ -11,9 +11,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-        //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
         String query = 'SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\' AND ParentOrder__r.Status = \'Completed\'';
+        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\' AND ParentOrder__r.Status = \'Completed\'';
         return Database.getQueryLocator(query);
     }
 
