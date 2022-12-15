@@ -85,9 +85,9 @@ global with sharing class HDT_WS_GarbageMan {
                 return new HDT_WRP_WasteDisposalResponse('Y',theCase.CreatedDate, request.requestCode, theCase.Id);
             }else{
                 for(Database.Error err : isCaseInserted.getErrors()) {
-                    System.debug('The following error has occurred.');                    
-                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
-                    System.debug('Case fields that affected this error: ' + err.getFields());
+                    System.debug(LoggingLevel.ERROR, 'The following error has occurred.');                    
+                    System.debug(LoggingLevel.ERROR, err.getStatusCode() + ': ' + err.getMessage());
+                    System.debug(LoggingLevel.ERROR, 'Case fields that affected this error: ' + err.getFields());
                 }
             }
 
