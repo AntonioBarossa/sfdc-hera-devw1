@@ -44,7 +44,7 @@ public with sharing class HDT_SRV_GarbageMan {
             this.dataInizioAppuntamento = null;
             this.dataFineAppuntamento = null;
             this.codiceEsito = codiceEsito;
-            this.descrizioneEsito = utlGarbage.descrizioneEsiti.get(codiceEsito);        
+            this.descrizioneEsito = utlGarbage.DESCRIZIONE_ESITI.get(codiceEsito);        
         }
     }
 
