@@ -14,28 +14,28 @@ global with sharing class HDT_WS_GarbageMan {
 
     //public HDT_WS_GarbageMan(){}
     
-    global class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
+    private class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
 
-        public String phoneNumber {get;set;}
-        public String fiscalCode {get;set;}
-        public String clientTypology {get;set;}
-        public String contactName {get;set;}
-        public String streetCode {get;set;}
-        public String city {get;set;}
-        public String street {get;set;}
-        public String streetNumber {get;set;}
-        public String typeInt {get;set;}
-        public String requestCode {get;set;}
-        public String materialDescription {get;set;}
+        private String phoneNumber {get;set;}
+        private String fiscalCode {get;set;}
+        private String clientTypology {get;set;}
+        private String contactName {get;set;}
+        private String streetCode {get;set;}
+        private String city {get;set;}
+        private String street {get;set;}
+        private String streetNumber {get;set;}
+        private String typeInt {get;set;}
+        private String requestCode {get;set;}
+        private String materialDescription {get;set;}
     }
 
     global class HDT_WRP_WasteDisposalResponse extends HDT_WS_Response{
 
-        public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
-        public String requestInCharge {get;set;}
-        public Datetime createdDate {get;set;}
-        public String requestCode {get;set;}
-        public String codeRds {get;set;}
+        private List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
+        private String requestInCharge {get;set;}
+        private Datetime createdDate {get;set;}
+        private String requestCode {get;set;}
+        private String codeRds {get;set;}
 
         global HDT_WRP_WasteDisposalResponse(){
             return;
@@ -50,13 +50,13 @@ global with sharing class HDT_WS_GarbageMan {
     }
 
     @HttpPost
-    global static HDT_WRP_WasteDisposalResponse handleWasteDisposalFromApp(HDT_WRP_WasteDisposalRequest request){
-        /*
+    global static HDT_WRP_WasteDisposalResponse handleWasteDisposalFromApp(){
+        
         String body = RestContext.request.requestBody.toString();
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_GarbageMan input body: ' + body);
 
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
-        */
+        
         try{
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
