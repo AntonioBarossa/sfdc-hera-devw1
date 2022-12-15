@@ -4,10 +4,12 @@
  * @description HDT_UTL_Scarti - Utility scarti
  * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
  */
-@SuppressWarnings('PMD.EmptyStatementBlock , PMD.AvoidGlobalModifier , PMD.AvoidDebugStatements, PMD.LocalVariableNamingConventions, PMD.MethodNamingConventions, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.ExcessivePublicCount, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength')
+@SuppressWarnings('PMD.EmptyStatementBlock , PMD.AvoidGlobalModifier , PMD.AvoidDebugStatements, PMD.LocalVariableNamingConventions, PMD.MethodNamingConventions, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.ExcessivePublicCount, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength, PMD.CognitiveComplexity')
 global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.IApexCriteria, Queueable{
     private List<wrts_prcgvr__Activity__c> newActivities;
     private List<wrts_prcgvr__Activity__c> oldActivities;
+    //[DV - 15/12/22] 2022_2B02 - Del.609_2021 e Del.639_2021 - Qualità Tecnica SII: Aggiungo una variabile globale per atracciamento esito scarto
+    global static DiscardAnnullmentRule__c discardRecord;
 
     static final string CANONERAITEMPLATENAME='CBS_CAR002__CANONE_RAI';
     static final string BONUSSOCIALETEMPLATENAME='CBS_FAT011__BONUS_SOCIALE';
@@ -470,7 +472,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         
 
         //Gestione Scarti SAP tolti i campi parent Object process field e controlling field
-        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c, DiscardReason__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
                                                 AND IsActive__c = true
@@ -508,12 +510,22 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                             when 'Alta'{
                                 if (ctrField.equalsIgnoreCase(curRule.ControllingValue__c)){
                                     outcome = true;
+                                    //[DV - 15/12/22] 2022_2B02 - Del.609_2021 e Del.639_2021 - Qualità Tecnica SII: Se il processo è Autolettura da Cliente e 
+                                    //il Servizio è Acqua, vado a salvarmi il record di DiscardAnnullmentRule__c
+                                    if(processField.equalsIgnoreCase('Autolettura da cliente') && commodity.equalsIgnoreCase('Acqua')){
+                                        discardRecord = curRule;
+                                    }
                                     break;
                                 }
                             }
                             when 'Bassa' {
                                 if (ctrField.containsIgnoreCase(curRule.ControllingValue__c)){
                                     outcome = true;
+                                    //[DV - 15/12/22] 2022_2B02 - Del.609_2021 e Del.639_2021 - Qualità Tecnica SII: Se il processo è Autolettura da Cliente e 
+                                    //il Servizio è Acqua, vado a salvarmi il record di DiscardAnnullmentRule__c
+                                    if(processField.equalsIgnoreCase('Autolettura da cliente') && commodity.equalsIgnoreCase('Acqua')){
+                                        discardRecord = curRule;
+                                    }
                                     break;
                                 }
                             }
@@ -1196,9 +1208,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             if(String.isNotBlank(errorDescription)){
                 objectToUpdate.put('DiscardDescription__c',errorDescription);
             }
-            
-            
-            //HDT_UTL_DatabaseService.updateSObject(objectToUpdate);
+            //[DV - 15/12/22] 2022_2B02 - Del.609_2021 e Del.639_2021 - Qualità Tecnica SII: Se ho popolato la discardRecord vado a ribaltare la DiscardReason__c sul Case
+            if(discardRecord != null){
+                objectToUpdate.put('AbnormalReading__c', discardRecord.DiscardReason__c);
+            }
+
             updateObjectFuture(JSON.serialize(objectToUpdate));
         }
     }
