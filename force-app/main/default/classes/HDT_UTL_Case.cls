@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_Case {
             httpObj.headersMap = new Map<String, String>();
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');    
-            httpObj.endPoint = 'callout:MulesoftBasePath/reminder';
+            httpObj.endPoint = 'callout:MulesoftHergoPath/reminder';
             body = JSON.serialize(new Map<String, Object>{
                 'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
                 'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
