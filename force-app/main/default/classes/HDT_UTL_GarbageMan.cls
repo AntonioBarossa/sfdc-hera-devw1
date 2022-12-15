@@ -1,4 +1,7 @@
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces')
 public with sharing class HDT_UTL_GarbageMan {
+
+    private static final Pattern PATTERN_DATA = Pattern.compile('(\\d+)-(\\d+)-(\\d+)\\s+(\\d+):(\\d+):(\\d+)');
 
     public final Map<String, String> DESCRIZIONE_ESITI = new Map<String, String> {
         '01' => 'StreetCode, Comune, Indirizzo, Civico non valorizzati',
@@ -58,9 +61,13 @@ public with sharing class HDT_UTL_GarbageMan {
     public List<Case> getCurrentCase(Id caseId){
         return [  
                     SELECT Id, WasterCode__c, StartAppointment__c, 
-                    EndAppointment__c, RecordTypeId, Outcome__c,
+                    EndAppointment__c, RecordTypeId,
                     Phase__c, Status, InvoicingStreetName__c, 
                     InvoicingStreetNumber__c, InvoicingPostalCode__c, InvoicingCity__c, 
+                    WithdrawalFee__c, ServicePoint__c,CaseNumber,
+                    Outcome__c, CreatedDate,
+                    SupplyPostalCode__c, SupplyStreetName__c,
+                    SupplyStreetNumber__c, SupplyStreetCode__c,
                     InvoicingStreetCode__c, TypeOperation__c
                     FROM Case
                     WHERE Id =: caseId 
@@ -69,8 +76,8 @@ public with sharing class HDT_UTL_GarbageMan {
                 ];
     }
 
-    public List<AccountContactRelation> getContactRelation(String accountId){
-
+    public List<AccountContactRelation> getContactRelation(Id accountId){
+        if(accountId==null) return new List<AccountContactRelation>();
         return  
         [
             SELECT 
@@ -86,5 +93,44 @@ public with sharing class HDT_UTL_GarbageMan {
             LIMIT 1
         ];
 
+    }
+
+    public Case initCase(Account account){
+        Case theCase = new Case();
+        theCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+        theCase.Cluster__c = 'Segnalazioni';
+        theCase.Type = 'Gestione Rifiuti';
+        theCase.OperationGroup__c = 'CONSULTA IL RIFIUTOLOGO';
+        theCase.Origin = 'Rifiutologo';
+        theCase.Phase__c = 'In Attesa Appuntamento';
+        theCase.Status = 'In Lavorazione';
+
+        List<AccountContactRelation> accContactRels = getContactRelation(account?.Id);
+        if(!accContactRels.isEmpty()){
+            AccountContactRelation accContactRel = accContactRels[0];
+            theCase.AccountId = account.Id;
+            theCase.CompanyOwner__c = account.CompanyOwner__c;
+            theCase.ContactId = accContactRel.ContactId;
+            theCase.SuppliedEmail = accContactRel.Contact.Email;
+            theCase.SuppliedPhone = accContactRel.Contact.MobilePhone;
+            theCase.BillingCity__c = account.BillingPlace__c;
+        }
+        
+        return theCase;
+    }
+
+    public DateTime formatDate(String dateToFormat){
+        Matcher matcher = PATTERN_DATA.matcher(dateToFormat);
+        if(!matcher.find()){
+            throw new HDT_UTL_HeraException('Error on Regex To Format Dates');
+        }
+        return DateTime.newInstance(
+                Integer.valueOf(matcher.group(3)), 
+                Integer.valueOf(matcher.group(2)), 
+                Integer.valueOf(matcher.group(1)), 
+                Integer.valueOf(matcher.group(4)), 
+                Integer.valueOf(matcher.group(5)), 
+                Integer.valueOf(matcher.group(6))
+        );
     }
 }

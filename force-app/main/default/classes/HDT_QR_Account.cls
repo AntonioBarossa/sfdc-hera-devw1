@@ -100,6 +100,8 @@ public inherited sharing class HDT_QR_Account {
      * @return List<Account>
      */
     public List<Account> getAccountByFiscalCode(String fiscalCode) {
+        if(STRING.isBlank(fiscalCode)){     return new List<Account>();     }
+        
         return [
             SELECT
                 Id,

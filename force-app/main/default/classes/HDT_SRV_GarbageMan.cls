@@ -147,8 +147,8 @@ public with sharing class HDT_SRV_GarbageMan {
                 errorCode= '06';
                 throw new HDT_UTL_HeraException('Slot not found'); 
             }else{
-                wrpDataApp.startDate = Datetime.newInstance(Long.valueOf(response.data.appointmentData[0].startDate));
-                wrpDataApp.endDate = Datetime.newInstance(Long.valueOf(response.data.appointmentData[0].endDate));
+                wrpDataApp.startDate = utlGarbage.formatDate(response.data.appointmentData[0].startDate);
+                wrpDataApp.endDate = utlGarbage.formatDate(response.data.appointmentData[0].endDate);
                 HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(currentCase, wrpDataApp);
                 if(String.isBlank(res?.data?.noticeNumber)){
                     errorCode= '07';
