@@ -73,7 +73,10 @@ public with sharing class HDT_WS_AgevolazioneTst{
             
             HDT_UTL_DataFactoryTst.createEndpointRule(1,true,'endpname');
             
-            HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', 'test', 'test', 'C', 'prova', 'calloutParameters', 'apexCalloutAction');
+            String rtName = 'HDT_RT_Segnalazioni';
+            String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+
+            HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', rtId, rtName,'A','prova', 'calloutParameters', 'apexCalloutAction');
 
             HDT_UTL_DataFactoryTst.createWebServiceConfiguration('MulesoftHergoPath', 'Callout:MulesoftHergoPath/notice', 'POST', 'testUser');
 		}
@@ -126,10 +129,7 @@ public with sharing class HDT_WS_AgevolazioneTst{
         res.status='';
         res.correlationId='';
         res.timestamp='';
-        res.data = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
-
-        HDT_WS_Agevolazione.HDT_WRP_ResponseData resData = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
-        resData.esito='';
+        res.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
 
         System.assertEquals('OK', responseReturn.message, 'The call was not successful');
         Test.stopTest();

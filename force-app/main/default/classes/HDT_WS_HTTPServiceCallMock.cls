@@ -178,7 +178,7 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
 
                             if (successfullReturn) {
                                 customRes.status = 'success';
-                                customRes.data = new HDT_WS_Agevolazione.HDT_WRP_ResponseData();
+                                customRes.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
                                 customRes.data.noticeId = String.valueOf(System.now().getTime());
 
                                 res.setStatus('success');
