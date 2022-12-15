@@ -194,6 +194,13 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
 
                         }
 
+                    } when 'Archive' {
+
+                        res.setHeader('Content-Length', '69420');
+
+                        res.setStatus('success');
+                        res.setStatusCode(200);
+
                     } when else {
         
                         res.setStatusCode(404);
