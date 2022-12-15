@@ -23,8 +23,12 @@
                 <field>AreaDeclaredTARI__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>MethodsForOutgoingPayments__c</field>
+                <behavior>Readonly</behavior>
+                <field>CountFreeWithdraw__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>MaxFreeWithdrawDate__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -43,6 +47,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>SingleInstallmentValidityDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MethodsForOutgoingPayments__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -162,6 +170,16 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>ServicePoint__c.HDT_ServiceCatalog</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>HDT_InformativeCallNotification</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>HDT_InfoTracking</actionName>
             <actionType>CustomButton</actionType>
             <sortOrder>2</sortOrder>
@@ -241,16 +259,6 @@
             <actionType>QuickAction</actionType>
             <sortOrder>17</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ServicePoint__c.HDT_ServiceCatalog</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_InformativeCallNotification</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <relatedLists>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
@@ -314,7 +322,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1w000000TS8k</masterLabel>
+        <masterLabel>00h3N000003d5iY</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
