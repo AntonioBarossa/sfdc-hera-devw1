@@ -54,7 +54,7 @@ public with sharing class HDT_SRV_GarbageMan {
 	}
 
     @TestVisible 
-    private class HDT_QBL_NotifyService implements Finalizer, Queueable, Database.AllowsCallouts {
+    public class HDT_QBL_NotifyService implements Finalizer, Queueable, Database.AllowsCallouts {
 
         private Id caseId {get;set;}
 
@@ -115,7 +115,7 @@ public with sharing class HDT_SRV_GarbageMan {
     }
 
     @TestVisible
-    private class HDT_QBL_ScheduleAppointment implements Finalizer, Queueable, Database.AllowsCallouts {
+    public class HDT_QBL_ScheduleAppointment implements Finalizer, Queueable, Database.AllowsCallouts {
 
         Id caseId {get;set;}
         String errorCode {
