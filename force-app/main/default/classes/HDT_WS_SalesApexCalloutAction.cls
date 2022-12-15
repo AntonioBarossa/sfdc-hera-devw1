@@ -76,8 +76,19 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                 Map<String, wrts_prcgvr.MRR_1_0.Field> fieldsToAdd = new Map<String, wrts_prcgvr.MRR_1_0.Field>();
                 wrts_prcgvr.MRR_1_0.WObject processOrder;
                 for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-                    if(w.id != null && Id.valueOf(w.id, true) == (Id) obj.get('Id')){
+                    if(w.id != null && Id.valueOf(w.id, true) == (Id) obj.get('Id') && w.objectType == 'Order'){
                         processOrder = w;
+
+                        for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                            if( f.name.equalsIgnoreCase('TIPO_OPERAZIONE') && 'Voltura'.equalsIgnoreCase(f.value) && 'Acqua'.equalsIgnoreCase(commodity) ){
+                                f.value = 'Voltura ' + (String)obj.get('Subprocess__c');
+                            }
+                            if( f.name.equalsIgnoreCase('QC') ){
+                                Datetime foo = (Datetime)obj.get('SendToDistributorDate__c');
+                                String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
+                                f.value = dateFinal;
+                            }
+                        }
                     }
                     else if(w.objectType == 'OrderItem'){
                         boolean find = false;
@@ -103,13 +114,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                             indexOfObjectToRemove.add(count);
                         }
                     }
-                    else if(w.objectType == 'Order'){
-                        for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                            if( f.name.equalsIgnoreCase('TIPO_OPERAZIONE') && 'Voltura'.equalsIgnoreCase(f.value) && 'Acqua'.equalsIgnoreCase(commodity) ){
-                                f.value = 'Voltura ' + (String)obj.get('Subprocess__c');
-                            }
-                        }
-                    }
+
                     count++;
                 }
                 // for(integer i : indexOffieldToRemove.keyset()){
