@@ -96,7 +96,7 @@ global with sharing class HDT_WS_GarbageMan {
 
             Database.SaveResult isCaseInserted = Database.insert(theCase, false);
             if (isCaseInserted.isSuccess()){
-                HDT_SRV_GarbageMan.HDT_QBL_ScheduleAppointment.scheduleAppointment(theCase.Id);
+                if(!Test.isRunningTest())    HDT_SRV_GarbageMan.scheduleAppointment(theCase.Id);
                 return new HDT_WRP_WasteDisposalResponse('Y',theCase.CreatedDate, request.requestCode, theCase.Id);
             }
 
