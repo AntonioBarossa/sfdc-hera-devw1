@@ -160,7 +160,9 @@
     <formulas>
         <name>newComponentsNumber</name>
         <dataType>Number</dataType>
-        <expression>MAX({!getCase.NotResidentMembers__c},{!getCase.CohabitantsNumber__c},{!getCase.ResidentMembers__c})</expression>
+        <expression>IF(ISNULL({!getCase.NotResidentMembers__c}), 0, {!getCase.NotResidentMembers__c})+
+IF(ISNULL({!getCase.CohabitantsNumber__c}), 0, {!getCase.CohabitantsNumber__c})+
+IF(ISNULL({!getCase.ResidentMembers__c}), 0, {!getCase.ResidentMembers__c})</expression>
         <scale>0</scale>
     </formulas>
     <interviewLabel>Modifica Date {!$Flow.CurrentDateTime}</interviewLabel>
