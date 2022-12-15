@@ -5,13 +5,16 @@
  * @last modified on  : 15-12-2022
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.EmptyStatementBlock, PMD.ExcessivePublicCount, PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.ExcessivePublicCount, PMD.ExcessiveParameterList')
 @RestResource(urlMapping='/rifiutologo/*')
 global with sharing class HDT_WS_GarbageMan {
+  
+    private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
+    private static HDT_QR_Account qrAccount = new HDT_QR_Account();
+
+    //public HDT_WS_GarbageMan(){}
     
-    public HDT_WS_GarbageMan(){}
-    
-    public class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
+    global class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
 
         public String phoneNumber {get;set;}
         public String fiscalCode {get;set;}
@@ -34,7 +37,9 @@ global with sharing class HDT_WS_GarbageMan {
         public String requestCode {get;set;}
         public String codeRds {get;set;}
 
-        public HDT_WRP_WasteDisposalResponse(){}
+        global HDT_WRP_WasteDisposalResponse(){
+            return;
+        }
 
         public HDT_WRP_WasteDisposalResponse(String requestInCharge, Datetime createdDate, String requestCode, String codeRds){
             this.requestInCharge = requestInCharge;
@@ -45,17 +50,16 @@ global with sharing class HDT_WS_GarbageMan {
     }
 
     @HttpPost
-    global static HDT_WRP_WasteDisposalResponse handleWasteDisposalFromApp(){
-        String body = '';
+    global static HDT_WRP_WasteDisposalResponse handleWasteDisposalFromApp(HDT_WRP_WasteDisposalRequest request){
+        /*
+        String body = RestContext.request.requestBody.toString();
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_GarbageMan input body: ' + body);
-        body = RestContext.request.requestBody.toString();
+
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
+        */
         try{
-            Account account = [ SELECT Id 
-                                FROM Account 
-                                WHERE FiscalCode__c=:request.fiscalCode 
-                                WITH SECURITY_ENFORCED 
-                                LIMIT 1]; 
+            Account account;
+            List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
             
             Case theCase = new Case();
             theCase.Cluster__c = 'Segnalazioni';
@@ -64,47 +68,38 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.WasterCode__c = request.requestCode;
             theCase.description = request.materialDescription;
 
-            if(account!= null){ //Gestione rifiuti normale
+            if(!accounts.isEmpty()){ //Gestione rifiuti normale
 
-                AccountContactRelation accContactRel = [SELECT Id, ContactId
-                                                        FROM AccountContactRelation 
-                                                        WHERE AccountId =:account.Id
-                                                        WITH SECURITY_ENFORCED 
-                                                        LIMIT 1];
-
-                theCase.AccountId = account.Id;
-                theCase.CompanyOwner__c = accContactRel.Account.CompanyOwner__c;
-                theCase.ContactId = accContactRel.ContactId;
-                theCase.PhoneNumber__c = accContactRel.Contact.MobilePhone;
-                theCase.SuppliedEmail = accContactRel.Contact.Email;
-                theCase.SuppliedPhone = accContactRel.Contact.MobilePhone;
-                theCase.BillingCity__c = accContactRel.Account.BillingPlace__c;
-
-            }else{ //Gestione rifiuti anonima
-
-                theCase.InvoicingCity__c = request.city;
-                theCase.TypeOperation__c = request.typeInt;
-                theCase.MaterialDescription__c = request.materialDescription;
-                theCase.AlternativeAddress__c = request.city + request.street + request.streetNumber + request.streetCode;
-                
+                account = accounts[0];
+                List<AccountContactRelation> accContactRels = utlGarbage.getContactRelation(account.Id);
+                if(!accContactRels.isEmpty()){
+                    AccountContactRelation accContactRel = accContactRels[0];
+                    theCase.AccountId = account.Id;
+                    theCase.CompanyOwner__c = account.CompanyOwner__c;
+                    theCase.ContactId = accContactRel.ContactId;
+                    theCase.SuppliedEmail = accContactRel.Contact.Email;
+                    theCase.SuppliedPhone = accContactRel.Contact.MobilePhone;
+                    theCase.BillingCity__c = account.BillingPlace__c;
+                }
             }
 
-            TariAppointment__c tabellaAppuntamento = [  SELECT Id 
-                                                        FROM TariAppointment__c
-                                                        WHERE City__c = 'CONSULTA IL RIFIUTOLOGO'
-                                                        AND TypeOperation__c =:request.typeInt
-                                                        WITH SECURITY_ENFORCED 
-                                                        LIMIT 1];
+            theCase.TypeOperation__c = request.typeInt;
+            theCase.MaterialDescription__c = request.materialDescription;
+            theCase.AlternativeAddress__c = request.city + request.street + request.streetNumber + request.streetCode;
+            theCase.InvoicingCity__c = request.city;
+            theCase.InvoicingStreetName__c =request.street;
+            theCase.InvoicingStreetNumber__c = request.streetNumber;
+            theCase.InvoicingStreetCode__c = request.streetCode;
+            theCase.InvoicingCountry__c = 'Italia';
+            theCase.PhoneNumber__c = getPhoneNumber(request, account);
 
-            if(tabellaAppuntamento!= null){
-                theCase.Phase__c = 'In Attesa Appuntamento';
-            }else{
-                theCase.Phase__c = 'Da Inviare';
-            }
+            
+            theCase.Phase__c = 'In Attesa Appuntamento';
+            theCase.Status = 'In Lavorazione';
 
-            Boolean isObjInserted = HDT_UTL_DatabaseService.insertSObject(theCase);
-            if (isObjInserted){
-                HDT_SRV_GarbageMan.HDT_QBL_ScheduleAppointment.scheduleAppointment(theCase.Id);
+            Database.SaveResult isCaseInserted = Database.insert(theCase, false);
+            if (isCaseInserted.isSuccess()){
+                if(!Test.isRunningTest())    HDT_SRV_GarbageMan.scheduleAppointment(theCase.Id);
                 return new HDT_WRP_WasteDisposalResponse('Y',theCase.CreatedDate, request.requestCode, theCase.Id);
             }
 
@@ -115,6 +110,14 @@ global with sharing class HDT_WS_GarbageMan {
         }
 
         return new HDT_WRP_WasteDisposalResponse('N',null, request.requestCode, null);
+    }
+
+    private static String getPhoneNumber(HDT_WRP_WasteDisposalRequest request, Account acc){
+        if(STRING.isNotBlank(request.phoneNumber))  return request.phoneNumber;
+        if(STRING.isNotBlank(acc?.Phone))  return acc.Phone;
+        if(STRING.isNotBlank(acc?.MobilePhone__c))  return acc.MobilePhone__c;
+        if(STRING.isNotBlank(acc?.OtherPhone__c))  return acc.OtherPhone__c;
+        return '';
     }
 
 }
