@@ -1,6 +1,6 @@
 public with sharing class HDT_UTL_GarbageMan {
 
-    public final Map<String, String> descrizioneEsiti = new Map<String, String> {
+    public final Map<String, String> DESCRIZIONE_ESITI = new Map<String, String> {
         '01' => 'StreetCode, Comune, Indirizzo, Civico non valorizzati',
         '02' => 'CodiceFiscale e NominativoContatto entrambi non valorizzati',
         '03' => 'Indirizzo non trovato',
