@@ -114,7 +114,7 @@ public with sharing class HDT_SRV_GarbageMan {
         }
     }
 
-    
+    @TestVisible
     private class HDT_QBL_ScheduleAppointment implements Finalizer, Queueable, Database.AllowsCallouts {
 
         Id caseId {get;set;}
