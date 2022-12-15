@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Andrei Necsulesc
  * @group             : 
- * @last modified on  : 11-17-2022
+ * @last modified on  : 12-14-2022
  * @last modified by  : Andrei Necsulescu
 **/
 @isTest
@@ -79,10 +79,49 @@ public with sharing class HDT_UTL_LandRegistryTst {
         
         ServicePoint__c sp = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
 
+        HDT_WS_VistaDatiCatastaliResponse vistaDatiCatastariResponse = new HDT_WS_VistaDatiCatastaliResponse();
+        
+        // Testata
+        HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_TestataObject testataObject = new HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_TestataObject();
+        testataObject.esito = 'success';
+        testataObject.messaggio = 'tutto ok';
+
+        HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_PosizioniResponseObject posizioniObject = new HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_PosizioniResponseObject();
+        posizioniObject.destinazioneUso = 'destinazioneUso';
+        posizioniObject.descrizioneDestinazioneUso = 'descrizioneDestinazioneUso';
+        posizioniObject.codiceAssenzaDatiCatastali = 'codiceAssenzaDatiCatastali';
+        posizioniObject.descrizioneAssenzaDc = 'descrizioneAssenzaDc';
+        posizioniObject.comuneAmministrativo = 'comuneAmministrativo';
+        posizioniObject.comuneCatastale = 'comuneCatastale';
+        posizioniObject.codiceComuneCatastale = 'codiceComuneCatastale';
+        posizioniObject.codiceProvincia = 'codiceProvincia';
+        posizioniObject.tipoUnita = 'tipoUnita';
+        posizioniObject.descrizioneTipoUnita = 'descrizioneTipoUnita';
+        posizioniObject.sezioneUrbana = 'sezioneUrbana';
+        posizioniObject.foglio = 'foglio';
+        posizioniObject.particella = 'particella';
+        posizioniObject.subalterno = 'subalterno';
+        posizioniObject.qualificaTitolareUtenza = 'qualificaTitolareUtenza';
+        posizioniObject.descrizioneQualifica = 'descrizioneQualifica';
+        posizioniObject.superficieCatastale = 'superficieCatastale';
+        posizioniObject.categoriaCatastale = 'categoriaCatastale';
+
+        HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_DataResponseObject dataResonseObject = new HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_DataResponseObject();
+        dataResonseObject.testata = testataObject;
+        dataResonseObject.posizioni = new List<HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_PosizioniResponseObject>{posizioniObject};
+
+        HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_ErrorResponseObject errorObject = new HDT_WS_VistaDatiCatastaliResponse.HDT_WRP_ErrorResponseObject();
+        errorObject.code = '200';
+        errorObject.message = 'success';
+        errorObject.additionalInfo = 'no additional info';
+
+        vistaDatiCatastariResponse.correlationId = String.valueOf(System.now().getTime());
+        vistaDatiCatastariResponse.timestamp = String.valueOf(System.now());
+
         HttpResponse response = new HttpResponse();
         response.setStatus('success');
         response.setStatusCode(202);
-        response.setBody(JSON.serialize(new HDT_WS_VistaDatiCatastaliResponse()));
+        response.setBody(JSON.serialize(vistaDatiCatastariResponse));        
 
         Test.setContinuationResponse('TestContinuation', response);
 
