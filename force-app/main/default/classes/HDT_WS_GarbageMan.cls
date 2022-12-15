@@ -69,15 +69,15 @@ global with sharing class HDT_WS_GarbageMan {
             if(!accounts.isEmpty()){ //Gestione rifiuti normale
 
                 account = accounts[0];
-                AccountContactRelation accContactRel = utlGarbage.getContactRelation(account.Id);
-
-                theCase.AccountId = account.Id;
-                theCase.CompanyOwner__c = account.CompanyOwner__c;
-                theCase.ContactId = accContactRel.ContactId;
-                theCase.SuppliedEmail = accContactRel.Contact.Email;
-                theCase.SuppliedPhone = accContactRel.Contact.MobilePhone;
-                theCase.BillingCity__c = account.BillingPlace__c;
-
+                List<AccountContactRelation> accContactRels = utlGarbage.getContactRelation(account.Id);
+                if(!accContactRels.isEmpty()){
+                    theCase.AccountId = account.Id;
+                    theCase.CompanyOwner__c = account.CompanyOwner__c;
+                    theCase.ContactId = accContactRel.ContactId;
+                    theCase.SuppliedEmail = accContactRel.Contact.Email;
+                    theCase.SuppliedPhone = accContactRel.Contact.MobilePhone;
+                    theCase.BillingCity__c = account.BillingPlace__c;
+                }
             }
 
             theCase.TypeOperation__c = request.typeInt;
@@ -94,8 +94,8 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.Phase__c = 'In Attesa Appuntamento';
             theCase.Status = 'In Lavorazione';
 
-            List<Database.SaveResult> isCaseInserted = Database.insert(theCase, false);
-            if (isCaseInserted[0].isSuccess()){
+            Database.SaveResult isCaseInserted = Database.insert(theCase, false);
+            if (isCaseInserted.isSuccess()){
                 HDT_SRV_GarbageMan.HDT_QBL_ScheduleAppointment.scheduleAppointment(theCase.Id);
                 return new HDT_WRP_WasteDisposalResponse('Y',theCase.CreatedDate, request.requestCode, theCase.Id);
             }
@@ -114,6 +114,7 @@ global with sharing class HDT_WS_GarbageMan {
         if(STRING.isNotBlank(acc?.Phone))  return acc.Phone;
         if(STRING.isNotBlank(acc?.MobilePhone__c))  return acc.MobilePhone__c;
         if(STRING.isNotBlank(acc?.OtherPhone__c))  return acc.OtherPhone__c;
+        return '';
     }
 
 }
