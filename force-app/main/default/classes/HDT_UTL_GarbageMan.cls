@@ -66,6 +66,8 @@ public with sharing class HDT_UTL_GarbageMan {
                     InvoicingStreetNumber__c, InvoicingPostalCode__c, InvoicingCity__c, 
                     WithdrawalFee__c, ServicePoint__c,CaseNumber,
                     Outcome__c, CreatedDate,
+                    SupplyPostalCode__c, SupplyStreetName__c,
+                    SupplyStreetNumber__c, SupplyStreetCode__c,
                     InvoicingStreetCode__c, TypeOperation__c
                     FROM Case
                     WHERE Id =: caseId 
