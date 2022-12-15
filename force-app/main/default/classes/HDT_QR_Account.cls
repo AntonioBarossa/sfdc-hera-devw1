@@ -102,7 +102,9 @@ public inherited sharing class HDT_QR_Account {
     public List<Account> getAccountByFiscalCode(String fiscalCode) {
         return [
             SELECT
-            Id
+                Id,
+                Phone, MobilePhone__c, OtherPhone__c,
+                CompanyOwner__c, BillingPlace__c
             FROM Account 
             WHERE FiscalCode__c = :fiscalCode
             WITH SECURITY_ENFORCED

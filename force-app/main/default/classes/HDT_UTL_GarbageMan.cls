@@ -68,4 +68,23 @@ public with sharing class HDT_UTL_GarbageMan {
                     LIMIT 1
                 ];
     }
+
+    public List<AccountContactRelation> getContactRelation(String accountId){
+
+        return  
+        [
+            SELECT 
+                Id, ContactId,
+                Contact.Email, Contact.MobilePhone
+            FROM AccountContactRelation 
+            WHERE 
+                AccountId =:accountId
+                AND IsDirect = true
+                AND IsActive = true
+                AND Roles IN ('Legale rappresentante', 'Titolare')
+            WITH SECURITY_ENFORCED 
+            LIMIT 1
+        ];
+
+    }
 }
