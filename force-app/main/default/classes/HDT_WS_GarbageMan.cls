@@ -60,28 +60,15 @@ global with sharing class HDT_WS_GarbageMan {
         try{
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
+            if(!accounts.isEmpty()){
+                account = accounts[0];
+            }
             
-            Case theCase = new Case();
-            theCase.Cluster__c = 'Segnalazioni';
-            theCase.OperationGroup__c = 'CONSULTA IL RIFIUTOLOGO';
-            theCase.Origin = 'Rifiutologo';
+            Case theCase = utlGarbage.initCase(account);
             theCase.WasterCode__c = request.requestCode;
             theCase.description = request.materialDescription;
 
-            if(!accounts.isEmpty()){ //Gestione rifiuti normale
-
-                account = accounts[0];
-                List<AccountContactRelation> accContactRels = utlGarbage.getContactRelation(account.Id);
-                if(!accContactRels.isEmpty()){
-                    AccountContactRelation accContactRel = accContactRels[0];
-                    theCase.AccountId = account.Id;
-                    theCase.CompanyOwner__c = account.CompanyOwner__c;
-                    theCase.ContactId = accContactRel.ContactId;
-                    theCase.SuppliedEmail = accContactRel.Contact.Email;
-                    theCase.SuppliedPhone = accContactRel.Contact.MobilePhone;
-                    theCase.BillingCity__c = account.BillingPlace__c;
-                }
-            }
+            
 
             theCase.TypeOperation__c = request.typeInt;
             theCase.MaterialDescription__c = request.materialDescription;
@@ -93,14 +80,16 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.InvoicingCountry__c = 'Italia';
             theCase.PhoneNumber__c = getPhoneNumber(request, account);
 
-            
-            theCase.Phase__c = 'In Attesa Appuntamento';
-            theCase.Status = 'In Lavorazione';
-
             Database.SaveResult isCaseInserted = Database.insert(theCase, false);
             if (isCaseInserted.isSuccess()){
                 if(!Test.isRunningTest())    HDT_SRV_GarbageMan.scheduleAppointment(theCase.Id);
                 return new HDT_WRP_WasteDisposalResponse('Y',theCase.CreatedDate, request.requestCode, theCase.Id);
+            }else{
+                for(Database.Error err : isCaseInserted.getErrors()) {
+                    System.debug('The following error has occurred.');                    
+                    System.debug(err.getStatusCode() + ': ' + err.getMessage());
+                    System.debug('Case fields that affected this error: ' + err.getFields());
+                }
             }
 
         }catch(Exception e){
