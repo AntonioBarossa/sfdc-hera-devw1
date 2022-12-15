@@ -166,4 +166,9 @@
         <default>false</default>
         <label>Alexa</label>
     </standardValue>
+    <standardValue>
+        <fullName>Rifiutologo</fullName>
+        <default>false</default>
+        <label>Rifiutologo</label>
+    </standardValue>
 </StandardValueSet>

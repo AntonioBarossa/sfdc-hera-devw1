@@ -173,8 +173,8 @@ public inherited sharing class HDT_UTL_SelfReadings {
             c.SalesCompanyCode__c = '13V0000000';
         }*/
 
-        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest('', request.contractCode);
-        HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, c);
+        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(request.contractCode, '');
+        HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), c);
 
         HDT_QR_CausalCodeCalculation causalCodeHandler = new HDT_QR_CausalCodeCalculation();
         HDT_CausalCodeCalculation__mdt causalCodeMdt = causalCodeHandler.calculateCausalCode(c.Cluster__c, c.Type, '', inputContract.ServicePoint__r.CommoditySector__c);

@@ -30,9 +30,9 @@ public with sharing class HDT_SRV_GenericSolHandler {
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         Case currentCase = qrClass.getCaseRecord(caseId);
         String pod = currentCase.PODPDRFormula__c;
-        String contractCode = currentCase.ContractCode__c;
-        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
-        currentCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
+        String contractCode = currentCase.ContractCode__c; 
+        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(contractCode, pod);
+        currentCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), currentCase);              
     }
 
     public static void handleInstallment(String caseId){

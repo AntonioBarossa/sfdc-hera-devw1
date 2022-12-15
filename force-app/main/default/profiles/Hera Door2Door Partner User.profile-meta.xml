@@ -33813,6 +33813,11 @@
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>
+		<editable>true</editable>
+		<field>Case.WasterCode__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>Contact.Activity__c</field>
         <readable>false</readable>

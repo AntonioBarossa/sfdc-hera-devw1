@@ -1729,26 +1729,12 @@
         <defaultConnectorLabel>Si</defaultConnectorLabel>
         <rules>
             <name>NotNeeded</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <leftValueReference>Get_Input_Case.CompanyOwner__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Istruttoria</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Nuovo Impianto</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case.Commodity__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Acqua</stringValue>
+                    <stringValue>MMS</stringValue>
                 </rightValue>
             </conditions>
             <connector>

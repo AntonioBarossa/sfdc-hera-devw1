@@ -24,6 +24,8 @@ public with sharing class HDT_UTL_TariManagement {
     // @InvocableMethod
     public static List<HDT_WRP_TariManagementResponse> checkTariProcess(List<HDT_WRP_TariManagementRequest> inputs) {
 
+        System.debug('checkTariProcess inputs: ' + JSON.serializePretty(inputs));
+
         HDT_WRP_TariManagementResponse response = new HDT_WRP_TariManagementResponse();
         List<HDT_WRP_TariManagementResponse> responseList = new List<HDT_WRP_TariManagementResponse>();
 
@@ -47,7 +49,9 @@ public with sharing class HDT_UTL_TariManagement {
             List<Object> resultList = (List<Object>) JSON.deserializeUntyped(documentSelectedString);
             
             Map<String, Object> resultMap = (Map<String, Object>) resultList[0];
-            List<Object> indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
+            List<Object> indentedList = new List<Object>();
+            if(resultMap.get('secondoLivelloInformativo') != null) indentedList = (List<Object>) resultMap.get('secondoLivelloInformativo');
+            if(resultMap.get('secondoLivelloInformativoF2') != null) indentedList = (List<Object>) resultMap.get('secondoLivelloInformativoF2');
             
             for(Object secondLevelObj : indentedList){
                 Map<String, Object> secondLevelMap = (Map<String, Object>) secondLevelObj;
