@@ -3177,6 +3177,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+		<editable>true</editable>
+		<field>AmministrazioneSottotipologiaUso__c.IntendedUse__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>AmministrazioneSottotipologiaUso__c.Societa__c</field>
         <readable>true</readable>
@@ -8844,6 +8849,11 @@
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.MissingDue__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>Case.WasterCode__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
     <fieldPermissions>

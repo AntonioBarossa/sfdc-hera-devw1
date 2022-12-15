@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Alberghi/pensioni</fullName>
+        <default>false</default>
+        <label>Alberghi/pensioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Antincendio</fullName>
+        <default>false</default>
+        <label>Antincendio</label>
+    </customValue>
+    <customValue>
+        <fullName>Attività di intratten. e altro</fullName>
+        <default>false</default>
+        <label>Attività di intratten. e altro</label>
+    </customValue>
+    <customValue>
+        <fullName>Completamento allacciamento</fullName>
+        <default>false</default>
+        <label>Completamento allacciamento</label>
+    </customValue>
+    <customValue>
+        <fullName>NO DOM TEMPOR. &gt; 40kW-FIERA</fullName>
+        <default>false</default>
+        <label>NO DOM TEMPOR. &gt; 40kW-FIERA</label>
+    </customValue>
+    <customValue>
+        <fullName>Ospedali/case di cura</fullName>
+        <default>false</default>
+        <label>Ospedali/case di cura</label>
+    </customValue>
+    <customValue>
+        <fullName>Stralcio di allac. - Uso cant.</fullName>
+        <default>false</default>
+        <label>Stralcio di allac. - Uso cant.</label>
+    </customValue>
+    <customValue>
+        <fullName>Uso domestico</fullName>
+        <default>false</default>
+        <label>Uso domestico</label>
+    </customValue>
+    <description>picklist da usare con API IntendedUse</description>
+    <masterLabel>HDT_IntendedUse</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

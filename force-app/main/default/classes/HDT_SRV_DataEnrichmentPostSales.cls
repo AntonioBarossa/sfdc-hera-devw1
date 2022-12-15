@@ -307,7 +307,7 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         return 'T1'.equalsIgnoreCase(sapValue);
     }
 
-    public static String handleSubType (String salesComp, String prodCode) {
+    public static AmministrazioneSottotipologiaUso__c handleSubType (String salesComp, String prodCode) {
 
         List <HDT_HeraCompany__mdt> compCodeList = [SELECT CompanyCode__c FROM HDT_HeraCompany__mdt  WHERE MasterLabel =: salesComp WITH SECURITY_ENFORCED];
             
@@ -319,17 +319,14 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         
         System.debug(LoggingLevel.DEBUG, campCode);
     
-        List <AmministrazioneSottotipologiaUso__c> subTypList = [SELECT SottotipologiaUso__c FROM AmministrazioneSottotipologiaUso__c WHERE Societa__c=: campCode AND
+        List <AmministrazioneSottotipologiaUso__c> subTypList = [SELECT SottotipologiaUso__c, IntendedUse__c FROM AmministrazioneSottotipologiaUso__c WHERE Societa__c=: campCode AND
         CodiceCategoriaTariffa__c=: prodCode AND Attivo__c=TRUE WITH SECURITY_ENFORCED];
-        
-        String subTyp = null;
-        
-        if(subTypList.size() > 0){
-            subTyp = subTypList[0].SottotipologiaUso__c;
+
+        if(!subTypList.isEmpty()){
+            return subTypList[0];
         }
-        
-        System.debug(LoggingLevel.DEBUG, subTyp);
-        return subTyp;
+
+        return (new AmministrazioneSottotipologiaUso__c(SottotipologiaUso__c = null, IntendedUse__c = null));
     
     }
 
