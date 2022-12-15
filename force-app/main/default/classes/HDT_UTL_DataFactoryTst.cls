@@ -3717,4 +3717,20 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return landRegistries;
 
 	}
+
+	public static List<FreeWithdraw__c> createFreeWithdraws(Id servicepointId, Date lastWithdrawDate, Integer amount, Boolean doInsert) {
+
+		List<FreeWithdraw__c> results = new List<FreeWithdraw__c>();
+
+		for(Integer i = 0; i < amount; i++){
+			results.add(new FreeWithdraw__c(ServicePoint__c = servicepointId, LastFreeWithdrawDate__c = lastWithdrawDate));
+		}
+
+		if(doInsert){
+			insert results;
+		}
+
+		return results;
+		
+	}
 }

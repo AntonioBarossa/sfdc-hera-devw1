@@ -152,6 +152,23 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         res.setStatusCode(200);
                         res.setStatus('success');
                         res.setBody(body); 
+                    } when 'MulesoftHergoPath' {
+                        
+                        HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse customRes = new HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse();
+
+                        if (successfullReturn) {
+                            customRes.status = 'success';
+                            
+                            res.setStatus('success');
+                            res.setStatusCode(200);
+                        } else {
+                            customRes.status = 'error';
+
+                            res.setStatus('error');
+                            res.setStatusCode(500);
+                        }
+
+                        res.setBody(JSON.serialize(customRes));
                     } when else {
         
                         res.setStatusCode(404);
