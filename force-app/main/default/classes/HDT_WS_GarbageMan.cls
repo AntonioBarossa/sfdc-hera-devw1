@@ -14,7 +14,7 @@ global with sharing class HDT_WS_GarbageMan {
 
     //public HDT_WS_GarbageMan(){}
     
-    public class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
+    global class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
 
         public String phoneNumber {get;set;}
         public String fiscalCode {get;set;}
@@ -37,7 +37,7 @@ global with sharing class HDT_WS_GarbageMan {
         public String requestCode {get;set;}
         public String codeRds {get;set;}
 
-        public HDT_WRP_WasteDisposalResponse(){
+        global HDT_WRP_WasteDisposalResponse(){
             return;
         }
 
@@ -50,11 +50,13 @@ global with sharing class HDT_WS_GarbageMan {
     }
 
     @HttpPost
-    global static HDT_WRP_WasteDisposalResponse handleWasteDisposalFromApp(){
+    global static HDT_WRP_WasteDisposalResponse handleWasteDisposalFromApp(HDT_WRP_WasteDisposalRequest request){
+        /*
         String body = RestContext.request.requestBody.toString();
         System.debug(LoggingLevel.DEBUG, 'HDT_WS_GarbageMan input body: ' + body);
 
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
+        */
         try{
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
@@ -71,6 +73,7 @@ global with sharing class HDT_WS_GarbageMan {
                 account = accounts[0];
                 List<AccountContactRelation> accContactRels = utlGarbage.getContactRelation(account.Id);
                 if(!accContactRels.isEmpty()){
+                    AccountContactRelation accContactRel = accContactRels[0];
                     theCase.AccountId = account.Id;
                     theCase.CompanyOwner__c = account.CompanyOwner__c;
                     theCase.ContactId = accContactRel.ContactId;
