@@ -455,10 +455,16 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Comunicazioni_Distributore</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Commodity__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Acqua</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
