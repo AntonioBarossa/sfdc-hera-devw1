@@ -98,7 +98,32 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
             setErrorItem(currentObj.requestItem, 'Errore, Id non presente nel DB');
         }
         if(recordsToUpdate.size()>0){ //Order e phase
-            update recordsToUpdate;
+            
+                //update recordsToUpdate;
+                List<Database.SaveResult> retList = Database.update(recordsToUpdate, false);
+                for(Database.SaveResult record : retList){
+                    if(!record.isSuccess()){ // Record non updateato con successo
+                        //ko, gestire logica aggiornamento requestItem errore DML, prova record.getId() per tornarti id SObject cosi ti puoi tornare l'oggetto dalla mappa
+                        //posso a questo punto aggiornare la lista itemToSave e setto lo stato e errore giusto
+                        for(MassiveLoaderRequestItem__c item : itemsToSave){
+                            List<String> splittedId = item.Data__c.split(splitCharacter, -1);
+                            
+                            String recordId = record.getId();
+                            if(( recordId == splittedId[0]) || (recordId == splittedId[1])){
+                                setErrorItem(item, 'DML Error: ' + record.getErrors()[0].getMessage());
+                                System.debug('Questo e\' l\'errore del record: ' + record.getErrors()[0].getMessage());
+                                System.debug('Questo invece e\' il MassiveLoaderRequestItem__c trovato in itemsToSave: ' + item);
+                            }
+                            else{
+                                System.debug('Record updateatio correttamente: ' + item);
+                            }
+                        }
+                        // item.Data__c.split(splitCharacter, -1);
+                    }
+                }
+            
+            
+            
         }
         System.debug(recordsToUpdate);
 
