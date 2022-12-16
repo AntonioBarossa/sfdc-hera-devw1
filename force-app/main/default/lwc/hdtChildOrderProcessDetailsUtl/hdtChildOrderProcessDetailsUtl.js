@@ -221,8 +221,8 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Data di nascita','BirthDate__c', this.typeVisibility('both'), true, false,'',''),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', true, tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c.toUpperCase()]?.getResident(this.order.Surface__c)?.toString()),
-                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDRES01' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente', true, false,'', '')                    
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDNR001' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c.toUpperCase()]?.readOnly,'', tariNonResidenti[this.order.ServicePoint__r.SupplyCity__c.toUpperCase()]?.getResident(this.order.Surface__c)?.toString()),
+                    new fieldData('Nr Componenti Nucleso','FamilyNumber__c', this.order.RateCategory__c==='TATUDRES01' && !['HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName), true, false,'', '')                    
                 ]
             },
             {

@@ -39,7 +39,6 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         String salesCompanyCode;
         String salesCompany;
         String method;
-        String sottoTipologiaDuso;
         /*
 			@Author: Davide Viola - 20/10/2021
 			Description: PMD -> Commentata variabile non utilizzata.
@@ -244,9 +243,10 @@ public with sharing class HDT_UTL_DataEnrichmentPostSales {
         transcodeMap.put('SalesCompany__c', salesCompany);
         transcodeMap.put('SalesCompanyCode__c', salesCompanyCode);
 
-        //SOTTOTIPOLOGIA D'USO
-        sottoTipologiaDuso = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompany, (String) transcodeMap.get('RateCategory__c'));
-        transcodeMap.put('UseSubCategory__c',sottoTipologiaDuso);
+        //SOTTOTIPOLOGIA D'USO e DESTISTANZIONE D'USO
+        AmministrazioneSottotipologiaUso__c sottoTipologiaEDestinazione = HDT_SRV_DataEnrichmentPostSales.handleSubType(salesCompany, (String) transcodeMap.get('RateCategory__c'));
+        transcodeMap.put('UseSubCategory__c',sottoTipologiaEDestinazione.SottotipologiaUso__c);
+        transcodeMap.put('IntendedUse__c',sottoTipologiaEDestinazione.IntendedUse__c);
        
         dataEnrichmentFields.addAll(transcodeMap.keySet());
         return depsSrv.populateCase(transcodeMap, currentCase);
