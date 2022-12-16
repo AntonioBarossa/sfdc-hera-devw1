@@ -334,7 +334,6 @@ import * as rateCategories from './hdtRateCategories.js';
                     ),
                     //new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), false, false, '',''),
-                    new fieldData('','NotDisconnectabilityCustomer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_NODISAL), false, false, '',''),
                     new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
                     new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
                     new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), this.rateCategoryVisibility(rateCategories.AF_BOC_IDRreq), false, '',''),
@@ -442,7 +441,6 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
                 new fieldData('','ContractReference__c', this.typeVisibility('acqua') && this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo', false, true, '',''),
                 new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('','NotDisconnectabilityCustomer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_NODISAL), false, false, '',''),
                 new fieldData('','SupplyUseType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, false, '','ACQUEDOTTO CIVILE'),
                 new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
                 new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
@@ -829,10 +827,12 @@ import * as rateCategories from './hdtRateCategories.js';
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch',
                 data: [
-                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta')  ,'', '', 
+                    new fieldData('Flag Agevolazione IVA','VATfacilitationFlag__c',this.typeVisibility('both'),false, this.order.ServicePoint__r.CommoditySector__c.localeCompare('Acqua') === 0 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta')  ,'', '', 
                         function(event){
                             let disableXorRequire = event?.target?.value == true;//if has value, field editable and required, else opposite
-                            if(this.template.querySelector(`[data-id='VAT__c']`) !== null) {
+                            if( this.order.ServicePoint__r.CommoditySector__c.localeCompare('Acqua') !== 0 &&
+                                this.template.querySelector(`[data-id='VAT__c']`) !== null ) 
+                            {
                                 this.template.querySelector(`[data-id='VAT__c']`).disabled = !disableXorRequire;
                                 this.template.querySelector(`[data-id='VAT__c']`).required = disableXorRequire;
                                 Promise.resolve().then(() => {
@@ -842,7 +842,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             }
                         }
                     ),
-                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false,this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,'', '',
+                    new fieldData('Flag Accise Agevolata','FacilitationExcise__c',this.typeVisibility('both'),false, this.order.ServicePoint__r.CommoditySector__c.localeCompare('Acqua') === 0 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || ((this.loginChannel === 'Teleselling Inbound' || this.loginChannel === 'Teleselling Outbound' || this.loginChannel === 'Telefono Inbound' || this.loginChannel === 'Telefono Outbound') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta') ,'', '',
                         function(event){
                             let disableXorRequire = event?.target?.value == true;//if has value, field editable and required, else opposite
                             for(let field of ["ExciseEle__c", "ExciseGAS__c"]){
@@ -857,7 +857,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             }
                         }
                     ),
-                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),'','Iva 10% (Cod. 01)'),
+                    new fieldData('IVA','VAT__c',this.typeVisibility('both'),false, this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso','',''),
                     new fieldData('Accise Agevolata Ele','ExciseEle__c',this.typeVisibility('ele'),false,(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
                     new fieldData('Accise Agevolata Gas','ExciseGAS__c',this.typeVisibility('gas'),false,(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioUso'),''),
                     new fieldData('Aliquota Accise','ExciseRate__c',this.typeVisibility('ele'),false,true,this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn',''),
