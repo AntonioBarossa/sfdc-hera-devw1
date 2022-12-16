@@ -16,7 +16,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
     private static List<List<String>> predefaultRatecategories = new List<List<String>>{
-        new List<String>{'NotDisconnectabilityCustomer__c','Si','ACANTINC00','ACPUBNDIS0','ACANTIN000'}, //altrimenti N
+        //new List<String>{'Disconnectable__c','Si','ACANTINC00','ACPUBNDIS0','ACANTIN000'}, //altrimenti N
         new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
         new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
@@ -175,15 +175,21 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
             newOrder.NotDisconnectabilityCustomer__c = 'No';
             newOrder.VAT__c = 'Iva 22% (Cod. 02)';
+            newOrder.AggregateBilling__c = 'Si';
         
             switch on order.CommodityFormula__c {
                 when 'Acqua' {
-                    //Inizio: Predefault valido per tutti i processinewOrder.UseSubCategory__c = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    //Inizio: Predefault valido per tutti i processi
+                    AmministrazioneSottotipologiaUso__c ammSubType = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    newOrder.UseSubCategory__c = ammSubType?.SottotipologiaUso__c;
+                    newOrder.IntendedUse__c = ammSubType?.IntendedUse__c;
                     newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
                     newOrder.ContractExpenses__c = 'Nessuno sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
                     newOrder.PayPurification__c = order.ServicePoint__r.PayPurification__c;
                     newOrder.PaySewer__c = order.ServicePoint__r.PaySewer__c;
+                    newOrder.AggregateBilling__c = 'No';
+                    newOrder.EffectiveDate__c = System.Today();
                     //Fine: Predefault valido per tutti i processi
 
                     //Inizio: Predefault secondo Processo
@@ -209,10 +215,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                         }
-                        when 'Cambio Offerta'
-                        {
-                            newOrder.EffectiveDate__c = System.Today();
-                        }
                     }
                     //Fine: Predefault secondo Processo
 
@@ -229,8 +231,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         }
                     }
                     //Per ogni ratecategory
-                    newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
-                    newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+                    //newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
+                    //newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
                     // Fine: Predefault secondo RateCategory
                     
                 }
@@ -257,7 +259,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.Deliberation__c = deliberate;
             newOrder.ProcessType__c = processType;
             newOrder.ProcessCode__c = processCode;
-            newOrder.AggregateBilling__c = 'Si';
             newOrder.Phase__c = 'Bozza';
 
             //Update RateCategory sul Service Point

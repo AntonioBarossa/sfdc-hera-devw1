@@ -152,6 +152,55 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         res.setStatusCode(200);
                         res.setStatus('success');
                         res.setBody(body); 
+                    } when 'MulesoftHergoPath' {
+
+                        if (wsc.Method__c == 'DELETE') {
+
+                            HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse customRes = new HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse();
+
+                            if (successfullReturn) {
+                                customRes.status = 'success';
+
+                                res.setStatus('success');
+                                res.setStatusCode(200);
+                            } else {
+                                customRes.status = 'error';
+
+                                res.setStatus('error');
+                                res.setStatusCode(500);
+                            }
+
+                            res.setBody(JSON.serialize(customRes));
+
+                        } else {
+
+                            HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse customRes = new HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse();
+
+                            if (successfullReturn) {
+                                customRes.status = 'success';
+                                customRes.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
+                                customRes.data.noticeId = String.valueOf(System.now().getTime());
+
+                                res.setStatus('success');
+                                res.setStatusCode(200);
+                            } else {
+                                customRes.status = 'error';
+
+                                res.setStatus('error');
+                                res.setStatusCode(500);
+                            }
+
+                            res.setBody(JSON.serialize(customRes));
+
+                        }
+
+                    } when 'Archive' {
+
+                        res.setHeader('Content-Length', '69420');
+
+                        res.setStatus('success');
+                        res.setStatusCode(200);
+
                     } when else {
         
                         res.setStatusCode(404);

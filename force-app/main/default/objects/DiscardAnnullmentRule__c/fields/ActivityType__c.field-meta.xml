@@ -137,5 +137,9 @@
             <controllingFieldValue>Riattivazione Fornitura</controllingFieldValue>
             <valueName>Esito KO da DBO</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
+            <valueName>Validazione KO da DL</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
