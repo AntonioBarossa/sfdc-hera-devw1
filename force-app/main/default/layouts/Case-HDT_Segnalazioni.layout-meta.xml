@@ -346,6 +346,22 @@
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>ChangeOwner</excludeButtons>
+        <excludeButtons>ChangeStatus</excludeButtons>
+        <excludeButtons>MassClose</excludeButtons>
+        <excludeButtons>NewCase</excludeButtons>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.STATUS</fields>
+        <fields>OWNER_NAME</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
+        <sortField>CASES.CREATED_DATE</sortField>
+        <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
         <fields>NAME</fields>
         <relatedList>CaseVolumetricaJunction__c.Case__c</relatedList>
     </relatedLists>
