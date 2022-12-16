@@ -185,7 +185,7 @@ public inherited sharing class HDT_SRV_InstallmentPlans {
         };
 
         //START 07/11/2022 - costanzo.lomele@webresults.it
-        if('Ambiente'.equalsIgnoreCase(currentCase.Commodity__c)) caseMap.put('tipoPiano', 'r002');
+        if('Ambiente'.equalsIgnoreCase(currentCase.Commodity__c)) caseMap.put('tipoPiano', 'R002');
         //END 07/11/2022 - costanzo.lomele@webresults.it
 
         caseListMap.add(caseMap);
