@@ -1,30 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <PermissionSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <classAccesses>
-        <apexClass>HDT_UTL_MailSenderHelper</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_UTL_MailSenderHelperTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_MailSender</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_MailSenderTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_CaseFileUpload</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
-        <apexClass>HDT_LC_CaseFileUploadTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>ChangePasswordController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -897,6 +873,14 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_CaseFileUpload</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_CaseFileUploadTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_CaseTabManagement</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1286,6 +1270,14 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_LeadConversionRedirect</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_MailSender</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_MailSenderTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -2949,6 +2941,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_SRV_GarbageMan</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_SRV_GenericSapIntegrationAdapter</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -2997,15 +2993,15 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_SRV_InstallmentPlansTst</apexClass>
-        <enabled>true</enabled>
-    </classAccesses>
-    <classAccesses>
         <apexClass>HDT_SRV_InstallmentPlansTari</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_SRV_InstallmentPlansTariTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_SRV_InstallmentPlansTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4125,6 +4121,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_ExpSieRavv</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_FormatTextScript</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4142,6 +4142,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_GaaView</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_GarbageMan</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4265,11 +4269,19 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_ManageTari</apexClass>
+        <apexClass>HDT_UTL_LogUtility</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_LogUtility</apexClass>
+        <apexClass>HDT_UTL_MailSenderHelper</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_MailSenderHelperTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ManageTari</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4513,11 +4525,11 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_ProcessReworkingScraps</apexClass>
+        <apexClass>HDT_UTL_ProcessOrderCreationTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
-        <apexClass>HDT_UTL_ProcessOrderCreationTst</apexClass>
+        <apexClass>HDT_UTL_ProcessReworkingScraps</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -5017,6 +5029,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_WRP_SieRavvExport</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_WRP_SolContractVas</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -5034,6 +5050,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_WRP_VoltureChangeManagerTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_WS_Agevolazione</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
