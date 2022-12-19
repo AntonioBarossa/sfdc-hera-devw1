@@ -102,7 +102,7 @@ public with sharing class HDT_UTL_RegistryAlignmentTst {
         }
 
         private String createBody(){
-            HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoResponse response = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoResponse();
+            HDT_WS_ArrichmentDataEntityResponse response = new HDT_WS_ArrichmentDataEntityResponse();
             response.status = 'Success';
             response.timestamp = String.valueOf(Datetime.now());
             response.correlationId = '43trdfgc34234';

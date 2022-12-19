@@ -27,7 +27,7 @@ public class HDT_WS_ArricchimentoDatiTempMock implements HTTPCalloutMock {
         data.posizioni = posizioni;
         data.testata = testata;
                         
-        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoResponse res = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoResponse();
+        HDT_WS_ArrichmentDataEntityResponse res = new HDT_WS_ArrichmentDataEntityResponse();
         res.data = data;
         res.status = 'status';
         res.correlationId = 'correlationId';
