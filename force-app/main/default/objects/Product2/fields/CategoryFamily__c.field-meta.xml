@@ -233,6 +233,16 @@
                 <default>false</default>
                 <label>Nuova Impronta Zero 12 Mesi</label>
             </value>
+            <value>
+                <fullName>PiuControllo Active</fullName>
+                <default>false</default>
+                <label>PiuControllo Active</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
