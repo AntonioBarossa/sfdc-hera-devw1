@@ -45,7 +45,7 @@ global with sharing class HDT_WS_IntermediateResults {
                 this.populateSobjForUpdate(caseData, mapCases.get(caseData.caseId), sobjectsToUpdate);
             }
             
-            List<Database.SaveResult> saveResults = Database.update(removeDuplicateSobjects(sobjs), false);
+            List<Database.SaveResult> saveResults = Database.update(removeDuplicateSobjects(sobjectsToUpdate), false);
             this.insertLog(saveResults);
             return;
         }
