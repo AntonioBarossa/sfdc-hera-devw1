@@ -154,7 +154,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             if(String.isBlank(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__c)){
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoMissingBillingProf);
                 retMap.put('checksAreValid',false);
-            }else if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypePaperMail && AddressFieldsInvalid(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__r)){
+            }else if(csvSplitted[shipmentTypeIndex]==Label.consumoAnomaloIdricoShipmentTypePaperMail && addressFieldsInvalid(contractCodePodMap.get(csvSplitted[contractIndex]).BillingProfile__r)){
                 retMap.put('errorMessage',Label.consumoAnomaloIdricoShipmentDataMissing);
                 retMap.put('checksAreValid',false);
             }
@@ -170,7 +170,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         return retMap;
     }
 
-    private Boolean AddressFieldsInvalid(BillingProfile__c billingProf){
+    private Boolean addressFieldsInvalid(BillingProfile__c billingProf){
         return String.isBlank(billingProf.InvoicingCity__c) || String.isBlank(billingProf.InvoicingCountry__c) || String.isBlank(billingProf.InvoicingPlace__c) ||
                 String.isBlank(billingProf.InvoicingPostalCode__c) || String.isBlank(billingProf.InvoicingProvince__c) || String.isBlank(billingProf.InvoicingStreetName__c) ||
                 String.isBlank(billingProf.InvoicingStreetNumber__c) || String.isBlank(billingProf.InvoicingAddressFormula__c);
