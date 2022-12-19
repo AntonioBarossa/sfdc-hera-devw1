@@ -707,7 +707,30 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
 	}
-	
+
+	public static List<Case> createCaseAnomaloIdricoBulk(Integer amount, Boolean doInsert, Id accId, Id servPointId, Id contractId,id billingProfileId,String signMode, String sendMode){
+		List<Case> caseList=new List<Case>();
+		Id consumoAnomaloRTId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConsumoAnomaloIdrico').getRecordTypeId();
+		for (Integer i=0; i<amount; i++){
+			caseList.add(new Case(
+					AccountId=accId,
+					ServicePoint__c=servPointId,
+					Contract__c=contractId,
+					BillingProfile__c=billingProfileId,
+					Status='In Lavorazione',
+					Phase__c='in attesa processo doc massivo',
+					Type='Consumo Anomalo Idrico',
+					Cluster__c='Segnalazioni',
+					RecordTypeId=consumoAnomaloRTId,
+					SignMode__c=signMode,
+					SendMode__c=sendMode
+			));
+		}
+		if(doInsert){
+			insert caseList;
+		}
+		return caseList;
+	}
 	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 		
 		List<Case> caseList=new List<Case>();
