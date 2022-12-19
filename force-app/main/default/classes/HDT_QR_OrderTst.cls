@@ -819,4 +819,83 @@ public class HDT_QR_OrderTst{
 		
 	}
 
+	@isTest
+	static void testgetChildOrdersForDateCalculation(){
+
+		Test.startTest();
+
+		Order ord=[SELECT ParentOrder__c
+		                     FROM Order
+		                     WHERE Phase__c NOT IN ('Annullato')
+							 AND ProcessType__c NOT IN ('Switch in Fittizio')
+							 AND ParentOrder__c != null
+		                     LIMIT 1];
+
+		List<Order> getRecordByParent=orderQr.getChildOrdersForDateCalculation(new List<String>{String.valueOf(ord.ParentOrder__c)});
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordByParent.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordByParent.isEmpty(), 'Value of parameter is not matching');
+	}
+
+	@isTest
+	static void testgetRecordsNotActivated(){
+
+		Test.startTest();
+
+		Order ord=[SELECT AccountId
+		                     FROM Order
+		                     WHERE RecordType.DeveloperName != null
+							 AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
+							 AND SBQQ__Quote__r.IsVAS__c != true
+							 AND SBQQ__Quote__r.AmendmentAllowed__c != true
+							 AND Status NOT IN ('Activated', 'Annullato')
+		                     LIMIT 1];
+
+		List<Order> getRecordByAccount=orderQr.getRecordsNotActivated(ord.AccountId);
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordByAccount.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordByAccount.isEmpty(), 'Value of parameter is not matching');
+	}
+
+	@isTest
+	static void testgetRecordByVasPracticeCode(){
+
+		Test.startTest();
+
+		Order ord=[SELECT Id
+		                     FROM Order
+		                     LIMIT 1];
+
+		ord.VasPracticeCode__c = 'TEST';
+		update ord;
+
+		List<Order> getRecordByPracticeCode=orderQr.getRecordByVasPracticeCode('TEST');
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordByPracticeCode.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordByPracticeCode.isEmpty(), 'Value of parameter is not matching');
+	}
+
+	@isTest
+	static void testgetOrdersByOrderNumber(){
+
+		Test.startTest();
+
+		Order ord=[SELECT OrderNumber
+		                     FROM Order
+		                     LIMIT 1];
+
+		List<Order> getRecordByOrderNumber=orderQr.getOrdersByOrderNumber(new List<String>{ord.OrderNumber});
+
+		Test.stopTest();
+
+		System.assertEquals(false, getRecordByOrderNumber.isEmpty(), 'Order not found');
+		System.assertNotEquals(true, getRecordByOrderNumber.isEmpty(), 'Value of parameter is not matching');
+	}
+
 }
