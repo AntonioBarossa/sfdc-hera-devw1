@@ -332,6 +332,7 @@ public with sharing class HDT_LC_SaleVasTst {
             Contract ctt = [SELECT Id, SBQQ__Order__c, Status FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
             ctt.Status = 'Attivo';
             ctt.SBQQ__Order__c = orders[0].Id;
+            ctt.EndDate = Date.today().addDays(10);
             update ctt;
 
             List<Contract> result = HDT_LC_SaleVas.getTempNuovaAttivazContracts(acc.Id);

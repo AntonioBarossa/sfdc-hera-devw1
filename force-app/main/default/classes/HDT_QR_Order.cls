@@ -613,8 +613,14 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             IntegratedSAP__c,
             CommercialProduct__c,
+            DocSendingMethod__c,
             SignatureMethod__c,
-            Type
+            Channel__c,
+            CustomerCategory__c,
+            MarketOrigin__c,
+            Type,
+            ShippingMail__c,
+            PhoneNumber__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -1335,7 +1341,7 @@ public inherited sharing class HDT_QR_Order {
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
         AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
-        AND Phase__c NOT IN ('Completata','Annullato')
+        AND Phase__c NOT IN ('Annullato') //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
         WITH SECURITY_ENFORCED
         ];
     }
@@ -1429,7 +1435,12 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return this.getOpenActivitiesByListOrderId(new Set<String>{orderId});
+    }
+
+    public List<wrts_prcgvr__Activity__c> getOpenActivitiesByListOrderId(Set<String> orderIdList)
+    {
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c IN :orderIdList WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {
