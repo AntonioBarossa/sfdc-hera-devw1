@@ -273,7 +273,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>1942</locationX>
+        <locationX>1810</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -289,13 +289,29 @@
     <assignments>
         <name>Assenga_Process_Type_0_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>2206</locationX>
+        <locationX>2338</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Verifiche Gas Modifica</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Inserimento_Dati</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assenga_Process_Type_0_0_0_0</name>
+        <label>Assenga Process Type</label>
+        <locationX>2074</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.Type</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -532,6 +548,21 @@
                 <targetReference>Assenga_Process_Type_0_0</targetReference>
             </connector>
             <label>Energia Elettrica</label>
+        </rules>
+        <rules>
+            <name>Acqua_Decision</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assenga_Process_Type_0_0_0_0</targetReference>
+            </connector>
+            <label>Acqua</label>
         </rules>
     </decisions>
     <decisions>
