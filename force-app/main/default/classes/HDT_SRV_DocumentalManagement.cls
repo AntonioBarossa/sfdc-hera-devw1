@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
 public with sharing class  HDT_SRV_DocumentalManagement{
-	
+	public static String formParams;
 	public static String generateRequest(String recordId, String context, String formParams){
 		
 		//DEBUG
@@ -281,8 +281,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	@future(callout=true)
-	public static void executeCalloutRequestFuture(String body, String context){
-		
+	public static void executeCalloutRequestFuture(String body, String context,String formParamsString){
+		formParams = formParamsString;
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
 		
@@ -732,7 +732,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				try{
-					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context,formParams);
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 				}

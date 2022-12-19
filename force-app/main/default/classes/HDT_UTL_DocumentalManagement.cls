@@ -186,7 +186,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context,String formParams){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
@@ -194,6 +194,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		Boolean isMassive = false;
 		String signatureMethod = '';
 		String signMode='';
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String tipoPlico = formParamsMap.get('TipoPlico') != null? (String)formParamsMap.get('TipoPlico'):'';
 		if(context.equalsIgnoreCase('Order')){
 			isMassive = (Boolean) processRecord.get('isMassive__c');
 		}
@@ -203,6 +205,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}else{
 				if(isSignNeeded(response)){
 					processRecord.put('DocumentalPhase__c','Plico in firma');
+				}else if(String.isNotBlank(tipoPlico) && tipoPlico.equalsIgnoreCase('Sollecito')){
+					processRecord.put('DocumentalPhase__c','Plico sollecitato');
 				}else {
 					processRecord.put('DocumentalPhase__c','Plico inviato');
 				}
