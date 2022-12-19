@@ -3,6 +3,12 @@ global with sharing class HDT_WS_IntermediateResults {
 
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
+    private static final Map<String, String> codToPhase = new Map<String, String>{
+        '0050'=>'Approvata',
+        '0007'=>'Rifiutata',
+        '0060'=>'Presa In Carico'
+    };
+
     @HttpPost
     global static HDT_WRP_Response postIntermediateResults()  {
         try{
@@ -33,18 +39,17 @@ global with sharing class HDT_WS_IntermediateResults {
             for(HDT_WRP_Reminder caseData : this.request.reminder){
                 caseIds.add(caseData.caseId);
             }
-            Map<Id, Case> mapCases = new Map<Id, Case>(caseQr.getRecordsById(caseIds, 'Id, Type, Order__c'));
+            Map<Id, Case> mapCases = new Map<Id, Case>(caseQr.getRecordsById(caseIds, 'Id, Type, Order__c, Phase__c'));
             List<Sobject> sobjs = new List<Sobject>();
             for(HDT_WRP_Reminder caseData : this.request.reminder){
-                sobjs.addAll(this.populateSobjForUpdate(caseData, mapCases.get(caseData.caseId)));
+                sobjs.addAll(this.populateSobjForUpdate(caseData, mapCases.get(caseData.caseId), sobjs));
             }
             List<Database.SaveResult> saveResults = Database.update(sobjs, false);
             this.insertLog(saveResults);
             return;
         }
 
-        private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder calloutCaseDt, Case originalCase){
-            List<Sobject> retList = new List<Sobject>();
+        private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder calloutCaseDt, Case originalCase, List<Sobject> sobjectsToUpdate){
             try{
                 Case caseToUpdate = new Case();
                 caseToUpdate.Id= calloutCaseDt.caseId;
@@ -52,16 +57,17 @@ global with sharing class HDT_WS_IntermediateResults {
                 HDT_WRP_Field fieldInfos = calloutCaseDt.field[calloutCaseDt.field.size()-1];
 
                 // popola phase con condizione
-                Map<String, String> codToPhase = new Map<String, String>{
-                    '0050'=>'Approvata',
-                    '0007'=>'Rifiutata',
-                    '0060'=>'Presa In Carico'
-                };
+                
                 // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
                 //     caseToUpdate.Phase__c = codToPhase.get(fieldInfos.codNota);
                 // else caseToUpdate.Phase__c = fieldInfos.phase;
                 caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(fieldInfos.codNota) : fieldInfos.phase;
-
+                if(STRING.isBlank(caseToUpdate.Phase__c)){
+                    caseToUpdate.Phase__c = originalCase.Phase__c;
+                    caseToUpdate.Description = 'Errore aggiornamento nota con codice '+ fieldInfos.codNota + '\nCodice Nota non valido per il caso selezionato.';
+                    sobjectsToUpdate.add(caseToUpdate);
+                    return;
+                }
                 // mergiate "descNota" e "textNota" all’interno del campo “Description”
                 caseToUpdate.Description = //'Codice Activity: '+fieldInfos.codActivity+'\n'+
                                            //'Codice Nota: *'+fieldInfos.codNota+'*'+'\n'+
@@ -74,14 +80,13 @@ global with sharing class HDT_WS_IntermediateResults {
 
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
-                retList.add(caseToUpdate);
+                sobjectsToUpdate.add(caseToUpdate);
                 if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && !'Presa In Carico'.equalsIgnoreCase(caseToUpdate.Phase__c) && originalCase.Order__c!=null){
-                    retList.add(this.populateOrder(caseToUpdate.Phase__c, originalCase.Order__c));
+                    sobjectsToUpdate.add(this.populateOrder(caseToUpdate.Phase__c, originalCase.Order__c));
                 } 
             }catch(Exception e){
                 this.errorLog.add(calloutCaseDt.caseId+'\t'+calloutCaseDt.noticeId+'\t'+'Exception Thrown '+e.getMessage());
             }
-            return retList;
         }
 
         private Order populateOrder(String casePhase, Id orderId){
