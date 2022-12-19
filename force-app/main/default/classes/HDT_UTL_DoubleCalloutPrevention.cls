@@ -1,7 +1,8 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_UTL_DoubleCalloutPrevention {
     private final Datetime LAST_JOB_DATE = Test.isRunningTest()? Datetime.now().addDays(-1) : Datetime.now().addSeconds(-30); // il tempo entro cui vado a verificare l'esistenza della callout     
-
+    private final String CASE_SKIP_FIELD = 'OpinionRequestNumber__c';
+    private final String ORDER_SKIP_FIELD = 'Skip_Callout__c';
     //Mappa finale che conterrà gli oggetti (newRecord => oldRecord) da sottoporre al metodo di integrazione;
     Map<SObject,SObject> newOldRecordMap;
     //Configurazione per ogni phase;
@@ -17,10 +18,15 @@ public with sharing class HDT_UTL_DoubleCalloutPrevention {
         this.jobItemCalloutMap = new Map<Id, List<wrts_prcgvr__AsyncJob__c>>();
         for (SObject newRecord : newRecordList){
             Id recordId = (Id) newRecord.get('Id');
-            this.newOldRecordMap.put(newRecord, oldRecordMap.get(recordId));
             if (String.isBlank(objectName) || !objectName.equalsIgnoreCase(newRecord.getSObjectType().getDescribe().getName())){
+                this.newOldRecordMap.put(newRecord, oldRecordMap.get(recordId));
                 continue;
             }
+            String skipCallField = 'Case'.equalsIgnoreCase(objectName) ? this.CASE_SKIP_FIELD :  'Order'.equalsIgnoreCase(objectName)? this.ORDER_SKIP_FIELD : ''; 
+            if (String.isNotBlank(skipCallField) && newRecord.get(skipCallField) != oldRecordMap.get(recordId).get(skipCallField)){
+                continue;
+            }
+            this.newOldRecordMap.put(newRecord, oldRecordMap.get(recordId));
             recordIdSet.add(recordId);
             String processTypeField = 'Case'.equalsIgnoreCase(objectName) ? 'Type' :  'Order'.equalsIgnoreCase(objectName)? 'ProcessType__c' : ''; 
             if (String.isNotEmpty(processTypeField) && newRecord.get(processTypeField) != null){

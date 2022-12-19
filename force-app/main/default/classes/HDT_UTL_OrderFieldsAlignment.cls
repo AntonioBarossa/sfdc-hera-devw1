@@ -419,6 +419,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         if(quote.IsVAS__c){
             orderToUpdate.IsVAS__c=quote.IsVAS__c;
         }
+        if(quote.VasCommodity__c != null)
+        {
+            orderToUpdate.Commodity__c = quote.VasCommodity__c;
+        }
         orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
         mixedData.quoteAmendmentAllow=quote.AmendmentAllowed__c;
         mixedData.contrNumb=quote.SBQQ__MasterContract__r?.ContractNumber;
