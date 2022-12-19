@@ -4,7 +4,7 @@
         <name>check_Resulting_Orderitems</name>
         <label>check Resulting Orderitems</label>
         <locationX>440</locationX>
-        <locationY>1454</locationY>
+        <locationY>1694</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -45,10 +45,35 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>getSalesCompany</name>
+        <label>getSalesCompany</label>
+        <locationX>440</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_RimozioneAgevolazione</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>CreatingOrders</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>customerMarking</name>
+            <value>
+                <elementReference>GetQuote.SBQQ__Account__r.CustomerMarking__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>servicePoint</name>
+            <value>
+                <elementReference>Get_SP</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>RedirectToCase</name>
         <label>RedirectToCase</label>
         <locationX>440</locationX>
-        <locationY>2846</locationY>
+        <locationY>3086</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -65,7 +90,7 @@
         <name>Annullamento</name>
         <label>Annullamento</label>
         <locationX>704</locationX>
-        <locationY>2174</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>Annulla_Ordini.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -132,7 +157,7 @@
         <name>Populate_ChildOrder</name>
         <label>Populate ChildOrder</label>
         <locationX>352</locationX>
-        <locationY>2294</locationY>
+        <locationY>2534</locationY>
         <assignmentItems>
             <assignToReference>Assign_Parent_Order.ParentOrder__c</assignToReference>
             <operator>Assign</operator>
@@ -176,9 +201,9 @@
         <name>Check_If_Quote_Found</name>
         <label>Check If Quote Found</label>
         <locationX>176</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <defaultConnector>
-            <targetReference>CreatingOrders</targetReference>
+            <targetReference>getSalesCompany</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>OK</defaultConnectorLabel>
         <rules>
@@ -203,7 +228,7 @@
         <name>Is_Amendment_Valid</name>
         <label>Is Amendment Valid</label>
         <locationX>440</locationX>
-        <locationY>1934</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>Annulla_Ordini</targetReference>
         </defaultConnector>
@@ -268,7 +293,7 @@
         <name>Annulla_Ordini</name>
         <label>Annulla Ordini</label>
         <locationX>616</locationX>
-        <locationY>2054</locationY>
+        <locationY>2294</locationY>
         <collectionReference>getOrdersCreated</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -282,7 +307,7 @@
         <name>Assign_Parent_Order</name>
         <label>Assign_Parent_Order</label>
         <locationX>264</locationX>
-        <locationY>2174</locationY>
+        <locationY>2414</locationY>
         <collectionReference>getOrdersCreated</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -315,7 +340,7 @@
         <name>CreateParentOrder</name>
         <label>CreateParentOrder</label>
         <locationX>264</locationX>
-        <locationY>2054</locationY>
+        <locationY>2294</locationY>
         <connector>
             <targetReference>Assign_Parent_Order</targetReference>
         </connector>
@@ -381,7 +406,7 @@
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>amendContract</targetReference>
+            <targetReference>Get_SP</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -396,10 +421,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_SP</name>
+        <label>Get SP</label>
+        <locationX>176</locationX>
+        <locationY>974</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>amendContract</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ContrattoAgevolazione.ServicePoint__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServicePoint__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getOrdersCreated</name>
         <label>getOrdersCreated</label>
         <locationX>440</locationX>
-        <locationY>1574</locationY>
+        <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordTypeChild</targetReference>
@@ -420,7 +466,7 @@
         <name>GetQuote</name>
         <label>GetQuote</label>
         <locationX>176</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_If_Quote_Found</targetReference>
@@ -455,7 +501,7 @@
         <name>getRecordTypeChild</name>
         <label>getRecordTypeChild</label>
         <locationX>440</locationX>
-        <locationY>1694</locationY>
+        <locationY>1934</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getRecordTypeParent</targetReference>
@@ -483,7 +529,7 @@
         <name>getRecordTypeParent</name>
         <label>getRecordTypeParent</label>
         <locationX>440</locationX>
-        <locationY>1814</locationY>
+        <locationY>2054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Is_Amendment_Valid</targetReference>
@@ -511,7 +557,7 @@
         <name>CreatingOrders</name>
         <label>CreatingOrders</label>
         <locationX>440</locationX>
-        <locationY>1334</locationY>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>check_Resulting_Orderitems</targetReference>
         </connector>
@@ -534,6 +580,18 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>SalesCompanyCode__c</field>
+            <value>
+                <elementReference>getSalesCompany.salesCompanyCode</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesCompany__c</field>
+            <value>
+                <elementReference>getSalesCompany.salesCompany</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>allowNegativeQuantity__c</field>
             <value>
                 <booleanValue>true</booleanValue>
@@ -545,7 +603,7 @@
         <name>In_Lavorazione</name>
         <label>In Lavorazione</label>
         <locationX>264</locationX>
-        <locationY>2630</locationY>
+        <locationY>2870</locationY>
         <connector>
             <targetReference>RedirectToCase</targetReference>
         </connector>
@@ -575,7 +633,7 @@
         <name>Update_orders</name>
         <label>Update orders</label>
         <locationX>264</locationX>
-        <locationY>2510</locationY>
+        <locationY>2750</locationY>
         <connector>
             <targetReference>In_Lavorazione</targetReference>
         </connector>
@@ -585,7 +643,7 @@
         <name>Update_orders_KO</name>
         <label>Update orders KO</label>
         <locationX>616</locationX>
-        <locationY>2390</locationY>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>schermata_errore</targetReference>
         </connector>
@@ -595,7 +653,7 @@
         <name>amendContract</name>
         <label>amendContract</label>
         <locationX>176</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -629,7 +687,7 @@
         <name>schermata_errore</name>
         <label>schermata errore</label>
         <locationX>616</locationX>
-        <locationY>2510</locationY>
+        <locationY>2750</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

@@ -38,14 +38,15 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
-        <name>Copy_1_of_Calculate_Expiration_Date</name>
-        <label>Copy 1 of Calculate Expiration Date</label>
+        <description>Calcolo delle date per case di indennizzo Relaclami Invo Acqua</description>
+        <name>Calculate_Expiration_Date_Water</name>
+        <label>Calculate Expiration Date Acqua</label>
         <locationX>2426</locationX>
         <locationY>758</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>Copy_1_of_AssignExpirationDate</targetReference>
+            <targetReference>Input_Case_Date_Assignment</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -456,6 +457,30 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Assegnazione importo e tipologia indennizzo per case Acqua mancata risposta</description>
+        <name>AssignVariables_Acqua_Invio</name>
+        <label>AssignVariables</label>
+        <locationX>2426</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>AmountTypeFirst</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Invio</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignVariablesFirst</name>
         <label>AssignVariablesFirst</label>
         <locationX>1370</locationX>
@@ -810,47 +835,48 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_AssignExpirationDate</name>
-        <label>Copy 1 of AssignExpirationDate</label>
+        <description>Assegnazione delle date specifiche estratte dal metodo UTL</description>
+        <name>Input_Case_Date_Assignment</name>
+        <label>Input Case Date Assignment</label>
         <locationX>2426</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
+                <elementReference>Calculate_Expiration_Date_Water.amountToPayInInstallments</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.endDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_Water.endDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.CompletedDocumentationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.completedDocumentationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_Water.completedDocumentationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.DepositExpirationDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.depositExpirationDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_Water.depositExpirationDate</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getInputCase.DepositAmount__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Copy_1_of_Calculate_Expiration_Date.depositAmount</elementReference>
+                <elementReference>Calculate_Expiration_Date_Water.depositAmount</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>GetFirstCausalCode</targetReference>
+            <targetReference>AssignVariables_Acqua_Invio</targetReference>
         </connector>
     </assignments>
     <decisions>
@@ -1302,12 +1328,13 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Calculate_Expiration_Date</targetReference>
+                <targetReference>Calculate_Expiration_Date_Water</targetReference>
             </connector>
             <label>7 - Richiesta Info Acqua</label>
         </rules>
     </decisions>
     <description>Flow per la gestione degli indennizzi</description>
+    <environments>Default</environments>
     <formulas>
         <name>SupplyCityFormula</name>
         <dataType>String</dataType>
