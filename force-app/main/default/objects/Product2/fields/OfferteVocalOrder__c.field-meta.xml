@@ -67,6 +67,66 @@
                 <label>Nuova Impronta Zero Lavoro Luce Imola</label>
             </value>
             <value>
+                <fullName>PiuControllo Active Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Active Casa Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Active Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Active Casa Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Active Lavoro Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Active Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Active Lavoro Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Active Lavoro Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Casa Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Casa Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Special Active Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Special Active Casa Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Special Active Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Special Active Casa Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Special Active Lavoro Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Special Active Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Special Active Lavoro Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Special Active Lavoro Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Special Flat Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Special Flat Casa Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Special Flat Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Special Flat Casa Luce</label>
+            </value>
+            <value>
                 <fullName>Placet Fissa Luce Casa</fullName>
                 <default>false</default>
                 <label>Placet Fissa Luce Casa</label>
@@ -107,44 +167,44 @@
                 <label>Prezzo Netto Natura Casa Luce</label>
             </value>
             <value>
-                <fullName>Prezzo Netto PiuControllo Lavoro Luce</fullName>
-                <default>false</default>
-                <label>Prezzo Netto PiuControllo Lavoro Luce</label>
-            </value>
-			<value>
-                <fullName>Prezzo Netto PiuControllo Lavoro Gas</fullName>
-                <default>false</default>
-                <label>Prezzo Netto PiuControllo Lavoro Gas</label>
-            </value>
-			<value>
-                <fullName>Prezzo Netto PiuControllo Special Lavoro Luce</fullName>
-                <default>false</default>
-                <label>Prezzo Netto PiuControllo Special Lavoro Luce</label>
-            </value>
-			<value>
-                <fullName>Prezzo Netto PiuControllo Special Lavoro Gas</fullName>
-                <default>false</default>
-                <label>Prezzo Netto PiuControllo Special Lavoro Gas</label>
-            </value>
-			<value>
-                <fullName>Prezzo Netto PiuControllo Casa Luce</fullName>
-                <default>false</default>
-                <label>Prezzo Netto PiuControllo Casa Luce</label>
-            </value>
-			<value>
                 <fullName>Prezzo Netto PiuControllo Casa Gas</fullName>
                 <default>false</default>
                 <label>Prezzo Netto PiuControllo Casa Gas</label>
             </value>
-			<value>
+            <value>
+                <fullName>Prezzo Netto PiuControllo Casa Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Casa Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto PiuControllo Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto PiuControllo Lavoro Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Lavoro Luce</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto PiuControllo Special Casa Gas</fullName>
                 <default>false</default>
                 <label>Prezzo Netto PiuControllo Special Casa Gas</label>
             </value>
-			<value>
+            <value>
                 <fullName>Prezzo Netto PiuControllo Special Casa Luce</fullName>
                 <default>false</default>
                 <label>Prezzo Netto PiuControllo Special Casa Luce</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto PiuControllo Special Lavoro Gas</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Special Lavoro Gas</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto PiuControllo Special Lavoro Luce</fullName>
+                <default>false</default>
+                <label>Prezzo Netto PiuControllo Special Lavoro Luce</label>
             </value>
             <value>
                 <fullName>Prezzo Netto Special Web Gas</fullName>

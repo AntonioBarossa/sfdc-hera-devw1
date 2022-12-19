@@ -431,6 +431,21 @@
     <relatedLists>
         <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>EnvelopeId__c</fields>
+        <fields>Receiver__c</fields>
+        <fields>DocumentalSystem__c</fields>
+        <relatedList>DocumentSendTracking__c.Case__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ActivityType__c</fields>
+        <fields>EnvelopeId__c</fields>
+        <fields>AttachmentDescription__c</fields>
+        <fields>DocumentalSystem__c</fields>
+        <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -440,7 +455,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002WP39</masterLabel>
+        <masterLabel>00h2o00000lovSi</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
