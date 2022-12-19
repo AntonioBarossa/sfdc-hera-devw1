@@ -355,13 +355,6 @@
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Copy_1_of_Screen_Documentale</targetReference>
         </connector>
