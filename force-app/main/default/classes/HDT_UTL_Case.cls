@@ -109,7 +109,7 @@ public inherited sharing class HDT_UTL_Case {
         else if('getServicePointFromContract'.equalsIgnoreCase(process)){
             List<String> contractCodes = inputString.split(';');
             System.debug(loggingLevel.DEBUG, contractCodes);
-            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes WITH SECURITY_ENFORCED];
+            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes AND ServicePoint__r.CommoditySector__c != 'Ambiente' WITH SECURITY_ENFORCED];
             output.servicePointId = new List<String>();
             for(Contract contr : contractList){
                 if(!output.servicePointId.contains(contr.ServicePoint__c)){
@@ -124,8 +124,8 @@ public inherited sharing class HDT_UTL_Case {
             for(OrderItem item : items){
                 if(item.SBQQ__OrderedQuantity__c>0){result=false;break;}
             }
-            result&=items.isEmpty();
-            output.isCompatible = result? '' : 'NO';
+            result&=!items.isEmpty();
+            output.isCompatible = result? 'Si' : 'NO';
         }else if ('Adesione Rinuncia Fondo Fughe'.equalsIgnoreCase(currentCase.Type)){     
             // Logica valorizzazione della data inizio variazione BBP w2 v4.0 pag 607
             List<Case> caseRetrieved = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
@@ -171,16 +171,23 @@ public inherited sharing class HDT_UTL_Case {
         }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(process) && 'Modifica Fognatura e Depurazione'.equals(currentCase.Subprocess__c)){
             List<Case> caseRetrieved = [SELECT Contract__r.StartDate, CustomerRequestDate__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
             Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
-            Date dataDecorrenza = null;
+            Date dataRetroattiva = null;
 
-            if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
-                dataDecorrenza = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
-            }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
-                dataDecorrenza = contractStartDate;
+            if(caseRetrieved.size() > 0){
+
+                //Logica prevalorizzazione campo Data Decorrenza (Data Inizio Variazione) con data creazione case BBP W2 pg. 594
+                currentCase.EffectiveDate__c = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()); 
+
+                //Logica prevalorizzazione campo Data Retroattiva in base a data Inizio Contratto BBP W2 pg. 594
+                if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
+                    dataRetroattiva = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+                }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
+                    dataRetroattiva = contractStartDate;
+                }
+    
+                currentCase.RetroactiveDate__c = dataRetroattiva;
+                output.currentCase = currentCase;
             }
-
-            currentCase.EffectiveDate__c = dataDecorrenza;
-            output.currentCase = currentCase;
         }
         else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
             String body;
@@ -188,7 +195,7 @@ public inherited sharing class HDT_UTL_Case {
             httpObj.headersMap = new Map<String, String>();
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');    
-            httpObj.endPoint = 'callout:MulesoftBasePath/reminder';
+            httpObj.endPoint = 'callout:MulesoftHergoPath/reminder';
             body = JSON.serialize(new Map<String, Object>{
                 'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
                 'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''

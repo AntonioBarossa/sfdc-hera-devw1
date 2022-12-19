@@ -20,4 +20,10 @@ public with sharing class HDT_LC_ComfortQualityCallResultTst {
         System.assertNotEquals(false, result, 'The method worked, the result is not false');
         Test.stopTest();    
     }
+    @isTest
+	public static void checkPermissionTst() {
+        Test.startTest();
+        Boolean res = HDT_LC_ComfortQualityCallResult.checkPermission();
+        Test.stopTest();
+	}
 }

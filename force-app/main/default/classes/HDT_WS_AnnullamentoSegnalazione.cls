@@ -38,7 +38,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         SObject obj = (SObject) argsMap.get('sender');
         Case currentCase = (Case) obj;
 
-        HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, null); //noticeId null
+        HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, currentCase.NoticeId__c); //noticeId null
         HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'DELETE', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
 

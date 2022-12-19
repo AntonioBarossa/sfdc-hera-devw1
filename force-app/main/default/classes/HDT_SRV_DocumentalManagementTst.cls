@@ -202,13 +202,15 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     }
     @isTest
     static void testGenerateDiscardDocusignEnvelopeRequest(){
-        
+        HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse responseWrap = new HDT_WRP_DocumentalResponse.HDT_WRP_IntesaResponse();
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_DocumentalMock());
         Test.startTest();
         List<DocumentSendTracking__c> dst = [SELECT Id FROM DocumentSendTracking__c LIMIT 1];
         String res = HDT_SRV_DocumentalManagement.generateDiscardDocusignEnvelopeRequest((String)dst[0].Id);
+        responseWrap = HDT_SRV_DocumentalManagement.executeDiscardDocusignEnvelopeCalloutRequest(res);
         Test.stopTest();
     }
-    
     
     @isTest
     static void testCreatePublicLinkFuture(){

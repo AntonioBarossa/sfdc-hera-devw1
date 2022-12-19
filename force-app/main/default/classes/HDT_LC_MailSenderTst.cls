@@ -63,8 +63,7 @@ public with sharing class HDT_LC_MailSenderTst {
         Test.startTest();
         ret = HDT_LC_MailSender.getMetadata(emailMessage.Id);
         Test.stopTest();
-      
-        System.assertEquals(false, ret.success, 'can\'t find the EmailTemplate in the folder');
+        System.assertEquals(true, ret.success, 'can\'t find the EmailTemplate in the folder');
         
     }
 

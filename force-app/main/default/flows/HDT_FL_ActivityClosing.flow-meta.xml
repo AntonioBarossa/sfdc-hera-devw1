@@ -355,7 +355,7 @@
         <defaultConnector>
             <targetReference>Completa_processo</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Chiudi Attività</defaultConnectorLabel>
+        <defaultConnectorLabel>Chiudi Attività / Completa case</defaultConnectorLabel>
         <rules>
             <name>Annulla_Ordine</name>
             <conditionLogic>and</conditionLogic>
@@ -436,6 +436,21 @@
                 <targetReference>Aggiorna_Order_Gestione_contratto_colonnetta</targetReference>
             </connector>
             <label>Aggiorna Ordine(Gestione contratto colonnetta)</label>
+        </rules>
+        <rules>
+            <name>Chiudi_attivit_Unificazione_BP_CA</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.Case__r.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Unificazione/Separazione BP-CA-Bolletta</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_Finale</targetReference>
+            </connector>
+            <label>Chiudi attività  Unificazione BP CA</label>
         </rules>
     </decisions>
     <decisions>
@@ -529,7 +544,7 @@
     <recordUpdates>
         <name>Aggiorna_Order_Dati_Discordanti</name>
         <label>Aggiorna Order (Dati Discordanti)</label>
-        <locationX>446</locationX>
+        <locationX>358</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
@@ -553,7 +568,7 @@
     <recordUpdates>
         <name>Aggiorna_Order_Gestione_contratto_colonnetta</name>
         <label>Aggiorna Order (Gestione contratto colonnetta)</label>
-        <locationX>974</locationX>
+        <locationX>886</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
@@ -600,7 +615,7 @@
     <recordUpdates>
         <name>Copy_1_of_Aggiorna_Order_Dati_Discordanti</name>
         <label>Copy 1 of Aggiorna Order (Dati Discordanti)</label>
-        <locationX>710</locationX>
+        <locationX>622</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
@@ -810,7 +825,7 @@
     <subflows>
         <name>Annulla_Order</name>
         <label>Annulla Order</label>
-        <locationX>182</locationX>
+        <locationX>94</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
@@ -838,7 +853,7 @@
     <subflows>
         <name>Completa_processo</name>
         <label>Completa processo</label>
-        <locationX>1238</locationX>
+        <locationX>1326</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>

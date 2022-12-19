@@ -639,6 +639,10 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Richiesta non accolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mancata corrispondenza Anagrafe</fullName>
             <default>false</default>
         </values>
@@ -8428,6 +8432,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito consuntivazione KO</fullName>
             <default>false</default>
         </values>
     </picklistValues>

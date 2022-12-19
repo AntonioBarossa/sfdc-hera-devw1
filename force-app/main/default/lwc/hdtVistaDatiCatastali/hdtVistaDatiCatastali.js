@@ -1,4 +1,5 @@
 import { LightningElement, api, wire } from 'lwc';
+import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getVistaDatiCatastali from '@salesforce/apexContinuation/HDT_UTL_LandRegistry.getVistaDatiCatastali';
 
 const COLUMNS = [
@@ -28,37 +29,45 @@ export default class HdtVistaDatiCatastali extends LightningElement {
     title = 'Vista Dati Catastali';
     cols = COLUMNS;
     rows;
+    showSpinner = true;
 
     connectedCallback(){
         console.log('>>recordId:', this.recordId);
         console.log('>>sObjectType:', this.sObjectType);
-        if(this.recordId) {
+        if(this.recordId && this.sObjectType) {
+            this.title = 'Vista Dati Catastali - ' + SOBJ_LABELS[this.sObjectType];
             getVistaDatiCatastali({ recordId: this.recordId })
             .then( result => {
                 if(result.status){
-                    if(result.response.status == 'success'){
-                        this.rows = [];
-                        let posizioni = result.response.data?.posizioni;
-                        let index = 0;
-                        let finalRows = [];
-                        posizioni.forEach(curPos => {
-                            let newRow = JSON.parse(JSON.stringify(curPos));
-                            newRow["Id"] = "tableRow_" + index;
-                            finalRows.push(newRow);
-                            index++;
-                        })
-                        this.rows = finalRows;
-                        this.title = 'Vista Dati Catastali - ' + SOBJ_LABELS[this.sObjectType];
-                        return;
-                    }
-                    if(result.response.status == 'failed'){
-                        return;
+                    this.rows = [];
+                    let posizioni = result.rows;
+                    let index = 0;
+                    let finalRows = [];
+                    posizioni.forEach(curPos => {
+                        let newRow = JSON.parse(JSON.stringify(curPos));
+                        newRow["Id"] = "tableRow_" + index;
+                        finalRows.push(newRow);
+                        index++;
+                    })
+                    this.rows = finalRows;
+
+                    if(this.rows.length == 0){
+                        const event = new ShowToastEvent({
+                            title: result.status,
+                            message: result.message,
+                            variant: result.status == 'KO' ? 'error' : 'warning',
+                            mode: 'dismissable'
+                        });
+                        this.dispatchEvent(event);
                     }
                 }
                 console.error('Cannot read response!');
             })
             .catch(error => {
                 console.error(JSON.stringify(error));
+            })
+            .finally(()=>{
+                this.showSpinner = false;
             })
         }
     }

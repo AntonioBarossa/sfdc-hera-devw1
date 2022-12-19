@@ -109,16 +109,48 @@ public with sharing class HDT_UTL_Utils {
         String unixDateTime = '';
 
         for (Integer i = 0; i < strArr.size(); i++) {
-            if (phaseTo.equalsIgnoreCase(strArr[i])) {
+            if (phaseTo.equalsIgnoreCase(strArr[i]) && strArr.size() > i+1 && strArr[i+1]!= null && strArr[i+1].isNumeric()) {
                 unixDateTime = strArr[i+1];
                 break;
             }
         }
-
+        if (''.equals(unixDateTime)){
+            return null;
+        }
         Datetime myDateTime = Datetime.newinstance(long.valueOf(unixDateTime));
         Date myDate = Date.newinstance(myDateTime.year(), myDateTime.month(), myDateTime.day());
 
         return myDate;
+    }
+
+    public static void setUsersField(List<SObject> newObjectList){
+
+        HDT_SRV_LogService logService = new HDT_SRV_LogService('USER_FIELD_EXCEPTION');
+        User u = HDT_QR_UserQueries.getCurrentUser(UserInfo.getUserId());
+
+        for(Sobject newObject : newObjectList){
+            setUsersField(newObject, logService, u);
+        }
+
+        logService.saveMassiveRecords();
+
+    }
+
+    public static void setUsersField(SObject newObject, HDT_SRV_LogService logService, User u){
+
+        try{
+            if(u != null){
+                newObject.put('CreatorGroup__c', u.CreatorGroup__c);  
+                newObject.put('LoginGroup__c', u.LoginChannel__c);
+                newObject.put('LoginWorkstation__c', u.Station__c);
+            }
+        }
+        catch(Exception e){
+            logService.addLog('HDT_UTL_Utils', 'setUsersField', JSON.serialize(newObject), null, e.getMessage()+ ' line: '+ e.getLineNumber(), null, null, null);
+
+        }
+        
+        
     }
   
 }

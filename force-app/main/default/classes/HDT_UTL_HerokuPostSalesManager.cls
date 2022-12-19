@@ -1,4 +1,4 @@
-@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList')
+@SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveParameterList, PMD.ExcessiveClassLength, PMD.CyclomaticComplexity, PMD.NcssMethodCount, PMD.AvoidDeeplyNestedIfStmts')
 public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
     private static HDT_QR_HerokuPostSalesManager hpsmQr = new HDT_QR_HerokuPostSalesManager();
@@ -635,6 +635,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
+            if(currentCase.Type == 'Autolettura da cliente' && currentCase.Commodity__c == 'Acqua'){
+                List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da DL' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c =: discardReason WITH SECURITY_ENFORCED]; 
+                if(!discRuleAutoletList.isEmpty()){
+                    currentCase.abnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
+                }     
+            }
             updateFuture(JSON.serialize(currentCase));
         /**@frpanico 21/01/2022
          * Aggiunto completamento automatico
@@ -652,6 +658,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Phase__c = 'Inviare preventivo';
             }else if(currentCase.Cluster__c.equalsIgnoreCase('Verifiche') && String.isNotBlank(verificaLaboratorio) && verificaLaboratorio.equalsIgnoreCase('SI')){
                 //In questo scenario restiamo in attesa del flusso 152 contenente l'allegato delle verifiche
+            }else if(currentCase.Type.equalsIgnoreCase('Modifica Unita Immobiliari Componenti') || (currentCase.Type.equalsIgnoreCase('Esenzione Modifica Fognatura Depurazione') && currentCase.Subprocess__c.equalsIgnoreCase('Modifica Fognatura e Depurazione'))) {
+                //In questo scenario il set di fase "Completata" viene gestito mediante altre logiche presenti sulla classe HDT_UTL_PostSalesManager, richiamata da process click all'atterraggio sulla fase di "Esito OK da DBO" tramite classe HDT_SRV_PostSalesManager
             }
             else{
                 //DBO non invia mai il completata
@@ -972,67 +980,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
     }
 
     public static Case dataEnrichment(String pod, String contractCOde, Case currentCase){
-        String serializedResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
-        return HDT_UTL_DataEnrichmentPostSales.handleResponse(serializedResponse, currentCase);
+        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(contractCode, pod);
+        return HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), currentCase);
     }
-
-    /*@future(callout=true)
-    private static void dataEnrichment(String pod, String contractCode,String caseId, String cluster){
-        Case currentCase = new Case();
-        Case updateCase = new Case();
-        currentCase.Id = caseId;
-        updateCase.Id = caseId;
-        try{
-            String response = HDT_WS_ArricchimentoDatiTemp.submitRequest(pod, contractCode);
-            updateCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(response, currentCase);
-        }catch(Exception e){
-            System.debug(e.getMessage());
-        }
-        if (updateCase != null) {
-            if(cluster.containsIgnoreCase('Morosità')){
-                updateCase.Phase__c = 'Da Inviare';
-                updateCase.Status = 'In Lavorazione';
-            }
-           
-        } else {
-            if(cluster.containsIgnoreCase('Morosità')){
-                updateCase.Phase__c = 'Da Inviare';
-                updateCase.Status = 'In Lavorazione';
-            }
-
-        }
-        HDT_UTL_DatabaseService.updateSObject(updateCase); 
-    }*/
 
     @AuraEnabled
     public static String getAsyncJobByJobItem(String recordId){
-        /*
-        wrts_prcgvr__AsyncJob__c asyncJobRec = new wrts_prcgvr__AsyncJob__c();
-        String result;
-
-        asyncJobRec = hpsmQr.getAsyncJobByJobItem(recordId);
-
-        if(asyncJobRec != null){
-            if(asyncJobRec.wrts_prcgvr__Status__c == 'Chiusa'){
-
-                result = 'OK';
-
-            }else if(asyncJobRec.wrts_prcgvr__Status__c == 'Queued' && asyncJobRec.wrts_prcgvr__Details__c != null){
-                
-                result = 'Error';
-
-            } else {
-
-                result = 'KO';
-
-            }
-        } else {
-
-            result = 'KO';
-
-        }
-        */
-
         String result = 'KO';
         List<Case> caseList = [SELECT Id,Phase__c FROM Case WHERE Id = :recordId WITH SECURITY_ENFORCED];
         if(!caseList.isEmpty() && (!caseList[0].Phase__c.equalsIgnoreCase('Da Inviare') && !caseList[0].Phase__c.equalsIgnoreCase('In Lavorazione')))

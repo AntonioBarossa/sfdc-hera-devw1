@@ -2330,6 +2330,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Errore invio a DL/SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>

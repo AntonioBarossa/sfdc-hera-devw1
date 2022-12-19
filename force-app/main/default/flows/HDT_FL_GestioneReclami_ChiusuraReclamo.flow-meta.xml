@@ -200,7 +200,7 @@
     <decisions>
         <name>In_sospensione_o_chiusura</name>
         <label>In sospensione o chiusura?</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Richiesta_del_Cliente_accolta_0_0</targetReference>
@@ -284,6 +284,7 @@
         <picklistField>CustomerRequestAccomplished__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>ClosureProcessType</name>
         <dataType>String</dataType>
@@ -367,7 +368,7 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>512</locationX>
+        <locationX>644</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -393,6 +394,10 @@
         <connector>
             <targetReference>Reset_Transaction</targetReference>
         </connector>
+        <faultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Reset_Transaction</targetReference>
+        </faultConnector>
         <inputReference>Get_Activity</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -421,7 +426,7 @@
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
         <fields>
-            <name>ResetTransactionScreen</name>
+            <name>resetTransaction</name>
             <extensionName>c:hdtResetTransaction</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -529,7 +534,7 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0</name>
         <label>Screen Errore</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -648,7 +653,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>386</locationX>
+        <locationX>518</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>

@@ -263,6 +263,21 @@ public with sharing class HDT_UTL_OrderProcessTst {
     }
 
     @isTest
+    public static void testCancellAllEligibleOrder() {
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+        System.runAs(u){
+            List<Order> orders = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+            Contact__c, ParentOrder__c, PhaseStory__c 
+            FROM Order WHERE ParentOrder__c = null];
+            Test.startTest();
+            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id);
+            Test.stopTest();
+            System.assertEquals(false, ordChildList.isEmpty(), 'child returned');
+        }
+    }
+
+    @isTest
     public static void testSalesProcessManagementBefore() {
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
@@ -998,6 +1013,39 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Test.stopTest();
 
             System.assertEquals('Documentazione Validata', newOrderList[0].Phase__c, 'Activity Custom created');
+        }
+    }
+
+    @isTest
+    public static void testCreditCheckActivityManagement() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> newOrderList = [SELECT Id 
+                                        FROM Order WHERE IsTransition__c = false LIMIT 2];
+        
+            newOrderList[0].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[1].IncomingCreditCheckResult__c = 'KO';
+            newOrderList[0].CreditCheckDescription__c = 'TEST';
+            newOrderList[1].CreditCheckDescription__c = 'TEST';
+
+            Set<Id> ordersId = new Set<Id>{newOrderList[0].Id,newOrderList[1].Id};
+
+            update newOrderList;
+
+            System.assertEquals(2, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non sono state create');
+
+            Test.startTest();
+
+            newOrderList[0].Phase__c = 'Annullato';
+            newOrderList[1].Phase__c = 'Annullato';
+            update newOrderList;
+            
+            Test.stopTest();
+
+            System.assertEquals(0, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Order__c IN :ordersId].size(), 'Le Activity di credit check non si sono chiuse');
         }
     }
 

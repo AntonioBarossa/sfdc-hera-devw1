@@ -16,6 +16,16 @@ public inherited sharing class HDT_LC_RecordEditFormFlowController {
         return JSON.serialize(userInputFlowList);
     }
 
+    @AuraEnabled(cacheable=true)
+    public static String getRelatedFields(String recordId,String fields, String objectType) {
+        List<Sobject> objectList = HDT_QR_GenericQuery.getGenericRecords(fields, objectType, 'Id = \''+recordId+'\'');
+        if(!objectList.isEmpty()){
+            return JSON.serialize(objectList[0]);
+        }else {
+            throw new ListException(System.Label.no_configuration_found);
+        }
+    }
+
     @AuraEnabled
     public static String validateRecord(String validateClass, String fields, String recordId) {
         String result;

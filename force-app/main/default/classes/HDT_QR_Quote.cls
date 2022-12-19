@@ -257,4 +257,23 @@ public inherited sharing class HDT_QR_Quote {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public String getQuoteType(String orderId){
+
+        List<Order> quoteType = [
+            SELECT 
+            Id,
+            SBQQ__Quote__r.SBQQ__Type__c
+            FROM Order 
+            WHERE Order.Id =: orderId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if(!quoteType.isEmpty()){
+            return quoteType[0].SBQQ__Quote__r.SBQQ__Type__c;
+        }else{
+            return '';
+        }
+        
+    }
 }

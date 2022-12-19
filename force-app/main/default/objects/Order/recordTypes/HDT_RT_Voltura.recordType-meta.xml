@@ -2284,6 +2284,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullamento - Errore invio a DL/SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito Consuntivazione KO</fullName>
             <default>false</default>
         </values>
@@ -2389,6 +2401,10 @@
         </values>
         <values>
             <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
             <default>false</default>
         </values>
         <values>

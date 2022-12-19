@@ -77,6 +77,11 @@
                 <label>Switch Out per Voltura</label>
             </value>
             <value>
+                <fullName>Prima Attivazione - ACQ</fullName>
+                <default>false</default>
+                <label>Prima Attivazione - ACQ</label>
+            </value>
+            <value>
                 <fullName>Prima Attivazione Ele</fullName>
                 <default>false</default>
                 <label>Prima Attivazione Ele</label>
@@ -115,6 +120,11 @@
                 <fullName>Aggiunta Sconti o Bonus VAS</fullName>
                 <default>false</default>
                 <label>Aggiunta Sconti o Bonus VAS</label>
+            </value>
+            <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
             </value>
             <value>
                 <fullName>Subentro Gas</fullName>
@@ -210,6 +220,11 @@
                 <fullName>Autolettura da processo</fullName>
                 <default>false</default>
                 <label>Autolettura da processo</label>
+            </value>
+            <value>
+                <fullName>Lettura Acqua Avviso al Cliente - Acqua</fullName>
+                <default>false</default>
+                <label>Lettura Acqua Avviso al Cliente - Acqua</label>
             </value>
             <value>
                 <fullName>Allineamento Canone Rai</fullName>
@@ -712,6 +727,26 @@
                 <label>Verifica Tensione - Pressione</label>
             </value>
             <value>
+                <fullName>Interventi con Verifica - ACQ</fullName>
+                <default>false</default>
+                <label>Interventi con Verifica - ACQ</label>
+            </value>
+            <value>
+                <fullName>Verifica Pressione - ACQ</fullName>
+                <default>false</default>
+                <label>Verifica Pressione - ACQ</label>
+            </value>
+            <value>
+                <fullName>Verifica Integrita Sigilli - ACQ</fullName>
+                <default>false</default>
+                <label>Verifica Integrita Sigilli - ACQ</label>
+            </value>
+            <value>
+                <fullName>Verifica Fuga Idrica - Acqua</fullName>
+                <default>false</default>
+                <label>Verifica Fuga Idrica - Acqua</label>
+            </value>
+            <value>
                 <fullName>Comportamento Altri Venditori</fullName>
                 <default>false</default>
                 <label>Comportamento Altri Venditori</label>
@@ -867,6 +902,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Prima Attivazione - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Prima Attivazione Ele</valueName>
         </valueSettings>
         <valueSettings>
@@ -896,6 +935,10 @@
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Aggiunta Sconti o Bonus VAS</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
@@ -972,6 +1015,10 @@
         <valueSettings>
             <controllingFieldValue>Autolettura</controllingFieldValue>
             <valueName>Autolettura da processo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura</controllingFieldValue>
+            <valueName>Lettura Acqua Avviso al Cliente - Acqua</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Informative</controllingFieldValue>
@@ -1392,6 +1439,23 @@
         <valueSettings>
             <controllingFieldValue>Verifiche</controllingFieldValue>
             <valueName>Verifica Tensione - Pressione</valueName>
+        </valueSettings>
+
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Interventi con Verifica - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Pressione - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Integrita Sigilli - ACQ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche</controllingFieldValue>
+            <valueName>Verifica Fuga Idrica - Acqua</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>PostSales VAS</controllingFieldValue>

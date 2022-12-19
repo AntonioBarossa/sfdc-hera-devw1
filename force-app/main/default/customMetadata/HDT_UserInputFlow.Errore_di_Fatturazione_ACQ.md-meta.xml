@@ -17,10 +17,6 @@
         &quot;Required&quot;: true,
         &quot;Column&quot;: 1
     }, {
-        &quot;FieldName&quot;: &quot;Note__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    }, {
         &quot;FieldName&quot;: &quot;CustomerSelfReading__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 2
@@ -101,6 +97,17 @@
         &quot;FieldName&quot;: &quot;CommodityFormula__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 2
+    }
+]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:type="xsd:string">[{
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+        &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
+        &quot;column&quot;: 1,
+        &quot;value&quot;: &quot;&quot;
     }
 ]</value>
     </values>

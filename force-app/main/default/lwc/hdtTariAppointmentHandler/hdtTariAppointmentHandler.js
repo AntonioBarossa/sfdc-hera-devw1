@@ -1,5 +1,5 @@
 import { LightningElement, api, track,wire } from 'lwc';
-import getCase from '@salesforce/apex/HDT_LC_AppointmentAgenda.getCase';
+import getCase from '@salesforce/apex/HDT_LC_AppointmentTariAgenda.getCase';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { refreshApex } from '@salesforce/apex';
@@ -11,6 +11,7 @@ const OBJECT_FIELDS =[
     'Phase__c',
     'StartAppointment__c',
     'Outcome__c',
+    'NoticeId__c',
     'PhaseStory__c'
 ];
 
@@ -44,9 +45,9 @@ export default class HdtTariAppointmentHandler extends LightningElement{
         const { data, error } = value; 
         console.log('value ->'+ value);
         if (data){
-            this.case = JSON.parse(data);
+            this.case = data;
             console.log('case ->' + this.case);
-            if(this.case.Outcome__c == 'Empty_Slots') {
+            if(this.case.NoticeId__c) {
                 this.isRendered = false;
             }
             if(this.confirmed==false){

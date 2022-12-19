@@ -141,12 +141,16 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
        Map<String,String> mapCustMarkToAccClass = new Map<String,String>{
            'D2 - Ditta individuale' => 'Small Business',
+           'G2 - MMS Ditta individuale' => 'Small Business',
+           'G3 - MMS Azienda' => 'Small Business',
            'D3 - Azienda' => 'Small Business',
            'Associazione' => 'Small Business',
            'D6 - Associazione' => 'Small Business',
+           'G6 - MMS Associazione' => 'Small Business',
            'Ditta individuale' => 'Small Business',
            'Azienda' => 'Small Business',
            'MMS Parti comuni' => 'Small Business',
+           'G4 - MMS Parti comuni' => 'Small Business',
            'AAS Azienda' => 'Small Business',
            'AAS Associazione' => 'Small Business',
            'D4 - Parti comuni' => 'Small Business',
@@ -155,10 +159,12 @@ public inherited sharing class HDT_LC_BillingProfileForm {
            'Persona fisica' => 'Privati',
            'D1 - Persona fisica' => 'Privati',
            'MMS Persona fisica' => 'Privati',
+           'G1 - MMS Persona fisica' => 'Privati',
            'AAS Persona fisica' => 'Privati',
            
            'Condominio' => 'Piccoli Condomini',
            'D5 - Condominio' => 'Piccoli Condomini',
+           'G5 - MMS Condominio' => 'Piccoli Condomini',
            'AAS Condominio' => 'Piccoli Condomini'
 
        };

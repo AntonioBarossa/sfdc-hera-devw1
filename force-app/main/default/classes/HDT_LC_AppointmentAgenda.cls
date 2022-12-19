@@ -21,17 +21,6 @@ public with sharing class HDT_LC_AppointmentAgenda {
     }
 
     @AuraEnabled(cacheable=true)
-    public static String getCase(String caseId,List<String> fields){
-        String response = '';
-        try{
-            response = srvAgenda.getCase(caseId,fields);
-        }catch (exception e){
-            throw new AuraHandledException(e.getMessage());
-        }
-        return response;
-    }
-
-    @AuraEnabled(cacheable=true)
     public static String getCommunityBaseUrl(){
         return srvAgenda.getCommunityLink();
     }

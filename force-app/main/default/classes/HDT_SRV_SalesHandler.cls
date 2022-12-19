@@ -13,7 +13,7 @@ public with sharing class HDT_SRV_SalesHandler {
      */
     private static HDT_SRV_VoltureChangeManager voltureChangeSrv = new HDT_SRV_VoltureChangeManager();
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
-    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas'};
+    private static Set<String> moveOutProcesses = new Set<String>{'Cambio Uso','Voltura','Cambio Offerta Ele','Cambio Offerta Gas', 'Cambio Tariffa'};
     private static String erroreLavorazioneSapPhase = 'Errore lavorazione SAP';
     private static String annullatoPhase = 'Annullato';
     private static String annullatoStatus = 'Annullato';
@@ -482,7 +482,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                      * Aggiunta gestione KO
                                      * Skip Azioni
                                      */
-                                    if(previousPhase.indexOf('KO') > -1)
+                                    if(previousPhase.indexOf('KO') > -1 && !previousPhase.equalsIgnoreCase('Esito Consuntivazione KO'))
                                     {
                                         ord.Phase__c = previousPhase;
                                         //ord.Status = 'Completed';
@@ -534,7 +534,19 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }else{
 
                                             if(mapRequestFields.get('FASE') == 'Esito OK da DBO'){
-                                                futurePhase = 'Completata';
+                                                if(previousPhase.indexOf('Annullamento') > -1) {
+                                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                                    Datetime nowDate = Datetime.now();
+                                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != ''){
+                                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                                        ord.DiscardReason__c = mapRequestFields.get('NOTE_ANN');
+                                                    }
+                                                    futurePhase = 'Annullato';
+                                                }else{
+                                                    futurePhase = 'Completata';
+                                                }
                                                 
                                             }
                                             /**@frpanico 04/01/2022
@@ -551,6 +563,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                             if(!String.isBlank(mapRequestFields.get('ANLAGE')))
                                             {
                                                 ord.SAPImplantCode__c = mapRequestFields.get('ANLAGE');
+                                            }
+                                            if(!String.isBlank(mapRequestFields.get('POD'))){
+                                                ord.ServicePointCode__c = mapRequestFields.get('POD');
                                             }
                                             ord.OrderODV__c = mapRequestFields.get('VBELN');
                                             ord.SapContractCode__c = mapRequestFields.get('VERTRAG');
@@ -582,6 +597,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                                    accToUpdate.CustomerCode__c = ord.CustomerCode__c;
                                                 }
                                                     accountSrv.updateRecord(accToUpdate);
+                                            }else if('Ambiente'.equalsIgnoreCase(ordRetrieved.Commodity__c) && STRING.isNotBlank(mapRequestFields.get('PARTNER'))){
+                                                Account accToUpdate = new Account();
+                                                accToUpdate.Id = ordRetrieved.AccountId;
+                                                accToUpdate.CustomerCode__c = mapRequestFields.get('PARTNER');
+                                                accountSrv.updateRecord(accToUpdate);
                                             }
                                             if(ordRetrieved.ProcessType__c.containsIgnoreCase('Subentro') || (ordRetrieved.ProcessType__c.containsIgnoreCase('Voltura') && !ordRetrieved.PhaseStory__c.containsIgnoreCase('Voltura Rifiutata'))){
                                                 mapRequestFields.put('NuovoAccount',ordRetrieved.AccountId);

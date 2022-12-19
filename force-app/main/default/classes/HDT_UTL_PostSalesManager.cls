@@ -13,6 +13,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     private HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
     private HDT_SRV_Order orderSrv = new HDT_SRV_Order();
 
+    private final Map<String,String> APPOINTMENT_METHOD = new Map<String,String>{
+        'Consegna copia chiave GdM' => 'ConsegnaCopiaChiaveGdM',
+        'Sost. contatore cliente' => 'Sost.Contatorec/cliente',
+        'Verifica GDM' => 'VerificaGdM',
+        'Verifica Tensione - Pressione' => 'VerificaPressione'
+    };
+
     public void changeCaseValue(Sobject inputCase){
 
         Case currentCase = (Case) inputCase;
@@ -103,6 +110,15 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 activity.Case__c = parentCase.Id;
                 activity.wrts_prcgvr__IsRequired__c	= true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
+            } else if (parentCase.Type.equalsIgnoreCase('Consumo Anomalo Idrico') && currentCase.Type.equalsIgnoreCase('Verifica Fuga Idrica') && (currentCase.Commodity__c.equalsIgnoreCase('Acqua') || currentCase.CommodityFormula__c.equalsIgnoreCase('Acqua'))) {
+                wrts_prcgvr__Activity__c actElabManuale = [SELECT Id, ActivityOutcome__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Elaborazione Manuale' AND wrts_prcgvr__Status__c = 'Chiusa' WITH SECURITY_ENFORCED LIMIT 1];
+                if (actElabManuale != null && 'Negativo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                    parentCase.Phase__c = 'KO Definitivo';
+                    parentCase.Status = 'Closed';
+                }else if (actElabManuale != null && 'Positivo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                    parentCase.Phase__c = 'Documentazione validata';
+                    parentCase.Status = 'In Lavorazione';
+                }
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
@@ -340,7 +356,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
 
         // Per tutti i sottoprocessi, tranne la Variaz. Gruppo IVA, inneschiamo il processo di Allineamento Anagrafica.
-        if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA')) {
+        /* 2022-11-28 @frpanico TK 930699C Dato che la modifica dati di recapito varia solo dati di fatturazione non e' necessario trasmettere le variazioni al SII */
+        if (!currentCase.SubProcess__c.equals('Variazione Gruppo IVA') && !currentCase.SubProcess__c.equalsIgnoreCase('Modifica Dati di Recapito')) {
             List<Case> anagAlignCases = HDT_SRV_AnagAlignment.handleAnagAlignment(inputCase, HDT_SRV_AnagAlignment.HDT_ENU_AnagAlignmentContext.VARIAZIONE_ANAGRAFICA_CLIENTE);
             System.debug(LoggingLevel.DEBUG,'# Case di Allineamento Anagrafica creati: ' + anagAlignCases.size());
         }
@@ -536,7 +553,22 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     }
 
     public void sendDocumentFile(SObject inputRecord){
+
+
         Id recordId = (Id)inputRecord.get('Id');
+        
+
+        if('Verifiche'.equalsIgnoreCase((String)inputRecord.get('Cluster__c')) && 
+            APPOINTMENT_METHOD.containsKey((String)inputRecord.get('Type'))){
+
+            Map<String, Object> inputMap = new Map<String,Object>();
+            HDT_UTL_GestAppAutomaticCreationCase gestAppAutomaticCreationCase = new HDT_UTL_GestAppAutomaticCreationCase();
+        
+            inputMap.put('method', APPOINTMENT_METHOD.get((String)inputRecord.get('Type')));
+            inputMap.put('sender', new Case(Id = (Id)inputRecord.get('Id')));
+            gestAppAutomaticCreationCase.execute(inputMap);
+         }
+
         if(recordId.getSobjectType().getDescribe().getName() == 'Order')
         {
             recordId = (Id)inputRecord.get('ParentOrder__c');
@@ -629,8 +661,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     public void handleSelfReadings(SObject inputCase)
     {
-        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL'};
-        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata'};
+        Set<String> fasiKo = new Set<String>{'Annullato', 'Validazione KO da DL', 'Esito KO da DBO'};
+        Set<String> fasiOk = new Set<String>{'Validazione OK da DL', 'Validazione OK DL simulata', 'Esito OK da DBO'};
         Case currentCase = (Case) inputCase;
         
         try {
@@ -687,16 +719,25 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                         Integer totaleUnitCase = caseUnitDomRes + caseUnitDomNonRes;
                         if(totaleUnitServicePoint != totaleUnitCase){
                             HDT_UTL_Case.createActivity(currentCase.Id, '', 'Elaborazione Manuale', 'Elaborazione Manuale');
-                        }else{
+                        }else{ //se non viene variato il totale delle unità abitative, alla ricezione dell'Esito OK da DBO imposto fase Completata
                             currentCase.Phase__c = 'Completata';
                             currentCase.Status = 'Closed';
-                            update currentCase;
+                            updateFuture(JSON.serialize(currentCase));
                         }
                     }
                 }else{ //in caso di Domestico alla ricezione dell'Esito OK da DBO imposto fase Completata
                     currentCase.Phase__c = 'Completata';
                     currentCase.Status = 'Closed';
-                    update currentCase;
+                    updateFuture(JSON.serialize(currentCase));
+                }
+            }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(currentCase.Type) && 'Modifica Fognatura e Depurazione'.equalsIgnoreCase(currentCase.Subprocess__c) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && 'Esito OK da DBO'.equalsIgnoreCase(currentCase.Phase__c)){
+                //BBP W2 4.0 pg. 601 - Creazione Activity Gestione Rimborso in caso di Esito Positivo e Data Retroattiva valorizzata
+                if(currentCase.RetroactiveDate__c != null) {
+                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'Gestione Rimborso', 'Gestione Rimborso');
+                }else{
+                    currentCase.Phase__c = 'Completata';
+                    currentCase.Status = 'Closed';
+                    updateFuture(JSON.serialize(currentCase));
                 }
             }
         } catch (Exception e) {

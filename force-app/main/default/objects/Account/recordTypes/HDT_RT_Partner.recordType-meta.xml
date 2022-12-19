@@ -1024,6 +1024,42 @@
             <fullName>Welcome Hera Luce</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Lavoro Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Active Special Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Special Casa Dual</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Ownership</picklist>

@@ -231,6 +231,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SelfCertificationConnection__c = '02';
         orderToUpdate.RequestOption__c = calculateRequestedOption(servicePoint.ImplantTypeTemp__c, servicePoint.PowerContractual__c);
         orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' ? servicePoint.MeterClass__c : null;
+        orderToUpdate.MeterClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' && String.isNotBlank(orderToUpdate.MeterClass__c) && orderToUpdate.MeterClass__c.indexOf('DN')>-1?null:orderToUpdate.MeterClass__c;
         orderToUpdate.Caliber__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas'? servicePoint.MeterClass__c : null;
         orderToUpdate.WithdrawalClass__c = servicePoint.RecordType.DeveloperName == 'HDT_RT_Gas' ? (servicePoint.WithdrawalClass__c != null ? servicePoint.WithdrawalClass__c : '001 - 7 giorni') : null;
         orderToUpdate.SupplyType__c = servicePoint.SupplyTypeTemp__c != null ? servicePoint.SupplyTypeTemp__c : servicePoint.SupplyType__c;
@@ -264,9 +265,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'BillingStreetNumberExtension__c,CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        if(!orderOld.isTransition__c){
+        /*if(!orderOld.isTransition__c){
             changeCustomerMarking(account);
-        }
+        } */
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         // String customerName = null;
         // String customerLastName = null;
@@ -351,10 +352,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.DocumentNumber__c = sale.DocumentNumber__c;
         orderToUpdate.DocumentType__c = sale.DocumentType__c;
 
-        orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
-        orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
-        orderToUpdate.CreatorGroup__c= sale.CreatedBy.CreatorGroup__c;
-
         try {
             HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate.Id);
         } catch (Exception e) {
@@ -396,6 +393,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.IntegratedSAP__c          = orderItemList[0].Product2.IntegratedSAP__c;
             orderToUpdate.Surface__c                = orderItemList[0].Surface__c;
             orderToUpdate.EmploymentMonthsInYear__c = orderItemList[0].MonthsOccupYear__c;
+            orderToUpdate.Market__c = orderItemList[0].Product2.ReferenceMarket__c;
+            if(orderItemList[0].Product2.ReferenceMarket__c == null)
+            {
+                OrderItem offerItem = orderItemQr.getOfferActivationItem(orderItemList[0].Order.ParentOrder__c, orderItemList[0].Order.ServicePoint__c);
+                orderToUpdate.Market__c = offerItem?.Product2?.ReferenceMarket__c;
+            }
         }
         
     }
@@ -428,7 +431,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         List<OrderItem> mainItems = orderItemQr.getMainItem(orderToUpdate.Id);
         Set<String> sconti = HDT_UTL_OrderProcessAssignment.getFamilySconto();
 
-        
         if(originalOrder.ServicePoint__c != null){
             OrderItem mainScontiItem = null;
             for(OrderItem item : mainItems){
@@ -446,7 +448,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             return;
         }
         if(!sconti.contains(mainItems[0].Product2.Family)){
-            
+
             
             orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
             orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
@@ -470,11 +472,6 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 Sobject reference = originalOrder.OrderReference__c!=null? (Sobject) originalOrder.OrderReference__r : (Sobject) originalOrder.ContractReference__r;
                 orderToUpdate.ServicePointCode__c=(String) reference.getSObject('ServicePoint__r')?.get('ServicePointCode__c');
                 orderToUpdate.ServicePoint__c = (String) reference.get('ServicePoint__c');
-            }else if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family) && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c!=null){
-                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
-                if(!orderItemsPod.isEmpty()){
-                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
-                }
             }
         }
         
@@ -535,11 +532,36 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     }
                 }
             }
+            if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)){
+                List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
+                if(!orderItemsPod.isEmpty() && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c != null){
+                    orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
+                    orderToUpdate.RateCategory__c = orderItemsPod[0].Order.RateCategory__c;
+                }else{
+                    orderToUpdate.RateCategory__c = getTariCommercialProductCodeFromSub(originalOrder.ContractReference__c);
+                }
+            }
         }
         if(orderToUpdate.ServicePoint__c != null)
         {
             alignServicePointFields(orderToUpdate, orderToUpdate.ServicePoint__c);
         }
+    }
+
+    private static String getTariCommercialProductCodeFromSub(Id contrReference){
+        if(contrReference != null){    
+            List<SBQQ__Subscription__c> lsubs = [
+                SELECT ProductCode__c
+                FROM SBQQ__Subscription__c 
+                WHERE SBQQ__Contract__c =:contrReference
+                AND SBQQ__Product__r.Family='Offerta commerciale'
+                WITH SECURITY_ENFORCED
+                LIMIT 1
+            ];
+            if(lsubs.isEmpty()){    return null;    }
+            return lsubs[0].ProductCode__c;
+        }
+        return null;
     }
 
     /**
@@ -640,7 +662,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }*/
     }
 
-    private static void changeCustomerMarking(Account account){
+    /* private static void changeCustomerMarking(Account account){
         Map<String, String> customerMarkingTranscode = 
                 new  Map<String, String>{
                     'Persona fisica'=> 'D1 - ',
@@ -653,7 +675,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             account.customerMarking__c = appendix+account.customerMarking__c;
             accountSrv.updateRecord(account);
         }
-    }
+    } */
 
     private inherited sharing class HDT_WRP_Data{
         public String servicePointStatus ='';

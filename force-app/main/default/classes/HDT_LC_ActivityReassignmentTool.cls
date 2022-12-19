@@ -22,13 +22,16 @@ public with sharing class HDT_LC_ActivityReassignmentTool {
 
     @AuraEnabled
     public static List<String> getPickListValuesIntoList(){
-        List<String> pickListValuesList= new List<String>();
-         Schema.DescribeFieldResult fieldResult = Queue__c.Agency2__c.getDescribe();
-         List<Schema.PicklistEntry> ple = fieldResult.getPicklistValues();
-         for( Schema.PicklistEntry pickListVal : ple){
-             pickListValuesList.add(pickListVal.getLabel());
-         }     
-         return pickListValuesList;
+        
+        List<Queue__c> queueList = [SELECT Id, Agency2__c FROM Queue__c WITH SECURITY_ENFORCED ORDER BY Agency2__c ASC];
+        List<String> agencyValues = new List<String>();
+        
+        for(Queue__c q : queueList){
+            if(!agencyValues.contains(q.Agency2__c))
+                agencyValues.add(q.Agency2__c);
+        }
+        
+        return agencyValues;
      }
 
 

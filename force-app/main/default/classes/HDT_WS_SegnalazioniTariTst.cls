@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 14-09-2022
+ * @last modified on  : 12-06-2022
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -28,6 +28,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             
             HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza',constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI,constants.CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Inviata a SAP', 'Bozza', constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI, constants.CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI);
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             
@@ -49,9 +50,9 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
             
             List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1, true, accs[0].id);
     
-            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, false, accs[0].id, contacts[0].Id, points[0].id, contracts[0].id, orders[0].id);
+            List<Case> cases = HDT_UTL_DataFactoryTst.createCase(2, false, accs[0].Id, contacts[0].Id, points[0].id, contracts[0].id, orders[0].id);
             cases[0].DiscardDescription__c = 'zero';
-            // cases[0].RecordTypeId=constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI;
+            cases[1].RecordTypeId=constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI;
             insert cases;
             
             HDT_UTL_DataFactoryTst.createDocumentSelected(1, true, false, (String) cases[0].Id, billings[0].ContractAccountCode__c);
@@ -62,8 +63,8 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
 
             HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].Id, points[0].Id, products[0].id, entries[0].id);
             
-            List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', '{"name":"Order","label":"Order","sObjectType":"Order","queryable":true,"fields":[{"name":"AccountId","label":"Account ID"},{"name":"OrderNumber","label":"Order Number"}],"objects":[{"name":"AccountId","label":"Account ID","sObjectType":"Account","relationshipName":"Account","queryable":true,"fields":[{"name":"Name","label":"Account Name"}],"objects":[]}]}', 'Callout_Template.json');
-            List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates=HDT_UTL_DataFactoryTst.createCalloutTemplate(1, true, 'Callout_Prova', 'prova', true, 'Order', 'Flat', contentVersionList[0].ContentDocumentId);
+            List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', '{"name":"Case","label":"Case","sObjectType":"Case","queryable":true,"fields":[{"name":"AccountId","label":"Account ID"},{"name":"CaseNumber","label":"Case Number"}],"objects":[{"name":"AccountId","label":"Account ID","sObjectType":"Account","relationshipName":"Account","queryable":true,"fields":[{"name":"Name","label":"Account Name"}],"objects":[]}]}', 'Callout_Template.json');
+            List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates=HDT_UTL_DataFactoryTst.createCalloutTemplate(1, true, 'Callout_Prova', 'prova', true, 'Case', 'Flat', contentVersionList[0].ContentDocumentId);
             id calloutTemplateid = calloutTemplates[0].id;
             
             ContentDocumentLink cDe = new ContentDocumentLink();
@@ -89,7 +90,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
-        Case myCase = [Select id, DiscardDescription__c, Phase__c, RecordTypeId from Case];
+        Case myCase = [Select id, DiscardDescription__c, Phase__c, RecordTypeId from Case WHERE DiscardDescription__c = 'zero' LIMIT 1];
         
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
@@ -127,7 +128,9 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         res.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
 
         HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData res2 = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
-        res2.esito='';
+        res2.outcome='';
+        res2.errorMessage='errMsg';
+        res2.noticeId='ntcId';
         Test.stopTest();
     }
 
@@ -142,7 +145,8 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
-        Case myCase = [Select id, DiscardDescription__c from case];
+        Case myCase = [Select id, DiscardDescription__c, AccountId, CaseNumber, Phase__c, NoticeId__c, Outcome__c, RecordType.DeveloperName from case WHERE DiscardDescription__c <> 'zero' LIMIT 1];
+        myCase.NoticeId__c = 'fakeid12345';
         
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
@@ -162,7 +166,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         Map<String, Object> args=new Map<String, Object>();
         
         args.put('action', myCase);
-        args.put('sender', myOrder);
+        args.put('sender', myCase);
         args.put('wrts_prcgvr__CalloutTemplate__c', 'prova');
         args.put('transition', myTransition);
         args.put('templateMap', paramsCallOut);
