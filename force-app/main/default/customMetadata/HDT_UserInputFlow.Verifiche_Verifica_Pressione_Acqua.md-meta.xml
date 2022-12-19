@@ -82,10 +82,6 @@
 &quot;Column&quot; : 2
 },
 {
-&quot;FieldName&quot; : &quot;ExistCorrector__c&quot;,
-&quot;Column&quot; : 1
-},
-{
 &quot;FieldName&quot; : &quot;ServicePointType__c&quot;,
 &quot;Column&quot; : 2
 },
@@ -93,6 +89,17 @@
 &quot;FieldName&quot; : &quot;UseSubCategory__c&quot;,
 &quot;Column&quot; : 2
 }
+]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:type="xsd:string">[{
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+        &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
+        &quot;column&quot;: 1,
+        &quot;value&quot;: &quot;&quot;
+    }
 ]</value>
     </values>
     <values>

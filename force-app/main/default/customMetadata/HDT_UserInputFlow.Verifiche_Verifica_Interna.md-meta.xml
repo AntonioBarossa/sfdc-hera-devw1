@@ -86,6 +86,17 @@
 ]</value>
     </values>
     <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:type="xsd:string">[{
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+        &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
+        &quot;column&quot;: 1,
+        &quot;value&quot;: &quot;&quot;
+    }
+]</value>
+    </values>
+    <values>
         <field>ValidateClass__c</field>
         <value xsi:nil="true"/>
     </values>
