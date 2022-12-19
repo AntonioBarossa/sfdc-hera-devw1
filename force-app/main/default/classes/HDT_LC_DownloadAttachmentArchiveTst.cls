@@ -11,25 +11,46 @@
 @isTest
 public class HDT_LC_DownloadAttachmentArchiveTst {
 
-  @isTest
+    @TestSetup
+    static void setup(){
+        
+        HDT_UTL_DataFactoryTst.createWebServiceConfiguration('Archive', 'callout:Archive/sbldownload/bolletta.pdf', 'GET', 'testUser');
+
+    }
+
+    @isTest
 	static void testGetUrlNameDocumentLink(){
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        Test.setMock(HttpCalloutMock.class, mock);
+        
+        List<SiebelDocumentLink__x> docs = new List<SiebelDocumentLink__x>{new SiebelDocumentLink__x(NOME_FILE_DOWNLOAD__c = 'bolletta.pdf')};
+        
+        HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(docs));
+
         String msg;
         String targetId = 'test';
+
+        Test.startTest();
+
+        Map<String, String> result = new Map<String, String>();
+
         try{
-        	HDT_LC_DownloadAttachmentArchive.getUrlNameDocumentLink(targetId);
+        	result = HDT_LC_DownloadAttachmentArchive.getUrlNameDocumentLink(targetId);
         }catch(Exception e){
             msg = e.getMessage();
         }
-        System.assertEquals('Script-thrown exception', msg, 'DownloadAttachmentAzure did not work correctly');
-        System.assertNotEquals('', msg, 'DownloadAttachmentAzure did not work correctly');
+
+        Test.stopTest();
+
+        System.assertEquals('true', result.get('fileExist'), 'DownloadAttachmentAzure did not work correctly');
+        System.assertNotEquals('false', result.get('fileExist'), 'DownloadAttachmentAzure did not work correctly');
         
     }
     
     @isTest static void testGetExtensionFile(){
         
-        List<SiebelDocumentLink__x> docs = new List<SiebelDocumentLink__x>();
-        SiebelDocumentLink__x doc = new SiebelDocumentLink__x();
-        docs.add(doc);
+        List<SiebelDocumentLink__x> docs = new List<SiebelDocumentLink__x>{new SiebelDocumentLink__x()};
         
         HDT_UTL_ObjectManagerTst.setMock(new HDT_UTL_MockInterfaceOverrideTst(docs));
         Test.startTest();
