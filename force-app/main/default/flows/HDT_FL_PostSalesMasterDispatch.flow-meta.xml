@@ -906,13 +906,6 @@
                 <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Commodity</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Ambiente</stringValue>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Get_RT_Reclami</targetReference>
         </connector>
@@ -1276,13 +1269,6 @@
             <name>RecCittadino</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Commodity</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Ambiente</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
@@ -1297,13 +1283,6 @@
         <rules>
             <name>RecContenitore</name>
             <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Commodity</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Ambiente</stringValue>
-                </rightValue>
-            </conditions>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
