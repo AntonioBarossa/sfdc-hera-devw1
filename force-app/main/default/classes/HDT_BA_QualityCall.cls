@@ -11,8 +11,9 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
+        //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
         String query = 'SELECT Id,Skip_Callout__c, ParentOrder__r.Status, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
-        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\'';
+        'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Voltura Rifiutata\', \'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\'';
         return Database.getQueryLocator(query);
     }
 
@@ -61,7 +62,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
             List<String> ordersIdsList = new List<String>();
             ordersIdsList.addAll(orderIdsSet);
-            
+            Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = new Map<String, wrts_prcgvr__Activity__c>();
             List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(ordersIdsList);
             List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
             Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
@@ -74,17 +75,17 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 }else if ('Quality Scaduta'.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
                     orderWithActivity.add(activityAssigned.Order__c);
                 }
+				if ('Quality Call'.equalsIgnoreCase(activitiesAssigned.Type__c) && !activitiesAssigned.IsClosed__c){
+                    parentQualCallMap.put(activitiesAssigned.Order__r.ParentOrder__c != null ? activitiesAssigned.Order__r.ParentOrder__c : activitiesAssigned.Order__c,activitiesAssigned);
+                }
             }
 
             Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
             for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(ordersIdsList)){
-                if(orderToItemMap.get(item.OrderId) != null){
-                    orderToItemMap.get(item.OrderId).add(item);
-                }
-                else {
+                if(!orderToItemMap.containsKey(item.OrderId) != null){
                     orderToItemMap.put(item.OrderId, new List<OrderItem>());
-                    orderToItemMap.get(item.OrderId).add(item);
                 }
+                orderToItemMap.get(item.OrderId).add(item);
             }
 
             List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
@@ -207,7 +208,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             if(!parentToChildOrderMap.keySet().isEmpty()){
                 //Mi vado a prendere tutti gli ordini correlati ai parent censiti e le relative activities
                 Map<String, List<String>> allChildByParent = HDT_QR_Order.getOrdersByParent(parentToChildOrderMap.keySet());
-                Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = HDT_QR_ActivityCustom.getQualCallByParentOrder(parentToChildOrderMap.keySet());
+                //Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = HDT_QR_ActivityCustom.getQualCallByParentOrder(parentToChildOrderMap.keySet());
                 //Controllo che ci siano attività da chiudere
                 if(!parentQualCallMap.keySet().isEmpty()){
                     for(String parent : parentQualCallMap.keySet()){
@@ -222,7 +223,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         }
                         if(allCanceled && parentQualCallMap.get(parent) != null){
                             //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
-                            wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
+                            wrts_prcgvr__Activity__c actToClose = new wrts_prcgvr__Activity__c(Id = parentQualCallMap.remove(parent).Id);
                             actToClose.wrts_prcgvr__Status__c = 'Chiusa';
                             actToClose.ContactResult__c='Chiusa Per Fine Intervallo';
                             activitiesToClose.add(actToClose);
