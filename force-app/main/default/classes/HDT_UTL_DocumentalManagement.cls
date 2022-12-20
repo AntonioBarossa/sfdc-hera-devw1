@@ -750,6 +750,11 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						if(resultTwo.equalsIgnoreCase('noValue')){
 							resultToReturn = '';
 						}
+						if(resultTwo.indexOf('.') > -1)
+						{
+							List<String> objectFieldToRet = resultTwo.split('\\.');
+							resultTwo = getValue(objectFieldToRet[0],objectFieldToRet[1],0,inputs,formParams);
+						}
 						resultToReturn = resultTwo;
 						break;
 					}
