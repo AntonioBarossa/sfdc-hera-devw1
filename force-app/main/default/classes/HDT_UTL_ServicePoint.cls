@@ -376,7 +376,7 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
         }
         if(mapRes.get('TFRS000000')!=null && !String.isBlank(mapRes.get('TFRS000000'))){         
-            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
+            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('TFRS000000')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();

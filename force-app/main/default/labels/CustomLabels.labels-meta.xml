@@ -1162,4 +1162,18 @@
         <shortDescription>consumoAnomaloIdricoShipmentTypePaperMail</shortDescription>
         <value>Posta Cartacea</value>
     </labels>
+    <labels>
+        <fullName>phaseInviataASap</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>phaseInviataASap</shortDescription>
+        <value>Inviata a SAP</value>
+    </labels>
+    <labels>
+        <fullName>phaseNonInviataASap</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>phaseNonInviataASap</shortDescription>
+        <value>Errore tecnico invio a SAP</value>
+    </labels>
 </CustomLabels>

@@ -80,7 +80,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         processOrder = w;
 
                         for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                            if( f.name.equalsIgnoreCase('QC') ){
+                            if( f.name.equalsIgnoreCase('QC') && obj.get('SendToDistributorDate__c') != null){
                                 Datetime foo = (Datetime)obj.get('SendToDistributorDate__c');
                                 String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
                                 f.value = dateFinal;
