@@ -45,6 +45,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleAnalisiConsumi(inputs,formParams);
                 }when 'handleOtpSign'{
                     return handleOtpSign(inputs,formParams);
+                }when 'calculateCommodityArcZeroTwo'{
+                    return calculateCommodityArcZeroTwo(inputs, formParams);
                 }
                 when else {
                     return '';
@@ -1284,6 +1286,19 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
+    }
+
+    private static String calculateCommodityArcZeroTwo(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
+    {
+        String context = (String) formParams.get('Contesto');
+        String result = '';
+        switch on context {
+            when 'Order'
+            {
+                result = '';
+            }
+        }
+        return result;
     }
     
 }
