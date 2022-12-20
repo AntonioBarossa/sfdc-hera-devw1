@@ -9864,6 +9864,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per decorrenza dei termini</fullName>
+            <default>false</default>
+        </values>        
+        <values>
             <fullName>Approvata</fullName>
             <default>false</default>
         </values>
