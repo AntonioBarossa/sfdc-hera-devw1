@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Chiudi_Activity_Scarto</name>
         <label>Chiudi Activity Scarto</label>
-        <locationX>1942</locationX>
+        <locationX>1590</locationX>
         <locationY>1430</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
@@ -22,7 +22,7 @@
     <actionCalls>
         <name>Get_Amount_Quote</name>
         <label>Get Amount Quote</label>
-        <locationX>1161</locationX>
+        <locationX>776</locationX>
         <locationY>518</locationY>
         <actionName>HDT_UTL_AmountQuote</actionName>
         <actionType>apex</actionType>
@@ -84,7 +84,7 @@
         <name>Quote_Management</name>
         <label>Quote Management</label>
         <locationX>776</locationX>
-        <locationY>2246</locationY>
+        <locationY>2798</locationY>
         <actionName>HDT_UTL_QuoteManagement</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -121,7 +121,7 @@
     <assignments>
         <name>Aggiorna_Da_Inviare</name>
         <label>Aggiorna Preventivo Accettato</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -138,7 +138,7 @@
         <name>Assegna_Fase_Preventivo</name>
         <label>Assegna Fase Preventivo e Importo</label>
         <locationX>314</locationX>
-        <locationY>3734</locationY>
+        <locationY>4286</locationY>
         <assignmentItems>
             <assignToReference>FasePreventivo</assignToReference>
             <operator>Assign</operator>
@@ -161,7 +161,7 @@
         <description>Inserito assignment poichè per il processo di Interventi con Verifica, uno dei subprocess prevede importo a 0.</description>
         <name>Assegna_Importo</name>
         <label>Assegna Importo</label>
-        <locationX>1293</locationX>
+        <locationX>908</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Importo</assignToReference>
@@ -177,7 +177,7 @@
     <assignments>
         <name>Assegna_Label_Conferma</name>
         <label>Assegna Label Conferma</label>
-        <locationX>1029</locationX>
+        <locationX>644</locationX>
         <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>SaveLabel</assignToReference>
@@ -187,14 +187,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
+            <targetReference>is_Verifica_Rottura_Impianto_Cliente</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Operation_Code</name>
         <label>Assegna Operation Code</label>
         <locationX>622</locationX>
-        <locationY>3398</locationY>
+        <locationY>3950</locationY>
         <assignmentItems>
             <assignToReference>OperationCode</assignToReference>
             <operator>Assign</operator>
@@ -209,7 +209,7 @@
     <assignments>
         <name>Assegna_Processo_Acqua</name>
         <label>Assegna Processo Acqua</label>
-        <locationX>1161</locationX>
+        <locationX>776</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -225,7 +225,7 @@
     <assignments>
         <name>Assegna_Quotation_Validity_Date</name>
         <label>Assegna Quotation Validity Date</label>
-        <locationX>1161</locationX>
+        <locationX>776</locationX>
         <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.QuotationValidityDate__c</assignToReference>
@@ -241,7 +241,7 @@
     <assignments>
         <name>Assenga_Process_Type</name>
         <label>Assenga Process Type</label>
-        <locationX>897</locationX>
+        <locationX>512</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -257,7 +257,7 @@
     <assignments>
         <name>Assenga_Process_Type_0</name>
         <label>Assenga Process Type</label>
-        <locationX>1425</locationX>
+        <locationX>1040</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -273,7 +273,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>1810</locationX>
+        <locationX>1458</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -289,7 +289,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>2338</locationX>
+        <locationX>1986</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -305,7 +305,7 @@
     <assignments>
         <name>Assenga_Process_Type_0_0_0_0</name>
         <label>Assenga Process Type</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -321,7 +321,7 @@
     <assignments>
         <name>Init_Case_Per_Risottomissione</name>
         <label>Init Case Per Risottomissione</label>
-        <locationX>1942</locationX>
+        <locationX>1590</locationX>
         <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.HerokuPracticeCode__c</assignToReference>
@@ -344,7 +344,7 @@
     <assignments>
         <name>Predeterminabile</name>
         <label>Predeterminabile</label>
-        <locationX>2338</locationX>
+        <locationX>1986</locationX>
         <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
@@ -361,7 +361,7 @@
         <name>Annullamento</name>
         <label>Annullamento?</label>
         <locationX>688</locationX>
-        <locationY>2726</locationY>
+        <locationY>3278</locationY>
         <defaultConnector>
             <targetReference>OperationCode_Valorizzato</targetReference>
         </defaultConnector>
@@ -385,7 +385,7 @@
     <decisions>
         <name>Check_Rilavorazione_Scarto</name>
         <label>Rilavorazione Scarto?</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case</targetReference>
@@ -410,7 +410,7 @@
     <decisions>
         <name>Company_Owner</name>
         <label>Company Owner and Commodity</label>
-        <locationX>1161</locationX>
+        <locationX>776</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Assegna_Importo</targetReference>
@@ -442,10 +442,10 @@
     <decisions>
         <name>Conferma_o_Avanti</name>
         <label>Conferma o Avanti</label>
-        <locationX>1161</locationX>
+        <locationX>776</locationX>
         <locationY>1550</locationY>
         <defaultConnector>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
+            <targetReference>is_Verifica_Rottura_Impianto_Cliente</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
@@ -488,7 +488,7 @@
     <decisions>
         <name>Energia_Elettrica_o_Gas</name>
         <label>Commodity?</label>
-        <locationX>1161</locationX>
+        <locationX>776</locationX>
         <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Assenga_Process_Type_0</targetReference>
@@ -528,7 +528,7 @@
     <decisions>
         <name>Energia_Elettrica_o_Gas_0</name>
         <label>Energia Elettrica o Gas?</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Assenga_Process_Type_0_0_0</targetReference>
@@ -568,7 +568,7 @@
     <decisions>
         <name>Il_Case_in_Bozza</name>
         <label>Il Case è in Bozza?</label>
-        <locationX>1617</locationX>
+        <locationX>1249</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Energia_Elettrica_o_Gas_0</targetReference>
@@ -591,10 +591,42 @@
         </rules>
     </decisions>
     <decisions>
+        <name>is_Verifica_Rottura_Impianto_Cliente</name>
+        <label>is Verifica Rottura Impianto Cliente</label>
+        <locationX>776</locationX>
+        <locationY>1886</locationY>
+        <defaultConnector>
+            <targetReference>LWC_hdtRecordEditForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
+        <rules>
+            <name>Verifica_Rottura_Impianto_Cliente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Verifica Rottura Impianto Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetRecordAfterUpdate</targetReference>
+            </connector>
+            <label>Verifica Rottura Impianto Cliente</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>OperationCode_Valorizzato</name>
         <label>OperationCode Valorizzato?</label>
         <locationX>534</locationX>
-        <locationY>3278</locationY>
+        <locationY>3830</locationY>
         <defaultConnector>
             <targetReference>Assegna_Operation_Code</targetReference>
         </defaultConnector>
@@ -619,7 +651,7 @@
         <name>Quote_trovata</name>
         <label>Quote trovata?</label>
         <locationX>776</locationX>
-        <locationY>2366</locationY>
+        <locationY>2918</locationY>
         <defaultConnector>
             <targetReference>Regola_non_trovata</targetReference>
         </defaultConnector>
@@ -644,7 +676,7 @@
         <name>Rapido_o_Predeterminabile</name>
         <label>Rapido o Predeterminabile?</label>
         <locationX>534</locationX>
-        <locationY>3614</locationY>
+        <locationY>4166</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Assegna_Fase_Preventivo</targetReference>
@@ -684,8 +716,8 @@
     <decisions>
         <name>SalvaInBozza_o_Conferma</name>
         <label>SalvaInBozza o Conferma?</label>
-        <locationX>1161</locationX>
-        <locationY>2006</locationY>
+        <locationX>974</locationX>
+        <locationY>2126</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -736,7 +768,7 @@
         <name>Skip_Documentale</name>
         <label>Skip Documentale?</label>
         <locationX>534</locationX>
-        <locationY>2486</locationY>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>Screen_Documentale</targetReference>
         </defaultConnector>
@@ -767,7 +799,7 @@
     <decisions>
         <name>Tipo_Preventivo</name>
         <label>Tipo Preventivo</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Predeterminabile</targetReference>
@@ -808,7 +840,7 @@
     <decisions>
         <name>Tipologia_Case</name>
         <label>Tipologia Case?</label>
-        <locationX>833</locationX>
+        <locationX>649</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Il_Case_in_Bozza</targetReference>
@@ -871,7 +903,7 @@
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>833</locationX>
+        <locationX>649</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -894,7 +926,7 @@
         <name>GetRecordAfterUpdate</name>
         <label>GetRecordAfterUpdate</label>
         <locationX>776</locationX>
-        <locationY>2126</locationY>
+        <locationY>2678</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quote_Management</targetReference>
@@ -914,7 +946,7 @@
     <recordUpdates>
         <name>Aggiorna_Amount</name>
         <label>Aggiorna Amount</label>
-        <locationX>1293</locationX>
+        <locationX>908</locationX>
         <locationY>878</locationY>
         <connector>
             <targetReference>Energia_Elettrica_o_Gas</targetReference>
@@ -944,7 +976,7 @@
     <recordUpdates>
         <name>Aggiorna_Amount_0</name>
         <label>Aggiorna Amount a 0</label>
-        <locationX>1029</locationX>
+        <locationX>644</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Energia_Elettrica_o_Gas</targetReference>
@@ -974,7 +1006,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>1766</locationY>
         <connector>
             <targetReference>LoadSpinner</targetReference>
@@ -985,7 +1017,7 @@
         <name>Aggiorna_Conferma_Case</name>
         <label>Aggiorna Fase in Inviare Preventivo</label>
         <locationX>534</locationX>
-        <locationY>3950</locationY>
+        <locationY>4502</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1041,7 +1073,7 @@
     <screens>
         <name>LoadSpinner</name>
         <label>LoadSpinner</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1072,8 +1104,8 @@
     <screens>
         <name>LWC_hdtRecordEditForm</name>
         <label>LWC hdtRecordEditForm</label>
-        <locationX>1161</locationX>
-        <locationY>1886</locationY>
+        <locationX>974</locationX>
+        <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1172,14 +1204,10 @@
         <name>Regola_non_trovata</name>
         <label>Regola non trovata</label>
         <locationX>1018</locationX>
-        <locationY>2486</locationY>
+        <locationY>3038</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>LWC_hdtRecordEditForm</targetReference>
-        </connector>
         <fields>
             <name>RuleNotFound</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Attenzione nessuna regola di preventivo trovata!&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Si prega di modificare i dati precedentemente inseriti&lt;/p&gt;</fieldText>
@@ -1192,7 +1220,7 @@
         <name>Screen_Documentale</name>
         <label>Screen Documentale</label>
         <locationX>688</locationX>
-        <locationY>2606</locationY>
+        <locationY>3158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1254,7 +1282,7 @@
     <screens>
         <name>Screen_Inserimento_Dati</name>
         <label>Screen Inserimento Dati</label>
-        <locationX>2074</locationX>
+        <locationX>1722</locationX>
         <locationY>854</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1333,7 +1361,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>707</locationX>
+        <locationX>523</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
@@ -1343,8 +1371,8 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>1282</locationX>
-        <locationY>2126</locationY>
+        <locationX>930</locationX>
+        <locationY>2246</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1369,7 +1397,7 @@
         <name>Gestione_Annullamento_Subflow_0</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>556</locationX>
-        <locationY>2846</locationY>
+        <locationY>3398</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
