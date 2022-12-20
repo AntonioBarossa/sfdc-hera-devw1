@@ -1,14 +1,14 @@
 global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
-    final HDT_QR_Contract qrContract=new HDT_QR_Contract();
-    final HDT_QR_Account qrAccount=new HDT_QR_Account();
+    final HDT_QR_Contract QRCONTRACT =new HDT_QR_Contract();
+    final HDT_QR_Account QRACCOUNT =new HDT_QR_Account();
     global Object execute(Object args){
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         Map<String,Object> argsMap = (Map<String,Object>) args;
         String method = (String) argsMap.get('method');
         Case caseToSend = (Case) argsMap.get('sender');
         if(method=='practicalescapes'){
-            List<Contract> contr=qrContract.getRecordById(caseToSend.Contract__c);
-            Account acc=qrAccount.getRecordById(caseToSend.AccountId,'CompanyOwner__c');
+            List<Contract> contr= QRCONTRACT.getRecordById(caseToSend.Contract__c);
+            Account acc= QRACCOUNT.getRecordById(caseToSend.AccountId,'CompanyOwner__c');
             try{
                 HDT_WS_ArrichmentDataEntityResponse resp=callServiceOne(new Map<String,Object>{'processCase'=>caseToSend,'api'=>method,'account'=>acc,'contract'=>contr[0]});
                 responseReturn.success = true;
