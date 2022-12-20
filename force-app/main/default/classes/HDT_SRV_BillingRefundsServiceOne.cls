@@ -28,7 +28,7 @@ global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgv
     public HDT_WS_ArrichmentDataEntityResponse callServiceOne(Map<String,Object> params){
         Http http = new Http();
         HttpRequest request = new HttpRequest();
-        request.setEndpoint('callout:MulesoftBasePath'+'/practical-escapes');
+        request.setEndpoint('callout:MulesoftBasePath/practical-escapes');
         request.setMethod('POST');
         request.setTimeout(120000);
         request.setHeader('Content-Type','application/json');
