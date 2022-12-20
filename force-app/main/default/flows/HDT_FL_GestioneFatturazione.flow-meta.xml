@@ -3575,7 +3575,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
             <targetReference>Case_da_annullare_2</targetReference>
         </connector>
         <fields>
-            <name>DTLetture3</name>
+            <name>DTLetture10</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!Query_Case.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Letture stimate sulla fattura:&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;b&gt;{!ConcatenazioneLettureSelezionate}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 14px;&quot;&gt;Inserire le letture comunicate dal cliente:&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
