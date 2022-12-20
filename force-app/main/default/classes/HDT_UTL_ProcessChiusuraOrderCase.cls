@@ -9,6 +9,8 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
     private List<HDT_WRP_ProcessObjects> processObjList;
     Map<String, String> mapWrapperCaseFields;
     Map<String, String> mapWrapperOrderFields;
+    List<String> casesId;
+    List<String> ordersId;
     List<Case> caseList;
     List<Order> orderList;
 
@@ -22,8 +24,10 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
 
         mapFieldsObject();
  
-        caseList = new List<Case>();
-        orderList = new List<Order>();
+        casesId = new List<String>();
+        ordersId = new List<String>();
+        //caseList = new List<Case>();
+        //orderList = new List<Order>();
         caseIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CASE'));
         orderIndex = mapHeaderForWrapper.get(mapWrapperOrderFields.get('ORDER'));
         
@@ -41,10 +45,12 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
                 continue;
             }
             if(String.isNotBlank(tempSplitedFields[caseIndex])){ 
-                caseList.add(new Case(Id = tempSplitedFields[caseIndex]));
+                //caseList.add(new Case(Id = tempSplitedFields[caseIndex]));
+                casesId.add(tempSplitedFields[caseIndex]);
             }
             else{
-                orderList.add(new Order(Id = tempSplitedFields[orderIndex]));
+                //orderList.add(new Order(Id = tempSplitedFields[orderIndex]));
+                ordersId.add(tempSplitedFields[orderIndex]);
             }
             processObj = new HDT_WRP_ProcessObjects();
             processObj.requestItem = item;
@@ -56,8 +62,10 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
     public override void getRecords(){
         System.debug(LoggingLevel.DEBUG, 'getRecords');
         objMap = new Map<String, SObject>();
-        caseList = HDT_QR_ProcessPostSales.getAllCaseIdInList(caseList);
-        orderList = HDT_QR_ProcessPostSales.getAllOrderIdInList(orderList);
+        caseList = new List<Case>();
+        orderList = new List<Order>();
+        caseList = HDT_QR_ProcessPostSales.getAllCaseIdInList(casesId);
+        orderList = HDT_QR_ProcessPostSales.getAllOrderIdInList(ordersId);
         for(Case c : caseList){
             objMap.put(c.Id, c);
         }
@@ -68,7 +76,11 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
 
     public override void registryCreation(){
         System.debug(LoggingLevel.DEBUG, 'registryCreation');
-        List<Sobject> recordsToUpdate=new List<Sobject>();
+        List<Case> caseToSave = new List<Case>();
+        List<Order> orderToSave = new List<Order>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsertOrd = new List<MassiveLoaderRequestItem__c>();
+        List<MassiveLoaderRequestItem__c> requestItemForUpsertCase = new List<MassiveLoaderRequestItem__c>();
+
         for(HDT_WRP_ProcessObjects currentObj : processObjList){
             String caseId = currentObj.csvSplitted[caseIndex];
             String orderId = currentObj.csvSplitted[orderIndex];
@@ -76,39 +88,49 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
                 Case tempCase = (Case) objMap.get(caseId);
                 tempCase.Phase__c = 'Annullato per decorrenza dei termini';
                 tempCase.Status = 'Chiuso';
-                recordsToUpdate.add(tempCase);
-                currentObj.requestItem.Status__c = 'Chiuso';
-                itemsToSave.add(currentObj.requestItem);
+                caseToSave.add(tempCase);
+                requestItemForUpsertCase.add(currentObj.requestItem);              
                 continue;
             }
             if(!String.isBlank(orderId) && objMap.get(orderId)!=null){
                 Order tempOrder = (Order) objMap.get(orderId);
                 tempOrder.Phase__c = 'Annullato per decorrenza dei termini';
                 tempOrder.Status = 'Completed';
-                recordsToUpdate.add(tempOrder);
-                currentObj.requestItem.Status__c = 'Chiuso';
-                itemsToSave.add(currentObj.requestItem);               
+                orderToSave.add(tempOrder);
+                requestItemForUpsertOrd.add(currentObj.requestItem);            
                 continue;
             }
             setErrorItem(currentObj.requestItem, 'Errore, Id non presente nel DB');
             itemsToSave.add(currentObj.requestItem); 
         }
-        if(recordsToUpdate.size()>0){
-            List<Database.SaveResult> retList = Database.update(recordsToUpdate, false);
-            for(Database.SaveResult record : retList){
-                if(!record.isSuccess()){ 
-                    for(MassiveLoaderRequestItem__c item : itemsToSave){
-                        List<String> splittedId = item.Data__c.split(splitCharacter, -1);
-                        
-                        String recordId = record.getId();
-                        if(( recordId == splittedId[caseIndex]) || (recordId == splittedId[orderIndex])){
-                            setErrorItem(item, 'DML Error: ' + record.getErrors()[0].getMessage());
-                        }
 
-                    }
+        System.debug(LoggingLevel.DEBUG, '>>> itemsToSave' + itemsToSave);
+
+            if(!orderToSave.isEmpty()){
+                HDT_WRP_SaveResponse saveResponseOrd;
+                saveResponseOrd = databaseUpsert(orderToSave, requestItemForUpsertOrd, 'Order');
+                orderToSave.clear();
+                getLimitDetails('AFTER Order UPDATE');
+                System.debug(LoggingLevel.DEBUG, '>>> saveResponseOrd.reponseItemList' + saveResponseOrd.reponseItemList);
+                if(saveResponseOrd.reponseItemList.size() > 0){
+                    itemsToSave.addAll(saveResponseOrd.reponseItemList);
                 }
+                System.debug(LoggingLevel.DEBUG, '>>> itemsToSave - Ord' + itemsToSave);
             }
-        }
+
+            if(!caseToSave.isEmpty()){
+                HDT_WRP_SaveResponse saveResponseCase;
+                saveResponseCase = databaseUpsert(caseToSave, requestItemForUpsertCase, 'Case');
+                caseToSave.clear();
+                getLimitDetails('AFTER Case UPDATE');
+                System.debug(LoggingLevel.DEBUG, '>>> saveResponseCase.reponseItemList' + saveResponseCase.reponseItemList);
+                if(saveResponseCase.reponseItemList.size() > 0){
+                    itemsToSave.addAll(saveResponseCase.reponseItemList);
+                }
+                System.debug(LoggingLevel.DEBUG, '>>> itemsToSave - Case' + itemsToSave);
+            }
+            System.debug(LoggingLevel.DEBUG, '>>> itemsToSave - Final' + itemsToSave);
+
     }
 
     public override void finalUpdate(){

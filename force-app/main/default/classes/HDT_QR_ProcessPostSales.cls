@@ -152,7 +152,7 @@ public with sharing class HDT_QR_ProcessPostSales {
         ];
     }
 
-    public static List<Case> getAllCaseIdInList(List<Case> caseList){
+    public static List<Case> getAllCaseIdInList(List<String> caseList){
         return [
             SELECT Id 
             FROM Case
@@ -160,7 +160,7 @@ public with sharing class HDT_QR_ProcessPostSales {
             WITH SECURITY_ENFORCED
         ];
     }
-    public static List<Order> getAllOrderIdInList(List<Order> orderList){
+    public static List<Order> getAllOrderIdInList(List<String> orderList){
         return [
             SELECT Id 
             FROM Order
