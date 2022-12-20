@@ -26,8 +26,6 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
  
         casesId = new List<String>();
         ordersId = new List<String>();
-        //caseList = new List<Case>();
-        //orderList = new List<Order>();
         caseIndex = mapHeaderForWrapper.get(mapWrapperCaseFields.get('CASE'));
         orderIndex = mapHeaderForWrapper.get(mapWrapperOrderFields.get('ORDER'));
         
@@ -45,11 +43,9 @@ public inherited sharing class HDT_UTL_ProcessChiusuraOrderCase extends HDT_UTL_
                 continue;
             }
             if(String.isNotBlank(tempSplitedFields[caseIndex])){ 
-                //caseList.add(new Case(Id = tempSplitedFields[caseIndex]));
                 casesId.add(tempSplitedFields[caseIndex]);
             }
             else{
-                //orderList.add(new Order(Id = tempSplitedFields[orderIndex]));
                 ordersId.add(tempSplitedFields[orderIndex]);
             }
             processObj = new HDT_WRP_ProcessObjects();
