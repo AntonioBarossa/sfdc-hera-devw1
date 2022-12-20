@@ -142,6 +142,15 @@ import * as rateCategories from './hdtRateCategories.js';
                         }
                         //check mandatory section field section
                         if(checkSectionRequiredFields.call(this, evt?.currentTarget?.value)){   return true;}
+                        //Blank datiSottoscrittore Fields
+                        if(!this.isRepeatedStep){
+                            let sectionName = "datiSottoscrittore";
+                            [
+                                ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
+                            ].forEach(el => {
+                                el.value = "";
+                            })
+                        }
                         /*You can do async operations before submitting
                             this function must return true, launch promise and when you're done, launch 
                             this.updateProcess(currentSectionIndex, nextSectionStep);

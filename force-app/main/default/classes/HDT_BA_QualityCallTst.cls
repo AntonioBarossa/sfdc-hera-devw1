@@ -46,10 +46,12 @@ public with sharing class HDT_BA_QualityCallTst {
             parentOrders[0].Contact__c = contactId;
             parentOrders[0].VASType__c = 'VAS Fatturabili';
             parentOrders[0].phase__c = 'Comunicazione verso Heroku';
+            parentOrders[0].Status = 'Completed';
             parentOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             parentOrders[1].Contact__c = contactId;
             parentOrders[1].VASType__c = 'VAS Fatturabili';
             parentOrders[1].phase__c = 'Comunicazione verso Heroku';
+            parentOrders[1].Status = 'Completed';
             parentOrders[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             update parentOrders;
 
@@ -66,6 +68,7 @@ public with sharing class HDT_BA_QualityCallTst {
             orderss[0].ComfortCallDaysDue__c=null;
             orderss[0].WizardCompletedDate__c=date.today().addDays(-60);
             orderss[0].ParentOrder__c = parentOrders[1].Id;
+            orderss[0].Channel__c = 'Agenzia';
             orderss[0].Contact__c = contactId;
             orderss[0].QualityCallUnique__c=true;
             orderss[0].AgencyCode__c='001';
@@ -83,6 +86,7 @@ public with sharing class HDT_BA_QualityCallTst {
             moreOrders[0].ComfortCallDaysDue__c = 6.2;
             moreOrders[0].ParentOrder__c = parentOrderId;
             moreOrders[0].Contact__c = anotherContactId;
+            moreOrders[0].Channel__c = 'Agenzia';
             moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             moreOrders[0].Phase__c = 'Bozza';
             insert moreOrders;
@@ -105,6 +109,7 @@ public with sharing class HDT_BA_QualityCallTst {
             ordersToday[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             ordersToday[0].VASType__c = 'VAS Fatturabili';
             ordersToday[0].Phase__c = 'Comunicazione verso Heroku';
+            ordersToday[0].Channel__c = 'Agenzia';
             
             ordersToday[1].Username__c='test2';
             ordersToday[1].Password__c='test21';
@@ -123,6 +128,7 @@ public with sharing class HDT_BA_QualityCallTst {
             ordersToday[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             ordersToday[1].VASType__c = 'VAS Fatturabili';
             ordersToday[1].Phase__c = 'Comunicazione verso Heroku';
+            ordersToday[1].Channel__c = 'Agenzia';
             insert ordersToday;
 
             wrts_prcgvr__Activity__c activityVas=new wrts_prcgvr__Activity__c(
@@ -197,7 +203,6 @@ public with sharing class HDT_BA_QualityCallTst {
         act.Order__c = ord.Id;
         update act;
         Test.startTest();
-        
         HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
         Database.executeBatch(batch,200);
 
@@ -205,5 +210,37 @@ public with sharing class HDT_BA_QualityCallTst {
         
         System.assertEquals(1, [Select id From wrts_prcgvr__Activity__c LIMIT 1].size(), 'HDT_BA_QualityCall did not work correctly: wrong amount of custom activities');
         System.assertNotEquals(0, [Select id From wrts_prcgvr__Activity__c LIMIT 1].size() ,'HDT_BA_QualityCall did not work correctly: wrong amount of CampaignMember');
+    }
+
+    @isTest
+    public static void testOrderToCancel(){
+        Order ord = [SELECT id,RecordTypeId, RecordType.DeveloperName FROM Order WHERE Phase__c NOT IN ('In attesa validazione', 'Accettazione Voltura', 'Da Inviare', 'Bozza',  'In attesa conferma cliente', 'Completata','Annullato','Credit Check KO') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != 'Analisi Consumi' AND QualityCallStatus__c != 'Scadenza Gestita' LIMIT 1];
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito KO da DL','Ammissibilità OK',ord.RecordTypeId,ord.RecordType.DeveloperName);
+            
+        ord.QualityCallStatus__c='Attività gestita';
+        ord.WizardCompletedDate__c = Date.today().addDays(-100);
+        ord.IsVas__c = true;
+        ord.Phase__c = 'Esito KO da DL';
+        ord.AgencyCode__c = 'TEST';
+        update ord;
+
+        insert new AgentMatrix__c(IsMonitoring__c = true,AgencyName__c = 'Name', AgentCode__c = 'TEST',AgencyCode__c = 'TEST');
+        
+        List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();
+        wrts_prcgvr__Activity__c act = [SELECT Order__r.Id,Order__r.Phase__c,RecordType.DeveloperName FROM wrts_prcgvr__Activity__c WHERE Type__c = 'Quality Call' AND wrts_prcgvr__Status__c= 'Aperta' LIMIT 1];
+        activities.add(new wrts_prcgvr__Activity__c(Id = act.Id, Order__c = ord.Id));
+        act = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Order__c = null LIMIT 1]; 
+        act.Order__c = ord.Id;
+        act.Type__c = 'Ammissibilità KO';
+        act.wrts_prcgvr__Status__c= 'Aperta';
+        activities.add(act);
+        update activities;
+        Test.startTest();
+        HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
+        Database.executeBatch(batch,200);
+
+        Test.stopTest();
+        
+        System.assertEquals(1, [Select id From wrts_prcgvr__Activity__c WHERE Order__c =:ord.Id AND wrts_prcgvr__Status__c = 'Annullata' AND Type__c = 'Ammissibilità KO'].size(), 'HDT_BA_QualityCall did not work correctly: wrong amount of custom activities');
     }
 }

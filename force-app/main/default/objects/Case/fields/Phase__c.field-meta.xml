@@ -13,6 +13,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Annullato per decorrenza dei termini</fullName>
+                <default>false</default>
+                <label>Annullato per decorrenza dei termini</label>
+            </value>
+            <value>
                 <fullName>Accettato Motore VAS</fullName>
                 <default>false</default>
                 <label>Accettato Motore VAS</label>
@@ -559,6 +564,11 @@
                 <label>In Attesa possibile contratto</label>
             </value>
             <value>
+                <fullName>in attesa processo doc massivo</fullName>
+                <default>false</default>
+                <label>in attesa processo doc massivo</label>
+            </value>
+            <value>
                 <fullName>In attesa risposta Mail</fullName>
                 <default>false</default>
                 <label>In attesa risposta Mail</label>
@@ -1018,6 +1028,16 @@
                 <fullName>In attesa di Verifica</fullName>
                 <default>false</default>
                 <label>In attesa di Verifica</label>
+            </value>
+            <value>
+                <fullName>Comunicazionee EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazionee EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>In attesa esito EngageOne</fullName>
+                <default>false</default>
+                <label>In attesa esito EngageOne</label>
             </value>
         </valueSetDefinition>
     </valueSet>
