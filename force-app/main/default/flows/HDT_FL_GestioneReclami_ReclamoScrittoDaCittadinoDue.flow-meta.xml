@@ -203,6 +203,71 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignFieldsActivity</name>
+        <label>assignFieldsActivity</label>
+        <locationX>182</locationX>
+        <locationY>3326</locationY>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateActivity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>468</locationX>
@@ -570,6 +635,41 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getActivityToClose</name>
+        <label>getActivityToClose</label>
+        <locationX>182</locationX>
+        <locationY>3206</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignFieldsActivity</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>wrts_prcgvr__Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reclamo da Riclassificare</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
         <locationX>182</locationX>
@@ -630,6 +730,9 @@
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
         <locationY>3086</locationY>
+        <connector>
+            <targetReference>getActivityToClose</targetReference>
+        </connector>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -641,6 +744,13 @@
             <targetReference>Assegna_Process_Type_0</targetReference>
         </connector>
         <inputReference>GetInputCaseAggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateActivity</name>
+        <label>updateActivity</label>
+        <locationX>182</locationX>
+        <locationY>3446</locationY>
+        <inputReference>getActivityToClose</inputReference>
     </recordUpdates>
     <screens>
         <name>Controllo_Classificazione</name>
