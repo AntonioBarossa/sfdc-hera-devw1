@@ -16747,6 +16747,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.BonusDeliveryMode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
