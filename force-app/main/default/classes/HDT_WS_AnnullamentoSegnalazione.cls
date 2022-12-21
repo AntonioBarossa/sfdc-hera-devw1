@@ -46,7 +46,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         
         try {
 
-            if(res.status.equalsIgnoreCase('success')){
+            if('OK'.equalsIgnoreCase(res?.data?.esito)){
 
                 currentCase.TecnicalPhase__c = 'Annullato';
                 currentCase.Status= 'Closed';
