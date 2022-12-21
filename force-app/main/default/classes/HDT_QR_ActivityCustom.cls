@@ -619,6 +619,15 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return parentActMap;
     }
 
+
+    /**
+     * 
+     * 
+     * DA SOTTO LE MIE MODIFICHE
+     * 
+     * 
+     */
+
     /**
          * @description getRecordByOrderListAndQuality
          * @param orderList
@@ -641,6 +650,27 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     where 
                     (RecordType.developername = 'HDT_RT_ComfortQualityCall'
                     OR Type__c IN :activityTypes)
+                    AND order__C IN :orderList
+                    WITH SECURITY_ENFORCED 
+            ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getContractActivityQualityBatch(List<String> orderList){
+            Set<String> activityTypes = new Set<String>{HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL,HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO,'Quality Scaduta'};
+            return [SELECT 
+                    Id,
+                    Account__c,
+                    Contact__c,
+                    order__c,
+                    order__r.ParentOrder__c,
+                    RecordTypeId,
+                    wrts_prcgvr__Status__c,
+                    wrts_prcgvr__IsClosed__c,
+                    RecordType.DeveloperName,
+                    Type__c
+                    FROM wrts_prcgvr__Activity__c
+                    where 
+                    Type__c IN :activityTypes
                     AND order__C IN :orderList
                     WITH SECURITY_ENFORCED 
             ];
