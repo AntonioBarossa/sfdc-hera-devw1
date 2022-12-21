@@ -221,13 +221,13 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     {
         String errorCode = '';
         String errorMessage = '';
-        if(bp?.BillSendingMethod__c?.equalsIgnoreCase('Bolletta per e-mail') 
+        if(bp.BillSendingMethod__c != null && bp?.BillSendingMethod__c?.equalsIgnoreCase('Bolletta per e-mail') 
             && (!String.isBlank(bp?.InvoiceCertifiedEmailAddress__c) || bp?.SendCertifiedEmailConsentDate__c != null))
         {
             errorCode = 'ERRBP-000001';
             errorMessage = 'Per Modalità Invio "Bolletta per Email" non è possibile valorizzare "Email PEC" e "Data consenso email PEC"';
         }
-        if(bp?.BillSendingMethod__c?.equalsIgnoreCase('Fatturazione PA') && bp?.ElectronicInvoicingMethod__c?.equalsIgnoreCase('XML + carta/email'))
+        if(bp.BillSendingMethod__c != null && bp?.BillSendingMethod__c?.equalsIgnoreCase('Fatturazione PA') && bp?.ElectronicInvoicingMethod__c?.equalsIgnoreCase('XML + carta/email'))
         {
             errorCode = 'ERRBP-000002';
             errorMessage = 'Per Modalità Invio "Fatturazione PA" non è possibile inserire Modalità Fattura "XML + Carta/Email"';
