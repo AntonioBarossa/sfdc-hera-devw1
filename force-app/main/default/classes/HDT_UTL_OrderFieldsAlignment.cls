@@ -414,6 +414,14 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         {
             orderToUpdate.Commodity__c = quote.VasCommodity__c;
         }
+        if(quote.VasSupplyAddress__c != null)
+        {
+            Map<String,String> address = (Map<String,String>) JSON.deserialize(quote.VasSupplyAddress__c, Map<String,String>.class);
+            for(String key : address.keySet())
+            {
+                orderToUpdate.put(key, address.get(key));
+            }
+        }
         orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
         mixedData.quoteAmendmentAllow=quote.AmendmentAllowed__c;
         mixedData.contrNumb=quote.SBQQ__MasterContract__r?.ContractNumber;
