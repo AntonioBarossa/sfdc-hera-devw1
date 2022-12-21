@@ -689,7 +689,8 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             IntegratedSAP__c,
             Commodity__c,
-            ProcessCode__c
+            ProcessCode__c,
+            CommodityFormula__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
