@@ -6,11 +6,6 @@
         <label>Verifica Integrita Sigilli - ACQ</label>
     </customValue>
     <customValue>
-        <fullName>Verifica Rottura Impianto Cliente - ACQ</fullName>
-        <default>false</default>
-        <label>Verifica Rottura Impianto Cliente - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Verifica GDM - ACQ</fullName>
         <default>false</default>
         <label>Verifica GDM - ACQ</label>
