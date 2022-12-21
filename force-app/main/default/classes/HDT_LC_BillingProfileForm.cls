@@ -174,7 +174,11 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         {
             billingProfile.ContractAccountCode__c = '';
         }
-
+        HDT_UTL_ErrorHandler validator = validateForm(billingProfile);
+        if(!validator.isSuccess)
+        {
+            throw new AuraHandledException(validator.errorDescription);
+        }
         return billingProfileSrv.createRecord(billingProfile);
     }
 
@@ -212,4 +216,18 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     public static BillingProfile__c getCloneBillingProfile(String billingProfileId){
         return billingProfileQr.getRecordById(billingProfileId);
     }
+
+    private static HDT_UTL_ErrorHandler validateForm(BillingProfile__c bp)
+    {
+        String errorCode = '';
+        String errorMessage = '';
+        if(bp?.BillSendingMethod__c.equalsIgnoreCase('Bolletta per e-mail') 
+            && (!String.isBlank(bp?.InvoiceCertifiedEmailAddress__c) || !String.isBlank(bp?.SendCertifiedEmailConsentDate__c)))
+        {
+            errorCode = '[ERRBP-000001]';
+            errorMessage = 'Per Modalità Invio "Bolletta per Email" non è possibile valorizzare "Email PEC" e "Data consenso email PEC"';
+        }
+        return new HDT_UTL_ErrorHandler(errorCode,errorMessage);
+    }
+
 }
