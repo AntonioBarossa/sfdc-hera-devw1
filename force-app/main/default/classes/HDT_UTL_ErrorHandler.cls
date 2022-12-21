@@ -10,8 +10,8 @@ public with sharing class HDT_UTL_ErrorHandler {
 
     public String errorCode {get;set;}
     public String errorMessage {get;set;}
-    public String errorDescription {get;}
-    public Boolean isSuccess {get;}
+    public String errorDescription {get; private set;}
+    public Boolean isSuccess {get; private set;}
 
     public HDT_UTL_ErrorHandler(String errorCode, String errorMessage) 
     {
