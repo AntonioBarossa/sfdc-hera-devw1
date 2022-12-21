@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>758</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -41,7 +41,7 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1670</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -57,7 +57,7 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.CorrectionRight__c</assignToReference>
@@ -161,7 +161,7 @@
     <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>336</locationX>
+        <locationX>380</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.AmountToPayInInstallments__c</assignToReference>
@@ -205,8 +205,8 @@
     <assignments>
         <name>assignFieldsActivity</name>
         <label>assignFieldsActivity</label>
-        <locationX>182</locationX>
-        <locationY>3326</locationY>
+        <locationX>50</locationX>
+        <locationY>3446</locationY>
         <assignmentItems>
             <assignToReference>getActivityToClose.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -270,7 +270,7 @@
     <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
@@ -312,9 +312,31 @@
         </value>
     </choices>
     <decisions>
+        <name>activityTrovata</name>
+        <label>activityTrovata</label>
+        <locationX>182</locationX>
+        <locationY>3326</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_activityTrovata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivityToClose</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignFieldsActivity</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>743</locationX>
+        <locationX>809</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -346,7 +368,7 @@
     <decisions>
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1910</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
@@ -403,7 +425,7 @@
     <decisions>
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica?</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1094</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
@@ -428,7 +450,7 @@
     <decisions>
         <name>Riclassificato</name>
         <label>Riclassificato?</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>638</locationY>
         <defaultConnector>
             <targetReference>Diritto_Rettifica</targetReference>
@@ -588,7 +610,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>743</locationX>
+        <locationX>809</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -641,7 +663,7 @@
         <locationY>3206</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>assignFieldsActivity</targetReference>
+            <targetReference>activityTrovata</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -693,7 +715,7 @@
     <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -738,7 +760,7 @@
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1550</locationY>
         <connector>
             <targetReference>Assegna_Process_Type_0</targetReference>
@@ -748,14 +770,14 @@
     <recordUpdates>
         <name>updateActivity</name>
         <label>updateActivity</label>
-        <locationX>182</locationX>
-        <locationY>3446</locationY>
+        <locationX>50</locationX>
+        <locationY>3566</locationY>
         <inputReference>getActivityToClose</inputReference>
     </recordUpdates>
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>743</locationX>
+        <locationX>809</locationX>
         <locationY>278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -848,7 +870,7 @@
     <screens>
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
-        <locationX>468</locationX>
+        <locationX>512</locationX>
         <locationY>1790</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -951,7 +973,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>617</locationX>
+        <locationX>683</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -961,7 +983,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1018</locationX>
+        <locationX>1106</locationX>
         <locationY>518</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -986,7 +1008,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>754</locationX>
+        <locationX>842</locationX>
         <locationY>2030</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
