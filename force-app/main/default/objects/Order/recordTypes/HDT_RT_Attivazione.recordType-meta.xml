@@ -146,6 +146,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BonusDeliveryMode__c</picklist>
+        <values>
+            <fullName>Bonus in continuita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus su ultima fattura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>BillSendMode__c</picklist>
         <values>
             <fullName>Bolletta per e-mail</fullName>
