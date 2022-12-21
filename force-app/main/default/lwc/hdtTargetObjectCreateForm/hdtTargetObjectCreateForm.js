@@ -1733,7 +1733,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             this.save();
                         }
-                    });
+                    }).catch(error => 
+                        {
+                            this.loading = false;
+                            this.alert('Errore', 'Distributore non calcolato. Verificare di aver inserito i dati correttamente e in caso contattare l\'amministratore di sistema', 'error');
+                        }
+                    );
                 }
                 else {
                     this.loading = false;

@@ -600,7 +600,12 @@ public inherited sharing class HDT_LC_SaleVas {
                 IsVAS__c = true,
                 IsBillableVas__c = false,
                 IsTransition__c = true,
-                SBQQ__PricebookId__c = commodity == 'Energia Elettrica' ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                SBQQ__PricebookId__c = commodity.equalsIgnoreCase('Energia Elettrica') ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                /**@frpanico 2022-12-15 Aggiunto in quanto la mancanza sulla commodity manda in errore Postel
+                 * Energia Elettrica dal servizio viene ritornato come "Energia elettrica"
+                 * Ed essendo Commodity__c sull'order un campo picklist andrebbe in errore
+                 */
+                VasCommodity__c = commodity.equalsIgnoreCase('Energia Elettrica') ? 'Energia Elettrica' : commodity,
                 AgencyCode__c = sale.AgencyCode__c,
                 CommercialId__c = sale.CommercialId__c,
                 SapContractCode__c = contract,

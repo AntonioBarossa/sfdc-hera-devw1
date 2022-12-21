@@ -376,6 +376,16 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>true</editable>
+        <field>AssignmentRule__c.SupplyCity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>AssignmentRule__c.RequestSource__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>false</editable>
         <field>AllineamentoGAA__c.Comune__c</field>
         <readable>true</readable>
@@ -973,6 +983,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.IntendedUse__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Skip_Callout__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2668,6 +2683,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.IsManagerSOL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.RegistrationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5203,6 +5223,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Product2.VariableOrFixed__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.VasCommodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14524,6 +14549,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>LoginGroup__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>MacroActivityEasyCIM__c.idMacroActivityEasyCIM__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16555,6 +16585,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.PaySewer__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.BonusDeliveryMode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -33717,6 +33752,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Societ_di_vendita__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Solicited__c</field>
         <readable>true</readable>
@@ -34597,6 +34637,16 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.FileNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
+        <editable>true</editable>
+        <field>ContentVersion.JobNameMigration__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+<fieldPermissions>
         <editable>true</editable>
         <field>ContentVersion.URL__c</field>
         <readable>true</readable>

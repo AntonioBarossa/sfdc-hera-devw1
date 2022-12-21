@@ -334,7 +334,7 @@
         <connector>
             <targetReference>OrdiniFigliAssign</targetReference>
         </connector>
-        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9)</filterLogic>
+        <filterLogic>1 AND 2 AND 3 AND 4 AND 5 AND (6 OR 7 OR 8 OR 9) AND 10</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
@@ -398,6 +398,13 @@
                 <elementReference>famigliaProdottoOffertaInput</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>VASType__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -411,7 +418,7 @@
         <connector>
             <targetReference>OrdiniFigliVasAssign_0</targetReference>
         </connector>
-        <filterLogic>1 AND (2 OR 3) AND (4 OR 5 OR 6 OR 7)</filterLogic>
+        <filterLogic>1 AND (2 OR 3) AND (4 OR 5 OR 6 OR 7) AND 8</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
@@ -459,6 +466,13 @@
             <operator>Contains</operator>
             <value>
                 <stringValue>Aggiunta Sconti o Bonus VAS Gas</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>VASType__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
