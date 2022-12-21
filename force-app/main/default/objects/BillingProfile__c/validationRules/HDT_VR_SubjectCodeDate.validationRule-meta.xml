@@ -4,9 +4,9 @@
     <active>true</active>
     <errorConditionFormula>OR
 (    AND(NOT(ISBLANK(SubjectCodeStartDate__c)),
-				NOT(REGEX(SubjectCodeStartDate__c,&quot;[12]?\\d{3}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])&quot;))),
+				NOT(REGEX(SubjectCodeStartDate__c,&quot;\\d{4}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])&quot;))),
     AND(NOT(ISBLANK(SubjectCodeEndDate__c)),
- 	      NOT(REGEX(SubjectCodeEndDate__c,&quot;[12]?\\d{3}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])&quot;)))
+ 	      NOT(REGEX(SubjectCodeEndDate__c,&quot;\\d{4}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])&quot;)))
 	)</errorConditionFormula>
     <errorMessage>La data Inizio/Fine Codice Validità deve essere nel formato &quot;YYYY-MM-DD&quot;</errorMessage>
 </ValidationRule>
