@@ -7,7 +7,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
     private Set<Id> parentsId;
     private List<String> isMonitoringList;
     private List<ComfortQualityCall__c> docValidList;
-    private Map<Id,Boolean> mapOrderToManage;
+    private Map<String,Boolean> mapOrderToManage;
     private HDT_UTL_QualityCall qCall;
 
 
@@ -18,7 +18,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         this.actMap = actToParentOrderMap;
         this.isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
         this.docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
-        this.mapOrderToManage = new Map<Id,Boolean>();
+        this.mapOrderToManage = new Map<String,Boolean>();
         this.qCall = new HDT_UTL_QualityCall();
     }
     
@@ -146,7 +146,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
 
             if (!this.actMap.isEmpty()){
                 List<Database.SaveResult> srList = Database.update(this.actMap.values(), false);
-                qCall.setLogRecord(srList, activitiesToUpdate, logs, 'update activities');
+                qCall.setLogRecord(srList, this.actMap.values(), logs, 'update activities');
             }
             
             if (!ordersToUpdate.isEmpty()){
