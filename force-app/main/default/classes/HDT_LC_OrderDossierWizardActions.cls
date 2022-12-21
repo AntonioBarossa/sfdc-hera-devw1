@@ -367,7 +367,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
                 check = false;
             }
-        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
+        }else if(String.isNotBlank(ord.CommodityFormula__c) && ord.CommodityFormula__c.equalsIgnoreCase('Ambiente') && String.isNotBlank(ord.ProcessType__c) && !ord.ProcessType__c.containsIgnoreCase('Modifica Tariffa')){
+            check = false;
+        }else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
             check = true;
         }
 

@@ -14,20 +14,20 @@ public class HDT_WS_ArricchimentoDatiTempMock implements HTTPCalloutMock {
         
         HttpResponse response = new HttpResponse();         
         
-        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoTestata testata = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoTestata();
+        HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_testataObject testata = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_testataObject();
         testata.esito = 'esito';
         
-        List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
-        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni();
+        List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject> posizioni = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject>();
+        HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject posizione = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
         posizione.campo = 'IMPOSTE';
         posizione.valore = 'E_IMPOST';
         posizioni.add(posizione);
         
-        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoData data = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoData();        
+        HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DataResponseObject data = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DataResponseObject();        
         data.posizioni = posizioni;
         data.testata = testata;
                         
-        HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoResponse res = new HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoResponse();
+        HDT_WS_ArrichmentDataEntityResponse res = new HDT_WS_ArrichmentDataEntityResponse();
         res.data = data;
         res.status = 'status';
         res.correlationId = 'correlationId';
