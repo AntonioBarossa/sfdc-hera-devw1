@@ -93,6 +93,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
 
     public virtual class HDT_WRP_AppointmentReqConfirm extends HDT_WS_Request{
         String purchaseOrderNumber;
+        String customerAccountNumber;
         String streetCoding;
         String street;
         String housenumber;
@@ -160,6 +161,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap) {
         HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap);
+        req.customerAccountNumber = theCase.AccountCode__c;
         //system.debug(json.serialize(req));
         HDT_WS_AppointmentConfirmResponse res = (HDT_WS_AppointmentConfirmResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_CONFIRM,'POST', req, HDT_WS_AppointmentConfirmResponse.class);
         //system.debug(json.serialize(res));

@@ -682,11 +682,6 @@
         <label>Verifica Integrita Sigilli</label>
     </standardValue>
     <standardValue>
-        <fullName>Verifica Rottura Impianto Cliente</fullName>
-        <default>false</default>
-        <label>Verifica Rottura Impianto Cliente</label>
-    </standardValue>
-    <standardValue>
         <fullName>Trasmissione Dati Cliente Finale SII</fullName>
         <default>false</default>
         <label>Trasmissione Dati Cliente Finale SII</label>

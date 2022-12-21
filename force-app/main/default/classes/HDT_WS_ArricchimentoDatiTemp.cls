@@ -43,7 +43,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         String pretty = gen.getAsString();
         System.debug(LoggingLevel.DEBUG, pretty);
         HttpRequest req = new HttpRequest();
-        HDT_WRP_ArricchimentoResponse arricchimentoResponse = new HDT_WRP_ArricchimentoResponse();
+        HDT_WS_ArrichmentDataEntityResponse arricchimentoResponse = new HDT_WS_ArrichmentDataEntityResponse();
         HDT_WRP_ArricchimentoData emptyData = new HDT_WRP_ArricchimentoData();
         List<HDT_WRP_ArricchimentoPosizioni> emptyPositions = new List<HDT_WRP_ArricchimentoPosizioni>();
         HDT_WRP_ArricchimentoPosizioni emptyPosition = new HDT_WRP_ArricchimentoPosizioni();
@@ -64,7 +64,7 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
             Http http = new Http();
             HTTPResponse res = http.send(req);
             
-            arricchimentoResponse = (HDT_WRP_ArricchimentoResponse) JSON.deserialize(res.getBody(), HDT_WRP_ArricchimentoResponse.class);
+            arricchimentoResponse = (HDT_WS_ArrichmentDataEntityResponse) JSON.deserialize(res.getBody(), HDT_WS_ArrichmentDataEntityResponse.class);
             System.debug(LoggingLevel.DEBUG, arricchimentoResponse.data.posizioni);
         } catch (Exception ex) {
             /*@frpanico created empty response to not undergo "Attempt To De-reference null object" */
@@ -118,12 +118,12 @@ public with sharing class HDT_WS_ArricchimentoDatiTemp {
         public List<HDT_WRP_ArricchimentoDatiCatastali> datiCatastali;
     }
     
-    public class HDT_WRP_ArricchimentoResponse{
+   /*  public class HDT_WRP_ArricchimentoResponse{
         public String status;
         public String correlationId;
         public String timestamp;
         public HDT_WRP_ArricchimentoData data;
-    }
+    } */
 
     public class HDT_WRP_ArricchimentoDatiCatastali{
         public String destinazione;
