@@ -1292,8 +1292,18 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     {
         String context = (String) formParams.get('Contesto');
         String result = '';
-        switch on context {
-            when 'Order'
+        String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'CommodityFormula__c', 0, inputs, formParams);
+        commodity = String.isBlank(commodity) ? HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams) : commodity;
+        switch on commodity{
+            when 'Energia Elettrica'    
+            {
+                result = 'ENE';
+            }
+            when 'Gas'
+            {
+                result = 'GAS';
+            }
+            when else
             {
                 result = '';
             }
