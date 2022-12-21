@@ -715,13 +715,6 @@
             <name>Completata_Ambiente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>CaseToLoop.CorrectionRight__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Si</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>CaseToLoop.CustomerRequestAccomplished__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
