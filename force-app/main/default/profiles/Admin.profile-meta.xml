@@ -862,11 +862,6 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>Order.DocumentalCommodity__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>true</editable>
         <field>Order.Skip_Callout__c</field>
         <readable>true</readable>
     </fieldPermissions>
