@@ -121,7 +121,8 @@ global with sharing class HDT_WS_IntermediateResults {
             }
             return tempMap.values();
         }
-
+        
+        @TestVisible
         private String getIstruttoriaFaseByCode(String noteCode){
             switch on noteCode {
                 when  '0050'{
