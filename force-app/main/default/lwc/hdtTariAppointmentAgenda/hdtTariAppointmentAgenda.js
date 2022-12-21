@@ -25,6 +25,7 @@ const OBJECT_FIELDS =[
     'InvoicingStreetName__c',
     'InvoicingCity__c',
     'InvoicingStreetCode__c',
+    "AccountCode__c",
     'TypeOperation__c'
 ];
 
