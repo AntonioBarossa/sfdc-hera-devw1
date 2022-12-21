@@ -26,6 +26,6 @@ public with sharing class HDT_UTL_ErrorHandler {
     }
     private Boolean isSuccessBuilder()
     {
-        return String.isNotBlank(this.errorCode);
+        return String.isBlank(this.errorCode);
     }
 }
