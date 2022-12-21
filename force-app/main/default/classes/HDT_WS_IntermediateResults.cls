@@ -3,11 +3,11 @@ global with sharing class HDT_WS_IntermediateResults {
 
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
-    private static final Map<String, String> COD_TO_PHASE = new Map<String, String>{
+    /*private static final Map<String, String> COD_TO_PHASE = new Map<String, String>{
         '0050'=>'Approvata',
         '0007'=>'Rifiutata',
         '0060'=>'Presa In Carico'
-    };
+    };*/
 
     @HttpPost
     global static HDT_WRP_Response postIntermediateResults()  {
@@ -60,7 +60,7 @@ global with sharing class HDT_WS_IntermediateResults {
                 // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
                 //     caseToUpdate.Phase__c = COD_TO_PHASE.get(fieldInfos.codNota);
                 // else caseToUpdate.Phase__c = fieldInfos.phase;
-                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? COD_TO_PHASE.get(fieldInfos.codNota) : fieldInfos.phase;
+                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? getIstruttoriaFaseByCode(fieldInfos.codNota) : fieldInfos.phase;
                 if(STRING.isBlank(caseToUpdate.Phase__c)){
                     caseToUpdate.Phase__c = originalCase.Phase__c;
                     caseToUpdate.Description = 'Errore aggiornamento nota con codice '+ fieldInfos.codNota + '\nCodice Nota non valido per il caso selezionato.';
@@ -120,6 +120,21 @@ global with sharing class HDT_WS_IntermediateResults {
                 tempMap.put(sobj.Id, sobj);
             }
             return tempMap.values();
+        }
+
+        private String getIstruttoriaFaseByCode(String noteCode){
+            switch on noteCode {
+                when  '0050'{
+                    return 'Approvata';
+                }
+                when '0007' {
+                    return 'Rifiutata';
+                }
+                when '0060', '0040' {
+                    return 'Presa In Carico';
+                }
+            }
+            return null;
         }
 
     }
