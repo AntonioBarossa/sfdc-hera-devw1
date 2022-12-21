@@ -232,7 +232,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             errorCode = 'ERRBP-000002';
             errorMessage = 'Per Modalità Invio "Fatturazione PA" non è possibile inserire Modalità Fattura "XML + Carta/Email"';
         }
-        if(bp?.IbanIsForeign__c && bp?.IBAN__c.startsWithIgnoreCase('IT'))
+        if(bp?.IbanIsForeign__c && bp?.IBAN__c.deleteWhitespace().startsWithIgnoreCase('IT'))
         {
             errorCode = 'ERRBP-000003';
             errorMessage = 'Per IBAN Estero non è possibile inserire un IBAN Italiano';
