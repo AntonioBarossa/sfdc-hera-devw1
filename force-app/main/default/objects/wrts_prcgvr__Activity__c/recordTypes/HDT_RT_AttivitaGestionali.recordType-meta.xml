@@ -1815,6 +1815,10 @@
             <fullName>Cambio offerta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Reason__c</picklist>
