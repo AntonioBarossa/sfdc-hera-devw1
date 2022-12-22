@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>894</locationX>
+        <locationX>883</locationX>
         <locationY>4598</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -275,7 +275,7 @@
     <assignments>
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
-        <locationX>894</locationX>
+        <locationX>883</locationX>
         <locationY>5690</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
@@ -298,7 +298,7 @@
     <assignments>
         <name>AssegnaValoriActivity</name>
         <label>AssegnaValoriActivity</label>
-        <locationX>630</locationX>
+        <locationX>619</locationX>
         <locationY>5318</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
@@ -363,7 +363,7 @@
     <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>894</locationX>
+        <locationX>883</locationX>
         <locationY>4718</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.AmountToPayInInstallments__c</assignToReference>
@@ -442,6 +442,71 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignFieldsActivity</name>
+        <label>assignFieldsActivity</label>
+        <locationX>553</locationX>
+        <locationY>6290</locationY>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.wrts_prcgvr__Status__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ActivityEndTime__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ClosedByUsername__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.wrts_prcgvr__IsClosed__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.UserCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ClosingCreatorGroup__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getActivityToClose.ClosingUserChannel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>closeActivity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
         <locationX>1370</locationX>
@@ -508,6 +573,28 @@
             <stringValue>Non Confermare</stringValue>
         </value>
     </choices>
+    <decisions>
+        <name>activityTrovata</name>
+        <label>activityTrovata</label>
+        <locationX>685</locationX>
+        <locationY>6170</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_activityTrovata</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getActivityToClose</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assignFieldsActivity</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
@@ -607,7 +694,7 @@
     <decisions>
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
-        <locationX>894</locationX>
+        <locationX>883</locationX>
         <locationY>4838</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_2</targetReference>
@@ -876,6 +963,28 @@
             <label>Si</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>WhichCommodity</name>
+        <label>WhichCommodity</label>
+        <locationX>883</locationX>
+        <locationY>5930</locationY>
+        <defaultConnectorLabel>Altro</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente_commodity</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseAggiornatoSecondaClassificazione.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getActivityToClose</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
+    </decisions>
     <description>Flow per la seconda classificazione dei Reclami Scritti/Rich. Info</description>
     <dynamicChoiceSets>
         <name>PrimoLivello</name>
@@ -917,6 +1026,7 @@
         <picklistField>ThirdLevelComplaintClassification__c</picklistField>
         <picklistObject>Case</picklistObject>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
         <name>ParentCaseFormula</name>
         <dataType>String</dataType>
@@ -951,7 +1061,7 @@
     <recordCreates>
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
-        <locationX>630</locationX>
+        <locationX>619</locationX>
         <locationY>5078</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
@@ -1075,7 +1185,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>630</locationX>
+        <locationX>619</locationX>
         <locationY>5198</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1131,7 +1241,7 @@
     <recordLookups>
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
-        <locationX>630</locationX>
+        <locationX>619</locationX>
         <locationY>4958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1157,9 +1267,44 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getActivityToClose</name>
+        <label>getActivityToClose</label>
+        <locationX>685</locationX>
+        <locationY>6050</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>activityTrovata</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>wrts_prcgvr__Status__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Type__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reclamo da Riclassificare</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
-        <locationX>894</locationX>
+        <locationX>883</locationX>
         <locationY>4478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1222,12 +1367,13 @@
     <recordUpdates>
         <name>Aggiorna_Attivi</name>
         <label>Aggiorna Attivita</label>
-        <locationX>630</locationX>
+        <locationX>619</locationX>
         <locationY>5438</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
         <faultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>AssegnaValori_2</targetReference>
         </faultConnector>
         <inputReference>Get_Activity</inputReference>
@@ -1235,8 +1381,11 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>894</locationX>
+        <locationX>883</locationX>
         <locationY>5810</locationY>
+        <connector>
+            <targetReference>WhichCommodity</targetReference>
+        </connector>
         <inputReference>GetCaseAggiornatoSecondaClassificazione</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1278,6 +1427,13 @@
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
         </connector>
         <inputReference>CaseCollection</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>closeActivity</name>
+        <label>closeActivity</label>
+        <locationX>553</locationX>
+        <locationY>6410</locationY>
+        <inputReference>getActivityToClose</inputReference>
     </recordUpdates>
     <screens>
         <name>Controllo_Classificazione</name>
@@ -1763,7 +1919,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1334</locationX>
+        <locationX>1345</locationX>
         <locationY>4478</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
