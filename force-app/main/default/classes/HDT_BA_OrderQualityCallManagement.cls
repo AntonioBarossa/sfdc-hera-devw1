@@ -75,11 +75,6 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }
                 Integer newSkipCall = o.Skip_Callout__c == null ? -1 : null; 
                 Order ordToUpd = new Order(Id = o.Id, QualityCallStatus__c = HDT_UTL_QualityCall.HANDLE_DEADLINE);
-                if (orderWithActivity.contains(o.Id) || orderWithActivity.contains(o.ParentOrder__c)){
-                    ordToUpd.Skip_Callout__c = newSkipCall;
-                    ordersToUpdate.add(ordToUpd);
-                    continue;
-                }
                 
                 Boolean hasCancellableProduct = false;
                 if(orderToItemMap.get(o.Id) != null){
@@ -111,13 +106,16 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                     ordToUpd.Skip_Callout__c = newSkipCall;
                 }
                 
-
-                if (needsActivity && ((!canDeleteOrder || (o.VASType__c != 'VAS Fatturabili' && ('NO_CANCEL_NO_BILL'.equals(result) || 'NO_CANCEL'.equals(result))) || (o.VASType__c == 'VAS Fatturabili' && ('NO_CANCEL'.equals(result) || 'NO_CANCEL_BILL'.equals(result)))))) {
+                if (orderWithActivity.contains(o.Id) || orderWithActivity.contains(o.ParentOrder__c)){
+                    ordersToUpdate.add(ordToUpd);
+                    continue;
+                }
                 
+                if (needsActivity && ((!canDeleteOrder || (o.VASType__c != 'VAS Fatturabili' && ('NO_CANCEL_NO_BILL'.equals(result) || 'NO_CANCEL'.equals(result))) || (o.VASType__c == 'VAS Fatturabili' && ('NO_CANCEL'.equals(result) || 'NO_CANCEL_BILL'.equals(result)))))) {
                     activitiesToInsert.add(new wrts_prcgvr__Activity__c(
                         RecordTypeId = rtId,
                         Account__c = o.AccountId,
-                        Order__c = o.Id,
+                        Order__c = o.QualityCallUnique__c ? o.ParentOrder__c : o.Id,
                         Type__c = 'Quality Scaduta',
                         wrts_prcgvr__Status__c = 'Aperta',
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
@@ -133,7 +131,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             if (!orderToCancel.isEmpty()){
                 HDT_QR_Order qrOrder = new HDT_QR_Order();
                 for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel)){
-                    if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
+                    if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)&& !'Quality Scaduta'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
                         activitiesToInsert.add(
                             new wrts_prcgvr__Activity__c(
                                 Id = activity.Id,

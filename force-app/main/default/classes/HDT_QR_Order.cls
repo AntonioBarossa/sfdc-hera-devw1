@@ -1440,6 +1440,6 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public static List<Order> getChildOrdersFromParentId(Set<String> parentsId){
-        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c,QualityCallStatus__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
     }
 }
