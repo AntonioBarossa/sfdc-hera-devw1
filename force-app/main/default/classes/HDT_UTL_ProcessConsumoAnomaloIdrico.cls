@@ -109,7 +109,8 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         caseToEnrich.AnnualConsumption__c=dataSource.ServicePoint__r.AnnualConsumption__c;
         caseToEnrich.Disconnectable__c=dataSource.ServicePoint__r.Disconnectable__c;
         caseToEnrich.DistributorCode__c=dataSource.ServicePoint__r.Distributor__r.Code__c;
-        caseToEnrich.Market__c=dataSource.ServicePoint__r.MarketOrigin__c;
+        caseToEnrich.Market__c=dataSource.Market__c;
+        caseToEnrich.SalesCompany__c=dataSource.ContractSalesCompany__c;
         caseToEnrich.PurificationInfoOnTheInvoice__c=dataSource.ServicePoint__r.PurificationInfoOnTheInvoice__c;
         caseToEnrich.RateCategory__c=dataSource.ServicePoint__r.RateCategory__c;
         caseToEnrich.ResidentDomesticHousingUnit__c=dataSource.ServicePoint__r.ResidentDomesticHousingUnit__c;
