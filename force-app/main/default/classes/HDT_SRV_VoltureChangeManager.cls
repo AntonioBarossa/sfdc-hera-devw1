@@ -42,7 +42,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         clonedOrder.put('OrderReference__c',inputOrder.Id);
         clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
         clonedOrder.put('VoltureType__c','Ordinaria');
-        clonedOrder.put('HerokuPracticeCode__c ','');
+        clonedOrder.put('HerokuPracticeCode__c','');
         /**@frpanico 2022-07-05
          * gestione campi mancanti integrazione
          */
