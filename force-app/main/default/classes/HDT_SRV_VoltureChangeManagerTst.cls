@@ -64,6 +64,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         childOrderList[0].Commodity__c = 'Energia Elettrica';
         childOrderList[0].EffectiveDate__c = Date.newInstance(2022, 3, 1);
         childOrderList[0].CustomerCategory__c = 'Famiglie';
+        childOrderList[0].HerokuPracticeCode__c = 'TEST0000';
         
         update childOrderList;
         orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(2, true, childOrderList[0].Id, spList[0].Id,productList[0].Id,pbEntry.Id);
@@ -123,7 +124,20 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         voltureManager.cloneOrderAndUpdate(orderList[0]);
         Test.stopTest();
 
-        List<Order> newOrderList = [SELECT Id, ParentOrder__c, Phase__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
+        List<Order> newOrderList = [SELECT Id, ProcessType__c,HerokuPracticeCode__c, Status, ParentOrder__c, Phase__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
+        Order vtSw = new Order();
+        Order sw = new Order();
+        for(Order o : newOrderList)
+        {
+            if(o.ProcessType__c == 'Voltura con Switch')
+            {
+                vtSw = o;
+            }
+            if(o.Phase__c == 'Annullato')
+            {
+                sw = o;
+            }
+        }
         List<OrderItem> newOrderItemList = [SELECT Id FROM OrderItem];
         System.assertEquals(2, newOrderList.size(),'Order non trovati');
         System.Assert(orderList[0].ParentOrder__c == newOrderList[0].ParentOrder__c, 'Parent order non associato correttamente');
@@ -131,6 +145,8 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         System.assertEquals(4, newOrderItemList.size(),'OrderItem non correttamente clonati');
         System.assert(newOrderList[0].Phase__c == 'Annullato' || newOrderList[0].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
         System.assert(newOrderList[1].Phase__c == 'Annullato' || newOrderList[1].Phase__c == 'Comunicazione verso Heroku', 'Fase non aggiornata correttamente');
+        System.assertEquals(true, sw?.Status == 'Annullato', 'Status non aggiornato correttamente');
+        System.assertEquals(true, String.isBlank(vtSw.HerokuPracticeCode__c),'Heroku practice code non aggiornato correttamente');
 
     }
 
