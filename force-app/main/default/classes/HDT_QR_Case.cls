@@ -113,7 +113,8 @@ public inherited sharing class HDT_QR_Case {
         return [SELECT Id,
         Type,
         Phase__c,
-        DistributorName__c
+        DistributorName__c,
+        Commodity__c
         FROM Case
         WHERE Id = :caseId
         WITH SECURITY_ENFORCED
