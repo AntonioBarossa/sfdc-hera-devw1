@@ -237,12 +237,6 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             errorCode = 'ERRBP-000003';
             errorMessage = 'Per IBAN Estero non è possibile inserire un IBAN Italiano';
         }
-        if(bp.PaymentMethod__c != null && bp.PaymentMethod__c.equalsIgnoreCase('RID') && 
-            (String.isBlank(bp.BankAccountSignatoryFiscalCode__c) || String.isBlank(bp.BankAccountSignatoryLastName__c)))
-        {
-            errorCode = 'ERRBP-000004';
-            errorMessage = 'Per Modalità Pagamento "RID" è necessario compilare i dati del sottoscrittore. Riprovare il salvataggio, nel caso il problema persiste contattare l\'amministratore di sistema.';
-        }
         return new HDT_UTL_ErrorHandler(errorCode,errorMessage);
     }
 
