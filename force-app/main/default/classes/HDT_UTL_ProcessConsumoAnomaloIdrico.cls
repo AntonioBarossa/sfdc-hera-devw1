@@ -80,7 +80,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             try{
                 currentObj.newCase=caseEnrichment(currentObj.newCase,contractCodePodMap.get(currentObj.csvSplitted[contractIndex]));
             }catch (Exception e){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, e.getMessage()));
+                itemsToSave.add(setErrorItem(currentObj.requestItem, e.getMessage() + ' | '+e.getStackTraceString()));
                 continue;
             }
             caseToInsert.add(currentObj.newCase);
