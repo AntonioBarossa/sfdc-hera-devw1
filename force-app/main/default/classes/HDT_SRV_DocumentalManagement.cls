@@ -285,7 +285,6 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		formParams = formParamsString;
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
-		
 		manageResponse(documentalResponse, context);
 		
 	}
@@ -749,13 +748,17 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
 					}
 				}
+				List<Case> integratedCases= qrCase.getCasesByCaseNumbers(new List<String>{response.deliverPackageResponse.requestId});
 				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result != '000' && context=='Case'){
-					List<Case> errCases= qrCase.getCasesByCaseNumbers(new List<String>{response.deliverPackageResponse.requestId});
-					if(!errCases.isEmpty() && errCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
-						errCases[0].Phase__c=Label.consumoAnomaloIdricoE1KOPhase;
-						HDT_UTL_DatabaseService.updateSObject(errCases);
+					if(!integratedCases.isEmpty() && integratedCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						integratedCases[0].Phase__c=Label.consumoAnomaloIdricoE1KOPhase;
+						HDT_UTL_DatabaseService.updateSObject(integratedCases);
 					}
-
+				}else{
+					if(!integratedCases.isEmpty() && integratedCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						integratedCases[0].Phase__c=Label.casePhaseAttesaCliente;
+						HDT_UTL_DatabaseService.updateSObject(integratedCases);
+					}
 				}
 			}
 		}catch(Exception ex){
