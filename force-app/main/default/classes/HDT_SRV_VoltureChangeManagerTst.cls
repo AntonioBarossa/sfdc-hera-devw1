@@ -124,7 +124,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         voltureManager.cloneOrderAndUpdate(orderList[0]);
         Test.stopTest();
 
-        List<Order> newOrderList = [SELECT Id, HerokuPracticeCode__c, Status, ParentOrder__c, Phase__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
+        List<Order> newOrderList = [SELECT Id, ProcessType__c,HerokuPracticeCode__c, Status, ParentOrder__c, Phase__c FROM Order WHERE (ProcessType__c = 'Voltura con Switch' OR Phase__c = 'Annullato') AND ParentOrder__c != NULL];
         Order vtSw = new Order();
         Order sw = new Order();
         for(Order o : newOrderList)
