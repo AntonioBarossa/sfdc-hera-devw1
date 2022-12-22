@@ -79,6 +79,10 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             }
             try{
                 currentObj.newCase=caseEnrichment(currentObj.newCase,contractCodePodMap.get(currentObj.csvSplitted[contractIndex]));
+                currentObj.newCase.Phase__c=Label.consumoAnomaloIdricoDefaultPhase;
+                currentObj.newCase.Status=Label.consumoAnomaloIdricoDefaultStatus;
+                currentObj.newCase.RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO;
+                currentObj.newCase.Cluster__c=Label.consumoAnomaloIdricoDefaultCluster;
             }catch (Exception e){
                 itemsToSave.add(setErrorItem(currentObj.requestItem, (e.getMessage() + ' | '+e.getStackTraceString()).abbreviate(255)));
                 continue;
