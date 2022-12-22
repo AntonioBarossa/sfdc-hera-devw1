@@ -1365,7 +1365,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getAllOrdersForComfort(String id){
-        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
     }
 
 
