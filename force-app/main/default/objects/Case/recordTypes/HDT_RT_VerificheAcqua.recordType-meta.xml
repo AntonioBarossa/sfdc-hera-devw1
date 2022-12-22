@@ -10394,6 +10394,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Verifica Rottura Impianto Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio Amministratore</fullName>
             <default>false</default>
         </values>
@@ -10948,10 +10952,6 @@
         </values>
         <values>
             <fullName>Verifica Integrita Sigilli</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica Rottura Impianto Cliente</fullName>
             <default>false</default>
         </values>
         <values>
