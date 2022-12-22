@@ -119,6 +119,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                     parentCase.Phase__c = 'Documentazione validata';
                     parentCase.Status = 'In Lavorazione';
                 }
+            } else if ('Ricostruzione Consumi'.equalsIgnoreCase(parentCase.Type) && !'Completata'.equalsIgnoreCase(parentCase.Phase__c) && 'Acqua'.equalsIgnoreCase(parentCase.Commodity__c) &&'Completata'.equalsIgnoreCase(currentCase.Phase__c)){
+                parentCase.Phase__c = 'Completata';
+                parentCase.Status = 'Closed';
             }
 
             HDT_UTL_DatabaseService.updateSObject(parentCase);
