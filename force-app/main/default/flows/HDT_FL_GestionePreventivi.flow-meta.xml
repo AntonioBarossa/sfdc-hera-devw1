@@ -138,6 +138,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>subprocess</name>
+            <value>
+                <elementReference>Get_Input_Case_0.Subprocess__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>supplyType</name>
             <value>
                 <elementReference>Get_Input_Case_0.SupplyType__c</elementReference>
