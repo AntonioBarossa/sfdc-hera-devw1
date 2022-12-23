@@ -181,13 +181,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Acqua' {
                     //Inizio: Predefault valido per tutti i processi
                     AmministrazioneSottotipologiaUso__c ammSubType = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
+                    List<ServicePoint__c> updatedServicePoint = servicePointQr.getServicePointsByCodeWater( order.ServicePoint__r.ServicePointCode__c , 'Ato__c,PayPurification__c,PaySewer__c' );
                     newOrder.UseSubCategory__c = ammSubType?.SottotipologiaUso__c;
                     newOrder.IntendedUse__c = ammSubType?.IntendedUse__c;
-                    newOrder.ATO__c = order.ServicePoint__r?.ATO__c;
                     newOrder.ContractExpenses__c = 'Nessuno sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
-                    newOrder.PayPurification__c = order.ServicePoint__r.PayPurification__c;
-                    newOrder.PaySewer__c = order.ServicePoint__r.PaySewer__c;
+                    newOrder.ATO__c = updatedServicePoint[0].ATO__c;
+                    newOrder.PayPurification__c = updatedServicePoint[0].PayPurification__c;
+                    newOrder.PaySewer__c = updatedServicePoint[0].PaySewer__c;
                     newOrder.AggregateBilling__c = 'No';
                     newOrder.EffectiveDate__c = System.Today();
                     //Fine: Predefault valido per tutti i processi
