@@ -83,7 +83,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
                 itemsToSave.add(setErrorItem(currentObj.requestItem, (e.getMessage() + ' | '+e.getStackTraceString()).abbreviate(255)));
                 continue;
             }
-            System.debug(currentObj.newCase.Commodity__c+' | '+currentObj.newCase.CommodityFormula__c+' | '+currentObj.newCase.ServicePointType__c);
             caseToInsert.add(currentObj.newCase);
             requestItemForUpsert.add(currentObj.requestItem);
         }
