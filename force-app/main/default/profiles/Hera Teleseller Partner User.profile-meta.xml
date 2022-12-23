@@ -38774,6 +38774,10 @@
         <visible>true</visible>
     </recordTypeVisibilities>
     <tabVisibilities>
+        <tab>AmministrazioneSottotipologiaUso__c</tab>
+        <visibility>DefaultOn</visibility>
+    </tabVisibilities>
+    <tabVisibilities>
         <tab>AdminPriceQuote__c</tab>
         <visibility>Hidden</visibility>
     </tabVisibilities>
