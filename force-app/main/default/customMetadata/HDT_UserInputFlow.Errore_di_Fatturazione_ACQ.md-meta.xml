@@ -19,9 +19,13 @@
     }, {
         &quot;FieldName&quot;: &quot;CustomerSelfReading__c&quot;,
         &quot;Required&quot;: false,
-        &quot;Column&quot;: 2
+        &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;ReadingDate__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;ParentId&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 2
     }
