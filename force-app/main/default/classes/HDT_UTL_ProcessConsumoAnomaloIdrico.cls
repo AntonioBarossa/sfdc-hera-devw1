@@ -79,14 +79,11 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             }
             try{
                 currentObj.newCase=caseEnrichment(currentObj.newCase,contractCodePodMap.get(currentObj.csvSplitted[contractIndex]));
-                currentObj.newCase.Phase__c=Label.consumoAnomaloIdricoDefaultPhase;
-                currentObj.newCase.Status=Label.consumoAnomaloIdricoDefaultStatus;
-                currentObj.newCase.RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO;
-                currentObj.newCase.Cluster__c=Label.consumoAnomaloIdricoDefaultCluster;
             }catch (Exception e){
                 itemsToSave.add(setErrorItem(currentObj.requestItem, (e.getMessage() + ' | '+e.getStackTraceString()).abbreviate(255)));
                 continue;
             }
+            System.debug(currentObj.newCase.Commodity__c+' | '+currentObj.newCase.CommodityFormula__c+' | '+currentObj.newCase.ServicePointType__c);
             caseToInsert.add(currentObj.newCase);
             requestItemForUpsert.add(currentObj.requestItem);
         }
@@ -100,8 +97,29 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
 
 
     private Case caseEnrichment(Case caseToEnrich, Contract dataSource){
-        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(caseToEnrich.ContractCode__c, dataSource.SAPContractCode__c );
-        return HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), caseToEnrich);
+        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(dataSource.SAPContractCode__c, '', dataSource.ServicePoint__r.SAPImplantCode__c);
+        if(res.status =='success' && res.statusCode== 200){
+            caseToEnrich=HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), caseToEnrich);
+            caseToEnrich.ServicePoint__c=dataSource.ServicePoint__c;
+            caseToEnrich.Contract__c=dataSource.Id;
+            caseToEnrich.AccountId=dataSource.AccountId;
+            caseToEnrich.ContactId=dataSource.Contact__c;
+            caseToEnrich.BillingProfile__c=dataSource.BillingProfile__c;
+            caseToEnrich.Distributor__c=dataSource.ServicePoint__r.Distributor__c;
+            caseToEnrich.Commodity__c=dataSource.ServicePoint__r.CommoditySector__c;
+            caseToEnrich.Email__c=getEmail(dataSource.Account,dataSource.BillingProfile__r);
+            caseToEnrich.InvoicingCity__c=caseToEnrich.BillingProfile__r.InvoicingCity__c;
+            caseToEnrich.InvoicingCountry__c=caseToEnrich.BillingProfile__r.InvoicingCountry__c;
+            caseToEnrich.InvoicingPlace__c=caseToEnrich.BillingProfile__r.InvoicingPlace__c;
+            caseToEnrich.InvoicingPostalCode__c=caseToEnrich.BillingProfile__r.InvoicingPostalCode__c;
+            caseToEnrich.InvoicingProvince__c=caseToEnrich.BillingProfile__r.InvoicingProvince__c;
+            caseToEnrich.InvoicingStreetName__c=caseToEnrich.BillingProfile__r.InvoicingStreetName__c;
+            caseToEnrich.InvoicingStreetNumber__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumber__c;
+            caseToEnrich.InvoicingStreetNumberExtension__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumberExtension__c;
+            caseToEnrich.DeliveryAddress__c=caseToEnrich.BillingProfile__r.InvoicingAddressFormula__c;
+            return caseToEnrich;
+        }
+        throw new CalloutException('Arricchimento dati fallito');
     }
 
     private Map<String,Object> integrityChecks(List<String>csvSplitted){
