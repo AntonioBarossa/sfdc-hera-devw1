@@ -289,7 +289,7 @@ public inherited sharing class HDT_QR_Contract {
                 ServicePoint__r.Disconnectable__c, ServicePoint__r.Distributor__r.Code__c, ServicePoint__r.MarketOrigin__c, ServicePoint__r.PurificationInfoOnTheInvoice__c, ServicePoint__r.RateCategory__c,
                 ServicePoint__r.ResidentDomesticHousingUnit__c, ServicePoint__r.NotDomesticHousingUnit__c, ServicePoint__r.ImplantTypeTemp__c,
                 ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplySAPCityCode__c, ServicePoint__r.SupplyCountry__c, ServicePoint__r.SupplyPostalCode__c, ServicePoint__r.SupplyProvince__c,
-                ServicePoint__r.SupplySAPStreetCode__c, ServicePoint__r.SupplyStreet__c, ServicePoint__r.SupplyStreetNumber__c
+                ServicePoint__r.SupplySAPStreetCode__c, ServicePoint__r.SupplyStreet__c, ServicePoint__r.SupplyStreetNumber__c, ServicePoint__r.SAPImplantCode__c
                 FROM Contract
                 WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED];
     }
