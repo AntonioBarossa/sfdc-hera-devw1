@@ -107,15 +107,15 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             caseToEnrich.Distributor__c=dataSource.ServicePoint__r.Distributor__c;
             caseToEnrich.Commodity__c=dataSource.ServicePoint__r.CommoditySector__c;
             caseToEnrich.Email__c=getEmail(dataSource.Account,dataSource.BillingProfile__r);
-            caseToEnrich.InvoicingCity__c=caseToEnrich.BillingProfile__r.InvoicingCity__c;
-            caseToEnrich.InvoicingCountry__c=caseToEnrich.BillingProfile__r.InvoicingCountry__c;
-            caseToEnrich.InvoicingPlace__c=caseToEnrich.BillingProfile__r.InvoicingPlace__c;
-            caseToEnrich.InvoicingPostalCode__c=caseToEnrich.BillingProfile__r.InvoicingPostalCode__c;
-            caseToEnrich.InvoicingProvince__c=caseToEnrich.BillingProfile__r.InvoicingProvince__c;
-            caseToEnrich.InvoicingStreetName__c=caseToEnrich.BillingProfile__r.InvoicingStreetName__c;
-            caseToEnrich.InvoicingStreetNumber__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumber__c;
-            caseToEnrich.InvoicingStreetNumberExtension__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumberExtension__c;
-            caseToEnrich.DeliveryAddress__c=caseToEnrich.BillingProfile__r.InvoicingAddressFormula__c;
+            caseToEnrich.InvoicingCity__c=dataSource.BillingProfile__r.InvoicingCity__c;
+            caseToEnrich.InvoicingCountry__c=dataSource.BillingProfile__r.InvoicingCountry__c;
+            caseToEnrich.InvoicingPlace__c=dataSource.BillingProfile__r.InvoicingPlace__c;
+            caseToEnrich.InvoicingPostalCode__c=dataSource.BillingProfile__r.InvoicingPostalCode__c;
+            caseToEnrich.InvoicingProvince__c=dataSource.BillingProfile__r.InvoicingProvince__c;
+            caseToEnrich.InvoicingStreetName__c=dataSource.BillingProfile__r.InvoicingStreetName__c;
+            caseToEnrich.InvoicingStreetNumber__c=dataSource.BillingProfile__r.InvoicingStreetNumber__c;
+            caseToEnrich.InvoicingStreetNumberExtension__c=dataSource.BillingProfile__r.InvoicingStreetNumberExtension__c;
+            caseToEnrich.DeliveryAddress__c=dataSource.BillingProfile__r.InvoicingAddressFormula__c;
             return caseToEnrich;
         }
         throw new CalloutException('Arricchimento dati fallito');
