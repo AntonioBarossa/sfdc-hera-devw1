@@ -328,6 +328,10 @@
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_LinkRifiutologoKnowledge__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>CS_GestioneScript__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
@@ -13546,6 +13550,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>Knowledge__kav.PublicLink__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>Knowledge__kav.WasterLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
