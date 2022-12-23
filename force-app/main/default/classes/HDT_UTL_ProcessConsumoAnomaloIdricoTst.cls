@@ -127,7 +127,7 @@ private class HDT_UTL_ProcessConsumoAnomaloIdricoTst {
     }
 
 
-      /**​
+      /**
     * @author Elvin Iluca
     * @date 23/12/2022
     * @description HDT_UTL_ProcessConsumoAnomaloIdricoTst – Test Class for HDT_UTL_ProcessConsumoAnomaloIdrico.cls
