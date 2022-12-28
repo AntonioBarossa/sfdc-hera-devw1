@@ -23,6 +23,11 @@
             <sortOrder>8</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>Crea_Distributore2</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -60,6 +65,9 @@
         </quickActionListItems>
         <quickActionListItems>
             <quickActionName>HDT_SendCertifiedEmail</quickActionName>
+        </quickActionListItems>
+        <quickActionListItems>
+            <quickActionName>Crea_Distributore2</quickActionName>
         </quickActionListItems>
     </quickActionList>
     <showEmailCheckbox>false</showEmailCheckbox>
