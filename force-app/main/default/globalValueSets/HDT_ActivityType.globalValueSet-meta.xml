@@ -511,6 +511,11 @@
         <label>Paperless non generato</label>
     </customValue>
     <customValue>
+        <fullName>PEC da DL</fullName>
+        <default>false</default>
+        <label>PEC da DL</label>
+    </customValue>
+    <customValue>
         <fullName>Pratica non gestita per il DL</fullName>
         <default>false</default>
         <label>Pratica non gestita per il DL</label>

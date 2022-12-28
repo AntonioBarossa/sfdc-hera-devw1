@@ -546,6 +546,11 @@
                 <label>Note_il cliente dice</label>
             </value>
             <value>
+                <fullName>PEC da DL</fullName>
+                <default>false</default>
+                <label>PEC da DL</label>
+            </value>
+            <value>
                 <fullName>Pratica avviata</fullName>
                 <default>false</default>
                 <label>Pratica avviata</label>
