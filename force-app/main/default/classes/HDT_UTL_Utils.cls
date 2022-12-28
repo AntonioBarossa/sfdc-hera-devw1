@@ -152,5 +152,26 @@ public with sharing class HDT_UTL_Utils {
         
         
     }
-  
+
+    public static String beforeSapPhase(String phase, String pStory){
+        if (String.isBlank(pStory)){
+            return '';
+        }
+        pStory.replace('@@M||', '@@A||');
+        for (String trans : pStory.split('@@A||')){
+            if (String.isBlank(trans)){
+                continue;
+            }
+            List<String> phases = trans.split('@@');
+            if (phases.size() < 3 || !phase.equalsIgnoreCase(phases[1])){
+                phase = '';
+                break;
+            }
+            phase = phases[0];
+            if (!HDT_UTL_GestioneScartiSap.skipPhaseManager(phase)){
+                break;
+            }
+        }
+        return phase;
+    }
 }

@@ -14,6 +14,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         system.debug(LoggingLevel.DEBUG,'Inizio beforeUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         if (!HDT_UTL_OrderProcess.transitorySiebelManagement(Trigger.new, Trigger.oldMap)){
+            HDT_UTL_Scarti.changeSapPhaseHandler(Trigger.newMap, Trigger.oldMap);
             HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
 
             /**@frpanico 15/12/2021 

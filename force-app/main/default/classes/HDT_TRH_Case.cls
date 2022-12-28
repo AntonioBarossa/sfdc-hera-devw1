@@ -16,6 +16,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
         try{
+            HDT_UTL_Scarti.changeSapPhaseHandler(Trigger.newMap, Trigger.oldMap);
             HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, Trigger.oldMap);
             for(Case caseNew : (List<Case>) Trigger.new){
                 if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){

@@ -1279,4 +1279,41 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         
     }
+
+    public static void changeSapPhaseHandler(Map<Id,SObject> newRecsMap, Map<Id,SObject> oldRecsMap){
+        Set<Id> secondCheck = new Set<Id>();
+        for (Sobject obj : newRecsMap.values()){
+            SObject oldObj = oldRecsMap.get((Id)obj.get('Id'));
+            String newPhase = obj.get('Phase__c') == null ? '' : (String)obj.get('Phase__c');
+            String oldPhase = oldObj.get('Phase__c') == null ? '' : (String)oldObj.get('Phase__c');
+            if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)){
+                if ('Completata'.equalsIgnoreCase(newPhase)){
+                    String phase = HDT_UTL_Utils.beforeSapPhase(oldPhase,oldObj.get('PhaseStory__c') == null ? '' : (String)oldObj.get('PhaseStory__c'));
+                    if (String.isBlank(phase)){
+                        secondCheck.add((Id)obj.get('Id'));
+                        continue;
+                    }
+                    if (phase.containsIgnoreCase('KO')){
+                        obj.put('Phase__c',phase);
+                        continue;
+                    }
+                }
+                //In attesa della risposta di s.b. su mail "Richiesta riscontro Autoletture e Scarti SAP"
+                if (newPhase.indexOf('Annullamento') > -1 || newPhase.indexOf('Ripensamento') > -1 || 'Annullato'.equalsIgnoreCase(newPhase)){
+                    obj.addError('Per procedere con l\'annullamento, è necessario gestire lo scarto SAP');
+                }
+            }
+        }
+        if (secondCheck.isEmpty()){
+            return;
+        }
+        String stringIds = '(\''+String.join(secondCheck, '\',\'')+'\')'; 
+        for (wrts_prcgvr__Activity__c act : HDT_QR_GenericQuery.getGenericRecords('Id, Type__c, Order__c, Case__c', 'wrts_prcgvr__Activity__c', 'Case__c IN '+stringIds+' OR Order__c IN '+stringIds)){ // inserire la query invece di acts
+            Sobject obj = newRecsMap.get(act.Order__c != null ? act.Order__c : act.Case__c);
+            String pStory = obj.get('PhaseStory__c') == null ? '' : (String)obj.get('PhaseStory__c');
+            String prefix = pStory.startsWithIgnoreCase('Annullamento -') ? 'Annullamento - ' :
+            pStory.startsWith('Ripensamento -') ? 'Ripensamento - ' : ''; 
+            obj.put('Phase__c',prefix + act.Type__c);
+        }
+    }
 }
