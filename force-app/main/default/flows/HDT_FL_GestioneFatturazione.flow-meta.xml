@@ -1845,7 +1845,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
