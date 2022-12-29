@@ -422,6 +422,22 @@
         </value>
     </choices>
     <choices>
+        <name>Pec_Da_DL_Case</name>
+        <choiceText>PEC da DL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PEC_DA_DL_CASE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Pec_Da_DL_Order</name>
+        <choiceText>PEC da DL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PEC_DA_DL_ORDER</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Positivo</name>
         <choiceText>Positivo</choiceText>
         <dataType>String</dataType>
@@ -651,6 +667,7 @@
                     <name>picklistPreavviso</name>
                     <choiceReferences>ContattareilclientePostsales</choiceReferences>
                     <choiceReferences>PreavvisoCessazione</choiceReferences>
+                    <choiceReferences>Pec_Da_DL_Case</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Tipologia</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -664,12 +681,19 @@
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>or</conditionLogic>
                         <conditions>
                             <leftValueReference>picklistPreavviso</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>picklistPreavviso</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pec_Da_DL_Case</elementReference>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -700,12 +724,19 @@
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>or</conditionLogic>
                         <conditions>
                             <leftValueReference>picklistPreavviso</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>picklistPreavviso</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pec_Da_DL_Case</elementReference>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -763,6 +794,7 @@
                 <fields>
                     <name>picklistOrder</name>
                     <choiceReferences>contattareilclienteSales</choiceReferences>
+                    <choiceReferences>Pec_Da_DL_Order</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Tipologia</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -856,6 +888,7 @@
                     <name>picklistGiroContatore</name>
                     <choiceReferences>ContattareilclientePostsales</choiceReferences>
                     <choiceReferences>GiroContatoreDaGestire</choiceReferences>
+                    <choiceReferences>Pec_Da_DL_Case</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Tipologia</fieldText>
                     <fieldType>DropdownBox</fieldType>
@@ -869,12 +902,19 @@
                     <isRequired>false</isRequired>
                     <scale>0</scale>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>or</conditionLogic>
                         <conditions>
                             <leftValueReference>picklistGiroContatore</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>picklistGiroContatore</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pec_Da_DL_Case</elementReference>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -905,12 +945,19 @@
                     <fieldType>DropdownBox</fieldType>
                     <isRequired>false</isRequired>
                     <visibilityRule>
-                        <conditionLogic>and</conditionLogic>
+                        <conditionLogic>or</conditionLogic>
                         <conditions>
                             <leftValueReference>picklistGiroContatore</leftValueReference>
                             <operator>EqualTo</operator>
                             <rightValue>
                                 <elementReference>ContattareilclientePostsales</elementReference>
+                            </rightValue>
+                        </conditions>
+                        <conditions>
+                            <leftValueReference>picklistGiroContatore</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <elementReference>Pec_Da_DL_Case</elementReference>
                             </rightValue>
                         </conditions>
                     </visibilityRule>
@@ -968,6 +1015,7 @@
                 <fields>
                     <name>picklistCaseDefault</name>
                     <choiceReferences>ContattareilclientePostsales</choiceReferences>
+                    <choiceReferences>Pec_Da_DL_Case</choiceReferences>
                     <dataType>String</dataType>
                     <fieldText>Tipologia</fieldText>
                     <fieldType>DropdownBox</fieldType>
