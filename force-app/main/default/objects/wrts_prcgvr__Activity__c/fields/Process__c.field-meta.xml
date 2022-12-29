@@ -653,6 +653,11 @@
                 <default>false</default>
                 <label>Annullamento Prestazione</label>
             </value>
+            <value>
+                <fullName>Voltura</fullName>
+                <default>false</default>
+                <label>Voltura</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
@@ -999,6 +1004,10 @@
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <!-- <controllingFieldValue>Attivazioni - Generiche</controllingFieldValue> -->
             <valueName>Bonus commerciale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Voltura</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Autolettura</controllingFieldValue>

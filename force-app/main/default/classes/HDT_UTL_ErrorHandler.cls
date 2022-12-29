@@ -8,8 +8,8 @@
  */
 public with sharing class HDT_UTL_ErrorHandler {
 
-    public String errorCode {get;set;}
-    public String errorMessage {get;set;}
+    private String errorCode;
+    private String errorMessage;
     public String errorDescription {get; private set;}
     public Boolean isSuccess {get; private set;}
 
