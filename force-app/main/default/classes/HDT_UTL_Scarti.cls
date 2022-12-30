@@ -1308,6 +1308,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             return;
         }
         String stringIds = '(\''+String.join(secondCheck, '\',\'')+'\')'; 
+        Esito KO da SII Ammissibilità KO	Esito KO da DL 	Esito KO da DL/SII
         for (wrts_prcgvr__Activity__c act : HDT_QR_GenericQuery.getGenericRecords('Id, Type__c, Order__c, Case__c', 'wrts_prcgvr__Activity__c', 'Case__c IN '+stringIds+' OR Order__c IN '+stringIds)){ // inserire la query invece di acts
             Sobject obj = newRecsMap.get(act.Order__c != null ? act.Order__c : act.Case__c);
             String pStory = obj.get('PhaseStory__c') == null ? '' : (String)obj.get('PhaseStory__c');
