@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_SubjectCodeDate</fullName>
+    <active>true</active>
+    <errorConditionFormula>OR
+(    AND(NOT(ISBLANK(SubjectCodeStartDate__c)),
+				NOT(REGEX(SubjectCodeStartDate__c,&quot;\\d{4}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])&quot;))),
+    AND(NOT(ISBLANK(SubjectCodeEndDate__c)),
+ 	      NOT(REGEX(SubjectCodeEndDate__c,&quot;\\d{4}-(0?[1-9]|1[012])-(0[1-9]|[12][0-9]|3[01])&quot;)))
+	)</errorConditionFormula>
+    <errorMessage>La data Inizio/Fine Codice Validità deve essere nel formato &quot;YYYY-MM-DD&quot;</errorMessage>
+</ValidationRule>

@@ -1928,6 +1928,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     getDistributorSelected(event) {
 
         this.retrievedDistributor.forEach(element => {
+            if(element.Account__c === undefined || element.Account__r.Name === undefined) return;
             if (event.detail.Distributor === element.Account__r.Name) {
                 this.recordDistributorPointCode = element.Account__r.Id;
                 this.selectedDistributor = element;

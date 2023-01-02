@@ -39,7 +39,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                     caseNew.TecnicalPhase__c = null;
                 }
 
-                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
                     DateTime dt = caseNew.CreatedDate;
                     caseNew.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
                 }
@@ -107,7 +107,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
 
         for(Case caseNew : (List<Case>) Trigger.new){
-            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
                 Case caseToUpdate = new Case(Id = caseNew.Id);
                 DateTime dt = caseNew.CreatedDate;
                 caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());

@@ -698,7 +698,7 @@
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2 OR 3</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -713,6 +713,11 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Annullato</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>HDT_RT_OrderDossier</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
