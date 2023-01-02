@@ -170,4 +170,13 @@ public with sharing class HDT_UTL_CheckFiscalCodeTaxNumberTst {
         System.assert(testFiscalCode.size() != null, 'Data From FiscalCode Success');
         System.assertNotEquals(null, testFiscalCode, 'Data From FiscalCode Success');
     }
+    @isTest
+    public static void getBirthDayFromCodeTst()
+    {
+        String testCode = 'MRCMRC80A41H501Y';
+        Test.startTest();
+            Date result = HDT_UTL_CheckFiscalCodeTaxNumber.getBirthDayFromCode(testCode);
+        Test.stopTest();
+        System.assertEquals(Date.newInstance(1980, 1, 1), result, 'Date calcolate correttamente');
+    }
 }

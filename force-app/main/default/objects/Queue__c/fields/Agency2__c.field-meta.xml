@@ -10,7 +10,12 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Comdata</fullName>
+                <default>false</default>
+                <label>Comdata</label>
+            </value>
             <value>
                 <fullName>Conservice</fullName>
                 <default>false</default>
@@ -27,6 +32,11 @@
                 <label>Data Company</label>
             </value>
             <value>
+                <fullName>Estenergy</fullName>
+                <default>false</default>
+                <label>Estenergy</label>
+            </value>
+            <value>
                 <fullName>HC</fullName>
                 <default>false</default>
                 <label>HC</label>
@@ -40,6 +50,11 @@
                 <fullName>Hera Comm Marche</fullName>
                 <default>false</default>
                 <label>Hera Comm Marche</label>
+            </value>
+            <value>
+                <fullName>Hera Spa</fullName>
+                <default>false</default>
+                <label>Hera Spa</label>
             </value>
             <value>
                 <fullName>Koinè</fullName>
@@ -100,21 +115,6 @@
                 <fullName>Target Sinergie</fullName>
                 <default>false</default>
                 <label>Target Sinergie</label>
-            </value>
-            <value>
-                <fullName>Comdata</fullName>
-                <default>false</default>
-                <label>Comdata</label>
-            </value>
-            <value>
-                <fullName>Hera Spa</fullName>
-                <default>false</default>
-                <label>Hera Spa</label>
-            </value>
-            <value>
-                <fullName>Estenergy</fullName>
-                <default>false</default>
-                <label>Estenergy</label>
             </value>
         </valueSetDefinition>
     </valueSet>

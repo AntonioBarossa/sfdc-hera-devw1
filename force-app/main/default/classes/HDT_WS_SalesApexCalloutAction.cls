@@ -339,10 +339,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
         Id contractId = ord.ContractReference__c;
         Id servicePointId = ord.ServicePoint__c;
         Id parentOrderId = ord.ParentOrder__c;
+        Id orderId = ord.Id;
         String commercialProductCode = '';
         String commercialVersion = ''; 
+        HDT_QR_Quote quoteQuery = new HDT_QR_Quote();
         try{
-            if(String.isNotBlank(contractId)){
+            if(String.isNotBlank(contractId) && quoteQuery.getQuoteType(orderId).equalsIgnoreCase('Amendment')){
                 HDT_QR_Contract qrContract = new HDT_QR_Contract();
                 SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(contractId);
                 if(subscription != null){

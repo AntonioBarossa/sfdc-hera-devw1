@@ -84,7 +84,7 @@ public with sharing class HDT_UTL_CreditCheck {
             req.crmId = String.valueOf(o.Id).substring(0,15);
             req.userId = o.CreatedById;
             req.jobTitle = o.ChannelTransCode__c;
-            req.internalCustomerId = o.Account != null?String.valueOf(o.Account.Id).substring(7,15):'';
+            req.internalCustomerId = String.isNotBlank(o.Account?.CustomerCode__c)? o.Account.CustomerCode__c : o.Account != null ? '1-'+String.valueOf(o.Account.Id).substring(7,15) : '';
             req.companyName = String.isNotBlank(o.Account?.FirstName__c)? o.Account.FirstName__c+separator+o.Account.LastName__c : o.Account?.LastName__c;
             req.externalCustomerId = String.isNotBlank(o.Account?.FiscalCode__c)? o.Account.FiscalCode__c : o.Account?.VATNumber__c;
             req.secondaryCustomerId = o.Account?.VATNumber__c;
@@ -157,6 +157,25 @@ public with sharing class HDT_UTL_CreditCheck {
         
         if(!ordersToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(ordersToUpdate);
+        }
+    }
+
+    @future
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    public static void updateOrderFuture(String orderDataJSON){
+        HDT_WRP_DataForUpdate orderData;
+        try{
+            Long startTime = Datetime.now().getTime();
+            Long actualTime;
+            do{
+                actualTime = Datetime.now().getTime();
+            }while (actualTime - startTime < 5000);
+            orderData = (HDT_WRP_DataForUpdate)JSON.deserialize(orderDataJSON, HDT_WRP_DataForUpdate.class); 
+            HDT_UTL_CreditCheck.updateOrder(new List<HDT_UTL_CreditCheck.HDT_WRP_DataForUpdate>{orderData});
+        }catch (Exception e){
+            HDT_SRV_LogService logService = new HDT_SRV_LogService('CREDIT_CHECK_EXCEPTION');
+            logService.insertSingleLog('HDT_UTL_CreditCheck', 'updateOrderFuture', orderDataJSON, null, e.getMessage()+ ' line: '+ e.getLineNumber(), orderData != null ? orderData.orderId : null, null, null);
+            System.debug(LoggingLevel.ERROR, e.getMessage()+ ' line: '+ e.getLineNumber() );
         }
     }
 

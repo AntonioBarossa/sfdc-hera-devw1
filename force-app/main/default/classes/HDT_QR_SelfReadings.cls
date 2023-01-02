@@ -88,7 +88,9 @@ public inherited sharing class HDT_QR_SelfReadings {
             Id,
             AccountId,
             ServicePoint__r.Distributor__r.Code__c,
-            ServicePoint__c
+            ServicePoint__r.ServicePointCode__c,
+            ServicePoint__c,
+            Status
             FROM Contract WHERE SAPContractCode__c = :contractCode
             WITH SECURITY_ENFORCED
         ];

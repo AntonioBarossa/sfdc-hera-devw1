@@ -29,6 +29,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         if(orderParent.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
         {
             Order parentOrderToUpdate = new Order();
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            List<Order> childs = [SELECT Id, SignedDate__c FROM Order WHERE ParentOrder__c = :orderParent.Id AND ProcessType__c = 'Switch in Fittizio' WITH SECURITY_ENFORCED];
+            if(!childs.isEmpty())
+            {
+                parentOrderToUpdate.SignedDate__c = childs[0].SignedDate__c;
+            }
             parentOrderToUpdate.Id = orderParent.Id;
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
@@ -245,7 +251,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-        for (Order childOrd : childOrders) {
+        /*for (Order childOrd : childOrders) {
             if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
                 ordersToUpdate.add(
                     new Order(
@@ -254,7 +260,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     )
                 );
             }
-        }
+        }*/
 
         //update CampaignMember Status From Stampa
         /**@fvitiell 21/02/2022
@@ -574,6 +580,14 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         WITH SECURITY_ENFORCED];
 
         List<SObject> sobjToUpdate = new List<SObject>();
+        /*@frpanico 2022-11-17 
+        * La list di quoteLine e' necessaria per dividere i chunk
+        * Salesforce ha il limite di 10 chunk
+        * se ho due oggetti A e B e ordino la lista A B A B A B Salesforce li considera singoli chunk andando in errore "Not more than 10 chunks..."
+        * se ordino la lista A A A A A B B B B B Salesforce li considera come due chunk
+        */
+        List<SBQQ__QuoteLine__c> quoteLineToUpdate = new List<SBQQ__QuoteLine__c>();
+        
 
         Map<String, Map<String,OrderItem>> podOrderItemMap = new Map<String, Map<String,OrderItem>>();
         /* Build the map that groups orderItems for ServicePointCode of the related order */
@@ -613,9 +627,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             offertaCommQl.Surface__c = (Decimal) (podOrderItemMap.get(key).get('analisiConsumi')).get('Surface__c');
 
             sobjToUpdate.add(offertaCommerciale);
-            sobjToUpdate.add(offertaCommQl);
+            quoteLineToUpdate.add(offertaCommQl);
         }
-
+        if(!quoteLineToUpdate.isEmpty())
+        {
+            sobjToUpdate.addAll(quoteLineToUpdate);
+        }
         if(!sobjToUpdate.isEmpty())
         {
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);

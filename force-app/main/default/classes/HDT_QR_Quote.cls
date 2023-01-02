@@ -84,7 +84,9 @@ public inherited sharing class HDT_QR_Quote {
             SalesCompany__c,
             SBQQ__MasterContract__r.ContractNumber,
             SBQQ__MasterContract__r.BillingProfile__c,
-            IsBillableVas__c
+            IsBillableVas__c,
+            VasCommodity__c,
+            VasSupplyAddress__c
             FROM SBQQ__Quote__c
             WHERE Id = :quoteId
             WITH SECURITY_ENFORCED
@@ -256,5 +258,24 @@ public inherited sharing class HDT_QR_Quote {
             AND SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public String getQuoteType(String orderId){
+
+        List<Order> quoteType = [
+            SELECT 
+            Id,
+            SBQQ__Quote__r.SBQQ__Type__c
+            FROM Order 
+            WHERE Order.Id =: orderId
+            WITH SECURITY_ENFORCED
+        ];
+
+        if(!quoteType.isEmpty()){
+            return quoteType[0].SBQQ__Quote__r.SBQQ__Type__c;
+        }else{
+            return '';
+        }
+        
     }
 }

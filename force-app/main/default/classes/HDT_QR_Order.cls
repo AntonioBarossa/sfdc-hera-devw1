@@ -352,7 +352,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.Phone,
             Contact__r.MobilePhone,
             Subprocess__c,
-            VASType__c
+            VASType__c,
+            DateSentToSII__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -593,7 +594,14 @@ public inherited sharing class HDT_QR_Order {
             CommercialProductCode__c,
             DocumentPackage__c,
             CommercialProduct__c,
-            Type
+            DocSendingMethod__c,
+            SignatureMethod__c,
+            Channel__c,
+            CustomerCategory__c,
+            MarketOrigin__c,
+            Type,
+            ShippingMail__c,
+            PhoneNumber__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -611,11 +619,13 @@ public inherited sharing class HDT_QR_Order {
     public List<Order> getChildOrdersForDateCalculation(List<String> parentOrderIds){
         return [
             SELECT
-            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c
+            Id,EffectiveDate__c,RecessNotice__c,WaiverRightAfterthought__c ,IsEarlyActivation__c ,ClientCategoryFormula__c,CommodityFormula__c,RecordType.DeveloperName,WizardCompletedDate__c,Account.RecordType.DeveloperName,Channel__c,Market__c,DocumentalProcessType__c,SignedDate__c,DateSentToSII__c,MaxAfterthoughtDate__c,IsActivationDeferred__c,ProcessType__c,MarketOrigin__c,ServicePoint__r.CommoditySector__c,VoltageLevel__c,SupplyType__c,CustomerCategory__c,SignatureMethod__c,DocSendingMethod__c,IsTransition__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            AND ProcessType__c NOT IN ('Switch in Fittizio')
             /* AND ProcessType__c != ''
             AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
@@ -912,6 +922,9 @@ public inherited sharing class HDT_QR_Order {
     * @param accountId - String
     * @return List<Order>
     */
+    /*@frpanico 2022-11-30 Viene filtrato ulteriormente per ProcessType__c != 'VAS'
+    * In quanto il solo controllo sulla quote non e' sufficiente nel caso di vendita Offerta + VAS
+    */
     public List<Order> getRecordsForVasSelection(String accountId){
         return [
             SELECT
@@ -942,6 +955,7 @@ public inherited sharing class HDT_QR_Order {
             AND RecordType.DeveloperName != null
             AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
             AND SBQQ__Quote__r.IsVAS__c != true
+            AND ProcessType__c != 'VAS'
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
             AND Status IN ('In Lavorazione')
             WITH SECURITY_ENFORCED
@@ -1238,11 +1252,11 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<order> getOrderCreatedYesterday(){
-        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED LIMIT 3000];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where Createddate = Yesterday WITH SECURITY_ENFORCED];
     }
 
     public List<order> getOrderCreatedInRequestedDate(Datetime startDt, Datetime endDt){
-        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where CreatedDate >=: startDt and CreatedDate <:endDt  WITH SECURITY_ENFORCED LIMIT 3000];
+        return [Select id,Account.Segment__c,LoginWorkstation__c,CreatorGroup__c,SalesCompany__c,account.SAPIntegrationID__c,account.RowIdSiebel__c,Account.Name,Account.Category__c,Account.CategoryCode__c,processType__c,OrderNumber,Recordtype.Name,Phase__c,CommodityFormula__c,OriginalOrderId,status, CreatedDate,Channel__c,Createdby.Name from Order where CreatedDate >=: startDt and CreatedDate <:endDt  WITH SECURITY_ENFORCED];
     }
 
     /**
@@ -1286,7 +1300,7 @@ public inherited sharing class HDT_QR_Order {
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
         AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
-        AND Phase__c NOT IN ('Completata','Annullato')
+        AND Phase__c NOT IN ('Annullato') //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
         WITH SECURITY_ENFORCED
         ];
     }
@@ -1347,11 +1361,11 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getAllOrdersForComfort(String id){
-        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
     }
 
 
@@ -1380,7 +1394,12 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return this.getOpenActivitiesByListOrderId(new Set<String>{orderId});
+    }
+
+    public List<wrts_prcgvr__Activity__c> getOpenActivitiesByListOrderId(Set<String> orderIdList)
+    {
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c IN :orderIdList WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {

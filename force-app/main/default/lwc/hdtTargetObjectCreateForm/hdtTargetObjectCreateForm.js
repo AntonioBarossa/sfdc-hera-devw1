@@ -171,7 +171,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         mapFieldReq = this.fieldRequiredMapping();
         var fieldReqParse = fieldsDataReq.toString();
         let fieldReq = fieldReqParse.split(",");
-
+        console.log('### this.fieldsData --> ' + fieldsData)
         fieldsDataReq.forEach(element => {
             console.log('this.fieldsDataReq --> '+fieldsDataReq);
             mapFieldReq.set(element, true);
@@ -182,7 +182,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
         console.log('this.recordtype.label --> '+this.recordtype.label);
         fieldsData.forEach(element => {
             console.log('this.element --> '+element);
-
             if (this.selectedservicepoint != undefined && this.processtype == '') {
 
                 if (element == 'CommoditySector__c') {
@@ -534,6 +533,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                 }
             }
         });
+        let accountIndex = fieldsDataObject.findIndex(el => el.fieldname === 'Account__c');
+        if(accountIndex > -1)
+        {
+            fieldsDataObject[accountIndex].required = false;
+            fieldsDataObject[accountIndex].disabled = true;
+        }
         return fieldsDataObject;
     }
 
@@ -1423,7 +1428,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             this.save();
                         }
-                    });
+                    }).catch(error => 
+                        {
+                            this.loading = false;
+                            this.alert('Errore', 'Distributore non calcolato. Verificare di aver inserito i dati correttamente e in caso contattare l\'amministratore di sistema', 'error');
+                        }
+                    );
                 }
                 else {
                     this.loading = false;
@@ -1608,6 +1618,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     getDistributorSelected(event) {
 
         this.retrievedDistributor.forEach(element => {
+            if(element.Account__c === undefined || element.Account__r.Name === undefined) return;
             if (event.detail.Distributor === element.Account__r.Name) {
                 this.recordDistributorPointCode = element.Account__r.Id;
                 this.selectedDistributor = element;

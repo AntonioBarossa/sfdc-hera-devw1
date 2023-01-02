@@ -198,7 +198,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
         orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
         //orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c =  'Libero';
+        //orderToUpdate.Market__c =  'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
@@ -261,9 +261,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         
         accountSrv.checkReadAccess('CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
         Account account = accountQr.getRecordById(accountId, 'BillingStreetNumberExtension__c,CustomerCode__c,CustomerType__c,Category__c,BillingPlace__c,BillingCountry,BillingPostalCode,BillingState,BillingCity,BillingIsAddressVerified__c,BillingStreetNumber__c,BillingStreetName__c,CustomerMarking__c,BillingCityCode__c,BPSAPModel__c,FiscalCode__c,VATNumber__c,RecordType.DeveloperName,Name,FirstName__c,LastName__c,PrimaryEmail__c,Phone');
-        if(!orderOld.isTransition__c){
+        /*if(!orderOld.isTransition__c){
             changeCustomerMarking(account);
-        }
+        } */
         // Order toCheck = orderQr.getRecordById(orderToUpdate.id);
         // String customerName = null;
         // String customerLastName = null;
@@ -320,7 +320,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
     private static void alignSaleFields(Order orderToUpdate, String saleId){
 
         saleSrv.checkReadAccess('Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,AreaManager__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'Agency__c,DocumentDate__c,DocumentNumber__c,DocumentType__c,AgencyCode__c,CommercialId__c,VendorFirstName__c,VendorLastName__c,Channel__c,UpperChannelAgency__c,LowerChannelAgency__c,SaleBy__c,Campaign__c,Campaign__r.Name,CommissioningCampaign__c,CommissioningCampaign__r.Name,SalesContact__c,SalesContact__r.IndividualId,SalesContact__r.Individual.MarketingPrivacy__c,SalesContact__r.Individual.ProfilingPrivacy__c,SalesContact__r.Phone,SalesContact__r.MobilePhone,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c,AreaManager__c');
 
         orderToUpdate.SaleBy__c = sale.SaleBy__c;
         orderToUpdate.CommissioningCampaign__c = sale.CommissioningCampaign__c;
@@ -344,10 +344,9 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.AgencyCode__c = sale.AgencyCode__c;
         orderToUpdate.Agency__c = sale.Agency__c;
         orderToUpdate.AreaManager__c = sale.AreaManager__c;
-
-        orderToUpdate.LoginChannel__c=sale.CreatedBy.LoginChannel__c;
-        orderToUpdate.LoginWorkstation__c= sale.CreatedBy.Station__c;
-        orderToUpdate.CreatorGroup__c= sale.CreatedBy.CreatorGroup__c;
+        orderToUpdate.DocumentDate__c = sale.DocumentDate__c;
+        orderToUpdate.DocumentNumber__c = sale.DocumentNumber__c;
+        orderToUpdate.DocumentType__c = sale.DocumentType__c;
 
         try {
             HDT_LC_CanaleContattoIVRLogin.generateUsernameAndPassword(orderToUpdate.Id);
@@ -385,6 +384,12 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             orderToUpdate.CommercialProduct__c = orderItemList[0].Product2.Name;
             orderToUpdate.VasServiceActivationDate__c = orderItemList[0].DelayEffectiveDate__c;
             orderToUpdate.CommercialProductLink__c = orderItemList[0].Product2Id;
+            orderToUpdate.Market__c = orderItemList[0].Product2.ReferenceMarket__c;
+            if(orderItemList[0].Product2.ReferenceMarket__c == null)
+            {
+                OrderItem offerItem = orderItemQr.getOfferActivationItem(orderItemList[0].Order.ParentOrder__c, orderItemList[0].Order.ServicePoint__c);
+                orderToUpdate.Market__c = offerItem?.Product2?.ReferenceMarket__c;
+            }
         }
         
     }
@@ -404,6 +409,18 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }
         if(quote.IsVAS__c){
             orderToUpdate.IsVAS__c=quote.IsVAS__c;
+        }
+        if(quote.VasCommodity__c != null)
+        {
+            orderToUpdate.Commodity__c = quote.VasCommodity__c;
+        }
+        if(quote.VasSupplyAddress__c != null)
+        {
+            Map<String,String> address = (Map<String,String>) JSON.deserialize(quote.VasSupplyAddress__c, Map<String,String>.class);
+            for(String key : address.keySet())
+            {
+                orderToUpdate.put(key, address.get(key));
+            }
         }
         orderToUpdate.isBillableVas__c=quote.isBillableVas__c;
         mixedData.quoteAmendmentAllow=quote.AmendmentAllowed__c;
@@ -622,7 +639,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         }*/
     }
 
-    private static void changeCustomerMarking(Account account){
+    /* private static void changeCustomerMarking(Account account){
         Map<String, String> customerMarkingTranscode = 
                 new  Map<String, String>{
                     'Persona fisica'=> 'D1 - ',
@@ -635,7 +652,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
             account.customerMarking__c = appendix+account.customerMarking__c;
             accountSrv.updateRecord(account);
         }
-    }
+    } */
 
     private inherited sharing class HDT_WRP_Data{
         public String servicePointStatus ='';

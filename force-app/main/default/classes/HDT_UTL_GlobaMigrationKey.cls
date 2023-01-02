@@ -12,6 +12,17 @@ public with sharing class HDT_UTL_GlobaMigrationKey {
         }
     }
 
+    /**
+     * Metodo che aggiorna la chiave di migrazione sugli Account di tipo distributore**/
+    public static void setGlobalMigrationKeyDistributor(List<Account> newAccountList){
+        for(Account singleAccount : newAccountList){
+            //If is distributor
+            if(String.isNotBlank(singleAccount.Code__c)){
+                singleAccount.GlobalMigrationKey__c = singleAccount.Code__c;
+            }
+        }
+    }
+
     private static String getSapCodeField(Id recordId){
         if (recordId.getSobjectType() == Schema.Account.getSobjectType()){
                 return 'CustomerCode__c';
