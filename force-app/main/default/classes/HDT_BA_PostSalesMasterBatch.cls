@@ -42,6 +42,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         List<Case> casesToCheck = new List<Case>();
 
         List<wrts_prcgvr__Activity__c> actToInsert = new List<wrts_prcgvr__Activity__c>();
+        List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
         for(SObject sobj : scope){
 
             try{
@@ -146,6 +147,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             act.Case__c = activity.Case__c;
                             act.wrts_prcgvr__IsRequired__c	= true;
                             actToInsert.add(act);
+                            activity.wrts_prcgvr__Status__c = 'Chiusa';
+                            actToUpdate.add(activity);
                         }
                     }
                 }
@@ -158,6 +161,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         }
         if (actToInsert.size() > 0){
             insert actToInsert;
+            update actToUpdate;
         }
         // if(!eventsToPublish.isEmpty()){
         //     //EventBus.publish(eventsToPublish);

@@ -1382,6 +1382,12 @@
                 <elementReference>Get_Input_Case</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ParentRecordId</name>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Processo_Verifiche_Dati_Al_DL</name>

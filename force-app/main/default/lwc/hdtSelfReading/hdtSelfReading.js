@@ -459,7 +459,7 @@ export default class HdtSelfReading extends LightningElement {
                 for (let i = 0; i < registers.length; i++) {
                     let register = registers[i];
 
-                    let result = register.handleSave(this.readingCustomerDate);
+                    let result = register.handleSave(this.readingCustomerDate, this.object );
 
                     if(String(result).includes("Impossibile")){
                         this.errorAdvanceMessage = result;

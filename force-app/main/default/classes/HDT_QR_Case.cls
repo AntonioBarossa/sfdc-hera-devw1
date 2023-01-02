@@ -113,7 +113,8 @@ public inherited sharing class HDT_QR_Case {
         return [SELECT Id,
         Type,
         Phase__c,
-        DistributorName__c
+        DistributorName__c,
+        Commodity__c
         FROM Case
         WHERE Id = :caseId
         WITH SECURITY_ENFORCED
@@ -287,7 +288,7 @@ public inherited sharing class HDT_QR_Case {
         List<Case> childCases = new List<Case>();
         try
         {
-            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, CustomerRequestAccomplished__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
         }
         catch(Exception e)
         {

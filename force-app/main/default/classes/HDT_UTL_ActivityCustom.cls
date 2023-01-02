@@ -450,6 +450,37 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    public static void postSurvayWorkActivity(List<wrts_prcgvr__Activity__c> newActsList){
+        try{
+            Set<Id> newActsId = new Set<Id>();
+            Map<Id,String> objsId = new Map<Id,String>();
+            for (wrts_prcgvr__Activity__c newAct : newActsList){
+                newActsId.add(newAct.Id);
+                if (!'Lavorazione Reclamo Post Survey'.equalsIgnoreCase(newAct.Type__c)){
+                    continue;
+                }
+                Id recordId = newAct.Case__c != null ? newAct.Case__c : newAct.Order__c;
+                if (recordId == null) {
+                    continue;
+                }
+                objsId.put(recordId,newAct.Name);
+            }
+            if (objsId.isEmpty()){
+                return;
+            }
+            List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getOpenActivityByType('Lavorazione Reclamo Post Survey',objsId.keySet(),newActsId)){
+                Id recordId = act.Case__c != null ? act.Case__c : act.Order__c;
+                actToUpdate.add(new wrts_prcgvr__Activity__c(Id = act.Id, wrts_prcgvr__Status__c = 'Annullata', ClosingNote__c = 'Annullata per apertura attività più recente: ' + objsId.get(recordId)));
+            }
+            if (!actToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(actToUpdate);
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.ERROR, ex.getStackTraceString());
+        }
+    }
+
     public static void setCompanyName(List<wrts_prcgvr__Activity__c> activities){
         List<wrts_prcgvr__Activity__c> actToCheckList = new List<wrts_prcgvr__Activity__c>();
         Set<Id> setActivityId = new Set<Id>();

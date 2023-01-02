@@ -1176,4 +1176,11 @@
         <shortDescription>phaseNonInviataASap</shortDescription>
         <value>Errore tecnico invio a SAP</value>
     </labels>
+    <labels>
+        <fullName>casePhaseAttesaCliente</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>casePhaseAttesaCliente</shortDescription>
+        <value>Attesa risposta cliente</value>
+    </labels>
 </CustomLabels>

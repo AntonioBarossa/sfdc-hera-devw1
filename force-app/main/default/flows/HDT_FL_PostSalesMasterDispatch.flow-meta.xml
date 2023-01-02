@@ -10703,6 +10703,12 @@
                 <elementReference>CaseId</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ParentRecordId</name>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Gestione_Variazioni_Subflow</name>

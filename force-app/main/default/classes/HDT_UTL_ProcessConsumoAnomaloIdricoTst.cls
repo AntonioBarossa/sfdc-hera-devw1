@@ -113,13 +113,52 @@ private class HDT_UTL_ProcessConsumoAnomaloIdricoTst {
         consumoAnomaloBulk.setRequestId(myBulkRequest.Id);
         consumoAnomaloBulk.setProcess(myBulkRequest.ProcessType__c);
         consumoAnomaloBulk.setMassiveLoaderRequestItemList(bulkItems);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_ProcessConsumoAnomaloIdricoTstMock());
         Test.startTest();
         consumoAnomaloBulk.execute();
         Test.stopTest();
         List<Case> caseList=[SELECT Id FROM Case WHERE Type='Consumo Anomalo Idrico' WITH SECURITY_ENFORCED];
         MassiveLoaderRequest__c myBulkRequestCheck=[SELECT Id,ProcessType__c,RequestKO__c,RequestOK__c FROM MassiveLoaderRequest__c WHERE ProcessType__c='ConsumoAnomaloIdrico' WITH SECURITY_ENFORCED LIMIT 1];
+        
         System.assertEquals(2,myBulkRequestCheck.RequestOK__c,'2 requests are ok');
         System.assertEquals(6,myBulkRequestCheck.RequestKO__c,'6 requests are ko');
         System.assertEquals(2,caseList.size() ,'2 cases have been created');
+    }
+
+
+      /**
+    * @author Elvin Iluca
+    * @date 23/12/2022
+    * @description HDT_UTL_ProcessConsumoAnomaloIdricoTst – Test Class for HDT_UTL_ProcessConsumoAnomaloIdrico.cls
+    */
+
+    public class HDT_UTL_ProcessConsumoAnomaloIdricoTstMock implements HttpCalloutMock {
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse response = new HttpResponse();
+            HDT_WS_ArrichmentDataEntityResponse myBody = new HDT_WS_ArrichmentDataEntityResponse();
+            myBody.status='success';
+            myBody.statusCode=200;
+            myBody.correlationId='228d2200-82cb-11ed-97d3-0651c83adc2a';
+            myBody.timestamp='2022-12-23T15:07:29';
+
+            HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DataResponseObject data = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DataResponseObject();
+            HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_testataObject testata = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_testataObject();
+            testata.esito = 'OK';
+            List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject> listaPosizione = new List<HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject>();
+            HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject posizione = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject();
+            posizione.campo = 'POD';
+            posizione.valore = '000573710070';
+            listaPosizione.add(posizione);
+            data.testata = testata;
+            data.posizioni = listaPosizione;
+            myBody.data = data;
+
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(JSON.serialize(myBody));
+            response.setStatusCode(200);
+            response.setStatus('success');
+            return response; 
+        }
     }
 }
