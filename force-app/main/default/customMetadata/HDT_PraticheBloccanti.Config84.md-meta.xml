@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Config73</label>
+    <label>Config84</label>
     <protected>false</protected>
     <values>
         <field>Active__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">Variazioni</value>
+        <value xsi:type="xsd:string">Verifiche</value>
     </values>
     <values>
         <field>Object__c</field>
@@ -16,10 +16,10 @@
     </values>
     <values>
         <field>Subtype__c</field>
-        <value xsi:type="xsd:string">IVA – Esenzione</value>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Dichiarazione di intento</value>
+        <value xsi:type="xsd:string">Verifica Fuga Idrica</value>
     </values>
 </CustomMetadata>
