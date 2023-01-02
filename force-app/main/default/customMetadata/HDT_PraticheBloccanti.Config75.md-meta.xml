@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Config15</label>
+    <label>Config75</label>
     <protected>false</protected>
     <values>
         <field>Active__c</field>
@@ -8,7 +8,7 @@
     </values>
     <values>
         <field>Cluster__c</field>
-        <value xsi:type="xsd:string">Fatturazione</value>
+        <value xsi:type="xsd:string">Variazioni</value>
     </values>
     <values>
         <field>Object__c</field>
@@ -16,10 +16,10 @@
     </values>
     <values>
         <field>Subtype__c</field>
-        <value xsi:type="xsd:string">Errore di Lettura</value>
+        <value xsi:type="xsd:string">Rettifica per segnalazione cassetto fiscale</value>
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Rettifica Consumi</value>
+        <value xsi:type="xsd:string">Dichiarazione di intento</value>
     </values>
 </CustomMetadata>
