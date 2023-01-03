@@ -2494,7 +2494,7 @@ TEXT({!Get_Input_Case.Type}),
     <formulas>
         <name>LabelNextFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!Get_Input_Case.Type}) = &apos;Istruttoria&apos; || TEXT({!Get_Input_Case.Type}) = &apos;Nuovo Impianto&apos;|| TEXT({!Get_Input_Case.Type}) = &apos;Modifica Impianto&apos; || TEXT({!Get_Input_Case.Type})=&apos;Rimozione Impianto&apos;, &apos;Conferma Pratica&apos;, &apos;Avanti&apos;)</expression>
+        <expression>IF(TEXT({!Get_Input_Case.CompanyOwner__c}) = &apos;MMS&apos;,&apos;Conferma Pratica&apos;,&apos;Avanti&apos;)</expression>
     </formulas>
     <formulas>
         <name>NuovoImpAggAttCommodity</name>
