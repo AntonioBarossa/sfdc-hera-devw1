@@ -148,7 +148,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             [
                                 ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
                             ].forEach(el => {
-                                el.value = "";
+                                if(!el.fieldName?.startsWith("Residential"))    el.value = "";
                             })
                         }
                         /*You can do async operations before submitting
@@ -223,8 +223,8 @@ import * as rateCategories from './hdtRateCategories.js';
                             }
                         }
                     ),
-                    new fieldData('Comune di residenza','ResidentialCity__c',this.typeVisibility('both'),true, false, 'true', ''),
-                    new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.typeVisibility('both'), true, false, '',''),
+                    new fieldData('Comune di residenza','ResidentialCity__c',this.typeVisibility('both'),true, true, '', ''),
+                    new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.typeVisibility('both'), true, true, '',''),
                     new fieldData('Luogo di sottoscrizione','SubscriberPlace__c', this.typeVisibility('both'),true, false, 'true', this.order.Account.BillingPlace__c),
                     new fieldData('Nome','CustomerName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
