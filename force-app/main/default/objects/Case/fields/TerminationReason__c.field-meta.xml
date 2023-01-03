@@ -34,11 +34,11 @@
             <valueName>Cessazione del presupposto di applicazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>D'ufficio</controllingFieldValue>
+            <controllingFieldValue>Dufficio</controllingFieldValue>
             <valueName>Cessazione del presupposto da verifica interna</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>D'ufficio</controllingFieldValue>
+            <controllingFieldValue>Dufficio</controllingFieldValue>
             <valueName>Richiesta da ente creditore</valueName>
         </valueSettings>
     </valueSet>

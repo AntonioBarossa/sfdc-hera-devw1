@@ -8466,7 +8466,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D&apos;ufficio</fullName>
+            <fullName>Dufficio</fullName>
             <default>false</default>
         </values>
         <values>
