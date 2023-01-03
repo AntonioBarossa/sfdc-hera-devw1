@@ -20,12 +20,6 @@
         <default>false</default>
         <label>Da gestore</label>
     </customValue>
-    <customValue>
-        <fullName>D’ufficio</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>D’ufficio</label>
-    </customValue>
     <masterLabel>Provenienza Richiesta</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
