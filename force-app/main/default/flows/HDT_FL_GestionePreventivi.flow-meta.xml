@@ -3400,7 +3400,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <elementReference>LabelNextFormula</elementReference>
+                    <stringValue>Conferma pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
