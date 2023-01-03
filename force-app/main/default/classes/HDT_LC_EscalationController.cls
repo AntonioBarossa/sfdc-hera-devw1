@@ -85,9 +85,9 @@ public with sharing class HDT_LC_EscalationController {
 
                     Order orderList = new Order();
 
-                    orderList = [SELECT id, Status FROM Order WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
+                    orderList = [SELECT id, Status, RecordType.DeveloperName FROM Order WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
 
-                    if(orderList.Status == 'Draft' || orderList.Status == 'In Lavorazione' || orderList.Status=='Annullato'){
+                    if((orderList.Status == 'Draft' || orderList.Status == 'In Lavorazione' || orderList.Status=='Annullato') && orderList.RecordType.DeveloperName!='HDT_RT_OrderDossier'){
                         recordTypeName = 'HDT_RT_EscalationOrder';
                         parentEntityField = 'Order__c';
                         showPriorityField = 'false';
