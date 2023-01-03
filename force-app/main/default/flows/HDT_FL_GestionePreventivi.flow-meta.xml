@@ -2494,7 +2494,7 @@ TEXT({!Get_Input_Case.Type}),
     <formulas>
         <name>LabelNextFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!Get_Input_Case.Type}) = &apos;Istruttoria&apos;,&apos;Conferma Pratica&apos;,&apos;Avanti&apos;)</expression>
+        <expression>IF(TEXT({!Get_Input_Case.Type}) = &apos;Istruttoria&apos; || TEXT({!Get_Input_Case.Type}) = &apos;Nuovo Impianto&apos;, &apos;Conferma Pratica&apos;, &apos;Avanti&apos;)</expression>
     </formulas>
     <formulas>
         <name>NuovoImpAggAttCommodity</name>
@@ -3400,7 +3400,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <inputParameters>
                 <name>labelSaveButton</name>
                 <value>
-                    <stringValue>Conferma pratica</stringValue>
+                    <elementReference>LabelNextFormula</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
