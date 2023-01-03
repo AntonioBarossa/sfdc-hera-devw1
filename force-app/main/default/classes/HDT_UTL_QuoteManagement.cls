@@ -59,6 +59,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		String caliber 				= inputs[0].caliber;
 		String voltageAvilable    	= inputs[0].voltageAvailable;
 		String phaseAvaillable    	= inputs[0].phaseAvalaible;
+		String subprocess    		= inputs[0].subprocess;
 		Boolean isInrete 			= checkLocalDispatcher(localDispatcher);
 		String powerAdjustment 	= 'Y';
 		String vendDist = isInrete ? 'InRete' : 'ExtraRete';
@@ -148,6 +149,7 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 			+'AND (VoltageRequired__c = \'' + String.escapeSingleQuotes(voltage) + '\' OR VoltageRequired__c = null) '
 			+connectionTypeCondition
 			+'AND Operation_type__c = \'' + String.escapeSingleQuotes(operationType) + '\' '
+			+'AND (Subprocess__c = \'' + String.escapeSingleQuotes(subprocess) + '\' OR Subprocess__c = null) '
 			+'AND Commodity__c = \'' + String.escapeSingleQuotes(commodity) + '\' '
 			+'AND (EnergyUseType__c = \'' + String.escapeSingleQuotes(energyUseType) + '\' OR EnergyUseType__c = null) '
 			+'AND (VendDist__c = \'' + String.escapeSingleQuotes(vendDist) + '\' OR VendDist__c = null) '

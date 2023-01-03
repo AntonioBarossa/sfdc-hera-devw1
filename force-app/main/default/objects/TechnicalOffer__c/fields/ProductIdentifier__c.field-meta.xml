@@ -12,12 +12,12 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>BAND DISCOUNT</fullName>
+                <fullName>BAND_DISCOUNT</fullName>
                 <default>false</default>
                 <label>BAND DISCOUNT</label>
             </value>
             <value>
-                <fullName>SPECIAL DAY</fullName>
+                <fullName>SPECIAL_DAY</fullName>
                 <default>false</default>
                 <label>SPECIAL DAY</label>
             </value>

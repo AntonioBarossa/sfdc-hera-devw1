@@ -1197,9 +1197,19 @@
                 <label>HC_CVMBO_RESC_Reporting</label>
             </value>
             <value>
+                <fullName>HC_VENDITA_MM_Supporto_alla_Vendita</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto alla Vendita</label>
+            </value>
+            <value>
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Approvazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Approvazione</label>
             </value>
             <value>
                 <fullName>HCM_BACK_CON_Fatturazione</fullName>
@@ -1307,6 +1317,11 @@
                 <label>HCM_DISCO_Notifiche</label>
             </value>
             <value>
+                <fullName>HCM_DISCO_Preventivi</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Preventivi</label>
+            </value>
+            <value>
                 <fullName>HCM_RECLAMI</fullName>
                 <default>false</default>
                 <label>HCM_RECLAMI</label>
@@ -1355,11 +1370,6 @@
                 <fullName>HS_DCSC_FI_Verifiche Fatturazione</fullName>
                 <default>false</default>
                 <label>HS_DCSC_FI_Verifiche Fatturazione</label>
-            </value>
-            <value>
-                <fullName>Supporto alla Vendita</fullName>
-                <default>false</default>
-                <label>Supporto alla Vendita</label>
             </value>
         </valueSetDefinition>
     </valueSet>

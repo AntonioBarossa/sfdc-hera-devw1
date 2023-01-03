@@ -80,7 +80,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             try{
                 currentObj.newCase=caseEnrichment(currentObj.newCase,contractCodePodMap.get(currentObj.csvSplitted[contractIndex]));
             }catch (Exception e){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, e.getMessage()));
+                itemsToSave.add(setErrorItem(currentObj.requestItem, (e.getMessage() + ' | '+e.getStackTraceString()).abbreviate(255)));
                 continue;
             }
             caseToInsert.add(currentObj.newCase);
@@ -94,47 +94,31 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         }
     }
 
+
     private Case caseEnrichment(Case caseToEnrich, Contract dataSource){
-        caseToEnrich.ServicePoint__c=dataSource.ServicePoint__c;
-        caseToEnrich.Contract__c=dataSource.Id;
-        caseToEnrich.AccountId=dataSource.AccountId;
-        caseToEnrich.ContactId=dataSource.Contact__c;
-        caseToEnrich.JointBottomAdhesion__c=dataSource.ServicePoint__r.JointBottomAdhesion__c;
-        caseToEnrich.PaySewer__c=dataSource.ServicePoint__r.PaySewer__c;
-        caseToEnrich.PayPurification__c=dataSource.ServicePoint__r.PayPurification__c;
-        caseToEnrich.MeterCode__c=dataSource.ServicePoint__r.MeterSN__c;
-        caseToEnrich.Commodity__c =dataSource.ServicePoint__r.CommoditySector__c;
-        caseToEnrich.Distributor__c=dataSource.ServicePoint__r.Distributor__c;
-        caseToEnrich.SupplyType__c=dataSource.ServicePoint__r.SupplyType__c;
-        caseToEnrich.AnnualConsumption__c=dataSource.ServicePoint__r.AnnualConsumption__c;
-        caseToEnrich.Disconnectable__c=dataSource.ServicePoint__r.Disconnectable__c;
-        caseToEnrich.DistributorCode__c=dataSource.ServicePoint__r.Distributor__r.Code__c;
-        caseToEnrich.Market__c=dataSource.ServicePoint__r.MarketOrigin__c;
-        caseToEnrich.PurificationInfoOnTheInvoice__c=dataSource.ServicePoint__r.PurificationInfoOnTheInvoice__c;
-        caseToEnrich.RateCategory__c=dataSource.ServicePoint__r.RateCategory__c;
-        caseToEnrich.ResidentDomesticHousingUnit__c=dataSource.ServicePoint__r.ResidentDomesticHousingUnit__c;
-        caseToEnrich.SalesCompanyCode__c=dataSource.ServicePoint__r.Distributor__r.Code__c;
-        caseToEnrich.ServicePointType__c=dataSource.ServicePoint__r.ImplantTypeTemp__c;
-        caseToEnrich.SupplyCity__c=dataSource.ServicePoint__r.SupplyCity__c;
-        caseToEnrich.SupplyCityCode__c=dataSource.ServicePoint__r.SupplySAPCityCode__c;
-        caseToEnrich.SupplyCountry__c=dataSource.ServicePoint__r.SupplyCountry__c;
-        caseToEnrich.SupplyPostalCode__c=dataSource.ServicePoint__r.SupplyPostalCode__c;
-        caseToEnrich.SupplyProvince__c=dataSource.ServicePoint__r.SupplyProvince__c;
-        caseToEnrich.SupplyStreetCode__c=dataSource.ServicePoint__r.SupplySAPStreetCode__c;
-        caseToEnrich.SupplyStreetName__c=dataSource.ServicePoint__r.SupplyStreet__c;
-        caseToEnrich.SupplyStreetNumber__c=dataSource.ServicePoint__r.SupplyStreetNumber__c;
-        caseToEnrich.Email__c=getEmail(dataSource.Account,dataSource.BillingProfile__r);
-        caseToEnrich.BillingProfile__c=dataSource.BillingProfile__c;
-        caseToEnrich.InvoicingCity__c=caseToEnrich.BillingProfile__r.InvoicingCity__c;
-        caseToEnrich.InvoicingCountry__c=caseToEnrich.BillingProfile__r.InvoicingCountry__c;
-        caseToEnrich.InvoicingPlace__c=caseToEnrich.BillingProfile__r.InvoicingPlace__c;
-        caseToEnrich.InvoicingPostalCode__c=caseToEnrich.BillingProfile__r.InvoicingPostalCode__c;
-        caseToEnrich.InvoicingProvince__c=caseToEnrich.BillingProfile__r.InvoicingProvince__c;
-        caseToEnrich.InvoicingStreetName__c=caseToEnrich.BillingProfile__r.InvoicingStreetName__c;
-        caseToEnrich.InvoicingStreetNumber__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumber__c;
-        caseToEnrich.InvoicingStreetNumberExtension__c=caseToEnrich.BillingProfile__r.InvoicingStreetNumberExtension__c;
-        caseToEnrich.DeliveryAddress__c=caseToEnrich.BillingProfile__r.InvoicingAddressFormula__c;
-        return caseToEnrich;
+        HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(dataSource.SAPContractCode__c, '', dataSource.ServicePoint__r.SAPImplantCode__c);
+        if(res.status =='success' && res.statusCode== 200){
+            caseToEnrich=HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), caseToEnrich);
+            caseToEnrich.ServicePoint__c=dataSource.ServicePoint__c;
+            caseToEnrich.Contract__c=dataSource.Id;
+            caseToEnrich.AccountId=dataSource.AccountId;
+            caseToEnrich.ContactId=dataSource.Contact__c;
+            caseToEnrich.BillingProfile__c=dataSource.BillingProfile__c;
+            caseToEnrich.Distributor__c=dataSource.ServicePoint__r.Distributor__c;
+            caseToEnrich.Commodity__c=dataSource.ServicePoint__r.CommoditySector__c;
+            caseToEnrich.Email__c=getEmail(dataSource.Account,dataSource.BillingProfile__r);
+            caseToEnrich.InvoicingCity__c=dataSource.BillingProfile__r.InvoicingCity__c;
+            caseToEnrich.InvoicingCountry__c=dataSource.BillingProfile__r.InvoicingCountry__c;
+            caseToEnrich.InvoicingPlace__c=dataSource.BillingProfile__r.InvoicingPlace__c;
+            caseToEnrich.InvoicingPostalCode__c=dataSource.BillingProfile__r.InvoicingPostalCode__c;
+            caseToEnrich.InvoicingProvince__c=dataSource.BillingProfile__r.InvoicingProvince__c;
+            caseToEnrich.InvoicingStreetName__c=dataSource.BillingProfile__r.InvoicingStreetName__c;
+            caseToEnrich.InvoicingStreetNumber__c=dataSource.BillingProfile__r.InvoicingStreetNumber__c;
+            caseToEnrich.InvoicingStreetNumberExtension__c=dataSource.BillingProfile__r.InvoicingStreetNumberExtension__c;
+            caseToEnrich.DeliveryAddress__c=dataSource.BillingProfile__r.InvoicingAddressFormula__c;
+            return caseToEnrich;
+        }
+        throw new CalloutException('Arricchimento dati fallito');
     }
 
     private Map<String,Object> integrityChecks(List<String>csvSplitted){

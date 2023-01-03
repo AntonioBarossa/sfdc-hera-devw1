@@ -7,7 +7,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
             SELECT Id, Name, CreatedDate, LastModifiedDate
             FROM Document
             WHERE FolderId = :folderId
-            //AND Name != 'Driver3'
+            AND Name != 'Driver3'
             WITH SECURITY_ENFORCED
             ORDER BY Name
         ];

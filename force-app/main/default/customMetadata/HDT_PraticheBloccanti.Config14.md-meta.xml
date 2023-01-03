@@ -20,6 +20,6 @@
     </values>
     <values>
         <field>Type__c</field>
-        <value xsi:type="xsd:string">Errore di fatturazione</value>
+        <value xsi:type="xsd:string">Errore di Fatturazione</value>
     </values>
 </CustomMetadata>
