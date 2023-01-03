@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_CaseProcess {
             //Commodity Management
             for(Case singleCase : caseList){
                 Case caseNew = singleCase;
-		        Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                Case caseOld = (Case) caseOldMap.get(caseNew.Id);
                 servicePoint = caseNew.ServicePoint__c;
                 servicePointOld = caseOld.ServicePoint__c;
                 if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
@@ -71,6 +71,8 @@ public with sharing class HDT_UTL_CaseProcess {
             }
         }
     }
+
+
     public static void caseBpcaSieManagement(Map<Id, Sobject> newCasesMap, Map<Id, Sobject> oldCasesMap) {
         Set<Id> accountIdsBpca = new Set<Id>();
         for(Case caseNew : (List<Case>) newCasesMap.values()){
@@ -160,20 +162,20 @@ public with sharing class HDT_UTL_CaseProcess {
         )return true;
         return false;
     }
-    public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
+    public static void handleAfterUpdate(List<Case> caseList, Map<Id,SObject> caseOldMap){
         HDT_QR_Case caseQr = new HDT_QR_Case();
-		Case caseNew = caseList[0];
-		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
-		String newPhase = caseNew.Phase__c;
-		String oldPhase = caseOld.Phase__c;
+        Case caseNew = caseList[0];
+        Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+        String newPhase = caseNew.Phase__c;
+        String oldPhase = caseOld.Phase__c;
         DateTime nowDateTime = DateTime.now();
-		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+        if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
             /**@frpanico
              * Added comment:
              * Se la fase di arrivo e' di annullamento o Annullato
              * si entra nell'if per tutte le gestioni ad hoc dei processi
              */
-			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+            if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
                 //Annullamento activities legate al case di Richiesta Parere
                 if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){    
@@ -277,16 +279,24 @@ public with sharing class HDT_UTL_CaseProcess {
                     System.debug(LoggingLevel.DEBUG, 'Inside Condition');
                     HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
                 }
-                /*if(caseNew.Cluster__c == 'Autolettura'){
-                    // Annullamento dopo l'invio al DL
-                    if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
-                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione M01/M02','Gestione M01/M02','Gestione M01/M02');
-                    }
-                    // Annullamento dopo la validazione da MDM ma prima dell'invio al DL
-                    else if (caseNew.PhaseStory__c != null && caseNew.PhaseStory__c.containsIgnoreCase('Esito OK da SAP') && !caseNew.PhaseStory__c.containsIgnoreCase('Comunicazione verso Heroku OK')){
-                        HDT_UTL_Case.createActivity(caseNew.Id, 'Gestione Manuale SAP','Gestione Manuale SAP','Gestione Manuale SAP');
-                    }
-                }*/
+            }
+        }
+    }
+    public static Boolean manageCancellationProcess(List<Case> caseList, Map<Id,SObject> caseOldMap){
+        HDT_QR_Case caseQr = new HDT_QR_Case();
+		Case caseNew = caseList[0];
+		Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+		String newPhase = caseNew.Phase__c;
+		String oldPhase = caseOld.Phase__c;
+        DateTime nowDateTime = DateTime.now();
+		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+            /**@frpanico
+             * Added comment:
+             * Se la fase di arrivo e' di annullamento o Annullato
+             * si entra nell'if per tutte le gestioni ad hoc dei processi
+             */
+			if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
+                
                 /**@frpanico 22/10/2021
                  * Reintrodotto PhaseManager per annullamento
                  * viene skippato solo in entrata e in uscita dall'annullamento dove non sono previste activity
@@ -308,10 +318,10 @@ public with sharing class HDT_UTL_CaseProcess {
                     return true;
                 }
                 return false;
-            /**@frpanico 22/10/2021
-             * Add Comment:
-             * Si entra in questo blocco quando la fase di partenza e' di annullamento e la nuova non lo e'  
-             */    
+                /**@frpanico 22/10/2021
+                 * Add Comment:
+                 * Si entra in questo blocco quando la fase di partenza e' di annullamento e la nuova non lo e'  
+                 */    
 			}else if(oldPhase.indexOf('Annullamento - ') > -1 || oldPhase.indexOf('Ripensamento - ') > -1){
                 caseNew.PhaseStory__c = oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+caseNew.PhaseStory__c;
 

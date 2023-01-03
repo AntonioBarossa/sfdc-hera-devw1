@@ -130,6 +130,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>BonusDeliveryMode__c</picklist>
+        <values>
+            <fullName>Bonus in continuita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus su ultima fattura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketingPrivacyAcquired__c</picklist>
         <values>
             <fullName>Si</fullName>
@@ -2352,6 +2363,18 @@
         </values>
         <values>
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Errore invio a DL/SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>

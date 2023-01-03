@@ -9598,6 +9598,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per decorrenza dei termini</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>

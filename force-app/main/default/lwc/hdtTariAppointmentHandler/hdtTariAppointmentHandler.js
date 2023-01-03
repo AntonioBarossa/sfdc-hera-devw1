@@ -11,6 +11,7 @@ const OBJECT_FIELDS =[
     'Phase__c',
     'StartAppointment__c',
     'Outcome__c',
+    'NoticeId__c',
     'PhaseStory__c'
 ];
 
@@ -46,7 +47,7 @@ export default class HdtTariAppointmentHandler extends LightningElement{
         if (data){
             this.case = data;
             console.log('case ->' + this.case);
-            if(this.case.Outcome__c == 'Empty_Slots') {
+            if(this.case.NoticeId__c) {
                 this.isRendered = false;
             }
             if(this.confirmed==false){

@@ -200,6 +200,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type</field>
             <value>
                 <stringValue>Informative</stringValue>

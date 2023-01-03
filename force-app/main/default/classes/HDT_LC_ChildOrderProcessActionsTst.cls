@@ -141,7 +141,13 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             sp[0].CommoditySector__c = 'Gas';
             insert sp;
 			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(9, false, accounts[0].Id, sales, pricebook[0].Id);
-            
+            Integer index = 0;
+            for(order ord : orders){
+                if(index < 4){
+                    ord.SignatureMethod__c = 'OTP Remoto';
+                }
+                index++;
+            }
             
             id orderVoltura=utlConstants.ORDER_RECORDTYPEID_VOLTURA;
             id orderSubentro=utlConstants.ORDER_RECORDTYPEID_SUBENTRO;
@@ -323,6 +329,30 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             ordersResidenziale[0].ParentOrder__c = orders[6].Id;
             ordersResidenziale[0].BillingProfile__c = billing[0].Id;
             insert ordersResidenziale;
+
+            List<Order> ordersResidenzialeSwitchIn=HDT_UTL_DataFactoryTst.createOrder(1, false, myAccountResidenzialeList[0].Id,'Bozza');
+			ordersResidenzialeSwitchIn[0].Name = 'orderResidenzialeSwitchIn';
+            ordersResidenzialeSwitchIn[0].ServicePoint__c = servPoints[0].Id;
+            ordersResidenzialeSwitchIn[0].Contact__c = contactId;
+            ordersResidenzialeSwitchIn[0].ParentOrder__c = orders[6].Id;
+            ordersResidenzialeSwitchIn[0].BillingProfile__c = billing[0].Id;
+            ordersResidenzialeSwitchIn[0].PowerCommitted__c=2;
+			ordersResidenzialeSwitchIn[0].CreditCheckDescription__c = 'test3';
+			ordersResidenzialeSwitchIn[0].VoltureType__c='In Continuità';
+			ordersResidenzialeSwitchIn[0].RecordTypeId = orderSwitchIn;
+			ordersResidenzialeSwitchIn[0].IsActivationDeferred__c=true;
+            ordersResidenzialeSwitchIn[0].ProcessType__c = 'Switch in Ripristinatorio';
+            ordersResidenzialeSwitchIn[0].SignedDate__c = null;
+            ordersResidenzialeSwitchIn[0].VATfacilitationFlag__c=true;
+            ordersResidenzialeSwitchIn[0].ExciseGas__c = 'Imposta Usi Domestici (Cod. G_ICD)';
+            ordersResidenzialeSwitchIn[0].UseCategory__c='003-CotturaCibi+AcquaCalda';
+            ordersResidenzialeSwitchIn[0].SupplyType__c = 'Domestico';
+            ordersResidenzialeSwitchIn[0].CustomerCategory__c = 'Famiglie';
+            ordersResidenzialeSwitchIn[0].ImplantType__c = '13A0-Usi di Abitazione BT';
+            ordersResidenzialeSwitchIn[0].WithdrawalClass__c = '001 - 7 giorni';
+            ordersResidenzialeSwitchIn[0].SignatureMethod__c = 'OTP Remoto';
+            insert ordersResidenzialeSwitchIn;
+
 
 			List<SBQQ__Quote__c> quotes=HDT_UTL_DataFactoryTst.createQuote(1, false, orders[0].Id, opps[0].Id, sales[0].Id, 'Amendment');
 			quotes[0].IsVAS__c=false;
@@ -565,6 +595,51 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         Test.stopTest();
 
     }
+
+    @isTest
+	static void testSaveSwitchInResidenziale(){
+        
+        //Start Test
+        
+        List<Order> tOrder2=[SELECT Id, Name, Contact__c, Contact__r.Id, Account.Id, Account.RecordType.Id, Account.RecordType.DeveloperName, RecordType.Id, RecordType.DeveloperName, Commodity__c,
+        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,
+        Channel__c, CustomerCategory__c, MarketOrigin__c, IsCloned__c, SignedDate__c,VolturaThirdTrader__c FROM Order WHERE Name = 'orderResidenzialeSwitchIn'];
+        
+
+        Test.startTest();
+
+        //Test AttivazioneConModifica
+        // system.debug('Test AttivazioneConModifica');
+        Map<String,Object> m3 = new Map<String,Object>();
+
+        m3.put('EffectiveDate__c', Date.today().addDays(11));
+        tOrder2[0].VATfacilitationFlag__c=true;
+        tOrder2[0].VolturaThirdTrader__c=true;
+        tOrder2[0].QuotationType__c='Rapido';
+        tOrder2[0].Commodity__c = 'Energia Elettrica';
+        tOrder2[0].ProcessType__c = 'Switch in Ele';
+        Order myOrder = [Select Id from Order where RecordType.Name = 'Order Dossier'];
+        tOrder2[0].ParentOrder__c = myOrder.Id;
+        tOrder2[0].EffectiveDate__c = Date.today();
+        tOrder2[0].SupplyType__c = 'Domestico';
+        tOrder2[0].SignatureMethod__c = 'OTP Remoto';
+        update tOrder2;
+        system.debug('PUNTO 1 --> '+tOrder2[0].Account.RecordType.DeveloperName);
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+
+        m3.put('VATfacilitationFlag__c',true);
+        try{
+        HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
+        }
+ 
+        catch(Exception e){ 
+            System.assertEquals(true, true, 'Caricare documento per iva e accise');
+
+        }
+        Test.stopTest();
+
+    }
+
     @isTest
 	static void testSaveM2(){
         

@@ -38,6 +38,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         } else if( 'Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c))
         {
             Order parentOrderToUpdate = new Order();
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            List<Order> childs = [SELECT Id, SignedDate__c FROM Order WHERE ParentOrder__c = :orderParent.Id AND ProcessType__c = 'Switch in Fittizio' WITH SECURITY_ENFORCED];
+            if(!childs.isEmpty())
+            {
+                parentOrderToUpdate.SignedDate__c = childs[0].SignedDate__c;
+            }
             parentOrderToUpdate.Id = orderParent.Id;
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
@@ -333,9 +339,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     public static Boolean checkRequiredDocs(Order ord){
 
         Boolean check = true;
-
-        if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.DocumentPackage__c != null)
-        {
+        if(String.isNotBlank(ord.CommodityFormula__c) && ord.CommodityFormula__c.equalsIgnoreCase('Ambiente') && String.isNotBlank(ord.ProcessType__c) && !ord.ProcessType__c.containsIgnoreCase('Modifica Tariffa')){
+            check = false;
+        }else if(ord.AutorizationVolturaThirdTrader__c != null || ord.CILegalRepresentative__c != null ||  ord.CIAccoutn__c != null || ord.QuickQuote__c != null || ord.ChamberCommerceRegistration__c != null || ord.Instance326__c != null || ord.DocumentLow80__c != null || ord.DocumentPackage__c != null){
            	check = true;
             if(ord.CILegalRepresentative__c != null && !'Validato'.EqualsIgnoreCase(ord.CILegalRepresentative__c)){
                 check = false;
@@ -361,7 +367,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             if(ord.DocumentPackage__c != null && !'Validato'.EqualsIgnoreCase(ord.DocumentPackage__c)){
                 check = false;
             }
-        } else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
+        }else if(ord.AutorizationVolturaThirdTrader__c == null && ord.CILegalRepresentative__c == null &&  ord.CIAccoutn__c == null && ord.QuickQuote__c == null && ord.ChamberCommerceRegistration__c == null && ord.Instance326__c == null && ord.DocumentLow80__c == null && ord.DocumentPackage__c == null) {
             check = true;
         }
 

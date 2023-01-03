@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Richiesta non accolta</fullName>
+        <default>false</default>
+        <label>Richiesta non accolta</label>
+    </customValue>
+    <customValue>
         <fullName>Annullamento da cliente</fullName>
         <default>false</default>
         <label>Annullamento da cliente</label>
@@ -234,6 +239,11 @@
         <fullName>Esito KO da SII</fullName>
         <default>false</default>
         <label>Esito KO da SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione non necessaria</fullName>
+        <default>false</default>
+        <label>Variazione non necessaria</label>
     </customValue>
 	<customValue>
         <fullName>Mancata corrispondenza Anagrafe</fullName>

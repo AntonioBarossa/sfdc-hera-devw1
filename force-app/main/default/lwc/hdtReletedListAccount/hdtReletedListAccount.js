@@ -342,9 +342,11 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
             isValidated=false;
         }
         if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
+            if(mobilePhonePrefix.value == '+39'){
+                if(mobilePhone.value[0] != '3' || mobilePhone.value.length<9 || mobilePhone.value.length > 12){
+                    isValidated=false;
+                    messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre ed iniziare per 3!";
+                }
             }
         }
         if(!(this.fiscalCode.value=== undefined || this.fiscalCode.value.trim()==='')){
@@ -353,19 +355,8 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
                 messageError=" Il Codice fiscale deve essere lungo 16 cifre!";
             }
         }
-        
-        if(!(mobilePhone.value=== undefined || mobilePhone.value.trim()==='')){
-            if(mobilePhone.value.length<9 || mobilePhone.value.length > 12){
-                isValidated=false;
-                messageError=" Il numero di cellulare deve essere compreso tra le 9 e le 12 cifre!";
-            }
-        }
         if(!(phoneNumber.value=== undefined || phoneNumber.value.trim()==='')){
-            if(phoneNumber[0] != '0' && (phoneNumber.value.length<6 || phoneNumber.value.length > 11)){
-                isValidated=false;
-                messageError=" Il numero di telefono deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
-            }
-            if( String(phoneNumber.value).charAt(0)!='0'){
+            if(phoneNumber.value[0] != '0' || phoneNumber.value.length<6 || phoneNumber.value.length > 11){
                 isValidated=false;
                 messageError=" Il numero di telefono fisso deve essere compreso tra le 6 e le 11 cifre ed iniziare per 0!";
             }

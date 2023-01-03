@@ -3,6 +3,12 @@ global with sharing class HDT_WS_IntermediateResults {
 
     private static HDT_QR_Case caseQr = new HDT_QR_Case();
 
+    /*private static final Map<String, String> COD_TO_PHASE = new Map<String, String>{
+        '0050'=>'Approvata',
+        '0007'=>'Rifiutata',
+        '0060'=>'Presa In Carico'
+    };*/
+
     @HttpPost
     global static HDT_WRP_Response postIntermediateResults()  {
         try{
@@ -33,53 +39,53 @@ global with sharing class HDT_WS_IntermediateResults {
             for(HDT_WRP_Reminder caseData : this.request.reminder){
                 caseIds.add(caseData.caseId);
             }
-            Map<Id, Case> mapCases = new Map<Id, Case>(caseQr.getRecordsById(caseIds, 'Id, Type, Order__c'));
-            List<Sobject> sobjs = new List<Sobject>();
+            Map<Id, Case> mapCases = new Map<Id, Case>(caseQr.getRecordsById(caseIds, 'Id, Type, Order__c, Phase__c'));
+            List<Sobject> sobjectsToUpdate = new List<Sobject>();
             for(HDT_WRP_Reminder caseData : this.request.reminder){
-                sobjs.addAll(this.populateSobjForUpdate(caseData, mapCases.get(caseData.caseId)));
+                this.populateSobjForUpdate(caseData, mapCases.get(caseData.caseId), sobjectsToUpdate);
             }
-            List<Database.SaveResult> saveResults = Database.update(sobjs, false);
+            
+            List<Database.SaveResult> saveResults = Database.update(removeDuplicateSobjects(sobjectsToUpdate), false);
             this.insertLog(saveResults);
             return;
         }
 
-        private List<Sobject> populateSobjForUpdate(HDT_WRP_Reminder calloutCaseDt, Case originalCase){
-            List<Sobject> retList = new List<Sobject>();
+        private void populateSobjForUpdate(HDT_WRP_Reminder calloutCaseDt, Case originalCase, List<Sobject> sobjectsToUpdate){
             try{
-                Case caseToUpdate = new Case();
-                caseToUpdate.Id= calloutCaseDt.caseId;
+                Case caseToUpdate = new Case(Id = calloutCaseDt.caseId);
+                HDT_WRP_Field fieldInfos = calloutCaseDt.field[calloutCaseDt.field.size()-1];
 
                 // popola phase con condizione
-                Map<String, String> codToPhase = new Map<String, String>{
-                    '0050'=>'Approvata',
-                    '0007'=>'Rifiutata',
-                    '0060'=>'Presa In Carico'
-                };
+                
                 // if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)) 
-                //     caseToUpdate.Phase__c = codToPhase.get(calloutCaseDt.field[0].codNota);
-                // else caseToUpdate.Phase__c = calloutCaseDt.field[0].phase;
-                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? codToPhase.get(calloutCaseDt.field[0].codNota) : calloutCaseDt.field[0].phase;
-
+                //     caseToUpdate.Phase__c = COD_TO_PHASE.get(fieldInfos.codNota);
+                // else caseToUpdate.Phase__c = fieldInfos.phase;
+                caseToUpdate.Phase__c = 'Avviso di Servizio'.equalsIgnoreCase(originalCase.Type)? getIstruttoriaFaseByCode(fieldInfos.codNota) : fieldInfos.phase;
+                if(STRING.isBlank(caseToUpdate.Phase__c)){
+                    caseToUpdate.Phase__c = originalCase.Phase__c;
+                    caseToUpdate.Description = 'Errore aggiornamento nota con codice '+ fieldInfos.codNota + '\nCodice Nota non valido per il caso selezionato.';
+                    sobjectsToUpdate.add(caseToUpdate);
+                    return;
+                }
                 // mergiate "descNota" e "textNota" all’interno del campo “Description”
-                caseToUpdate.Description = //'Codice Activity: '+calloutCaseDt.field[0].codActivity+'\n'+
-                                           //'Codice Nota: *'+calloutCaseDt.field[0].codNota+'*'+'\n'+
-                                           'Descrizione Nota: '+calloutCaseDt.field[0].descNota+'\n'+
-                                           'Testo Nota: '+calloutCaseDt.field[0].textNota;
+                caseToUpdate.Description = //'Codice Activity: '+fieldInfos.codActivity+'\n'+
+                                           //'Codice Nota: *'+fieldInfos.codNota+'*'+'\n'+
+                                           'Descrizione Nota: '+fieldInfos.descNota+'\n'+
+                                           'Testo Nota: '+fieldInfos.textNota;
 
                 // passati "codActivity" e "codNota" nei rispettivi campi su Case
-                caseToUpdate.ActivityCode__c = calloutCaseDt.field[0].codActivity;
-                caseToUpdate.NoteCode__c = calloutCaseDt.field[0].codNota;
+                caseToUpdate.ActivityCode__c = fieldInfos.codActivity;
+                caseToUpdate.NoteCode__c = fieldInfos.codNota;
 
                 //c.exampleActivityCode = caseData.field[0].codActivity;
                 //Try Save all data
-                retList.add(caseToUpdate);
+                sobjectsToUpdate.add(caseToUpdate);
                 if('Avviso di Servizio'.equalsIgnoreCase(originalCase.Type) && !'Presa In Carico'.equalsIgnoreCase(caseToUpdate.Phase__c) && originalCase.Order__c!=null){
-                    retList.add(this.populateOrder(caseToUpdate.Phase__c, originalCase.Order__c));
+                    sobjectsToUpdate.add(this.populateOrder(caseToUpdate.Phase__c, originalCase.Order__c));
                 } 
             }catch(Exception e){
                 this.errorLog.add(calloutCaseDt.caseId+'\t'+calloutCaseDt.noticeId+'\t'+'Exception Thrown '+e.getMessage());
             }
-            return retList;
         }
 
         private Order populateOrder(String casePhase, Id orderId){
@@ -87,7 +93,7 @@ global with sharing class HDT_WS_IntermediateResults {
             orderToUpdate.Id = orderId;
             /* controllo Phase */
             if(casePhase=='Approvata'){
-                orderToUpdate.Phase__c = 'Comunicazione Verso Heroku';
+                orderToUpdate.Phase__c = 'Documentazione Validata';
             } else if(casePhase=='Rifiutata'){
                 orderToUpdate.Phase__c = 'Annullata';
                 orderToUpdate.CancellationReason__c = 'Mancanza del presupposto';
@@ -106,6 +112,30 @@ global with sharing class HDT_WS_IntermediateResults {
                 this.errorLog.add(sr.getId()+'\t'+'-'+'\t'+errorMsg);
             }
             HDT_SRV_ServiceTwentySix.insertCalloutLog(this.request.requestId, JSON.serialize(this.request), STRING.join(this.errorLog, '\n'));
+        }
+
+        private List<Sobject> removeDuplicateSobjects(List<SObject> listWithDuplicates){
+            Map<Id, Sobject> tempMap = new Map<Id, Sobject>();
+            for(SObject sobj : listWithDuplicates){
+                tempMap.put(sobj.Id, sobj);
+            }
+            return tempMap.values();
+        }
+        
+        @TestVisible
+        private String getIstruttoriaFaseByCode(String noteCode){
+            switch on noteCode {
+                when  '0050'{
+                    return 'Approvata';
+                }
+                when '0007' {
+                    return 'Rifiutata';
+                }
+                when '0060', '0040' {
+                    return 'Presa In Carico';
+                }
+            }
+            return null;
         }
 
     }

@@ -448,15 +448,15 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 System.debug(LoggingLevel.DEBUG, 'RateCategory: ' + String.valueOf(objFields.get('RateCategory__c')));
 
                 if(afundiRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDI';
+                    fieldName = 'UND_IND';
                 }else if (afundaRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDA';
+                    fieldName = 'UND_AGR';
                 }else if(afundcRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDC';
+                    fieldName = 'UND_COM';
                 }else if(afundzRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
                     fieldName = 'AFUNDZ';
                 }else if ('ACAUGENER0'.equalsIgnoreCase(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUND';
+                    fieldName = 'UND';
                 }
 
                 if(!String.isBlank(fieldName))

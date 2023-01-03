@@ -49,7 +49,7 @@ public with sharing class HDT_UTL_CalculateTransition {
             HDT_MatriceSocietaVendita__mdt matrixSaleSociety = [SELECT Id, isActive__c, SalesCompanyCode__c, Comune__c, distributor__c, Marcatura__c, Offerta__c, Service__c, SellerCompany__c 
                                                                 FROM HDT_MatriceSocietaVendita__mdt 
                                                                 WHERE isActive__c = true AND 
-                                                                    Marcatura__c = 'ALTRO' AND 
+                                                                    (Marcatura__c = 'MMS' OR Marcatura__c = 'ALTRO') AND 
                                                                     (distributor__c LIKE :(String)calculateTransitionMap.get('distributorCode') OR distributor__c LIKE 'ALTRO') AND 
                                                                     Comune__c =: queryCity AND
                                                                     Service__c =: (String)calculateTransitionMap.get('commodity') WITH SECURITY_ENFORCED LIMIT 1];

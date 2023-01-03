@@ -36,8 +36,7 @@ public inherited sharing class HDT_QR_AtecoMatrix {
                 IstatCode__c,
                 Category__c,
                 RonchiCode__c,
-                RonchiSubcategory__c,
-                RonchiDescription__c
+                RonchiSubcategory__c
                 FROM AtecoMatrix__c
                 WHERE
                 City__c = :comune
@@ -57,8 +56,7 @@ public inherited sharing class HDT_QR_AtecoMatrix {
                 IstatCode__c,
                 Category__c,
                 RonchiCode__c,
-                RonchiSubcategory__c,
-                RonchiDescription__c
+                RonchiSubcategory__c
                 FROM AtecoMatrix__c
                 WHERE
                 City__c = :comune
@@ -84,8 +82,7 @@ public inherited sharing class HDT_QR_AtecoMatrix {
                 IstatCode__c,
                 Category__c,
                 RonchiCode__c,
-                RonchiSubcategory__c,
-                RonchiDescription__c
+                RonchiSubcategory__c
                 FROM AtecoMatrix__c
                 WHERE
                 IstatCode__c = :codiceIstat
@@ -105,8 +102,7 @@ public inherited sharing class HDT_QR_AtecoMatrix {
                 IstatCode__c,
                 Category__c,
                 RonchiCode__c,
-                RonchiSubcategory__c,
-                RonchiDescription__c
+                RonchiSubcategory__c
                 FROM AtecoMatrix__c
                 WHERE
                 IstatCode__c = :codiceIstat

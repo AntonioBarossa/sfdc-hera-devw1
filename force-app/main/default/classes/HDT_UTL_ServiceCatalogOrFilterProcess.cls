@@ -143,7 +143,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'ErrorediFatturazione' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Preventivi'}, 
+                {'Preventivi'}, 
             'Type' => new List<String>
                 {'Gestione Calamità'}
         },
@@ -155,7 +155,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     'RettificaConsumi' => new Map<String,List<String>>
         {
             'Cluster__c' => new List<String>
-                {'Reclami', 'Segnalazioni'},
+                {'Segnalazioni'},
             'Type' => new List<String>
                 {'Consumo Anomalo Idrico'}
         },

@@ -20,7 +20,7 @@
     </values>
     <values>
         <field>StatoFornitura__c</field>
-        <value xsi:type="xsd:string">Cessato,Sospeso</value>
+        <value xsi:type="xsd:string">Inattivo,Sospeso</value>
     </values>
     <values>
         <field>TipoProcesso__c</field>
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Gas</value>
+        <value xsi:type="xsd:string">Gas,Energia Elettrica</value>
     </values>
 </CustomMetadata>

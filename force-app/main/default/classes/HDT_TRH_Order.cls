@@ -73,7 +73,10 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         /* sostituito dal metodo sotto che esclude eventuali chiamate doppie eseguite negli ultimi 30 secondi
         ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils')).bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old}); */
         HDT_UTL_PhaseTransSobjectCreation.insertBulkSobjects();
-        HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Order');
+        if(HDT_UTL_OrderProcess.isChangedPhase((List<Order>)trigger.new,Trigger.oldMap)){
+            ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils')).bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
+            //HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Order');
+        }
 
 
         HDT_UTL_OrderProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
@@ -91,7 +94,8 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         HDT_UTL_VoltureChangeManager.cancelTechnicalVolture((List<Order>)Trigger.New);
 
-
+        //Lasciare come ultima istruzione dell'afterupdate
+        HDT_UTL_OrderProcess.creditCheckActivityManagement(Trigger.new,Trigger.oldMap);
         system.debug(LoggingLevel.DEBUG,'Fine afterUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         
     }

@@ -339,8 +339,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DiscardReason__c = (String.isNotBlank(ord.PrecheckReasonSII__c) && String.isNotBlank(ord.CausalCode__c))? ord.CausalCode__c+' - '+ord.PrecheckReasonSII__c 
                                         : (String.isBlank(ord.CausalCode__c))? ord.PrecheckReasonSII__c : ord.CausalCode__c;
-
-                                    if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103'){
+                                    /**@frpanico 2022-12-14 TK 939779C Aggiunto codice 107 */
+                                    if(mapRequestFields.get('CODERR_ES') == '003' || mapRequestFields.get('CODERR_ES') == '103' || mapRequestFields.get('CODERR_ES') == '107'){
                                         ord.IsTechnicalTransfer__c = true;
                                     }
                                 }
@@ -534,7 +534,20 @@ public with sharing class HDT_SRV_SalesHandler {
                                         }else{
 
                                             if(mapRequestFields.get('FASE') == 'Esito OK da DBO'){
-                                                futurePhase = 'Completata';
+                                                if(previousPhase.indexOf('Annullamento') > -1) {
+                                                    ord.Phase__c = 'Annullamento - ' + nextPhase;
+                                                    Datetime nowDate = Datetime.now();
+                                                    String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                                                    String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
+                                                    if(mapRequestFields.get('NOTE_ANN') != null && mapRequestFields.get('NOTE_ANN') != ''){
+                                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('NOTE_ANN') + '\n' + cancellationNote;
+                                                        ord.DiscardReason__c = mapRequestFields.get('NOTE_ANN');
+                                                    }
+                                                    futurePhase = 'Annullato';
+                                                }else{
+                                                    futurePhase = 'Completata';
+                                                }
+                                                
                                             }
                                             /**@frpanico 04/01/2022
                                              * Aggiunto MoveOut

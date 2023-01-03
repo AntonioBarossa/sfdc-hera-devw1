@@ -12,7 +12,44 @@
 
 
     public override void beforeInsert(){
-        
+        List<Contact> listCnt = (List<Contact>)trigger.new;
+
+        for (Contact tempCnt : listCnt) {
+            if((String.isNotBlank(tempCnt.FiscalCode__c) && (tempCnt.FiscalCode__c.length()!=16 && tempCnt.FiscalCode__c.length()!=11)) || (String.isNotBlank(tempCnt.VATNumber__c) && tempCnt.VATNumber__c.length()!=11 && !tempCnt.VATNumber__c.isNumeric())){
+                tempCnt.addError('Inserire una Partita Iva o un Codice Fiscale Valido');
+            }
+
+            if (String.isNotBlank(tempCnt.FiscalCode__c) && tempCnt.FiscalCode__c.length()==16) {
+                tempCnt.FiscalCode__c = tempCnt.FiscalCode__c.toUpperCase();
+                String lastLetter = tempCnt.FiscalCode__c.right(1);
+                String fiscalCodeToCheck = tempCnt.FiscalCode__c.left(15);
+                String letterControled = HDT_UTL_CalculateFiscalCode.getControlLetter(fiscalCodeToCheck);
+
+                if(lastLetter != letterControled ){
+                    tempCnt.addError('Codice fiscale non valido');
+                }
+            }
+            else if(String.isNotBlank(tempCnt.FiscalCode__c) && tempCnt.FiscalCode__c.length()==11 && tempCnt.FiscalCode__c.isNumeric()){
+                String lastNum = tempCnt.FiscalCode__c.right(1);
+                String pIvaToCheck = tempCnt.FiscalCode__c.left(10);
+                String numControled = HDT_UTL_CalculateFiscalCode.getControlNumberPiva(pIvaToCheck);
+
+                if(lastNum != numControled ){
+                    tempCnt.addError('Partita Iva non valida');
+                }
+            }
+
+            if(String.isNotBlank(tempCnt.VATNumber__c)){
+                String lastNumVat = tempCnt.VATNumber__c.right(1);
+                String vatToCheck = tempCnt.VATNumber__c.left(10);
+                String numVatControled = HDT_UTL_CalculateFiscalCode.getControlNumberPiva(vatToCheck);
+
+                if(lastNumVat != numVatControled ){
+                    tempCnt.addError('Partita Iva non valida');
+                }
+            }
+        }
+
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_GestionePrivacy.checkCloneCompany(trigger.new);
         changeRecordType(trigger.new);

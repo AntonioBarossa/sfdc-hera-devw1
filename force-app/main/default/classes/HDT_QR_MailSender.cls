@@ -30,11 +30,12 @@ public inherited sharing class HDT_QR_MailSender {
     }
 
     public static List<OrgWideEmailAddress> getOrgWideEmailAddressList(String displayName){
+        // FP: i profili no-admin non riescono ad accedere a questo metadato
         return [
             SELECT Id, Address, DisplayName
             FROM OrgWideEmailAddress
             WHERE DisplayName = :displayName
-            WITH SECURITY_ENFORCED
+            // WITH SECURITY_ENFORCED
             LIMIT 1
         ];
     }

@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
 public with sharing class  HDT_SRV_DocumentalManagement{
-	
+	public static String formParams;
 	public static String generateRequest(String recordId, String context, String formParams){
 		
 		//DEBUG
@@ -281,11 +281,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	@future(callout=true)
-	public static void executeCalloutRequestFuture(String body, String context){
-		
+	public static void executeCalloutRequestFuture(String body, String context,String formParamsString){
+		formParams = formParamsString;
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
-		
 		manageResponse(documentalResponse, context);
 		
 	}
@@ -414,10 +413,19 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					// La DocumentalPhase__c per l'Order verrà valorizzata nel method handleRadioGroup() in base ai radio button (Legge 80 ecc.)
 					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
+				}else if(status.equalsIgnoreCase('declined')){
+					List<Order> ordList = new List<Order>();
+					record.put('DocumentalPhase__c','Plico rifiutato');
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'));
+					ordList.add((Order)record);
+					HDT_UTL_DatabaseService.updateSObject(ordList);
+					return;
 				}
 			}
-			handleRadioGroup(record,listOfRadio,envelopeId);
-			handleLandRegistry(record,listOfData,listOfRadio);
+			if(!status.equalsIgnoreCase('declined')){
+				handleRadioGroup(record,listOfRadio,envelopeId);
+				handleLandRegistry(record,listOfData,listOfRadio);
+			}
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -454,7 +462,8 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	private static void handleRadioGroup(Sobject record, List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, String envelopeId){
-        if(listOfRadio != null && listOfRadio.size()>0){
+        String phaseNoUpdate = System.Label.HDT_DocusignPhaseNoUpdate;//new Set<String>{'Completata', 'Annullato', 'Accettazione Voltura', 'Credit Check KO', 'Attesa Credit Check', 'Voltura Rifiutata'};
+		if(listOfRadio != null && listOfRadio.size()>0){
 			String individualId;
 			if(record.getSobjectType() == Case.getSobjectType()){
 				Case caseRecord = (Case) record;
@@ -626,53 +635,28 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					}
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
-					orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+					//orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
+					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
+						Order ordRefresh = orderMap.get(childOrder.Id);
 						singleOrder.Id = childOrder.Id;
 						singleOrder.CIAccoutn__c = 'Validato';
+						singleOrder.CILegalRepresentative__c = 'Validato';
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
 						singleOrder.DocumentPackage__c = 'Validato';
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
-						(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
-						&& (!'Annullato'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Accettazione Voltura'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Credit Check KO'.equalsIgnoreCase((String)childOrder.get('Phase__c')) && !'Attesa Credit Check'.equalsIgnoreCase((String)childOrder.get('Phase__c')))){
+							(String.isBlank(istanza) || (String.isNotBlank(istanza) && istanza.equalsIgnoreCase('Validato')))
+							&& (!phaseNoUpdate.containsIgnoreCase((String)ordRefresh.get('Phase__c'))))
+						{
 							singleOrder.Phase__c = 'Documentazione Validata';
 							orderPhaseMap.put(singleOrder.Id, 'Documentazione Validata');
 						}
 						childToUpdate.add(singleOrder);
 					}
-					/**
-					 * AF Fix Accettazione Voltura.
-					 * E' necessario chiudere l'attività prima di settare Documentazione Validata
-					 */
-					/*try {
-						if(!orderList.isEmpty()){
-							Set<Id> voltOrdSet = new Set<Id>();
-							String processTypeVol = '';
-							String phase = '';
-							for (SObject voltOrder : orderList) {
-								processTypeVol = (String)voltOrder.get('DocumentalProcessType__c');
-								phase = orderPhaseMap.get((Id)voltOrder.get('Id')) != null? orderPhaseMap.get((Id)voltOrder.get('Id')):'';
-								if(String.isNotBlank(processTypeVol) && processTypeVol.containsIgnoreCase('Voltura') && String.isNotBlank(phase) && phase.equalsIgnoreCase('Documentazione Validata')){
-									voltOrdSet.add((Id)voltOrder.get('Id'));
-								}
-							}
-							if(!voltOrdSet.isEmpty()){
-								voltureActList = [SELECT Id,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Order__c IN:voltOrdSet AND wrts_prcgvr__Status__c = 'Aperta' AND Type__c = 'Accettazione Voltura'  WITH SECURITY_ENFORCED];
-								for(wrts_prcgvr__Activity__c singleAct : voltureActList){
-									singleAct.wrts_prcgvr__Status__c = 'Chiusa';
-								}
-								if(!voltureActList.isEmpty()){
-									HDT_UTL_DatabaseService.updateSObject(voltureActList);
-								}
-							}
-						}
-					} catch (Exception ex) {
-						//no throws
-					}*/
 					if(!childToUpdate.isEmpty()){
 						HDT_UTL_DatabaseService.updateSObject(childToUpdate);
 					}
@@ -741,17 +725,17 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
+			HDT_QR_Case qrCase=new HDT_QR_Case();
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
 			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				try{
-					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context,formParams);
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 				}
 			}
-			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
 					String msg = response.deliverPackageResponse.message;
@@ -762,6 +746,18 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						Date dToday = Date.today();
 						String dateStr = dToday.day() + '/' + dToday.month() + '/' + dToday.year();
 						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
+					}
+				}
+				List<Case> integratedCases= qrCase.getCasesByCaseNumbers(new List<String>{response.deliverPackageResponse.requestId});
+				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result != '000' && context=='Case'){
+					if(!integratedCases.isEmpty() && integratedCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						integratedCases[0].Phase__c=Label.consumoAnomaloIdricoE1KOPhase;
+						HDT_UTL_DatabaseService.updateSObject(integratedCases);
+					}
+				}else{
+					if(!integratedCases.isEmpty() && integratedCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						integratedCases[0].Phase__c=Label.casePhaseAttesaCliente;
+						HDT_UTL_DatabaseService.updateSObject(integratedCases);
 					}
 				}
 			}

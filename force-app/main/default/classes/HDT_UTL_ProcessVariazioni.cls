@@ -204,11 +204,8 @@ public inherited sharing class HDT_UTL_ProcessVariazioni extends HDT_UTL_Process
 
             if(String.isNotBlank(contract.ServicePoint__r.ServicePointCode__c)){
                 try{
-                    //String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(processObj.csvSplitted[podIndex], null);
-                    String arricchimentoResponse = HDT_WS_ArricchimentoDatiTemp.submitRequest(contract.ServicePoint__r.ServicePointCode__c, null);
-                    System.debug(LoggingLevel.DEBUG, '>>> arricchimentoResponse: ' + arricchimentoResponse);
-    
-                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(arricchimentoResponse, processObj.newCase);
+                    HDT_WS_ArrichmentDataEntityResponse res = HDT_WS_ArrichmentDataEntityInvoker.callService(null, contract.ServicePoint__r.ServicePointCode__c);
+                    processObj.newCase = HDT_UTL_DataEnrichmentPostSales.handleResponse(JSON.serialize(res), processObj.newCase); 
                     caseToInsert.add(processObj.newCase); 
                     requestItemForUpsert.add(processObj.requestItem);
                 } catch(Exception e){

@@ -43,6 +43,7 @@ public class HDT_BA_ComfortCallTst {
             Id parentOrderId = parentOrders[0].id;
             parentOrders[0].Contact__c = contactId;
             parentOrders[0].recordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            parentOrders[0].Status = 'Completed';
             update parentOrders;
             
             List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');

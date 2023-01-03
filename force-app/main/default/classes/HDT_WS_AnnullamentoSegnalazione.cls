@@ -38,7 +38,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         SObject obj = (SObject) argsMap.get('sender');
         Case currentCase = (Case) obj;
 
-        HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, null); //noticeId null
+        HDT_WRP_AnnullamentoSegnalazioneReq req = new HDT_WRP_AnnullamentoSegnalazioneReq(currentCase.Id, currentCase.NoticeId__c); //noticeId null
         HDT_WS_AnnullamentoSegnalazioneResponse res = (HDT_WS_AnnullamentoSegnalazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'DELETE', req, HDT_WS_AnnullamentoSegnalazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + res); 
 
@@ -46,12 +46,12 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         
         try {
 
-            if(res.status.equalsIgnoreCase('success')){
+            if('Success'.equalsIgnoreCase(res?.data?.esito)){
 
                 currentCase.TecnicalPhase__c = 'Annullato';
                 currentCase.Status= 'Closed';
 
-                if(!currentCase.WithdrawalFee__c){ //Se Ritiro Gratuito
+                if(!currentCase.WithdrawalFee__c && currentCase.ServicePoint__c != null){ //Se Ritiro Gratuito
             
                     Datetime createdDate = currentCase.CreatedDate;
                     Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());

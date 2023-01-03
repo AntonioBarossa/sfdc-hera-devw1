@@ -11,13 +11,14 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     public Map<String, List<String>> parentToChildOrderMap = new Map<String, List<String>>();
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
-
-        String query = 'SELECT Id, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
+        String query = 'SELECT Id,Skip_Callout__c, ParentOrder__r.Status, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
         'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Completata\',\'Annullato\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c != \'Scadenza Gestita\'';
         return Database.getQueryLocator(query);
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
+
+        Set<String> orderToCancel = new Set<String>();
 
         List<String> notCancelNonBillable = new List<String>{
             'Completata',
@@ -48,270 +49,300 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
         Set<String> orderIdsSet = new Set<String>();
         Set<String> orderAccountCompanyOwnersSet = new Set<String>();
-        for (Order order : orders) {
-            orderIdsSet.add(order.Id);
-            if (order.ParentOrder__c != null) {
-                orderIdsSet.add(order.ParentOrder__c);
-            }
-            
-            orderAccountCompanyOwnersSet.add(order.Account.CompanyOwner__c);
-        }        
-
-        List<String> ordersIdsList = new List<String>();
-        ordersIdsList.addAll(orderIdsSet);
-        
-        List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(ordersIdsList);
-        List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
-        Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
-        Set<Id> orderWithActivity = new Set<Id>();
-        Set<Id> ordersAlreadyAssigned = new Set<Id>();
-        for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
-            if ('HDT_RT_ComfortQualityCall'.equalsIgnoreCase(activityAssigned.RecordType.DeveloperName)){
-                ordersAlreadyAssigned.add(activityAssigned.Order__c);
-                orderToActivityMap.put(activityAssigned.Order__c, activityAssigned);
-            }else if ('Quality Scaduta'.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
-                orderWithActivity.add(activityAssigned.Order__c);
-            }
-        }
-
-        Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
-        for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(ordersIdsList)){
-            if(orderToItemMap.get(item.OrderId) != null){
-                orderToItemMap.get(item.OrderId).add(item);
-            }
-            else {
-                orderToItemMap.put(item.OrderId, new List<OrderItem>());
-                orderToItemMap.get(item.OrderId).add(item);
-            }
-        }
-
-        List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
-        String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
-        List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
-
-        for (Order ord : orders) {
-
-            Date startDate = ord.WizardCompletedDate__c;
-
-            for (ComfortQualityCall__c cqc : docValidList) {
-                if (
-                    String.isNotBlank(ord.PhaseStory__c) && ord.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
-                ) {
-                    startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
-                    break;
+        try{
+            for (Order order : orders) {
+                orderIdsSet.add(order.Id);
+                if (order.ParentOrder__c != null) {
+                    orderIdsSet.add(order.ParentOrder__c);
                 }
-            }
-
-            wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
-                    ? orderToActivityMap.get(ord.ParentOrder__c) : orderToActivityMap.get(ord.Id);
-
-            if ((startDate != null && startDate.daysBetween(dueDate) > 50) && activityQualityCall != null ){
                 
-                Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
+                orderAccountCompanyOwnersSet.add(order.Account.CompanyOwner__c);
+            }        
 
-                if (activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
-                    ordersToUpdate.add(ordToUpd);
-                    continue;
+            List<String> ordersIdsList = new List<String>();
+            ordersIdsList.addAll(orderIdsSet);
+            
+            List<wrts_prcgvr__Activity__c> activitiesAssigned = HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(ordersIdsList);
+            List<wrts_prcgvr__Activity__c> activitiesToClose = new List<wrts_prcgvr__Activity__c>();
+            Map<String, wrts_prcgvr__Activity__c> orderToActivityMap = new Map<String, wrts_prcgvr__Activity__c>();
+            Set<Id> orderWithActivity = new Set<Id>();
+            Set<Id> ordersAlreadyAssigned = new Set<Id>();
+            for (wrts_prcgvr__Activity__c activityAssigned : activitiesAssigned) {
+                if ('HDT_RT_ComfortQualityCall'.equalsIgnoreCase(activityAssigned.RecordType.DeveloperName)){
+                    ordersAlreadyAssigned.add(activityAssigned.Order__c);
+                    orderToActivityMap.put(activityAssigned.Order__c, activityAssigned);
+                }else if ('Quality Scaduta'.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL.equalsIgnoreCase(activityAssigned.type__c) || HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO.equalsIgnoreCase(activityAssigned.type__c)){
+                    orderWithActivity.add(activityAssigned.Order__c);
                 }
+            }
 
-                Boolean hasCancellableProduct = false;
-                if(orderToItemMap.get(ord.Id) != null){
-                    for(OrderItem item : orderToItemMap.get(ord.Id)){
-                        if(item.Product2.CancelableQC__c){
-                            hasCancellableProduct= true;
-                            break;
-                        }
-                    }
-                }
-
-                Boolean canDeleteOrder = !this.notCancellableOrder(ord);
-                Boolean needsActivity = false;
-                if (!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c) && canDeleteOrder 
-                    && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
-                    ordToUpd.Phase__c = 'Annullato';
-                    ordToUpd.Status = 'Annullato';         
-                }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
-                    needsActivity = true;
-                }
-                //DV: VADO A CREARMI UNA MAPPA DI TUTTI GLI ORDINI VECCHI, CORRELATI AL PARENT
-                if(parentToChildOrderMap.get(ord.ParentOrder__c) != null){
-                    parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
+            Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
+            for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(ordersIdsList)){
+                if(orderToItemMap.get(item.OrderId) != null){
+                    orderToItemMap.get(item.OrderId).add(item);
                 }
                 else {
-                    parentToChildOrderMap.put(ord.ParentOrder__c, new List<String>());
-                    parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
+                    orderToItemMap.put(item.OrderId, new List<OrderItem>());
+                    orderToItemMap.get(item.OrderId).add(item);
+                }
+            }
+
+            List<String> isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+            String comfortQualityQueId = [Select id,name from group where developername = 'HDT_QUE_ComfortQuality' limit 1].id;
+            List<ComfortQualityCall__c> docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
+
+            for (Order ord : orders) {
+                Integer newSkipCall = ord.Skip_Callout__c == null ? -1 : null; 
+                Date startDate;
+
+                for (ComfortQualityCall__c cqc : docValidList) {
+                    if (
+                        String.isNotBlank(ord.PhaseStory__c) && ord.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == ord.RecordType.DeveloperName && cqc.Channel__c == ord.Channel__c && cqc.CustomerType__c == ord.CustomerCategory__c && cqc.QualitySignatureMethod__c == ord.SignatureMethod__c
+                    ) {
+                        startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(ord.PhaseStory__c, 'Documentazione Validata');
+                        break;
+                    }
+                }
+                if (startDate == null){
+                    startDate = ord.WizardCompletedDate__c;
                 }
 
-                if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, orderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
-                    
-                    String ordIdToAssoc = ord.Id;
 
-                    if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
-                        ordIdToAssoc = ord.ParentOrder__c;
+                wrts_prcgvr__Activity__c activityQualityCall = (ord.ParentOrder__c != null && orderToActivityMap.containsKey(ord.ParentOrder__c))
+                        ? orderToActivityMap.get(ord.ParentOrder__c) : orderToActivityMap.get(ord.Id);
+
+                if ((startDate != null && startDate.daysBetween(dueDate) > 50) && activityQualityCall != null ){
+                    
+                    Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
+
+                    if (activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
+                        ordToUpd.Skip_Callout__c = newSkipCall;
+                        ordersToUpdate.add(ordToUpd);
+                        continue;
                     }
-                    //String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
-                    activityVas.add(new wrts_prcgvr__Activity__c(
-                        RecordTypeId = rc.Id,
-                        Account__c = ord.AccountId,
-                        Order__c = ordIdToAssoc,
-                        Type__c = 'Quality Scaduta',
-                        wrts_prcgvr__Status__c = 'Aperta',
-                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
-                    ));
-                }                
-                ordersToUpdate.add(ordToUpd);
-            }else if (HANDLE_ACTIVITY.equalsIgnoreCase(ord.QualityCallStatus__c) && activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
-                Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE );
-                ordersToUpdate.add(ordToUpd);
-            }else if (String.isBlank(ord.QualityCallStatus__c)){
-                ordersToUpdate.add(new Order(Id=ord.Id, QualityCallStatus__c = HANDLE_ACTIVITY));
-                if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
-                    orderMap.put(ord.Id, ord);
-        
-                    wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-                        RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
-                        Type__c = 'Quality Call',
-                        wrts_prcgvr__Status__c = 'Aperta',
-                        OwnerId = comfortQualityQueId,
-                        ActivatedDate__c = ord.ActivatedDate,
-                        LoginChannel__c = ord.LoginChannel__c
-                    );
-    
-                    if (ord.QualityCallUnique__c) {
-                        activity.Order__c = ord.ParentOrder__c;
-                        mapActivitiesParent.put(ord.ParentOrder__c, activity);
+
+                    Boolean hasCancellableProduct = false;
+                    if(orderToItemMap.get(ord.Id) != null){
+                        for(OrderItem item : orderToItemMap.get(ord.Id)){
+                            if(item.Product2.CancelableQC__c){
+                                hasCancellableProduct= true;
+                                break;
+                            }
+                        }
+                    }
+
+                    Boolean canDeleteOrder = !this.notCancellableOrder(ord);
+                    Boolean needsActivity = false;
+                    if (!notCancelNonBillable.contains(ord.Phase__c) && !notCancelBillable.contains(ord.Phase__c) && canDeleteOrder 
+                        && ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct)) {
+                        ordToUpd.Phase__c = 'Annullato';
+                        ordToUpd.Status = 'Annullato';         
+                        orderToCancel.add((String)ordToUpd.Id);     
+                    }else if ((isMonitoringList.contains(ord.AgencyCode__c) && ord.IsVAS__c) || hasCancellableProduct){
+                        needsActivity = true;
+                    }
+                    if (!orderToCancel.contains((String)ordToUpd.Id)){
+                        ordToUpd.Skip_Callout__c = newSkipCall;
+                    }
+                    //DV: VADO A CREARMI UNA MAPPA DI TUTTI GLI ORDINI VECCHI, CORRELATI AL PARENT
+                    if(parentToChildOrderMap.get(ord.ParentOrder__c) != null){
+                        parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
                     }
                     else {
-                        activity.Order__c = ord.Id;
-                        callActivities.add(activity);
-                    }    
-                    orderActivityMap.put(ord.id, activity);
-                }
-            }
-        }
+                        parentToChildOrderMap.put(ord.ParentOrder__c, new List<String>());
+                        parentToChildOrderMap.get(ord.ParentOrder__c).add(ord.OrderNumber);
+                    }
 
-        //Dv: applico logica dei 50gg -> se tutti gli ordini su un ordine parent (esclusi gli ordini di analisi consumi) sono stati messi in annullato, e sul parent e' presente un'activity di 
-        //quality call, la vado a chiudere. 
-        //Vado a controllare se ci sono ordini annullati perche' superati i 50gg
-        if(!parentToChildOrderMap.keySet().isEmpty()){
-            //Mi vado a prendere tutti gli ordini correlati ai parent censiti e le relative activities
-            Map<String, List<String>> allChildByParent = HDT_QR_Order.getOrdersByParent(parentToChildOrderMap.keySet());
-            Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = HDT_QR_ActivityCustom.getQualCallByParentOrder(parentToChildOrderMap.keySet());
-            //Controllo che ci siano attività da chiudere
-            if(!parentQualCallMap.keySet().isEmpty()){
-                for(String parent : parentQualCallMap.keySet()){
-                    Boolean allCanceled = true;
-                    //Per ogni parent vado a controllare che tutti i suoi figli stiano passando in annullato
-                    for(String child : allChildByParent.get(parent)){
-                        if(!parentToChildOrderMap.get(parent).contains(child)){
-                            allCanceled = false;
-                            break;
+                    if (!this.skipActivityCreation(ord.Id,ord.ParentOrder__c, orderWithActivity) && needsActivity && ((!canDeleteOrder || (ord.VASType__c != 'VAS Fatturabili' && notCancelNonBillable.contains(ord.Phase__c)) || (ord.VASType__c == 'VAS Fatturabili' && notCancelBillable.contains(ord.Phase__c))))) {
+                        
+                        String ordIdToAssoc = ord.Id;
+
+                        if(ordersAlreadyAssigned.contains(ord.ParentOrder__c)){
+                            ordIdToAssoc = ord.ParentOrder__c;
                         }
-                    }
-                    if(allCanceled && parentQualCallMap.get(parent) != null){
-                        //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
-                        wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
-                        actToClose.wrts_prcgvr__Status__c = 'Chiusa';
-                        actToClose.ContactResult__c='Chiusa Per Fine Intervallo';
-                        activitiesToClose.add(actToClose);
+                        //String activityType = ord.isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO;
+                        activityVas.add(new wrts_prcgvr__Activity__c(
+                            RecordTypeId = rc.Id,
+                            Account__c = ord.AccountId,
+                            Order__c = ordIdToAssoc,
+                            Type__c = 'Quality Scaduta',
+                            wrts_prcgvr__Status__c = 'Aperta',
+                            wrts_prcgvr__Description__c = 'Non è stato possibile procedere all’annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
+                        ));
+                    }                
+                    ordersToUpdate.add(ordToUpd);
+                }else if (HANDLE_ACTIVITY.equalsIgnoreCase(ord.QualityCallStatus__c) && activityQualityCall!= null && activityQualityCall.wrts_prcgvr__IsClosed__c){
+                    Order ordToUpd = new Order(Id = ord.Id, QualityCallStatus__c = HANDLE_DEADLINE, Skip_Callout__c = newSkipCall );
+                    ordersToUpdate.add(ordToUpd);
+                }else if (String.isBlank(ord.QualityCallStatus__c) && 'Completed'.equalsIgnoreCase(ord.ParentOrder__r.Status)){
+                    ordersToUpdate.add(new Order(Id=ord.Id, QualityCallStatus__c = HANDLE_ACTIVITY, Skip_Callout__c = newSkipCall));
+                    if (!ordersAlreadyAssigned.contains(ord.Id) && (ord.ParentOrder__c != null && !ordersAlreadyAssigned.contains(ord.ParentOrder__c))) {
+                        orderMap.put(ord.Id, ord);
+            
+                        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+                            RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
+                            Type__c = 'Quality Call',
+                            wrts_prcgvr__Status__c = 'Aperta',
+                            OwnerId = comfortQualityQueId,
+                            ActivatedDate__c = ord.ActivatedDate,
+                            LoginChannel__c = ord.LoginChannel__c
+                        );
+        
+                        if (ord.QualityCallUnique__c) {
+                            activity.Order__c = ord.ParentOrder__c;
+                            mapActivitiesParent.put(ord.ParentOrder__c, activity);
+                        }
+                        else {
+                            activity.Order__c = ord.Id;
+                            callActivities.add(activity);
+                        }    
+                        orderActivityMap.put(ord.id, activity);
                     }
                 }
             }
-        }
 
-        callActivities.addAll(mapActivitiesParent.values());
-
-        if (!ordersToUpdate.isEmpty()) {
-            List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
-            this.setLogRecord(srList, ordersToUpdate, logs, 'update Order');
-        }
-        if (!callActivities.isEmpty()) {
-            List<Database.SaveResult> srList = Database.insert(callActivities, false);
-            this.setLogRecord(srList, callActivities, logs, 'insert activities');
-        }
-        if(activitiesToClose.size() > 0){
-            List<Database.SaveResult> srList = Database.update(activitiesToClose, false);
-            this.setLogRecord(srList, activitiesToClose, logs, 'update activities');
-        }
-
-        List<String> contactList = new List<String>();
-        for (Order orderCm : orderMap.values()) {
-            if ( orderCm.Contact__c != null) {
-                contactList.add(orderCm.Contact__c);
-            }
-        }
-
-        Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
-        compOwnerToCampMap = HDT_QR_Campaign.getCampaignByCompOwner('Quality Call', orderAccountCompanyOwnersSet);
-
-        List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
-        if (compOwnerToCampMap != null && !contactList.isEmpty()) {
-            List<String> campaignIdList = new List<String>();
-            for(Campaign c : compOwnerToCampMap.values()){
-                campaignIdList.add(c.Id);
-            }
-            campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(campaignIdList, contactList);
-        }
-
-        Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
-
-        for (String ordId : orderActivityMap.keySet()) {
-            String compOwner = orderMap.get(ordId).Account.CompanyOwner__c;
-            if (orderMap.get(ordId).Contact__c != null && compOwnerToCampMap.get(compOwner) != null) {
-
-                Boolean isCmAlready = false;
-                String cmAlreadyId = null;
-
-                if (!campaignMembersBulk.isEmpty()) {
-                    for (CampaignMember cmAlready : campaignMembersBulk) {
-                        if (cmAlready.CampaignId == compOwnerToCampMap.get(compOwner).Id 
-                            && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
-                            isCmAlready = true;
-                            cmAlreadyId = cmAlready.Id;
-                            break;
+            //Dv: applico logica dei 50gg -> se tutti gli ordini su un ordine parent (esclusi gli ordini di analisi consumi) sono stati messi in annullato, e sul parent e' presente un'activity di 
+            //quality call, la vado a chiudere. 
+            //Vado a controllare se ci sono ordini annullati perche' superati i 50gg
+            if(!parentToChildOrderMap.keySet().isEmpty()){
+                //Mi vado a prendere tutti gli ordini correlati ai parent censiti e le relative activities
+                Map<String, List<String>> allChildByParent = HDT_QR_Order.getOrdersByParent(parentToChildOrderMap.keySet());
+                Map<String, wrts_prcgvr__Activity__c> parentQualCallMap = HDT_QR_ActivityCustom.getQualCallByParentOrder(parentToChildOrderMap.keySet());
+                //Controllo che ci siano attività da chiudere
+                if(!parentQualCallMap.keySet().isEmpty()){
+                    for(String parent : parentQualCallMap.keySet()){
+                        Boolean allCanceled = true;
+                        //Per ogni parent vado a controllare che tutti i suoi figli stiano passando in annullato
+                        List<String> allChildByParentOrderNumber = allChildByParent.containsKey(parent) ? allChildByParent.get(parent) : new List<String>();
+                        for(String child : allChildByParentOrderNumber){
+                            if(!parentToChildOrderMap.get(parent).contains(child)){
+                                allCanceled = false;
+                                break;
+                            }
+                        }
+                        if(allCanceled && parentQualCallMap.get(parent) != null){
+                            //Devo andare a controllare se sul Parent Order è presente una QualityCall aperta. Nel caso, vado a chiuderla.
+                            wrts_prcgvr__Activity__c actToClose = parentQualCallMap.get(parent);
+                            actToClose.wrts_prcgvr__Status__c = 'Chiusa';
+                            actToClose.ContactResult__c='Chiusa Per Fine Intervallo';
+                            activitiesToClose.add(actToClose);
                         }
                     }
                 }
+            }
 
-                if (isCmAlready && cmAlreadyId != null) {
-                    if (orderActivityMap.get(ordId).Id != null) {
-                        campaignMembersUpdate.put(cmAlreadyId,new CampaignMember(
-                            Id = cmAlreadyId,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id
-                        ));
-                    }
-                }
-                else {
-                    if (orderActivityMap.get(ordId).Id != null) {
-
-                        notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
-                            ContactId = orderMap.get(ordId).Contact__c,
-                            CampaignId = compOwnerToCampMap.get(compOwner).Id ,
-                            PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
-                            RelatedActivity__c = orderActivityMap.get(ordId).Id,
-                            NumberingValidityStartDate__c = System.today(),
-                            NumberingValidityEndDate__c = System.today().addDays(50),
-                            ExcludeFub__c = 'Si',
-                            GenericField1__c = orderMap.get(ordId).AccountId
-                        ));
+            callActivities.addAll(mapActivitiesParent.values());
+            if (!orderToCancel.isEmpty()){
+                HDT_QR_Order qrOrder = new HDT_QR_Order();
+                for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel)){
+                    if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
+                        activitiesToClose.add(
+                            new wrts_prcgvr__Activity__c(
+                                Id = activity.Id,
+                                wrts_prcgvr__Status__c = 'Annullata'
+                            )
+                        );
                     }
                 }
             }
-        }
 
-        List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
+            if(activitiesToClose.size() > 0){
+                List<Database.SaveResult> srList = Database.update(activitiesToClose, false);
+                this.setLogRecord(srList, activitiesToClose, logs, 'update activities');
+            }
 
-        if(!campNotDuplicateList.isEmpty()) {
-            List<Database.SaveResult> srList = Database.insert(notDuplicatedCampToIns.values(), false);
-            this.setLogRecord(srList, notDuplicatedCampToIns.values(), logs, 'insert Campaign Member');
-        }
-        if(!campaignMembersUpdate.isEmpty()){
-            List<Database.SaveResult> srList = Database.update(campaignMembersUpdate.values(), false);
-            this.setLogRecord(srList, campaignMembersUpdate.values(), logs, 'update Campaign Member');
-        }
-        if (!activityVas.isEmpty()) {
-            List<Database.SaveResult> srList = Database.insert(activityVas, false);
-            this.setLogRecord(srList, activityVas, logs, 'insert activities VAS');
+            if (!ordersToUpdate.isEmpty()) {
+                List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
+                this.setLogRecord(srList, ordersToUpdate, logs, 'update Order');
+            }
+            if (!callActivities.isEmpty()) {
+                List<Database.SaveResult> srList = Database.insert(callActivities, false);
+                this.setLogRecord(srList, callActivities, logs, 'insert activities');
+            }
+            
+
+            List<String> contactList = new List<String>();
+            for (Order orderCm : orderMap.values()) {
+                if ( orderCm.Contact__c != null) {
+                    contactList.add(orderCm.Contact__c);
+                }
+            }
+
+            Map<String, Campaign> compOwnerToCampMap = new Map<String, Campaign>();
+            compOwnerToCampMap = HDT_QR_Campaign.getCampaignByCompOwner('Quality Call', orderAccountCompanyOwnersSet);
+
+            List<CampaignMember> campaignMembersBulk = new List<CampaignMember>();
+            if (compOwnerToCampMap != null && !contactList.isEmpty()) {
+                List<String> campaignIdList = new List<String>();
+                for(Campaign c : compOwnerToCampMap.values()){
+                    campaignIdList.add(c.Id);
+                }
+                campaignMembersBulk = campaignMemberQr.getCampaignMemberByCampaingAndContactInBulk(campaignIdList, contactList);
+            }
+
+            Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
+
+            for (String ordId : orderActivityMap.keySet()) {
+                String compOwner = orderMap.get(ordId).Account.CompanyOwner__c;
+                if (orderMap.get(ordId).Contact__c != null && compOwnerToCampMap.get(compOwner) != null) {
+
+                    Boolean isCmAlready = false;
+                    String cmAlreadyId = null;
+
+                    if (!campaignMembersBulk.isEmpty()) {
+                        for (CampaignMember cmAlready : campaignMembersBulk) {
+                            if (cmAlready.CampaignId == compOwnerToCampMap.get(compOwner).Id 
+                                && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
+                                isCmAlready = true;
+                                cmAlreadyId = cmAlready.Id;
+                                break;
+                            }
+                        }
+                    }
+
+                    if (isCmAlready && cmAlreadyId != null) {
+                        if (orderActivityMap.get(ordId).Id != null) {
+                            campaignMembersUpdate.put(cmAlreadyId,new CampaignMember(
+                                Id = cmAlreadyId,
+                                RelatedActivity__c = orderActivityMap.get(ordId).Id
+                            ));
+                        }
+                    }
+                    else {
+                        if (orderActivityMap.get(ordId).Id != null) {
+
+                            notDuplicatedCampToIns.put(orderMap.get(ordId).Contact__c, new CampaignMember(
+                                ContactId = orderMap.get(ordId).Contact__c,
+                                CampaignId = compOwnerToCampMap.get(compOwner).Id ,
+                                PhoneNumber__c = orderMap.get(ordId).PhoneNumber__c,
+                                RelatedActivity__c = orderActivityMap.get(ordId).Id,
+                                NumberingValidityStartDate__c = System.today(),
+                                NumberingValidityEndDate__c = System.today().addDays(50),
+                                ExcludeFub__c = 'Si',
+                                GenericField1__c = orderMap.get(ordId).AccountId
+                            ));
+                        }
+                    }
+                }
+            }
+
+            List<CampaignMember> campNotDuplicateList = notDuplicatedCampToIns.values();
+
+            if(!campNotDuplicateList.isEmpty()) {
+                List<Database.SaveResult> srList = Database.insert(notDuplicatedCampToIns.values(), false);
+                this.setLogRecord(srList, notDuplicatedCampToIns.values(), logs, 'insert Campaign Member');
+            }
+            if(!campaignMembersUpdate.isEmpty()){
+                List<Database.SaveResult> srList = Database.update(campaignMembersUpdate.values(), false);
+                this.setLogRecord(srList, campaignMembersUpdate.values(), logs, 'update Campaign Member');
+            }
+            if (!activityVas.isEmpty()) {
+                List<Database.SaveResult> srList = Database.insert(activityVas, false);
+                this.setLogRecord(srList, activityVas, logs, 'insert activities VAS');
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - execute ' +ex.getMessage());
+            logs.addLog(LOG_SERVICE, 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
         }
         logs.saveMassiveRecords();
     }
@@ -349,7 +380,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             }catch(Exception ex){
                 System.debug(LoggingLevel.DEBUG, 'HDT_BA_QualityCall - crea Log ' +ex.getMessage());
             }
-            
+            index++;
         }
     }
 }

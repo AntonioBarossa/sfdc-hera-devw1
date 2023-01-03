@@ -1,3 +1,4 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 /**
 * @author Luca Molino (luca.molino@engdb.com.br)
 * @date 23/03/2021
@@ -12,6 +13,16 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
    
+
+    @InvocableMethod(label='Invoke ServicePoint Enrichment')
+    public static List<ServicePoint__c> servicePointEnrichment( List<HDT_UTL_FlowInput> inputs){
+        //  List<ServicePoint__c> sp, List<String> responseSerialized
+
+        HDT_WS_ArrichmentDataEntityResponse response = (HDT_WS_ArrichmentDataEntityResponse) JSON.deserialize(inputs[0].responseSerialized, HDT_WS_ArrichmentDataEntityResponse.class);
+        List<ServicePoint__c> ret = extractDataFromArriccDataServiceWithExistingSp(inputs[0].servicePoint, response); 
+
+        return ret;
+    }
     
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
@@ -135,14 +146,16 @@ public with sharing class HDT_UTL_ServicePoint {
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
             spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
-        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE')))
-        {
+        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE'))){
             String codiceVenditore = (String)mapRes.get('VENDITORE');
             List<HDT_MatriceSocietaVendita__mdt> salesCompanies = [SELECT SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c = :codiceVenditore WITH SECURITY_ENFORCED];
             if(!salesCompanies.isEmpty()){
                 spNew.Vendor__c = salesCompanies[0].SellerCompany__c;
             }
             spNew.SalesCompanyCode__c = codiceVenditore;
+        } else if(mapRes.get('COMPANY')!=null && !String.isBlank(mapRes.get('COMPANY'))){
+            /* recupero il codice società per i casi di non energy -- cr005 */
+            spNew.SalesCompanyCode__c = mapRes.get('COMPANY');
         }
         if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
@@ -194,7 +207,7 @@ public with sharing class HDT_UTL_ServicePoint {
                             landReg.ServicePoint__c = spNew.Id;
                             landReg.StartDate__c = dataEnrich.getDateFromString(mapRes.get('DATAATTIVAZIONE'));
                             landReg.EndDate__c = dataEnrich.getDateFromString('99991231'.equals(mapRes.get('DATACESSAZIONE'))? null: mapRes.get('DATACESSAZIONE'));
-                            landReg.GlobalMigrationKey__c = 'DC_'+ spNew.SAPImplantCode__c + '_' + landReg.DestinationUsage__c + '_' + landReg.SapProgressive__c + '_' + String.valueof(landReg.StartDate__c);
+                            landReg.GlobalMigrationKey__c = 'DC_'+ spNew.SAPImplantCode__c + '_' + landReg.DestinationUsage__c + '_' + landReg.SapProgressive__c;
                             landLstToInsert.add(landReg);
                             
                         }
@@ -363,7 +376,7 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
         }
         if(mapRes.get('TFRS000000')!=null && !String.isBlank(mapRes.get('TFRS000000'))){         
-            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
+            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('TFRS000000')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
@@ -636,5 +649,14 @@ public with sharing class HDT_UTL_ServicePoint {
         else{
             return false;
         }
+    }
+
+    public class HDT_UTL_FlowInput{
+
+        @InvocableVariable
+        public ServicePoint__c servicePoint;
+        @InvocableVariable
+        public String responseSerialized;
+
     }
 }

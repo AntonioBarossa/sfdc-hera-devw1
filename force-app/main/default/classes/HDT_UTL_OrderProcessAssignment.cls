@@ -314,6 +314,8 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 famils.add((String) ag.get('fam'));
         }
         famils.add('Promozione');
+        //aggiunto per gestire il link degli order in caso di Amend di aggiunta agevolazione
+        famils.add('Opzioni TARI');
         return famils;
     }
 
@@ -438,7 +440,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 saleSrv.updateRecord(s);
             }
             res = String.join(listRes,',');
-            if(r){
+            /**@frpanico 2022-12-14 nel caso di Service Point non innescabile per transitorio e punto gas innescabile a transitorio
+             * Verrebbe sovrascritto la stringa res perdendo traccia della non innescabilita' del punto
+             */
+            if(r && (res == null || String.isBlank(res))){
                 res = 'Subentro';
             }
         }

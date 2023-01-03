@@ -369,6 +369,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetAccountStessoReclamo.Parent.IsContainer__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Id_Contenitore</targetReference>
             </connector>
@@ -706,6 +713,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del Cluster Reclami</description>
+    <environments>Default</environments>
     <formulas>
         <name>IncorrectCausalTrackingFormula</name>
         <dataType>String</dataType>
@@ -907,6 +915,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reclami</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -1365,6 +1380,12 @@
             <name>InputCase</name>
             <value>
                 <elementReference>Get_Input_Case</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ParentRecordId</name>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
             </value>
         </inputAssignments>
     </subflows>

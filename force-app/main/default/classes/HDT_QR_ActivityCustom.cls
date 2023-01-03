@@ -126,6 +126,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             SELECT
             Id,
             order__c,
+            Order__r.Account.Category__c,
             Account__c,
             Type__c,
             DiscardCount__c,
@@ -643,5 +644,14 @@ public inherited sharing class HDT_QR_ActivityCustom {
                     AND order__C IN :orderList
                     WITH SECURITY_ENFORCED 
             ];
+        }
+
+        public static List<wrts_prcgvr__Activity__c> getOpenActivityByType(String type, Set<Id> objectId, Set<Id> actsId){
+            return [
+                SELECT id, Case__c, Order__c, Type__c,wrts_prcgvr__IsClosed__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c
+                WHERE wrts_prcgvr__IsClosed__c = false AND Type__c = :type AND (Order__c IN :objectId OR Case__c IN :objectId) AND Id NOT IN :actsId
+                WITH SECURITY_ENFORCED
+            ];
+
         }
 }

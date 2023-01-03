@@ -366,7 +366,8 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             AdditionalAttachments__c,
             WasteCommodityType__c,
-            VASType__c
+            VASType__c,
+            DateSentToSII__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -612,7 +613,14 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             IntegratedSAP__c,
             CommercialProduct__c,
-            Type
+            DocSendingMethod__c,
+            SignatureMethod__c,
+            Channel__c,
+            CustomerCategory__c,
+            MarketOrigin__c,
+            Type,
+            ShippingMail__c,
+            PhoneNumber__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -636,6 +644,8 @@ public inherited sharing class HDT_QR_Order {
             WHERE ParentOrder__c IN :parentOrderIds
             AND Phase__c NOT IN ('Annullato')
             AND CommodityFormula__c != 'Acqua'
+            /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+            AND ProcessType__c NOT IN ('Switch in Fittizio')
             /* AND ProcessType__c != ''
             AND ProcessType__c != 'VAS' */
             WITH SECURITY_ENFORCED
@@ -679,7 +689,8 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             IntegratedSAP__c,
             Commodity__c,
-            ProcessCode__c
+            ProcessCode__c,
+            CommodityFormula__c
             FROM
             Order
             WHERE ParentOrder__c IN :parentOrderIds
@@ -947,6 +958,9 @@ public inherited sharing class HDT_QR_Order {
     * @param accountId - String
     * @return List<Order>
     */
+    /*@frpanico 2022-11-30 Viene filtrato ulteriormente per ProcessType__c != 'VAS'
+    * In quanto il solo controllo sulla quote non e' sufficiente nel caso di vendita Offerta + VAS
+    */
     public List<Order> getRecordsForVasSelection(String accountId){
         return [
             SELECT
@@ -977,6 +991,7 @@ public inherited sharing class HDT_QR_Order {
             AND RecordType.DeveloperName != null
             AND RecordType.DeveloperName != 'HDT_RT_OrderDossier'
             AND SBQQ__Quote__r.IsVAS__c != true
+            AND ProcessType__c != 'VAS'
             AND SBQQ__Quote__r.AmendmentAllowed__c != true
             AND Status IN ('In Lavorazione')
             WITH SECURITY_ENFORCED
@@ -1327,7 +1342,7 @@ public inherited sharing class HDT_QR_Order {
         WHERE ParentOrder__c = :parentOrderId
         AND QualityCall__c = true
         AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL)
-        AND Phase__c NOT IN ('Completata','Annullato')
+        AND Phase__c NOT IN ('Annullato') //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
         WITH SECURITY_ENFORCED
         ];
     }
@@ -1388,11 +1403,11 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getAllOrdersForComfort(String id){
-        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
     }
 
 
@@ -1421,7 +1436,12 @@ public inherited sharing class HDT_QR_Order {
     //@frpanico getOpenActivities
     public List<wrts_prcgvr__Activity__c> getOpenActivitiesByOrderId(String orderId)
     {
-        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c = :orderId WITH SECURITY_ENFORCED];
+        return this.getOpenActivitiesByListOrderId(new Set<String>{orderId});
+    }
+
+    public List<wrts_prcgvr__Activity__c> getOpenActivitiesByListOrderId(Set<String> orderIdList)
+    {
+        return [SELECT Id, wrts_prcgvr__Status__c,Type__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Chiusa' AND wrts_prcgvr__IsClosed__c = false AND Order__c IN :orderIdList WITH SECURITY_ENFORCED];
     }
 
     public static List<Order> getOrderQuality(Set<String> ordIdSet) {

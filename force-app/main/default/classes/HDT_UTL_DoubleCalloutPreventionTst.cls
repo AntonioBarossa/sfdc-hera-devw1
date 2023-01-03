@@ -43,15 +43,15 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
 
     @isTest
     private static void noCalloutRecord(){
-        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type FROM Case];
-        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type FROM Case]);
+        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case];
+        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case]);
         for (SObject record : newRecord){
             record.put('Phase__c','Check preliminari OK');
         }
         HDT_UTL_DoubleCalloutPrevention prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Case');
         System.assertEquals(false, prevention.skipIntegrationCall(), 'noCalloutRecord: case prevention doesn\'t Work');
-        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order];
-        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order]);
+        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order];
+        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order]);
         for (SObject record : newRecord){
             record.put('Phase__c','Da Inviare');
         }
@@ -60,16 +60,36 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
     }
 
     @isTest
+    private static void skipCalloutCase(){
+        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case];
+        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case]);
+        for (SObject record : newRecord){
+            record.put('Phase__c','Check preliminari OK');
+            record.put('OpinionRequestNumber__c',-1);
+        }
+        HDT_UTL_DoubleCalloutPrevention prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Case');
+        System.assertEquals(true, prevention.skipIntegrationCall(), 'skipCalloutCase: case prevention doesn\'t Work');
+        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order];
+        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order]);
+        for (SObject record : newRecord){
+            record.put('Phase__c','Da Inviare');
+            record.put('Skip_Callout__c',-1);
+        }
+        prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Order');
+        System.assertEquals(true, prevention.skipIntegrationCall(), 'skipCalloutCase: order prevention doesn\'t Work');
+    }
+
+    @isTest
     private static void errorObjectType(){
-        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type FROM Case];
-        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type FROM Case]);
+        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case];
+        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case]);
         for (SObject record : newRecord){
             record.put('Phase__c','Check preliminari OK');
         }
         HDT_UTL_DoubleCalloutPrevention prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Order');
         System.assertEquals(false, prevention.skipIntegrationCall(), 'errorObjectType: case prevention doesn\'t Work');
-        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order];
-        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order]);
+        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order];
+        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order]);
         for (SObject record : newRecord){
             record.put('Phase__c','Da Inviare');
         }
@@ -79,8 +99,8 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
 
     @isTest
     private static void noConfiguration(){
-        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type FROM Case];
-        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type FROM Case]);
+        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case];
+        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case]);
         List<Map<String,Object>> args = new List<Map<String,Object>>();
         for (SObject record : newRecord){
             record.put('Phase__c','Completata');
@@ -98,8 +118,8 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
         HDT_UTL_DoubleCalloutPrevention prevention = new HDT_UTL_DoubleCalloutPrevention(newRecord,oldRecordMap,'Case');
         System.assertEquals(false, prevention.skipIntegrationCall(), 'noConfiguration: case prevention doesn\'t Work');
         
-        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order];
-        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order]);
+        newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order];
+        oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order]);
         args = new List<Map<String,Object>>();
         for (SObject record : newRecord){
             record.put('Phase__c','Completata');
@@ -121,8 +141,8 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
 
     @IsTest
     private static void caseTest(){
-        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type FROM Case LIMIT 1];
-        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type FROM Case WHERE Id = :(Id)newRecord[0].get('Id')]);
+        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case LIMIT 1];
+        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case WHERE Id = :(Id)newRecord[0].get('Id')]);
         // primo caso esiste la configurazione ma il metodo indicato non corrisponde a quelo del record;
         newRecord[0].put('Phase__c','Check preliminari OK');
         insertSingleAsyncCallout(new Map<String,Object>{
@@ -190,8 +210,8 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
 
     @IsTest
     private static void orderTest(){
-        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order LIMIT 1];
-        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order WHERE Id = :(Id)newRecord[0].get('Id')]);
+        List<SObject> newRecord = [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order LIMIT 1];
+        Map<Id,SObject> oldRecordMap = new Map<Id,SObject>([SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order WHERE Id = :(Id)newRecord[0].get('Id')]);
         // primo caso esiste la configurazione ma il metodo indicato non corrisponde a quelo del record;
         newRecord[0].put('Phase__c','Da Inviare');
         insertSingleAsyncCallout(new Map<String,Object>{
@@ -260,11 +280,11 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
     @IsTest
     private static void runTest(){
         List<SObject> newObject = new List<SObject>();
-        for(Case c :  [SELECT Id, Phase__c, PhaseStory__c, Type FROM Case]){
+        for(Case c :  [SELECT Id, Phase__c, PhaseStory__c, Type, OpinionRequestNumber__c FROM Case]){
             c.Phase__c = 'Check preliminari OK';
             newObject.add(c);
         }
-        for(Order o :  [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c FROM Order]){
+        for(Order o :  [SELECT Id, Phase__c, PhaseStory__c, ProcessType__c, Skip_Callout__c FROM Order]){
             o.Phase__c = 'Da Inviare';
             newObject.add(o);
         }

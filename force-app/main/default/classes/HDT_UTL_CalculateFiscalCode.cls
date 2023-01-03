@@ -235,7 +235,7 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         return dayAndGenderCode;
     }   
     
-    private static String getControlLetter(String s){
+    public static String getControlLetter(String s){
 		List<String> evenChars=new List<String>();
 		List<String> oddChars= new List<String>();
         String letter='';
@@ -457,5 +457,36 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             }
         }
         return letter;
+    }
+
+    public static String getControlNumberPiva(String s){
+		List<Integer> evenNums=new List<Integer>();
+		List<Integer> oddNums= new List<Integer>();
+        String controllNum='';
+		Integer oddCounter=0;
+        Integer evenCounter=0;
+
+		for(Integer i=0;i<s.length();i++){
+			if(math.mod(i,2)==0){
+                oddNums.add(Integer.valueOf(s.substring(i,i+1)));
+            }else{
+                evenNums.add(Integer.valueOf(s.substring(i,i+1)));
+            }
+		}
+        for (Integer i=0; i<oddNums.size(); i++){
+            oddCounter+=oddNums[i];
+        }
+        for (Integer i=0; i<evenNums.size(); i++){
+            integer tempNum=0;
+            tempNum=evenNums[i]*2;
+            if(tempNum>9){
+                tempNum-=9;
+            }
+            evenCounter+=tempNum;
+        }
+
+        integer sumMod=math.mod((oddCounter+evenCounter),10);
+        controllNum=string.valueOf(math.mod((10-sumMod),10));
+        return controllNum;
     }
 }

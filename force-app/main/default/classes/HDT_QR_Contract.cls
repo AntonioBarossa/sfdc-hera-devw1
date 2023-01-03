@@ -279,4 +279,19 @@ public inherited sharing class HDT_QR_Contract {
         return [SELECT Id,EndDate, StartDate,(select Id,SBQQ__RequiredById__c from SBQQ__Subscriptions__r) FROM Contract WHERE ServicePoint__c =:servicePointId AND Status='Attivo' LIMIT 1];
     }
 
+    public List<Contract> getContractByContractCodeConsumoAnomaloIdrico(Set<String> sapCodes){
+        return [SELECT Id,SAPContractCode__c,ContractSalesCompany__c,Market__c,ServicePoint__c,ServicePoint__r.ServicePointCode__c,ServicePoint__r.JointBottomAdhesion__c,
+                ServicePoint__r.PaySewer__c, ServicePoint__r.PayPurification__c, ServicePoint__r.MeterSN__c, ServicePoint__r.CommoditySector__c,
+                ServicePoint__r.Distributor__c, ServicePoint__r.SupplyType__c, Contact__c,AccountId,Account.PrimaryEmail__c,
+                Account.SAPIntegrationID__c ,BillingProfile__r.InvoicingAddressFormula__c,BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c,
+                BillingProfile__r.InvoicingPlace__c, BillingProfile__r.InvoicingPostalCode__c, BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c,
+                BillingProfile__r.InvoicingStreetNumberExtension__c,BillingProfile__r.InvoiceEmailAddress__c,BillingProfile__r.InvoiceCertifiedEmailAddress__c,BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c ,ServicePoint__r.AnnualConsumption__c, ServicePoint__r.MeterClass__c,
+                ServicePoint__r.Disconnectable__c, ServicePoint__r.Distributor__r.Code__c, ServicePoint__r.MarketOrigin__c, ServicePoint__r.PurificationInfoOnTheInvoice__c, ServicePoint__r.RateCategory__c,
+                ServicePoint__r.ResidentDomesticHousingUnit__c, ServicePoint__r.NotDomesticHousingUnit__c, ServicePoint__r.ImplantTypeTemp__c,
+                ServicePoint__r.SupplyCity__c, ServicePoint__r.SupplySAPCityCode__c, ServicePoint__r.SupplyCountry__c, ServicePoint__r.SupplyPostalCode__c, ServicePoint__r.SupplyProvince__c,
+                ServicePoint__r.SupplySAPStreetCode__c, ServicePoint__r.SupplyStreet__c, ServicePoint__r.SupplyStreetNumber__c, ServicePoint__r.SAPImplantCode__c
+                FROM Contract
+                WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED];
+    }
+
 }
