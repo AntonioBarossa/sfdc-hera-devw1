@@ -39,7 +39,7 @@ public with sharing class HDT_LC_EscalationController {
                     
                     caseList = [SELECT id, Status FROM Case WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
 
-                    if(caseList.Status == 'Bozza' || caseList.Status == 'In Lavorazione'){
+                    if(caseList.Status == 'New' || caseList.Status == 'In Lavorazione'){
                         recordTypeName = 'HDT_RT_EscalationCase';
                         parentEntityField = 'Case__c';
                         showPriorityField = 'false';
