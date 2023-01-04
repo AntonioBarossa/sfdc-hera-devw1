@@ -832,6 +832,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             Id = childOrder.Id,
                                 Phase__c = newPhase
                         );
+                        if('completata'.equalsIgnoreCase(newPhase)){
+                            orderToUpdate.Status='Activated';
+                        }
                         childOrdersToUpdate.add(orderToUpdate);
                     }
                 }
