@@ -479,7 +479,7 @@
         <name>getFakeAccount</name>
         <label>getFakeAccount</label>
         <locationX>646</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>updateAccount</targetReference>
@@ -538,9 +538,9 @@
         <name>updateAccount</name>
         <label>updateAccount</label>
         <locationX>646</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <connector>
-            <targetReference>Advice</targetReference>
+            <targetReference>assignProcessType_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -572,12 +572,12 @@
         <name>Advice</name>
         <label>Advice</label>
         <locationX>646</locationX>
-        <locationY>398</locationY>
+        <locationY>158</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>assignProcessType_0</targetReference>
+            <targetReference>getFakeAccount</targetReference>
         </connector>
         <fields>
             <name>AdviceText</name>
@@ -585,7 +585,7 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Prima_Classificazione</name>
@@ -851,7 +851,7 @@
         <locationX>520</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getFakeAccount</targetReference>
+            <targetReference>Advice</targetReference>
         </connector>
     </start>
     <status>Active</status>
