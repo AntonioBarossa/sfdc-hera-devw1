@@ -31,8 +31,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.startTest();
 
 			List<Account> tAccs=[SELECT Id, Name, LastName__c
-			                     FROM Account
-			                     WHERE Name='test account0'];
+			                     FROM Account];
 
 			Account tAccount=HDT_LC_SellingWizardController.getAccount(tAccs[0].Id, 'Name, LastName__c');
 
@@ -56,8 +55,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.startTest();
 
 			List<Account> tAccs=[SELECT Id, Name, LastName__c
-			                     FROM Account
-			                     WHERE Name='test account0'];
+			                     FROM Account];
 
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, true, tAccs[0].Id, 'Attiva');
 
@@ -104,8 +102,7 @@ public with sharing class HDT_LC_SellingWizardControllerTst{
 			Test.startTest();
 
 			List<Account> tAccs=[SELECT Id, Name, LastName__c
-			                     FROM Account
-			                     WHERE Name='test account0'];
+			                     FROM Account];
 
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, false, tAccs[0].Id, 'Attiva');
 
