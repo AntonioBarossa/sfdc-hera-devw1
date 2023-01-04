@@ -166,13 +166,20 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             firstNameCode= consonantsLetters.get(0)+consonantsLetters.get(1)+consonantsLetters.get(2);
         }else if(consonantsLetters.size()==2 && vowelsLetters.size()>=1){
             firstNameCode=consonantsLetters.get(0)+consonantsLetters.get(1)+vowelsLetters.get(0);
-        }else if(consonantsLetters.size()==1 ){
-            if( vowelsLetters.size()>=2){
-                firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+vowelsLetters.get(1);
-            }else{
-                firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+'X';
-            }
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()>=2){
+            firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+vowelsLetters.get(1);
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()==1){
+            firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+'X';
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()==0){
+            firstNameCode=consonantsLetters.get(0)+'X'+'X';
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()>2){
+            firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+vowelsLetters.get(2);
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()==2){
+            firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+'X';
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()==1){
+            firstNameCode=vowelsLetters.get(0)+'X'+'X';
         }
+        
         return firstNameCode;
     }
     
