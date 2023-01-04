@@ -7,6 +7,7 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import canHandleTari from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.canHandleTari';
 import createServicePoinString from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoinString';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
@@ -1785,6 +1786,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         else {
                             console.log('XXX Save: CreateServicePoint ');
                             this.updateSubmitedField();
+                            this.checkForTari();
                             this.create();
                         }
                     }
@@ -1841,6 +1843,30 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             title += this.recordtype.label;
         }
         return title;
+    }
+
+    checkForTari() {
+        canHandleTari({ comune: this.theRecord['Comune'], commodity: this.commodity }).then(data => {
+            
+            if(data){
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: '',
+                    message: 'Per questo comune è disponibile il servizio TARI',
+                    variant: 'Alert'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
+
+        }).catch(error => {
+            this.loading = false;
+
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     /**

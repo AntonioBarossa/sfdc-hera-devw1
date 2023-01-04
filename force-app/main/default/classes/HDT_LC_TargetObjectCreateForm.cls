@@ -28,6 +28,12 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
+    public static Boolean canHandleTari(String comune, String commodity){
+        List<City__c> cities = [ SELECT ServiceTari__c FROM City__c WHERE Name = :comune WITH SECURITY_ENFORCED ];
+        return !'Ambiente'.equalsIgnoreCase(commodity) && !cities.isEmpty() ? cities[0].ServiceTari__c : false;
+    }
+
+    @AuraEnabled
     public static ServicePoint__c createServicePoint(ServicePoint__c servicePoint) {
 
         if(servicePoint.MeterStatus__c == 'Bozza'){

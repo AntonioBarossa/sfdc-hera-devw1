@@ -187,6 +187,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.ContractExpenses__c = 'Nessuno sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
                     newOrder.ATO__c = updatedServicePoint[0].ATO__c;
+                    newOrder.VAT__c = 'Iva 10% (Cod. 01)';
                     newOrder.PayPurification__c = updatedServicePoint[0].PayPurification__c;
                     newOrder.PaySewer__c = updatedServicePoint[0].PaySewer__c;
                     newOrder.AggregateBilling__c = 'No';
@@ -210,7 +211,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         when 'Connessione con Attivazione'{
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
-                            newOrder.VAT__c = 'Iva 10% (Cod. 01)';
                             newOrder.ResidentDomesticHousingUnit__c = 1;
                         }
                         when 'Subentro'{
