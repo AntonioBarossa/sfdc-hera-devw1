@@ -2047,7 +2047,7 @@
             <name>NotManaged</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>checkTariManaged.result</leftValueReference>
+                <leftValueReference>checkManaedTari.result</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
