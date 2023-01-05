@@ -260,9 +260,9 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
 
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 
-            'Cessazione post accertamento'.equalsIgnoreCase(caseType) /* ||
+            'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
             ('Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
-             subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))*/){
+             subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){
             if('Positivo'.equalsIgnoreCase(outcome)){
                 return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
             }else{
