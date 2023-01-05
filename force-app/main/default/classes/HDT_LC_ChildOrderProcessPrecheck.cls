@@ -20,6 +20,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
         new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
+        new List<String>{'RealEstateUnit__c','1','ACAGRICO00','ACAGRIZOO0','ACANTINC00','ACARTCOMM0','ACAUNOPOT0','ACDOMNR000','ACDOMRESP0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPUBNDIS0','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACZOOTECN0','APSCARPRO0','ACAUGRUNI0','ACAUGRUNC0','ACANTIN000','ACPISPUB00','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
         new List<String>{'AgriculturalHousingUnit__c','1','ACAGRICO00'},
         new List<String>{'CommercialHousingUnit__c','1','ACARTCOMM0','ACAUGRUNC0'},
         new List<String>{'IndustrialHousingUnit__c','1','ACINDSTR00','ACAUGRUNI0'},
