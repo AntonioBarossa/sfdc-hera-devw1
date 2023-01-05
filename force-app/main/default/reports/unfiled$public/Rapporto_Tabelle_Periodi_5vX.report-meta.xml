@@ -4,7 +4,7 @@
         <field>CUST_NAME</field>
     </columns>
     <format>Tabular</format>
-    <name>Rapporto_Tabelle_Periodi</name>
+    <name>Rapporto Tabelle Periodi</name>
     <params>
         <name>co</name>
         <value>1</value>

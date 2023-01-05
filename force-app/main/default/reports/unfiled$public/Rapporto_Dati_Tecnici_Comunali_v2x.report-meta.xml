@@ -4,7 +4,7 @@
         <field>CUST_NAME</field>
     </columns>
     <format>Tabular</format>
-    <name>Rapporto_Dati_Tecnici_Comunali</name>
+    <name>Rapporto Dati Tecnici Comunali</name>
     <params>
         <name>co</name>
         <value>1</value>
