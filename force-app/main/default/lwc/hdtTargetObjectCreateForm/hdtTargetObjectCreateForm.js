@@ -1778,6 +1778,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     console.log('XXX Save: validForm -> '+this.validForm);
                     if (this.validForm) {
                         this.loading = true;
+                        this.checkForTari();
                         if (this.selectedservicepoint != undefined) {
                             console.log('XXX Save: UpdateServicePoint ');
                             this.updateServicePoint();
@@ -1786,7 +1787,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         else {
                             console.log('XXX Save: CreateServicePoint ');
                             this.updateSubmitedField();
-                            this.checkForTari();
                             this.create();
                         }
                     }
