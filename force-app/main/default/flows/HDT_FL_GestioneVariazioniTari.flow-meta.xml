@@ -1792,14 +1792,14 @@
                 <leftValueReference>getPostAttachment.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Coabitazioni</stringValue>
+                    <stringValue>DOM_Coabitazioni</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>getPostAttachment.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Componenti Residenti</stringValue>
+                    <stringValue>DOM_Componenti residenti</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
