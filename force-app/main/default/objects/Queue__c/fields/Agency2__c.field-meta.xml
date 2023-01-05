@@ -67,6 +67,16 @@
                 <label>Linetech</label>
             </value>
             <value>
+                <fullName>Marche Multiservizi</fullName>
+                <default>false</default>
+                <label>Marche Multiservizi</label>
+            </value>
+            <value>
+                <fullName>Marche service</fullName>
+                <default>false</default>
+                <label>Marche service</label>
+            </value>
+            <value>
                 <fullName>Service A</fullName>
                 <default>false</default>
                 <label>Service A</label>
