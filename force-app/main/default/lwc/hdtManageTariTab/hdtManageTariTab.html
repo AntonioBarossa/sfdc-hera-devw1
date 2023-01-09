@@ -1,0 +1,28 @@
+<!--
+  @description       : 
+  @author            : Giacinto Florio
+  @group             : 
+  @last modified on  : 09-01-2023
+  @last modified by  : Giacinto Florio
+-->
+
+<template>
+    <lightning-card title="Tabelle Amministrabili" icon-name="standard:contact">
+
+            <div class="slds-m-around_medium">
+                <lightning-combobox
+                name="progress"
+                label="Seleziona Una Tabella"
+                value={value}
+                placeholder="- Select -"
+                options={options}
+                onchange={handleChange} 
+                required></lightning-combobox>
+            </div>
+
+            <div class="slds-m-around_medium">
+                <lightning-button variant="brand" label={label} title={label} onclick={navigateToTab} disabled={isButtonDisabled}></lightning-button>
+            </div>
+            
+    </lightning-card>
+</template>
