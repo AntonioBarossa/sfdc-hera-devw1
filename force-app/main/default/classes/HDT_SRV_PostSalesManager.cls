@@ -41,9 +41,6 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             when 'evaluateEffectiveDate'{
                 psmUtl.evaluateEffectiveDate(sender);
             }
-            when 'createActivityElaborazioneManuale'{
-                psmUtl.createActivityElaborazioneManuale(sender);
-            }
             when 'sbloccoVoltura'{
                 psmUtl.sbloccoVoltura(sender);
             }
