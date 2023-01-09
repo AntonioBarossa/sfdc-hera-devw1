@@ -482,6 +482,19 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void createActivityElaborazioneManuale(SObject inputOrder){
+
+        Order currentOrder = (Order) inputOrder;
+        
+        if( currentOrder.RetroactiveDate__c != null && currentOrder.RetroactiveDate__c < System.Today() )
+        {
+            wrts_prcgvr__Activity__c activity = createActivity('Elaborazione Manuale');
+            activity.Order__c = currentOrder.Id;
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        }
+
+    }
+
     public void sbloccoVoltura(SObject inputCase){
 
         Case currentCase = (Case) inputCase;
