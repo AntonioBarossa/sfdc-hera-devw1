@@ -109,6 +109,10 @@
                 <behavior>Readonly</behavior>
                 <field>UseSubCategory__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Caliber__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -253,10 +257,6 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CartographyDetail__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>Caliber__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
