@@ -1080,9 +1080,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         for (Integer i = 0; i < responseCases.size(); i++) {
             Case c = responseCases[i];
             String[] record = new List<String>();
+            String preposition = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'al' : 'alla';
+            String received = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'ricevuto' : 'ricevuta';
             record.add('00310');
             record.add('120');
-            record.add('Risposta al Reclamo ricevuto in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
+            record.add('Risposta ' + preposition + ' ' + c.FirstLevelComplaintClassification__c + ' ' + received + ' in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);
             // Aggiungiamo lo \n finale sempre tranne che all'ultimo giro.
             if (i < responseCases.size() - 1) {
                 record.add(endLine);
