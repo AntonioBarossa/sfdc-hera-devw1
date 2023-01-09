@@ -963,7 +963,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         System.debug(LoggingLevel.DEBUG, 'caseIds: ' + caseIds);
 
         HDT_QR_Case queryCase = new HDT_QR_Case();
-        String queryFieldsCase = 'Id,CaseNumber,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
+        String queryFieldsCase = 'Id,CaseNumber,FirstLevelComplaintClassification__c,IndemnityConfirmed__c,IndemnityMotivation__c,IndemnityDueSendResponse__c,IndemnityDueBilllingCorrection__c,CorrectionRight__c,CorrectionDocumentEmissionDay__c,Contract__c,Market__c,SendDate__c,CommodityFormula__c,AddressFormula__c,PODPDRFormula__c'; // WIP. per aggiungere l'offerta bisogna querare anche i contratti del cliente... :(
         List<Case> responseCases = queryCase.getRecordsById(caseIds, queryFieldsCase);
         System.debug(LoggingLevel.DEBUG, 'responseCases: ' + responseCases);
 
