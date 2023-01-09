@@ -125,7 +125,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     anagAlignCase = createAnagAlignmentCase(triggerOrder);
                     anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
                     anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                    anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                    //anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
                     anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
                     anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
                     if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
@@ -134,6 +134,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     for (String field : dataEnrichmentFields) {
                         anagAlignCase.put(field, tempCase.get(field));
                     }
+                    alignSalesCompany(anagAlignCase,triggerOrder);
                     System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                     anagAlignCase.Phase__c = 'Da Inviare';
                     HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
@@ -718,10 +719,24 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         return transcodedValue;
     }
 
-    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
-    private static String companyCodeTemp(String commodity) {
-        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    private static void alignSalesCompany(Case newCase, Order ord){
+        if (String.isNotBlank(newCase.SalesCompanyCode__c) || String.isNotBlank(newCase.SalesCompany__c)){
+            return;
+        }
+        /* if (String.isNotBlank(ord.SalesCompanyCode__c)){
+            newCase.SalesCompanyCode__c = ord.SalesCompanyCode__c;
+            newCase.SalesCompany__c = ord.SalesCompany__c;
+            return;
+        } */
+        newCase.SalesCompanyCode__c = 'Gas'.equals(ord.CommodityFormula__c) ? '10V0000160' : '13V0000000';
+        HDT_SRV_DataEnrichmentPostSales depsSrv = new HDT_SRV_DataEnrichmentPostSales();
+        newCase.SalesCompany__c = depsSrv.calculateSalesCompany(newCase.SalesCompanyCode__c);
     }
+
+    // Codice venditore cablato essendo cablato anche nel template pclick delle attivazioni.
+    /* private static String companyCodeTemp(String commodity) {
+        return commodity.equals('Gas') ? '10V0000160' : '13V0000000';
+    } */
 
     // Fornisce la regione a partire dalla provincia. Per Wave 1 sono gestite solo MARCHE e ABRUZZO.
     // TODO WAVE 3: creare un metadato ad-hoc per configurare tutte le province e tutte le regioni.
