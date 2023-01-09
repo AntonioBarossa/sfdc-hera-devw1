@@ -400,17 +400,10 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>FirstName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>BP</stringValue>
-            </value>
-        </filters>
-        <filters>
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>MODELLO</stringValue>
+                <stringValue>BP MODELLO</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
