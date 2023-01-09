@@ -748,6 +748,29 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         }
     }
 
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleChiusuraActivitiesPending(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+
+        try {
+            if ('Ricostruzione Consumi'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+        
+    }
+
     @Future
     private static void updateFuture(String serializedCase)
     {
