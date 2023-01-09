@@ -489,14 +489,14 @@
             <field>FirstName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>RECLAMO DA</stringValue>
+                <stringValue>BP</stringValue>
             </value>
         </filters>
         <filters>
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>CITTADINO</stringValue>
+                <stringValue>MODELLO</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
