@@ -3,6 +3,19 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
     private static String vowels='AEIUO';
     private static String[] vowelsLetters=new List<String>();
     private static String[] consonantsLetters=new List<String>();
+    private static Map<String, String> omocodiaMap = new Map<String, String>
+    {
+        'L' => '0',
+        'M' => '1',
+        'N' => '2',
+        'P' => '3',
+        'Q' => '4',
+        'R' => '5',
+        'S' => '6',
+        'T' => '7',
+        'U' => '8',
+        'V' => '9'
+    };
     
     @AuraEnabled
     public static String calculateFiscalCode(Map<String,String> infoData){
@@ -24,6 +37,70 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             fiscalCode += getControlLetter(fiscalCode);
         }
         return fiscalCode;
+    }
+    /* Nel calcolo del lead viene eseguito un controllo prima sulla validita' del codice fiscale
+    * Poi lo calcola nuovamente
+    * in caso di citta' con piu' codici belfiore e' necessario calcolare il codice fiscale 
+    * per ogni possibile citycode
+    */
+    public static Set<String> calculateSetFiscalCode(Map<String,String> infoData){
+        String city = infoData.get('birthPlace').toUpperCase();
+        Set<String> cityCodes = new Set<String>();
+        Set<String> fiscalCodes = new Set<String>();
+        List<City__c> checkCitta = [SELECT BelfioreCode__c FROM City__c WHERE Name = :city AND BelfioreCode__c != null WITH SECURITY_ENFORCED];
+        for(City__c singleCity : checkCitta)
+        {
+            cityCodes.add(singleCity.BelfioreCode__c);
+        }
+        for(String singleCode : cityCodes)
+        {
+            String fiscalCode='';
+            if(''.equals(singleCode)){
+                fiscalCode = null ;
+            }else{
+                
+                fiscalCode += getLastNameCode(infoData.get('lastName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+                fiscalCode += getFirstNameCode(infoData.get('firstName').toUpperCase().replaceAll('\'', '').deleteWhitespace());//HRAWRM-763,HRAWRM-800
+
+                fiscalCode += getYear(infoData.get('birthDate'));
+                fiscalCode += getMonthLetter(infoData.get('birthDate'));
+                fiscalCode += getDayAndGenderCode(infoData.get('birthDate'), infoData.get('gender'));
+                fiscalCode += singleCode;
+                System.debug(singleCode);
+                fiscalCode += getControlLetter(fiscalCode);
+            }
+            fiscalCodes.add(fiscalCode);
+        }
+        return fiscalCodes;
+    }
+
+    public static String cleanFiscalCodeFromOmocodia(String fiscalCode)
+    {
+        String newFiscalCode = '';
+        String name = fiscalCode.substring(0,6);
+        String year = cleanInfoFromOmocodia(fiscalCode.substring(6,8));
+        String month = fiscalCode.substring(8,9);
+        String day = cleanInfoFromOmocodia(fiscalCode.substring(9,11));
+        String cityCodeFirstChar =  fiscalCode.replaceAll( '\\s+', '').substring(11,12);
+        String cityCode =cleanInfoFromOmocodia(fiscalCode.replaceAll( '\\s+', '').substring(12,15));
+        newFiscalCode = name + year + month + day + cityCodeFirstChar + cityCode;
+        newFiscalCode += getControlLetter(newFiscalCode);
+        return newFiscalCode;
+    }
+    private static String cleanInfoFromOmocodia(String s)
+    {
+        String lastString = s;
+        String newString = '';
+        for(Integer i=0; i < s.length(); ++i)
+        {
+            String sub = s.substring(i, i+1);
+            if(!sub.isNumeric())
+            {
+                newString = lastString.replace(sub, omocodiaMap.get(sub));
+                lastString = newString;
+            }
+        }
+        return String.isBlank(newString) ? lastString : newString;
     }
     private static Boolean isVowel(String test, String letter){
         return test.contains(letter)?true:false;
@@ -64,8 +141,18 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
                 }
             }
             //Caso di Cognome con Due lettere bisogna aggiungere una X
-            if(consonantsLetters.size() <3 && vowelsLetters.size()<1){
+            if(String.isBlank(lastNameCode) && consonantsLetters.size() <3 && vowelsLetters.size()<1){
                 lastNameCode= consonantsLetters.get(0)+consonantsLetters.get(1) + 'X';
+            }
+            else if(String.isBlank(lastNameCode) && vowelsLetters.size() <3 && consonantsLetters.size()<1){
+                lastNameCode= vowelsLetters.get(0)+vowelsLetters.get(1) + 'X';
+            }
+            //Caso di Cognome con una lettera, bisogna aggiungere due X
+            if(String.isBlank(lastNameCode) && consonantsLetters.size() ==0 && vowelsLetters.size()==1){
+                lastNameCode= vowelsLetters.get(0)+ 'X' + 'X';
+            } 
+            else if(String.isBlank(lastNameCode) && vowelsLetters.size() ==0 && consonantsLetters.size()==1){
+                lastNameCode= consonantsLetters.get(0)+ 'X' + 'X';
             }
         }
         return lastNameCode;   
@@ -79,13 +166,20 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             firstNameCode= consonantsLetters.get(0)+consonantsLetters.get(1)+consonantsLetters.get(2);
         }else if(consonantsLetters.size()==2 && vowelsLetters.size()>=1){
             firstNameCode=consonantsLetters.get(0)+consonantsLetters.get(1)+vowelsLetters.get(0);
-        }else if(consonantsLetters.size()==1 ){
-            if( vowelsLetters.size()>=2){
-                firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+vowelsLetters.get(1);
-            }else{
-                firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+'X';
-            }
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()>=2){
+            firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+vowelsLetters.get(1);
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()==1){
+            firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+'X';
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()==0){
+            firstNameCode=consonantsLetters.get(0)+'X'+'X';
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()>2){
+            firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+vowelsLetters.get(2);
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()==2){
+            firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+'X';
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()==1){
+            firstNameCode=vowelsLetters.get(0)+'X'+'X';
         }
+        
         return firstNameCode;
     }
     
@@ -158,7 +252,7 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
         return dayAndGenderCode;
     }   
     
-    private static String getControlLetter(String s){
+    public static String getControlLetter(String s){
 		List<String> evenChars=new List<String>();
 		List<String> oddChars= new List<String>();
         String letter='';
@@ -380,5 +474,36 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             }
         }
         return letter;
+    }
+
+    public static String getControlNumberPiva(String s){
+		List<Integer> evenNums=new List<Integer>();
+		List<Integer> oddNums= new List<Integer>();
+        String controllNum='';
+		Integer oddCounter=0;
+        Integer evenCounter=0;
+
+		for(Integer i=0;i<s.length();i++){
+			if(math.mod(i,2)==0){
+                oddNums.add(Integer.valueOf(s.substring(i,i+1)));
+            }else{
+                evenNums.add(Integer.valueOf(s.substring(i,i+1)));
+            }
+		}
+        for (Integer i=0; i<oddNums.size(); i++){
+            oddCounter+=oddNums[i];
+        }
+        for (Integer i=0; i<evenNums.size(); i++){
+            integer tempNum=0;
+            tempNum=evenNums[i]*2;
+            if(tempNum>9){
+                tempNum-=9;
+            }
+            evenCounter+=tempNum;
+        }
+
+        integer sumMod=math.mod((oddCounter+evenCounter),10);
+        controllNum=string.valueOf(math.mod((10-sumMod),10));
+        return controllNum;
     }
 }

@@ -23,10 +23,16 @@ public with sharing class HDT_LC_AttachmentManagerTst {
 
         System.runAs(internalUser){
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G1 - MMS Persona fisica','Famiglie');
             Id accId = accs[0].id;
 
             list<Case> listFakeCases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, null, null, null, null);
+            listFakeCases[0].ClientTypology__c = 'Domestico';
+            listFakeCases[0].Channel__c = 'telefono';
+            listFakeCases[0].Subprocess__c = 'sottoprocesso';
+            listFakeCases[0].SubscriberType__c = 'Amministratore';
+            listFakeCases[0].MacroTopic__c = 'Info contratto';
+            listFakeCases[0].SupplyCity__c = 'città';
             listFakeCases[0].AdditionalAttachments__c = 'test';
             listFakeCases[0].MandatoryAttachments__c = 'allegato';
             insert listFakeCases;
@@ -108,13 +114,12 @@ public with sharing class HDT_LC_AttachmentManagerTst {
 
     @isTest
     static void test_6(){
-    HDT_LC_AttachmentManager params = new HDT_LC_AttachmentManager();
     String varString = '';
     Id caseId = [SELECT Id
                 FROM Case
                 WITH SECURITY_ENFORCED].Id;
     Test.startTest();
-        varString = HDT_LC_AttachmentManager.getRequiredAttachment(caseId, params);
+        varString = HDT_LC_AttachmentManager.getRequiredAttachment(caseId, null);
     Test.stopTest();  
     system.assert(varString.length()>0);
     }
@@ -129,6 +134,18 @@ public with sharing class HDT_LC_AttachmentManagerTst {
         varSObject = HDT_LC_AttachmentManager.getRecordsToCheck(caseId);
     Test.stopTest();  
     system.assertEquals(caseId, varSObject.Id);
+    }
+
+    @isTest
+    static void test_8(){
+    HDT_LC_AttachmentManager varWrap = null;
+    Id caseId = [SELECT Id
+                    FROM Case
+                    WITH SECURITY_ENFORCED].Id;
+    Test.startTest();
+        varWrap = HDT_LC_AttachmentManager.getCaseForButton(caseId);
+    Test.stopTest();  
+    system.assertEquals('città', varWrap.city);
     }
 
 }

@@ -186,13 +186,16 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context,String formParams){
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
 		String quotationType = '';
 		Boolean isMassive = false;
 		String signatureMethod = '';
+		String signMode='';
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String tipoPlico = formParamsMap.get('TipoPlico') != null? (String)formParamsMap.get('TipoPlico'):'';
 		if(context.equalsIgnoreCase('Order')){
 			isMassive = (Boolean) processRecord.get('isMassive__c');
 		}
@@ -202,18 +205,24 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}else{
 				if(isSignNeeded(response)){
 					processRecord.put('DocumentalPhase__c','Plico in firma');
+				}else if(String.isNotBlank(tipoPlico) && tipoPlico.equalsIgnoreCase('Sollecito')){
+					processRecord.put('DocumentalPhase__c','Plico sollecitato');
 				}else {
 					processRecord.put('DocumentalPhase__c','Plico inviato');
 				}
+				
 				if(context.equalsIgnoreCase('Case')){
+					signMode = (String) processRecord.get('SignMode__c');
 					cluster = (String) processRecord.get('Cluster__c');
 					quotationType = (String) processRecord.get('QuotationType__c');
 					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
 						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
 					}
+				} else {
+					signMode = (String) processRecord.get('SignatureMethod__c');
 				}
 				// Oltre alla DocusignExpirationDate__c, settiamo anche il campo DocusignExpirationDate__c se necessario.
-				String signMode = (String) processRecord.get('SignMode__c');
+			
 				if (signMode != null && signMode.containsIgnoreCase('OTP')) {
 					List<CS_DaysToExpiration__c> daysToExpiration = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='BustaDocusign' WITH SECURITY_ENFORCED];
 					if (!daysToExpiration.isEmpty()) {
@@ -496,6 +505,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
 			mapStringObjectRecords.put('Order', orderList);
+
+			//DATI CATASTALI
+			List<LandRegistry__c> landList = new List<LandRegistry__c>();
+			for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) singleOrder.Dati_Catastali__r){
+				landList.add(singleLandRegistry);
+			}
+			mapStringObjectRecords.put('LandRegistry', landList);
 			
 			//PROCESSING ORDER ITEMS
 			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){

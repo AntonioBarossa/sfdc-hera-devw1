@@ -42,6 +42,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         clonedOrder.put('OrderReference__c',inputOrder.Id);
         clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
         clonedOrder.put('VoltureType__c','Ordinaria');
+        clonedOrder.put('HerokuPracticeCode__c','');
         /**@frpanico 2022-07-05
          * gestione campi mancanti integrazione
          */
@@ -88,6 +89,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         }
         /* Update in "Annullato" phase the input order */
         inputOrder.Phase__c = 'Annullato';
+        inputOrder.Status = 'Annullato';
         /*TODO: add other fields of annullment if needed*/
         HDT_UTL_VoltureChangeUtilities.updateOrderFuture(JSON.serialize(inputOrder));
         /**@frpanico 12/10/2021*/
@@ -96,7 +98,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
          * set the outcome phase from the accountCheck method
          */
         List<Account> orderAccount = voltureChangeQr.getAccountInfoById(clonedOrder.AccountId);
-        accountCheckParams.put('accountType',orderAccount[0]?.RecordType.DeveloperName);
+        //ticket 911622C: solo Marcatura D1 - Persona Fisica RESIDENZIALE, Tutti gli altri sono BUSINESS (per impostare la fase )
+        accountCheckParams.put('accountType',orderAccount.isEmpty()? '' : ('D1 - Persona fisica'.equalsIgnoreCase(orderAccount[0].CustomerMarking__c) && 'Famiglie'.equalsIgnoreCase(orderAccount[0].Category__c))? 'HDT_RT_Residenziale' : 'HDT_RT_Business');
         accountCheckParams.put('orderId', clonedOrder.get('Id'));
         accountCheckParams.put('dataDecorrenza',inputOrder?.EffectiveDate__c);
         accountCheckParams.put('preavvisoRecesso',inputOrder?.RecessNotice__c);

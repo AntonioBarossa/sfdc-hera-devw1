@@ -332,6 +332,7 @@ public with sharing class HDT_LC_SaleVasTst {
             Contract ctt = [SELECT Id, SBQQ__Order__c, Status FROM Contract WHERE SAPContractCode__c='3011913470' LIMIT 1];
             ctt.Status = 'Attivo';
             ctt.SBQQ__Order__c = orders[0].Id;
+            ctt.EndDate = Date.today().addDays(10);
             update ctt;
 
             List<Contract> result = HDT_LC_SaleVas.getTempNuovaAttivazContracts(acc.Id);
@@ -529,6 +530,49 @@ public with sharing class HDT_LC_SaleVasTst {
 
             System.assertEquals(false, result.isEmpty(), 'Query done');
             System.assertNotEquals(true, result.isEmpty(), 'Query failed');
+        }
+    }
+
+    @isTest
+    static void handleNotMigratedContratTst()
+    {
+        List<Sale__c> saleList = [SELECT Id FROM Sale__c];
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_TestMockArricchimento());
+        Test.startTest();
+            String result = HDT_LC_SaleVas.handleNotMigratedContract('3029109239',saleList[0]);
+        Test.stopTest();
+        System.assertEquals('Success', result,'Vendita non effettuata correttamente');
+
+    }
+    public class HDT_UTL_TestMockArricchimento implements HTTPCalloutMock{
+
+        public HTTPResponse respond(HTTPRequest request){
+
+            HttpResponse response = new HttpResponse();
+            String bodyResponse;
+            Integer statusCode;
+
+            bodyResponse = '{"status": "success","correlationId": "2a0c1340-f6b5-11eb-bb88-068530f44c42","timestamp": "2021-08-06T14:52:33",'
+            +'"data": {"testata": {"esito": "OK"},"posizioni": ['
+            +'{"campo": "DATACESSAZIONE","valore": "99991231"},'
+            +'{"campo": "ALIQUOTAIVA","valore": "01"},'
+            +'{"campo": "CA","valore": "200008867681"},'
+            +'{"campo": "DESCRFATTURAZCOLL","valore": "Il contratto può essere fatturato con altri contratti"},'
+            +'{"campo": "ANNOFABBRCONT","valore": "2000"},'
+            +'{"campo": "CALIBRO1","valore": "GRT003"},'
+            +'{"campo": "PRESENZACORRETTORE","valore": "NO"},'
+            +'{"campo": "OPZIONE","valore": "E_UD_TDR"},'
+            +'{"campo": "MOTIVOBLOCCOCALCOLO","valore": "T1"},'
+            +'{"campo": "ACCISE","valore": "0.02270000"},'
+            +'{"campo": "CODICE_ATECO","valore": "999999"}'
+            +']}}';
+            statusCode = 200;
+
+            response.setHeader('Content-Type', 'application/json');
+            response.setBody(bodyResponse);
+            response.setStatusCode(statusCode);
+            response.setStatus('OK');
+            return response;
         }
     }
 }

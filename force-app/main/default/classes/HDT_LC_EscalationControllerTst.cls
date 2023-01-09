@@ -3,16 +3,25 @@ public with sharing class HDT_LC_EscalationControllerTst {
     @TestSetup
     static void makeData(){
         Account account = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'Mario Rossi')[0];
-        account.CompanyOwner__c = 'MMS';
+        account.Category__c = 'Aziende SME';
+        account.CustomerMarking__c = 'D3 - Azienda';
         insert account;
+
         HDT_UTL_DataFactoryTst.createLead(1, true);
+
         HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-        Order order = HDT_UTL_DataFactoryTst.createOrder(1, true, account.Id, '')[0];
-        HDT_UTL_DataFactoryTst.createCase(1, true, account.Id, null, null, null, order.Id);
 
-        insert new Interaction__c(
+        Order order = HDT_UTL_DataFactoryTst.createOrder(1, false, account.Id, '')[0];
+        order.Status = 'Draft';
+        insert order;
 
-        );
+        Case caseList = HDT_UTL_DataFactoryTst.createCase(1, false, account.Id, null, null, null, order.Id)[0];
+        caseList.Status = 'New';
+        insert caseList;
+
+        Interaction__c interaction = new Interaction__c();
+        interaction.Status__c = 'Aperta';
+        insert interaction;
     }
 
     @IsTest
@@ -20,8 +29,8 @@ public with sharing class HDT_LC_EscalationControllerTst {
         String result;
         Test.startTest();
 
-        Account account = [SELECT Id FROM Account];
-        result = HDT_LC_EscalationController.getRecordData(account.Id);
+        Account acc = [SELECT Id FROM Account];
+        result = HDT_LC_EscalationController.getRecordData(acc.Id);
         System.assert(result.contains('Account__c'));
         
         Lead lead = [SELECT Id FROM Lead];
@@ -35,7 +44,7 @@ public with sharing class HDT_LC_EscalationControllerTst {
         Order order = [SELECT Id FROM Order];
         result = HDT_LC_EscalationController.getRecordData(order.Id);
         System.assert(result.contains('Order__c'));
-        
+
         Case caseRecord = [SELECT Id FROM Case];
         result = HDT_LC_EscalationController.getRecordData(caseRecord.Id);
         System.assert(result.contains('Case__c'));

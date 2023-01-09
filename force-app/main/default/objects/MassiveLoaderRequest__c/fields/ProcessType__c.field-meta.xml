@@ -104,6 +104,26 @@
                 <default>false</default>
                 <label>Allineamento Anagrafica</label>
             </value>
+            <value>
+                <fullName>ConsumoAnomaloIdrico</fullName>
+                <default>false</default>
+                <label>Consumo Anomalo Idrico</label>
+            </value>
+            <value>
+                <fullName>CaricamentoIniziativaDgrer</fullName>
+                <default>false</default>
+                <label>Caricamento Iniziativa DGRER</label>
+            </value>
+            <value>
+                <fullName>ChiusuraMassivaActivity</fullName>
+                <default>false</default>
+                <label>Chiusura Massiva Activity</label>
+            </value>
+            <value>
+                <fullName>ChiusuraOrderCase</fullName>
+                <default>false</default>
+                <label>Chiusura Order Case</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

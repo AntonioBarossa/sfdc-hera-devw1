@@ -436,6 +436,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Product__r.Name,
             SBQQ__Product__r.ProductCode,
             SBQQ__Product__r.Version__c,
+            SBQQ__Product__r.ReferenceMarket__c,
             DelayEffectiveDate__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__c = :quoteId
@@ -516,7 +517,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.ContractReference__c = :contractId
             AND SBQQ__Quote__r.Sale__c = :saleId
-            AND (SBQQ__Product__r.Name IN ('PDR','POD')  OR SBQQ__Product__r.Family IN :famils)
+            AND (SBQQ__Product__r.Name IN ('PDR','POD','Punto Fornitura Ambiente','Punto Fornitura Acqua')  OR SBQQ__Product__r.Family IN :famils)
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')
             WITH SECURITY_ENFORCED
         ];
@@ -569,7 +570,14 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__c,
             SBQQ__Quote__r.Name,
             SBQQ__Quote__r.SBQQ__Opportunity2__r.Name,
-            ServicePoint__c
+            SBQQ__Quote__r.ContractReference__r.Status,
+            SBQQ__Quote__r.ContractReference__r.AccountId,
+            SBQQ__Quote__r.ContractReference__r.BillingProfile__c,
+            SBQQ__Quote__r.SBQQ__Account__c,
+            SBQQ__RequiredBy__r.BillingProfile__c,
+            ServicePoint__r.CommoditySector__c,
+            ServicePoint__c,
+            BillingProfile__c
             FROM SBQQ__QuoteLine__c
             WHERE SBQQ__Quote__r.Sale__c = :saleId
             AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected')

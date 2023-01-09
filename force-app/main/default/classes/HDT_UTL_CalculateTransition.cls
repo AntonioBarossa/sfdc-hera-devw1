@@ -34,7 +34,6 @@ public with sharing class HDT_UTL_CalculateTransition {
     }
 
     public Map<String,Object> calculateCompanyInfos(){
-        
         Map<String,Object> companyInfosMap = new Map<String,Object>();
         Map<String,Object> calculateTransitionMap = new Map<String,Object>();
 
@@ -45,17 +44,21 @@ public with sharing class HDT_UTL_CalculateTransition {
         
         
         if((String)calculateTransitionMap.get('distributorCode') != null && (String)calculateTransitionMap.get('distributorCode') != ''){
+            string queryCity = String.isNotBlank(city.SDV__c) ? city.SDV__c : 'ALTRO';
+
             HDT_MatriceSocietaVendita__mdt matrixSaleSociety = [SELECT Id, isActive__c, SalesCompanyCode__c, Comune__c, distributor__c, Marcatura__c, Offerta__c, Service__c, SellerCompany__c 
                                                                 FROM HDT_MatriceSocietaVendita__mdt 
                                                                 WHERE isActive__c = true AND 
-                                                                    Marcatura__c = 'ALTRO' AND 
+                                                                    (Marcatura__c = 'MMS' OR Marcatura__c = 'ALTRO') AND 
                                                                     (distributor__c LIKE :(String)calculateTransitionMap.get('distributorCode') OR distributor__c LIKE 'ALTRO') AND 
-                                                                    Comune__c =: city.SDV__c AND
+                                                                    Comune__c =: queryCity AND
                                                                     Service__c =: (String)calculateTransitionMap.get('commodity') WITH SECURITY_ENFORCED LIMIT 1];
             companyInfosMap.put('SalesCompanyCode', matrixSaleSociety.SalesCompanyCode__c);
+            companyInfosMap.put('SalesCompany', matrixSaleSociety.SellerCompany__c);
         }
         else{
             companyInfosMap.put('SalesCompanyCode', '');
+            companyInfosMap.put('SalesCompany', '');
         }
         companyInfosMap.put('cityObj', city);
         

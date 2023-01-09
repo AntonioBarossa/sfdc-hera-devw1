@@ -558,6 +558,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
@@ -590,6 +594,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contattare banca</fullName>
             <default>false</default>
         </values>
@@ -603,6 +611,10 @@
         </values>
         <values>
             <fullName>Domiciliazione già presente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7097,7 +7109,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7842,6 +7854,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In compartecipazione o totalmente da istituzioni pubbliche</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Totalmente da Istituzioni Pubbliche</fullName>
             <default>false</default>
         </values>
@@ -8379,6 +8395,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>D&apos;ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Resolution__c</picklist>
         <values>
             <fullName>Contratto non richiesto</fullName>
@@ -8711,18 +8738,6 @@
         </values>
         <values>
             <fullName>13FM-Non domestici AT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13X0-Usi interni BT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Y0-Usi interni MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>13Z0-Grossisti</fullName>
             <default>false</default>
         </values>
     </picklistValues>

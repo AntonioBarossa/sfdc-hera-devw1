@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_EscalationOpportunity</fullName>
     <active>true</active>
@@ -745,7 +745,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1307,7 +1307,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2933,35 +2933,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Tari%2FTCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Vas e HVAC</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2981,6 +2953,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripresa formativa CC</fullName>
             <default>false</default>
         </values>
@@ -2990,10 +2966,6 @@
         </values>
         <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Contact Center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3009,19 +2981,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto TL Front</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Supporto legale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto su migrazione</fullName>
             <default>false</default>
         </values>
         <values>

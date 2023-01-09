@@ -29,7 +29,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             myAccountResidenziale.RecordTypeId = accountResidenziale;
             myAccountResidenziale.Name = 'Test Residenziale';
             myAccountResidenziale.CompanyOwner__c = 'MMS';
-            myAccountResidenziale.CustomerMarking__c = 'MMS Persona fisica';
+            myAccountResidenziale.CustomerMarking__c = 'G1 - MMS Persona fisica';
             myAccountResidenziale.Category__c = 'Famiglie';
             myAccountResidenziale.BillingCityCode__c='Roma';
 			myAccountResidenziale.BillingStreetName__c='via roma';
@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(2, false);
             spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].SupplyType__c = 'Domestico';
-            spList[0].ImplantType__c = '13Z0-Grossisti';
+            spList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
             spList[0].Account__c = accList[0].Id;
             spList[1].CommoditySector__c = 'Gas';
             insert spList;
@@ -77,7 +77,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
             insert contractList;
 
-            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(3, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
+            List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(4, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
             childOrders[0].Name = 'childOrder0';
             childOrders[0].RecordTypeId = constants.ORDER_RECORDTYPEID_VOLTURA;
             childOrders[0].ContractReference__c = contractList[0].Id;
@@ -334,7 +334,7 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
             List<Order> orders = [SELECT DateSentToSII__c,SignedDate__c,WaiverRightAfterthought__c,ProcessType__c,WizardCompletedDate__c,
                                 MaxAfterthoughtDate__c, IsEarlyActivation__c, Account.RecordType.DeveloperName, Channel__c, Market__c,
                                 CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c, DocumentalProcessType__c, MarketOrigin__c,
-                                CommodityFormula__c, VoltageLevel__c, SupplyType__c, IsActivationDeferred__c
+                                CommodityFormula__c, VoltageLevel__c, SupplyType__c, IsActivationDeferred__c,IsTransition__c
                                 FROM Order WHERE Name = 'childOrder1'];
             
             Test.startTest();

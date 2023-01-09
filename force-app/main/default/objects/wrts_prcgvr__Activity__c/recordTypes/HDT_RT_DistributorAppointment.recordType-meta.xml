@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_DistributorAppointment</fullName>
     <active>true</active>
@@ -631,6 +631,18 @@
         </values>
         <values>
             <fullName>Ok contattato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Primo contatto fallito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Secondo contatto fallito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Terzo contatto fallito</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2675,35 +2687,7 @@
     <picklistValues>
         <picklist>SuspensionReason__c</picklist>
         <values>
-            <fullName>Approfondimenti in corso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa dettagli richiedente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa di esito da DL%2FSII</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa esito lavorazione esterna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa integrazione documenti da parte cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa integrazione documenti%2FVO da agenzia</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>In attesa ricontatto cliente non trovato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesto parere ad altra struttura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2720,6 +2704,10 @@
         <values>
             <fullName>Presa Appuntamento</fullName>
             <default>true</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>

@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Richiesta non accolta</fullName>
+        <default>false</default>
+        <label>Richiesta non accolta</label>
+    </customValue>
+    <customValue>
         <fullName>Annullamento da cliente</fullName>
         <default>false</default>
         <label>Annullamento da cliente</label>
@@ -44,6 +49,11 @@
         <fullName>Annullo voltura</fullName>
         <default>false</default>
         <label>Annullo voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+        <default>false</default>
+        <label>Assenza del presupposto di applicazione del tributo</label>
     </customValue>
     <customValue>
         <fullName>Autolettura non acquisibile</fullName>
@@ -119,6 +129,11 @@
         <fullName>Installazione Fallita</fullName>
         <default>false</default>
         <label>Installazione Fallita</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancanza del presupposto</fullName>
+        <default>false</default>
+        <label>Mancanza del presupposto</label>
     </customValue>
     <customValue>
         <fullName>Mancanza titolarità</fullName>
@@ -209,6 +224,31 @@
         <fullName>Volontà estorta</fullName>
         <default>false</default>
         <label>Volontà estorta</label>
+    </customValue>
+    <customValue>
+        <fullName>Ammissibilità KO</fullName>
+        <default>false</default>
+        <label>Ammissibilità KO</label>
+    </customValue>
+	<customValue>
+        <fullName>Credit Check KO</fullName>
+        <default>false</default>
+        <label>Credit Check KO</label>
+    </customValue>
+	<customValue>
+        <fullName>Esito KO da SII</fullName>
+        <default>false</default>
+        <label>Esito KO da SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Variazione non necessaria</fullName>
+        <default>false</default>
+        <label>Variazione non necessaria</label>
+    </customValue>
+	<customValue>
+        <fullName>Mancata corrispondenza Anagrafe</fullName>
+        <default>false</default>
+        <label>Mancata corrispondenza Anagrafe</label>
     </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
     <sorted>true</sorted>

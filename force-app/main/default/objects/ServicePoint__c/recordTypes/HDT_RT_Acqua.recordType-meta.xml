@@ -483,33 +483,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>NumberOfFamilyMembers__c</picklist>
-        <values>
-            <fullName>1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>6 o più</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>NumberOfTARIMembers__c</picklist>
         <values>
             <fullName>1</fullName>
@@ -591,15 +564,19 @@
     <picklistValues>
         <picklist>PurificationInfoOnTheInvoice__c</picklist>
         <values>
-            <fullName>No - Esente</fullName>
+            <fullName>Utenza non servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Paga</fullName>
+            <fullName>Utenza servita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Si - Ridotta</fullName>
+            <fullName>Utenza temporaneamente non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
             <default>false</default>
         </values>
     </picklistValues>

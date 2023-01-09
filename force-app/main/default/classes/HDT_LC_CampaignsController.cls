@@ -56,6 +56,16 @@ public inherited sharing class HDT_LC_CampaignsController {
             }
             else if(objectName.equalsIgnoreCase('Lead')) {
                 return  campaignMemberQr.getCampaignsByLeadPartner(id, currentUser);
+            }else if(objectName.equalsIgnoreCase('Account')) {
+                //return all active campaigns related to all contacts related to this Account
+                List<String> contacts = contactQr.getContactsIdByAccountId(id);
+                if (String.isNotBlank(category)) {
+                    if (String.isNotBlank(channel)) {
+                        return campaignMemberQr.filterCampaignsByCategoryAndChannelWithStatus(contacts, category, channel);
+                    }
+                    return campaignMemberQr.filterCampaignsByCategoryWithStatus(contacts, category);
+                }
+                return campaignMemberQr.getCampaignsFilteredByContactsWithStatus(contacts);
             }
             else {
                 return null;
@@ -442,7 +452,7 @@ public inherited sharing class HDT_LC_CampaignsController {
     @AuraEnabled(cacheable=true)
     public static CampaignMember getCampaignAndAccountByMember(String campaignMemberId){
         try {
-            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
+            CampaignMember cm = [SELECT Id, GenericField1__c ,Contact.AccountId, LeadId, CampaignId, Campaign.CaseCategory__c, Campaign.CaseSubCategory__c, Campaign.ProcessType__c FROM CampaignMember WHERE Id = :campaignMemberId WITH SECURITY_ENFORCED];
             return cm;
         }
         catch (Exception e) {
@@ -523,7 +533,11 @@ public inherited sharing class HDT_LC_CampaignsController {
                 (cmdt.Category__c == 'Outbound' && cmdt.Channel__c == 'Door to Door' && campaignList[0].Channel__c=='Door to Door')) && (cmdt.OutcomeCategory__c == outcomeType)
             )  {
                 system.debug('PUNTO 2');
-                partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+                if(outcomeType !=  'Esito Parziale')
+                    partialOutcomeValues.put(cmdt.StatusName__c, cmdt.StatusName__c);
+                else
+                    partialOutcomeValues.put(cmdt.StatusName__c, cmdt.DeveloperName);
+
             }
             system.debug('PUNTO 3');
         }
@@ -549,4 +563,5 @@ public inherited sharing class HDT_LC_CampaignsController {
         }
         return false;
     }
+    
 }

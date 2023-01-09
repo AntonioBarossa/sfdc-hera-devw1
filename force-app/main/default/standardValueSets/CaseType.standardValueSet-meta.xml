@@ -67,6 +67,11 @@
         <label>Autolettura da processo</label>
     </standardValue>
     <standardValue>
+        <fullName>Avviso di Servizio</fullName>
+        <default>false</default>
+        <label>Avviso di Servizio</label>
+    </standardValue>
+    <standardValue>
         <fullName>BP/CA - errata categoria</fullName>
         <default>false</default>
         <label>BP/CA - errata categoria</label>
@@ -675,11 +680,6 @@
         <fullName>Verifica Integrita Sigilli</fullName>
         <default>false</default>
         <label>Verifica Integrita Sigilli</label>
-    </standardValue>
-    <standardValue>
-        <fullName>Verifica Rottura Impianto Cliente</fullName>
-        <default>false</default>
-        <label>Verifica Rottura Impianto Cliente</label>
     </standardValue>
     <standardValue>
         <fullName>Trasmissione Dati Cliente Finale SII</fullName>

@@ -64,9 +64,12 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     public ServicePoint__c getServicePoint(String code){
         return [SELECT Id, CommoditySector__c FROM ServicePoint__c WHERE ServicePointCode__c=:code WITH SECURITY_ENFORCED LIMIT 1];
     }
-
+    /* è necessario far creare la pratica di richiesta passiva per contratto cessato
+    * In modo che si abbia traccia che la cessazione e' gia' avvenuta
+    * tramite errore sulla pratica stessa
+    */
     public Contract getContract(String servicePointId){
-        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status ='Attivo' WITH SECURITY_ENFORCED LIMIT 1];
+        return [SELECT Id,BillingProfile__c,SAPContractCode__c, EndDate FROM Contract WHERE ServicePoint__c=:servicePointId AND Status IN ('Attivo','Cessato') WITH SECURITY_ENFORCED ORDER BY Status ASC  LIMIT 1 ];
     }
 
     public HDT_CausalCodeCalculation__mdt getCausalCode(String cluster, String process, String commodity){
@@ -81,7 +84,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         LIMIT 1];
     }
 
-    public Case getRelatedCase(String recordId){
+    public List<Case> getRelatedCase(String recordId){
         return [SELECT Id,
         Type,
         Phase__c,

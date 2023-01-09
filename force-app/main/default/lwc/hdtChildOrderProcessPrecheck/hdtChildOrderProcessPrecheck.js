@@ -641,6 +641,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
+            if(this.order.ServicePoint__r.CommoditySector__c == 'Acqua'){
+                typeOfCommodity = 'ACQUA';
+            }
         }
         if(this.order.SalesCompany__c !== undefined){
             companyGroup = this.order.SalesCompany__c;
@@ -677,11 +680,12 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             activationUser:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             jobTitle:this.order.ChannelTransCode__c,
-            internalCustomerId:this.order.Account.CustomerCode__c,
+            internalCustomerId:this.order.Account.CustomerCode__c ? this.order.Account.CustomerCode__c : '1-'+this.order.Account.Id.slice(7,15),
             companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c? this.order.Account.FiscalCode__c : this.order.Account.VATNumber__c,
             secondaryCustomerId:secondaryCustomerId,
-            bpClass:bpClass,
+            //bpClass:bpClass,
+            bpClass:this.order.Account.CustomerMarking__c,
             bpCategory:this.order.Account.Category__c,
             bpType:bpType,
             customerType:"CT0", //da definire campo SF con business            
@@ -723,7 +727,8 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             console.log("this.34"); 
             
             data["bpAlternative"] = this.order.ServicePoint__r?.Account__r?.CustomerCode__c;
-            data["alternativeCustomerId"] = fiscalData;
+            //ticket 905174C email del 02/11/2022
+            //data["alternativeCustomerId"] = fiscalData;
         }
         console.log("this.4"); 
         console.log("@@@@request --> " + JSON.stringify(data)); 

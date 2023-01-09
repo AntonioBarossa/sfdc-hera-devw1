@@ -10,7 +10,12 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Comdata</fullName>
+                <default>false</default>
+                <label>Comdata</label>
+            </value>
             <value>
                 <fullName>Conservice</fullName>
                 <default>false</default>
@@ -25,6 +30,11 @@
                 <fullName>Data Company</fullName>
                 <default>false</default>
                 <label>Data Company</label>
+            </value>
+            <value>
+                <fullName>Estenergy</fullName>
+                <default>false</default>
+                <label>Estenergy</label>
             </value>
             <value>
                 <fullName>HC</fullName>
@@ -42,6 +52,11 @@
                 <label>Hera Comm Marche</label>
             </value>
             <value>
+                <fullName>Hera Spa</fullName>
+                <default>false</default>
+                <label>Hera Spa</label>
+            </value>
+            <value>
                 <fullName>Koinè</fullName>
                 <default>false</default>
                 <label>Koinè</label>
@@ -50,6 +65,16 @@
                 <fullName>Linetech</fullName>
                 <default>false</default>
                 <label>Linetech</label>
+            </value>
+            <value>
+                <fullName>Marche Multiservizi</fullName>
+                <default>false</default>
+                <label>Marche Multiservizi</label>
+            </value>
+            <value>
+                <fullName>Marche service</fullName>
+                <default>false</default>
+                <label>Marche service</label>
             </value>
             <value>
                 <fullName>Service A</fullName>
@@ -100,21 +125,6 @@
                 <fullName>Target Sinergie</fullName>
                 <default>false</default>
                 <label>Target Sinergie</label>
-            </value>
-            <value>
-                <fullName>Comdata</fullName>
-                <default>false</default>
-                <label>Comdata</label>
-            </value>
-            <value>
-                <fullName>Hera Spa</fullName>
-                <default>false</default>
-                <label>Hera Spa</label>
-            </value>
-            <value>
-                <fullName>Estenergy</fullName>
-                <default>false</default>
-                <label>Estenergy</label>
             </value>
         </valueSetDefinition>
     </valueSet>

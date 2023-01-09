@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8"?> 
 <RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>HDT_RT_Scarto</fullName>
     <active>true</active>
@@ -2742,6 +2742,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare Resoconto Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -2826,6 +2830,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
@@ -2839,6 +2847,10 @@
         </values>
         <values>
             <fullName>Esito ricevuto su richiesta chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione contratto colonnetta</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2863,6 +2875,10 @@
         </values>
         <values>
             <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Back Office</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2899,6 +2915,10 @@
         </values>
         <values>
             <fullName>Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
         <values>

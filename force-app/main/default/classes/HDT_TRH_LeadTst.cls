@@ -15,7 +15,8 @@ public with sharing class HDT_TRH_LeadTst{
 
 		HDT_UTL_DataFactoryTst.createIndividual(1, true);
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
-         	leads[0].VATNumber__c = '12345678100';
+         	leads[0].VATNumber__c = '07988320011';
+			leads[0].FiscalCode__c = '07988320011';
             leads[0].CustomerMarking__c= 'Azienda';
             leads[0].CompanyOwner__c ='HERA COMM';
             leads[0].Category__c ='Aziende SME';
@@ -99,6 +100,7 @@ public with sharing class HDT_TRH_LeadTst{
 			
             lead.LastName='Smith';
             lead.FirstName='George';
+            lead.FiscalCode__c='13288870150';
             lead.Birthdate__c= Date.parse('2/10/1990') ;
             lead.Birthcity__c='Roma';
             lead.Gender__c='Maschio';

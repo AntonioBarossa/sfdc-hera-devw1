@@ -98,7 +98,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             }
 
             arg.put('endpoint', endpoint);
-            arg.put('timeout', 12000);
+            arg.put('timeout', 20000);
             arg.put('payload',mrrList);
             arg.put('clientType','REST');
             arg.put('contentType','application/json');
@@ -197,6 +197,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField};
         List<Case> caseUpdate = new List<Case>();
         Case caseInsert = new Case();
+        Boolean discardManagement = false;
         try {
             HDT_WRP_HerokuPostSalesManager reqWrp = hpsmUtl.manipulateRequest(request);
             switch on request.header.requestType{
@@ -206,6 +207,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         //HDT_UTL_DatabaseService.updateSObject(caseUpdate);
                         responseObject.fields.addAll(handleNotifEsResponseField(caseUpdate[0]));
                     }
+                    discardManagement = true;
                 }
                 when 'RICH_PASS'{
                     caseInsert = hpsmUtl.handleRequestRichPass(reqWrp);
@@ -228,7 +230,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             RestContext.response.statusCode = 200;
         } catch (Exception ex) {
 		
-
+            discardManagement = false;
             responseField.fieldType = 'TEXT';
             responseField.name = 'ESITO';
             responseField.value = 'KO';
@@ -246,6 +248,9 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
             responseObject.fields = new List<HDT_WRP_MrrResponse.HDT_WRP_Field>{responseField, responseFieldError, responseFieldErrorCode};
             RestContext.response.statusCode = 400;
+        }
+        if (discardManagement){
+            HDT_UTL_Scarti.discardManagement(new List<HDT_WRP_MrrRequest.HDT_WRP_Request>{request});
         }
         return responseObject;
     }
@@ -443,15 +448,15 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 System.debug(LoggingLevel.DEBUG, 'RateCategory: ' + String.valueOf(objFields.get('RateCategory__c')));
 
                 if(afundiRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDI';
+                    fieldName = 'UND_IND';
                 }else if (afundaRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDA';
+                    fieldName = 'UND_AGR';
                 }else if(afundcRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDC';
+                    fieldName = 'UND_COM';
                 }else if(afundzRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
                     fieldName = 'AFUNDZ';
                 }else if ('ACAUGENER0'.equalsIgnoreCase(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUND';
+                    fieldName = 'UND';
                 }
 
                 if(!String.isBlank(fieldName))

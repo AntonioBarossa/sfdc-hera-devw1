@@ -56,7 +56,7 @@ public with sharing class HDT_LC_ActiveRepentant {
     }
 
     public static List<CityTechnicalData__c> getCityTecData(String comune){
-        List<CityTechnicalData__c> cityData =  [SELECT Id, TARIManagingStartDate__c, TARIManagingEndDate__c, CityNotManagedAlert__c, CutOverEndDate__c, TARIManaged__c FROM CityTechnicalData__c WHERE CadastralCity__c = :comune WITH SECURITY_ENFORCED LIMIT 1];
+        List<CityTechnicalData__c> cityData =  [SELECT Id, TARIManagingStartDate__c, TARIManagingEndDate__c, CityNotManagedAlert__c, CutOverEndDate__c, TARIManaged__c, CityCode__c FROM CityTechnicalData__c WHERE CadastralCity__c = :comune WITH SECURITY_ENFORCED LIMIT 1];
         return cityData;
     }
 

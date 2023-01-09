@@ -12,14 +12,21 @@
     <protected>false</protected>
     <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!Case.Id}&amp;
 c__accid={!Case.AccountId}&amp;
+c__sObjectRecordToCancell=Case&amp;
 c__flowName=HDT_FL_GestioneAnnullamento&amp;
-c__processType={!CASE(Case.Type, 
-																&apos;Variazione indirizzo di fornitura&apos;, &apos;Variazione indirizzo di fornitura tari&apos;, 
-																&apos;Errore di Fatturazione&apos;, &apos;Annullamento errore fatturazione&apos;,
+c__processType={!CASE(Case.Type,
+																&apos;Variazione indirizzo di fornitura&apos;,&apos;Variazione indirizzo di fornitura tari&apos;,
+																&apos;Errore di Fatturazione&apos;,&apos;Annullamento errore fatturazione&apos;,
 																&apos;Storno Rateizzazione&apos;,&apos;Annullamento storno rateizzazione tari&apos;,
 																&apos;Piano Rateizzazione&apos;,&apos;Annullamento storno rateizzazione tari&apos;,
 																&apos;Comunicazione Pagamento&apos;,&apos;Annullamento comunicazione pagamenti tari&apos;,
 																&apos;Doppi Pagamenti/Incassi&apos;,&apos;Annullamento doppi pagamenti tari&apos;,
 																&apos;Rimborso&apos;,&apos;Annullamento rimborso tari&apos;,
-																TEXT(Case.Type) )}</url>
+																&apos;Modifica dati contrattuali&apos;,TEXT(Case.Type),
+																&apos;Modifica post accertamento&apos;,TEXT(Case.Type),
+																&apos;Cessazione&apos;,TEXT(Case.Type),
+                &apos;Cessazione post accertamento&apos;,TEXT(Case.Type),
+                &apos;Reclamo da cittadino&apos;,TEXT(Case.Type),
+                &apos;Posizionamento contenitore&apos;,TEXT(Case.Type),
+																&apos;Annullamento prestazione&apos;)}</url>
 </WebLink>

@@ -674,8 +674,8 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>3645</locationX>
-        <locationY>1039</locationY>
+        <locationX>3619</locationX>
+        <locationY>1089</locationY>
         <assignmentItems>
             <assignToReference>GetOrder.CancellationRequestDate__c</assignToReference>
             <operator>Assign</operator>
@@ -780,7 +780,7 @@
             <assignToReference>GetOrderAggiornato_0.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Bozza Annullata</stringValue>
+                <stringValue>Annullato</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -824,8 +824,8 @@
     <assignments>
         <name>Passa_Fase_In_Lavorazione</name>
         <label>Passa Fase In Lavorazione</label>
-        <locationX>1723</locationX>
-        <locationY>1968</locationY>
+        <locationX>2089</locationX>
+        <locationY>2100</locationY>
         <assignmentItems>
             <assignToReference>GetRecord.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -833,8 +833,38 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Fase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Passa_Fase_In_Lavorazione_0</name>
+        <label>Passa Fase In Lavorazione</label>
+        <locationX>1757</locationX>
+        <locationY>1603</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseScreen.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseScreen.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Prevalorizzazione_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -955,8 +985,8 @@
     <assignments>
         <name>Valorizzazione_ProcessType</name>
         <label>Valorizzazione ProcessType</label>
-        <locationX>1366</locationX>
-        <locationY>1461</locationY>
+        <locationX>1597</locationX>
+        <locationY>1359</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -971,7 +1001,7 @@
     <decisions>
         <name>Can_Proceed</name>
         <label>Can Proceed?</label>
-        <locationX>3194</locationX>
+        <locationX>3197</locationX>
         <locationY>357</locationY>
         <defaultConnector>
             <targetReference>Wrong_Owner_Scrren</targetReference>
@@ -1046,8 +1076,8 @@
     <decisions>
         <name>Ci_sono_Allegati</name>
         <label>Ci sono Allegati?</label>
-        <locationX>1516</locationX>
-        <locationY>1858</locationY>
+        <locationX>1650</locationX>
+        <locationY>1863</locationY>
         <defaultConnector>
             <targetReference>Errore_Allegati_Obbligatori</targetReference>
         </defaultConnector>
@@ -1063,7 +1093,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Motivo_0</targetReference>
+                <targetReference>Passa_Fase_In_Lavorazione_0</targetReference>
             </connector>
             <label>SI</label>
         </rules>
@@ -1071,10 +1101,10 @@
     <decisions>
         <name>Controllo_Allegati_Obbligatori</name>
         <label>Controllo Allegati Obbligatori</label>
-        <locationX>1629</locationX>
-        <locationY>1483</locationY>
+        <locationX>1384</locationX>
+        <locationY>1522</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Motivo_0</targetReference>
+            <targetReference>Passa_Fase_In_Lavorazione_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Obbligatori</defaultConnectorLabel>
         <rules>
@@ -1110,8 +1140,8 @@
     <decisions>
         <name>Controllo_Contratto_TARI</name>
         <label>Controllo Contratto TARI</label>
-        <locationX>1747</locationX>
-        <locationY>1118</locationY>
+        <locationX>1879</locationX>
+        <locationY>1125</locationY>
         <defaultConnector>
             <targetReference>Motivo_Annullamento_Screen_0</targetReference>
         </defaultConnector>
@@ -1309,12 +1339,27 @@
     <decisions>
         <name>InviataHeroku</name>
         <label>Inviata ad Heroku?</label>
-        <locationX>1172</locationX>
-        <locationY>2080</locationY>
+        <locationX>1170</locationX>
+        <locationY>2081</locationY>
         <defaultConnector>
             <targetReference>Close_Activity_Case</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente_Case</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCase.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Ambiente</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Activity_Case</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
         <rules>
             <name>Discard_Rework_Case</name>
             <conditionLogic>and</conditionLogic>
@@ -1375,6 +1420,27 @@
                     <stringValue>Esito KO da SAP</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DBO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore invio a DL/SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Type</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Switch Out SII</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1390,6 +1456,21 @@
             <targetReference>Chiusura_activity_Order</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non inviata</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusura_activity_Order</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
         <rules>
             <name>Discard_Rework_Order</name>
             <conditionLogic>and</conditionLogic>
@@ -1462,6 +1543,20 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Dati discordanti</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito KO da DBO</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore invio a DL/SII</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1747,8 +1842,8 @@
     <decisions>
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
-        <locationX>1905</locationX>
-        <locationY>1883</locationY>
+        <locationX>2101</locationX>
+        <locationY>1829</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -1843,23 +1938,23 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti</name>
         <label>Salva In Bozza o vai Avanti</label>
-        <locationX>1433</locationX>
-        <locationY>1275</locationY>
-        <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
+        <locationX>1401</locationX>
+        <locationY>1259</locationY>
+        <defaultConnector>
+            <targetReference>GetCaseScreen</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
-            <name>Avanti</name>
-            <conditionLogic>or</conditionLogic>
+            <name>Salva_in_Bozza</name>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_0_0.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_0_0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>GetCaseScreen</targetReference>
-            </connector>
-            <label>Avanti</label>
+            <label>Salva in Bozza</label>
         </rules>
         <rules>
             <name>Annulla_0_0</name>
@@ -2069,8 +2164,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordLookups>
         <name>GetCaseScreen</name>
         <label>GetCaseScreen</label>
-        <locationX>1632</locationX>
-        <locationY>1277</locationY>
+        <locationX>1248</locationX>
+        <locationY>1520</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Controllo_Allegati_Obbligatori</targetReference>
@@ -2240,8 +2335,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordLookups>
         <name>Query_Allegati</name>
         <label>Query Allegati</label>
-        <locationX>1524</locationX>
-        <locationY>1597</locationY>
+        <locationX>1519</locationX>
+        <locationY>1734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Ci_sono_Allegati</targetReference>
@@ -2298,8 +2393,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordUpdates>
         <name>Aggiorna_Fase</name>
         <label>Aggiorna Fase</label>
-        <locationX>1915</locationX>
-        <locationY>2053</locationY>
+        <locationX>1956</locationX>
+        <locationY>1949</locationY>
         <inputReference>GetRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2325,8 +2420,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordUpdates>
         <name>Aggiorna_Motivo_0</name>
         <label>Aggiorna Motivo</label>
-        <locationX>1765</locationX>
-        <locationY>1798</locationY>
+        <locationX>1973</locationX>
+        <locationY>1681</locationY>
         <connector>
             <targetReference>Salva_In_Bozza_o_Conferma</targetReference>
         </connector>
@@ -2406,12 +2501,19 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordUpdates>
         <name>Update_Prevalorizzazione_0</name>
         <label>Update Prevalorizzazione</label>
-        <locationX>1371</locationX>
-        <locationY>1607</locationY>
+        <locationX>1738</locationX>
+        <locationY>1360</locationY>
         <connector>
-            <targetReference>Can_Proceed</targetReference>
+            <targetReference>Processo</targetReference>
         </connector>
         <inputReference>GetRecord</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Update_Prevalorizzazione_0_0</name>
+        <label>Update Prevalorizzazione</label>
+        <locationX>1827</locationX>
+        <locationY>1807</locationY>
+        <inputReference>GetCaseScreen</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Update_Voltura_Tecnica_Dati_Discordanti</name>
@@ -2426,7 +2528,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <screens>
         <name>Errore_Allegati_Obbligatori</name>
         <label>Errore Allegati Obbligatori</label>
-        <locationX>1130</locationX>
+        <locationX>1132</locationX>
         <locationY>1743</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -2629,8 +2731,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <screens>
         <name>Motivo_Annullamento_Screen_0</name>
         <label>Motivo Annullamento Screen</label>
-        <locationX>1915</locationX>
-        <locationY>1296</locationY>
+        <locationX>1908</locationX>
+        <locationY>1309</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2915,8 +3017,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <screens>
         <name>Motivo_Annullamento_Screen_TARI</name>
         <label>Motivo Annullamento Screen</label>
-        <locationX>1129</locationX>
-        <locationY>1309</locationY>
+        <locationX>1126</locationX>
+        <locationY>1312</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2962,6 +3064,12 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                     <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -2974,45 +3082,15 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>cancelButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>density</name>
                 <value>
                     <stringValue>Comfy</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>draftButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelDraftButton</name>
-                <value>
-                    <stringValue>Salva In Bozza</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma Pratica</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>objectName</name>
                 <value>
                     <stringValue>Case</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>previousButton</name>
-                <value>
-                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3034,12 +3112,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>saveButton</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
@@ -3049,6 +3121,62 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 <name>addContentDocument</name>
                 <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>bottoniScreen</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

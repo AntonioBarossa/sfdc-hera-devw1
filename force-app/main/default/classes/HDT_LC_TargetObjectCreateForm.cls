@@ -121,7 +121,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                     if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                         servicePo.SwitchInWinback__c = true;
-                        if(resp.result[0].effectiveDate != null){
+                        if(resp.result[0].effectiveDate != null && !resp.result[0]?.effectiveDate.equalsIgnoreCase('0000-00-00')){
                             servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                         }
                     }
@@ -152,7 +152,7 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                     if(resp != null && resp.result!=null && !resp.result.isEmpty()){
                         if('in Corso'.equalsIgnoreCase(resp.result[0].status)){
                             servicePo.SwitchInWinback__c = true;
-                            if(resp.result[0].effectiveDate != null){
+                            if(resp.result[0].effectiveDate != null && !resp.result[0]?.effectiveDate.equalsIgnoreCase('0000-00-00')){
                                 servicePo.SwitchOutDate__c = date.valueOf(resp.result[0].effectiveDate);
                             }
                         }
@@ -216,17 +216,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
 
     @AuraEnabled
     public static String getAto(String comune){
+        String toReturn = '';
+        List<TownATOTable__c> atoList = [Select id, ATO__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
+        toReturn = (!atoList.isEmpty() && String.isNotBlank(atoList[0].ATO__c)) ? atoList[0].ATO__c : toReturn;
 
-        List<TownATOTable__c> myRecordList = [Select id, ATO__c, Town__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
-        if(!myRecordList.isEmpty()){
-            if(myRecordList[0].ATO__c !=null ){
-                return myRecordList[0].ATO__C;
-            }else{
-                return '';
-            }
-        }else{
-            return '';
-        }
+        return toReturn;
     }
 
     @AuraEnabled

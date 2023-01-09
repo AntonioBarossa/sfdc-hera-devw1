@@ -2,6 +2,7 @@
 public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 	
     public override void beforeInsert(){
+        HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, null);
         HDT_UTL_CaseProcess.setCloseStatusForAll(Trigger.new);
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
@@ -15,7 +16,11 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
         try{
+            HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, Trigger.oldMap);
             for(Case caseNew : (List<Case>) Trigger.new){
+                if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){
+                    caseNew.CancellationNote__c = caseNew.CancellationNote__c.substring(0,255);
+                }
                 HDT_UTL_CaseProcess.setCloseStatus(caseNew);
                 Case caseOld = (Case) Trigger.oldMap.get(caseNew.Id);
                 
@@ -32,6 +37,11 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                 if(caseNew.TecnicalPhase__c	!= null && caseNew.TecnicalPhase__c  == caseOld.TecnicalPhase__c){
                     caseNew.Phase__c = caseNew.TecnicalPhase__c;
                     caseNew.TecnicalPhase__c = null;
+                }
+
+                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                    DateTime dt = caseNew.CreatedDate;
+                    caseNew.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
                 }
             }   
         } catch (Exception ex) {
@@ -68,11 +78,14 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                     .bulkSaveActivityContext(null);
             
             //Handles callout (update only)
+            /*sostituito dal metodo sotto che esclude eventuali chiamate doppie eseguite negli ultimi 30 secondi 
             ((wrts_prcgvr.Interfaces_1_0.ICalloutUtils) wrts_prcgvr.VersionManager.newClassInstance('CalloutUtils'))
-                    .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old});
+                    .bulkSend(new Map<String,Object>{'newObjects'=>Trigger.new, 'oldObjects' => Trigger.old}); */
+            if(HDT_UTL_CaseProcess.isChangedPhase(trigger.new,Trigger.oldMap)){
+                HDT_UTL_DoubleCalloutPrevention.checkAndCallout(Trigger.new, Trigger.oldMap, 'Case');
+            }
         }
         HDT_UTL_CaseProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
-
         HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  
         HDT_UTL_CaseProcess.caseBpcaSieManagement(Trigger.newMap, Trigger.oldMap);
         //***INIZIO SVILUPPO CAMPAGNE */
@@ -80,17 +93,28 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         //**FINE SVILUPPO */
 
         //***INIZIO SVILUPPO Marco Arci 17/05/2022 Cluster Disattivazioni Tari, chiusura activity correlate*/
-        HDT_UTL_CaseProcess.closeRelatedActivity(Trigger.new, Trigger.oldMap);
+        //HDT_UTL_CaseProcess.closeRelatedActivity(Trigger.new, Trigger.oldMap); //non più necessario, motivazione nel metodo
         //**FINE SVILUPPO */
         
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
         HDT_UTL_Scarti.closeActivityOnCompleted(Trigger.new, Trigger.oldMap);
+        HDT_UTL_CaseProcess.handleAfterUpdate(Trigger.new, Trigger.oldMap);
         
     }
 
     public override void afterInsert(){
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                Case caseToUpdate = new Case(Id = caseNew.Id);
+                DateTime dt = caseNew.CreatedDate;
+                caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
+
+                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
+            }
+        }
     }
 
     /**

@@ -64,7 +64,7 @@ public with sharing class HDT_UTL_CampaignMember {
             campaignIds.add(item.CampaignId);
         }
       
-        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate FROM Campaign WHERE Id IN: campaignIds]);
+        Map <Id,Campaign> campMap=new Map<Id, Campaign>([SELECT Id, EndDate, Tipology__c FROM Campaign WHERE Id IN: campaignIds]);
 
         for (Integer i = 0; i < newCampaignMember.size(); i++) {
             if ( campMap.containsKey(newCampaignMember[i].CampaignId)) {
@@ -72,7 +72,8 @@ public with sharing class HDT_UTL_CampaignMember {
                     newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).EndDate;
                 }
                 else{
-                    newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
+                    newCampaignMember[i].NumberingValidityEndDate__c=campMap.get(newCampaignMember[i].CampaignId).Tipology__c=='Quality Call' ? System.today().addDays(50) : Date.today().addYears(1); 
+                    //newCampaignMember[i].NumberingValidityEndDate__c=Date.today().addYears(1);
                 }
             }
         }
@@ -299,9 +300,17 @@ public with sharing class HDT_UTL_CampaignMember {
         }
         Map<String, Order> ordToCheckMap = new Map<String, Order>(orderQr.getOrdersList(ordIdList));
 
+        Map<Id,String> mapContactResult = new Map<Id,String>();
+        for(wrts_prcgvr__Activity__c act : HDT_QR_Activity.getActivityFromIdList(actToOrdersToCancelMap.keySet())){
+            if ('Quality Call'.equalsIgnoreCase(act.Type__c) || 'Comfort Call'.equalsIgnoreCase(act.Type__c)){
+                mapContactResult.put(act.Id,'Quality Call'.equalsIgnoreCase(act.Type__c)? 'Annullato Quality Call' : 'Annullato Comfort Call');
+            }
+        }
+
         for (String actId : actToOrdersToCancelMap.keySet()) {
 
-            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = 'Annullato', wrts_prcgvr__Status__c = 'Non Esitata');
+            String outcome = mapContactResult.containsKey(actId)? mapContactResult.get(actId) : 'Annullato';
+            wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = actId, ContactResult__c = outcome, wrts_prcgvr__Status__c = 'Non Esitata');
             actToCloseList.add(act);
 
             for(String ordId : actToOrdersToCancelMap.get(actId)){
@@ -490,7 +499,7 @@ public with sharing class HDT_UTL_CampaignMember {
     }
     @future(callout=true)
     public static void assignCallDateTime(List<Id> context){
-        List<CampaignMember> updList = [SELECT Id, PhoneNumber__c, Lead.ContactDate__c, Agency__r.Name, Campaign.MacroActivityEasyCIM__r.Name, Campaign.ReitekIntegrationTechnology__c FROM CampaignMember WHERE Id IN :context];
+        List<CampaignMember> updList = [SELECT Id, PhoneNumber__c, Lead.ContactDate__c, Agency__r.Name, Campaign.MacroActivityEasyCIM__r.Name, Campaign.ReitekIntegrationTechnology__c FROM CampaignMember WHERE Id IN :context AND Campaign.ReitekIntegrationTechnology__c = 'Web Service' WITH SECURITY_ENFORCED];
             
         for(CampaignMember curCm : updList){
             String macroactivity = curCm.Campaign.MacroActivityEasyCIM__r.Name;

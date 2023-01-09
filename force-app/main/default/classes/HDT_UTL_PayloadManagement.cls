@@ -45,6 +45,10 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleAnalisiConsumi(inputs,formParams);
                 }when 'handleOtpSign'{
                     return handleOtpSign(inputs,formParams);
+                }when 'handleWasteProcessCode'{
+                    return handleWasteProcessCode(inputs,formParams);
+                }when 'calculateCommodityArcZeroTwo'{
+                    return calculateCommodityArcZeroTwo(inputs, formParams);
                 }
                 when else {
                     return '';
@@ -54,6 +58,44 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             System.debug(LoggingLevel.DEBUG, 'Si è verificato un errore nel richiamo del metodo ' + method + ': ' + ex.getMessage() + ' alla riga ' + ex.getLineNumber());
         }
         return result;
+    }
+
+    private String handleWasteProcessCode(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
+        String context = (String) formParams.get('Contesto');
+        String process = '';
+        Map<String, String> tariCodeMap = new Map<String, String>{
+            'Prima Attivazione' => 'CN001', 
+            'Nuovo Contratto' => 'CN001',
+            'Subentro' => 'CS001',
+            'Subentro Cambio Cat.Tariffa' => 'CS002',
+            'Cessazione' => 'CC001',
+            'Superficie' => 'CM001',
+            'DOM_Componenti non residenti' => 'CM020',
+            'NON DOM_ISTAT/Ronchi' => 'CM006',
+            'Cambio Tariffa' => 'CM004',
+            'Modifica Tariffa - Rimozione Agevolazione' =>'CM003',
+            'Modifica Tariffa'=>'CM003',
+            'DOM_Coabitazioni'=>'CM021',
+            'DOM_Componenti residenti'=>'CM022',
+            'Dati catastali'=>'CM030',
+            'Variazione Indirizzo Fornitura'=>'CM023',
+            'Variazione indirizzo di fornitura'=>'CM023',
+            'Domiciliato in nucleo residente'=>'CM021'
+            };
+        if('Order'.equalsIgnoreCase(context)){
+            process = HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
+        }else if('Case'.equalsIgnoreCase(context)){
+            process = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
+            if(!'Cessazione'.equalsIgnoreCase(process) && !'Variazione indirizzo di fornitura'.equalsIgnoreCase(process)){
+                process = HDT_UTL_DocumentalManagement.getValue('Case', 'Subprocess__c', 0, inputs, formParams);
+            }
+        }
+        if(String.isBlank(process))return '';
+        if(tariCodeMap.get(process) != null){
+            return tariCodeMap.get(process);
+        }else{
+            return '';
+        }
     }
 
     private String handleOtpSign(Map<String,List<sObject>> inputs, Map<String,Object> formParams){
@@ -461,19 +503,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         
         System.debug(LoggingLevel.DEBUG, 'Amount: ' + amount);
         if(String.isNotBlank(amount)){
-            amountDouble = Double.valueOf(amount);
-            if(String.isNotBlank(iva)){
-                if(iva.indexOf('10') > -1){
-                    ivaInteger = 10;
-                }else if(iva.indexOf('22') > -1){
-                    ivaInteger = 22;
-                }
-                if(ivaInteger > 0){
-                    ivaAmount = ((amountDouble/100)*ivaInteger);
-                }
-            }
-            totalAmount = amountDouble + ivaAmount;
-
             if(String.isBlank(variableAmount) && String.isBlank(fixedAmount) 
                 && (context.equalsIgnoreCase('Case') || context.equalsIgnoreCase('Order')) 
                 && (cluster.equalsIgnoreCase('Preventivi') 
@@ -488,8 +517,51 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else {
                     fixedAmount = '48.81';
                 }
-                variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+                /* Nel caso in cui l'importo sia pari a 0 vi e' solo la quota fissa
+                * l'importo totale in questo caso e' pari alla sola quota fissa
+                * su quello va calcolata l'iva.
+                */
+                if(Double.valueOf(amount) != null && Double.valueOf(amount) > 0)
+                {
+                    variableAmount = String.valueOf(Double.valueOf(amount) - Double.valueOf(fixedAmount));
+                }
+                else
+                {
+                    amount = fixedAmount;
+                }
+                amountDouble = Double.valueOf(amount);
+                if(String.isNotBlank(iva)){
+                    if(iva.indexOf('10') > -1){
+                        ivaInteger = 10;
+                    }else if(iva.indexOf('22') > -1){
+                        ivaInteger = 22;
+                    }
+                    else if(iva.indexOf('20') > -1)
+                    {
+                        ivaInteger = 22;
+                    }
+                    if(ivaInteger > 0){
+                        ivaAmount = ((amountDouble/100)*ivaInteger);
+                    }
+                }
+                totalAmount = amountDouble + ivaAmount;
             }
+            amountDouble = Double.valueOf(amount);
+            if(String.isNotBlank(iva)){
+                if(iva.indexOf('10') > -1){
+                    ivaInteger = 10;
+                }else if(iva.indexOf('22') > -1){
+                    ivaInteger = 22;
+                }
+                else if(iva.indexOf('20') > -1)
+                {
+                    ivaInteger = 22;
+                }
+                if(ivaInteger > 0){
+                    ivaAmount = ((amountDouble/100)*ivaInteger);
+                }
+            }
+            totalAmount = amountDouble + ivaAmount;
             result = variableAmount + '|' + fixedAmount + '|' + amount + '|' + ivaInteger + '|' + ivaAmount + '|' + totalAmount;    
             
         }else {
@@ -1400,6 +1472,29 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
+    }
+
+    private static String calculateCommodityArcZeroTwo(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
+    {
+        String context = (String) formParams.get('Contesto');
+        String result = '';
+        String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'CommodityFormula__c', 0, inputs, formParams);
+        commodity = String.isBlank(commodity) ? HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams) : commodity;
+        switch on commodity{
+            when 'Energia Elettrica'    
+            {
+                result = 'ENE';
+            }
+            when 'Gas'
+            {
+                result = 'GAS';
+            }
+            when else
+            {
+                result = '';
+            }
+        }
+        return result;
     }
     
 }

@@ -326,6 +326,21 @@
                 <label>Gestione Votive</label>
             </value>
             <value>
+                <fullName>Gestione procedurale SAP</fullName>
+                <default>false</default>
+                <label>Gestione procedurale SAP</label>
+            </value>
+            <value>
+                <fullName>Gestione Back Office</fullName>
+                <default>false</default>
+                <label>Gestione Back Office</label>
+            </value>
+            <value>
+                <fullName>Gestire fuga</fullName>
+                <default>false</default>
+                <label>Gestire fuga</label>
+            </value>
+            <value>
                 <fullName>Giro contatore da gestire</fullName>
                 <default>false</default>
                 <label>Giro contatore da gestire</label>

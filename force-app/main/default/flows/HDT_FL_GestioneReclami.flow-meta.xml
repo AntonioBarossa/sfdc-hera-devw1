@@ -52,8 +52,8 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1986</locationX>
-        <locationY>518</locationY>
+        <locationX>2140</locationX>
+        <locationY>1310</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -68,7 +68,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>2250</locationX>
+        <locationX>2602</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -84,7 +84,7 @@
     <assignments>
         <name>Assegna_Valori</name>
         <label>Assegna Valori</label>
-        <locationX>1590</locationX>
+        <locationX>1766</locationX>
         <locationY>4478</locationY>
         <assignmentItems>
             <assignToReference>getCaseAggiornato.Phase__c</assignToReference>
@@ -130,7 +130,7 @@
     <assignments>
         <name>AssegnaProcessType</name>
         <label>AssegnaProcessType</label>
-        <locationX>1260</locationX>
+        <locationX>1436</locationX>
         <locationY>2678</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -176,7 +176,7 @@
     <assignments>
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>3470</locationY>
         <assignmentItems>
             <assignToReference>getCaseAggiornato.Note__c</assignToReference>
@@ -192,10 +192,10 @@
     <decisions>
         <name>Altri_Venditori_o_Venditori_HC</name>
         <label>Altri Venditori o Venditori HC?</label>
-        <locationX>1854</locationX>
+        <locationX>1931</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Process_Type_0</targetReference>
+            <targetReference>GetServiceRequest</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Venditori HC</defaultConnectorLabel>
         <rules>
@@ -242,7 +242,7 @@
     <decisions>
         <name>Bozza</name>
         <label>Bozza?</label>
-        <locationX>1392</locationX>
+        <locationX>1568</locationX>
         <locationY>2558</locationY>
         <defaultConnector>
             <targetReference>Screen_inserimento_dati</targetReference>
@@ -265,9 +265,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Compatibile</name>
+        <label>Compatibile?</label>
+        <locationX>2294</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Process_Type_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
+        <rules>
+            <name>Non_Compatibile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>IsCompatible</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsCompatible</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <label>Non Compatibile</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Comportamento_Causale_Modificata</name>
         <label>Comportamento Causale Modificata?</label>
-        <locationX>1590</locationX>
+        <locationX>1766</locationX>
         <locationY>3350</locationY>
         <defaultConnector>
             <targetReference>VolontaEstora_o_FirmaFalsa</targetReference>
@@ -299,7 +328,7 @@
     <decisions>
         <name>Comportamento_HC</name>
         <label>Comportamento HC?</label>
-        <locationX>1546</locationX>
+        <locationX>1722</locationX>
         <locationY>2438</locationY>
         <defaultConnector>
             <targetReference>Screen_inserimento_dati</targetReference>
@@ -340,6 +369,13 @@
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetAccountStessoReclamo.Parent.IsContainer__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Id_Contenitore</targetReference>
             </connector>
@@ -349,7 +385,7 @@
     <decisions>
         <name>Motivazione</name>
         <label>Motivazione?</label>
-        <locationX>1590</locationX>
+        <locationX>1766</locationX>
         <locationY>4142</locationY>
         <defaultConnector>
             <targetReference>Assegna_Valori</targetReference>
@@ -425,7 +461,7 @@
     <decisions>
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>1546</locationX>
+        <locationX>1722</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Nessun_Processo</targetReference>
@@ -530,6 +566,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Record_Trovato</name>
+        <label>Record Trovato?</label>
+        <locationX>2140</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Compatibilit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Non Trovato</defaultConnectorLabel>
+        <rules>
+            <name>Trovato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetServiceRequest</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetServiceRequest</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type_0</targetReference>
+            </connector>
+            <label>Trovato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Riprendi_Bozza</name>
         <label>Riprendi Bozza?</label>
         <locationX>1293</locationX>
@@ -557,7 +625,7 @@
     <decisions>
         <name>Salva_in_Bozza_o_Conferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>1546</locationX>
+        <locationX>1722</locationX>
         <locationY>3110</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
@@ -608,7 +676,7 @@
     <decisions>
         <name>VolontaEstora_o_FirmaFalsa</name>
         <label>VolontaEstora o FirmaFalsa</label>
-        <locationX>1590</locationX>
+        <locationX>1766</locationX>
         <locationY>3686</locationY>
         <defaultConnector>
             <targetReference>Motivazione</targetReference>
@@ -645,6 +713,7 @@
         </rules>
     </decisions>
     <description>Flow per la gestione del Cluster Reclami</description>
+    <environments>Default</environments>
     <formulas>
         <name>IncorrectCausalTrackingFormula</name>
         <dataType>String</dataType>
@@ -751,7 +820,7 @@
     <recordCreates>
         <name>CreaActivty</name>
         <label>CreaActivty</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>3926</locationY>
         <connector>
             <targetReference>Motivazione</targetReference>
@@ -792,7 +861,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1546</locationX>
+        <locationX>1722</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -848,6 +917,13 @@
                 <stringValue>Reclamo Scritto/Rich. Info</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -855,7 +931,7 @@
     <recordLookups>
         <name>GetActivityTemplate</name>
         <label>GetActivityTemplate</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>3806</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -876,7 +952,7 @@
     <recordLookups>
         <name>getCaseAggiornato</name>
         <label>getCaseAggiornato</label>
-        <locationX>1590</locationX>
+        <locationX>1766</locationX>
         <locationY>3230</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -894,10 +970,31 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetServiceRequest</name>
+        <label>GetServiceRequest</label>
+        <locationX>2140</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Record_Trovato</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Case__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>ServiceRequest__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Fase_in_Lavorazione</name>
         <label>Aggiorna Fase in Lavorazione</label>
-        <locationX>1590</locationX>
+        <locationX>1766</locationX>
         <locationY>4598</locationY>
         <inputReference>getCaseAggiornato</inputReference>
     </recordUpdates>
@@ -914,7 +1011,7 @@
     <screens>
         <name>Nessun_Processo</name>
         <label>Nessun Processo</label>
-        <locationX>3042</locationX>
+        <locationX>3394</locationX>
         <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -993,7 +1090,7 @@
     <screens>
         <name>Screen_Documenti_Selezionati</name>
         <label>Screen Documenti Selezionati</label>
-        <locationX>1458</locationX>
+        <locationX>1634</locationX>
         <locationY>4262</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1080,7 +1177,7 @@
     <screens>
         <name>Screen_inserimento_dati</name>
         <label>Screen inserimento dati</label>
-        <locationX>1546</locationX>
+        <locationX>1722</locationX>
         <locationY>2990</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1183,7 +1280,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1420</locationX>
+        <locationX>1596</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1218,7 +1315,7 @@
     <subflows>
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1194</locationX>
+        <locationX>1370</locationX>
         <locationY>3230</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -1241,9 +1338,29 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Compatibilit</name>
+        <label>Compatibilità</label>
+        <locationX>2294</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>Compatibile</targetReference>
+        </connector>
+        <flowName>HDT_FL_SubFlowCompatibility</flowName>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <outputAssignments>
+            <assignToReference>IsCompatible</assignToReference>
+            <name>IsCompatible</name>
+        </outputAssignments>
+    </subflows>
+    <subflows>
         <name>GestioneReclamoDaCittadino</name>
         <label>GestioneReclamoDaCittadino</label>
-        <locationX>2778</locationX>
+        <locationX>3130</locationX>
         <locationY>398</locationY>
         <flowName>HDT_FL_GestioneReclami_ReclamoScrittoDaCittadino</flowName>
         <inputAssignments>
@@ -1265,6 +1382,12 @@
                 <elementReference>Get_Input_Case</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>ParentRecordId</name>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </inputAssignments>
     </subflows>
     <subflows>
         <name>Processo_Verifiche_Dati_Al_DL</name>
@@ -1282,7 +1405,7 @@
     <subflows>
         <name>subFlowPosizionamentoContenitore</name>
         <label>subFlowPosizionamentoContenitore</label>
-        <locationX>2514</locationX>
+        <locationX>2866</locationX>
         <locationY>398</locationY>
         <flowName>HDT_FL_GestioneReclami_PosizionamentoContenitore</flowName>
         <inputAssignments>
@@ -1322,6 +1445,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IsCompatible</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

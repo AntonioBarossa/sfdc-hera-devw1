@@ -26,19 +26,17 @@ public inherited sharing class HDT_UTL_Case {
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
         String inputString = inputs[0].genericInputString;
-        String joinBottomAdhesion = inputs[0].joinBottomAdhesion;
-        
-        
+        String commodity = inputs[0].commodity;
 
-        if(process == 'Voltura Tecnica'){
+        if('Voltura Tecnica'.equalsIgnoreCase(process)){
             effectiveDate = addBusinessDay(System.today(), 3);
-            output.effectiveDate = effectiveDate;
-        
-        } else if(cluster == 'Preventivi'){
+            output.effectiveDate = effectiveDate;    
+        } else if('Preventivi'.equalsIgnoreCase(cluster)){
             output.option = calculateOption(implantType, powerRequested);
             if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco'))
             {
-                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currentCase.Distributor__r.Code__c);
+                Case currCase=caseQr.getRecordById(currentCase.Id);
+                HDT_UTL_CalculateTransition calculateTransition = new HDT_UTL_CalculateTransition(currentCase.SupplyCity__c, currentCase.Commodity__c, currCase.Distributor__r.Code__c);
                 Map<String,Object> companyInfosMap = new Map<String,Object>();
                 companyInfosMap = calculateTransition.calculateCompanyInfos();
                 City__c city = (City__c)companyInfosMap.get('cityObj');
@@ -74,16 +72,14 @@ public inherited sharing class HDT_UTL_Case {
                         }
                         when else {
                             output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                            output.salesCompany = city.SDV__c;
+                            //output.salesCompany = city.SDV__c;
+                            output.salesCompany=(String)companyInfosMap.get('SalesCompany');
                         }
                     }
                 }
-                
-                //output.salesCompanyCode = (String)companyInfosMap.get('SalesCompanyCode');
-                //output.salesCompany = city.SDV__c;
             }
         } 
-        else if(process.equalsIgnoreCase('Compatibilita'))
+        else if('Compatibilita'.equalsIgnoreCase(process))
         {
             try 
             {
@@ -96,33 +92,28 @@ public inherited sharing class HDT_UTL_Case {
             }
             
         }
-        else if(process.equalsIgnoreCase('Contenitore'))
-        {
+        else if('Contenitore'.equalsIgnoreCase(process)){
             output.childCases = caseQr.getChildCasesReclamo(currentCase.Note__c, currentCase.Id);
         }
-        else if(process.equalsIgnoreCase('Annullamento'))
-        {
+        else if('Annullamento'.equalsIgnoreCase(process)){
             Datetime nowDate = Datetime.now();
             String nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
             output.cancellationNote = nowDateFormat + ': ' + cancellationNote;
             output.cancellationNote = output.cancellationNote.length() > 255 ? output.cancellationNote.substring(0, 255) : output.cancellationNote; 
         }
-        else if(process.equalsIgnoreCase('CreaBpCa')){
+        else if('CreaBpCa'.equalsIgnoreCase(process)){
             System.enqueueJob(new HDT_QBL_BpCaRequest( accountContactRelationQr.getCreateBpCa( currentCase.AccountId ), currentCase.SupplyProvince__c, true ) );
         }
-        else if(process.equalsIgnoreCase('CheckIsCommunity')){
+        else if('CheckIsCommunity'.equalsIgnoreCase(process)){
             output.isCommunity = HDT_LC_SellingWizardController.checkCommunityLogin();
         }
-        else if(process.equalsIgnoreCase('getServicePointFromContract'))
-        {
+        else if('getServicePointFromContract'.equalsIgnoreCase(process)){
             List<String> contractCodes = inputString.split(';');
             System.debug(loggingLevel.DEBUG, contractCodes);
-            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes WITH SECURITY_ENFORCED];
+            List<Contract> contractList = [SELECT ServicePoint__c FROM Contract WHERE SAPContractCode__c IN :contractCodes AND ServicePoint__r.CommoditySector__c != 'Ambiente' WITH SECURITY_ENFORCED];
             output.servicePointId = new List<String>();
-            for(Contract contr : contractList)
-            {
-                if(!output.servicePointId.contains(contr.ServicePoint__c))
-                {
+            for(Contract contr : contractList){
+                if(!output.servicePointId.contains(contr.ServicePoint__c)){
                     output.servicePointId.add(contr.ServicePoint__c);
                 }
             }
@@ -134,29 +125,19 @@ public inherited sharing class HDT_UTL_Case {
             for(OrderItem item : items){
                 if(item.SBQQ__OrderedQuantity__c>0){result=false;break;}
             }
-            result&=items.isEmpty();
-            output.isCompatible = result? '' : 'NO';
-        }else if (process.equalsIgnoreCase('Adesione Rinuncia Fondo Fughe')){
+            result&=!items.isEmpty();
+            output.isCompatible = result? 'Si' : 'NO';
+        }else if ('Adesione Rinuncia Fondo Fughe'.equalsIgnoreCase(currentCase.Type)){     
+            // Logica valorizzazione della data inizio variazione BBP w2 v4.0 pag 607
+            List<Case> caseRetrieved = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+            Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
 
-            try {
-                
-                Case curCase = [SELECT Contract__r.StartDate FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
-
-                Date startDate = curCase.Contract__r.StartDate;
-                if (startDate != null){
-
-                    if('Y'.equals(joinBottomAdhesion) || ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) > Date.today())){
-                        output.dataInizioVariazione = Date.today();
-                    }else if ('N'.equals(joinBottomAdhesion) && startDate.addDays(365) < Date.today()){
-                            output.dataInizioVariazione = startDate;
-                    }
-                }
-
-            } catch (Exception e) {
-                System.debug(LoggingLevel.DEBUG,'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());  
-            }
-
-        }else if (process.equalsIgnoreCase('Modifica Unita Immobiliari Componenti')){
+            currentCase.ResidenceChangeDate__c = (contractStartDate != null && 
+                                                'Rinuncia Fondo Fughe'.equals(currentCase.Subprocess__c) && 
+                                                contractStartDate.addDays(365) < Date.today()) ? 
+                                                contractStartDate : Date.today();
+            output.currentCase = currentCase;
+        }else if ('Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(process)){
 
             Case newCurrentCase = [SELECT SupplyCity__c, RateCategory__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED];
             List<AllineamentoGAA__c> listAllineamentoGaa = [SELECT Frequenza__c FROM AllineamentoGAA__c WHERE Comune__c =: newCurrentCase.SupplyCity__c AND Rate_Category__c =: newCurrentCase.RateCategory__c WITH SECURITY_ENFORCED];
@@ -169,10 +150,9 @@ public inherited sharing class HDT_UTL_Case {
                 output.allineamentoGaa = 'N';
             }
         }
-        else if(cluster.equalsIgnoreCase('Reclami') && process.equalsIgnoreCase('calculateExpirationDate'))
-        {
+        else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
-            Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany);
+            Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany, commodity);
             //output.effectiveDate
             if( datesNamount.containsKey('EndDate__c') ){
                 output.endDate = date.valueOf(datesNamount.get('EndDate__c'));
@@ -189,13 +169,47 @@ public inherited sharing class HDT_UTL_Case {
             if( datesNamount.containsKey('DepositAmount__c') ){
                 output.depositAmount = decimal.valueOf(datesNamount.get('DepositAmount__c'));
             }
+        }else if ('Esenzione Modifica Fognatura Depurazione'.equalsIgnoreCase(process) && 'Modifica Fognatura e Depurazione'.equals(currentCase.Subprocess__c)){
+            List<Case> caseRetrieved = [SELECT Contract__r.StartDate, CustomerRequestDate__c FROM Case WHERE Id =: currentCase.Id WITH SECURITY_ENFORCED LIMIT 1];
+            Date contractStartDate = (caseRetrieved.size() > 0) ? caseRetrieved[0]?.Contract__r?.StartDate : null;
+            Date dataRetroattiva = null;
+
+            if(caseRetrieved.size() > 0){
+
+                //Logica prevalorizzazione campo Data Decorrenza (Data Inizio Variazione) con data creazione case BBP W2 pg. 594
+                currentCase.EffectiveDate__c = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()); 
+
+                //Logica prevalorizzazione campo Data Retroattiva in base a data Inizio Contratto BBP W2 pg. 594
+                if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
+                    dataRetroattiva = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+                }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
+                    dataRetroattiva = contractStartDate;
+                }
+    
+                currentCase.RetroactiveDate__c = dataRetroattiva;
+                output.currentCase = currentCase;
+            }
         }
-
+        else if (System.Label.invio_sollecito.equalsIgnoreCase(process)){
+            String body;
+            HDT_WS_MulesoftCaller.HDT_WRP_HttpObj httpObj = new HDT_WS_MulesoftCaller.HDT_WRP_HttpObj();
+            httpObj.headersMap = new Map<String, String>();
+            httpObj.httpMethod = 'POST';
+            httpObj.headersMap.put('Content-Type', 'application/json');    
+            httpObj.endPoint = 'callout:MulesoftHergoPath/reminder';
+            body = JSON.serialize(new Map<String, Object>{
+                'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
+                'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
+            });
+            output.effectiveDate = Date.today();
+            HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);
+            if(respWrp.status.equalsIgnoreCase(System.Label.failed)){
+                HDT_UTL_IntegrationLog.handleGenericErrorRequest(body, 'POST', respWrp.errorDetails[0].additionalInfo , System.Label.invio_sollecito, currentCase.Id);
+                output.cancellationNote = String.valueof(datetime.now()) +' '+respWrp.errorDetails[0].code+' | '+respWrp.errorDetails[0].additionalInfo;
+            }
+        }
         outputs.add(output);
-
         return outputs;
-
-
     }
 
     public class HDT_UTL_FlowInputs{
@@ -221,12 +235,10 @@ public inherited sharing class HDT_UTL_Case {
         @InvocableVariable
         public String quoteId;
         @InvocableVariable
-        public String joinBottomAdhesion;
-
+        public String commodity;
     }
 
     public class HDT_UTL_FlowOutputs{
-
         @InvocableVariable
         public Date endDate;
         @InvocableVariable
@@ -267,7 +279,8 @@ public inherited sharing class HDT_UTL_Case {
         public String frequenzaAllineamentoGaa;
         @InvocableVariable
         public String isDomestico;
-
+        @InvocableVariable
+        public Case currentCase;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){

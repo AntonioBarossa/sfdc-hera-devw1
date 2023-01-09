@@ -23,7 +23,7 @@
                 <field>CompanyOwner__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Required</behavior>
+                <behavior>Edit</behavior>
                 <field>Company__c</field>
             </layoutItems>
             <layoutItems>
@@ -239,6 +239,11 @@
             <actionName>Lead.HDT_CalcolaVendutoDa</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EscalationCmp</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedContent>

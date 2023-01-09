@@ -30,3 +30,7 @@ force-app/main/default/objects/Case/fields/MacroTopic__c.field-meta.xml
 force-app/main/default/globalValueSets/HDT_InformationDetail.globalValueSet-meta.xml
 
 force-app/main/default/customMetadata/HDT_Informative_Configuration*
+
+# This permissionset can only be deployed in Production orgs
+force-app/main/default/permissionsets/HDT_CASB_Permission.permissionset-meta.xml
+

@@ -459,7 +459,7 @@ export default class HdtSelfReading extends LightningElement {
                 for (let i = 0; i < registers.length; i++) {
                     let register = registers[i];
 
-                    let result = register.handleSave(this.readingCustomerDate);
+                    let result = register.handleSave(this.readingCustomerDate, this.object );
 
                     if(String(result).includes("Impossibile")){
                         this.errorAdvanceMessage = result;
@@ -565,6 +565,18 @@ export default class HdtSelfReading extends LightningElement {
                         updateSelfReading({fields : JSON.stringify(this.outputObj)})
                         .then(result => { 
                                        
+                            this.isSaved = true;
+                        
+                        })
+                        .catch(error => { console.log(error) });
+                    }
+                }else{ 
+                    //gestione creazione record Reading__c al Riprendi Case da Bozza, in questo caso infatti non è presente il record di Reading e va creato
+                    if(!this.isSaved && this.resumedFromDraft && this.object === 'case'){
+                        console.log('Inserimento nuovo record oggetto Reading__c');
+                        insertSelfReading({fields : JSON.stringify(this.outputObj)})
+                        .then(result => { 
+                            
                             this.isSaved = true;
                         
                         })

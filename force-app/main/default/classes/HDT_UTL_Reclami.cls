@@ -1,13 +1,13 @@
 public with sharing class HDT_UTL_Reclami
 {
-    public Map<String,String> setExpirationDate(Case inputCase, String supplyCity)
+    public Map<String,String> setExpirationDate(Case inputCase, String supplyCity, String commodity)
     {
-        return calculateExpirationDate(inputCase, supplyCity);
+        return calculateExpirationDate(inputCase, supplyCity, commodity);
     }   
 
-    private Map<String,String> calculateExpirationDate(Case inputCase, String supplyCity)
+    private Map<String,String> calculateExpirationDate(Case inputCase, String supplyCity, String commodityCase)
     {
-        String commodity = [ SELECT ServicePoint__r.CommoditySector__c FROM Case WHERE ( ParentId = :inputCase.ParentId OR ParentId = :inputCase.Id ) AND ServicePoint__c != null WITH SECURITY_ENFORCED ][0].ServicePoint__r.CommoditySector__c;
+        String commodity = !String.isBlank(commodityCase) ? commodityCase : inputCase.CommodityFormula__c;
         Map<String,String> result = new Map<String,String>();
 
         if ( 'Acqua'.equalsIgnoreCase(commodity) )
@@ -66,14 +66,18 @@ public with sharing class HDT_UTL_Reclami
 
     private Map<String,String> setDates(Case inputCase, HDT_IndemnitiesDays__mdt config)
     { 
-        Date startDate = inputCase.SendDate__c;
+        Date startDate = 'Richiesta Parere'.equalsIgnoreCase(inputCase.Type) ? Date.today() : inputCase.SendDate__c;
         Date firstDate;
         Date secondDate;
         Date thirdDate;
         Map<String,String> result = new Map<String,String>();
+        Set<String> onlyEndDateProcess = new Set<String>{'Ricostruzione Consumi', 'Esenzione Modifica Fognatura Depurazione', 'Errore di Fatturazione'};
         if( 'W'.equalsIgnoreCase(config.ComputeType__c ) )
         {
             result.put('EndDate__c', String.valueof(addBusinsessDaysWithHolidays( Integer.valueOf(config.SuspensionDays__c), startDate) ));
+            if(onlyEndDateProcess.contains(inputCase.Parent.Type) && 'Acqua'.equalsIgnoreCase(inputCase.Parent.Commodity__c)){
+                return result;
+            }
             result.put('CompletedDocumentationDate__c', String.valueof(addBusinsessDaysWithHolidays( 2*Integer.valueOf(config.SuspensionDays__c), startDate) ));
             result.put('DepositExpirationDate__c', String.valueof(addBusinsessDaysWithHolidays( 3*Integer.valueOf(config.SuspensionDays__c), startDate) ));
             firstDate = addBusinsessDaysWithHolidays( Integer.valueOf(config.SuspensionDaysRectification__c), startDate);

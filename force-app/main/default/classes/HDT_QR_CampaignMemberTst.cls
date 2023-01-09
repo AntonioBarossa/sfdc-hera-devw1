@@ -118,6 +118,7 @@ public class HDT_QR_CampaignMemberTst{
 		contactIds.add(tContact[0].id);
 
 		List<CampaignMember> getCampFilteredByContacts=campMembQr.getCampaignsFilteredByContacts(contactIds);
+		campMembQr.getCampaignsFilteredByContactsWithStatus(contactIds);
 
 		Test.stopTest();
 

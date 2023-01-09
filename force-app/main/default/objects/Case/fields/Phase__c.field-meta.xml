@@ -13,9 +13,19 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Annullato per decorrenza dei termini</fullName>
+                <default>false</default>
+                <label>Annullato per decorrenza dei termini</label>
+            </value>
+            <value>
                 <fullName>Accettato Motore VAS</fullName>
                 <default>false</default>
                 <label>Accettato Motore VAS</label>
+            </value>
+            <value>
+                <fullName>Inviato resoconto</fullName>
+                <default>false</default>
+                <label>Inviato resoconto</label>
             </value>
             <value>
                 <fullName>Accettazione Voltura Tecnica</fullName>
@@ -393,6 +403,11 @@
                 <label>Errore tecnico invio a SAP</label>
             </value>
             <value>
+                <fullName>Esito consuntivazione KO</fullName>
+                <default>false</default>
+                <label>Esito consuntivazione KO</label>
+            </value>
+            <value>
                 <fullName>Esito KO</fullName>
                 <default>false</default>
                 <label>Esito KO</label>
@@ -549,6 +564,11 @@
                 <label>In Attesa possibile contratto</label>
             </value>
             <value>
+                <fullName>in attesa processo doc massivo</fullName>
+                <default>false</default>
+                <label>in attesa processo doc massivo</label>
+            </value>
+            <value>
                 <fullName>In attesa risposta Mail</fullName>
                 <default>false</default>
                 <label>In attesa risposta Mail</label>
@@ -562,6 +582,11 @@
                 <fullName>In attesa validazione</fullName>
                 <default>false</default>
                 <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In attesa validazione BO</fullName>
+                <default>false</default>
+                <label>In attesa validazione BO</label>
             </value>
             <value>
                 <fullName>In Classificazione</fullName>
@@ -593,6 +618,11 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>In sequenzializzazione</label>
+            </value>
+            <value>
+                <fullName>Intermedia</fullName>
+                <default>false</default>
+                <label>Intermedia</label>
             </value>
             <value>
                 <fullName>Inviare preventivo</fullName>
@@ -743,6 +773,11 @@
                 <fullName>Pratica Riclassificata</fullName>
                 <default>false</default>
                 <label>Pratica Riclassificata</label>
+            </value>
+            <value>
+                <fullName>Presa in Carico</fullName>
+                <default>false</default>
+                <label>Presa in Carico</label>
             </value>
             <value>
                 <fullName>Presa in Carico KO</fullName>
@@ -988,6 +1023,21 @@
                 <fullName>Verifica in laboratorio</fullName>
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
+            </value>
+            <value>
+                <fullName>In attesa di Verifica</fullName>
+                <default>false</default>
+                <label>In attesa di Verifica</label>
+            </value>
+            <value>
+                <fullName>Comunicazionee EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazionee EngageOne KO</label>
+            </value>
+            <value>
+                <fullName>In attesa esito EngageOne</fullName>
+                <default>false</default>
+                <label>In attesa esito EngageOne</label>
             </value>
         </valueSetDefinition>
     </valueSet>

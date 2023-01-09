@@ -21,6 +21,8 @@ export const cities = [
     new comune("SAN GIORGIO DI PIANO", false, ()=>3),
     new comune("SERRAMAZZONI", true, ()=>3),
     new comune("CAMPOGALLIANO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
         if (mq <= 50)   return 1;
         if (mq <= 80)   return 2;
         if (mq <= 100)  return 3;
@@ -29,6 +31,8 @@ export const cities = [
         return 6;
     }),
     new comune("GRANAROLO DELL'EMILIA", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
         if (mq <= 45)   return 1;
         if (mq <= 60)   return 2;
         if (mq <= 75)   return 3;
@@ -37,6 +41,8 @@ export const cities = [
         return 6;
     }),
     new comune("MODENA", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
         if (mq <= 50)   return 1;
         if (mq <= 80)   return 2;
         if (mq <= 100)  return 3;

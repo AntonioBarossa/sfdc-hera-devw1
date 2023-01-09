@@ -104,7 +104,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
             List<OrderItem> orderItemsList = orderItemQr.getRecordsByOrderIdListFilteredPdrPodBillingProfile(listOrdersId);
             orderItemsList.addAll(handleNotAmendBonus(listOrdersId));
             /* Separates order item of Ambiente */
-            List<Id> orderTariIds = new List<Id>();
+            Set<Id> orderTariIds = new Set<Id>();
             List<Id> orderNotTariIds = new List<Id>();
             for(OrderItem item : orderItemsList)
             {

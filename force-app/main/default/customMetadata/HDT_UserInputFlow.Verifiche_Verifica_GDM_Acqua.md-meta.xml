@@ -8,22 +8,20 @@
     </values>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[
-{
-&quot;FieldName&quot; : &quot;SupplyUseType__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;DistributorNote__c&quot;,
-&quot;Required&quot; : false,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;PhoneNumber__c&quot;,
-&quot;Required&quot; : true,
-&quot;Column&quot; : 1
-}
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;Commodity__c&quot;,
+        &quot;Required&quot;: true,
+		&quot;ReadOnly&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;SupplyUseType__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;DistributorNote__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }
 ]</value>
     </values>
     <values>
@@ -32,59 +30,60 @@
     </values>
     <values>
         <field>ReadOnlyFields__c</field>
-        <value xsi:type="xsd:string">[
-{
-&quot;FieldName&quot; : &quot;ServicePoint__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;AddressFormula__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;CommodityFormula__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;ContractCode__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;AccountId&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;Commodity__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;SupplyType__c&quot;,
-&quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;MeterCode__c&quot;,
-&quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;Caliber__c&quot;,
-&quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;Amount__c&quot;,
-&quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;DistributorName__c&quot;,
-&quot;Column&quot; : 2
-},
-{
-&quot;FieldName&quot; : &quot;ExistCorrector__c&quot;,
-&quot;Column&quot; : 1
-},
-{
-&quot;FieldName&quot; : &quot;UseSubCategory__c&quot;,
-&quot;Column&quot; : 2
-}
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;ServicePoint__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;ContractCode__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;AccountId&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;SupplyType__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;MeterCode__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;Caliber__c&quot;,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;Amount__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;DistributorName__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;ExistCorrector__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;Market__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;YearManufactureMeter__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;PODPDRFormula__c&quot;,
+        &quot;Column&quot;: 2
+    }
+]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:type="xsd:string">[{
+        &quot;label&quot;: &quot;Impianto&quot;,
+        &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+        &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
+        &quot;column&quot;: 1,
+        &quot;value&quot;: &quot;&quot;
+    }
 ]</value>
     </values>
     <values>

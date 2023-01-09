@@ -73,6 +73,7 @@ public inherited sharing class HDT_QR_BillingProfile {
             Name,
             PaymentMethod__c,
             InvoicingAddressFormula__c,
+            PaymentConditions__c,
             BillSendingMethod__c,
             IBAN__c,
             InvoiceEmailAddress__c,

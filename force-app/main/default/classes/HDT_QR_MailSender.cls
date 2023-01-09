@@ -30,11 +30,12 @@ public inherited sharing class HDT_QR_MailSender {
     }
 
     public static List<OrgWideEmailAddress> getOrgWideEmailAddressList(String displayName){
+        // FP: i profili no-admin non riescono ad accedere a questo metadato
         return [
             SELECT Id, Address, DisplayName
             FROM OrgWideEmailAddress
             WHERE DisplayName = :displayName
-            WITH SECURITY_ENFORCED
+            // WITH SECURITY_ENFORCED
             LIMIT 1
         ];
     }
@@ -45,6 +46,17 @@ public inherited sharing class HDT_QR_MailSender {
             FROM EmailTemplate
             WHERE IsActive = true
             AND Id = :templateId
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static Integer getChildCase(Id parentId){
+        return [
+            SELECT count()
+            FROM Case
+            WHERE ParentId = :parentId
+            AND Type = 'Comunicazione con il Gestore'
+            AND Cluster__c = 'Informative'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -62,7 +74,7 @@ public inherited sharing class HDT_QR_MailSender {
 
     public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){
         return [
-            SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject
+            SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject, ToAddress
             FROM EmailMessage
             WHERE RelatedToId = :caseId
             AND Subject = :Subject

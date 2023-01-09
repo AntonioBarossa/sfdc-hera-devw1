@@ -4,6 +4,7 @@
 * @description Class that holds util functions for wrts_prcgvr__Activity__c
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
+
 @SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
 
@@ -159,8 +160,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             res = true;
             ord.DocumentPackage__c = 'Validato';
             ord.phase__c = 'Registrazione validata';
-            ord.SignedDate__c = Date.today();
-            ord.DocumentalPhase__c = 'Plico firmato';
+            //ord.SignedDate__c = Date.today();
+            //ord.DocumentalPhase__c = 'Plico firmato';
             //ord.status = 'Activated';
         }
         else{
@@ -243,7 +244,13 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 }else if ( ( oldActivity.type__c== 'Validazione Vocal Order' || oldActivity.type__c== 'Vocal Order non validato') && oldActivity.DiscardCount__c == 1){
                     newActivity.DiscardCount__c = 2;
                 }
-                activityCustomSrv.createRecord(newActivity);
+                /**@frpanico 2022-11-22 TK 910955C
+                 * L'activity Documenti non validati non deve essere creata
+                 */
+                if(newActivity.Type__c != null && newActivity.Type__c == 'Vocal Order non validato')
+                {
+                    activityCustomSrv.createRecord(newActivity);
+                }
                 res = 'Creata';  
                 activityCustomSrv.updateRecord(oldActivityToUpdate);
             }
@@ -266,24 +273,41 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordid);
             oldActivityToUpdate.validation__c = validazione;
             activityCustomSrv.updateRecord(oldActivityToUpdate);
+            List<Order> orderToUpd = new List<Order>();
             if(validazione == 'Si'){
                 // res = true;
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 ord.SignedDate__c = Date.today();
-                 ord.DocumentalPhase__c = 'Plico firmato';
+                 //
+                 //ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
-                     ord.Phase__c = 'Registrazione validata';
+                    ord.Phase__c = 'Registrazione validata';
+                    if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
+                    {
+                        ord.SignedDate__c = Date.today();
+                    }
+                    else
+                    {
+                        /* Per evitare eventuali ordini per cui manca la configurazione CC */
+                        List<Order> ol = [SELECT Id,SignedDate__c FROM Order WHERE ComfortCallDaysDue__c = null AND ParentOrder__c = :ord.id WITH SECURITY_ENFORCED];
+                        for(order o : ol)
+                        {
+                            o.SignedDate__c = Date.today();
+                            o.ConfirmCustomerContract__c = 'Comfort call';
+                            orderToUpd.add(o);
+                        }
+                    }   
                  }
                  else
                  {
                      ord.phase__c = 'Documentazione Gestita';
                      ord.status = 'Completed';
-                 
+                     ord.SignedDate__c = Date.today();
                  }
-                 orderSrv.updateRecord(ord);
+                 orderToUpd.add(ord);  
+                 HDT_UTL_DatabaseService.updateSObject(orderToUpd);
              }
              else{
                  // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
@@ -347,11 +371,12 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && stateToConvert.contains(activity.wrts_prcgvr__Status__c.toLowerCase())){
                 activity.wrts_prcgvr__Status__c = 'Chiusa';
             }
-            if (activity.EndDate__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
-                activity.EndDate__c = Date.today();
-            }
-            if (activity.ActivityEndTime__c == null && String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())){
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase()) && (activity.ActivityEndTime__c == null || activity.ActivityEndTime__c < activity.ActivityStartTime__c)  ){
                 activity.ActivityEndTime__c = DateTime.now();
+            }
+            if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())
+            && activity.ActivityEndTime__c != null){
+                activity.EndDate__c = activity.ActivityEndTime__c.date();
             }
         }
     }
@@ -425,6 +450,37 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    public static void postSurvayWorkActivity(List<wrts_prcgvr__Activity__c> newActsList){
+        try{
+            Set<Id> newActsId = new Set<Id>();
+            Map<Id,String> objsId = new Map<Id,String>();
+            for (wrts_prcgvr__Activity__c newAct : newActsList){
+                newActsId.add(newAct.Id);
+                if (!'Lavorazione Reclamo Post Survey'.equalsIgnoreCase(newAct.Type__c)){
+                    continue;
+                }
+                Id recordId = newAct.Case__c != null ? newAct.Case__c : newAct.Order__c;
+                if (recordId == null) {
+                    continue;
+                }
+                objsId.put(recordId,newAct.Name);
+            }
+            if (objsId.isEmpty()){
+                return;
+            }
+            List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getOpenActivityByType('Lavorazione Reclamo Post Survey',objsId.keySet(),newActsId)){
+                Id recordId = act.Case__c != null ? act.Case__c : act.Order__c;
+                actToUpdate.add(new wrts_prcgvr__Activity__c(Id = act.Id, wrts_prcgvr__Status__c = 'Annullata', ClosingNote__c = 'Annullata per apertura attività più recente: ' + objsId.get(recordId)));
+            }
+            if (!actToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(actToUpdate);
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.ERROR, ex.getStackTraceString());
+        }
+    }
+
     public static void setCompanyName(List<wrts_prcgvr__Activity__c> activities){
         List<wrts_prcgvr__Activity__c> actToCheckList = new List<wrts_prcgvr__Activity__c>();
         Set<Id> setActivityId = new Set<Id>();
@@ -485,6 +541,27 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
         HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
 
+    }
+
+    @AuraEnabled
+    public static void setNoteRicontattoCliente(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
+        Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
+        Datetime nowDate = null;
+        String nowDateFormat = '';
+        try {
+            for(wrts_prcgvr__Activity__c act : oldList){
+                mapOld.put(act.id,act);
+            }
+            for(wrts_prcgvr__Activity__c act : newList){
+                if((mapOld.get(act.id).ContactResult__c != act.ContactResult__c) && !String.isBlank(act.ContactResult__c) && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c)){
+                    nowDate = Datetime.now();
+                    nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                    act.NoteRicontattoCliente__c = !String.isBlank(mapOld.get(act.id).NoteRicontattoCliente__c) ? mapOld.get(act.id).NoteRicontattoCliente__c + '\n' + act.ContactResult__c + ' in data ' + nowDateFormat : act.ContactResult__c + ' in data ' + nowDateFormat;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed exception: ' + e.getMessage());
+        }
     }
 
 }
