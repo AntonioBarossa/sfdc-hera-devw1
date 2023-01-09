@@ -33,6 +33,10 @@
             <fullName>Protocollo Gestito</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Contratto Caricato</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Status__c</picklist>
