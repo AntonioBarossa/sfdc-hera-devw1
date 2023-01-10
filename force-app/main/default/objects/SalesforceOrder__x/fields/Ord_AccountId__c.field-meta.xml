@@ -10,7 +10,7 @@
     <label>Ord_AccountId</label>
     <length>255</length>
     <referenceTo>SalesforceCustomer__x</referenceTo>
-    <relationshipLabel>Ordine Salesforce</relationshipLabel>
+    <relationshipLabel>Ordini Salesforce</relationshipLabel>
     <relationshipName>OrdiniSalesforce</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>
