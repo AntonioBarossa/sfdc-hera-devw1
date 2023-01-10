@@ -1780,7 +1780,7 @@
         <defaultConnectorLabel>altri sottoprocessi</defaultConnectorLabel>
         <rules>
             <name>concatenazioneToDo_0_0</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5) AND 6</conditionLogic>
             <conditions>
                 <leftValueReference>getPostAttachment.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1814,6 +1814,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Domiciliato in nucleo residente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPostAttachment.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2779,7 +2786,6 @@
         <locationX>2839</locationX>
         <locationY>2510</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>getAfterAddress</targetReference>
         </connector>
         <inputReference>getAfterSubprocess</inputReference>
