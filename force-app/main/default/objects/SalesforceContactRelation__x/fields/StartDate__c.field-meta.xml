@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>AccountId__c</fullName>
-    <description>AccountId</description>
-    <externalDeveloperName>AccountId</externalDeveloperName>
+    <fullName>StartDate__c</fullName>
+    <description>StartDate</description>
+    <externalDeveloperName>StartDate</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Account</label>
-    <length>255</length>
+    <label>StartDate</label>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>DateTime</type>
 </CustomField>
