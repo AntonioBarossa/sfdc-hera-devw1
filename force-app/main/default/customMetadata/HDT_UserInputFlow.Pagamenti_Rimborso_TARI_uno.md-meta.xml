@@ -9,7 +9,7 @@
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
-{&quot;FieldName&quot;:&quot;SupplyCountry__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1,&quot;Label&quot;:&quot;Paese&quot;},
+{&quot;FieldName&quot;:&quot;SupplyCountry__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1,&quot;Label&quot;:&quot;Paese&quot;,&quot;ReadOnly&quot;:true},
 {&quot;FieldName&quot;:&quot;RequestSource__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}
 ]</value>
     </values>

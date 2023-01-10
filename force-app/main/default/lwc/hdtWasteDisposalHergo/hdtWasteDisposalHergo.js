@@ -150,7 +150,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     handleClose(event){
         console.log('###Close Event >>> ' + JSON.stringify(event.detail));
         this.template.querySelector("[data-id='MaterialDescription__c']").value = event.detail.label;  
-        if(!this.cubatureLimit==null){
+        if(!(this.cubatureLimit==null)){
             const checkPayment = this.template.querySelector("[data-id='WithdrawalFee__c']");
             checkPayment.value = event.detail.needPayment;
         }   
