@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Account</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
+    <relationshipLabel>Individual Email Results Salesforce</relationshipLabel>
+    <relationshipName>IndividualEmailResultsSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>

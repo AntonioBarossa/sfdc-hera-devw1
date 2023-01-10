@@ -7,9 +7,10 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Ordine</label>
+    <label>Ordine Gas</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceOrder__x</referenceTo>
+    <relationshipLabel>Letture Salesforce</relationshipLabel>
+    <relationshipName>LettureGasSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>

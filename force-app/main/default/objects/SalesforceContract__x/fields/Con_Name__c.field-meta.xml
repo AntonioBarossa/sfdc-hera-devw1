@@ -5,7 +5,7 @@
     <externalDeveloperName>Con_Name</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>false</isNameField>
+    <isNameField>true</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Con_Name</label>
     <length>80</length>

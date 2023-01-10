@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data Richiesta Sostituzione </label>
+    <label>Data Richiesta Sostituzione</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>
