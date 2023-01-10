@@ -95,7 +95,7 @@ global with sharing class HDT_WS_IntermediateResults {
             if(casePhase=='Approvata'){
                 orderToUpdate.Phase__c = 'Documentazione Validata';
             } else if(casePhase=='Rifiutata'){
-                orderToUpdate.Phase__c = 'Annullata';
+                orderToUpdate.Phase__c = 'Annullato';
                 orderToUpdate.CancellationReason__c = 'Mancanza del presupposto';
             }
             return orderToUpdate;
