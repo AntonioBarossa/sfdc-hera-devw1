@@ -31,11 +31,11 @@ public with sharing class HDT_UTL_QualityCall {
         if (String.isBlank(phase)){
             return 'BLANK';
         }
+        if (HDT_UTL_GestioneScartiSap.skipPhaseManager(phase)){
+            return 'NO_CANCEL';
+        }
         Map<String,String> phaseResult = new Map<String,String>{
             'completata' => 'NO_CANCEL',
-            'errore lavorazione sap' => 'NO_CANCEL',
-            'errore tecnico invio a sap' => 'NO_CANCEL',
-            'flusso bloccato in assenza del precedente	' => 'NO_CANCEL',
             'comunicazione verso heroku ok' => 'NO_CANCEL_BILL',
             'comunicazione verso heroku' => 'NO_CANCEL_BILL',
             'caricamento siebel ok' => 'NO_CANCEL_BILL',
@@ -43,7 +43,8 @@ public with sharing class HDT_UTL_QualityCall {
             'accettato motore vas' => 'NO_CANCEL_NO_BILL',
             'comunicazione verso motore vas' => 'NO_CANCEL_NO_BILL',
             'annullato' => 'CLOSE_PHASE',
-            'voltura rifiutata' => 'CLOSE_PHASE'
+            'voltura rifiutata' => 'CLOSE_PHASE',
+            'accettazione voltura' => 'CLOSE_PHASE'
         };
         return phaseResult.containsKey(phase.toLowerCase()) ? phaseResult.get(phase.toLowerCase()) : 'CANCEL';
     }
