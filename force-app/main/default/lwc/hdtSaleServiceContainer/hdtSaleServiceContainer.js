@@ -146,10 +146,10 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
     handleNext(){
         this.loading = true;
-
+        /**TK 944536C - softening del controllo di entrata Subentro_Remi in quanto per piu' punti potrebbe uscire Subentro_Remi_Remi ecc. */
         fieldsTransition({sale: this.saleRecord}).then(data =>{
-            if(data == null || data == '' ||  data == 'Subentro' || data == 'Subentro_Remi' || data == '_Remi'){
-                if(data == 'Subentro' || data == 'Subentro_Remi'){
+            if(data == null || data == '' ||  data == 'Subentro' || data.indexOf('Subentro_Remi') > -1 || data == '_Remi'){
+                if(data == 'Subentro' || data.indexOf('Subentro_Remi') > -1){
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'warning',
                         message: 'Per i punti di fornitura gas se si tratta di Subentro ricordarsi di prendere l\'appuntamento su Siebel oppure annullare la vendita ed inserire la richiesta su Siebel.',
