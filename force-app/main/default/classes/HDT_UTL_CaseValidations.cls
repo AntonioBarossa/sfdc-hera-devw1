@@ -1307,7 +1307,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return '';
         }
 
-        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
+        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9LMNOPQRSTUV]{3})[a-zA-Z]{1}$');
         Matcher matcher = pattern.matcher(fiscalCode);
 
         return matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
