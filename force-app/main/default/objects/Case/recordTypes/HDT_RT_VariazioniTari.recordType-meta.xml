@@ -10352,7 +10352,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%27ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>
