@@ -652,6 +652,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancanza del presupposto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mancanza titolarità</fullName>
             <default>false</default>
         </values>
