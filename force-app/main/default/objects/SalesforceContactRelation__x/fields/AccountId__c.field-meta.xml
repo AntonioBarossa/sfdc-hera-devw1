@@ -10,7 +10,7 @@
     <label>Account</label>
     <length>18</length>
     <referenceTo>SalesforceCustomer__x</referenceTo>
-    <relationshipLabel>Contatti Salesforce</relationshipLabel>
+    <relationshipLabel>Relazioni Referenti Account Salesforce</relationshipLabel>
     <relationshipName>RelazioniReferentiAccountSalesforce</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

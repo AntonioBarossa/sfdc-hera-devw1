@@ -1311,6 +1311,51 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <fields>GlobalMigrationKeyC__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceDocActivity__x.OrderIdC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceWrtsActivity__x.OrderC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceDocSendTracking__x.OrderC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceEmailResult__x.OrderIDC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceReading__x.OrderEleC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceReading__x.OrderGasC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceOrderItem__x.OrderId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforcePushTracking__x.OrderIDC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NameC__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceSMSTracking__x.OrderIDC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ExternalId</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceDocumentLink__x.LinkedEntityIdOrder__c</relatedList>

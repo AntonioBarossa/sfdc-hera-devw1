@@ -2167,6 +2167,46 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <fields>GlobalMigrationKeyC__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceDocActivity__x.CaseIdC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceWrtsActivity__x.CaseC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceDocSendTracking__x.CaseC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceDocSelected__x.CaseC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceEmailResult__x.CaseIDC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceReading__x.CaseGasC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforcePushTracking__x.CaseIDC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NameC__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceSMSTracking__x.CaseIDC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>ExternalId</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceReading__x.CaseEleC__c</relatedList>
