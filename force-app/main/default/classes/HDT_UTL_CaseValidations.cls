@@ -1320,6 +1320,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         {
             return errorMessage;
         }
+        return '';
     }
 
     // Validazione CF, considerando anche variazioni rispetto al vecchio CF. Se il nuovo CF è vuoto lo consideriamo valido.
