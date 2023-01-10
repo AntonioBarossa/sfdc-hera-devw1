@@ -121,6 +121,6 @@
     <externalDataSource>Hera_Archive</externalDataSource>
     <externalName>SalesforceOrder</externalName>
     <label>Ordine Salesforce</label>
-    <pluralLabel>Ordine Salesforce</pluralLabel>
+    <pluralLabel>Ordini Salesforce</pluralLabel>
     <searchLayouts></searchLayouts>
 </CustomObject>
