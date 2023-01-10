@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Titolare</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
+    <relationshipLabel>Contratti Salesforce</relationshipLabel>
+    <relationshipName>ContrattiSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>
