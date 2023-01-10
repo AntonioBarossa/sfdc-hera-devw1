@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>CaseC__c</fullName>
-    <description>CaseC</description>
-    <externalDeveloperName>CaseC</externalDeveloperName>
+    <fullName>ClienteSalesforce__c</fullName>
+    <externalDeveloperName>AccountC</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Case</label>
+    <label>Cliente Salesforce</label>
     <length>18</length>
-    <referenceTo>SalesforceCase__x</referenceTo>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
     <relationshipLabel>Attività Salesforce</relationshipLabel>
     <relationshipName>AttivitaSalesforce</relationshipName>
     <type>ExternalLookup</type>
