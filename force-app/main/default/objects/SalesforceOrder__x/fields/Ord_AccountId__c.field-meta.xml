@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Ord_AccountId</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
+    <relationshipLabel>Ordine Salesforce</relationshipLabel>
+    <relationshipName>OrdiniSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>
