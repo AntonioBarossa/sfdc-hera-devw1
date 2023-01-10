@@ -1303,6 +1303,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     // Validazione CF. Se il CF è vuoto lo consideriamo valido.
     public String validateFiscalCode(String fiscalCode) {
+        String errorMessage = 'Il Codice Fiscale inserito non è valido.';
+        
         if (String.isBlank(fiscalCode)) {
             return '';
         }
@@ -1310,7 +1312,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9LMNOPQRSTUV]{3})[a-zA-Z]{1}$');
         Matcher matcher = pattern.matcher(fiscalCode);
 
-        return matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+        if(!matcher.matches()) 
+        {
+            return errorMessage;
+        }
+        if(!(fiscalCode.substring(0,15) + HDT_UTL_CalculateFiscalCode.getControlLetter(fiscalCode.substring(0,15))).equalsIgnoreCase(fiscalCode))
+        {
+            return errorMessage;
+        }
     }
 
     // Validazione CF, considerando anche variazioni rispetto al vecchio CF. Se il nuovo CF è vuoto lo consideriamo valido.
