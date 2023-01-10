@@ -3,6 +3,10 @@
     <label>Preventivi - Spostamento Contatore Rec.G</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -20,6 +24,10 @@
 {&quot;FieldName&quot;:&quot;CommodityFormula__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;DlNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
 ]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ValidateClass__c</field>
