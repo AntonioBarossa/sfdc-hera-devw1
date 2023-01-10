@@ -136,6 +136,10 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
             billingProfile.IBAN__c = iban;
         }
+        if(billingProfile.IbanIsForeign__c)
+        {
+            billingProfile.IbanCountry__c = String.isNotBlank(billingProfile.Iban__c) ? billingProfile.Iban__c.substring(0,2) : '';
+        }
 
        Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c');
 
