@@ -260,6 +260,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
 
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 
+            'Variazione indirizzo di fornitura'.equalsIgnoreCase(caseType) ||
             'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
             ('Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
              subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){

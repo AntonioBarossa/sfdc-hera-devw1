@@ -10352,7 +10352,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D&apos;ufficio</fullName>
+            <fullName>D%27ufficio</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11939,10 +11939,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
-		<values>
-			<fullName>Agevolazione</fullName>
-			<default>false</default>
-		</values>
 		<values>
 			<fullName>Dati catastali</fullName>
 			<default>false</default>

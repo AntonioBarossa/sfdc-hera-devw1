@@ -3,7 +3,7 @@
     <actionCalls>
         <name>redirectToCase</name>
         <label>redirectToCase</label>
-        <locationX>297</locationX>
+        <locationX>253</locationX>
         <locationY>2990</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
@@ -20,7 +20,7 @@
     <assignments>
         <name>assignAttachments</name>
         <label>assignAttachments</label>
-        <locationX>517</locationX>
+        <locationX>473</locationX>
         <locationY>2534</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.AdditionalAttachments__c</assignToReference>
@@ -66,7 +66,7 @@
     <assignments>
         <name>assignFields_0</name>
         <label>assignFields</label>
-        <locationX>627</locationX>
+        <locationX>583</locationX>
         <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>getAfterAddress.Phase__c</assignToReference>
@@ -138,7 +138,7 @@
     <assignments>
         <name>assignParamsAttachments_0</name>
         <label>assignParamsAttachments</label>
-        <locationX>517</locationX>
+        <locationX>473</locationX>
         <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
@@ -168,7 +168,7 @@
     <assignments>
         <name>assignPhase</name>
         <label>assignPhase</label>
-        <locationX>517</locationX>
+        <locationX>473</locationX>
         <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.Phase__c</assignToReference>
@@ -191,7 +191,7 @@
     <decisions>
         <name>isChecked_0</name>
         <label>isChecked</label>
-        <locationX>539</locationX>
+        <locationX>495</locationX>
         <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>assignFields_0</targetReference>
@@ -216,7 +216,7 @@
     <decisions>
         <name>operationButton_0</name>
         <label>operationButton</label>
-        <locationX>297</locationX>
+        <locationX>253</locationX>
         <locationY>2054</locationY>
         <defaultConnector>
             <targetReference>getPreAttachments</targetReference>
@@ -233,6 +233,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>
@@ -294,7 +295,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>
@@ -303,10 +303,9 @@
     <decisions>
         <name>tariManaged</name>
         <label>tariManaged</label>
-        <locationX>539</locationX>
+        <locationX>495</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>subFlowAnnullamento_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
@@ -351,7 +350,7 @@
     <recordLookups>
         <name>get_input_case_aggiornato</name>
         <label>get_input_case_aggiornato</label>
-        <locationX>539</locationX>
+        <locationX>495</locationX>
         <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -372,7 +371,7 @@
     <recordLookups>
         <name>getAfterAddress</name>
         <label>getAfterAddress</label>
-        <locationX>539</locationX>
+        <locationX>495</locationX>
         <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -401,17 +400,10 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>FirstName__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>POSIZIONAMENTO</stringValue>
-            </value>
-        </filters>
-        <filters>
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>CONTENITORE</stringValue>
+                <stringValue>BP MODELLO</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -442,7 +434,7 @@
     <recordLookups>
         <name>getPreAttachments</name>
         <label>getPreAttachments</label>
-        <locationX>517</locationX>
+        <locationX>473</locationX>
         <locationY>2174</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -473,7 +465,7 @@
     <recordUpdates>
         <name>updateFinishAddress</name>
         <label>updateFinishAddress</label>
-        <locationX>627</locationX>
+        <locationX>583</locationX>
         <locationY>1358</locationY>
         <connector>
             <targetReference>get_input_case_aggiornato</targetReference>
@@ -483,7 +475,7 @@
     <recordUpdates>
         <name>updatePostAttachment</name>
         <label>updatePostAttachment</label>
-        <locationX>517</locationX>
+        <locationX>473</locationX>
         <locationY>2774</locationY>
         <connector>
             <targetReference>redirectToCase</targetReference>
@@ -512,7 +504,7 @@
     <screens>
         <name>ScreenFieldsForm</name>
         <label>ScreenFieldsForm</label>
-        <locationX>297</locationX>
+        <locationX>253</locationX>
         <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -617,7 +609,7 @@
     <screens>
         <name>screenGestioneAllegati</name>
         <label>Gestione allegati</label>
-        <locationX>517</locationX>
+        <locationX>473</locationX>
         <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -865,7 +857,7 @@
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>539</locationX>
+        <locationX>495</locationX>
         <locationY>1694</locationY>
         <connector>
             <targetReference>tariManaged</targetReference>
@@ -894,8 +886,8 @@
     <subflows>
         <name>subFlowAnnullamento_0</name>
         <label>subFlowAnnullamento</label>
-        <locationX>77</locationX>
-        <locationY>2174</locationY>
+        <locationX>176</locationX>
+        <locationY>3422</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
