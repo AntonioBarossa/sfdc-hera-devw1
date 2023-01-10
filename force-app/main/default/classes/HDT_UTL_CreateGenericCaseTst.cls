@@ -21,8 +21,10 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-            
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caselist[0].origin='Da PGM';
+        caselist[0].type='Riattivazione Fornitura';
+        insert caselist;
     }
     
     
@@ -38,7 +40,7 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         //SETUP      
 
         Map<String, Object> myMap = new Map<String, Object>();
-        Case testCase = [SELECT Id, recordTypeId, type, Cluster__c FROM Case LIMIT 1];
+        Case testCase = [SELECT Id, recordTypeId, type, Cluster__c, Origin FROM Case LIMIT 1];
         myMap.put('recordTypeId', testCase.recordTypeId);
         myMap.put('type', testCase.type);
         myMap.put('cluster', testCase.Cluster__c);
@@ -50,7 +52,8 @@ public with sharing class HDT_UTL_CreateGenericCaseTst {
         Try{
             
             HDT_UTL_CreateGenericCase myClass = new HDT_UTL_CreateGenericCase();
-            myClass.createCaseFromCase(myMap);
+            system.debug(myClass.createCaseFromCase(myMap));
+            
 
 
         }catch(DmlException e) {

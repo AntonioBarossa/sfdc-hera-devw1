@@ -34,14 +34,6 @@
                 <behavior>Readonly</behavior>
                 <field>ContractSalesCompany__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ExemptionStartDate__c</field>
-            </layoutItems>
-			<layoutItems>
-                <behavior>Edit</behavior>
-                <field>DeclaredExemptionThreshold__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -72,14 +64,6 @@
                 <behavior>Readonly</behavior>
                 <field>OwnerId</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ExemptionEndDate__c</field>
-            </layoutItems>
-			<layoutItems>
-                <behavior>Edit</behavior>
-                <field>TotalTurnoverVATExempted__c</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -102,6 +86,33 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ExciseGas__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Dichiarazione  d&apos;intento</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExemptionStartDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DeclaredExemptionThreshold__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExemptionEndDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TotalTurnoverVATExempted__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
