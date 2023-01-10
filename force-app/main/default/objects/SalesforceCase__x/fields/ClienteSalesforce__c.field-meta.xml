@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>Cas_AccountId__c</fullName>
-    <deleteConstraint>SetNull</deleteConstraint>
-    <description>Cas_AccountId</description>
+    <fullName>ClienteSalesforce__c</fullName>
     <externalDeveloperName>Cas_AccountId</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Cliente Online</label>
-    <referenceTo>Account</referenceTo>
+    <label>Cliente Salesforce</label>
+    <length>18</length>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
     <relationshipLabel>Casi Salesforce</relationshipLabel>
     <relationshipName>CasiSalesforce</relationshipName>
-    <required>false</required>
-    <type>Lookup</type>
+    <type>ExternalLookup</type>
 </CustomField>
