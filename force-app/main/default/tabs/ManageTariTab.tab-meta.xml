@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomTab xmlns="http://soap.sforce.com/2006/04/metadata">
-    <label>Tabelle Amministrabili</label>
+    <label>Tabelle Amministrabili Ambiente</label>
     <lwcComponent>hdtManageTariTab</lwcComponent>
     <motif>Custom45: Ticket</motif>
 </CustomTab>
