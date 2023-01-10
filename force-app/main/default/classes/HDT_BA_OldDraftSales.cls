@@ -34,17 +34,17 @@ public with sharing class HDT_BA_OldDraftSales implements Database.Batchable<sOb
             
             //cancel vendita
             sale.Status__c = 'Annullata';
-            sale.CancellationReason__c = 'No conferma Cliente';
+            //sale.CancellationReason__c = 'No conferma Cliente';
             sales.add(sale); 
             // cancel quote
             for(SBQQ__Quote__c quote : sale.Quotes__r) {
-                quote.SBQQ__Status__c = 'Annullata';
-                quote.CancellationReason__c = 'Volonta cliente';
+                quote.SBQQ__Status__c = 'Cancelled';
+                //quote.CancellationReason__c = 'Volonta cliente';
                 quotes.add(quote);
             }
             // cancel opportunity
             for(Opportunity opp : sale.Opportunities__r) {           
-                opp.StageName = 'Chiusa/Annullata';
+                opp.StageName = 'Closed Lost';
                 opps.add(opp);
             }
         }
