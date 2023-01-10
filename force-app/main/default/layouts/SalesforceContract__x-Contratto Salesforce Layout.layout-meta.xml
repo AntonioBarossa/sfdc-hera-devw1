@@ -522,6 +522,16 @@
         <layoutColumns/>
         <style>CustomLinks</style>
     </layoutSections>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceAsset__x.ContractC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceSubscription__x.SBQQ_ContractC__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

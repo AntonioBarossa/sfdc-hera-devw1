@@ -10,7 +10,7 @@
     <label>Case Gas</label>
     <length>255</length>
     <referenceTo>SalesforceCase__x</referenceTo>
-    <relationshipLabel>Letture Salesforce</relationshipLabel>
+    <relationshipLabel>Letture Gas Salesforce</relationshipLabel>
     <relationshipName>LettureGasSalesforce</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

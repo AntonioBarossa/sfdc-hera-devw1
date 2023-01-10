@@ -10,7 +10,7 @@
     <label>Ordine Ele</label>
     <length>255</length>
     <referenceTo>SalesforceOrder__x</referenceTo>
-    <relationshipLabel>Letture Salesforce</relationshipLabel>
+    <relationshipLabel>Letture Ele Salesforce</relationshipLabel>
     <relationshipName>LettureEleSalesforce</relationshipName>
     <type>ExternalLookup</type>
 </CustomField>

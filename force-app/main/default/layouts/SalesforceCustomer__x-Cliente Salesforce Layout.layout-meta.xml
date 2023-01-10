@@ -323,14 +323,29 @@
         <style>CustomLinks</style>
     </layoutSections>
     <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceContact__x.AccountId_CONTACT__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>Cas_CaseNumber__c</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceCase__x.ClienteSalesforce__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Ord_OrderNumber__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceOrder__x.Ord_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>Name__c</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceWrtsActivity__x.ClienteSalesforce__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceStandardActivity__x.AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
         <fields>Con_Name__c</fields>
