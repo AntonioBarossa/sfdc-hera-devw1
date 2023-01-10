@@ -11940,10 +11940,6 @@
     <picklistValues>
         <picklist>Subprocess__c</picklist>
 		<values>
-			<fullName>Agevolazione</fullName>
-			<default>false</default>
-		</values>
-		<values>
 			<fullName>Dati catastali</fullName>
 			<default>false</default>
 		</values>
