@@ -1308,7 +1308,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         if (String.isBlank(fiscalCode)) {
             return '';
         }
-
+        /**TK 945657C -- Modificato pattern regex per includere anche i casi di omocodia
+         * aggiunto controllo su ultimo carattere CF: viene ricalcolato il carattere di controllo partendo dal CF inserito e viene confrontato con il CF inserito*/
         Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9LMNOPQRSTUV]{3})[a-zA-Z]{1}$');
         Matcher matcher = pattern.matcher(fiscalCode);
 
