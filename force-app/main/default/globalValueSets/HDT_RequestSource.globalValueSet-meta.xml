@@ -6,9 +6,9 @@
         <label>Da contribuente</label>
     </customValue>
     <customValue>
-        <fullName>D&apos;ufficio</fullName>
+        <fullName>D'ufficio</fullName>
         <default>false</default>
-        <label>D&apos;ufficio</label>
+        <label>D'ufficio</label>
     </customValue>
     <customValue>
         <fullName>Da utente</fullName>

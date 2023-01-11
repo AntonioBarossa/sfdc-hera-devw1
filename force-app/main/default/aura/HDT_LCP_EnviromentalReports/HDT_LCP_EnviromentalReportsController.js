@@ -16,6 +16,8 @@
     handleStatusChange : function (component, event) {
         if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
             console.log('Flow-Finished');
+            var flowfinal = component.find("flowData");
+			flowfinal.destroy();
             var dismissActionPanel = $A.get("e.force:closeQuickAction");
             dismissActionPanel.fire();
         }
