@@ -124,14 +124,21 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             processObj.CasualCode__c = '';
             //processObj.CreatedById = '';
             processObj.ExistActivityDatiDiscordanti__c = false;
+            processObj.ExistActivityDatiDiscordantiNew__c = 'All';
             processObj.ExistActivitySwitchRipristinatorio__c = false;
+            processObj.ExistActivitySwitchRipristinatorioNew__c = 'All';
             processObj.IsAmendment__c = false;
             processObj.IsChangeUse__c = false;
+            processObj.IsChangeUseNew__c = 'All';
             processObj.isOwnAccount__c = 'No';
+            processObj.isOwnAccountNew__c = 'All';
             processObj.IsReseller__c = false;
+            processObj.IsResellerNew__c = 'All';
             processObj.IsSameAccount__c = false;
             processObj.isSTG__c = false;
+            processObj.isSTGNew__c = 'All';
             processObj.OngoingSwitchOut__c = false;
+            processObj.OngoingSwitchOutNew__c = 'All';
             //processObj.OwnerId = '';
             processObj.PlugPresence__c = true;
             processObj.PowerChange__c = true;
@@ -838,7 +845,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SupplyCity__c,
                      	AccountId,
                      	Account.RecordType.DeveloperName,
-                        SupplyType__c
+                        SupplyType__c,
+                        ServicePoint__r.SapContractStatus__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         Test.startTest();
