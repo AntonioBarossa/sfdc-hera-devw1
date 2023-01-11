@@ -71,7 +71,6 @@ public with sharing class HDT_UTL_VasManagement {
             requestMap.put('codFiscale',currentCase.Account?.FiscalCode__c);
             requestMap.put('partitaIva',currentCase.Account?.VATNumber__c);
             requestMap.put('pod',currentCase.Subscription__r.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c);
-            requestMap.put('intestatario','');
             requestMap.put('servizioIp',(currentCase.Subscription__r.SBQQ__Product__r.DescriptionSAP__c).abbreviate(30));
             requestMap.put('versione',currentCase.Subscription__r.Version__c);
             requestMap.put('nrContrattoIp',currentCase.Subscription__r.SBQQ__Contract__r.SAPContractCode__c);
@@ -228,7 +227,6 @@ public with sharing class HDT_UTL_VasManagement {
                 pod = currentOrder.ContractReference__r.ServicePoint__r?.ServicePointCode__c;
             }
 
-            List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
             intestatario = '';
 
             //servizioIp = currentOrder.CommercialProductCode__c?.abbreviate(30);
