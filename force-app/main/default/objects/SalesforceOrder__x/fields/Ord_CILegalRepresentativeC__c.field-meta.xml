@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Carta d'identità Rap. Legale</label>
+    <label>Carta d&apos;identità Rap. Legale</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

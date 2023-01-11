@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Case</label>
     <length>18</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceCase__x</referenceTo>
+    <relationshipLabel>Attività Salesforce</relationshipLabel>
+    <relationshipName>AttivitaSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>
