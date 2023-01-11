@@ -1820,7 +1820,7 @@
                 <leftValueReference>getPostAttachment.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>D'ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2217,7 +2217,7 @@
                 <leftValueReference>getPreSecondForm.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>D'ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
