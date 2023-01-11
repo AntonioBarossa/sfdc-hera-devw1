@@ -297,6 +297,13 @@
         <fields>CASES.TYPE</fields>
         <fields>Phase__c</fields>
         <fields>CASES.STATUS</fields>
+        <relatedList>RelatedChildCaseList</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>CASES.CASE_NUMBER</fields>
+        <fields>CASES.TYPE</fields>
+        <fields>Phase__c</fields>
+        <fields>CASES.STATUS</fields>
         <relatedList>Case.RelatedCase__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -374,7 +381,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1x000001a1Qb</masterLabel>
+        <masterLabel>00h2o00000lovSa</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
