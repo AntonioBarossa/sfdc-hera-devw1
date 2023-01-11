@@ -5,19 +5,19 @@ import retrieveLandRegistryTable from '@salesforce/apex/HDT_UTL_LandRegistry.ret
 const COLUMNS = [
     { label: 'Nome Record',                     fieldName: 'Name',                                      type: 'text' },
     // { label: 'Codice assenza dati catastali',   fieldName: 'CodeMissingRegistryData__c',                type: 'text' },
-    // { label: 'Destinazione Uso',                fieldName: 'DestinationUsage__c',                       type: 'text' },
+    { label: 'Destinazione Uso',                fieldName: 'DestinationUsage__c',                       type: 'text' },
     { label: 'Comune catastale',                fieldName: 'RegistryCity__c',                           type: 'text' },
-    // { label: 'Codice comune catastale',         fieldName: 'RegistryCityCode__c',                       type: 'text' },
+    { label: 'Codice comune catastale',         fieldName: 'RegistryCityCode__c',                       type: 'text' },
     // { label: 'Comune amministrativo',           fieldName: 'LegalCity__c',                              type: 'text' },
-    { label: 'Provincia ubicazione',            fieldName: 'Province__c',                               type: 'text' },
+    // { label: 'Provincia ubicazione',            fieldName: 'Province__c',                               type: 'text' },
     // { label: 'Tipo unita',                      fieldName: 'UnitType__c',                               type: 'text' },
-    { label: 'Sezione urbana',                  fieldName: 'UrbanSection__c',                           type: 'text' },
+    // { label: 'Sezione urbana',                  fieldName: 'UrbanSection__c',                           type: 'text' },
     { label: 'Foglio',                          fieldName: 'Sheet__c',                                  type: 'text' },
     { label: 'Particella',                      fieldName: 'ParticleSheet__c',                          type: 'text' },
     { label: 'Subalterno',                      fieldName: 'Subaltern__c',                              type: 'text' },
     // { label: 'Categoria Catastale',             fieldName: 'RegistryCategory__c',                       type: 'text' },
-    { label: 'Superficie Catastale',            fieldName: 'RegistrySurface__c',                        type: 'text' },
-    // { label: 'Qualifica Titolare',              fieldName: 'Title__c',                                  type: 'text' }
+    // { label: 'Superficie Catastale',            fieldName: 'RegistrySurface__c',                        type: 'text' },
+    { label: 'Qualifica Titolare',              fieldName: 'Title__c',                                  type: 'text' }
 ];
 
 export default class HdtLandRegistry extends LightningElement {
