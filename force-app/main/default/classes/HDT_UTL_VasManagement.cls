@@ -71,7 +71,7 @@ public with sharing class HDT_UTL_VasManagement {
             requestMap.put('codFiscale',currentCase.Account?.FiscalCode__c);
             requestMap.put('partitaIva',currentCase.Account?.VATNumber__c);
             requestMap.put('pod',currentCase.Subscription__r.SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c);
-            requestMap.put('intestatario',joinStringValues(new List<String>{currentCase.Account.FirstName__c,currentCase.Account.LastNameRcuFormula__c}));
+            requestMap.put('intestatario','');
             requestMap.put('servizioIp',(currentCase.Subscription__r.SBQQ__Product__r.DescriptionSAP__c).abbreviate(30));
             requestMap.put('versione',currentCase.Subscription__r.Version__c);
             requestMap.put('nrContrattoIp',currentCase.Subscription__r.SBQQ__Contract__r.SAPContractCode__c);
@@ -229,7 +229,7 @@ public with sharing class HDT_UTL_VasManagement {
             }
 
             List<String> strValues = new List<String>{currentOrder.CustomerName__c, currentOrder.CustomerName__c};
-            intestatario = joinStringValues(strValues);
+            intestatario = '';
 
             //servizioIp = currentOrder.CommercialProductCode__c?.abbreviate(30);
             versione = currentOrder.CommercialProductVersion__c?.split('\\.\\d+')[0];
@@ -305,7 +305,7 @@ public with sharing class HDT_UTL_VasManagement {
             codFiscale = (String)requestMap.get('codFiscale');
             partitaIva = (String)requestMap.get('partitaIva');
             pod = (String)requestMap.get('pod');
-            intestatario = (String)requestMap.get('intestatario');
+            intestatario = '';
             servizioIp = (String)requestMap.get('servizioIp');
             versione = (String)requestMap.get('versione');
             dataCessazione = Date.today();
