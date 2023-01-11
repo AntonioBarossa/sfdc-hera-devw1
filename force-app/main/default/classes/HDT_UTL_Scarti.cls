@@ -1286,7 +1286,9 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             SObject oldObj = oldRecsMap.get((Id)obj.get('Id'));
             String newPhase = obj.get('Phase__c') == null ? '' : (String)obj.get('Phase__c');
             String oldPhase = oldObj.get('Phase__c') == null ? '' : (String)oldObj.get('Phase__c');
-            if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)){
+            String checkScartoSap = obj.getSObjectType() != Case.getSObjectType() ? '' :  obj.get('distributorflowcode__c') == null ? '' : (String)obj.get('distributorflowcode__c'); 
+            if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)
+            && (String.isBlank(checkScartoSap))){
                 if ('Completata'.equalsIgnoreCase(newPhase)){
                     String phase = HDT_UTL_Utils.beforeSapPhase(oldPhase,oldObj.get('PhaseStory__c') == null ? '' : (String)oldObj.get('PhaseStory__c'));
                     if (String.isBlank(phase)){
@@ -1297,20 +1299,26 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         obj.put('Phase__c',phase);
                         continue;
                     }
+
                 }
-                //In attesa della risposta di s.b. su mail "Richiesta riscontro Autoletture e Scarti SAP"
-                if (newPhase.indexOf('Annullamento') > -1 || newPhase.indexOf('Ripensamento') > -1 || 'Annullato'.equalsIgnoreCase(newPhase)){
-                    obj.addError('Per procedere con l\'annullamento, è necessario gestire lo scarto SAP');
+                if (!newPhase.containsIgnoreCase('OK')){
+                    obj.addError('Su questo ordine è presente uno scarto SAP da gestire');
+                    continue;
                 }
+            }
+            if(!newPhase.equalsIgnoreCase(oldPhase) && obj.getSObjectType() == Case.getSObjectType()){
+                obj.put('distributorflowcode__c','');
             }
         }
         if (secondCheck.isEmpty()){
             return;
         }
-        String stringIds = '(\''+String.join(secondCheck, '\',\'')+'\')'; 
-        Esito KO da SII Ammissibilità KO	Esito KO da DL 	Esito KO da DL/SII
-        for (wrts_prcgvr__Activity__c act : HDT_QR_GenericQuery.getGenericRecords('Id, Type__c, Order__c, Case__c', 'wrts_prcgvr__Activity__c', 'Case__c IN '+stringIds+' OR Order__c IN '+stringIds)){ // inserire la query invece di acts
+        String stringIds = '(\''+String.join(new List<Id>(secondCheck), '\',\'')+'\')'; 
+        for (wrts_prcgvr__Activity__c act : (List<wrts_prcgvr__Activity__c>)HDT_QR_GenericQuery.getGenericRecords('Id, Order__c, Case__c', 'wrts_prcgvr__Activity__c', '(Case__c IN '+stringIds+' OR Order__c IN '+stringIds+') AND Type__c IN (\'Esito KO da SII\',\'Ammissibilità KO\',\'Esito KO da DL\',\'Esito KO da DL/SII\') AND wrts_prcgvr__IsClosed__c = false')){ // inserire la query invece di acts
             Sobject obj = newRecsMap.get(act.Order__c != null ? act.Order__c : act.Case__c);
+            if (obj == null){
+                continue;
+            }
             String pStory = obj.get('PhaseStory__c') == null ? '' : (String)obj.get('PhaseStory__c');
             String prefix = pStory.startsWithIgnoreCase('Annullamento -') ? 'Annullamento - ' :
             pStory.startsWith('Ripensamento -') ? 'Ripensamento - ' : ''; 
