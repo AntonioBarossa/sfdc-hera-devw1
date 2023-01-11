@@ -815,6 +815,39 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
 
+    @isTest
+    static void getProcessDriverTst()
+    {
+        Order ord = [Select id,
+                        ServicePoint__c,
+                        VoltageLevel__c,
+                        MarketOrigin__c,
+                        PowerRequested__c,
+                        PowerCommitted__c,
+                        IsWinback__c,
+                        SAPImplantCode__c,
+                        ServicePoint__r.MeterStatus__c,
+                        ServicePoint__r.Account__c,
+                        ServicePoint__r.PlugPresence__c,
+                        ServicePoint__r.ServicePointCode__c,
+                        ServicePoint__r.RecordType.DeveloperName,
+                        SBQQ__Quote__r.AllowChangeUse__c,
+                        SBQQ__Quote__r.AmendmentAllowed__c, 
+                        ServicePoint__r.isReseller__c,
+                        CommodityFormula__c,
+                        SupplyCity__c,
+                     	AccountId,
+                     	Account.RecordType.DeveloperName,
+                        SupplyType__c
+                        From Order
+                        WHERE Name = 'testOrderName0'];
+        Test.startTest();
+            String resultOne = HDT_LC_ChildOrderProcessPrecheck.getProcessDriver(ord);
+            String resultTwo = HDT_LC_ChildOrderProcessPrecheck.getProcessDriver(null);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(resultOne), 'Driver Non Calcolati');
+        System.assertEquals(true, !String.isNotBlank(resultTwo), 'Errore non gestito correttamente');
 
+    }
     
 }
