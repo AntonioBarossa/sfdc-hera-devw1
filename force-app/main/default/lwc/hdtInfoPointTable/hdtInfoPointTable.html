@@ -1,5 +1,5 @@
 <template>
-   <lightning-button-icon icon-name="utility:help" alternative-text="Help..." variant="brand" title="Help" onclick={handleClick}></lightning-button-icon>
+   <lightning-button-icon disabled={infoDisabled} icon-name="utility:help" alternative-text="Help..." variant="brand" title="Help" onclick={handleClick}></lightning-button-icon>
    <div if:true={showInfoModal}>
         <section role="dialog" tabindex="-1" aria-modal="true" aria-labelledby="modal-heading-01" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
@@ -14,7 +14,7 @@
                     <lightning-datatable
                         data={infoObj}
                         columns={columnsObj}
-                        key-field={keyField}
+                        key-field={fieldKey}
                         hide-checkbox-column
                     ></lightning-datatable>
                 </div>

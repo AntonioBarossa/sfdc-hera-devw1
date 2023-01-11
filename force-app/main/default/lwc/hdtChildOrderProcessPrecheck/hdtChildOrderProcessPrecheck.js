@@ -45,6 +45,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     @track modalHeader = 'Matrice Processi';
     @track keyField = 'driverName';
     @track modalSpinner = true;
+    @track infoDisabled = false;
 
     handleModalOpening(event)
     {
@@ -384,6 +385,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.incompatibilityfound(this.selectedProcessObject, data);
                 this.loaded = true;
             }else{
+                this.infoDisabled = true;
                 this.loaded = true;
                 this.dispatchEvent(new CustomEvent('refreshorderchild'));
             }
@@ -532,6 +534,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.value = this.selectedProcessObject.ProcessName__c;
             // this.checkCompatibilityProcess();
             this.pickValue = this.value;
+            this.infoDisabled = true;
             this.startCheckContendibilita();
         }
 

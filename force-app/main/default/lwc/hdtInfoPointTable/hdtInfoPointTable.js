@@ -9,6 +9,7 @@ export default class HdtInfoPointTable extends LightningElement
     @api fieldKey = '';
     @api modalHeader = '';
     @api loadingSpinner = false;
+    @api infoDisabled = false;
     
     @track showInfoModal = false;
 
