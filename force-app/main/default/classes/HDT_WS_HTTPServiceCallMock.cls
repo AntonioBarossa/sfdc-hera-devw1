@@ -5,7 +5,7 @@
  * @history Lucas da Silva Fernandes – 31/08/2021 – Created Class
  */
 @SuppressWarnings('PMD.ClassNamingConventions, PMD.AvoidDebugStatements, PMD.NcssMethodCount, PMD.CyclomaticComplexity, PMD.DebugsShouldUseLoggingLevel')
-public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock { 
+public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock {
     
     public Boolean successfullReturn = true;
 
@@ -16,7 +16,7 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
         res.setHeader('Content-Type', 'application/json');
         String body;
         
-        List<HDT_WebServiceConfiguration__c> webServiceConfigurations = HDT_WebServiceConfiguration__c.getAll().values();
+        List<HDT_WebServiceConfiguration__c> webServiceConfigurations = HDT_WebServiceConfiguration__c.getAll().values();     
 
         for(HDT_WebServiceConfiguration__c wsc : webServiceConfigurations) {
             if(req.getEndpoint() == wsc.Endpoint__c) {
@@ -137,20 +137,24 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                         res.setBody(body); 
                     } when 'AppointmentSearch' {
                         HDT_WS_Response customResp = (HDT_WS_Response)HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse.class.newInstance();
-                        Map<String, Object> responseMap = (Map<String, Object>) json.deserializeUntyped(json.serialize(customResp));
-                        responseMap.putAll(
-                            new Map<String, String>{
-                                'data.appointmentData.0.startDate' => '15-01-2023 11:00:00'
-                            }
-                        );
-                        HDT_UTL_GenerateMultilevelJson gen = new HDT_UTL_GenerateMultilevelJson(responseMap);
-            			Map<String, Object> mapToSendCallout = gen.generateMap();
-                        system.debug('test serialize ');
-                        system.debug(Json.serializePretty(mapToSendCallout));
-                        body = JSON.serialize(mapToSendCallout);
-                        res.setStatusCode(200);
-                        res.setStatus('success');
-                        res.setBody(body); 
+                        if (successfullReturn) {
+                            Map<String, Object> responseMap = (Map<String, Object>) json.deserializeUntyped(json.serialize(customResp));
+                            responseMap.putAll(
+                                new Map<String, String>{
+                                    'data.appointmentData.0.startDate' => '15-01-2023 11:00:00',
+                                        'data.appointmentData.0.endDate' => '15-01-2023 11:00:00'
+                                        }
+                            );
+                            HDT_UTL_GenerateMultilevelJson gen = new HDT_UTL_GenerateMultilevelJson(responseMap);
+                            Map<String, Object> mapToSendCallout = gen.generateMap();
+                            //system.debug(Json.serializePretty(mapToSendCallout));
+                            body = JSON.serialize(mapToSendCallout);
+                            res.setStatusCode(200);
+                            res.setStatus('success');
+                            res.setBody(body); 
+                        }else{
+                            res.setStatusCode(400);
+                        }
                     } when 'AppointmentView' {
                         HDT_WS_Response customResp = (HDT_WS_Response)HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentViewResponse.class.newInstance();
                         body = JSON.serialize(customResp);
