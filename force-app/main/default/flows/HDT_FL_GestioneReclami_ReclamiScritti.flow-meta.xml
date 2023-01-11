@@ -692,6 +692,12 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <stringValue>TIR</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>DistributorCode__c</field>
             <value>
                 <stringValue>1200000000</stringValue>
