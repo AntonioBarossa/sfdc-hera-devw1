@@ -90,6 +90,7 @@ public with sharing class HDT_BA_QualityCallTst {
             childOrders[2].Sale__c = sales[2].Id;
             
             childOrders[3].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VAS;
+            childOrders[3].Phase__c = 'Comunicazione verso Heroku KO';
             childOrders[3].ParentOrder__c = parentOrders[2].Id;
             childOrders[3].Sale__c = sales[2].Id;
             childOrders[3].Contact__c = parentOrders[2].Contact__c;
@@ -147,6 +148,7 @@ public with sharing class HDT_BA_QualityCallTst {
             childOrders[14].Contact__c = parentOrders[6].Contact__c;
             
             childOrders[15].VasSubtype__c = 'Analisi consumi';
+            childOrders[15].Phase__c = 'Comunicazione verso Heroku KO';
             childOrders[15].ParentOrder__c = parentOrders[6].Id;
             childOrders[15].Contact__c = parentOrders[6].Contact__c;
             childOrders[15].Sale__c = sales[6].Id;

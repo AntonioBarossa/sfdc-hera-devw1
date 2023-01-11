@@ -103,7 +103,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 
                 if ('CANCEL'.equalsIgnoreCase(result) && canDeleteOrder 
                     && ((isMonitoringList.contains(o.AgencyCode__c) && o.IsVAS__c) || hasCancellableProduct)) {
-                    this.closeOrder(ordToUpd,orderToCancel,o.Phase__c);     
+                        ordToUpd.Phase__c = 'Annullato';
+                        ordToUpd.Status = 'Annullato';         
+                        orderToCancel.add(ordToUpd.Id);     
                 }else if ((isMonitoringList.contains(o.AgencyCode__c) && o.IsVAS__c) || hasCancellableProduct){
                     needsActivity = true;
                 }
@@ -168,22 +170,6 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         logs.saveMassiveRecords();
     }
 
-    private void closeOrder(Order o, Set<String> orderToCancel, String phase){
-        Set<String> phaseforVoltura = new Set<String>{
-            'in attesa validazione',
-            'da inviare',
-            'bozza',
-            'credit check ko',
-            'attesa credit check'
-        };
-        if ('HDT_RT_Voltura'.equalsIgnoreCase(o.RecordType.DeveloperName) && phaseforVoltura.contains(phase)){
-            o.Phase__c = 'Accettazione Voltura';
-            return;
-        }
-        o.Phase__c = 'Annullato';
-        o.Status = 'Annullato';         
-        orderToCancel.add(o.Id);
-    }
 
     private void getChildOrderInfo(Set<String> pOrdersId, Set<Id> orderWithActivity){
         Date dueDate = Date.today();
