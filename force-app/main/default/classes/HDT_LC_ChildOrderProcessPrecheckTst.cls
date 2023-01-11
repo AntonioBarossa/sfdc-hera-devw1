@@ -842,11 +842,13 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SBQQ__Quote__r.AmendmentAllowed__c, 
                         ServicePoint__r.isReseller__c,
                         CommodityFormula__c,
+                        ServicePoint__r.CommoditySector__c,
                         SupplyCity__c,
                      	AccountId,
                      	Account.RecordType.DeveloperName,
                         SupplyType__c,
-                        ServicePoint__r.SapContractStatus__c
+                        ServicePoint__r.SapContractStatus__c,
+                        isSTG__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         Test.startTest();
