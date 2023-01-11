@@ -4,10 +4,10 @@ export default class HdtInfoPointTable extends LightningElement
 {
 
    
-    @api columnsObj = [{label: 'Driver', fieldName: 'driverName'},{label: 'Valore', fieldName: 'driverValue'}];
-    @api infoObj = [{driverName: 'Stato Contratto', driverValue: 'Cessato'},{driverName:'Presenza Allaccio', driverValue: 'Si'}];
-    @api keyField = 'driverName';
-    @api modalHeader = 'Matrice Processi';
+    @api columnsObj = [];
+    @api infoObj = [];
+    @api keyField = '';
+    @api modalHeader = '';
     @api loadingSpinner = false;
     
     @track showInfoModal = false;

@@ -24,7 +24,14 @@
                                 </lightning-combobox>
                             </div>
                             <div class="slds-col slds-size_1-of-3" style="padding-top: 22px">
-                                <c-hdt-info-point-table onopenmodal={handleModalOpening}></c-hdt-info-point-table>
+                                <c-hdt-info-point-table 
+                                    info-obj={infoObj}
+                                    columns-obj={columnsObj}
+                                    key-field={keyField}
+                                    loading-spinner={modalSpinner}
+                                    modal-header={modalHeader}
+                                    onopenmodal={handleModalOpening}>
+                                </c-hdt-info-point-table>
                             </div> 
                         </div>
                     </template>
