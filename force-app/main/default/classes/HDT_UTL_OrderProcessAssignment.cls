@@ -573,10 +573,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
     {
         Map<String, List<Map<String,String>>> result = new Map<String,List<Map<String,String>>>(); 
         /* Column Header */
-        result.put('columnsObj',new List<Map<String,String>>{new Map<String,String>{'label' => 'Driver', 'fieldName' => 'driverLabel'}, new Map<String,String>{'label' => 'Driver', 'fieldName' => 'driverName'}});
+        result.put('columnsObj',new List<Map<String,String>>{new Map<String,String>{'label' => 'Driver', 'fieldName' => 'driverLabel'}, new Map<String,String>{'label' => 'Valore', 'fieldName' => 'driverValue'}});
         /* Stato Contratto SAP */
         List<Map<String,String>> infoList = new List<Map<String,String>>();
-        infoList.add(addDriver('Stato Contratto SAP', 'sapContractStatus', ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'null'));
+        infoList.add(addDriver('Stato Contratto SAP', 'sapContractStatus', ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'Nullo'));
         /* STG */
         infoList.add(addDriver('STG','isStg',ord.isSTG__c ? 'Si' : 'No'));
         /* Mercato Provenienza */

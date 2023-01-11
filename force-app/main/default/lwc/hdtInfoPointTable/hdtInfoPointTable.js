@@ -6,7 +6,7 @@ export default class HdtInfoPointTable extends LightningElement
    
     @api columnsObj = [];
     @api infoObj = [];
-    @api keyField = '';
+    @api fieldKey = '';
     @api modalHeader = '';
     @api loadingSpinner = false;
     

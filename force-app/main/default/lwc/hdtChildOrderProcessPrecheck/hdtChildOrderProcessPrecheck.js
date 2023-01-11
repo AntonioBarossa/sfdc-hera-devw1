@@ -50,13 +50,15 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     {
         console.log('Received Open Modal Event');
         this.modalSpinner = true;
+        console.log('Callout Condition: ' + !this.infoObj);
         /* Fetch process matrix driver */
-        if(!infoObj)
+        if(this.infoObj.length <= 0)
         {
+            console.log('@@@ Fetching Data');
             getInfoPointData({order: this.order})
             .then(data => 
                 {
-                    returnObj = JSON.parse(data);
+                    const returnObj = JSON.parse(data);
                     this.columnsObj = returnObj['columnsObj'];
                     this.infoObj = returnObj['infoObj'];
                     this.modalSpinner = false;
@@ -64,6 +66,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
         }
         else
         {
+            console.log('@@@ Data already fetched');
             this.modalSpinner = false;
         }
     }    
