@@ -41,6 +41,11 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     connectedCallback(){
         console.log('>>> recordIdFromAura: ' + this.recordIdFromAura);
         console.log('>>> recordId from LWC: ' + this.recordId);
+
+        if(this.recordId===undefined || this.recordId===''){
+            this.recordId = this.recordIdFromAura;
+        }
+
         this.getMetadata();
     }
 

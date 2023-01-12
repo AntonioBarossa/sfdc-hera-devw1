@@ -212,11 +212,14 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     public static HDT_WRP_MailSender.HDT_WRP_SendMailResult sendMailHelper(String mailStructureJson){
 
         HDT_WRP_MailSender.HDT_WRP_SendMailResult sendMailResult = new HDT_WRP_MailSender.HDT_WRP_SendMailResult();
+        String subjectString = '';
+        Boolean isCaseObj;
+        HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
 
-        try{			
-
-            String subjectString = '';
-            HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
+        try{
+            Id currentId = Id.valueOf(mailStructure.caseId);
+            isCaseObj = currentId.getSobjectType() == Schema.Case.SObjectType;
+            
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
