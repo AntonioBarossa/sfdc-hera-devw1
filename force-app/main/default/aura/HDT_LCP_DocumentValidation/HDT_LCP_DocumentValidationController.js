@@ -37,8 +37,15 @@
         action2.setCallback(this, function (response) {
             var state = response.getState();
             if (state === 'SUCCESS') {
-                component.set("v.accountId", response.getReturnValue());        
-                console.log('AccountId : '+ component.get("v.accountId"));        
+                var ord = response.getReturnValue();
+                var company = ord.SalesCompany__c;
+                component.set("v.accountId", ord.AccountId);
+                console.log('AccountId : '+ component.get("v.accountId"));
+                if(company && company.includes("Marche Multiservizi")){
+                    component.set("v.showMarketing", false);
+                }else{
+                    component.set("v.showMarketing", true);
+                }
             }
             else{
                 var errors = response.getError();  
