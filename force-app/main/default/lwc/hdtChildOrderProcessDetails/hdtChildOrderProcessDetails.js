@@ -658,12 +658,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
                     }
-                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value : 0;
-                    let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value : 0;
-                    let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value : 0;
-                    let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value : 0;
-                    let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value : 0;
-                    let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? this.template.querySelector("[data-id='CommercialHousingUnit__c']").value : 0;
+                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value) : 0;
+                    let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
+                    let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
+                    let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
+                    let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
+                    let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
                     if ( this.template.querySelector("[data-id='RealEstateUnit__c']").value != (noResDom + resDom + noDom + indUnit + zooUnit + commUnit) )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
@@ -695,12 +695,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
                     }
-                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value : 0;
-                    let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value : 0;
-                    let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value : 0;
-                    let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value : 0;
-                    let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value : 0;
-                    let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? this.template.querySelector("[data-id='CommercialHousingUnit__c']").value : 0;
+                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value) : 0;
+                    let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
+                    let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
+                    let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
+                    let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
+                    let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
                     if ( this.template.querySelector("[data-id='RealEstateUnit__c']").value != (noResDom + resDom + noDom + indUnit + zooUnit + commUnit) )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
