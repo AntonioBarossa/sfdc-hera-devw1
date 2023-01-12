@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
+    <assignments>
+        <name>AssignIdricoTrue</name>
+        <label>AssignIdricoTrue</label>
+        <locationX>649</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>checkIdrico</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>LoopChilds</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Confermo_RB</name>
         <choiceText>Confermo</choiceText>
@@ -21,7 +37,7 @@
         <name>CallTypeDecision</name>
         <label>CallTypeDecision</label>
         <locationX>1766</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0</targetReference>
         </defaultConnector>
@@ -46,7 +62,7 @@
         <name>CallTypeDecision_0</name>
         <label>CallTypeDecision</label>
         <locationX>1238</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici</targetReference>
         </defaultConnector>
@@ -71,7 +87,7 @@
         <name>CallTypeDecision_0_0</name>
         <label>CallTypeDecision</label>
         <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafica_VAS_Screen_0</targetReference>
         </defaultConnector>
@@ -96,7 +112,7 @@
         <name>CategoriaDecision</name>
         <label>CategoriaDecision</label>
         <locationX>1502</locationX>
-        <locationY>518</locationY>
+        <locationY>1190</locationY>
         <defaultConnector>
             <targetReference>CallTypeDecision</targetReference>
         </defaultConnector>
@@ -121,7 +137,7 @@
         <name>CategoriaDecision_0</name>
         <label>CategoriaDecision</label>
         <locationX>644</locationX>
-        <locationY>518</locationY>
+        <locationY>1190</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -143,10 +159,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>checkIsIdrico</name>
+        <label>LoopCheckIdrico</label>
+        <locationX>781</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>LoopChilds</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>idIdricoTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopChilds.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignIdricoTrue</targetReference>
+            </connector>
+            <label>idIdricoTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>isIdrico</name>
         <label>isIdrico</label>
         <locationX>561</locationX>
-        <locationY>278</locationY>
+        <locationY>950</locationY>
         <defaultConnector>
             <targetReference>VasDecision</targetReference>
         </defaultConnector>
@@ -155,10 +196,10 @@
             <name>Idrico</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getChild_0.CommodityFormula__c</leftValueReference>
+                <leftValueReference>checkIdrico</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Acqua</stringValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -171,7 +212,7 @@
         <name>VasDecision</name>
         <label>VasDecision</label>
         <locationX>1073</locationX>
-        <locationY>398</locationY>
+        <locationY>1070</locationY>
         <defaultConnector>
             <targetReference>CategoriaDecision</targetReference>
         </defaultConnector>
@@ -192,8 +233,23 @@
             <label>isVAS</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <interviewLabel>HDT Script - Anagrafica {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT Script - Anagrafica</label>
+    <loops>
+        <name>LoopChilds</name>
+        <label>LoopChilds</label>
+        <locationX>561</locationX>
+        <locationY>278</locationY>
+        <collectionReference>getFigli</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>checkIsIdrico</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>getChild_0</targetReference>
+        </noMoreValuesConnector>
+    </loops>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -217,7 +273,7 @@
         <name>getChild_0</name>
         <label>getChild</label>
         <locationX>561</locationX>
-        <locationY>158</locationY>
+        <locationY>830</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>isIdrico</targetReference>
@@ -234,11 +290,32 @@
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getFigli</name>
+        <label>getFigli</label>
+        <locationX>561</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>LoopChilds</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>OrderData.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Anagrafica_Servizio_Idrico</name>
         <label>Anagrafica_Servizio_Idrico</label>
         <locationX>50</locationX>
-        <locationY>398</locationY>
+        <locationY>1070</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -294,7 +371,7 @@
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -360,7 +437,7 @@
         <name>Dati_Anagrafica_VAS_Screen_0_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>314</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -426,7 +503,7 @@
         <name>Dati_Anagrafici</name>
         <label>Dati Anagrafici</label>
         <locationX>1370</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -583,7 +660,7 @@
         <name>Dati_Anagrafici_0</name>
         <label>Dati Anagrafici</label>
         <locationX>1106</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -743,7 +820,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1898</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1024,7 +1101,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1634</locationX>
-        <locationY>758</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1334,7 +1411,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>1310</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1464,7 +1541,7 @@
         <locationX>435</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getChild_0</targetReference>
+            <targetReference>getFigli</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -1493,6 +1570,16 @@
         <isOutput>false</isOutput>
         <value>
             <stringValue>Inbound</stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>checkIdrico</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>
