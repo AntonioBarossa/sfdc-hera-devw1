@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VariazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Variazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -10352,7 +10353,7 @@
     <picklistValues>
         <picklist>RequestSource__c</picklist>
         <values>
-            <fullName>D%27ufficio</fullName>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
         <values>

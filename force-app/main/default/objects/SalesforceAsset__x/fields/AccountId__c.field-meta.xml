@@ -8,8 +8,9 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>AccountId</label>
-    <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <length>18</length>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
+    <relationshipLabel>Assets Salesforce</relationshipLabel>
+    <relationshipName>AssetsSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>
