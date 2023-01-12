@@ -80,7 +80,8 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             if(String.isNotBlank(processType) && 
             (processType.equalsIgnoreCase('Richiesta Domiciliazione')
             || processType.equalsIgnoreCase('Variazione Domiciliazione')
-            || processType.equalsIgnoreCase('Rimborso')))
+            || processType.equalsIgnoreCase('Rimborso')
+            || processType.equalsIgnoreCase('Attivazione Click&Pay')))
             {
                 mrrList = addIbanCountry(mrrList); 
             }
