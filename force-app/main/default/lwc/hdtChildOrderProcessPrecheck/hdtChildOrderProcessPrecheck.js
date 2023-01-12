@@ -385,7 +385,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.incompatibilityfound(this.selectedProcessObject, data);
                 this.loaded = true;
             }else{
-                this.infoDisabled = true;
+                //this.infoDisabled = true;
                 this.loaded = true;
                 this.dispatchEvent(new CustomEvent('refreshorderchild'));
             }
@@ -534,7 +534,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.value = this.selectedProcessObject.ProcessName__c;
             // this.checkCompatibilityProcess();
             this.pickValue = this.value;
-            this.infoDisabled = true;
+            //this.infoDisabled = true;
             this.startCheckContendibilita();
         }
 
