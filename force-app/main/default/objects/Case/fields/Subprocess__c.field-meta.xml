@@ -44,11 +44,6 @@
                 <label>Adesione Fondo Fughe</label>
             </value>
             <value>
-                <fullName>Agevolazione</fullName>
-                <default>false</default>
-                <label>Agevolazione</label>
-            </value>
-            <value>
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
                 <label>Aggiunta Attacco</label>
@@ -348,6 +343,11 @@
                 <default>false</default>
                 <label>Verifica interna sul posto gratuita</label>
             </value>
+            <value>
+                <fullName>Verifica Rottura Impianto Cliente</fullName>
+                <default>false</default>
+                <label>Verifica Rottura Impianto Cliente</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
@@ -473,7 +473,27 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Agevolazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
             <valueName>Rid. Agev. Dopo Accertamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Adesione Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Rinuncia Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica Interna</controllingFieldValue>
@@ -500,6 +520,10 @@
             <valueName>Verifica interna sul posto gratuita</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica Rottura Impianto Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Antincendio</valueName>
         </valueSettings>
@@ -518,22 +542,6 @@
         <valueSettings>
             <controllingFieldValue>Istruttoria</controllingFieldValue>
             <valueName>Parere Preventivo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Modifica Fognatura e Depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Adesione Fondo Fughe</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
-            <valueName>Rinuncia Fondo Fughe</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Interventi con Verifica</controllingFieldValue>

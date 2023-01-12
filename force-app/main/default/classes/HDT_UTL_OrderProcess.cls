@@ -375,7 +375,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked && !myOrder.Commodity__c.containsIgnoreCase('Acqua')? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
                     newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
                     if('Documentazione Validata'== newPhase && STRING.isNotBlank(myOrder.ApprovalType__c) && !'3 - Nessuna'.equalsIgnoreCase(myOrder.ApprovalType__c)){
-                        newPhase = 'In Attesa Approvazione';//Approvazione Agevolazione
+                        newPhase = '1 - Avviso di servizio'.equalsIgnoreCase(myOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'In Lavorazione';//Approvazione Agevolazione
                     }
 
                     childOrdersDocValid.add(new Order(
@@ -832,6 +832,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             Id = childOrder.Id,
                                 Phase__c = newPhase
                         );
+                        if('completata'.equalsIgnoreCase(newPhase)){
+                            orderToUpdate.Status='Activated';
+                        }
                         childOrdersToUpdate.add(orderToUpdate);
                     }
                 }
@@ -1486,8 +1489,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String oldPhase = newOrder.Phase__c;
             Order oldOrder = (Order) oldOrderMap.get(newOrder.Id);
             DateTime nowDateTime = DateTime.now();
+            /**@frpanico 2022-12-13 Transitorio: Ci sono delle casistiche in cui
+             * Arriva "Annullato" prima del "Caricamento Siebel OK"
+             * In questi casi non scatta il secondo giro di update a causa dell'istruzione 
+             * "!(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))"
+             * Dunque per coprire queste casistiche sono state aggiunte le istruzioni
+             * "negativeOutcomes.contains(newOrder.get('SiebelStatus__c'))"
+             * "positiveOutcomes.contains(newOrder.get('SiebelStatus__c'))"
+             */
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
-                && (oldOrder.SiebelStatus__c == null || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))))
+                && (oldOrder.SiebelStatus__c == null 
+                    || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c'))) 
+                    || negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
+                    || positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
+                    )
+                )
             {
                 String newPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Completata'

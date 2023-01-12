@@ -1433,6 +1433,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         Set<String> argSet = new Set<String>{'Richiesta di ricalcolo fuga acqua', 'Rimborso retroattivo importo fognatura e depurazione'};
         String argument = getFieldValue(fields, 'BillingErrorArgument__c');
+        String refundStartDate = getFieldValue(fields, 'RefundStartDate__c');
         String customerSelfReading = getFieldValue(fields, 'CustomerSelfReading__c');
         String readingDate = getFieldValue(fields, 'ReadingDate__c');
         String note = getFieldValue(fields, 'Note__c');
@@ -1446,6 +1447,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             if(attachedDocument.size() == 0){
                 return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato.'));
             }
+        }
+
+        if ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) && 'Rimborso retroattivo importo fognatura e depurazione'.equalsIgnoreCase(argument) && String.isBlank(refundStartDate)) {
+            return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per l\'argomento selezionato occorre valorizzare la Data Inizio Rimborso.'));
         }
 
         return result;

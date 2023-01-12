@@ -86,7 +86,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             if (context == 'EC' || context == 'GC') {
                 HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
             }
-            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
+            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context,formParams);
 
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());

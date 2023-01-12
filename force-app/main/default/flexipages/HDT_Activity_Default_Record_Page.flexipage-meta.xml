@@ -455,10 +455,16 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Comunicazioni_Distributore</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Commodity__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Acqua</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1000,6 +1006,23 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Account__c</fieldItem>
                 <identifier>RecordAccount__cField2</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Sale__c</fieldItem>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Caricamento Manuale Siebel</rightValue>
+                    </criteria>
+                </visibilityRule>
+                <identifier>RecordSale__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>

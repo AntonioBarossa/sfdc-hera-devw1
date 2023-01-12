@@ -3,8 +3,8 @@
     <actionCalls>
         <name>redirectToCase</name>
         <label>redirectToCase</label>
-        <locationX>297</locationX>
-        <locationY>2750</locationY>
+        <locationX>253</locationX>
+        <locationY>2990</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -20,8 +20,8 @@
     <assignments>
         <name>assignAttachments</name>
         <label>assignAttachments</label>
-        <locationX>517</locationX>
-        <locationY>2294</locationY>
+        <locationX>473</locationX>
+        <locationY>2534</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.AdditionalAttachments__c</assignToReference>
             <operator>Assign</operator>
@@ -41,15 +41,22 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assignCommodity</name>
-        <label>assignCommodity</label>
+        <name>assignCommodityAccount</name>
+        <label>assignCommodityAccount</label>
         <locationX>176</locationX>
-        <locationY>278</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.Commodity__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getFakeAccount.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -59,8 +66,8 @@
     <assignments>
         <name>assignFields_0</name>
         <label>assignFields</label>
-        <locationX>627</locationX>
-        <locationY>998</locationY>
+        <locationX>583</locationX>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>getAfterAddress.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -131,8 +138,8 @@
     <assignments>
         <name>assignParamsAttachments_0</name>
         <label>assignParamsAttachments</label>
-        <locationX>517</locationX>
-        <locationY>2054</locationY>
+        <locationX>473</locationX>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
@@ -161,8 +168,8 @@
     <assignments>
         <name>assignPhase</name>
         <label>assignPhase</label>
-        <locationX>517</locationX>
-        <locationY>2414</locationY>
+        <locationX>473</locationX>
+        <locationY>2654</locationY>
         <assignmentItems>
             <assignToReference>getPreAttachments.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -184,8 +191,8 @@
     <decisions>
         <name>isChecked_0</name>
         <label>isChecked</label>
-        <locationX>539</locationX>
-        <locationY>878</locationY>
+        <locationX>495</locationX>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>assignFields_0</targetReference>
         </defaultConnector>
@@ -209,8 +216,8 @@
     <decisions>
         <name>operationButton_0</name>
         <label>operationButton</label>
-        <locationX>297</locationX>
-        <locationY>1814</locationY>
+        <locationX>253</locationX>
+        <locationY>2054</locationY>
         <defaultConnector>
             <targetReference>getPreAttachments</targetReference>
         </defaultConnector>
@@ -226,6 +233,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>
@@ -250,7 +258,7 @@
         <name>operationButton_0_0_0</name>
         <label>operationButton</label>
         <locationX>176</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>getAfterAddress</targetReference>
         </defaultConnector>
@@ -287,7 +295,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>subFlowAnnullamento_0</targetReference>
             </connector>
             <label>Annullamento</label>
@@ -296,10 +303,9 @@
     <decisions>
         <name>tariManaged</name>
         <label>tariManaged</label>
-        <locationX>539</locationX>
-        <locationY>1574</locationY>
+        <locationX>495</locationX>
+        <locationY>1814</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>subFlowAnnullamento_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
@@ -344,8 +350,8 @@
     <recordLookups>
         <name>get_input_case_aggiornato</name>
         <label>get_input_case_aggiornato</label>
-        <locationX>539</locationX>
-        <locationY>1334</locationY>
+        <locationX>495</locationX>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>checkTariManaged</targetReference>
@@ -365,8 +371,8 @@
     <recordLookups>
         <name>getAfterAddress</name>
         <label>getAfterAddress</label>
-        <locationX>539</locationX>
-        <locationY>758</locationY>
+        <locationX>495</locationX>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>isChecked_0</targetReference>
@@ -384,13 +390,34 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getFakeAccount</name>
+        <label>getFakeAccount</label>
+        <locationX>176</locationX>
+        <locationY>398</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignCommodityAccount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LastName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BP MODELLO</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getInputCase</name>
         <label>getInputCase</label>
         <locationX>176</locationX>
-        <locationY>158</locationY>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>assignCommodity</targetReference>
+            <targetReference>getFakeAccount</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -407,8 +434,8 @@
     <recordLookups>
         <name>getPreAttachments</name>
         <label>getPreAttachments</label>
-        <locationX>517</locationX>
-        <locationY>1934</locationY>
+        <locationX>473</locationX>
+        <locationY>2174</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignParamsAttachments_0</targetReference>
@@ -429,7 +456,7 @@
         <name>updateCommodity</name>
         <label>updateCommodity</label>
         <locationX>176</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <connector>
             <targetReference>screenIndirizzo_0</targetReference>
         </connector>
@@ -438,8 +465,8 @@
     <recordUpdates>
         <name>updateFinishAddress</name>
         <label>updateFinishAddress</label>
-        <locationX>627</locationX>
-        <locationY>1118</locationY>
+        <locationX>583</locationX>
+        <locationY>1358</locationY>
         <connector>
             <targetReference>get_input_case_aggiornato</targetReference>
         </connector>
@@ -448,18 +475,37 @@
     <recordUpdates>
         <name>updatePostAttachment</name>
         <label>updatePostAttachment</label>
-        <locationX>517</locationX>
-        <locationY>2534</locationY>
+        <locationX>473</locationX>
+        <locationY>2774</locationY>
         <connector>
             <targetReference>redirectToCase</targetReference>
         </connector>
         <inputReference>getPreAttachments</inputReference>
     </recordUpdates>
     <screens>
+        <name>Advice</name>
+        <label>Advice</label>
+        <locationX>176</locationX>
+        <locationY>158</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>getInputCase</targetReference>
+        </connector>
+        <fields>
+            <name>AdviceText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per un&apos;esperienza di navigazione migliore, consigliamo di ingrandire questa finestra.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>ScreenFieldsForm</name>
         <label>ScreenFieldsForm</label>
-        <locationX>297</locationX>
-        <locationY>1694</locationY>
+        <locationX>253</locationX>
+        <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -563,8 +609,8 @@
     <screens>
         <name>screenGestioneAllegati</name>
         <label>Gestione allegati</label>
-        <locationX>517</locationX>
-        <locationY>2174</locationY>
+        <locationX>473</locationX>
+        <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -660,7 +706,7 @@
         <name>screenIndirizzo_0</name>
         <label>screenIndirizzo</label>
         <locationX>176</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -804,15 +850,15 @@
         <locationX>50</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>getInputCase</targetReference>
+            <targetReference>Advice</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>539</locationX>
-        <locationY>1454</locationY>
+        <locationX>495</locationX>
+        <locationY>1694</locationY>
         <connector>
             <targetReference>tariManaged</targetReference>
         </connector>
@@ -840,8 +886,8 @@
     <subflows>
         <name>subFlowAnnullamento_0</name>
         <label>subFlowAnnullamento</label>
-        <locationX>77</locationX>
-        <locationY>1934</locationY>
+        <locationX>176</locationX>
+        <locationY>3422</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

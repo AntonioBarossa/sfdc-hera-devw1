@@ -138,6 +138,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>subprocess</name>
+            <value>
+                <elementReference>Get_Input_Case_0.Subprocess__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>supplyType</name>
             <value>
                 <elementReference>Get_Input_Case_0.SupplyType__c</elementReference>
@@ -1729,26 +1735,12 @@
         <defaultConnectorLabel>Si</defaultConnectorLabel>
         <rules>
             <name>NotNeeded</name>
-            <conditionLogic>1 OR (2 AND 3)</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <leftValueReference>Get_Input_Case.CompanyOwner__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Istruttoria</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Nuovo Impianto</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case.Commodity__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Acqua</stringValue>
+                    <stringValue>MMS</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2502,7 +2494,7 @@ TEXT({!Get_Input_Case.Type}),
     <formulas>
         <name>LabelNextFormula</name>
         <dataType>String</dataType>
-        <expression>IF(TEXT({!Get_Input_Case.Type}) = &apos;Istruttoria&apos;,&apos;Conferma Pratica&apos;,&apos;Avanti&apos;)</expression>
+        <expression>IF(TEXT({!Get_Input_Case.CompanyOwner__c}) = &apos;MMS&apos;,&apos;Conferma Pratica&apos;,&apos;Avanti&apos;)</expression>
     </formulas>
     <formulas>
         <name>NuovoImpAggAttCommodity</name>
@@ -4034,7 +4026,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <scale>2</scale>
         <value>
-            <numberValue>25.2</numberValue>
+            <numberValue>25.88</numberValue>
         </value>
     </variables>
     <variables>
@@ -4045,7 +4037,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <scale>2</scale>
         <value>
-            <numberValue>56.38</numberValue>
+            <numberValue>57.85</numberValue>
         </value>
     </variables>
     <variables>
@@ -4056,7 +4048,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <isOutput>false</isOutput>
         <scale>2</scale>
         <value>
-            <numberValue>71.32</numberValue>
+            <numberValue>73.17</numberValue>
         </value>
     </variables>
     <variables>

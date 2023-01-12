@@ -47,6 +47,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleOtpSign(inputs,formParams);
                 }when 'handleWasteProcessCode'{
                     return handleWasteProcessCode(inputs,formParams);
+                }when 'calculateCommodityArcZeroTwo'{
+                    return calculateCommodityArcZeroTwo(inputs, formParams);
                 }
                 when else {
                     return '';
@@ -77,13 +79,14 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             'DOM_Componenti residenti'=>'CM022',
             'Dati catastali'=>'CM030',
             'Variazione Indirizzo Fornitura'=>'CM023',
+            'Variazione indirizzo di fornitura'=>'CM023',
             'Domiciliato in nucleo residente'=>'CM021'
             };
         if('Order'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Order', 'ProcessType__c', 0, inputs, formParams);
         }else if('Case'.equalsIgnoreCase(context)){
             process = HDT_UTL_DocumentalManagement.getValue('Case', 'Type', 0, inputs, formParams);
-            if(!'Cessazione'.equalsIgnoreCase(process)){
+            if(!'Cessazione'.equalsIgnoreCase(process) && !'Variazione indirizzo di fornitura'.equalsIgnoreCase(process)){
                 process = HDT_UTL_DocumentalManagement.getValue('Case', 'Subprocess__c', 0, inputs, formParams);
             }
         }
@@ -1469,6 +1472,29 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         }
         String formattedDate = dt.format('dd/MM/y');
         return formattedDate;
+    }
+
+    private static String calculateCommodityArcZeroTwo(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
+    {
+        String context = (String) formParams.get('Contesto');
+        String result = '';
+        String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'CommodityFormula__c', 0, inputs, formParams);
+        commodity = String.isBlank(commodity) ? HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams) : commodity;
+        switch on commodity{
+            when 'Energia Elettrica'    
+            {
+                result = 'ENE';
+            }
+            when 'Gas'
+            {
+                result = 'GAS';
+            }
+            when else
+            {
+                result = '';
+            }
+        }
+        return result;
     }
     
 }

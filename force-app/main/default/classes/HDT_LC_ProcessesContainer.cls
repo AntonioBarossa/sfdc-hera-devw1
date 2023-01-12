@@ -77,17 +77,15 @@ public inherited sharing class HDT_LC_ProcessesContainer {
 
         Map<String,Object> mapResponse = new Map<String,Object>();
 
-        orderSrv.checkReadAccess('AccountId,Sale__c,ParentOrder__c,Status,Phase__c');
+        orderSrv.checkReadAccess('AccountId,Sale__c,ParentOrder__c,Status,Phase__c,WasteCommodityType__c');
         Order order = orderQr.getRecordById(orderId);
-
-
-
         String orderParentId = order.ParentOrder__c == null ? order.Id : order.ParentOrder__c;
         String parentPhase = order.ParentOrder__c == null ? order.Phase__c : order.ParentOrder__r.Phase__c;
         String status = order.ParentOrder__c == null ? order.Status : order.ParentOrder__r.Status;
         String accountId = order.AccountId;
         String saleId = order.Sale__c;
         String macroProcessType = order.ServicePoint__c != null && order.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente') ? 'handleProcessTari' : 'handleProcess';
+        macroProcessType = String.isNotBlank(order.WasteCommodityType__c) && order.WasteCommodityType__c.equalsIgnoreCase('Ambiente')?'handleProcessTari' : macroProcessType;
         if(status == 'Annullato' || (parentPhase == 'Documentazione da validare')){
             check = false;
         }

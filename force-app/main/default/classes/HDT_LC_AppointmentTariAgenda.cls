@@ -93,12 +93,14 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
 
     public virtual class HDT_WRP_AppointmentReqConfirm extends HDT_WS_Request{
         String purchaseOrderNumber;
+        String customerAccountNumber;
         String streetCoding;
         String street;
         String housenumber;
         String typeInt;
         String indicator;
         String numberOfLines;
+        String city;
         String startDate;
         String endDate;
         
@@ -110,9 +112,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.housenumber = wrap.housenumber;
             this.typeInt = wrap.typeInt;
             this.indicator = wrap.indicator;
+            this.city = wrap.city;
             this.numberOfLines = wrap.numberOfLines;
-            this.startDate = wrap.startDate.format('yyyy-MM-dd hh:mm:ss');
-            this.endDate = wrap.endDate.format('yyyy-MM-dd hh:mm:ss');
+            this.startDate = wrap.startDate.format('yyyyMMddhhmmss');
+            this.endDate = wrap.endDate.format('yyyyMMddhhmmss');
         }
     }
 
@@ -158,9 +161,10 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
     @AuraEnabled
     public static HDT_WS_AppointmentConfirmResponse handleConfirm(Case theCase, HDT_WRP_DataApp wrap) {
         HDT_WRP_AppointmentReqConfirm req = new HDT_WRP_AppointmentReqConfirm(wrap);
-        system.debug(json.serialize(req));
+        req.customerAccountNumber = theCase.AccountCode__c;
+        //system.debug(json.serialize(req));
         HDT_WS_AppointmentConfirmResponse res = (HDT_WS_AppointmentConfirmResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_CONFIRM,'POST', req, HDT_WS_AppointmentConfirmResponse.class);
-        
+        //system.debug(json.serialize(res));
         if(Test.isRunningTest()){
             res.status = 'success';
         }
@@ -170,11 +174,12 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             theCase.EndAppointment__c = wrap.endDate;
             theCase.JobCenterCode__c = res.data.workCenterId;
             theCase.NoticeId__c = res.data.noticeNumber;
-            theCase.Phase__c = 'Da Inviare';
-            theCase.Outcome__c ='Recived_Slots';
+            //theCase.Phase__c = 'Da Inviare';
+            theCase.Phase__c = 'Inviata a SAP';
+            //theCase.Outcome__c ='Recived_Slots';
 
-            if(!theCase.WithdrawalFee__c){
-                if(theCase.ServicePoint__c == null){    throw new HDT_UTL_HeraException('ServicePointId Null when creating MasterDetail');     }
+            if(!theCase.WithdrawalFee__c && theCase.ServicePoint__c != null){
+                //if(theCase.ServicePoint__c == null){    throw new HDT_UTL_HeraException('ServicePointId Null when creating MasterDetail');     }
                 Date dataRitiro = Date.newinstance(theCase.CreatedDate.year(), theCase.CreatedDate.month(), theCase.CreatedDate.day());
                 FreeWithdraw__c ritiro = new FreeWithdraw__c();
                 ritiro.ServicePoint__c = theCase.ServicePoint__c;

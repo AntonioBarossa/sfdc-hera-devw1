@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 20-10-2022
+ * @last modified on  : 10-01-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
@@ -24,7 +24,7 @@ global inherited sharing class HDT_UTL_PhaseTransSobjectCreation implements wrts
                 for(SObject s : senders){
                     if(s instanceof Order){
                         Order ord = (Order) s;
-                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Order__c = ord.Id, AccountId = ord.AccountId );
+                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Cluster__c = 'Segnalazioni', Order__c = ord.Id, AccountId = ord.AccountId );
                         sObjectsToInsert.add(caso);
                     }
                 }

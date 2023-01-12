@@ -39,7 +39,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                     caseNew.TecnicalPhase__c = null;
                 }
 
-                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+                if(caseNew.SendDate__c == null && String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
                     DateTime dt = caseNew.CreatedDate;
                     caseNew.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
                 }
@@ -86,7 +86,6 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             }
         }
         HDT_UTL_CaseProcess.checkSatisfationIndex(trigger.newMap, trigger.oldMap);
-
         HDT_UTL_CaseProcess.casePhaseManagementAfterUpdate(trigger.new,trigger.old);  
         HDT_UTL_CaseProcess.caseBpcaSieManagement(Trigger.newMap, Trigger.oldMap);
         //***INIZIO SVILUPPO CAMPAGNE */
@@ -100,6 +99,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_PrClickDoubleTransaction.enqueueDoublePhaseTransactions();
         HDT_UTL_PrClickEndSubscriptionBulk.updateCorrelatedObjects();
         HDT_UTL_Scarti.closeActivityOnCompleted(Trigger.new, Trigger.oldMap);
+        HDT_UTL_CaseProcess.handleAfterUpdate(Trigger.new, Trigger.oldMap);
         
     }
 
@@ -107,7 +107,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
 
         for(Case caseNew : (List<Case>) Trigger.new){
-            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP') && caseNew.Cluster__c == 'Reclami'){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
                 Case caseToUpdate = new Case(Id = caseNew.Id);
                 DateTime dt = caseNew.CreatedDate;
                 caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());

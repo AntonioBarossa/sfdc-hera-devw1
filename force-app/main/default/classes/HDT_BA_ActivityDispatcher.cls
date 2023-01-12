@@ -29,7 +29,9 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
         'Process__c' => '(Case__r.Type IN (###) OR Order__r.Process__c IN (###))',
         'SubProcess__c' => '(Case__r.SubProcess__c IN (###) OR Order__r.Subprocess__c IN (###))',
         'Commodity__c' => '(Case__r.Commodity__c IN (###) OR Case__r.CommodityFormula__c IN (###) OR Order__r.CommodityFormula__c IN (###))',
-        'ATO__c' => '(Case__r.AtoFormula__c IN (###) OR Order__r.ATO__c IN (###))'
+        'ATO__c' => '(Case__r.AtoFormula__c IN (###) OR Order__r.ATO__c IN (###))',
+        'RequestSource__c' => '(Case__r.RequestSource__c IN (###) OR Order__r.RequestSource__c IN (###))',
+        'SupplyCity__c' => '(Case__r.SupplyCity__c IN (###) OR Order__r.SupplyCity__c IN (###))'
     };
 
     public List<AssignmentRule__c> start(Database.BatchableContext bc) {
@@ -66,7 +68,10 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 Type__c,
                 UserCreatorChannel__c,
                 UserCreatorGroup__c,
-                Vendor__c
+                Vendor__c,
+                RequestSource__c,
+                SupplyCity__c,
+                ATO__c
             FROM AssignmentRule__c
             WHERE
                 Deactivated__c = false AND

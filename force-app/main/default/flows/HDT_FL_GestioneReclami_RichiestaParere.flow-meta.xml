@@ -18,9 +18,218 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>currentCase</name>
             <value>
                 <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_2</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>1106</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_2</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_3</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>1370</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_3</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_4</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>1634</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_4</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_5</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>2866</locationX>
+        <locationY>638</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_5</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case_0</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_6</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>3130</locationX>
+        <locationY>638</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_6</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case_0</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -283,7 +492,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Case_Layout</targetReference>
+            <targetReference>Calculate_Expiration_Date_6</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -939,7 +1148,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AssegnaCollection</targetReference>
+            <targetReference>Calculate_Expiration_Date_4</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1007,6 +1216,86 @@
         </assignmentItems>
         <connector>
             <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_2</name>
+        <label>AssignExpirationDate</label>
+        <locationX>1106</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_2.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_3</name>
+        <label>AssignExpirationDate</label>
+        <locationX>1370</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_3.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_4</name>
+        <label>AssignExpirationDate</label>
+        <locationX>1634</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_4.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_5</name>
+        <label>AssignExpirationDate</label>
+        <locationX>2866</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_5.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_6</name>
+        <label>AssignExpirationDate</label>
+        <locationX>3130</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_6.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1175,7 +1464,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AssegnaCollection</targetReference>
+            <targetReference>Calculate_Expiration_Date_2</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1235,7 +1524,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Case_Layout</targetReference>
+            <targetReference>Calculate_Expiration_Date_5</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1358,7 +1647,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AssegnaCollection</targetReference>
+            <targetReference>Calculate_Expiration_Date_3</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1898,7 +2187,7 @@
                 <leftValueReference>GetParentCase.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>GetParentCase.Type</elementReference>
+                    <stringValue>Errore di Fatturazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2175,6 +2464,12 @@
             <field>Case__c</field>
             <value>
                 <elementReference>Get_Parere_Aggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DueDate__c</field>
+            <value>
+                <elementReference>GetParentCase.EndDate__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>

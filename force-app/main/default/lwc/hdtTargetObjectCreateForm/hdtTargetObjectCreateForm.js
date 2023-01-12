@@ -7,6 +7,7 @@ import { getRecord, getRecordNotifyChange } from 'lightning/uiRecordApi';
 import getCustomSettings from '@salesforce/apex/HDT_LC_ServicePointCustomSettings.getCustomSettings';
 import getServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getServicePoint';
 import createServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoint2';
+import canHandleTari from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.canHandleTari';
 import createServicePoinString from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoinString';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
@@ -1733,7 +1734,12 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
                             this.save();
                         }
-                    });
+                    }).catch(error => 
+                        {
+                            this.loading = false;
+                            this.alert('Errore', 'Distributore non calcolato. Verificare di aver inserito i dati correttamente e in caso contattare l\'amministratore di sistema', 'error');
+                        }
+                    );
                 }
                 else {
                     this.loading = false;
@@ -1772,6 +1778,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     console.log('XXX Save: validForm -> '+this.validForm);
                     if (this.validForm) {
                         this.loading = true;
+                        this.checkForTari();
                         if (this.selectedservicepoint != undefined) {
                             console.log('XXX Save: UpdateServicePoint ');
                             this.updateServicePoint();
@@ -1836,6 +1843,30 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             title += this.recordtype.label;
         }
         return title;
+    }
+
+    checkForTari() {
+        canHandleTari({ comune: this.theRecord['Comune'], commodity: this.commodity }).then(data => {
+            
+            if(data){
+                const toastSuccessMessage = new ShowToastEvent({
+                    title: '',
+                    message: 'Per questo comune è disponibile il servizio TARI',
+                    variant: 'Alert'
+                });
+                this.dispatchEvent(toastSuccessMessage);
+            }
+
+        }).catch(error => {
+            this.loading = false;
+
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
     }
 
     /**
@@ -1923,6 +1954,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     getDistributorSelected(event) {
 
         this.retrievedDistributor.forEach(element => {
+            if(element.Account__c === undefined || element.Account__r.Name === undefined) return;
             if (event.detail.Distributor === element.Account__r.Name) {
                 this.recordDistributorPointCode = element.Account__r.Id;
                 this.selectedDistributor = element;

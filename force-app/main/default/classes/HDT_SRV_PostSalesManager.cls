@@ -101,6 +101,10 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             {
                 psmUtl.handleCreazioneActivityVariazioni(sender);
             }
+            when 'handleChiusuraActivitiesPending'
+            {
+                psmUtl.handleChiusuraActivitiesPending(sender);
+            }
         }
 
         return null;

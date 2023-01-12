@@ -15,6 +15,9 @@
             <layoutItems>
                 <field>Language</field>
             </layoutItems>
+            <layoutItems>
+                <field>WasterLink__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -160,7 +160,16 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Amministrazione Sottotipologia Uso</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <searchResultsAdditionalFields>CategoriaTariffa__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>CodiceCategoriaTariffa__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>DataInizioValidita__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>DataFineValidita__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Societa__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>TipologiaUso__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>SottotipologiaUso__c</searchResultsAdditionalFields>
+        <searchResultsAdditionalFields>Attivo__c</searchResultsAdditionalFields>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

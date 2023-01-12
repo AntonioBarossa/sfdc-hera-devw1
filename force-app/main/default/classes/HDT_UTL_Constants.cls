@@ -193,6 +193,13 @@ public with sharing class HDT_UTL_Constants {
     public final String CASE_RECORDTYPEID_POST_SALES_VAS =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS).getRecordTypeId();
 
+    //Case RecordType Consumo Anomalo Idrico
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_CONSUMO_ANOMALO_IDRICO='HDT_RT_ConsumoAnomaloIdrico';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO=
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_CONSUMO_ANOMALO_IDRICO).getRecordTypeId();
+
     // Order RecordType Riattivazione Non Morose
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE = 'HDT_RT_RiattivazioniNonMorose';

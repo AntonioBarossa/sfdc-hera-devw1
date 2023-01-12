@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>"Periodo Fatturato ""Da"""</label>
+    <label>&quot;Periodo Fatturato &quot;&quot;Da&quot;&quot;&quot;</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

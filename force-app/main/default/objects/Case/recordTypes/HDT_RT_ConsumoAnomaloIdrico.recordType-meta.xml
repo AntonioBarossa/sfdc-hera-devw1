@@ -9858,7 +9858,7 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-		<values>
+        <values>
             <fullName>Allegati ricevuti</fullName>
             <default>false</default>
         </values>
@@ -9927,6 +9927,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>in attesa processo doc massivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>KO Definitivo</fullName>
             <default>false</default>
         </values>
@@ -9964,6 +9968,26 @@
         </values>
         <values>
             <fullName>Mancata risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazionee EngageOne KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esito EngageOne</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>
     </picklistValues>

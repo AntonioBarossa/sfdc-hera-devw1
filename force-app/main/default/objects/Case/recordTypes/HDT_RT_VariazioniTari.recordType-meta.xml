@@ -3,6 +3,7 @@
     <fullName>HDT_RT_VariazioniTari</fullName>
     <active>true</active>
     <businessProcess>SupportProcessDefault</businessProcess>
+    <compactLayoutAssignment>General_Compact_Layout</compactLayoutAssignment>
     <label>Variazioni Ambiente</label>
     <picklistValues>
         <picklist>AccountClass__c</picklist>
@@ -9748,6 +9749,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullato per decorrenza dei termini</fullName>
+            <default>false</default>
+        </values>        
+        <values>
             <fullName>Bozza</fullName>
             <default>false</default>
         </values>
@@ -11935,10 +11940,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
-		<values>
-			<fullName>Agevolazione</fullName>
-			<default>false</default>
-		</values>
 		<values>
 			<fullName>Dati catastali</fullName>
 			<default>false</default>

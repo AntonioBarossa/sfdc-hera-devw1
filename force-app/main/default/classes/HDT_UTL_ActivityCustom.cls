@@ -273,27 +273,41 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordid);
             oldActivityToUpdate.validation__c = validazione;
             activityCustomSrv.updateRecord(oldActivityToUpdate);
+            List<Order> orderToUpd = new List<Order>();
             if(validazione == 'Si'){
                 // res = true;
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
-                 {
-                    ord.SignedDate__c = Date.today();
-                 }
                  //
                  //ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
-                     ord.Phase__c = 'Registrazione validata';
+                    ord.Phase__c = 'Registrazione validata';
+                    if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
+                    {
+                        ord.SignedDate__c = Date.today();
+                    }
+                    else
+                    {
+                        /* Per evitare eventuali ordini per cui manca la configurazione CC */
+                        List<Order> ol = [SELECT Id,SignedDate__c FROM Order WHERE ComfortCallDaysDue__c = null AND ParentOrder__c = :ord.id WITH SECURITY_ENFORCED];
+                        for(order o : ol)
+                        {
+                            o.SignedDate__c = Date.today();
+                            o.ConfirmCustomerContract__c = 'Comfort call';
+                            orderToUpd.add(o);
+                        }
+                    }   
                  }
                  else
                  {
                      ord.phase__c = 'Documentazione Gestita';
                      ord.status = 'Completed';
+                     ord.SignedDate__c = Date.today();
                  }
-                 orderSrv.updateRecord(ord);
+                 orderToUpd.add(ord);  
+                 HDT_UTL_DatabaseService.updateSObject(orderToUpd);
              }
              else{
                  // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
@@ -433,6 +447,37 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                     }
                 }
             }
+        }
+    }
+
+    public static void postSurvayWorkActivity(List<wrts_prcgvr__Activity__c> newActsList){
+        try{
+            Set<Id> newActsId = new Set<Id>();
+            Map<Id,String> objsId = new Map<Id,String>();
+            for (wrts_prcgvr__Activity__c newAct : newActsList){
+                newActsId.add(newAct.Id);
+                if (!'Lavorazione Reclamo Post Survey'.equalsIgnoreCase(newAct.Type__c)){
+                    continue;
+                }
+                Id recordId = newAct.Case__c != null ? newAct.Case__c : newAct.Order__c;
+                if (recordId == null) {
+                    continue;
+                }
+                objsId.put(recordId,newAct.Name);
+            }
+            if (objsId.isEmpty()){
+                return;
+            }
+            List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getOpenActivityByType('Lavorazione Reclamo Post Survey',objsId.keySet(),newActsId)){
+                Id recordId = act.Case__c != null ? act.Case__c : act.Order__c;
+                actToUpdate.add(new wrts_prcgvr__Activity__c(Id = act.Id, wrts_prcgvr__Status__c = 'Annullata', ClosingNote__c = 'Annullata per apertura attività più recente: ' + objsId.get(recordId)));
+            }
+            if (!actToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(actToUpdate);
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.ERROR, ex.getStackTraceString());
         }
     }
 

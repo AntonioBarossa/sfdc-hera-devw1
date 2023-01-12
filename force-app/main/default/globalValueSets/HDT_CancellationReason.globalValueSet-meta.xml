@@ -240,6 +240,11 @@
         <default>false</default>
         <label>Esito KO da SII</label>
     </customValue>
+    <customValue>
+        <fullName>Variazione non necessaria</fullName>
+        <default>false</default>
+        <label>Variazione non necessaria</label>
+    </customValue>
 	<customValue>
         <fullName>Mancata corrispondenza Anagrafe</fullName>
         <default>false</default>

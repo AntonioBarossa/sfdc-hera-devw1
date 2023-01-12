@@ -25,6 +25,7 @@ const OBJECT_FIELDS =[
     'InvoicingStreetName__c',
     'InvoicingCity__c',
     'InvoicingStreetCode__c',
+    "AccountCode__c",
     'TypeOperation__c'
 ];
 
@@ -109,8 +110,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
         this.showSpinner = true;
         let rows = this.template.querySelector('[data-id="dtAppointment"]').getSelectedRows();
         const wrap = this.createWrapper();
-        wrap.startDate=new Date(rows[0].startDate);
-        wrap.endDate=new Date(rows[0].endDate);
+        wrap.startDate=this.formatDateTime(rows[0].startDate);
+        wrap.endDate=this.formatDateTime(rows[0].endDate);
         handleConfirm({
             theCase : this.case,
             wrap : wrap
@@ -124,8 +125,10 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                 let data = result;
                 if(data.status.localeCompare('success') === 0){
                     this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
-                    this.case.Phase__c = 'Inviata a SAP';
-                    this.updateCase(this.case, true);
+                    //this.case.Phase__c = 'Inviata a SAP';
+                    //this.updateCase(this.case, true);
+                    this.refreshPage(true);
+                    this.showSpinner = false;
                 }else{ 
                     this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
                     this.showSpinner = false;
@@ -325,6 +328,11 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     addRecord(element){
         this.records = [...this.records,element];
+    }
+
+    formatDateTime(stringDateTime){
+        const match = stringDateTime?.match(/(\d+)-(\d+)-(\d+)\s+(\d+:\d+:\d+)/);
+        return new Date(`${match[3]}-${match[2]}-${match[1]}T${match[4]}+01:00`);//"2015-03-25T12:00:00Z"
     }
  
     formatData(dateToFormat){

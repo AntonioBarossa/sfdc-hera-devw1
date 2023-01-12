@@ -1197,9 +1197,19 @@
                 <label>HC_CVMBO_RESC_Reporting</label>
             </value>
             <value>
+                <fullName>HC_VENDITA_MM_Supporto_alla_Vendita</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto alla Vendita</label>
+            </value>
+            <value>
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Approvazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Approvazione</label>
             </value>
             <value>
                 <fullName>HCM_BACK_CON_Fatturazione</fullName>
@@ -1287,6 +1297,16 @@
                 <label>HCM_BACK_Verifiche</label>
             </value>
             <value>
+                <fullName>HCM_CON_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_CON_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_CON_Protocollo</fullName>
+                <default>false</default>
+                <label>HCM_CON_Protocollo</label>
+            </value>
+            <value>
                 <fullName>HCM_DISCO_ Appuntamenti</fullName>
                 <default>false</default>
                 <label>HCM_DISCO_ Appuntamenti</label>
@@ -1307,6 +1327,11 @@
                 <label>HCM_DISCO_Notifiche</label>
             </value>
             <value>
+                <fullName>HCM_DISCO_Preventivi</fullName>
+                <default>false</default>
+                <label>HCM_DISCO_Preventivi</label>
+            </value>
+            <value>
                 <fullName>HCM_RECLAMI</fullName>
                 <default>false</default>
                 <label>HCM_RECLAMI</label>
@@ -1322,9 +1347,29 @@
                 <label>HCM_SPORT_Escalation</label>
             </value>
             <value>
+                <fullName>HCM_TRG_Fatturazione</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Fatturazione</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Modifiche anagrafiche</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Modifiche anagrafiche</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Pagamenti</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Pagamenti</label>
+            </value>
+            <value>
                 <fullName>HCM_TRG_Reclami_scritti</fullName>
                 <default>false</default>
                 <label>HCM_TRG_Reclami_scritti</label>
+            </value>
+            <value>
+                <fullName>HCM_TRG_Variazioni</fullName>
+                <default>false</default>
+                <label>HCM_TRG_Variazioni</label>
             </value>
             <value>
                 <fullName>HS_DAFC_Tesoreria_Verifica comportamento banca</fullName>
@@ -1355,6 +1400,81 @@
                 <fullName>HS_DCSC_FI_Verifiche Fatturazione</fullName>
                 <default>false</default>
                 <label>HS_DCSC_FI_Verifiche Fatturazione</label>
+            </value>
+            <value>
+                <fullName>MMS-AMB</fullName>
+                <default>false</default>
+                <label>MMS-AMB</label>
+            </value>
+            <value>
+                <fullName>MMS-BACK</fullName>
+                <default>false</default>
+                <label>MMS-BACK</label>
+            </value>
+            <value>
+                <fullName>MMS-BACK CC</fullName>
+                <default>false</default>
+                <label>MMS-BACK CC</label>
+            </value>
+            <value>
+                <fullName>MMS-BACK-CC</fullName>
+                <default>false</default>
+                <label>MMS-BACK-CC</label>
+            </value>
+            <value>
+                <fullName>MMS-COORD-FRONT</fullName>
+                <default>false</default>
+                <label>MMS-COORD-FRONT</label>
+            </value>
+            <value>
+                <fullName>MMS-COORD-FRONT-CC</fullName>
+                <default>false</default>
+                <label>MMS-COORD-FRONT-CC</label>
+            </value>
+            <value>
+                <fullName>MMS-CRE</fullName>
+                <default>false</default>
+                <label>MMS-CRE</label>
+            </value>
+            <value>
+                <fullName>MMS-CRE CRM</fullName>
+                <default>false</default>
+                <label>MMS-CRE CRM</label>
+            </value>
+            <value>
+                <fullName>MMS-CRE LEG</fullName>
+                <default>false</default>
+                <label>MMS-CRE LEG</label>
+            </value>
+            <value>
+                <fullName>MMS-CV</fullName>
+                <default>false</default>
+                <label>MMS-CV</label>
+            </value>
+            <value>
+                <fullName>MMS-INC</fullName>
+                <default>false</default>
+                <label>MMS-INC</label>
+            </value>
+            <value>
+                <fullName>MMS-KNE</fullName>
+                <default>false</default>
+                <label>MMS-KNE</label>
+            </value>
+            <value>
+                <fullName>MMS-SPORT</fullName>
+                <default>false</default>
+                <label>MMS-SPORT</label>
+            </value>
+            <value>
+                <fullName>MMS-SPORT OUT</fullName>
+                <default>false</default>
+                <label>MMS-SPORT OUT</label>
+            </value>
+            <value>
+                <fullName>MMS-TES</fullName>
+                <default>false</default>
+                <label>MMS-TES</label>
             </value>
             <value>
                 <fullName>Supporto alla Vendita</fullName>

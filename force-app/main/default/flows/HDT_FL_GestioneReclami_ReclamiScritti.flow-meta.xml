@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>50</locationX>
-        <locationY>1370</locationY>
+        <locationX>248</locationX>
+        <locationY>1238</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -41,8 +41,8 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>50</locationX>
-        <locationY>1826</locationY>
+        <locationX>248</locationX>
+        <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -64,8 +64,8 @@
     <assignments>
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
-        <locationX>50</locationX>
-        <locationY>2282</locationY>
+        <locationX>248</locationX>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -108,8 +108,8 @@
     <assignments>
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
-        <locationX>314</locationX>
-        <locationY>2282</locationY>
+        <locationX>512</locationX>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -145,8 +145,8 @@
     <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>50</locationX>
-        <locationY>1490</locationY>
+        <locationX>248</locationX>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.EndDate__c</assignToReference>
             <operator>Assign</operator>
@@ -182,7 +182,7 @@
     <assignments>
         <name>assignProcessType</name>
         <label>assignProcessType</label>
-        <locationX>886</locationX>
+        <locationX>1898</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -192,13 +192,14 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Prima_Classificazione</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>assignProcessType_0</name>
         <label>assignProcessType</label>
-        <locationX>270</locationX>
+        <locationX>1056</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -214,7 +215,7 @@
     <assignments>
         <name>Copy_1_of_assignProcessType</name>
         <label>Copy 1 of assignProcessType</label>
-        <locationX>622</locationX>
+        <locationX>1634</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
@@ -224,14 +225,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Prima_Classificazione</targetReference>
         </connector>
     </assignments>
     <decisions>
         <name>Gestito</name>
         <label>Gestito?</label>
-        <locationX>270</locationX>
-        <locationY>518</locationY>
+        <locationX>1056</locationX>
+        <locationY>638</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -256,8 +258,8 @@
     <decisions>
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
-        <locationX>182</locationX>
-        <locationY>2162</locationY>
+        <locationX>380</locationX>
+        <locationY>2030</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -288,8 +290,8 @@
     <decisions>
         <name>Non_Energy</name>
         <label>Non Energy</label>
-        <locationX>182</locationX>
-        <locationY>1250</locationY>
+        <locationX>380</locationX>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
         </defaultConnector>
@@ -318,9 +320,67 @@
         </rules>
     </decisions>
     <decisions>
+        <name>ParentId_Valorizzato</name>
+        <label>ParentId Valorizzato?</label>
+        <locationX>380</locationX>
+        <locationY>2486</locationY>
+        <defaultConnectorLabel>Non Valorizzato</defaultConnectorLabel>
+        <rules>
+            <name>Valorizzato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ParentRecordId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Case_Padre</targetReference>
+            </connector>
+            <label>Valorizzato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Processo_Padre</name>
+        <label>Processo Padre</label>
+        <locationX>182</locationX>
+        <locationY>2726</locationY>
+        <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
+        <rules>
+            <name>Ricostruzione_Consumi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Padre.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Padre.Reason__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricalcolo consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case_Padre.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Collega_Case_Figlio</targetReference>
+            </connector>
+            <label>Ricostruzione Consumi</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ReclamoAcqua</name>
         <label>ReclamoAcqua?</label>
-        <locationX>754</locationX>
+        <locationX>1766</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>assignProcessType</targetReference>
@@ -345,7 +405,7 @@
     <decisions>
         <name>recordType_Check</name>
         <label>recordType Check</label>
-        <locationX>512</locationX>
+        <locationX>1411</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>ReclamoAcqua</targetReference>
@@ -370,20 +430,27 @@
     <decisions>
         <name>Rettifica_Doppia_Fatturazione</name>
         <label>Rettifica Doppia Fatturazione?</label>
-        <locationX>182</locationX>
-        <locationY>1706</locationY>
+        <locationX>380</locationX>
+        <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>Cerca_Case_reiterazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Si</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case_Aggiornato.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Rettifica Doppia Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case_Aggiornato.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di Rettifica di fatturazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -395,8 +462,8 @@
     <decisions>
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
-        <locationX>512</locationX>
-        <locationY>1010</locationY>
+        <locationX>743</locationX>
+        <locationY>878</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -444,6 +511,7 @@
         </rules>
     </decisions>
     <description>Flow per la prima classificazione del processo di Reclami Scritti/Richieste Info</description>
+    <environments>Default</environments>
     <formulas>
         <name>CaseVecchioScaduto</name>
         <dataType>Boolean</dataType>
@@ -478,8 +546,8 @@
     <recordLookups>
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
-        <locationX>182</locationX>
-        <locationY>2042</locationY>
+        <locationX>380</locationX>
+        <locationY>1910</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -525,10 +593,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_Padre</name>
+        <label>Get Case Padre</label>
+        <locationX>182</locationX>
+        <locationY>2606</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Processo_Padre</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
-        <locationX>182</locationX>
-        <locationY>1130</locationY>
+        <locationX>380</locationX>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Non_Energy</targetReference>
@@ -548,22 +637,91 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>50</locationX>
-        <locationY>2402</locationY>
+        <locationX>248</locationX>
+        <locationY>2270</locationY>
+        <connector>
+            <targetReference>ParentId_Valorizzato</targetReference>
+        </connector>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
-        <locationX>314</locationX>
-        <locationY>2402</locationY>
+        <locationX>512</locationX>
+        <locationY>2270</locationY>
+        <connector>
+            <targetReference>ParentId_Valorizzato</targetReference>
+        </connector>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Collega_Case_Figlio</name>
+        <label>Collega Case Figlio</label>
+        <locationX>50</locationX>
+        <locationY>2846</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ParentId</field>
+            <value>
+                <elementReference>ParentRecordId</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateCasePreClassification</name>
+        <label>updateCasePreClassification</label>
+        <locationX>1056</locationX>
+        <locationY>518</locationY>
+        <connector>
+            <targetReference>Gestito</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <stringValue>TIR</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DistributorCode__c</field>
+            <value>
+                <stringValue>1200000000</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>OperationCode__c</field>
+            <value>
+                <stringValue>RE</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SalesCompanyCode__c</field>
+            <value>
+                <stringValue>1200000000</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
-        <locationX>512</locationX>
-        <locationY>890</locationY>
+        <locationX>743</locationX>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -689,7 +847,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>386</locationX>
+        <locationX>1285</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>recordType_Check</targetReference>
@@ -699,8 +857,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>578</locationX>
-        <locationY>1130</locationY>
+        <locationX>842</locationX>
+        <locationY>998</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -724,10 +882,10 @@
     <subflows>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
-        <locationX>270</locationX>
+        <locationX>1056</locationX>
         <locationY>398</locationY>
         <connector>
-            <targetReference>Gestito</targetReference>
+            <targetReference>updateCasePreClassification</targetReference>
         </connector>
         <flowName>HDT_FL_CheckTariManaged</flowName>
         <inputAssignments>
@@ -771,6 +929,13 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>processTypeMetadato</name>

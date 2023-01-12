@@ -26,6 +26,7 @@ public inherited sharing class HDT_UTL_Case {
         Case currentCase = inputs[0].currentCase;
         String cancellationNote = inputs[0].cancellationNote;
         String inputString = inputs[0].genericInputString;
+        String commodity = inputs[0].commodity;
 
         if('Voltura Tecnica'.equalsIgnoreCase(process)){
             effectiveDate = addBusinessDay(System.today(), 3);
@@ -151,7 +152,7 @@ public inherited sharing class HDT_UTL_Case {
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
-            Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany);
+            Map<String,String> datesNamount = utlReclami.setExpirationDate(currentCase, salesCompany, commodity);
             //output.effectiveDate
             if( datesNamount.containsKey('EndDate__c') ){
                 output.endDate = date.valueOf(datesNamount.get('EndDate__c'));
@@ -195,7 +196,7 @@ public inherited sharing class HDT_UTL_Case {
             httpObj.headersMap = new Map<String, String>();
             httpObj.httpMethod = 'POST';
             httpObj.headersMap.put('Content-Type', 'application/json');    
-            httpObj.endPoint = 'callout:MulesoftBasePath/reminder';
+            httpObj.endPoint = 'callout:MulesoftHergoPath/reminder';
             body = JSON.serialize(new Map<String, Object>{
                 'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
                 'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
@@ -233,6 +234,8 @@ public inherited sharing class HDT_UTL_Case {
         public String genericInputString;
         @InvocableVariable
         public String quoteId;
+        @InvocableVariable
+        public String commodity;
     }
 
     public class HDT_UTL_FlowOutputs{

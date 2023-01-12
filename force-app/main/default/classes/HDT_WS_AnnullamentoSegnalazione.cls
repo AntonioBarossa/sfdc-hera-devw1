@@ -46,12 +46,12 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
         
         try {
 
-            if(res.status.equalsIgnoreCase('success')){
+            if('Success'.equalsIgnoreCase(res?.data?.esito)){
 
                 currentCase.TecnicalPhase__c = 'Annullato';
                 currentCase.Status= 'Closed';
 
-                if(!currentCase.WithdrawalFee__c){ //Se Ritiro Gratuito
+                if(!currentCase.WithdrawalFee__c && currentCase.ServicePoint__c != null){ //Se Ritiro Gratuito
             
                     Datetime createdDate = currentCase.CreatedDate;
                     Date dataUltimoRitiro = Date.newinstance(createdDate.year(), createdDate.month(), createdDate.day());
