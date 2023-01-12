@@ -133,8 +133,21 @@
             <valueName>Esito KO pre-MDM</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Subentro</controllingFieldValue>
+            <controllingFieldValue>Verifica GDM</controllingFieldValue>
+            <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
+            <controllingFieldValue>Consegna copia chiave GdM</controllingFieldValue>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Voltura</controllingFieldValue>
+            <controllingFieldValue>Cambio Offerta</controllingFieldValue>
+            <controllingFieldValue>Connessione con Attivazione</controllingFieldValue>
+            <controllingFieldValue>Sospensione Fornitura</controllingFieldValue>
             <controllingFieldValue>Riattivazione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Variazione Potenza</controllingFieldValue>
+            <controllingFieldValue>Interruzione Fornitura</controllingFieldValue>
+            <controllingFieldValue>Chiusura Contatore</controllingFieldValue>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <controllingFieldValue>Prima Attivazione</controllingFieldValue>
             <valueName>Esito KO da DBO</valueName>
         </valueSettings>
         <valueSettings>

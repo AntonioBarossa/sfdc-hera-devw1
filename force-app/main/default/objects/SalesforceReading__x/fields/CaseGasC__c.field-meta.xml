@@ -7,9 +7,10 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Case</label>
+    <label>Case Gas</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceCase__x</referenceTo>
+    <relationshipLabel>Letture Gas Salesforce</relationshipLabel>
+    <relationshipName>LettureGasSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>
