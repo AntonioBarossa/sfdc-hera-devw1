@@ -3,6 +3,10 @@
     <label>Preventivi - Spostamento Contatore Ele</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;DisplacementDistance__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
@@ -28,6 +32,10 @@
 {&quot;FieldName&quot;:&quot;DisconnectablePicklist__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;DisconnectibilityType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;RemoteManagementSystem__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;SalesCompany__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;DistributorName__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}
 ]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ValidateClass__c</field>

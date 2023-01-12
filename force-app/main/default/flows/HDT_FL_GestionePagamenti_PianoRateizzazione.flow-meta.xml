@@ -1020,7 +1020,7 @@
                 <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>D’ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1042,7 +1042,7 @@
                 <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>D’ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1064,7 +1064,7 @@
                 <leftValueReference>Get_Case_Tari_Layout.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
-                    <stringValue>D’ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
