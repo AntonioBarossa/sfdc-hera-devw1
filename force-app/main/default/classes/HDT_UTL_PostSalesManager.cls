@@ -338,7 +338,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     {
         if(inputSobj.get('EffectiveDate__c') != null && System.today() > (Date)inputSobj.get('EffectiveDate'))
         {
-            inputSobj.put('EffectiveDate__c', HDT_UTL_Case.addBusinessDay(System.today(), 3))
+            inputSobj.put('EffectiveDate__c', HDT_UTL_Case.addBusinessDay(System.today(), 3));
         }
     }
 
