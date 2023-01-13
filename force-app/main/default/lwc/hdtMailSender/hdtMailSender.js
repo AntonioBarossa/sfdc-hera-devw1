@@ -21,7 +21,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     render = false;
     spinner = true;
     mailStructure = {
-        caseId: '',
+        recordId: '',
         isReminder: false,
         orgWideAddId: '',
         bodyMail: '',
@@ -58,7 +58,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 console.log('# SUCCESS #');
 
                 this.mailSender = result.mailData.sender;
-                this.mailStructure.caseId = this.recordId;
+                this.mailStructure.recordId = this.recordId;
                 this.mailStructure.orgWideAddId = result.mailData.orgWideEmailAddressId;
                 this.reminderMode = result.isReminder;
                 this.mailStructure.isReminder = result.isReminder;

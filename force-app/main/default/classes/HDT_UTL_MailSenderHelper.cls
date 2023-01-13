@@ -1,10 +1,26 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_MailSenderHelper {
 
+    private static String COM_GESTORE = 'Comunicazione dal gestore';
+    private static String SOLLECITO = 'Sollecito';
 
     public static Boolean checkForReminderMail(Id recordId){
         List<EmailMessage> emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
+        Id currentRecordId;
+        Boolean isCaseObj = recordId.getSobjectType() == Schema.Case.SObjectType;
+
+        if(isCaseObj){
+            currentRecordId = recordId;
+        } else {
+            List<Case> caseList = new List<Case>();
+            caseList = HDT_QR_MailSender.getCaseByOrderId(recordId);
+            if(caseList.size()==0){
+                return false;
+            }
+            currentRecordId = caseList[0].Id;
+        }
+
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, COM_GESTORE);
         return !(emailMessageList.size() == 0);
     }
 
@@ -13,6 +29,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         HDT_WRP_MailSender.HDT_WRP_Result mailSenderMetaData = new HDT_WRP_MailSender.HDT_WRP_Result();
         List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
         emailTemplateList = HDT_QR_MailSender.getEmailTemplateByNameList('COM-Sollecito');
+        Id currentRecordId;
+        Boolean isCaseObj = recordId.getSobjectType() == Schema.Case.SObjectType;
 
         if(emailTemplateList.size() == 0){
             mailSenderMetaData.success = false;
@@ -21,7 +39,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
-        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList('Comunicazione dal gestore');
+        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList(COM_GESTORE);
 
         if(orgWideEmailAddressList.size() == 0){
             mailSenderMetaData.success = false;
@@ -37,12 +55,25 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         mailSenderMetaData.mailData.sender = orgWideEmailAddressList[0].Address;
         mailSenderMetaData.mailData.reminderBodyMail = emailTemplateList[0].HtmlValue;
 
+        if(isCaseObj){
+            currentRecordId = recordId;
+        } else {
+            List<Case> caseList = new List<Case>();
+            caseList = HDT_QR_MailSender.getCaseByOrderId(recordId);
+            if(caseList.size()==0){
+                mailSenderMetaData.success = false;
+                mailSenderMetaData.message = 'Non è presente il case collegato a questo Ordine';
+                return mailSenderMetaData;
+            }
+            currentRecordId = caseList[0].Id;
+        }
+
         emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Comunicazione dal gestore');
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, COM_GESTORE);
         mailSenderMetaData.mailData.receiver = emailMessageList[0].ToAddress;
 
         emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(recordId, 'Sollecito');
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, SOLLECITO);
         mailSenderMetaData.mailData.reminderMailCounter = emailMessageList.size();
 
         mailSenderMetaData.isReminder = true;
@@ -90,7 +121,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
-        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList('Comunicazione dal gestore');
+        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList(COM_GESTORE);
 
         if(orgWideEmailAddressList.size() == 0){
             mailSenderMetaData.success = false;
@@ -107,7 +138,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
     }
 
-    public static HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateReminderCase(Id caseId){
+    public static HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateReminderCase(Id caseId, Boolean isCaseObj){
         
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateCaseResult = new HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult();
 
@@ -140,7 +171,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
     }
 
-    public static HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateNewCase(Id caseId){
+    public static HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateNewCase(Id recordId, Boolean isCaseObj){
         
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generateCaseResult = new HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult();
 
@@ -150,14 +181,28 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         try{
 
             mailCase = new Case();
-            caseToClone = retrieveCaseForClone(caseId);
-            mailCase = caseToClone.clone(false, true, false, false);
+
+            if(isCaseObj){
+                caseToClone = HDT_QR_MailSender.retrieveCaseForClone(recordId);
+                mailCase = caseToClone.clone(false, true, false, false);
+                mailCase.ParentId = recordId;
+            } else {
+                Order orderDetail = HDT_QR_MailSender.retrieveCaseDetailsFromOrder(recordId);
+                mailCase.Order__c = recordId;
+                mailCase.AccountId = orderDetail.AccountId;
+                mailCase.Contract__c = orderDetail.ContractId;
+                mailCase.ContactId = orderDetail.BillToContactId;
+                //mailCase.ContactId = orderDetail.ShipToContactId;
+                //mailCase. = orderDetail.ServicePoint__c;
+                mailCase.ServicePointCode__c = orderDetail.ServicePointCode__c;
+                mailCase.BillingProfile__c = orderDetail.BillingProfile__c;
+            }
+
             mailCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Informative').getRecordTypeId();
             mailCase.Type = 'Comunicazione con il Gestore';
             mailCase.Phase__c = 'Bozza';
             mailCase.Status = 'New';
             mailCase.Cluster__c = 'Informative';
-            mailCase.ParentId = caseId;
             mailCase.ServiceRequestID__c = '';
             mailCase.PhaseStory__c = null;
 
@@ -217,24 +262,40 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
 
         try{
-            Id currentId = Id.valueOf(mailStructure.caseId);
-            isCaseObj = currentId.getSobjectType() == Schema.Case.SObjectType;
             
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
+            Id currentId = Id.valueOf(mailStructure.recordId);
+            isCaseObj = currentId.getSobjectType() == Schema.Case.SObjectType;
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 
             HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
 
             if(mailStructure.isReminder){
-                caseResult = updateReminderCase(mailStructure.caseId);
-                subjectString= 'Sollecito';
+
+                Id currentRecordId;
+        
+                if(isCaseObj){
+                    currentRecordId = currentId;
+                } else {
+                    List<Case> caseList = new List<Case>();
+                    caseList = HDT_QR_MailSender.getCaseByOrderId(currentId);
+                    if(caseList.size()==0){
+                        sendMailResult.success = false;
+                        sendMailResult.message = 'Non è stato trovato il case correlato a questo ordine';
+                        return sendMailResult;
+                    }
+                    currentRecordId = caseList[0].Id;
+                }
+
+                caseResult = updateReminderCase(currentRecordId, isCaseObj);
+                subjectString= SOLLECITO;
                 //mail.setInReplyTo('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
                 //mail.setReferences('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
                 //mail.setBccAddresses(new List<String>{''});
             } else {
-                subjectString= 'Comunicazione dal gestore';
-                caseResult = generateNewCase(mailStructure.caseId);
+                subjectString = COM_GESTORE;
+                caseResult = generateNewCase(mailStructure.recordId, isCaseObj);
     
                 if(!caseResult.success){
                     sendMailResult.success = false;
@@ -261,31 +322,6 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         return sendMailResult;
-    }
-
-    public static Case retrieveCaseForClone(Id caseIdToClone){
-
-        List<String> sObjectFields = new List<String>{};
-        List<Case> caseList = new List<Case>();
-        SObjectType objtype = Schema.getGlobalDescribe().get('Case');
-        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
-        sObjectFields.addAll(objtype.getDescribe().fields.getMap().keySet());
-
-        String queryString = '';
-        queryString += 'SELECT ' + sObjectFields.get(0);
-
-        for (Integer i=1 ; i < sObjectFields.size() ; i++){
-            queryString += ', ' + sObjectFields.get(i);
-        }
-
-        queryString += ' FROM Case ';
-        queryString += 'WHERE Id = \'' + caseIdToClone + '\'';
-
-        if(objRes.isAccessible()){
-            caseList = Database.query(queryString);
-        }
-
-        return caseList[0];
     }
 
     //public static String getReceiverMail(Id templateId){
