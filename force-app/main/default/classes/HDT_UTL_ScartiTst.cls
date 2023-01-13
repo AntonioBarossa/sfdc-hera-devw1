@@ -942,9 +942,9 @@ public class HDT_UTL_ScartiTst {
         Order o = [SELECT id FROM Order Limit 1];
 		o.RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
         setObject(o, 'Ammissibilità KO');
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Errore Lavorazione SAP',constants..ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito OK da DL','Errore Lavorazione SAP',constants..ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
-        HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Errore Lavorazione SAP',constants..ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Errore Lavorazione SAP',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito OK da DL','Errore Lavorazione SAP',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Errore Lavorazione SAP',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
         Test.startTest();
             update new Order (Id = o.Id, Phase__c = 'Completata');
             o = [SELECT id,Phase__c FROM Order WHERE Id =:o.Id];
