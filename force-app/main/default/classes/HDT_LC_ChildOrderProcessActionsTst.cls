@@ -711,7 +711,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         update tOrder2[0];
         tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
         system.debug('@@@ tOrder2 SaveM3 '+ tOrder2);
@@ -725,7 +725,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         update tOrder2[0];
         tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
@@ -763,7 +763,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         update tOrder2[0];
         tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
@@ -775,7 +775,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         update tOrder2[0];
         tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
         HDT_LC_ChildOrderProcessActions.save(tOrder2[0],m3);
