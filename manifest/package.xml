@@ -1,27 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
-	<types>
-		<members>HDT_SRV_BpCaVariationFacade</members>
-		<members>HDT_SRV_EditAlert</members>
-		<members>HDT_SRV_ModificaLayoutFattura</members>
-		<members>HDT_SRV_PrescrizioneFattura</members>
-		<members>HDT_TRH_Case</members>
-		<members>HDT_TRH_Order</members>
-		<members>HDT_UTL_Scarti</members>
-		<members>HDT_UTL_ScartiTst</members>
-		<members>HDT_UTL_Utils</members>
-		<members>HDT_UTL_UtilsTst</members>
-		<name>ApexClass</name>
-	</types>
-	<types>
-		<members>Case.DistributorFlowCode__c</members>
-		<name>CustomField</name>
-	</types>
-	<types>
-		<members>HDT_FL_CheckObjectBeforeCancel</members>
-		<members>HDT_FL_GestioneAnnullamento</members>
-		<members>HDT_FL_GestioneDisattivazioni</members>
-		<name>Flow</name>
-	</types>
-	<version>55.0</version>
+    <types>
+        <members>HDT_TRH_Lead</members>
+        <members>HDT_TRH_LeadTst</members>
+        <name>ApexClass</name>
+    </types>
+    <version>53.0</version>
 </Package>
