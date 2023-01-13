@@ -5,7 +5,7 @@
         <name>Copy_1_of_Set_Response</name>
         <label>Set Response</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -24,7 +24,7 @@
     <assignments>
         <name>Set_phase_From_Case</name>
         <label>Set phase From Case</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>phase</assignToReference>
@@ -40,7 +40,7 @@
     <assignments>
         <name>Set_phase_From_Order</name>
         <label>Set phase From Order</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>phase</assignToReference>
@@ -56,8 +56,8 @@
     <assignments>
         <name>Set_Response</name>
         <label>Set Response</label>
-        <locationX>424</locationX>
-        <locationY>1190</locationY>
+        <locationX>589</locationX>
+        <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -76,7 +76,7 @@
     <decisions>
         <name>Check_Object_Type</name>
         <label>Tipo Oggetto</label>
-        <locationX>556</locationX>
+        <locationX>721</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>null</defaultConnectorLabel>
         <rules>
@@ -113,8 +113,8 @@
     <decisions>
         <name>Check_Rule</name>
         <label>Esiste Regola</label>
-        <locationX>556</locationX>
-        <locationY>1070</locationY>
+        <locationX>721</locationX>
+        <locationY>1406</locationY>
         <defaultConnectorLabel>ok</defaultConnectorLabel>
         <rules>
             <name>fase_scarto_sap</name>
@@ -135,7 +135,7 @@
     <decisions>
         <name>Check_SAP_Phase</name>
         <label>Check SAP Phase</label>
-        <locationX>578</locationX>
+        <locationX>754</locationX>
         <locationY>398</locationY>
         <defaultConnectorLabel>no check</defaultConnectorLabel>
         <rules>
@@ -145,7 +145,7 @@
                 <leftValueReference>Case.DistributorFlowCode__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -162,9 +162,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Stop_Cancel</name>
+        <label>Stop Cancel</label>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>Check_Phase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>stopCancel</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>childId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Set_Response</targetReference>
+            </connector>
+            <label>stopCancel</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Verify_Record_Type</name>
         <label>Verify Record Type</label>
-        <locationX>182</locationX>
+        <locationX>336</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Check_Phase</targetReference>
@@ -181,7 +206,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Set_Response</targetReference>
+                <targetReference>Get_Child_Orders</targetReference>
             </connector>
             <label>Parent Order</label>
         </rules>
@@ -210,8 +235,8 @@
     <recordLookups>
         <name>Check_Phase</name>
         <label>Check Phase</label>
-        <locationX>556</locationX>
-        <locationY>950</locationY>
+        <locationX>721</locationX>
+        <locationY>1286</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Rule</targetReference>
@@ -237,8 +262,45 @@
             <field>DeveloperName</field>
         </outputAssignments>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Child_Orders</name>
+        <label>Get Child Orders</label>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Stop_Cancel</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>order.Id</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
+        </filters>
+        <object>Order</object>
+        <outputAssignments>
+            <assignToReference>childId</assignToReference>
+            <field>Id</field>
+        </outputAssignments>
+    </recordLookups>
     <start>
-        <locationX>430</locationX>
+        <locationX>595</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Object_Type</targetReference>
@@ -252,6 +314,16 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>childId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
     </variables>
     <variables>
         <name>errorMessage</name>

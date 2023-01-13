@@ -157,8 +157,8 @@ public with sharing class HDT_UTL_Utils {
         if (String.isBlank(pStory)){
             return '';
         }
-        pStory.replace('@@M||', '@@A||');
-        for (String trans : pStory.split('@@A||')){
+        pStory = pStory.replace('@@M||', '@@A||');
+        for (String trans : pStory.split('[@][@][A][|][|]')){
             if (String.isBlank(trans)){
                 continue;
             }
