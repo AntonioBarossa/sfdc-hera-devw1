@@ -158,20 +158,18 @@ public with sharing class HDT_UTL_Utils {
             return '';
         }
         pStory = pStory.replace('@@M||', '@@A||');
+        Boolean isRightPhase = false;
         for (String trans : pStory.split('[@][@][A][|][|]')){
-            if (String.isBlank(trans)){
-                continue;
-            }
             List<String> phases = trans.split('@@');
             if (phases.size() < 3 || !phase.equalsIgnoreCase(phases[1])){
-                phase = '';
                 break;
             }
             phase = phases[0];
             if (!HDT_UTL_GestioneScartiSap.skipPhaseManager(phase)){
+                isRightPhase = true;
                 break;
             }
         }
-        return phase;
+        return isRightPhase ? phase : '';
     }
 }
