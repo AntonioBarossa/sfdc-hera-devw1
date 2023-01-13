@@ -53,7 +53,7 @@
         &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;Amount__c&quot;,
-        &quot;Column&quot;: 2
+        &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;DistributorName__c&quot;,
         &quot;Column&quot;: 2
@@ -71,6 +71,9 @@
         &quot;Column&quot;: 2
     }, {
         &quot;FieldName&quot;: &quot;PODPDRFormula__c&quot;,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;MeterRelation__c&quot;,
         &quot;Column&quot;: 2
     }
 ]</value>
