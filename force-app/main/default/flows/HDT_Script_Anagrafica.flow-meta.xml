@@ -321,7 +321,72 @@
         <allowPause>true</allowPause>
         <fields>
             <name>Anagrafica_Acqua</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;2. Dati Anagrafici&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto?&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;        CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è XXXXXXXXX e la Data di rilascio è XXXXXXXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in{!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;2. Dati Anagrafici&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le chiedo di indicarmi il suo Cognome e Nome {!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;Mi indica il Cognome e Nome della persona cui va intestato il contratto?&lt;/p&gt;&lt;p&gt;{!OrderData.Account.LastName__c} {!OrderData.Account.FirstName__c}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma di essere autorizzato, a concludere il presente contratto?&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;        CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il Codice Fiscale della persona a cui va intestato il contratto è {!OrderData.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il numero della Carta d’identità dell’intestatario è {!OrderData.DocumentNumber__c} e la Data di rilascio è {!OrderData.DocumentDate__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che l’indirizzo di residenza della persona a cui va intestato il contratto è {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text_idrico_5</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.Account.PrimaryEmail__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.PrimaryEmail__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_6</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che la sua mail è {!OrderData.ShippingMail__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_8</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di telefono fisso è {!OrderData.Account.Phone}?&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.Phone</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_9</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che il suo numero di cellulare è {!OrderData.Account.MobilePhone__c}?&amp;nbsp;&lt;/p&gt;&lt;p&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>OrderData.Account.MobilePhone__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_idrico_7</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’indirizzo di comunicazione postale è in{!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo {!OrderData.Account.BillingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
