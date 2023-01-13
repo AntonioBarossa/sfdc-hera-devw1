@@ -4,6 +4,7 @@
 * @description HDT_QR_Order – Contains queries for Order
 * @history Keltin Mesonjesi – 05/01/2020 – Created class
 */
+
 public inherited sharing class HDT_QR_Order {
     
     /**
