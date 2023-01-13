@@ -560,7 +560,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Start Test
         
         List<Order> tOrder2=[SELECT Id, Name, Contact__c, Contact__r.Id, Account.Id, Account.RecordType.Id, Account.RecordType.DeveloperName, RecordType.Id, RecordType.DeveloperName, Commodity__c,
-        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,Market__c
+        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,Market__c,
         Channel__c, CustomerCategory__c, MarketOrigin__c FROM Order WHERE Name = 'orderResidenziale'];
         
 
@@ -887,7 +887,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
