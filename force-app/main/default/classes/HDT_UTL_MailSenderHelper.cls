@@ -1,8 +1,7 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_MailSenderHelper {
 
-    private static String COM_GESTORE = 'Comunicazione dal gestore';
-    private static String SOLLECITO = 'Sollecito';
+    private static String comGestore = 'Comunicazione dal gestore';
 
     public static Boolean checkForReminderMail(Id recordId){
         List<EmailMessage> emailMessageList = new List<EmailMessage>();
@@ -20,7 +19,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             currentRecordId = caseList[0].Id;
         }
 
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, COM_GESTORE);
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, comGestore);
         return !(emailMessageList.size() == 0);
     }
 
@@ -39,7 +38,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
-        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList(COM_GESTORE);
+        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList(comGestore);
 
         if(orgWideEmailAddressList.size() == 0){
             mailSenderMetaData.success = false;
@@ -69,11 +68,11 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, COM_GESTORE);
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, comGestore);
         mailSenderMetaData.mailData.receiver = emailMessageList[0].ToAddress;
 
         emailMessageList = new List<EmailMessage>();
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, SOLLECITO);
+        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, 'Sollecito');
         mailSenderMetaData.mailData.reminderMailCounter = emailMessageList.size();
 
         mailSenderMetaData.isReminder = true;
@@ -121,7 +120,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         List<OrgWideEmailAddress> orgWideEmailAddressList = new List<OrgWideEmailAddress>();
-        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList(COM_GESTORE);
+        orgWideEmailAddressList = HDT_QR_MailSender.getOrgWideEmailAddressList(comGestore);
 
         if(orgWideEmailAddressList.size() == 0){
             mailSenderMetaData.success = false;
@@ -289,12 +288,12 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 }
 
                 caseResult = updateReminderCase(currentRecordId, isCaseObj);
-                subjectString= SOLLECITO;
+                subjectString = 'Sollecito';
                 //mail.setInReplyTo('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
                 //mail.setReferences('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
                 //mail.setBccAddresses(new List<String>{''});
             } else {
-                subjectString = COM_GESTORE;
+                subjectString = comGestore;
                 caseResult = generateNewCase(mailStructure.recordId, isCaseObj);
     
                 if(!caseResult.success){
