@@ -99,10 +99,10 @@ public inherited sharing class HDT_LC_DocumentValidation {
     }
 
     @AuraEnabled
-    public static string getOrderAccountId(Id orderRecordId){
+    public static Order getOrderAccountId(Id orderRecordId){
         
-        Order o = [SELECT Id, AccountId FROM Order WHERE Id =: orderRecordId with SECURITY_ENFORCED];
-        return o.AccountId;
+        Order o = [SELECT Id, AccountId,SalesCompany__c FROM Order WHERE Id =: orderRecordId with SECURITY_ENFORCED];
+        return o;
     }
 
     @AuraEnabled
