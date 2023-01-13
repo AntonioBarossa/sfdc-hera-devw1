@@ -8048,6 +8048,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Validazione KO da Gestore</fullName>
+            <default>false</default>
+        </values>
+		        <values>
+            <fullName>Validazione OK da Gestore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Bozza Annullata</fullName>
             <default>false</default>
         </values>
