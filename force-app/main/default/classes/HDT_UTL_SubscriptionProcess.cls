@@ -17,6 +17,8 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             FROM OrderItem 
             WHERE Id IN :itemToSub.keySet() 
             AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' 
+                OR Order.RecordType.DeveloperName = 'HDT_RT_AgevolazioniAmbiente'
+                OR Order.RecordType.DeveloperName = 'HDT_RT_ModificaTariffaRimozione'
                 OR 
                     (
                     Order.RecordType.DeveloperName='HDT_RT_VAS' 
