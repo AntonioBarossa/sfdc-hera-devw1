@@ -402,7 +402,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c, ExciseGas__c, UseCategory__c, SupplyType__c, ImplantType__c, WithdrawalClass__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,Status,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
         
@@ -456,7 +456,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
@@ -531,7 +531,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
@@ -560,7 +560,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Start Test
         
         List<Order> tOrder2=[SELECT Id, Name, Contact__c, Contact__r.Id, Account.Id, Account.RecordType.Id, Account.RecordType.DeveloperName, RecordType.Id, RecordType.DeveloperName, Commodity__c,
-        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,
+        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,Market__c
         Channel__c, CustomerCategory__c, MarketOrigin__c FROM Order WHERE Name = 'orderResidenziale'];
         
 
@@ -602,7 +602,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Start Test
         
         List<Order> tOrder2=[SELECT Id, Name, Contact__c, Contact__r.Id, Account.Id, Account.RecordType.Id, Account.RecordType.DeveloperName, RecordType.Id, RecordType.DeveloperName, Commodity__c,
-        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,
+        VATfacilitationFlag__c, SignatureMethod__c, ProcessType__c, EffectiveDate__c, QuotationType__c, ParentOrder__c, ParentOrder__r.Id, ParentOrder__r.Status,Market__c,
         Channel__c, CustomerCategory__c, MarketOrigin__c, IsCloned__c, SignedDate__c,VolturaThirdTrader__c FROM Order WHERE Name = 'orderResidenzialeSwitchIn'];
         
 
@@ -647,7 +647,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
         List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,false,'HERA COMM','Persona fisica','Famiglie');
@@ -687,7 +687,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE CreditCheckDescription__c = 'test4AttivConMod' ORDER BY Name asc limit 1];
         List<Account> accountList= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,false,'HERA COMM','Persona fisica','Famiglie');
@@ -745,7 +745,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,QuickQuote__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc limit 1];
         List<Order> listToDelete =[SELECT ID FROM ORDER where id NOT IN:tOrder2];
@@ -801,7 +801,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
@@ -855,7 +855,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c, ExciseGas__c, UseCategory__c, SupplyType__c, ImplantType__c, WithdrawalClass__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
@@ -887,7 +887,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
@@ -915,7 +915,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
                
@@ -975,7 +975,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
      
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
       // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
@@ -1004,7 +1004,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
      
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,Email__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
       // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
@@ -1034,7 +1034,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
      
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
       // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
@@ -1067,7 +1067,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
      
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
       // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
@@ -1095,7 +1095,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
      
         List<Order> tOrder2=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c, ExciseGas__c, UseCategory__c, SupplyType__c, ImplantType__c, WithdrawalClass__c,
         ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
-        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
+        Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,Market__c,
         ParentOrder__c,DocSendingMethod__c,RecordType.Name,ContractReference__c,EffectiveDate__c,Contact__c,ParentOrder__r.Status,IsCloned__c,QuotationType__c
         FROM Order WHERE Name Like 'testOrderName%' ORDER BY Name asc];
       // system.debug('order list !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!' + tOrder2);
@@ -1434,7 +1434,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
     static void voltureReadingTst()
     {
         List<Order> tOrder=[SELECT Id, Name, AccountId,RecordType.DeveloperName,SignedDate__c,
-        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,
+        ProcessType__c,VolturaThirdTrader__c,IsActivationDeferred__c,Market__c,
         Account.RecordType.DeveloperName,Channel__c,MarketOrigin__c,CustomerCategory__c,SignatureMethod__c,
         ParentOrder__c, ParentOrder__r.Status,DocSendingMethod__c,RecordType.Name,NotRegisteredMeterCase__c,EffectiveDate__c,Commodity__c
         FROM Order
