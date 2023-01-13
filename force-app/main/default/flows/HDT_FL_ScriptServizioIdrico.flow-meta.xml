@@ -1,6 +1,170 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>55.0</apiVersion>
+    <assignments>
+        <name>AssignmentPrimaryEmail</name>
+        <label>AssignmentPrimaryEmail</label>
+        <locationX>264</locationX>
+        <locationY>1430</locationY>
+        <assignmentItems>
+            <assignToReference>PrimaryMail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>SubprocessCheck</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentShippingAddress</name>
+        <label>AssignmentShippingAddress</label>
+        <locationX>264</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>ShippingAddress</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>ShippingMailCheck</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentShippingMail</name>
+        <label>AssignmentShippingMail</label>
+        <locationX>264</locationX>
+        <locationY>1094</locationY>
+        <assignmentItems>
+            <assignToReference>ShippingMail</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>PrimaryEmailCheck</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignSubprocess</name>
+        <label>AssignSubprocess</label>
+        <locationX>264</locationX>
+        <locationY>1766</locationY>
+        <assignmentItems>
+            <assignToReference>Subprocess</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopOrdiniFigliOfferta.Subprocess__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Tariffe_Servizio_Idrico</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>PrimaryEmailCheck</name>
+        <label>PrimaryEmailCheck</label>
+        <locationX>396</locationX>
+        <locationY>1310</locationY>
+        <defaultConnector>
+            <targetReference>SubprocessCheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>isPrimaryEmailTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.Account.PrimaryEmail__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentPrimaryEmail</targetReference>
+            </connector>
+            <label>isPrimaryEmailTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ShippingAddressCheck</name>
+        <label>ShippingAddressCheck</label>
+        <locationX>396</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>ShippingMailCheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>isShippingAddressTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.ShippingAddressFormula__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentShippingAddress</targetReference>
+            </connector>
+            <label>isShippingAddressTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>ShippingMailCheck</name>
+        <label>ShippingMailCheck</label>
+        <locationX>396</locationX>
+        <locationY>974</locationY>
+        <defaultConnector>
+            <targetReference>PrimaryEmailCheck</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>isShippingMailTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.ShippingMail__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentShippingMail</targetReference>
+            </connector>
+            <label>isShippingMailTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>SubprocessCheck</name>
+        <label>SubprocessCheck</label>
+        <locationX>396</locationX>
+        <locationY>1646</locationY>
+        <defaultConnector>
+            <targetReference>Tariffe_Servizio_Idrico</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
+        <rules>
+            <name>SubProcessTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.Subprocess__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignSubprocess</targetReference>
+            </connector>
+            <label>SubProcessTrue</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <interviewLabel>HDT_FL_ScriptServizioIdrico {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_ScriptServizioIdrico</label>
@@ -12,7 +176,7 @@
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>Tariffe_Servizio_Idrico</targetReference>
+            <targetReference>ShippingAddressCheck</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>Durata_Contratto_Servizio_Idrico</targetReference>
@@ -40,8 +204,8 @@
     <recordLookups>
         <name>GetorderItem</name>
         <label>GetorderItem</label>
-        <locationX>264</locationX>
-        <locationY>758</locationY>
+        <locationX>396</locationX>
+        <locationY>2102</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Dati_Tecnici_Servizio_Idrico</targetReference>
@@ -62,7 +226,7 @@
         <name>Conferma_Adesione_Servizio_Idrico</name>
         <label>Conferma Adesione Servizio Idrico</label>
         <locationX>176</locationX>
-        <locationY>1214</locationY>
+        <locationY>2558</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -78,10 +242,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.ShippingAddressFormula__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>ShippingAddress</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -93,10 +257,17 @@
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.Account.PrimaryEmail__c</leftValueReference>
-                    <operator>IsNull</operator>
+                    <leftValueReference>PrimaryMail</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <booleanValue>false</booleanValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ShippingMail</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -122,8 +293,8 @@
     <screens>
         <name>Dati_Tecnici_Servizio_Idrico</name>
         <label>Dati_Tecnici_Servizio_Idrico</label>
-        <locationX>264</locationX>
-        <locationY>878</locationY>
+        <locationX>396</locationX>
+        <locationY>2222</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -253,6 +424,23 @@
             <name>text_dati_tecnici_servizio_Idrico_6</name>
             <fieldText>&lt;p&gt;Se prima attivazione o subentro su GDM:&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail contratti@gruppohera.it&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>Subprocess</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Subentro</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>Subprocess</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Attivazione</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text_dati_tecnici_servizio_Idrico_7</name>
@@ -266,7 +454,7 @@
         <name>Durata_Contratto_Servizio_Idrico</name>
         <label>Durata_Contratto_Servizio_Idrico</label>
         <locationX>176</locationX>
-        <locationY>1094</locationY>
+        <locationY>2438</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -284,8 +472,8 @@
     <screens>
         <name>Tariffe_Servizio_Idrico</name>
         <label>Tariffe_Servizio_Idrico</label>
-        <locationX>264</locationX>
-        <locationY>638</locationY>
+        <locationX>396</locationX>
+        <locationY>1982</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -445,6 +633,43 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>PrimaryMail</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ShippingAddress</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ShippingMail</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>Subprocess</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
 </Flow>
