@@ -170,6 +170,23 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return false;
     }
 
+    private static Boolean isRemoveSubscriptions(Order ord){
+        if(String.isNotBlank(ord.ServicePoint__r.CommoditySector__c) && 'Ambiente'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c)){
+            List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+            if(!items.isEmpty()){
+                for(OrderItem oi : items){
+                    //product Family è sempre valorizzato
+                    if(oi.Quantity != null && oi.Quantity <= 0){
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false; 
+        }
+        return false;
+    }
+
 
     /**
      * @description getAvailableProcesses
@@ -196,6 +213,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = checkAmendmentOrder(ord);
         Boolean isPowerChange = isAttivazioneConModifica(ord);
 		String commodity = ord.ServicePoint__r.CommoditySector__c;
+        Boolean isRemoveSubscriptions = isRemoveSubscriptions(ord);
         
         for (ProcessMatrix__c process : allProcesses){
             /* 
@@ -256,7 +274,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 {
                     process.CasualCode__c = 'RI6';
                 }
-                availableProcesses.add(process);
+               //escludo il processo di modifica tariffa se si sta eseguendo una rimozione sconto
+                if(!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)){
+                    availableProcesses.add(process);
+                }
             }
         }
 
