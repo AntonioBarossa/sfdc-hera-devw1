@@ -937,6 +937,85 @@ public class HDT_UTL_ScartiTst {
 
     }
 
+    @IsTest
+    public static void testGestioneSapOrder(){
+        Order o = [SELECT id FROM Order Limit 1];
+		o.RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+        setObject(o, 'Ammissibilità KO');
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Errore Lavorazione SAP',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito OK da DL','Errore Lavorazione SAP',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Errore Lavorazione SAP',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        Test.startTest();
+            update new Order (Id = o.Id, Phase__c = 'Completata');
+            o = [SELECT id,Phase__c FROM Order WHERE Id =:o.Id];
+            System.assertEquals(o.Phase__c, 'Ammissibilità KO', 'La fase non è ritornata in Ammissibilità KO');
+            setObject(o, 'Esito OK da DL');
+            update new Order (Id = o.Id, Phase__c = 'Completata');
+            o = [SELECT id,Phase__c FROM Order WHERE Id =:o.Id];
+            System.assertEquals(o.Phase__c, 'Completata', 'La pratica non è stata chiusa');
+            setObject(o, 'Ammissibilità OK');
+            update new Order (Id = o.Id, Phase__c = 'Esito OK da DL');
+            o = [SELECT id,Phase__c FROM Order WHERE Id =:o.Id];
+            System.assertEquals(o.Phase__c, 'Esito OK da DL', 'L\'esito OK non ha sbloccato l\'errore lavorazione SAP.');
+            setObject(o, 'Ammissibilità OK');
+            Boolean error = false;
+            try{
+                update new Order (Id = o.Id, Phase__c = 'Da Inviare');
+            }catch(Exception e){
+                error = true;
+                System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
+            }
+            System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+        Test.stopTest();
+    }
+
+    @IsTest
+    public static void testGestioneSapCase(){
+        Case c = [SELECT id FROM Case Limit 1];
+        setObject(c, 'Ammissibilità KO');
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Errore Lavorazione SAP',constants.CASE_RECORDTYPEID_MOROSITA,constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito OK da DL','Errore Lavorazione SAP',constants.CASE_RECORDTYPEID_MOROSITA,constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Da Inviare','Errore Lavorazione SAP',constants.CASE_RECORDTYPEID_MOROSITA,constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
+        Test.startTest();
+            update new Case (Id = c.Id, Phase__c = 'Completata');
+            c = [SELECT id,Phase__c FROM Case WHERE Id =:c.Id];
+            System.assertEquals(c.Phase__c, 'Ammissibilità KO', 'La fase non è ritornata in Ammissibilità KO');
+            setObject(c, 'Esito OK da DL');
+            update new Case (Id = c.Id, Phase__c = 'Completata');
+            c = [SELECT id,Phase__c FROM Case WHERE Id =:c.Id];
+            System.assertEquals(c.Phase__c, 'Completata', 'La pratica non è stata chiusa');
+            setObject(c, 'Ammissibilità OK');
+            update new Case (Id = c.Id, Phase__c = 'Esito OK da DL');
+            c = [SELECT id,Phase__c FROM Case WHERE Id =:c.Id];
+            System.assertEquals(c.Phase__c, 'Esito OK da DL', 'L\'esito OK non ha sbloccato l\'errore lavorazione SAP.');
+            setObject(c, 'Ammissibilità OK');
+            Boolean error = false;
+            try{
+                update new Case (Id = c.Id, Phase__c = 'Da Inviare');
+            }catch(Exception e){
+                error = true;
+                System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
+            }
+            System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+            c.Phase__c = 'Errore Lavorazione SAP';
+            update c;
+            c.PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||';
+            c.DistributorFlowCode__c = 'OK';
+            update new Case (Id = c.Id,DistributorFlowCode__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );
+            update new Case (Id = c.Id, Phase__c = 'Da Inviare');
+            c = [SELECT id,Phase__c,DistributorFlowCode__c FROM Case WHERE Id =:c.Id];
+            System.assertEquals(c.Phase__c, 'Da Inviare', 'Non è stato rivelato l\'errore lavorazione SAP impostato da SFDC.');
+            System.assert(String.isBlank(c.DistributorFlowCode__c), 'Non è stato sbiancato il campo all\'uscita della fase');
+        Test.stopTest();   
+    }
+
+    private static void setObject(SObject o,String previousPhase){
+        o.put('Phase__c' , 'Errore Lavorazione SAP');
+        update o;
+        o.put('PhaseStory__c', 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||'+previousPhase+'@@Errore Lavorazione SAP@@1659117263912@@A||');
+        update o;
+    }
+    
     public class HDT_TST_MyWebServiceMock implements HTTPCalloutMock{
         
         public HTTPResponse respond(HTTPRequest request){
@@ -959,5 +1038,5 @@ public class HDT_UTL_ScartiTst {
             return response;
         }
     }
-    
+
 }
