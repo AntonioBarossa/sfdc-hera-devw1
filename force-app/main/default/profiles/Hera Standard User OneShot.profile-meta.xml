@@ -26338,6 +26338,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SAPContractAccountCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SAPContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
