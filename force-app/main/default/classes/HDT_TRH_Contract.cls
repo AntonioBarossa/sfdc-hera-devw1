@@ -107,10 +107,23 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
         Set<Id> contractsForSieXiv = new Set<Id>();
+
+        List<id> listOrderId = new List<id>();
+        for (Contract c : (List<Contract>)Trigger.new) {
+            if( c.SBQQ__Order__c != null){      listOrderId.add(c.SBQQ__Order__c);     }
+        }
+        Map<Id, Order> mapOrder = qrOrder.getOrdersRecord(listOrderId);
+
         for(Contract c : (List<Contract>)Trigger.new){
             if(c.status=='Attivo' && c.ServicePoint__c!=null && Trigger.oldMap.get(c.id).get('ServicePoint__c')==null){
                 spToActivate.put(c.ServicePoint__c, new ServicePoint__c(Id=c.ServicePoint__c, MeterStatus__c='Attivo'));
                 contractsForSieXiv.add(c.Id);
+            }
+            Order ord = mapOrder.get(c.SBQQ__Order__c);
+            if(ord?.Surface__c != null && 'Ambiente' == ord?.Commodity__c){
+                ServicePoint__c sp = spToActivate.get(c.ServicePoint__c);
+                sp = sp!=null? sp : new ServicePoint__c(Id=c.ServicePoint__c);
+                sp.AreaDeclaredTARI__c = ord.Surface__c;
             }
         }
         if(!spToActivate.isEmpty()){
