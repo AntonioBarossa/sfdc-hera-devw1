@@ -1303,12 +1303,12 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }else if (!newPhase.containsIgnoreCase('OK')){
                     obj.addError('Su questo ordine è presente uno scarto SAP da gestire');
                 }
+                obj.put('PreviousPhase__c','');
             }
             if(!newPhase.equalsIgnoreCase(oldPhase)){
                 if (obj.getSObjectType() == Case.getSObjectType()){
                     obj.put('distributorflowcode__c','');
                 }
-                obj.put('PreviousPhase__c','');
             }
         }
         return pManSkip;
