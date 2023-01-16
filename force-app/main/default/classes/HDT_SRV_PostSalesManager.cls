@@ -89,6 +89,10 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             {
                 psmUtl.submitForApproval(sender);
             }
+            when 'recalculateVoltureEffectiveDate'
+            {
+                psmUtl.recalculateVoltureEffectiveDate(sender);
+            }
         }
 
         return null;
