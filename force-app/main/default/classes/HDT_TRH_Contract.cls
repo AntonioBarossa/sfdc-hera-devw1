@@ -5,6 +5,8 @@
 * @history Keltin Mesonjesi – 19/04/2021 – Created class
 */
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
+    
+    private static HDT_QR_Order qrOrder = new HDT_QR_Order();
 
     public override void beforeInsert(){
         list<Contract> newContracts = (List<Contract>) Trigger.New;
@@ -36,7 +38,6 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         // HDT_UTL_ContractProcess.orderCompletataPhaseManagement(Trigger.new);
         // system.debug('END HDT_TRH_Contract beforeUpdate');
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
-        HDT_QR_Order qrOrder = new HDT_QR_Order();
         List<id> listOrderId = new List<id>();
         List<Contract> listContract = new List<Contract>();
         for (Contract tempContract : (List<Contract>)Trigger.new) {
