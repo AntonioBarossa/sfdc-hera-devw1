@@ -5,8 +5,9 @@
     <formula>IF(
 	OR( 
 	IsActivationDeferred__c = true,
- ISPICKVAL(WaiverRightAfterthought__c,&apos;Si&apos;) 
-	),
+ ISPICKVAL(WaiverRightAfterthought__c,&apos;Si&apos;),
+	NOT(ISBLANK(RecessNotice__c))
+	),  
 	true,
 	false
 	)</formula>
