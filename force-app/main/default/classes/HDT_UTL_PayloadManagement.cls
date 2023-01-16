@@ -1125,8 +1125,6 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String preposition = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'al' : 'alla';
             String received = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'ricevuto' : 'ricevuta';
             String[] record = new List<String>();
-            String preposition = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'al' : 'alla';
-            String received = c.FirstLevelComplaintClassification__c.equalsIgnoreCase('Reclamo Scritto') ? 'ricevuto' : 'ricevuta';
             record.add('00310');
             record.add('120');
             record.add('Risposta ' + preposition + ' ' + c.FirstLevelComplaintClassification__c + ' ' + received + ' in data ' + getFormattedDate(c.SendDate__c) + ' ns Prot ' + c.CaseNumber);

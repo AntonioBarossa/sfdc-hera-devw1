@@ -47,10 +47,6 @@
                 <behavior>Readonly</behavior>
                 <field>Commodity__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>Order__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
