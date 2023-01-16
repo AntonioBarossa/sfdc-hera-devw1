@@ -69,7 +69,7 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Prima di Annullare l&apos;ordine è necessario gestire lo scarto SAP</stringValue>
+                <stringValue>Prima di Annullare la pratica è necessario gestire lo scarto SAP</stringValue>
             </value>
         </assignmentItems>
     </assignments>
