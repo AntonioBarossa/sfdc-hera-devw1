@@ -637,4 +637,44 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
 
         return toReturn;
     }
+
+    public static String getProcessDriver(Order ord)
+    {
+        Map<String, List<Map<String,String>>> result = new Map<String,List<Map<String,String>>>(); 
+        /* Column Header */
+        result.put('columnsObj',new List<Map<String,String>>{new Map<String,String>{'label' => 'Driver', 'fieldName' => 'driverLabel'}, new Map<String,String>{'label' => 'Valore', 'fieldName' => 'driverValue'}});
+        /* Stato Contratto SAP */
+        List<Map<String,String>> infoList = new List<Map<String,String>>();
+        infoList.add(addDriver('Stato Contratto SAP', 'sapContractStatus', ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'Nullo'));
+        /* STG */
+        infoList.add(addDriver('STG','isStg',ord.isSTG__c ? 'Si' : 'No'));
+        /* Mercato Provenienza */
+        infoList.add(addDriver('Mercato Provenienza','marketOrigin',ord.MarketOrigin__c));
+        /* Presenza Allaccio */
+        infoList.add(addDriver('Presenza Allaccio','plugPresence',ord.ServicePoint__r.PlugPresence__c == null ? 'N/A' : ord.ServicePoint__r.PlugPresence__c));
+        /* Stesso Account */
+        infoList.add(addDriver('Stesso Account','sameAccount',ord.AccountId == ord.ServicePoint__r.Account__c ? 'Si' : 'No'));
+        /* Reseller */
+        infoList.add(addDriver('Reseller','isReseller',ord.ServicePoint__r.isReseller__c ? 'Si' : 'No'));
+        /* Cambio Uso */
+        infoList.add(addDriver('Cambio Uso','isChangeUse', ord.SBQQ__Quote__r.AllowChangeUse__c ? 'Si' : 'No'));
+        /* Switch In Ripristinatorio */
+        infoList.add(addDriver('Switch Ripristinatorio','switchRipr',isSwitchInRipristinatorio(ord) ? 'Si' : 'No'));
+        /* Dati Discordanti */
+        infoList.add(addDriver('Dati Discordanti','datiDiscordanti','No'));
+        /* Presenza SwitchOut */
+        infoList.add(addDriver('Presenza Switchout','isWinback',ord.isWinback__c ? 'Si' : 'No'));
+        /* Modifica Potenza */
+        infoList.add(addDriver('Modifica Potenza','isPowerChange',isAttivazioneConModifica(ord) ? 'Si' : 'No'));
+        /* Servizio */
+        infoList.add(addDriver('Servizio','commodity',ord.ServicePoint__r.CommoditySector__c));
+        
+        result.put('infoObj', infoList);
+
+        return JSON.serialize(result);
+    }
+    private static Map<String,String> addDriver(String label, String name, String value)
+    {
+        return new Map<String,String>{'driverLabel' => label, 'driverName' => name, 'driverValue' => value};
+    }
 }
