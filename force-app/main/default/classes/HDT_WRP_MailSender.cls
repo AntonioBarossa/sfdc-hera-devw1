@@ -36,7 +36,7 @@ public class HDT_WRP_MailSender {
     }
 
     public class HDT_WRP_MailStructure {
-        public Id caseId;
+        public Id recordId;
         public Boolean isReminder;
         public String orgWideAddId;
         public String bodyMail;
