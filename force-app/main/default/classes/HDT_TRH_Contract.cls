@@ -120,10 +120,11 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 contractsForSieXiv.add(c.Id);
             }
             Order ord = mapOrder.get(c.SBQQ__Order__c);
-            if(ord?.Surface__c != null && 'Ambiente' == ord?.Commodity__c){
+            if(ord?.Surface__c != null && 'Ambiente' == ord?.Commodity__c && c.ServicePoint__c != null){
                 ServicePoint__c sp = spToActivate.get(c.ServicePoint__c);
                 sp = sp!=null? sp : new ServicePoint__c(Id=c.ServicePoint__c);
                 sp.AreaDeclaredTARI__c = ord.Surface__c;
+                spToActivate.put(sp.Id, sp);
             }
         }
         if(!spToActivate.isEmpty()){
