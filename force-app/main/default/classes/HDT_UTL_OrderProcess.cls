@@ -603,7 +603,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             //Se la data di decorrenza non è stata calcolata per qualsiasi motivo (1) oppure ho superato la data di invio al SII (2)
                             //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi) 
                             String category = newOrder.CustomerCategory__c;
-                            if('Famiglie'.equalsIgnoreCase(category) || newOrder.RecessNotice__c == 0){
+                            if(('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category)) || newOrder.RecessNotice__c == 0){
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
