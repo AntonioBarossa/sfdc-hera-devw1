@@ -32,7 +32,7 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
 
         //Get Sale
         saleSrv.checkReadAccess('Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
-        Sale__c sale = saleQr.getRecordById(saleId, 'Interaction__c,UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
+        Sale__c sale = saleQr.getRecordById(saleId, 'LoginWorkstation__c, LoginGroup__c, CreatorGroup__c,Interaction__c,UpperChannelAgency__c,LowerChannelAgency__c,SalesContact__c,CreatedBy.LoginChannel__c,Status__c,Account__c,Name,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,DocumentNumber__c,DocumentDate__c,DocumentType__c');
         check = sale.Status__c == 'Attiva' ? true : false;
         
         //Get Orders
@@ -90,7 +90,10 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
                     SalesContact__c = sale.SalesContact__c,
                     Interaction__c = sale.Interaction__c,
                     LowerChannelAgency__c = sale.LowerChannelAgency__c,
-                    UpperChannelAgency__c = sale.UpperChannelAgency__c
+                    UpperChannelAgency__c = sale.UpperChannelAgency__c,
+                    LoginWorkstation__c = sale.LoginWorkstation__c, 
+                    LoginGroup__c = sale.LoginGroup__c, 
+                    CreatorGroup__c = sale.CreatorGroup__c 
                 );
 
                 orderSrv.createRecord(parentOrderNew);
