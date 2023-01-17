@@ -8,6 +8,10 @@
 @SuppressWarnings('PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements, PMD.ForLoopsMustUseBraces')
 public inherited sharing class HDT_UTL_ActivityTemplate { 
 
+    private static Integer size = 0;
+    private static final Integer MAX_SIZE_SYNC = 3;
+    private static final Integer MAX_SIZE_ASYNC = 50;
+
     private static final Pattern FIELD_PATTERN = Pattern.compile('\\{![\\xa0\\s]?+([A-Za-z0-9_.]+)[\\xa0\\s]?+\\}');
     private List<String> fields;
     @TestVisible
@@ -15,6 +19,21 @@ public inherited sharing class HDT_UTL_ActivityTemplate {
     private static HDT_UTL_Sobject utlSbj = new HDT_UTL_Sobject();
     public HDT_UTL_ActivityTemplate(){
         this.fields= new List<String>{'id'};
+    }
+
+    @TestVisible
+    private inherited sharing class HDT_WRP_Queue implements Queueable{
+
+        Map<Id, HDT_WRP_Infos> actions;
+        @TestVisible
+        HDT_WRP_Queue(Map<Id, HDT_WRP_Infos> actions){
+            this.actions=actions;
+        }
+        public void execute(QueueableContext context) {
+            HDT_UTL_ActivityTemplate utilsTemplate = new HDT_UTL_ActivityTemplate();
+            if(!actions.isEmpty())  HDT_UTL_DatabaseService.insertSObject(utilsTemplate.pclickActivityCreation(this.actions));
+            //if(!actionsOrder.isEmpty()) utilsTemplate.handleNewActivityCreation(this.actionsOrder);
+        }
     }
 
 
@@ -33,6 +52,51 @@ public inherited sharing class HDT_UTL_ActivityTemplate {
         protected HDT_WRP_Infos(){
             return;
         }
+    }
+
+    public void handlePclickActivityCreation(Map<Id, HDT_WRP_Infos> sobjectToNewActivityType){
+        if((size+sobjectToNewActivityType.size()) <= MAX_SIZE_SYNC){
+            HDT_UTL_DatabaseService.insertSObject(pclickActivityCreation(sobjectToNewActivityType));
+        }else{
+            handleAsyncJobs(sobjectToNewActivityType);
+        }
+    }
+
+    private void handleAsyncJobs(Map<Id, HDT_WRP_Infos> sobjectToNewActivityType){
+        Map<Id, HDT_WRP_Infos> mapForAsyncJobs = new Map<Id, HDT_WRP_Infos>();
+        Integer count = 0;
+        for(Id key : sobjectToNewActivityType.keySet()){
+            mapForAsyncJobs.put(key, sobjectToNewActivityType.get(key));
+            if(++count > MAX_SIZE_ASYNC){
+                enqueueJob(new HDT_WRP_Queue(new Map<Id, HDT_WRP_Infos>(mapForAsyncJobs)));
+                count=0;
+                mapForAsyncJobs.clear();
+            }
+        }
+        enqueueJob(new HDT_WRP_Queue(new Map<Id, HDT_WRP_Infos>(mapForAsyncJobs)));
+    }
+
+    private void enqueueJob(HDT_WRP_Queue que){
+        System.enqueueJob(que);
+    }
+
+    private List<wrts_prcgvr__Activity__c> pclickActivityCreation(Map<Id, HDT_WRP_Infos> sobjectToNewActivityType){
+        wrts_prcgvr.Interfaces_1_1.IActivityIntegration activityIntegration =
+            (wrts_prcgvr.Interfaces_1_1.IActivityIntegration)
+            wrts_prcgvr.VersionManager.newClassInstance('ActivityIntegration');
+
+        List<wrts_prcgvr__Activity__c> actsToReturn = new List<wrts_prcgvr__Activity__c>();
+        if(sobjectToNewActivityType!= null && sobjectToNewActivityType.isEmpty()) return actsToReturn;
+        //validationCheck(sobjectToNewActivityType);//do some validations
+        Map<String, wrts_prcgvr__ActivityTemplate__c> templates = getActivityTemplates(sobjectToNewActivityType.values());
+        if(templates.isEmpty()) return actsToReturn;
+        for(Id sobjId : sobjectToNewActivityType.keySet()){
+            HDT_WRP_Infos info = sobjectToNewActivityType.get(sobjId);
+            List<wrts_prcgvr__Activity__c> acts = (List<wrts_prcgvr__Activity__c>) activityIntegration.createFromTemplate(templates.get(info.activityType+sobjId.getSobjectType().getDescribe().getName().toLowerCase()).wrts_prcgvr__Code__c, new Map<String,Object>{ 'objectId' => sobjId});
+            if(info.isMandatory)    acts[0].wrts_prcgvr__IsRequired__c = true;
+            actsToReturn.add(acts[0]);
+        }
+        return actsToReturn;
     }
 
     /**
@@ -123,12 +187,17 @@ public inherited sharing class HDT_UTL_ActivityTemplate {
                                     (SELECT wrts_prcgvr__Field__c, wrts_prcgvr__Operation__c, wrts_prcgvr__Value__c FROM wrts_prcgvr__ActivityActions__r)
                             FROM wrts_prcgvr__ActivityTemplate__c
                             WHERE Name IN :names
-                            AND wrts_prcgvr__ObjectType__c =:this.sobjType
+                            //AND wrts_prcgvr__ObjectType__c =:this.sobjType
                             //WITH SECURITY_ENFORCED//Oggetto Tecnico, no security enforced
                         ];
     
         for(wrts_prcgvr__ActivityTemplate__c curTemplate : queryResult){
-            returnMap.put(curTemplate.Name, curTemplate);
+
+            String key = curTemplate.Name;
+            if(this.sobjType == null){
+                key+=curTemplate.wrts_prcgvr__ObjectType__c.toLowerCase();
+            } 
+            returnMap.put(key, curTemplate);
             for(wrts_prcgvr__ActivityAction__c  action : curTemplate.wrts_prcgvr__ActivityActions__r){
                 String fieldName = getFieldName(action.wrts_prcgvr__Value__c);
                 if(STRING.isNotBlank(fieldName))    this.fields.add(fieldName);

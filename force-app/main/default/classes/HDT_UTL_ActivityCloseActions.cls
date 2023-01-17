@@ -132,7 +132,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         } 
 
         if(!caseToNewActivityType.isEmpty() || !orderToNewActivityType.isEmpty()){
-            System.enqueueJob(new HDT_WRP_Queue(caseToNewActivityType, orderToNewActivityType));
+            //System.enqueueJob(new HDT_WRP_Queue(caseToNewActivityType, orderToNewActivityType));
+            Map<Id, HDT_WRP_Actions> allActivities = new Map<Id, HDT_WRP_Actions>();
+            allActivities.putAll(caseToNewActivityType);
+            allActivities.putAll(orderToNewActivityType);
+            HDT_UTL_ActivityTemplate utilsTemplate = new HDT_UTL_ActivityTemplate();
+            utilsTemplate.handlePclickActivityCreation(allActivities);
         }
         if(!sObjectToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(sObjectToUpdate);
