@@ -373,6 +373,13 @@
                 <elementReference>GetCaseAggiornatoForUpdate.DistributorNote__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorFlowCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>KO</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Status_0_0_0_0_0</targetReference>
         </connector>
@@ -408,6 +415,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetCaseAggiornatoForUpdate_0.DistributorNote__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorFlowCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>KO</stringValue>
             </value>
         </assignmentItems>
         <connector>
