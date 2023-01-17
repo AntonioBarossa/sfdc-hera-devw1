@@ -2447,11 +2447,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus mancante</fullName>
+            <fullName>Altro compenso mancante</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Business</fullName>
+            <fullName>Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2547,7 +2547,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Legge 80_Istanza EE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2719,7 +2719,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica colonnine</fullName>
+            <fullName>Verifica colonnine e Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2793,23 +2793,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Contratti</fullName>
+            <fullName>Cliente senza Fornitura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Fatturazione</fullName>
+            <fullName>Mancata messa a ruolo contratto</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Morosità</fullName>
+            <fullName>Sblocco Processo Post-Vendita</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Preventivi</fullName>
+            <fullName>Pratica gestita erroneamente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2817,19 +2813,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Tari%2FTCP</fullName>
+            <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Vas e HVAC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Caricamenti contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione processi Ultima Istanza</fullName>
+            <fullName>Order Management MUI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2853,10 +2841,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Migrazione dati</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto Agenzia</fullName>
             <default>false</default>
         </values>
@@ -2869,11 +2853,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto emissione SD_singola</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche contratti</fullName>
+            <fullName>Sblocco Processo verso SII/DL</fullName>
             <default>false</default>
         </values>
     </picklistValues>

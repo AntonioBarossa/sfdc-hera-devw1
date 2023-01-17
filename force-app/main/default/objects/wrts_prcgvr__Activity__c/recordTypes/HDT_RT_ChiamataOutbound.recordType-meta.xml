@@ -2236,11 +2236,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus mancante</fullName>
+            <fullName>Altro compenso mancante</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Business</fullName>
+            <fullName>Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2388,7 +2388,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Legge 80_Istanza EE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2700,7 +2700,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica colonnine</fullName>
+            <fullName>Verifica colonnine e Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2850,7 +2850,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamenti contratti</fullName>
+            <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2922,11 +2922,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi Ultima Istanza</fullName>
+            <fullName>Order Management MUI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi di Misura</fullName>
+            <fullName>Gestione Misure Energy</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3082,7 +3082,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifiche contratti</fullName>
+            <fullName>Sblocco Processo verso SII/DL</fullName>
             <default>false</default>
         </values>
         <values>
