@@ -2786,10 +2786,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Credit Management %E2%80%93 cessioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Credit Management %E2%80%93 sospensioni</fullName>
             <default>false</default>
         </values>
