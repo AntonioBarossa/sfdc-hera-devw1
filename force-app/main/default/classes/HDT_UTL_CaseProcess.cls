@@ -230,9 +230,12 @@ public with sharing class HDT_UTL_CaseProcess {
                 }
                 /* Richiesta Parere
                 * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                * Se le CancellationNote sono vuote o diverse da '[REC-0001] Annullato per annullamento case padre' 
+                * si procede alla movimentazione del case padre di Reclamo Scritto
+                * in caso contrario siamo nelle condizioni di annullamento top -> bottom e dunque non si deve movimentare il case di Reclamo 
                 */
                 if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null 
-                    && String.isNotBlank(caseNew.CancellationNote__c) && !caseNew.CancellationNote__c.equalsIgnoreCase(childOpinionCanc))
+                    && (String.isBlank(caseNew.CancellationNote__c) || (String.isNotBlank(caseNew.CancellationNote__c) && !caseNew.CancellationNote__c.equalsIgnoreCase(childOpinionCanc))))
                 {
                     Case complaintCase = new Case();
                     complaintCase.Id = caseNew.ParentId;
