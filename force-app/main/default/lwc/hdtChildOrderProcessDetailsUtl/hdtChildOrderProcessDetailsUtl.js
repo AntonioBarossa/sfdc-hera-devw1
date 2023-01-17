@@ -125,7 +125,7 @@ import * as rateCategories from './hdtRateCategories.js';
                         }
         
                         if(!(this.closeAttachmentEvent?.buttonPressed && this.closeAttachmentEvent?.numberOfFiles)){
-                            if(this.template.querySelector("[data-id='DeliveredDocumentation__c']")?.value == 'Y'){
+                            if(this.template.querySelector("[data-id='DeliveredDocumentation__c']")?.value == true){
                                 this.showMessage('Errore', "Verificare gli allegati obbligatori per Documentazione da Contribuente", 'error');
                                 //this.closeAttachmentEvent.isValid = true;
                                 return true;

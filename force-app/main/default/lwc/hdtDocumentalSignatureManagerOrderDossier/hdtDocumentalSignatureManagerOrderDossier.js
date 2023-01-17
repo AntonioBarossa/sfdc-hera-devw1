@@ -88,7 +88,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     isVisibleSignedDate = false;
     isVisibleAmbiente=false;
     isVisbleDocumentazioneContribuente=false;
-    lastDocContrValue='';
+    lastDocContrValue;
     areInputsVisible = true;
     loading = false;
     currentStep = 1;
@@ -303,7 +303,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     this.isVisibleAmbiente = true;
                     if(provenienza!= null && provenienza != undefined && provenienza != '' && provenienza ==='Da contribuente'){
                         this.isVisbleDocumentazioneContribuente = true;
-                        if(docContribuente != null && docContribuente != undefined && docContribuente != 'Y'){
+                        if(docContribuente != null && docContribuente != undefined && docContribuente == true){
                             this.loadData = true;
                         }else{
                             this.loadData = false;
@@ -358,7 +358,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             if(fieldValue != null && fieldValue === 'Da contribuente'){
                 this.isVisbleDocumentazioneContribuente=true;
                 /*var deliveryDoc = this.template.querySelector("[data-id='DeliveredDocumentation__c']").value;*/
-                if(this.lastDocContrValue && this.lastDocContrValue === 'N'){
+                if(this.lastDocContrValue != null && this.lastDocContrValue == false){
                     this.loadData = true;
                 }else{
                     this.loadData = false;

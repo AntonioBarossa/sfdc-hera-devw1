@@ -139,7 +139,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             for (Order currOrd:allOrders){
                 if (currOrd.Id!=ordToCheck[0].Id) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
-                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) )) {
+                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
                         break;
                     }

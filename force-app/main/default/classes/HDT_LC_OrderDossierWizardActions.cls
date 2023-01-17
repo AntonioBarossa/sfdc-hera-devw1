@@ -644,7 +644,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
     private static void handleTariOrder(Order orderParentRetreived){
         Order parentOrderToUpdate = new Order();
         parentOrderToUpdate.Id = orderParentRetreived.Id;
-        if('Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c) || orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c.equalsIgnoreCase('Y')){
+        if('Contratto già firmato'.equalsIgnoreCase(orderParentRetreived.SignatureMethod__c) || orderParentRetreived.RequestSource__c.equalsIgnoreCase('D\'ufficio') || orderParentRetreived.DeliveredDocumentation__c){
             parentOrderToUpdate.Phase__c = 'Documentazione Gestita';
             parentOrderToUpdate.Status = 'Completed';
         }else{

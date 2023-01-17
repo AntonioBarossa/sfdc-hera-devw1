@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 15-12-2022
+ * @last modified on  : 13-01-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.ExcessivePublicCount, PMD.ExcessiveParameterList')
@@ -82,7 +82,8 @@ global with sharing class HDT_WS_GarbageMan {
             Database.SaveResult isCaseInserted = Database.insert(theCase, false);
             if (isCaseInserted.isSuccess()){
                 if(!Test.isRunningTest())    HDT_SRV_GarbageMan.scheduleAppointment(theCase.Id);
-                return new HDT_WRP_WasteDisposalResponse('Y',theCase.CreatedDate, request.requestCode, theCase.Id);
+                Case insertedCase = utlGarbage.getCurrentCase(theCase.Id)[0];
+                return new HDT_WRP_WasteDisposalResponse('Y',insertedCase.CreatedDate, request.requestCode, insertedCase.Id);
             }else{
                 for(Database.Error err : isCaseInserted.getErrors()) {
                     System.debug(LoggingLevel.ERROR, 'The following error has occurred.');                    

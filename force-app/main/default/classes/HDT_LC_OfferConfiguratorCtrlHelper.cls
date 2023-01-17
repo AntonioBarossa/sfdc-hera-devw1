@@ -631,8 +631,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.parametroI0 = formatCurrency(String.valueOf(techOff.I0__c));
             obj.header.parametroL = String.valueOf(techOff.Lambda__c);
             obj.header.identificativoProdotto = String.valueOf(techOff.ProductIdentifier__c);
-            // CONT_GG
-            // CONT_SETT
+            obj.header.coGg = String.valueOf(techOff.DailyContribution__c);
+            obj.header.coSt = String.valueOf(techOff.WeeklyContribution__c	);
 
             //obj.header.parametroP0 = (obj.header.parametroP0==null) ? null : obj.header.parametroP0.replace('.', ',');
             //obj.header.parametroK = (obj.header.parametroK==null) ? null : obj.header.parametroK.replace('.', ',');
