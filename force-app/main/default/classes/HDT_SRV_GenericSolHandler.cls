@@ -100,8 +100,18 @@ public with sharing class HDT_SRV_GenericSolHandler {
         }else{
             HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
         }
-        
+    }
 
+    public static void handleVolturaH2O(Map<String,Object> inputParams){
+        String accountId = (String) inputParams.get('accountId');
+        String contactId = (String) inputParams.get('contactId');
+        String serviceRequest = (String) inputParams.get('serviceRequest');
+        if(String.isBlank(serviceRequest)){
+            //Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId);
+            //HDT_UTL_GenericSolHandler.createBaseOrder(inputParams,sale.Id);
+        }else{
+            //HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
+        }
     }
     
 }

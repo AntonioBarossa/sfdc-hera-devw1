@@ -24,6 +24,9 @@ global with sharing class HDT_WS_InboundSol {
             when 'analisiConsumi'{
                 HDT_SRV_GenericSolHandler.handleAnalisiConsumi(bodyMap);
             }
+            when 'volturah2o'{
+                HDT_SRV_GenericSolHandler.handleVolturaH2O(bodyMap);
+            }
             when else {
                 HDT_SRV_GenericSolHandler.dataEnrichment(caseId);
             }
