@@ -827,7 +827,23 @@
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
+        <tab>CityTechnicalData__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
         <tab>ComfortQualityCall__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>FreeWithdrawConfig__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>ManageTariTab</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>MandatoryAttachments__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
@@ -836,6 +852,18 @@
     </tabSettings>
     <tabSettings>
         <tab>RentProcessRule__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>StaticStringForDocuments__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>TariAppointment__c</tab>
+        <visibility>Visible</visibility>
+    </tabSettings>
+    <tabSettings>
+        <tab>TermTable__c</tab>
         <visibility>Visible</visibility>
     </tabSettings>
     <tabSettings>
