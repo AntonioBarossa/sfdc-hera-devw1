@@ -334,6 +334,14 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void recalculateVoltureEffectiveDate(SObject inputSobj)
+    {
+        if(inputSobj.get('EffectiveDate__c') != null && System.today() > (Date)inputSobj.get('EffectiveDate__c'))
+        {
+            inputSobj.put('EffectiveDate__c', HDT_UTL_Case.addBusinessDay(System.today(), 3));
+        }
+    }
+
     public void sbloccoVoltura(SObject inputCase){
 
         Case currentCase = (Case) inputCase;

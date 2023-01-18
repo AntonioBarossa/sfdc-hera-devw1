@@ -2499,19 +2499,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Ripresa formativa con Cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripresa formativa senza Cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Social</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TCP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2565,27 +2553,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Assistenza Contact Center</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiesta Parere</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripresa formativa CC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripresa formativa CC cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Migrazione dati</fullName>
             <default>false</default>
         </values>
         <values>

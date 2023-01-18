@@ -11,15 +11,30 @@
             <div class="slds-grid slds-gutters">
                 <div class="slds-col slds-size_4-of-12">
                     <template if:true={options}>
-                        <lightning-combobox
-                        disabled={disabledInput}
-                            name="selectProcess"
-                            label="Processo"
-                            value={value}
-                            placeholder="Seleziona Processo"
-                            options={options}
-                            onchange={handleSelectProcess} >
-                        </lightning-combobox>
+                        <div class="slds-grid slds-gutters">
+                            <div class="slds-col slds-size_2-of-3">
+                                <lightning-combobox
+                                disabled={disabledInput}
+                                    name="selectProcess"
+                                    label="Processo"
+                                    value={value}
+                                    placeholder="Seleziona Processo"
+                                    options={options}
+                                    onchange={handleSelectProcess} >
+                                </lightning-combobox>
+                            </div>
+                            <div class="slds-col slds-size_1-of-3" style="padding-top: 22px">
+                                <c-hdt-info-point-table 
+                                    info-obj={infoObj}
+                                    columns-obj={columnsObj}
+                                    field-key={keyField}
+                                    loading-spinner={modalSpinner}
+                                    modal-header={modalHeader}
+                                    onopenmodal={handleModalOpening}
+                                    info-disabled={infoDisabled}>
+                                </c-hdt-info-point-table>
+                            </div> 
+                        </div>
                     </template>
                 </div>
                 <div class="slds-col slds-size_2-of-12"></div>

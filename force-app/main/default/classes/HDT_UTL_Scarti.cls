@@ -1279,4 +1279,37 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         }
         
     }
+
+    public static boolean changeSapPhaseHandler(Map<Id,SObject> newRecsMap, Map<Id,SObject> oldRecsMap){
+        Boolean pManSkip = false;
+        for (Sobject obj : newRecsMap.values()){
+            String fieldName =  obj.getSObjectType() == Order.getSObjectType() ? 'ManagedSapDiscard__c' : 'distributorflowcode__c';
+            SObject oldObj = oldRecsMap.get((Id)obj.get('Id'));
+            String newPhase = obj.get('Phase__c') == null ? '' : (String)obj.get('Phase__c');
+            String oldPhase = oldObj.get('Phase__c') == null ? '' : (String)oldObj.get('Phase__c');
+            String checkScartoSap = obj.get(fieldName) == null ? '' : (String)obj.get(fieldName); 
+            if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)
+            && (String.isBlank(checkScartoSap))){
+                if ('Completata'.equalsIgnoreCase(newPhase)){
+                    String phaseStoryOld = oldObj.get('PhaseStory__c') != null ? (String)oldObj.get('PhaseStory__c') : '';
+                    String phase = HDT_UTL_Utils.beforeSapPhase(oldPhase,phaseStoryOld);
+                    if (phase.containsIgnoreCase('KO')){
+                        obj.put('Phase__c',phase);
+                        DateTime nowDateTime = DateTime.now();
+                        String phaseStrory = oldPhase+'@@'+phase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
+                        obj.put('PhaseStory__c',phaseStrory);
+                        pManSkip = newRecsMap.values().size() == 1;
+                        continue;
+                    }
+                }else if (!newPhase.containsIgnoreCase('OK') && !'Annullato SII'.equalsIgnoreCase(newPhase)){
+                    obj.addError('Su questo ordine è presente uno scarto SAP da gestire');
+                }
+                obj.put('PreviousPhase__c','');
+            }
+            if(!newPhase.equalsIgnoreCase(oldPhase)){
+                obj.put(fieldName,'');
+            }
+        }
+        return pManSkip;
+    }
 }
