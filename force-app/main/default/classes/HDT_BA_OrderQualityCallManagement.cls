@@ -191,10 +191,11 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             ||(!this.childsId.contains(o.Id) && !this.parentsId.contains(o.ParentOrder__c))){
                 continue;
             }
-            if ((orderWithActivity.contains(o.Id) && this.childsId.contains(o.Id)) || orderWithActivity.contains(o.ParentOrder__c)){
+            if ((orderWithActivity.contains(o.Id) && this.childsId.contains(o.Id)) || orderWithActivity.contains(o.ParentOrder__c) || HDT_UTL_QualityCall.HANDLE_DEADLINE.equalsIgnoreCase(o.QualityCallStatus__c)){
                 this.mapOrderToManage.put(o.ParentOrder__c,true);
                 continue;
             }
+            //a meno che non è stato già gestito, se l'order è in una fase non consentita non gestire l'activity
             if (!HDT_UTL_QualityCall.HANDLE_DEADLINE.equalsIgnoreCase(o.QualityCallStatus__c) && (String.isBlank(o.Phase__c) || 'in attesa conferma cliente'.equalsIgnoreCase(o.Phase__c.toLowerCase()))){
                 this.mapOrderToManage.put(o.ParentOrder__c,false);
                 mapStartDate.remove(o.ParentOrder__c);
@@ -219,7 +220,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             this.mapOrderToManage.put(o.ParentOrder__c,true);
         }
         for (Id parentId : mapStartDate.keySet()){
-            if (!mapStartDate.containsKey(parentId) || mapStartDate.get(parentId).daysBetween(dueDate) <= HDT_UTL_QualityCall.DAYS_TO_WORK){
+            if (mapStartDate.get(parentId).daysBetween(dueDate) <= HDT_UTL_QualityCall.DAYS_TO_WORK){
                 this.mapOrderToManage.put(parentId,false);
             }
         }
