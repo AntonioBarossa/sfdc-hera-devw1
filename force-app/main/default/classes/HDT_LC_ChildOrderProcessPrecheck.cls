@@ -41,6 +41,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     }
 
     @AuraEnabled
+    public static string getProcessDriver(Order order)
+    {
+        try
+        {
+            return  HDT_UTL_OrderProcessAssignment.getProcessDriver(order);
+        }
+        catch(Exception e)
+        {
+            return '';
+        }
+    
+    }
+
+    @AuraEnabled
     public static String getConsumptionAnnualForVas(String orderId){
         
         try{

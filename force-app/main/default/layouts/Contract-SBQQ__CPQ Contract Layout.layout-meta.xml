@@ -464,6 +464,11 @@
         <fields>VasPracticeCode__c</fields>
         <fields>VasEffectiveDate__c</fields>
         <fields>SBQQ__ProductName__c</fields>
+        <fields>SBQQ__StartDate__c</fields>
+        <fields>SBQQ__EndDate__c</fields>
+        <fields>SBQQ__TerminatedDate__c</fields>
+        <fields>SBQQ__Quantity__c</fields>
+        <fields>SAPContractCode__c</fields>
         <relatedList>SBQQ__Subscription__c.SBQQ__Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
