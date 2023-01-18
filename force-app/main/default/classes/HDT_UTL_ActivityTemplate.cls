@@ -67,7 +67,7 @@ public inherited sharing class HDT_UTL_ActivityTemplate {
         Integer count = 0;
         for(Id key : sobjectToNewActivityType.keySet()){
             mapForAsyncJobs.put(key, sobjectToNewActivityType.get(key));
-            if(++count > MAX_SIZE_ASYNC){
+            if(++count > MAX_SIZE_ASYNC && !System.isBatch() && (Limits.getLimitQueueableJobs() - Limits.getQueueableJobs()) > 0){
                 enqueueJob(new HDT_WRP_Queue(new Map<Id, HDT_WRP_Infos>(mapForAsyncJobs)));
                 count=0;
                 mapForAsyncJobs.clear();
