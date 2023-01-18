@@ -648,12 +648,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.typeVisibility('acqua') &&
                     this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' )
                 {
-                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value > 1 )
+                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value < 2 )
                     {
                         this.showMessage('Errore', 'In caso di Tipo Impianto Promiscuo è necessario che il numero delle Unita Immobiliari sia maggiore di 1', 'error');
                         return;
                     }
-                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value == 1 )
+                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value != 1 )
                     {
                         this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
@@ -664,7 +664,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
                     let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
                     let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
-                    if ( this.template.querySelector("[data-id='RealEstateUnit__c']").value != (noResDom + resDom + noDom + indUnit + zooUnit + commUnit) )
+                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit;
+                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;
@@ -685,12 +686,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || 
                     this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) )
                 {
-                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value > 1 )
+                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value < 2 )
                     {
                         this.showMessage('Errore', 'In caso di Tipo Impianto Promiscuo è necessario che il numero delle Unita Immobiliari sia maggiore di 1', 'error');
                         return;
                     }
-                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value == 1 )
+                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value != 1 )
                     {
                         this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
@@ -701,7 +702,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
                     let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
                     let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
-                    if ( this.template.querySelector("[data-id='RealEstateUnit__c']").value != (noResDom + resDom + noDom + indUnit + zooUnit + commUnit) )
+                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit;
+                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;
