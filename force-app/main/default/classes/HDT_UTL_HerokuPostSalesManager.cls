@@ -516,7 +516,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     contractAmb.Id = recordCase.Contract__c;
                     spAmb.Id = recordCase.ServicePoint__c;
                     contractAmb.Status = contractStatus;
-                    spAmb.SapContractStatus__c = contractStatus; 
+                    spAmb.SapContractStatus__c = contractStatus;
                 }
                 DateTime endDateTimeContractAmb = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
                 if( endDateTimeContractAmb != null &&
