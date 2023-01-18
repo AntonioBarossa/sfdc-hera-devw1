@@ -816,16 +816,6 @@
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
-                            <value>Case.HDT_CaseDocumentValidation</value>
-                            <visibilityRule>
-                                <criteria>
-                                    <leftValue>{!Record.Phase__c}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>In attesa validazione</rightValue>
-                                </criteria>
-                            </visibilityRule>
-                        </valueListItems>
-                        <valueListItems>
                             <value>Case.Catalogo_Servizi</value>
                         </valueListItems>
                         <valueListItems>
