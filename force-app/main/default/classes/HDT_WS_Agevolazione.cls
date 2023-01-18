@@ -21,8 +21,16 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
     }
 
     global Object execute(Object args) {
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
+
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject obj = (sObject) argsMap.get('sender');
+
+        String commercialProduct = (String) obj.get('CommercialProduct__c');
+        if('Istruttoria DL116'.equalsIgnoreCase(commercialProduct)){
+            //richiama logiche task DL 116
+            return null;
+        }
         List<Case> lcs = [ SELECT Id FROM Case Where Order__c=:obj.Id AND RecordTypeId=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId() WITH SECURITY_ENFORCED LIMIT 1 ];
         wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
 
@@ -43,8 +51,6 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
 
         HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
         System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
-
-        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
         
         try{
             if(STRING.isNotBlank(res?.data?.noticeId)){
