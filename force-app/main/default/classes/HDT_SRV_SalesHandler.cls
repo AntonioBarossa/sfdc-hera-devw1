@@ -142,6 +142,9 @@ public with sharing class HDT_SRV_SalesHandler {
                         HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, nextPhase, mapActivityField);
                         Order ord = new Order(); 
                         ord.Id = ordRetrieved.Id;
+                        if('STATO_INTD'.equalsIgnoreCase(activityName)){
+                            ord.ManagedSapDiscard__c = 'KO';
+                        }
                         if(String.isNotBlank(csOutcome) && csOutcome.equalsIgnoreCase('Y'))
                         {
                             ord.Cs1Outcome__c = nextPhase;
@@ -672,6 +675,12 @@ public with sharing class HDT_SRV_SalesHandler {
                             ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         }
                         HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, '', mapRequestFields);
+                        if('STATO_INTD'.equalsIgnoreCase(activityName)){
+                            Order ord = new Order();
+                            ord.Id = ordRetrieved.Id;
+                            ord.ManagedSapDiscard__c = 'KO';
+                            orderSrv.updateRecord(ord);
+                        }
                         responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';
