@@ -233,4 +233,26 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         }
     }
 
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @date 17/01/2023
+    * @description closeSubscriptionsToday - chiusura subscription per processo di cessazione 
+    *              metodo richiamato nell'HDT_UTL_HerokuPostSalesManager
+    * @param contractId - Id del contratto
+    * @return Void
+    */
+    public static void closeSubscriptionsToday(Id contractId){
+        List<SBQQ__Subscription__c> toCloseSub = [  SELECT Id, SBQQ__TerminatedDate__c, SBQQ__EndDate__c
+                                                    FROM SBQQ__Subscription__c
+                                                    WHERE SBQQ__Contract__c =: contractId];
+        if(toCloseSub != null){
+            DateTime nowDateTime = DateTime.now();
+            Date closingDate = date.newinstance(nowDateTime.year(), nowDateTime.month(), nowDateTime.day()-1);
+            for(SBQQ__Subscription__c currentSub : toCloseSub){
+                currentSub.SBQQ__TerminatedDate__c = closingDate;
+            }
+            HDT_UTL_DatabaseService.updateSObject(toCloseSub);
+        }
+    }
+
 }
