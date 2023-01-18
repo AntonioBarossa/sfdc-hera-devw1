@@ -545,6 +545,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 }
             }
             if('Opzioni TARI'.equalsIgnoreCase(mainItems[0].Product2.Family)){
+                orderToUpdate.CommercialProductCode__c = mainItems[0].Product2.ProductCode;
+                orderToUpdate.CommercialProductVersion__c = mainItems[0].Product2.Version__c;
+                orderToUpdate.CommercialProduct__c = mainItems[0].Product2.DescriptionSAP__c;
+                
                 List<OrderItem> orderItemsPod=orderItemQr.getPodOrderFromQuote(originalOrder.SBQQ__Quote__c, mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c);
                 if(!orderItemsPod.isEmpty() && mainItems[0]?.SBQQ__QuoteLine__r?.SBQQ__RequiredBy__c != null){
                     orderToUpdate.OrderReference__c=orderItemsPod[0].OrderId;
