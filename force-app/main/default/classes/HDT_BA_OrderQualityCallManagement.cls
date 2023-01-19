@@ -205,7 +205,6 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             if (!HDT_UTL_QualityCall.HANDLE_DEADLINE.equalsIgnoreCase(o.QualityCallStatus__c) && (String.isBlank(o.Phase__c) || 'in attesa conferma cliente'.equalsIgnoreCase(o.Phase__c.toLowerCase()))){
                 this.mapOrderToManage.put(o.ParentOrder__c,false);
                 mapStartDate.remove(o.ParentOrder__c);
-                this.actMap.remove(o.ParentOrder__c);
                 continue;
             }
             Date startDate;
@@ -229,7 +228,6 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         for (Id parentId : mapStartDate.keySet()){
             if (mapStartDate.get(parentId).daysBetween(dueDate) <= HDT_UTL_QualityCall.DAYS_TO_WORK){
                 this.mapOrderToManage.put(parentId,false);
-                this.actMap.remove(parentId);
             }
         }
     }
