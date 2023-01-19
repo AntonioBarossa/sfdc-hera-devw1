@@ -1,11 +1,11 @@
 public with sharing class HDT_UTL_GenericSolHandler {
 
-    public static Sale__c createSale(String accountId, String contactId){
+    public static Sale__c createSale(String accountId, String contactId, String saleName){
         String recordId;
         Sale__c sale = new Sale__c();
         try{
             sale = new Sale__c(
-                Name = 'Vendita Analisi Consumi da Web ' + Date.today(),
+                Name = saleName+' '+ Date.today(),
                 CurrentStep__c = 4.0,
                 SalesContactRole__c = 'Titolare',
                 SalesContact__c = getTitolare(accountId)?.Contact?.Id,//contactId,

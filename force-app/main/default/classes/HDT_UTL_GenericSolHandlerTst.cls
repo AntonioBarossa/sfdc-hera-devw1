@@ -68,7 +68,7 @@ public class HDT_UTL_GenericSolHandlerTst {
     static void createSaleTst(){
         Contact cont=[SELECT Id,AccountId FROM Contact WHERE Account.RecordTypeId=:utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE LIMIT 1];
         Test.startTest();
-        HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id);
+        HDT_UTL_GenericSolHandler.createSale(cont.AccountId, cont.Id,'Vendita Analisi Consumi da Web ');
         Test.stopTest();
         Sale__c generatedSale=[SELECT Id,Account__c FROM Sale__c WHERE Account__c=:cont.AccountId LIMIT 1];
         System.assertEquals(cont.AccountId, generatedSale.Account__c, 'Sale__c object created successfully');
