@@ -39,8 +39,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
                                                                  WHERE wrts_prcgvr__CalloutTemplate__c = 'HDT_SegnalazioniAmbientali'
                                                                  WITH SECURITY_ENFORCED];
             if (cases.isEmpty() || transitions.isEmpty() ) {
-                System.debug(LoggingLevel.DEBUG, 'No Cases or Transitions found.');
-                return null;
+                throw new HDT_UTL_HeraException('No Cases or Transitions found');
             }
             return utlGarbage.launchCalloutTemplateSync(cases[0].Id, transitions[0].Id);
         }
