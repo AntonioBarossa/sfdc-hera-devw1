@@ -111,7 +111,6 @@ public with sharing class HDT_UTL_Utils {
         for (Integer i = 0; i < strArr.size(); i++) {
             if (phaseTo.equalsIgnoreCase(strArr[i]) && strArr.size() > i+1 && strArr[i+1]!= null && strArr[i+1].isNumeric()) {
                 unixDateTime = strArr[i+1];
-                break;
             }
         }
         if (''.equals(unixDateTime)){
