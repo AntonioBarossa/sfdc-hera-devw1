@@ -2,14 +2,15 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 21-10-2022
+ * @last modified on  : 19-01-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.AvoidGlobalModifier, PMD.AvoidDebugStatements')
 global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     private static final String REQUEST_PATH = '/notice';
-    private final static String PHASE = 'Inviata a SAP';
+    private static final String PHASE = 'Inviata a SAP';
+    private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
     HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
 
     global HDT_WS_Agevolazione() {
@@ -28,8 +29,19 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
 
         String commercialProduct = (String) obj.get('CommercialProduct__c');
         if('Istruttoria DL116'.equalsIgnoreCase(commercialProduct)){
-            //richiama logiche task DL 116
-            return null;
+            List<Case> cases = [SELECT Id 
+                                FROM Case 
+                                WHERE Order__c=:obj.Id
+                                WITH SECURITY_ENFORCED];
+                                 
+            List<Wrts_prcgvr__PhaseTransition__c> transitions = [SELECT id 
+                                                                 FROM Wrts_prcgvr__PhaseTransition__c 
+                                                                 WHERE wrts_prcgvr__CalloutTemplate__c = 'HDT_SegnalazioniAmbientali'
+                                                                 WITH SECURITY_ENFORCED];
+            if (cases.isEmpty() || transitions.isEmpty() ) {
+                throw new HDT_UTL_HeraException('No Cases or Transitions found');
+            }
+            return utlGarbage.launchCalloutTemplateSync(cases[0].Id, transitions[0].Id);
         }
         List<Case> lcs = [ SELECT Id FROM Case Where Order__c=:obj.Id AND RecordTypeId=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId() WITH SECURITY_ENFORCED LIMIT 1 ];
         wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
@@ -45,7 +57,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
         HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
         Map<String, Object> request = generate.generateMap();
 
-        system.debug('request '+JSON.serializePretty(request));
+        System.debug(LoggingLevel.DEBUG,'request '+JSON.serializePretty(request));
 
         //Case caso = lcs[0];
 
