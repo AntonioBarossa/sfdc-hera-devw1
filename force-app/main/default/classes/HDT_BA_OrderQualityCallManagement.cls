@@ -50,7 +50,8 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         try{
             Id rtId = (new  HDT_QR_RecordType()).getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c').Id;
             List<Order> ordersToUpdate = new List<Order>();
-            List<wrts_prcgvr__Activity__c> activitiesToInsert = new List<wrts_prcgvr__Activity__c>();
+            //List<wrts_prcgvr__Activity__c> activitiesToInsert = new List<wrts_prcgvr__Activity__c>();
+            Map<Id,wrts_prcgvr__Activity__c> activitiesToInsert = new Map<Id,wrts_prcgvr__Activity__c>();
             Set<String> orderToCancel = new Set<String>();
             Set<Id> orderWithActivity = new Set<Id>();
             Set<String> pOrdersId = new Set<String>();
@@ -122,10 +123,11 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }
                 
                 if (needsActivity && ((!canDeleteOrder || (o.VASType__c != 'VAS Fatturabili' && ('NO_CANCEL_NO_BILL'.equals(result) || 'NO_CANCEL'.equals(result))) || (o.VASType__c == 'VAS Fatturabili' && ('NO_CANCEL'.equals(result) || 'NO_CANCEL_BILL'.equals(result)))))) {
-                    activitiesToInsert.add(new wrts_prcgvr__Activity__c(
+                    Id orderId = o.QualityCallUnique__c ? o.ParentOrder__c : o.Id;
+                    activitiesToInsert.put(orderId, new wrts_prcgvr__Activity__c(
                         RecordTypeId = rtId,
                         Account__c = o.AccountId,
-                        Order__c = o.QualityCallUnique__c ? o.ParentOrder__c : o.Id,
+                        Order__c = orderId,
                         Type__c = 'Quality Scaduta',
                         wrts_prcgvr__Status__c = 'Aperta',
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
@@ -159,8 +161,8 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             }
 
             if (!activitiesToInsert.isEmpty()){
-                List<Database.SaveResult> srList = Database.insert(activitiesToInsert, false);
-                qCall.setLogRecord(srList, activitiesToInsert, logs, 'insert activities');
+                List<Database.SaveResult> srList = Database.insert(activitiesToInsert.values(), false);
+                qCall.setLogRecord(srList, activitiesToInsert.values(), logs, 'insert activities');
             }
 
         }catch (Exception ex){
