@@ -966,6 +966,13 @@ public class HDT_UTL_ScartiTst {
                 System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
             System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+            o.Phase__c = 'Errore Lavorazione SAP';
+            update o;
+            update new Order (Id = o.Id,ManagedSapDiscard__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );
+            update new Order (Id = o.Id, Phase__c = 'Da Inviare');
+            o = [SELECT id,Phase__c,ManagedSapDiscard__c FROM Order WHERE Id =:o.Id];
+            System.assertEquals(o.Phase__c, 'Da Inviare', 'Non è stato rivelato l\'errore lavorazione SAP impostato da SFDC.');
+            System.assert(String.isBlank(o.ManagedSapDiscard__c), 'Non è stato sbiancato il campo all\'uscita della fase');
         Test.stopTest();
     }
 
@@ -999,8 +1006,6 @@ public class HDT_UTL_ScartiTst {
             System.assert(error,'Non è stata lanciata l\'eccezione attesa');
             c.Phase__c = 'Errore Lavorazione SAP';
             update c;
-            c.PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||';
-            c.DistributorFlowCode__c = 'OK';
             update new Case (Id = c.Id,DistributorFlowCode__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );
             update new Case (Id = c.Id, Phase__c = 'Da Inviare');
             c = [SELECT id,Phase__c,DistributorFlowCode__c FROM Case WHERE Id =:c.Id];
