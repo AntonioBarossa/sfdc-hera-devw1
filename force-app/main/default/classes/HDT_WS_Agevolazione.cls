@@ -10,7 +10,7 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
 
     private static final String REQUEST_PATH = '/notice';
     private static final String PHASE = 'Inviata a SAP';
-    private static final HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
+    private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
     HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
 
     global HDT_WS_Agevolazione() {
