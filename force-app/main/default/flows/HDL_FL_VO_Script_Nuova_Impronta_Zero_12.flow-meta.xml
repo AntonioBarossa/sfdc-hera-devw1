@@ -4,8 +4,8 @@
     <assignments>
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
-        <locationX>2404</locationX>
-        <locationY>6734</locationY>
+        <locationX>2534</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
-        <locationX>1612</locationX>
-        <locationY>6734</locationY>
+        <locationX>1742</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>AssignEbike</name>
         <label>AssignEbike</label>
-        <locationX>3460</locationX>
-        <locationY>6734</locationY>
+        <locationX>3590</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistEbike</assignToReference>
             <operator>Assign</operator>
@@ -66,7 +66,7 @@
     <assignments>
         <name>AssignEE</name>
         <label>AssignEE</label>
-        <locationX>622</locationX>
+        <locationX>490</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>IsEnergiaElettrica</assignToReference>
@@ -82,7 +82,7 @@
     <assignments>
         <name>AssignEE_0</name>
         <label>AssignEE</label>
-        <locationX>1678</locationX>
+        <locationX>2290</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>IsEnergiaElettrica</assignToReference>
@@ -98,8 +98,8 @@
     <assignments>
         <name>AssignFotoVoltaico</name>
         <label>AssignFotoVoltaico</label>
-        <locationX>4252</locationX>
-        <locationY>6734</locationY>
+        <locationX>4382</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistFotoVoltaico</assignToReference>
             <operator>Assign</operator>
@@ -114,7 +114,7 @@
     <assignments>
         <name>AssignGas</name>
         <label>AssignGas</label>
-        <locationX>1502</locationX>
+        <locationX>1370</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
@@ -130,7 +130,7 @@
     <assignments>
         <name>AssignGas_0</name>
         <label>AssignGas</label>
-        <locationX>2206</locationX>
+        <locationX>3170</locationX>
         <locationY>1118</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
@@ -146,7 +146,7 @@
     <assignments>
         <name>AssignInstallazione</name>
         <label>AssignInstallazione</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>3374</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneTermostato</assignToReference>
@@ -162,7 +162,7 @@
     <assignments>
         <name>AssignInstallazioneStandard</name>
         <label>AssignInstallazioneStandard</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>4382</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneStandard</assignToReference>
@@ -178,8 +178,8 @@
     <assignments>
         <name>AssignLED</name>
         <label>AssignLED</label>
-        <locationX>1084</locationX>
-        <locationY>6734</locationY>
+        <locationX>1214</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
             <operator>Assign</operator>
@@ -201,7 +201,7 @@
     <assignments>
         <name>AssignLedKit</name>
         <label>AssignLedKit</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>3710</locationY>
         <assignmentItems>
             <assignToReference>KitLedVariable</assignToReference>
@@ -215,10 +215,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignmentAnalisiConsumi</name>
+        <label>AssignmentAnalisiConsumi</label>
+        <locationX>1038</locationX>
+        <locationY>6038</locationY>
+        <assignmentItems>
+            <assignToReference>AnalisiConsumi</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
-        <locationX>3724</locationX>
-        <locationY>6734</locationY>
+        <locationX>3854</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
@@ -233,8 +249,8 @@
     <assignments>
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
-        <locationX>3196</locationX>
-        <locationY>6734</locationY>
+        <locationX>3326</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -256,8 +272,8 @@
     <assignments>
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
-        <locationX>2140</locationX>
-        <locationY>6734</locationY>
+        <locationX>2270</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -279,8 +295,8 @@
     <assignments>
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
-        <locationX>1876</locationX>
-        <locationY>6734</locationY>
+        <locationX>2006</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -302,8 +318,8 @@
     <assignments>
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
-        <locationX>2932</locationX>
-        <locationY>6734</locationY>
+        <locationX>3062</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -325,8 +341,8 @@
     <assignments>
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
-        <locationX>2668</locationX>
-        <locationY>6734</locationY>
+        <locationX>2798</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
             <operator>Assign</operator>
@@ -341,8 +357,8 @@
     <assignments>
         <name>AssignSanifica</name>
         <label>AssignSanifica</label>
-        <locationX>3988</locationX>
-        <locationY>6734</locationY>
+        <locationX>4118</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
@@ -355,42 +371,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignStringEle</name>
-        <label>AssignStringEle</label>
-        <locationX>50</locationX>
-        <locationY>5702</locationY>
-        <assignmentItems>
-            <assignToReference>ContainerEleGas</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Luce</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Servizi_Bundle</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignStringGas</name>
-        <label>AssignStringGas</label>
-        <locationX>314</locationX>
-        <locationY>5702</locationY>
-        <assignmentItems>
-            <assignToReference>ContainerEleGas</assignToReference>
-            <operator>Add</operator>
-            <value>
-                <stringValue>Gas</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Servizi_Bundle</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssignThermo</name>
         <label>AssignThermo</label>
-        <locationX>1348</locationX>
-        <locationY>6734</locationY>
+        <locationX>1478</locationX>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -412,7 +396,7 @@
     <assignments>
         <name>AssignVariabiliConcatenate</name>
         <label>AssignVariabiliConcatenate</label>
-        <locationX>1062</locationX>
+        <locationX>930</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
@@ -449,7 +433,7 @@
     <assignments>
         <name>AssignVariabiliConcatenate_0</name>
         <label>AssignVariabiliConcatenate</label>
-        <locationX>1942</locationX>
+        <locationX>2730</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
@@ -486,7 +470,7 @@
     <assignments>
         <name>CounterTermostato</name>
         <label>CounterTermostato</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>3038</locationY>
         <assignmentItems>
             <assignToReference>TermostatoQuantity</assignToReference>
@@ -502,7 +486,7 @@
     <assignments>
         <name>CounterWallBox</name>
         <label>CounterWallBox</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>4046</locationY>
         <assignmentItems>
             <assignToReference>WallBoxCounter</assignToReference>
@@ -518,8 +502,8 @@
     <assignments>
         <name>Vas_PresentiAssign</name>
         <label>Vas PresentiAssign</label>
-        <locationX>2800</locationX>
-        <locationY>6494</locationY>
+        <locationX>2930</locationX>
+        <locationY>6710</locationY>
         <assignmentItems>
             <assignToReference>VariableVasPresenti</assignToReference>
             <operator>Assign</operator>
@@ -534,7 +518,7 @@
     <decisions>
         <name>Bonus_Decision</name>
         <label>Bonus Decision</label>
-        <locationX>402</locationX>
+        <locationX>270</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision</targetReference>
@@ -566,7 +550,7 @@
     <decisions>
         <name>Bonus_Decision_0</name>
         <label>Bonus Decision</label>
-        <locationX>842</locationX>
+        <locationX>710</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0</targetReference>
@@ -598,7 +582,7 @@
     <decisions>
         <name>Bonus_Decision_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0</targetReference>
@@ -623,7 +607,7 @@
     <decisions>
         <name>Bonus_Decision_0_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>1722</locationX>
+        <locationX>1590</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0</targetReference>
@@ -646,9 +630,137 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Bonus_Decision_Az_EE_INB</name>
+        <label>Bonus Decision</label>
+        <locationX>2510</locationX>
+        <locationY>1598</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
+        <rules>
+            <name>isBonus_0_0_0_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Bonus_AZ_INB_EE</targetReference>
+            </connector>
+            <label>isBonus</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Decision_Az_EE_Out</name>
+        <label>Bonus Decision</label>
+        <locationX>2070</locationX>
+        <locationY>1598</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
+        <rules>
+            <name>isBonus_0_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Bonus_0_0_0_0</targetReference>
+            </connector>
+            <label>isBonus</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Decision_Az_GAS_INB</name>
+        <label>Bonus Decision</label>
+        <locationX>3390</locationX>
+        <locationY>1598</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
+        <rules>
+            <name>isBonus_0_0_0_0_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Bonus_Gas_Az_Inb</targetReference>
+            </connector>
+            <label>isBonus</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Bonus_Decision_Az_GAS_OUT</name>
+        <label>Bonus Decision</label>
+        <locationX>2950</locationX>
+        <locationY>1598</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
+        <rules>
+            <name>isBonus_0_0_0_0_0</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Bonus_Gas_Az_Out</targetReference>
+            </connector>
+            <label>isBonus</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Bonus_Obbligatori_Decision</name>
         <label>Bonus Obbligatori Decision</label>
-        <locationX>842</locationX>
+        <locationX>710</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Bonus_Decision_0</targetReference>
@@ -694,7 +806,7 @@
     <decisions>
         <name>Bonus_Obbligatori_Decision_0</name>
         <label>Bonus Obbligatori Decision</label>
-        <locationX>402</locationX>
+        <locationX>270</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Bonus_Decision</targetReference>
@@ -740,7 +852,7 @@
     <decisions>
         <name>Bonus_Obbligatori_Decision_0_0</name>
         <label>Bonus Obbligatori Decision</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Bonus_Decision_0_0</targetReference>
@@ -786,7 +898,7 @@
     <decisions>
         <name>Bonus_Obbligatori_Decision_0_0_0</name>
         <label>Bonus Obbligatori Decision</label>
-        <locationX>1722</locationX>
+        <locationX>1590</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Bonus_Decision_0_0_0</targetReference>
@@ -832,7 +944,7 @@
     <decisions>
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>622</locationX>
+        <locationX>490</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_0</targetReference>
@@ -857,7 +969,7 @@
     <decisions>
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1502</locationX>
+        <locationX>1370</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_Gas_0</targetReference>
@@ -882,7 +994,7 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>798</locationX>
+        <locationX>666</locationX>
         <locationY>4814</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE_0</targetReference>
@@ -907,7 +1019,7 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1326</locationX>
+        <locationX>1194</locationX>
         <locationY>4814</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS_0</targetReference>
@@ -932,24 +1044,24 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1678</locationX>
+        <locationX>2290</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
-            <targetReference>Condizioni_Economiche_Famiglie_EE_0_0_0</targetReference>
+            <targetReference>Condizioni_Economiche_Aziende_EE_INB</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isInbound</defaultConnectorLabel>
         <rules>
             <name>isOutbound_0_0_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Condizioni_Economiche_Famiglie_EE_0_0</targetReference>
+                <targetReference>Condizioni_Economiche_Aziende_EE_OUT</targetReference>
             </connector>
             <label>isOutbound</label>
         </rules>
@@ -957,24 +1069,74 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>2206</locationX>
+        <locationX>3170</locationX>
         <locationY>1238</locationY>
         <defaultConnector>
-            <targetReference>Condizioni_Economiche_Famiglie_Gas_0_0_0</targetReference>
+            <targetReference>Condizioni_Economiche_Aziende_Gas_INB</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isInbound</defaultConnectorLabel>
         <rules>
             <name>isOutbound_0_0_0_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.Channel__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Outbound</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Condizioni_Economiche_Famiglie_Gas_0_0</targetReference>
+                <targetReference>Condizioni_Economiche_Aziende_Gas_OUT</targetReference>
+            </connector>
+            <label>isOutbound</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>CanaleVenditaDecisionAz</name>
+        <label>CanaleVenditaDecisionAz</label>
+        <locationX>2466</locationX>
+        <locationY>2246</locationY>
+        <defaultConnector>
+            <targetReference>Dati_Tecnici_Aziende_EE_Inb</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isInbound</defaultConnectorLabel>
+        <rules>
+            <name>isOutbound_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Tecnici_Aziende_EE_Out</targetReference>
+            </connector>
+            <label>isOutbound</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>CanaleVenditaDecisionAz_0</name>
+        <label>CanaleVenditaDecisionAz</label>
+        <locationX>2994</locationX>
+        <locationY>2246</locationY>
+        <defaultConnector>
+            <targetReference>Dati_Tecnici_Aziende_Gas_Inb</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isInbound</defaultConnectorLabel>
+        <rules>
+            <name>isOutbound_0_0_0_0_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.Channel__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Dati_Tecnici_Aziende_Gas_Out</targetReference>
             </connector>
             <label>isOutbound</label>
         </rules>
@@ -982,7 +1144,7 @@
     <decisions>
         <name>Categoria_Cliente_Decision</name>
         <label>Categoria Cliente Decision</label>
-        <locationX>820</locationX>
+        <locationX>950</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
@@ -1007,8 +1169,11 @@
     <decisions>
         <name>Categoria_Cliente_Decision_0</name>
         <label>Categoria Cliente Decision</label>
-        <locationX>820</locationX>
-        <locationY>7142</locationY>
+        <locationX>950</locationX>
+        <locationY>7358</locationY>
+        <defaultConnector>
+            <targetReference>DecisionServiziBuddleAZ</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>isAziende</defaultConnectorLabel>
         <rules>
             <name>isFamiglie_0</name>
@@ -1021,7 +1186,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Durata_Contratto</targetReference>
+                <targetReference>DecisionServiziBuddleFAM</targetReference>
             </connector>
             <label>isFamiglie</label>
         </rules>
@@ -1029,8 +1194,8 @@
     <decisions>
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
-        <locationX>622</locationX>
-        <locationY>7382</locationY>
+        <locationX>686</locationX>
+        <locationY>7934</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0</targetReference>
         </defaultConnector>
@@ -1052,9 +1217,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>ChannelDecisionAZ</name>
+        <label>ChannelDecision</label>
+        <locationX>1214</locationX>
+        <locationY>7934</locationY>
+        <defaultConnector>
+            <targetReference>Conferma_Adesione_Screen_AZ_INB</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Inbound</defaultConnectorLabel>
+        <rules>
+            <name>Outbound_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Outbound</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Conferma_Adesione_Screen_AZ_OUT</targetReference>
+            </connector>
+            <label>Outbound</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ConstainsInstallStandard</name>
         <label>ConstainsInstallStandard</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>4262</locationY>
         <defaultConnector>
             <targetReference>CounterLoop</targetReference>
@@ -1079,7 +1269,7 @@
     <decisions>
         <name>ContainsKitLed</name>
         <label>ContainsKitLed</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>3590</locationY>
         <defaultConnector>
             <targetReference>ContainsWallBox</targetReference>
@@ -1104,7 +1294,7 @@
     <decisions>
         <name>ContainsTermostatoConInstallazione</name>
         <label>ContainsTermostatoConInstallazione</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>3254</locationY>
         <defaultConnector>
             <targetReference>ContainsKitLed</targetReference>
@@ -1129,7 +1319,7 @@
     <decisions>
         <name>ContainsWallBox</name>
         <label>ContainsWallBox</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>3926</locationY>
         <defaultConnector>
             <targetReference>ConstainsInstallStandard</targetReference>
@@ -1152,34 +1342,84 @@
         </rules>
     </decisions>
     <decisions>
-        <name>isGasOrisEleDecision</name>
-        <label>isGasOrisEleDecision</label>
-        <locationX>182</locationX>
-        <locationY>5582</locationY>
+        <name>DecisionAnalisiConsumi</name>
+        <label>DecisionAnalisiConsumi</label>
+        <locationX>1170</locationX>
+        <locationY>5918</locationY>
         <defaultConnector>
-            <targetReference>AssignStringGas</targetReference>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>isGasDecision</defaultConnectorLabel>
+        <defaultConnectorLabel>Not Contains</defaultConnectorLabel>
         <rules>
-            <name>isEleDecision</name>
+            <name>Contains</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                <leftValueReference>AnalisiConsumiChildsLoop.CommercialProduct__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Analisi Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentAnalisiConsumi</targetReference>
+            </connector>
+            <label>Contains</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionServiziBuddleAZ</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>1214</locationX>
+        <locationY>7478</locationY>
+        <defaultConnector>
+            <targetReference>Durata_Contratto_AZ</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Contains Analisi Consumi</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Analisi_Consumi_AZ</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssignStringEle</targetReference>
+                <targetReference>Servizi_Bundle_AZ</targetReference>
             </connector>
-            <label>isEleDecision</label>
+            <label>Contains Analisi Consumi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionServiziBuddleFAM</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>686</locationX>
+        <locationY>7478</locationY>
+        <defaultConnector>
+            <targetReference>Durata_Contratto</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Contains Analisi Consumi</defaultConnectorLabel>
+        <rules>
+            <name>ContainsAnalisiConsumi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Servizi_Bundle</targetReference>
+            </connector>
+            <label>Contains Analisi Consumi</label>
         </rules>
     </decisions>
     <decisions>
         <name>Promo_Decision</name>
         <label>Promo Decision</label>
-        <locationX>402</locationX>
+        <locationX>270</locationX>
         <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
@@ -1218,7 +1458,7 @@
     <decisions>
         <name>Promo_Decision_0</name>
         <label>Promo Decision</label>
-        <locationX>842</locationX>
+        <locationX>710</locationX>
         <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
@@ -1250,7 +1490,7 @@
     <decisions>
         <name>Promo_Decision_0_0</name>
         <label>Promo Decision</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
@@ -1289,7 +1529,7 @@
     <decisions>
         <name>Promo_Decision_0_0_0</name>
         <label>Promo Decision</label>
-        <locationX>1722</locationX>
+        <locationX>1590</locationX>
         <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
@@ -1328,7 +1568,7 @@
     <decisions>
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
-        <locationX>1062</locationX>
+        <locationX>930</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>AssignGas</targetReference>
@@ -1353,7 +1593,7 @@
     <decisions>
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
-        <locationX>1062</locationX>
+        <locationX>930</locationX>
         <locationY>4694</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0</targetReference>
@@ -1378,7 +1618,7 @@
     <decisions>
         <name>Servizio_Decision_0_0</name>
         <label>Servizio Decision</label>
-        <locationX>1942</locationX>
+        <locationX>2730</locationX>
         <locationY>998</locationY>
         <defaultConnector>
             <targetReference>AssignGas_0</targetReference>
@@ -1388,7 +1628,7 @@
             <name>isEE_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>LoopOrdiniFigliOfferta.CommodityFormula__c</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.CommodityFormula__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Energia Elettrica</stringValue>
@@ -1401,9 +1641,34 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Servizio_Decision_Az</name>
+        <label>Servizio Decision</label>
+        <locationX>2730</locationX>
+        <locationY>2126</locationY>
+        <defaultConnector>
+            <targetReference>CanaleVenditaDecisionAz_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isGas</defaultConnectorLabel>
+        <rules>
+            <name>isEE_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CanaleVenditaDecisionAz</targetReference>
+            </connector>
+            <label>isEE</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Termostato</name>
         <label>ContainsTermostato</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>2918</locationY>
         <defaultConnector>
             <targetReference>ContainsTermostatoConInstallazione</targetReference>
@@ -1435,8 +1700,8 @@
     <decisions>
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
-        <locationX>1854</locationX>
-        <locationY>6374</locationY>
+        <locationX>1984</locationX>
+        <locationY>6590</locationY>
         <defaultConnector>
             <targetReference>Vas_PresentiAssign</targetReference>
         </defaultConnector>
@@ -1460,8 +1725,8 @@
     <decisions>
         <name>WhichVasName</name>
         <label>WhichVasName</label>
-        <locationX>2800</locationX>
-        <locationY>6614</locationY>
+        <locationX>2930</locationX>
+        <locationY>6830</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1663,6 +1928,30 @@
         </rules>
     </decisions>
     <formulas>
+        <name>AzPrezzoLordoF1Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c}*1.1</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>AzPrezzoLordoF2Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c}*1.1</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>AzPrezzoLordoF3Formula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}*1.1</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
+        <name>AzPrezzoLordoFormula</name>
+        <dataType>Number</dataType>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}*1.1</expression>
+        <scale>4</scale>
+    </formulas>
+    <formulas>
         <name>FormulaPriceF0</name>
         <dataType>Number</dataType>
         <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}</expression>
@@ -1688,19 +1977,19 @@
     <formulas>
         <name>PrezzoLordoFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>PrezzoLordoOrePieneFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>PrezzoLordoOreVuoteFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
@@ -1714,9 +2003,23 @@
     <interviewLabel>HDL FL VO Script - Nuova Impronta Zero 12 {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Nuova Impronta Zero 12</label>
     <loops>
+        <name>AnalisiConsumiChildsLoop</name>
+        <label>AnalisiConsumiChildsLoop</label>
+        <locationX>950</locationX>
+        <locationY>5798</locationY>
+        <collectionReference>getChilds</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DecisionAnalisiConsumi</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>CounterLoop</name>
         <label>CounterLoop</label>
-        <locationX>1062</locationX>
+        <locationX>930</locationX>
         <locationY>2798</locationY>
         <collectionReference>GetOrderItem</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1730,7 +2033,7 @@
     <loops>
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
-        <locationX>182</locationX>
+        <locationX>50</locationX>
         <locationY>638</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1744,7 +2047,7 @@
     <loops>
         <name>LoopOrdiniFigliOfferta_0</name>
         <label>LoopOrdiniFigliOfferta</label>
-        <locationX>1458</locationX>
+        <locationX>1850</locationX>
         <locationY>638</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1752,14 +2055,14 @@
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli_0</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
+            <targetReference>GetParent</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
-        <locationX>820</locationX>
-        <locationY>6134</locationY>
+        <locationX>950</locationX>
+        <locationY>6350</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1789,9 +2092,30 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
+        <name>getChilds</name>
+        <label>getChilds</label>
+        <locationX>950</locationX>
+        <locationY>5678</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetOrderItem</name>
         <label>GetOrderItem</label>
-        <locationX>1062</locationX>
+        <locationX>930</locationX>
         <locationY>2678</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1812,11 +2136,11 @@
     <recordLookups>
         <name>GetOrderProduct</name>
         <label>GetOrderProduct</label>
-        <locationX>182</locationX>
-        <locationY>5462</locationY>
+        <locationX>950</locationX>
+        <locationY>5558</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>isGasOrisEleDecision</targetReference>
+            <targetReference>getChilds</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -1833,8 +2157,8 @@
     <recordLookups>
         <name>GetParent</name>
         <label>GetParent</label>
-        <locationX>182</locationX>
-        <locationY>5342</locationY>
+        <locationX>950</locationX>
+        <locationY>5438</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetOrderProduct</targetReference>
@@ -1866,9 +2190,85 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
+        <name>Bonus_Obbligatorio_Aziende_EE_INB</name>
+        <label>Bonus_Obbligatorio_Aziende_EE</label>
+        <locationX>2510</locationX>
+        <locationY>1478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision_Az_EE_INB</targetReference>
+        </connector>
+        <fields>
+            <name>FAM_EE_BONUS_OBB_INB_text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Fedeltà&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Obbligatorio_Aziende_EE_OUT</name>
+        <label>Bonus_Obbligatorio_Aziende_EE</label>
+        <locationX>2070</locationX>
+        <locationY>1478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision_Az_EE_Out</targetReference>
+        </connector>
+        <fields>
+            <name>FAM_EE_BONUS_OBB_OUT_text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Fedeltà&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Obbligatorio_Aziende_Gas_Inb</name>
+        <label>Bonus_Obbligatorio_Aziende_Gas</label>
+        <locationX>3390</locationX>
+        <locationY>1478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision_Az_GAS_INB</targetReference>
+        </connector>
+        <fields>
+            <name>AZ_GAS_BONUS_OBB_INB_text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Fedeltà&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Bonus_Obbligatorio_Aziende_Gas_OUT</name>
+        <label>Bonus_Obbligatorio_Aziende_Gas</label>
+        <locationX>2950</locationX>
+        <locationY>1478</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Decision_Az_GAS_OUT</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_FAM_EE_BONUS_OBB_OUT_text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Fedeltà&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Bonus_Obbligatorio_FAM_INB_EE</name>
         <label>Bonus Obbligatorio</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1887,7 +2287,7 @@
     <screens>
         <name>Bonus_Obbligatorio_FAM_INB_GAS</name>
         <label>Bonus Obbligatorio</label>
-        <locationX>1590</locationX>
+        <locationX>1458</locationX>
         <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1906,7 +2306,7 @@
     <screens>
         <name>Bonus_Obbligatorio_FAM_OUT_EE</name>
         <label>Bonus Obbligatorio</label>
-        <locationX>270</locationX>
+        <locationX>138</locationX>
         <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1925,7 +2325,7 @@
     <screens>
         <name>Bonus_Obbligatorio_FAM_OUT_GAS</name>
         <label>Bonus Obbligatorio</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1942,9 +2342,337 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Condizioni_Economiche_Aziende_EE_INB</name>
+        <label>Condizioni Economiche Aziende EE</label>
+        <locationX>2510</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Obbligatorio_Aziende_EE_INB</targetReference>
+        </connector>
+        <fields>
+            <name>FAM_EE_INB_Text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Energia elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 12 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FAM_EE_INB_Text2</name>
+            <fieldText>&lt;p&gt;•   Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di {!AzPrezzoLordoF1Formula} €/kWh in F1, {!AzPrezzoLordoF2Formula} €/kWh in F2 e {!AzPrezzoLordoF3Formula} €/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a {!AzPrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: F1: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c} €/kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F2: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c} €/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F3: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF3__c} €/ kWh&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;F24 ore: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10% per un cliente in bassa tensione, 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>123</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_EE_INB_Text3</name>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!AzPrezzoLordoFormula} €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c} €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>24</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_EE_INB_Text4</name>
+            <fieldText>&lt;p&gt;•	•	Il prezzo descritto, al netto delle perdite pari al 10% per un cliente in bassa tensione e del 3,8% per un cliente in media tensione, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’85% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte, tenuto conto dello sconto.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 150,00 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 15% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_EE_INB_Text5</name>
+            <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FAM_EE_INB_Text6</name>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 23,00&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Aziende_EE_OUT</name>
+        <label>Condizioni Economiche Aziende EE</label>
+        <locationX>2070</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Obbligatorio_Aziende_EE_OUT</targetReference>
+        </connector>
+        <fields>
+            <name>FAM_EE_OUT_Text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Energia elettrica per {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 12 mesi di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FAM_EE_OUT_Text2</name>
+            <fieldText>&lt;p&gt;•   Il profilo 123 prevede un prezzo applicato alla componente energia differenziato secondo le tre fasce orarie F1, F2 ed F3 definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo della componente energia, per il periodo da lei scelto, assumerà il valore di {!AzPrezzoLordoF1Formula} €/kWh in F1, {!AzPrezzoLordoF2Formula} €/kWh in F2 e {!AzPrezzoLordoF3Formula} €/kWh in F3. Qualora il misuratore non sia idoneo alla rilevazione dell’energia elettrica per fascia oraria, sarà applicato invece un prezzo uguale in tutte le ore della giornata e pari a {!AzPrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: F1: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c} €/kWh &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;F2:&lt;/span&gt;{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c} €/ kWh &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;F3:&lt;/span&gt;{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF3__c} €/ kWh&amp;nbsp;F24 ore: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10% per un cliente in bassa tensione, 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>123</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_EE_OUT_Text3</name>
+            <fieldText>&lt;p&gt;Il profilo 24 prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!AzPrezzoLordoFormula} €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c} €/kWh&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10% per un cliente in bassa tensione e 3,8% per un cliente in media tensione), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>24</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_EE_OUT_Text4</name>
+            <fieldText>&lt;p&gt;•	Il prezzo descritto, al netto delle perdite pari al 10% per un cliente in bassa tensione e del 3,8% per un cliente in media tensione, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’85% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte, tenuto conto dello sconto.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 150,00 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 15% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_EE_OUT_Text5</name>
+            <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FAM_EE_OUT_Text6</name>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, quelli previsti dal distributore attualmente pari ad € 25,81 e quelli previsti da Hera Comm/EstEnergy pari ad € 23,00&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Aziende_Gas_INB</name>
+        <label>Condizioni Economiche Aziende Gas</label>
+        <locationX>3390</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Obbligatorio_Aziende_Gas_Inb</targetReference>
+        </connector>
+        <fields>
+            <name>FAM_GAS_INB_Text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 12 mesi, di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FAM_GAS_INB_Text2</name>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 102% della spesa annua per un cliente con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte, tenuto conto dello sconto.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e oneri aggiuntivi, come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 22% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_GAS_INB_Text3</name>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_GAS_INB_Text4</name>
+            <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Aziende_Gas_OUT</name>
+        <label>Condizioni Economiche Aziende Gas OUT</label>
+        <locationX>2950</locationX>
+        <locationY>1358</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Bonus_Obbligatorio_Aziende_Gas_OUT</targetReference>
+        </connector>
+        <fields>
+            <name>FAM_GAS_OUT_Text1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le propongo di seguito le condizioni economiche, valide per un periodo di 12 mesi, di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} per la sua attività economica.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>FAM_GAS_OUT_Text2</name>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 102% della spesa annua per un cliente con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte, tenuto conto dello sconto.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e oneri aggiuntivi, come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 22% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_GAS_OUT_Text3</name>
+            <fieldText>&lt;p&gt;•	Nella prima bolletta ci saranno inoltre i costi della voltura, previsti da {!HDT_Script_Introduzione.salesCompany} pari ad € 25,00 e quelli applicabili a discrezione del Distributore Locale&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>3 AND (1 OR 2)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.VoltureType__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue>Mortis Causa</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>FAM_GAS_OUT_Text4</name>
+            <fieldText>&lt;p&gt;•	Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Condizioni_Economiche_Bonus</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>270</locationX>
+        <locationX>138</locationX>
         <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2016,7 +2744,7 @@
     <screens>
         <name>Condizioni_Economiche_Bonus_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2073,7 +2801,7 @@
     <screens>
         <name>Condizioni_Economiche_Bonus_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2130,7 +2858,7 @@
     <screens>
         <name>Condizioni_Economiche_Bonus_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>1590</locationX>
+        <locationX>1458</locationX>
         <locationY>1934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2185,9 +2913,153 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Condizioni_Economiche_Bonus_0_0_0_0</name>
+        <label>Condizioni Economiche Bonus</label>
+        <locationX>1938</locationX>
+        <locationY>1718</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_EE_BONUS_OUT_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Bonus_AZ_INB_EE</name>
+        <label>Condizioni Economiche Bonus</label>
+        <locationX>2378</locationX>
+        <locationY>1718</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_EE_BONUS_INB_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Bonus_Gas_Az_Inb</name>
+        <label>Condizioni Economiche Bonus Gas Az Inb</label>
+        <locationX>3258</locationX>
+        <locationY>1718</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_GAS_BONUS_INB_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Bonus_Gas_Az_Out</name>
+        <label>Condizioni Economiche Bonus Gas Az Out</label>
+        <locationX>2818</locationX>
+        <locationY>1718</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_Az</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_GAS_BONUS_OUT_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Lavoro Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Condizioni_Economiche_Famiglie_EE</name>
         <label>Condizioni Economiche Famiglie EE</label>
-        <locationX>402</locationX>
+        <locationX>270</locationX>
         <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2392,7 +3264,7 @@
     <screens>
         <name>Condizioni_Economiche_Famiglie_EE_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
-        <locationX>842</locationX>
+        <locationX>710</locationX>
         <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2601,37 +3473,9 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Condizioni_Economiche_Famiglie_EE_0_0</name>
-        <label>Condizioni Economiche Famiglie EE</label>
-        <locationX>1546</locationX>
-        <locationY>1358</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
-        </connector>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Condizioni_Economiche_Famiglie_EE_0_0_0</name>
-        <label>Condizioni Economiche Famiglie EE</label>
-        <locationX>1810</locationX>
-        <locationY>1358</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
-        </connector>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Condizioni_Economiche_Famiglie_Gas</name>
         <label>Condizioni Economiche Famiglie Gas</label>
-        <locationX>1282</locationX>
+        <locationX>1150</locationX>
         <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2706,7 +3550,7 @@
     <screens>
         <name>Condizioni_Economiche_Famiglie_Gas_0</name>
         <label>Condizioni Economiche Famiglie Gas</label>
-        <locationX>1722</locationX>
+        <locationX>1590</locationX>
         <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2779,37 +3623,9 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Condizioni_Economiche_Famiglie_Gas_0_0</name>
-        <label>Condizioni Economiche Famiglie Gas</label>
-        <locationX>2074</locationX>
-        <locationY>1358</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
-        </connector>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Condizioni_Economiche_Famiglie_Gas_0_0_0</name>
-        <label>Condizioni Economiche Famiglie Gas</label>
-        <locationX>2338</locationX>
-        <locationY>1358</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
-        </connector>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Condizioni_Economiche_Promozioni</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>270</locationX>
+        <locationX>138</locationX>
         <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2857,7 +3673,7 @@
     <screens>
         <name>Condizioni_Economiche_Promozioni_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>710</locationX>
+        <locationX>578</locationX>
         <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2891,7 +3707,7 @@
     <screens>
         <name>Condizioni_Economiche_Promozioni_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>1150</locationX>
+        <locationX>1018</locationX>
         <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -2961,7 +3777,7 @@
     <screens>
         <name>Condizioni_Economiche_Promozioni_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>1590</locationX>
+        <locationX>1458</locationX>
         <locationY>2270</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3031,8 +3847,8 @@
     <screens>
         <name>Conferma_Adesione_Screen</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>490</locationX>
-        <locationY>7502</locationY>
+        <locationX>554</locationX>
+        <locationY>8054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3556,8 +4372,8 @@
     <screens>
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>754</locationX>
-        <locationY>7502</locationY>
+        <locationX>818</locationX>
+        <locationY>8054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4150,9 +4966,862 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Conferma_Adesione_Screen_AZ_INB</name>
+        <label>Conferma Adesione Screen</label>
+        <locationX>1346</locationX>
+        <locationY>8054</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT2</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&lt;/strong&gt; e &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT3</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT4</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&amp;nbsp;&lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT5</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistContaWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT6</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Luce&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT7</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Gas&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT8</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT9</name>
+            <fieldText>&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT10</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o SMS?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_INB_TEXT11</name>
+            <fieldText>&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;•	SI/NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;•	SI/NO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in {!HDT_Script_Introduzione.salesCompany}.&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Conferma_Adesione_Screen_AZ_OUT</name>
+        <label>Conferma Adesione Screen</label>
+        <locationX>1082</locationX>
+        <locationY>8054</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT2</name>
+            <fieldText>&lt;p&gt;Mi conferma quindi che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Luce &lt;/strong&gt;e all’offerta&amp;nbsp;&lt;strong&gt;Gas&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT3</name>
+            <fieldText>&lt;p&gt;Mi conferma quindi che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Luce&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT4</name>
+            <fieldText>&lt;p&gt;Mi conferma quindi che aderisce all’offerta &lt;strong&gt;Gas&lt;/strong&gt;?&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT5</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistContaWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT6</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Luce&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT7</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera No Problem Gas&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT8</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT9</name>
+            <fieldText>&lt;p&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email o sms?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_CONFERMA_ADESIONE_AZ_OUT_TEXT10</name>
+            <fieldText>&lt;p&gt;•	Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} &lt;/span&gt;abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}!&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;&amp;nbsp;[***FINE REGISTRAZIONE***]&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Dati_Tecnici_Aziende_EE_Inb</name>
+        <label>Dati Tecnici Aziende EE Inb</label>
+        <locationX>2598</locationX>
+        <locationY>2366</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_INB_EE_DT_TITLE_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_1</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_2</name>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_3</name>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_4</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_5</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_6</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_EE_DT_AZ_TEXTBOX_7</name>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta_0.PowerCommitted__c} kW?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la tensione di fornitura è {!LoopOrdiniFigliOfferta_0.VoltageLevel__c}?&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Dati_Tecnici_Aziende_Gas_Inb</name>
+        <label>Dati Tecnici Aziende Gas Inb</label>
+        <locationX>3126</locationX>
+        <locationY>2366</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_TITLE</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_2</name>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della gas?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_3</name>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_4</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_5</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_6</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_7</name>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_INB_GAS_DT_AZ_TEXTBOX_8</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è {!LoopOrdiniFigliOfferta_0.Account.LastName__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.FacilitationExcise__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Dati_Tecnici_Aziende_Gas_Out</name>
+        <label>Dati Tecnici Aziende Gas Out</label>
+        <locationX>2862</locationX>
+        <locationY>2366</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_TITLE</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Gas&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’attuale fornitore Gas è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_2</name>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della gas?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_3</name>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_4</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_5</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_6</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_7</name>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice PDR è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura di gas è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_GAS_DT_AZ_TEXTBOX_8</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Le ricordo che in alcuni casi le forniture di gas naturale sono soggette all’imposta di consumo statale ed alle addizionali regionali agevolate. Mi conferma che la sua attività è {!LoopOrdiniFigliOfferta_0.Account.LastName__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, allora la informo che troverà la modulistica di richiesta all’interno del plico contrattuale da restituire debitamente compilata.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.FacilitationExcise__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
-        <locationX>666</locationX>
+        <locationX>534</locationX>
         <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4290,7 +5959,7 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
-        <locationX>930</locationX>
+        <locationX>798</locationX>
         <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4523,7 +6192,7 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
-        <locationX>1458</locationX>
+        <locationX>1326</locationX>
         <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4763,7 +6432,7 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_GAS_0_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
-        <locationX>1194</locationX>
+        <locationX>1062</locationX>
         <locationY>4934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4901,8 +6570,8 @@
     <screens>
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
-        <locationX>622</locationX>
-        <locationY>7262</locationY>
+        <locationX>686</locationX>
+        <locationY>7814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4989,15 +6658,94 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Servizi_Bundle</name>
-        <label>Servizi Bundle</label>
-        <locationX>182</locationX>
-        <locationY>5918</locationY>
+        <name>Durata_Contratto_AZ</name>
+        <label>Durata Contratto</label>
+        <locationX>1214</locationX>
+        <locationY>7814</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
+            <targetReference>ChannelDecisionAZ</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_DURATA_CONTRATTO_GAS_TEXT1</name>
+            <fieldText>&lt;h1&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Durata contratto&lt;/strong&gt;&lt;/h1&gt;&lt;p&gt;La informo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 9 mesi presso l’indirizzo della nostra sede legale.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Qualora il punto di fornitura di energia elettrica sia connesso in bassa tensione e/o&amp;nbsp;i consumi di gas non siano superiori a 200.000 Smc/anno può recedere in qualsiasi momento entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_DURATA_CONTRATTO_GAS_TEXT2</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Hera ContaWatt&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;, Lei potrà esercitare il diritto di recesso dal servizio nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, con un preavviso di almeno 30 giorni per il servizio.&lt;/span&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistContaWatt</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_DURATA_CONTRATTO_GAS_TEXT3</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_DURATA_CONTRATTO_GAS_TEXT4</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_DURATA_CONTRATTO_GAS_TEXT5</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/li&gt;&lt;li&gt;Riceverà una bolletta mensile con consumi reali. Se ciò non fosse possibile, i consumi saranno stimati, con successivo conguaglio.&lt;/li&gt;&lt;li&gt;Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistCaldaiaSicura</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Servizi_Bundle</name>
+        <label>Servizi Bundle</label>
+        <locationX>554</locationX>
+        <locationY>7598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Durata_Contratto</targetReference>
         </connector>
         <fields>
             <name>NIZ12_BUNDLE_FAM_TITLE_1</name>
@@ -5011,7 +6759,7 @@
         </fields>
         <fields>
             <name>NIZ12_BUNDLE_FAM_TEXTBOX_1</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta {!ContainerEleGas}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta &lt;strong&gt;Luce&lt;/strong&gt; o dell&apos;offerta &lt;strong&gt;Gas&lt;/strong&gt;, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi &lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt; e &lt;strong&gt;Hera Fast check up&lt;/strong&gt;. A questo proposito, mi conferma che:&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5097,14 +6845,243 @@
         </fields>
         <fields>
             <name>NIZ12_BUNDLE_FAM_TEXTBOX_8</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta {!ContainerEleGas}, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta &lt;strong&gt;Luce &lt;/strong&gt;o dell&apos;offerta &lt;strong&gt;Gas&lt;/strong&gt;, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio &lt;strong&gt;Hera Fast check up&lt;/strong&gt;.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Servizi_Bundle_AZ</name>
+        <label>Servizi Bundle</label>
+        <locationX>1082</locationX>
+        <locationY>7598</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Durata_Contratto_AZ</targetReference>
+        </connector>
+        <fields>
+            <name>NIZ12_BUNDLE_FAZ_TITLE_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Servizi in bundle alle offerte&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_BUNDLE_AZ_TITLE_2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_BUNDLE_AZ_TEXTBOX_1</name>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta &lt;strong&gt;Luce&lt;/strong&gt; o dell&apos;offerta &lt;strong&gt;Gas&lt;/strong&gt;, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio &lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;. A questo proposito, mi conferma che:&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_BUNDLE_AZ_TEXTBOX_2</name>
+            <fieldText>&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è {!GetOrderProduct.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrderProduct.OccupantsNumber__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_BUNDLE_AZ_TEXTBOX_3</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;la superficie dello stabile è &lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!GetOrderProduct.Surface__c} &lt;/span&gt;metri quadri?&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrderProduct.Surface__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_BUNDLE_AZ_TEXTBOX_4</name>
+            <fieldText>&lt;p&gt;Il report di “DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, i servizi, di cui riceverà il dettaglio nel plico contrattuale, non saranno più disponibili.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_BUNDLE_AZ_TEXTBOX_5</name>
+            <fieldText>&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Tecnici_Aziende_EE_Out</name>
+        <label>Dati Tecnici Aziende EE Out</label>
+        <locationX>2334</locationX>
+        <locationY>2366</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_NIZ12_INB_EE_DT_TITLE_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Dati Tecnici Energia Elettrica&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_1</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che l’attuale fornitore per l’Energia Elettrica è {!LoopOrdiniFigliOfferta_0.DistributorFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_2</name>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;•	Mi indica Ragione sociale e partita IVA riportati sulla bolletta della luce?&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;{!LoopOrdiniFigliOfferta_0.Account.LastName__c} {!LoopOrdiniFigliOfferta_0.Account.VATNumber__c}&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_7</name>
+            <fieldText>&lt;p&gt;•	La informiamo che effettueremo la voltura contestualmente alla data di cambio venditore&lt;/p&gt;&lt;p&gt;•	Conferma di possedere titolo idoneo a sottoscrivere la fornitura?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_8</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.LastName} {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.FirstName} e {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.VATNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_9</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Conferma che Ragione Sociale e Partita Iva del precedente intestatario sono {!LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c} e {!LoopOrdiniFigliOfferta_0.PreviousHolderVatNumber__c}?&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousHoldeCompanyName__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_10</name>
+            <fieldText>&lt;p&gt;•	Conferma che il codice cliente è {!LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.PreviousCustomer__r.Account.CustomerCode__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura con Switch</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.ProcessType__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Voltura</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_OUT_EE_DT_AZ_TEXTBOX_6</name>
+            <fieldText>&lt;p&gt;•	È già a Libero Mercato?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che il codice POD è {!LoopOrdiniFigliOfferta_0.ServicePointCodeFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;•	Mi conferma che la potenza impegnata è {!LoopOrdiniFigliOfferta_0.PowerCommitted__c} kW?&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la tensione di fornitura è {!LoopOrdiniFigliOfferta_0.VoltageLevel__c}?&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;CONFERMO&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Mi conferma che la fornitura elettrica è in {!LoopOrdiniFigliOfferta_0.SupplyAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>694</locationX>
+        <locationX>824</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
@@ -5114,7 +7091,7 @@
     <subflows>
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
-        <locationX>1062</locationX>
+        <locationX>930</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate</targetReference>
@@ -5131,7 +7108,7 @@
     <subflows>
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli_0</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
-        <locationX>1942</locationX>
+        <locationX>2730</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate_0</targetReference>
@@ -5142,7 +7119,7 @@
     <subflows>
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
-        <locationX>820</locationX>
+        <locationX>950</locationX>
         <locationY>158</locationY>
         <connector>
             <targetReference>HDT_Script_Introduzione</targetReference>
@@ -5165,7 +7142,7 @@
     <subflows>
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
-        <locationX>820</locationX>
+        <locationX>950</locationX>
         <locationY>398</locationY>
         <connector>
             <targetReference>Categoria_Cliente_Decision</targetReference>
@@ -5205,7 +7182,7 @@
     <subflows>
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
-        <locationX>820</locationX>
+        <locationX>950</locationX>
         <locationY>278</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
@@ -5243,8 +7220,8 @@
     <subflows>
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
-        <locationX>1854</locationX>
-        <locationY>6254</locationY>
+        <locationX>1984</locationX>
+        <locationY>6470</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -5275,6 +7252,16 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>AnalisiConsumi</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>ContainerEleGas</name>
         <dataType>String</dataType>
