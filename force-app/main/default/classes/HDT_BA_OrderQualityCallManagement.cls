@@ -73,7 +73,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 orderWithActivity.add(act.Order__c); //Verifico quali ordini hanno già l'activity Contratto da gestire in SFDC/Siebel o QC scaduta
             }
             this.getChildOrderInfo(pOrdersId,orderWithActivity); // creare le informazioni, per vedere se un ordine è da gestire (solo relativamente agli stati) e con quale data.
-
+            List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
             for (Order o : orders){
                 //Verificare se con il null funziona;
                 if (!this.mapOrderToManage.get(o.ParentOrder__c)){
@@ -91,6 +91,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                             break;
                         }
                     }
+                }
+                if (this.actMap.containsKey(o.ParentOrder__c)){
+                    actToUpdate.add(this.actMap.remove(o.ParentOrder__c));
                 }
                 String result = qCall.checkOrderPhase(o.Phase__c);
                 if ('CLOSE_PHASE'.equalsIgnoreCase(result)){
@@ -130,16 +133,12 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }              
                 ordersToUpdate.add(ordToUpd);
             }
-
-            for (wrts_prcgvr__Activity__c act : this.actMap.values()){
-                act.wrts_prcgvr__Status__c = 'Chiusa';
-                act.ContactResult__c='Chiusa Per Fine Intervallo';
-            }
+            this.closeActivities(actToUpdate);
             if (!orderToCancel.isEmpty()){
                 HDT_QR_Order qrOrder = new HDT_QR_Order();
                 for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel)){
                     if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)&& !'Quality Scaduta'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
-                        activitiesToInsert.add(
+                        actToUpdate.add(
                             new wrts_prcgvr__Activity__c(
                                 Id = activity.Id,
                                 wrts_prcgvr__Status__c = 'Annullata'
@@ -149,9 +148,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }
             }
 
-            if (!this.actMap.isEmpty()){
-                List<Database.SaveResult> srList = Database.update(this.actMap.values(), false);
-                qCall.setLogRecord(srList, this.actMap.values(), logs, 'update activities');
+            if (!actToUpdate.isEmpty()){
+                List<Database.SaveResult> srList = Database.update(actToUpdate, false);
+                qCall.setLogRecord(srList, actToUpdate, logs, 'update activities');
             }
             
             if (!ordersToUpdate.isEmpty()){
@@ -168,6 +167,13 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             logs.addLog('HDT_BA_QualityCall', 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
         }
         logs.saveMassiveRecords();
+    }
+
+    private void closeActivities(List<wrts_prcgvr__Activity__c> activities){
+        for (wrts_prcgvr__Activity__c act : activities){
+            act.wrts_prcgvr__Status__c = 'Chiusa';
+            act.ContactResult__c='Chiusa Per Fine Intervallo';
+        }
     }
 
 
@@ -227,6 +233,17 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
     }
 
     public void finish(Database.BatchableContext bc){
+        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_UTL_QualityCall');
+        try{
+            if (!this.actMap.isEmpty()){
+                this.closeActivities(this.actMap.values());
+                List<Database.SaveResult> srList = Database.update(this.actMap.values(), false);
+                qCall.setLogRecord(srList, this.actMap.values(), logs, 'update activities');
+            }
+        }catch(exception ex){
+            logs.addLog('HDT_BA_QualityCall', 'OrderQualityCallManagementfinish', JSON.serialize(this.actMap),null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
+        }
+        logs.saveMassiveRecords();
         System.debug(LoggingLevel.DEBUG,'HDT_BA_OrderQualityCallManagement - finish');
     }
 }
