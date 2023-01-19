@@ -50,7 +50,6 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         try{
             Id rtId = (new  HDT_QR_RecordType()).getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c').Id;
             List<Order> ordersToUpdate = new List<Order>();
-            //List<wrts_prcgvr__Activity__c> activitiesToInsert = new List<wrts_prcgvr__Activity__c>();
             Map<Id,wrts_prcgvr__Activity__c> activitiesToInsert = new Map<Id,wrts_prcgvr__Activity__c>();
             Set<String> orderToCancel = new Set<String>();
             Set<Id> orderWithActivity = new Set<Id>();
