@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>CommercialHousingUnit__c</fullName>
     <externalId>false</externalId>
-    <label>Unità abitative uso artigianale/commerci</label>
+    <label>Unità Abitative Uso Artigianale/Commerci</label>
     <precision>10</precision>
     <required>false</required>
     <scale>0</scale>
