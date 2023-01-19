@@ -251,7 +251,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
                 for ( Case cs : caseToUpdate )
                 {
-                    if( c.Id != currentCase.Id ){
+                    if( cs.Id != currentCase.Id ){
                         cs.Email__c = currentCase.Email__c;
                         cs.PhoneNumber__c = currentCase.PhoneNumber__c;
                         cs.Mobile__c = currentCase.Mobile__c;
