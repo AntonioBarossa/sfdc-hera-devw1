@@ -212,7 +212,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         System.assertEquals('In attesa Data Decorrenza', updatedCase8.Phase__c , 'Phase != In attesa Data Decorrenza');
 
         Case updateCase9 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase9.Id LIMIT 1];
-        System.assertEquals('Preventivo Scaduto', updateCase9.Phase__c, 'Preventivo non scaduto');
+        System.assertEquals('Preventivo scaduto', updateCase9.Phase__c, 'Preventivo non scaduto');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
         System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
