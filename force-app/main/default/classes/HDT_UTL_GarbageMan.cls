@@ -26,7 +26,7 @@ public with sharing class HDT_UTL_GarbageMan {
                 ];
     }
 
-    public void launchCalloutTemplateSync(Id sobjId, Id transitionId){
+    public Object launchCalloutTemplateSync(Id sobjId, Id transitionId){
         //Select all fields from a Sobject START
         Schema.DescribeSObjectResult descSobj = ((Id) sobjId).getSobjectType().getDescribe();
 
@@ -55,7 +55,7 @@ public with sharing class HDT_UTL_GarbageMan {
         argsMap.put('method', method);
         argsMap.put('parameters', new Map<String,String>());
 
-        callout.execute(argsMap);
+        return callout.execute(argsMap);
     }
 
     public List<Case> getCurrentCase(Id caseId){
