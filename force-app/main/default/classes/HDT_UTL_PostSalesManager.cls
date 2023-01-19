@@ -482,6 +482,14 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
     }
 
+    public void recalculateVoltureEffectiveDate(SObject inputSobj)
+    {
+        if(inputSobj.get('EffectiveDate__c') != null && System.today() > (Date)inputSobj.get('EffectiveDate__c'))
+        {
+            inputSobj.put('EffectiveDate__c', HDT_UTL_Case.addBusinessDay(System.today(), 3));
+        }
+    }
+
     public void sbloccoVoltura(SObject inputCase){
 
         Case currentCase = (Case) inputCase;
@@ -688,13 +696,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     public void handleUpdateUnitServicePoint(SObject inputCase){
         Case currentCase = (Case) inputCase;
 
-        if(!String.isBlank(currentCase.ServicePoint__c) && 'Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c)) && !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+        if(!String.isBlank(currentCase.ServicePoint__c) && 'Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
             try {
                 ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
-                if(sp != null){
+                if(sp != null && !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
                     sp.NotDomesticHousingUnit__c = currentCase.Unita_Abitative__c;
                     sp.NotResidentDomesticHousingUnit__c = currentCase.NotResidentDomesticHousingUnit__c;
                     sp.ResidentDomesticHousingUnit__c = currentCase.ResidentDomesticHousingUnit__c;
+                    sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
+                    update sp;
+                }else if (sp != null && 'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
+                    sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
                     update sp;
                 }
             } catch (Exception e) {
@@ -746,6 +758,29 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
         }
+    }
+
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleChiusuraActivitiesPending(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+
+        try {
+            if ('Ricostruzione Consumi'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+        
     }
 
     @Future

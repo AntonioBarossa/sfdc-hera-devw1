@@ -400,6 +400,7 @@
         <relatedList>SBQQ__Subscription__c.SBQQ__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <fields>Cluster__c</fields>
@@ -551,6 +552,21 @@
         <relatedList>SiebelMsgNotifica__x.ID_BP_SALESFORCE__c</relatedList>
         <sortField>DATA_INVIO__c</sortField>
         <sortOrder>Desc</sortOrder>
+    </relatedLists>
+    <relatedLists>
+        <fields>Cas_CaseNumber__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceCase__x.Cas_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Con_Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceContract__x.Con_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceWrtsActivity__x.AccountC__c</relatedList>
     </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>

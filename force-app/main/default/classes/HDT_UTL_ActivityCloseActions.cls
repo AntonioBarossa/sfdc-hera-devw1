@@ -132,7 +132,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         } 
 
         if(!caseToNewActivityType.isEmpty() || !orderToNewActivityType.isEmpty()){
-            System.enqueueJob(new HDT_WRP_Queue(caseToNewActivityType, orderToNewActivityType));
+            //System.enqueueJob(new HDT_WRP_Queue(caseToNewActivityType, orderToNewActivityType));
+            Map<Id, HDT_WRP_Actions> allActivities = new Map<Id, HDT_WRP_Actions>();
+            allActivities.putAll(caseToNewActivityType);
+            allActivities.putAll(orderToNewActivityType);
+            HDT_UTL_ActivityTemplate utilsTemplate = new HDT_UTL_ActivityTemplate();
+            utilsTemplate.handlePclickActivityCreation(allActivities);
         }
         if(!sObjectToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(sObjectToUpdate);
@@ -190,6 +195,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if( 'HDT_RT_VariazioniTari'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName) ||
             'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName)) return tariLogicVarDis(selectedCase, activity);
 
+        if('HDT_RT_PosizionamentoContenitore'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName)) return posContenitoreLogic(selectedCase, activity);
+
         //END >>> marco.arci@webresults.it
         /*if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
             if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');
@@ -227,6 +234,18 @@ public with sharing class HDT_UTL_ActivityCloseActions {
     }
 
     //START >>> marco.arci@webresults.it
+
+    @TestVisible
+    private static HDT_WRP_Actions posContenitoreLogic(Case selectedCase, wrts_prcgvr__Activity__c activity){
+        String outcome = activity.ActivityOutcome__c;
+        if('Positivo'.equalsIgnoreCase(outcome)){
+            return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+        }else{
+            Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), Status = 'Closed');
+            return new HDT_WRP_UpdateSobj(caseUpdate);
+        }
+    }
+
     @TestVisible
     private static HDT_WRP_Actions tariLogicVarDis(Case selectedCase, wrts_prcgvr__Activity__c activity){
 
@@ -260,6 +279,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
 
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 
+            'Variazione indirizzo di fornitura'.equalsIgnoreCase(caseType) ||
             'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
             ('Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
              subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){

@@ -120,7 +120,7 @@
     <enableReports>false</enableReports>
     <enableSearch>false</enableSearch>
     <externalDataSource>Hera_Archive</externalDataSource>
-    <externalName>SalesforceContactRelation</externalName>
+    <externalName>SalesforceContact</externalName>
     <gender>Feminine</gender>
     <label>Relazione referenti-account Salesforce</label>
     <pluralLabel>Relazioni referenti-account Salesforce</pluralLabel>

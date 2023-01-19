@@ -652,6 +652,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancanza del presupposto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mancanza titolarità</fullName>
             <default>false</default>
         </values>
@@ -1983,17 +1987,6 @@
         </values>
         <values>
             <fullName>In Delibera</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DeliveredDocumentation__c</picklist>
-        <values>
-            <fullName>N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Y</fullName>
             <default>false</default>
         </values>
     </picklistValues>

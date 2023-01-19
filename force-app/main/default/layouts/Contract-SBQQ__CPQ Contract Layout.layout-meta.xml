@@ -52,21 +52,13 @@
                 <behavior>Readonly</behavior>
                 <field>Iniziativa__c</field>
             </layoutItems>
-			<layoutItems>
-                <behavior>Edit</behavior>
-                <field>ExemptionStartDate__c</field>
-            </layoutItems>
-			<layoutItems>
-                <behavior>Edit</behavior>
-                <field>DeclaredExemptionThreshold__c</field>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SBQQ__Order__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ExemptionEndDate__c</field>
-            </layoutItems>
-			<layoutItems>
-                <behavior>Edit</behavior>
-                <field>TotalTurnoverVATExempted__c</field>
+                <behavior>Readonly</behavior>
+                <field>OwnerId</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
@@ -98,14 +90,6 @@
                 <behavior>Readonly</behavior>
                 <field>SBQQ__Quote__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>SBQQ__Order__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>OwnerId</field>
-            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
     </layoutSections>
@@ -128,6 +112,33 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ExciseGas__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <style>TwoColumnsLeftToRight</style>
+    </layoutSections>
+    <layoutSections>
+        <customLabel>true</customLabel>
+        <detailHeading>true</detailHeading>
+        <editHeading>true</editHeading>
+        <label>Dichiarazione  d&apos;intento</label>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExemptionStartDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DeclaredExemptionThreshold__c</field>
+            </layoutItems>
+        </layoutColumns>
+        <layoutColumns>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ExemptionEndDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>TotalTurnoverVATExempted__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -453,6 +464,11 @@
         <fields>VasPracticeCode__c</fields>
         <fields>VasEffectiveDate__c</fields>
         <fields>SBQQ__ProductName__c</fields>
+        <fields>SBQQ__StartDate__c</fields>
+        <fields>SBQQ__EndDate__c</fields>
+        <fields>SBQQ__TerminatedDate__c</fields>
+        <fields>SBQQ__Quantity__c</fields>
+        <fields>SAPContractCode__c</fields>
         <relatedList>SBQQ__Subscription__c.SBQQ__Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
