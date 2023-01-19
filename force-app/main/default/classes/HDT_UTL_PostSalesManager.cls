@@ -698,12 +698,13 @@ public inherited sharing class HDT_UTL_PostSalesManager{
 
         if(!String.isBlank(currentCase.ServicePoint__c) && 'Modifica Unita Immobiliari Componenti'.equalsIgnoreCase(currentCase.Type) && ('Acqua'.equalsIgnoreCase(currentCase.Commodity__c) || 'Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c))){
             try {
-                ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
+                ServicePoint__c sp = [SELECT NotDomesticHousingUnit__c, NotResidentDomesticHousingUnit__c, ResidentDomesticHousingUnit__c, CommercialHousingUnit__c FROM ServicePoint__c WHERE Id =: currentCase.ServicePoint__c WITH SECURITY_ENFORCED];
                 if(sp != null && !'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
                     sp.NotDomesticHousingUnit__c = currentCase.Unita_Abitative__c;
                     sp.NotResidentDomesticHousingUnit__c = currentCase.NotResidentDomesticHousingUnit__c;
                     sp.ResidentDomesticHousingUnit__c = currentCase.ResidentDomesticHousingUnit__c;
                     sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
+                    sp.CommercialHousingUnit__c = currentCase.CommercialHousingUnit__c;
                     update sp;
                 }else if (sp != null && 'ACDOMRESP0'.equalsIgnoreCase(currentCase.RateCategory__c)){
                     sp.NumberOfFamilyMembers__c = currentCase.ResidentMembers__c;
