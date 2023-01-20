@@ -37,11 +37,29 @@ public with sharing class HDT_LC_ReletedListAccount {
         Contact contact= new Contact(AccountId= dataContact.get('accountId'), DegreeOfStudies__c= dataContact.get('education'),LastName= account.LastName__c,Gender__c= account.Gender__c ,FirstName=account.FirstName__c ,Birthdate=birthdate, FiscalCode__c= account.FiscalCode__c,Birthcity__c=dataContact.get('birthplace') ,Phone= account.Phone, Email= account.PrimaryEmail__c,MobilePhonePrefix__c= account.MobilePhonePrefix__c, MobilePhone= account.MobilePhone__c, PhonePrefix__c= account.PhonePrefix__c, Fax= account.FAX__c,Profession__c= account.Profession__c, MailingCity= account.BillingCity, MailingCityCode__c= account.BillingCityCode__c, MailingCountry= account.BillingCountry, MailingPostalCode= account.BillingPostalCode, MailingState= account.BillingState, MailingStreet= account.BillingStreet, MailingStreetName__c= account.BillingStreetName__c, MailingStreetCode__c= account.BillingStreetCode__c, MailingStreetNumber__c= account.BillingStreetNumber__c, MailingStreetNumberExtension__c= account.BillingStreetNumberExtension__c, MailingRegion__c= account.BillingRegion__c,MailingPlace__c = account.BillingPlace__c ,MailingPlaceCode__c = account.BillingPlaceCode__c , MailingIsAddressVerified__c = account.BillingIsAddressVerified__c);
         contactSrv.checkCreateAccess(contact);
         Contact cont= contactSrv.createRecord(contact);
+        Boolean updateAcr = true;
         if(dataContact.get('role')!=null){
             List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(dataContact.get('accountId'), cont.Id, 'Id, AccountId');
             if(listAccCon != null && listAccCon.size() > 0){
                 AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= dataContact.get('accountId'), Roles= dataContact.get('role'));
-                accoContRelSrv.updateRecord(acr);
+                if(acr.Roles.containsIgnoreCase('Titolare'))
+                {
+                    List<AccountContactRelation> otherAcr= [SELECT Id 
+                    FROM AccountContactRelation 
+                    WHERE AccountId = :dataContact.get('accountId') 
+                    AND Id != :listAccCon[0].Id 
+                    AND Roles INCLUDES ('Titolare')
+                    WITH SECURITY_ENFORCED];
+                    updateAcr = otherAcr.isEmpty();
+                }
+                if(updateAcr)
+                {
+                    accoContRelSrv.updateRecord(acr);
+                }
+                else
+                {
+                    throw new AuraHandledException('Non è possibile avere più di un Contatto Titolare sotto lo stesso Account.');
+                }
             }
             if(dataContact.get('role').equalsIgnoreCase('Amministratore Condominio'))
             {
