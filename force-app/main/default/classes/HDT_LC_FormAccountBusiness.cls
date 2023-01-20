@@ -16,7 +16,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
     public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress,Map<String,String> contactAddress){
 
         String name;
-        Id mainAcrdId;
+        Id mainAcrId;
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
@@ -94,7 +94,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(acct.Id, cont.Id, 'Id');
         if(listAccCon != null && listAccCon.size() > 0){
             AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= acct.Id, Roles= 'Titolare');
-            mainAcrdId = listAccCon[0].Id;
+            mainAcrId = listAccCon[0].Id;
            // HDT_SRV_AccountContactRelation.checkUpdateAccess(acr);
            accoContRelSrv.updateRecord(acr);
         }
@@ -275,7 +275,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         Boolean upMainAcr = false;
         for(AccountContactRelation signleAct : finalAcr)
         {
-            if(signleAct.Id != mainAcrdId && signleAct.Roles.containsIgnoreCase('Titolare'))
+            if(signleAct.Id != mainAcrId && signleAct.Roles.containsIgnoreCase('Titolare'))
             {
                 upMainAcr = true;
                 break;
