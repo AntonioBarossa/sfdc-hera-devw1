@@ -80,7 +80,7 @@
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>CreateParentOrder</elementReference>
+                <elementReference>redirectId</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -231,6 +231,11 @@
         <dataType>String</dataType>
         <expression>&quot;Ordine Rimozione &quot;&amp;{!ContrattoAgevolazione.ContractNumber}</expression>
     </formulas>
+    <formulas>
+        <name>redirectId</name>
+        <dataType>String</dataType>
+        <expression>BLANKVALUE({!CreateParentOrder}, {!theCase.AccountId})</expression>
+    </formulas>
     <interviewLabel>HDT_FL_RimozioneAgevolazione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_RimozioneAgevolazione</label>
     <loops>
@@ -297,7 +302,7 @@
         <inputAssignments>
             <field>Contact__c</field>
             <value>
-                <elementReference>selezFornituraAgevolazione.recordId</elementReference>
+                <elementReference>theCase.ContactId</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
