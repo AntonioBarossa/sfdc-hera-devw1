@@ -9,7 +9,7 @@ export default class HdtCustomRelatedList extends LightningElement {
     @api parentRecordTargetField;
     @api childLookupField;
     @api fieldsToRetrieve;
-    @api nameField = 'Name';
+    @api nameField;
     @api linesToDisplay;
     retrieveAll = false;
     limitDisplayedLines = true;
@@ -22,6 +22,7 @@ export default class HdtCustomRelatedList extends LightningElement {
     title = '';
     fetchColumns = true;
     relationshipFields = '';
+    numberOfRecords = 0;
 
     // dataTable variables
     columns = {};
@@ -45,7 +46,9 @@ export default class HdtCustomRelatedList extends LightningElement {
                             }).then(result => {
             
             if(result) {
-                if (this.calculateTitle) this.title = result.objectLabel + ' (' + (result['childRecords'].length > 6 ? '6+' : result['childRecords'].length) + ')';
+                this.numberOfRecords = result['childRecords'] ? result['childRecords'].length : 0;
+                
+                if (this.calculateTitle) this.title = result.objectLabel + ' (' + (this.numberOfRecords > this.linesToDisplay ? this.linesToDisplay + '+' : result['childRecords'].length) + ')';
                 this.generateDataTable(result['columns'], result['childRecords'], this.fetchColumns ? result['relationshipsAddedToQuery'] : this.relationshipFields);
 
             }
