@@ -10,6 +10,7 @@
         <targetConfig targets="lightning__HomePage,lightning__RecordPage">
             <!-- <property name="recordId" type="String" label="Parent Record Id"/> -->
             <property name="childObjectApiName" type="String" label="Child Object API Name"/>
+            <property name="parentRecordTargetField" default="Id" type="String" label="Parent Record Target Field"/>
             <property name="childLookupField" type="String" label="Child Lookup Field"/>
             <property name="fieldsToRetrieve" type="String" label="Fields to Retrieve" 
                       description="The fields should be separated by comma (,). Relationships should be referenced using the Name field (ex. Account.Name)"/>

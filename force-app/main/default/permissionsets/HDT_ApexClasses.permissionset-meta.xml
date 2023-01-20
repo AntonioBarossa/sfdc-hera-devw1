@@ -1049,6 +1049,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_CustomRelatedList</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_DecisionalScriptController</apexClass>
         <enabled>true</enabled>
     </classAccesses>
