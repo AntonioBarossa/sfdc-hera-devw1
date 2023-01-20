@@ -215,6 +215,10 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>CommercialHousingUnit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>DataUltimoAllineamentoGAA__c</field>
             </layoutItems>
         </layoutColumns>
