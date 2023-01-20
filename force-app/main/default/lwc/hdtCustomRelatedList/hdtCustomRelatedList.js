@@ -6,6 +6,7 @@ export default class HdtCustomRelatedList extends LightningElement {
 
     @api recordId;
     @api childObjectApiName;
+    @api parentRecordTargetField;
     @api childLookupField;
     @api fieldsToRetrieve;
     @api nameField = 'Name';
@@ -34,6 +35,7 @@ export default class HdtCustomRelatedList extends LightningElement {
         // console.log(this.recordId, this.childObjectApiName, this.childLookupField, this.fieldsToRetrieve, this.linesToDisplay);
 
         getRecordsToDisplay ({ parentRecordId: this.recordId, 
+                               parentRecordTargetField: this.parentRecordTargetField,
                                childObjectApiName: this.childObjectApiName, 
                                childLookupField: this.childLookupField,
                                fieldsToRetrieve: this.fetchColumns ? this.fieldsToRetrieve : (this.fieldsToRetrieve + this.relationshipFields),
