@@ -453,7 +453,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ordersNonEnergy.add(o);
                 }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
                     if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
-                    if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else{   ordersHeroku.add(o);    }
                 }
                 else{
                     ordersHeroku.add(o);
