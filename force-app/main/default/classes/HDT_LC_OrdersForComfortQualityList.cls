@@ -139,7 +139,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             for (Order currOrd:allOrders){
                 if (currOrd.Id!=ordToCheck[0].Id) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
-                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) )) {
+                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
                         break;
                     }
@@ -183,6 +183,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Skip_Callout__c = ordToCheck[0].Skip_Callout__c == null ? -1 : null,
+                CancellationReason__c = causal,
                 WorkedQualityCall__c = qualityMessage
             ));
         }

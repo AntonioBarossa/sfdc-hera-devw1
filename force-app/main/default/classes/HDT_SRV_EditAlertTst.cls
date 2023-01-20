@@ -10,7 +10,8 @@ public with sharing class HDT_SRV_EditAlertTst {
     
     
     //TEST SETUP
-    private static void mySetup(){
+    @TestSetup
+    static void mySetup(){
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<BillingProfile__c> bpf = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, acc[0].Id);
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
@@ -33,8 +34,6 @@ public with sharing class HDT_SRV_EditAlertTst {
         String debugString = TEST_NAME + ' - executeTest_OK';
         System.debug(debugString);
         
-        //SETUP
-        mySetup();
         Case myCase = [SELECT Id FROM Case];
         
         Map<String, Object> argsMap = new Map<String, Object>();
@@ -78,7 +77,6 @@ public with sharing class HDT_SRV_EditAlertTst {
         
         //SETUP
         isOk = false;
-        mySetup();
         Case myCase = [SELECT Id FROM Case];
         
         Map<String, Object> argsMap = new Map<String, Object>();
@@ -119,9 +117,6 @@ public with sharing class HDT_SRV_EditAlertTst {
         //DEBUG
         String debugString = TEST_NAME + ' - updateFutureTest';
         System.debug(debugString);
-        
-        //SETUP
-        mySetup();
         
         //TESTING
         Case myCase = [SELECT Id FROM Case];

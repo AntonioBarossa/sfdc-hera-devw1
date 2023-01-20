@@ -80,13 +80,15 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             if(String.isNotBlank(processType) && 
             (processType.equalsIgnoreCase('Richiesta Domiciliazione')
             || processType.equalsIgnoreCase('Variazione Domiciliazione')
-            || processType.equalsIgnoreCase('Rimborso')))
+            || processType.equalsIgnoreCase('Rimborso')
+            || processType.equalsIgnoreCase('Attivazione Click&Pay')))
             {
                 mrrList = addIbanCountry(mrrList); 
             }
             if (String.isNotBlank(meterCode)){
                 mrrList = changeMeterCode(mrrList,meterCode);
             }
+            mrrList = supplyTypeTech(mrrList);
             arg.put('endpoint', endpoint);
             arg.put('timeout', 20000);
             arg.put('payload',mrrList);
@@ -421,4 +423,29 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return mrrList;
     }
 
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest supplyTypeTech(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean fieldChanged = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(fieldChanged)
+            {
+                break;
+            }
+            if(obj.objectType != null && obj.objectType.equalsIgnoreCase('Case'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('CAN_VEND'))
+                    {
+                        f.value = String.isNotBlank(f.value) && (f.value.equalsIgnoreCase('A-Domestico') || f.value.equalsIgnoreCase('Domestico')) ? 'Domestico' : 'Non Domestico';
+                        fieldChanged = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return mrrList;
+    }
 }

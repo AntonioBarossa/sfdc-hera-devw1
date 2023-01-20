@@ -384,6 +384,10 @@
         <enabled>true</enabled>
         <name>HDT_WarningStatusList__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_ProductAssociation__mdt</name>
+    </customMetadataTypeAccesses>
     <custom>true</custom>
     <customSettingAccesses>
         <enabled>true</enabled>
@@ -873,6 +877,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.NumeratorGroup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ManagedSapDiscard__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -26334,6 +26343,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.RowIdSiebel__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.SAPContractAccountCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
