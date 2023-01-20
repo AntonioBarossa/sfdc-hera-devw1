@@ -1638,11 +1638,11 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Cas_PurificationPayC__c</field>
+                <field>Cas_PayPurificationC__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Cas_SewerPayC__c</field>
+                <field>Cas_PaySewerC__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
