@@ -222,15 +222,14 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         
         String orderType = selectedOrder?.ProcessType__c;
 
-        if( String.isNotEmpty(activityType) && String.isNotEmpty(orderType)) {
-            if( 'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 'Modifica Tariffa'.equalsIgnoreCase(orderType) ) {
-                if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, '');
-                if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
-            }
-            if( 'Elaborazione Manuale'.containsIgnoreCase(activityType) && 'Modifica Tariffa - Rimozione Agevolazione'.equalsIgnoreCase(orderType) ) { //START >>> carmine.scalise@webresults.it
-                return new HDT_WRP_UpdateSobj('Completata');
-            }
-        }        
+        if( 'Approvazione Agevolazione'.equalsIgnoreCase(activityType) && 'Modifica Tariffa'.equalsIgnoreCase(orderType) ) {
+            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, '');
+            if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
+        }
+        if( 'Elaborazione Manuale'.equalsIgnoreCase(activityType) && 'Modifica Tariffa - Rimozione Agevolazione'.equalsIgnoreCase(orderType) ) { //START >>> carmine.scalise@webresults.it
+            return new HDT_WRP_UpdateSobj('Completata');
+        }
+        
         return null;
     }
 
