@@ -222,14 +222,15 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         
         String orderType = selectedOrder?.ProcessType__c;
 
-        if( String.isNotEmpty(activityType) && String.isNotEmpty(orderType) &&
-            'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 
-            new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType) )
-        {
-            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, '');
-            if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
-        }
-        
+        if( String.isNotEmpty(activityType) && String.isNotEmpty(orderType)) {
+            if( 'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 'Modifica Tariffa'.equalsIgnoreCase(orderType) ) {
+                if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, '');
+                if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
+            }
+            if( 'Elaborazione Manuale'.containsIgnoreCase(activityType) && 'Modifica Tariffa - Rimozione Agevolazione'.equalsIgnoreCase(orderType) ) { //START >>> carmine.scalise@webresults.it
+                return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }        
         return null;
     }
 
