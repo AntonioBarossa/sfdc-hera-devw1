@@ -163,7 +163,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Tabelle Appuntamento Tari</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <listViewButtons>Rapporto_Tabella_Appuntamento_Tari</listViewButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>
