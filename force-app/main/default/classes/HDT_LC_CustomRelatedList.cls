@@ -8,7 +8,9 @@ public with sharing class HDT_LC_CustomRelatedList {
         'EMAIL' => 'email',
         'DOUBLE' => 'number',
         'PERCENT' => 'percent',
-        'PHONE' => 'phone'
+        'PHONE' => 'phone',
+        'STRING'=> 'text',
+        'URL'=> 'url'
     };
 
     private static final Integer QUERY_LIMIT = 7;
@@ -136,7 +138,9 @@ public with sharing class HDT_LC_CustomRelatedList {
 
     private static void generateGenericLabel(JSONGenerator gen, String label, String type) {
 
-        gen.writeStringField('type', String.isNotBlank(type) ? type : 'text');
+        type = String.isNotBlank(type) ? type : 'text';
+
+        gen.writeStringField('type', type);
         gen.writeStringField('label', label);
 
         if (!type.equals('boolean')) gen.writeBooleanField('sortable', true);
