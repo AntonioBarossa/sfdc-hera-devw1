@@ -23,8 +23,11 @@
                             </h2>
                         </div>
                         <div class="slds-no-flex">
-                            <lightning-button label="Nuovo" title="Nuovo" onclick={buttonNew}></lightning-button>
-                            <lightning-button-icon icon-name="utility:refresh"  alternative-text="Ricarica..." title="refresh" onclick={handleRefreshClick}></lightning-button-icon>
+                            <lightning-button class="slds-var-p-top_small" label="Nuovo" title="Nuovo" onclick={buttonNew}></lightning-button>
+
+                        </div>
+                        <div>
+                            <lightning-button-icon  class="slds-var-p-left_small" icon-name="utility:refresh" variant="neutral"  alternative-text="Ricarica..." title="refresh" onclick={handleRefreshClick}></lightning-button-icon>
                         </div>
                     </header>
                 </div>
