@@ -46,21 +46,6 @@ export default class HdtCustomRelatedList extends LightningElement {
                 if (this.calculateTitle) this.title = result.objectLabel + ' (' + (result['childRecords'].length > 6 ? '6+' : result['childRecords'].length) + ')';
                 this.generateDataTable(result['columns'], result['childRecords'], this.fetchColumns ? result['relationshipsAddedToQuery'] : this.relationshipFields);
 
-                // this.columns = [{
-                //     label: 'Opportunity name',
-                //     fieldName: 'nameUrl',
-                //     type: 'url',
-                //     typeAttributes: {label: { fieldName: 'name' }, 
-                //     target: '_self'},
-                //     sortable: true
-                // }];
-
-                // this.data = [
-                //     { Id: 1, nameUrl: '/0011X00000iFRsMQAW', name: 'ciao' },
-                //     { Id: 2, nameUrl: '/0011X00000iFRsMQAW', name: 'ciao1' },
-                //     { Id: 3, nameUrl: '/0011X00000iFRsMQAW', name: 'ciao2'}
-                // ];
-
             }
 
         });
