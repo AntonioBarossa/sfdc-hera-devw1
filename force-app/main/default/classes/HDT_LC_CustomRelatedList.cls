@@ -8,13 +8,15 @@ public with sharing class HDT_LC_CustomRelatedList {
         'EMAIL' => 'email',
         'DOUBLE' => 'number',
         'PERCENT' => 'percent',
-        'PHONE' => 'phone'
+        'PHONE' => 'phone',
+        'STRING'=> 'text',
+        'URL'=> 'url'
     };
 
     private static final Integer QUERY_LIMIT = 7;
     
     @AuraEnabled
-    public static Map<String, Object> getRecordsToDisplay(String parentRecordId, String childObjectApiName, String childLookupField, String fieldsToRetrieve, String nameField, Boolean retrieveAll, Boolean fetchColumns){
+    public static Map<String, Object> getRecordsToDisplay(Id parentRecordId, String parentRecordTargetField, String childObjectApiName, String childLookupField, String fieldsToRetrieve, String nameField, Boolean retrieveAll, Boolean fetchColumns){
         
         Map<String, Object> result = new Map<String, Object>();
 
@@ -95,9 +97,11 @@ public with sharing class HDT_LC_CustomRelatedList {
 
             }
 
+            SObject parentRecord = Database.query('SELECT ' + parentRecordTargetField + ' FROM ' + parentRecordId.getSobjectType() + ' WHERE Id =: parentRecordId');
+
             String queryString = 'SELECT ' + fieldsToRetrieve + (fieldsToRetrieve.containsIgnoreCase(',' + nameField + ',') ? '' : ', ' + nameField) + relationShipsToAddToQuery;
             queryString += ' FROM ' + childObjectApiName + 
-                           ' WHERE ' + childLookupField + ' =: parentRecordId' + 
+                           ' WHERE ' + childLookupField + ' = \'' + parentRecord.get(parentRecordTargetField) + '\'' + 
                            ' ORDER By ' + (String.isNotBlank(nameField) ? nameField : fieldsToRetrieve.split(',').get(0));
 
             if (!retrieveAll) {
@@ -134,7 +138,9 @@ public with sharing class HDT_LC_CustomRelatedList {
 
     private static void generateGenericLabel(JSONGenerator gen, String label, String type) {
 
-        gen.writeStringField('type', String.isNotBlank(type) ? type : 'text');
+        type = String.isNotBlank(type) ? type : 'text';
+
+        gen.writeStringField('type', type);
         gen.writeStringField('label', label);
 
         if (!type.equals('boolean')) gen.writeBooleanField('sortable', true);
