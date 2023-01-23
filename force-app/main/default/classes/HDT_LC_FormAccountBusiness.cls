@@ -273,9 +273,9 @@ public with sharing class HDT_LC_FormAccountBusiness {
         }
         List<AccountContactRelation> finalAcr = accoContRelQr.getContactsByAccountWithRoles(acct.Id);
         Boolean upMainAcr = false;
-        for(AccountContactRelation signleAct : finalAcr)
+        for(AccountContactRelation singleAcr : finalAcr)
         {
-            if(signleAct.Id != mainAcrId && String.isNotBlank(singleAct.Roles) && signleAct.Roles.containsIgnoreCase('Titolare'))
+            if(singleAcr.Id != mainAcrId && String.isNotBlank(singleAcr.Roles) && singleAcr.Roles.containsIgnoreCase('Titolare'))
             {
                 upMainAcr = true;
                 break;
