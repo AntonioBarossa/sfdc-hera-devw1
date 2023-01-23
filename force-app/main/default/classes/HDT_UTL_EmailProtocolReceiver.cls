@@ -8,22 +8,48 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
             HDT_SRV_ContentVersion contentSrv = new HDT_SRV_ContentVersion();
             String emailBody;
             Boolean bodyTruncated = false;
+            String cluster;
+            String type;
+            String process;
+            String companyOwner;
+            String salesCompany;
+            
+            //Recupero i record del metadato HDT_ProtocolSpecificEmail__mdt
+            Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
+            for(HDT_ProtocolSpecificEmail__mdt specificEmail : HDT_ProtocolSpecificEmail__mdt.getAll().values()) {
+                mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
+            }
 
+            //Recupero il destinatario dell'email
+            String toAddress = email.toAddresses == null || email.toAddresses.isEmpty() ? null : email.toAddresses[0];
+
+            //Gestico la dimensione del testo dell'email e la tronco se supera i 31999 caratteri
             if(email.plainTextBody != null && email.plainTextBody.length() > 31999) {
                 emailBody = email.plainTextBody.left(31999);
                 bodyTruncated = true;
             } else {
                 emailBody = email.plainTextBody;
             }
+            //Recupero dal metadato HDT_ProtocolSpecificEmail__mdt le informazioni da riportare sull'activity e interaction in base all'email destinataria 
+            if(mapEmailObj.get(toAddress.toUpperCase()) != null) {
+                HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
+                cluster = specificEmail.Cluster__c;
+                process = specificEmail.Process__c;
+                type = specificEmail.Type__c;
+                companyOwner = specificEmail.CompanyOwner__c;
+                //salesCompany = specificEmail.SalesCompany__c;
+            }
 
+            //Creo l'interaction
             String subject = (String.isNotBlank(email.subject) && email.subject.length() > 255) ? email.subject.substring(0,254) : email.subject;
             Interaction__c interaction = new Interaction__c(
                 Type__c = 'Digital',
                 ReceptionDate__c = DateTime.now(),
                 BodyEmail__c = emailBody,
                 SubjectEmail__c = subject,
-                CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT
+                CompanyOwner__c = String.isNotBlank(companyOwner)?companyOwner:TEMPORARY_COMPANYOWNER_DEFAULT
             );
+            
 
             // MAIL SEMPRE INOLTRATE DA ACCOUNT HERA - NECESSARIO ESTRARRE MITENTE ORIGINALE
             String senderAddress = emailBody.left(300).substringBetween(' <', '>');
@@ -73,38 +99,17 @@ public class HDT_UTL_EmailProtocolReceiver implements Messaging.InboundEmailHand
                 contentdocumentLink.insertRecords(contentDocumentList);
             }
 
-            String toAddress = email.toAddresses == null || email.toAddresses.isEmpty() ? null : email.toAddresses[0];
-            // VERIFICARE SE NECESSARIO SALVARE LA MAIL COME EMAILMESSAGE
-            // EmailMessage newEmail = new EmailMessage(
-            //     FromAddress = senderAddress /*email.fromAddress*/,
-            //     FromName = email.fromName,
-            //     ToAddress = toAddress,
-            //     Subject = email.subject,
-            //     TextBody = emailBody,
-            //     //HtmlBody = email.htmlBody,
-            //     relatedToId = interaction.Id ,
-            //     status = '0'
-            // );
-            // HDT_SRV_EmailMessage.insertEmailMessage(newEmail);
-
+            //Creo l'activity
             wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
             activity.Interaction__c = interaction.Id;
             activity.RecordTypeId = new HDT_QR_RecordType().getRecordTypeIdByName('HDT_RT_RegisterActivity');
             activity.Account__c = interaction.Account__c;
             activity.Contact__c = interaction.Contact__c;
-            activity.CompanyOwner__c = TEMPORARY_COMPANYOWNER_DEFAULT;
-
-            Map<String,HDT_ProtocolSpecificEmail__mdt> mapEmailObj = new Map<String,HDT_ProtocolSpecificEmail__mdt>();
-            for(HDT_ProtocolSpecificEmail__mdt specificEmail : HDT_ProtocolSpecificEmail__mdt.getAll().values()) {
-                mapEmailObj.put(specificEmail.Email__c.toUpperCase(), specificEmail);
-            }
-
-            if(mapEmailObj.get(toAddress.toUpperCase()) != null) {
-                HDT_ProtocolSpecificEmail__mdt specificEmail = mapEmailObj.get(toAddress.toUpperCase());
-                activity.Cluster__c = specificEmail.Cluster__c;
-                activity.Process__c = specificEmail.Process__c;
-                activity.Type__c = specificEmail.Type__c;
-            }
+            activity.CompanyOwner__c = String.isNotBlank(companyOwner)?companyOwner:TEMPORARY_COMPANYOWNER_DEFAULT;
+            activity.Cluster__c = String.isNotBlank(cluster)?cluster:'';
+            activity.Process__c = String.isNotBlank(process)?process:'';
+            activity.Type__c = String.isNotBlank(type)?type:'';
+            
             new HDT_SRV_ActivityCustom().createRecord(activity);
         } catch (Exception e) {
             e.setMessage(e.getMessage() + ' at line ' + e.getLineNumber());
