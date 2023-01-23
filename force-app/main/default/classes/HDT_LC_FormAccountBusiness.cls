@@ -16,6 +16,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
     public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress,Map<String,String> contactAddress){
 
         String name;
+        Id mainAcrId;
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
@@ -93,6 +94,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(acct.Id, cont.Id, 'Id');
         if(listAccCon != null && listAccCon.size() > 0){
             AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= acct.Id, Roles= 'Titolare');
+            mainAcrId = listAccCon[0].Id;
            // HDT_SRV_AccountContactRelation.checkUpdateAccess(acr);
            accoContRelSrv.updateRecord(acr);
         }
@@ -268,6 +270,20 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // List<String> phones= new List<String>();
             // phones.add(cont.Phone);
             // HDT_UTL_GestionePrivacy.createDefaultPrivacyContact(cont.Id, emails, phones);
+        }
+        List<AccountContactRelation> finalAcr = accoContRelQr.getContactsByAccountWithRoles(acct.Id);
+        Boolean upMainAcr = false;
+        for(AccountContactRelation singleAcr : finalAcr)
+        {
+            if(singleAcr.Id != mainAcrId && String.isNotBlank(singleAcr.Roles) && singleAcr.Roles.containsIgnoreCase('Titolare'))
+            {
+                upMainAcr = true;
+                break;
+            }       
+        }
+        if(upMainAcr)
+        {
+            HDT_UTL_DatabaseService.updateSObject(new AccountContactRelation(Id = mainAcrId, Roles = 'Azienda'));
         }
         //HDT_UTL_Account.makeRequest(account,contact);
         System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));
