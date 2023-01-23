@@ -15,7 +15,7 @@ public with sharing class HDT_SRV_GarbageMan {
     @TestVisible
     private class HDT_WRP_GarbageManResponse extends HDT_WS_Response
     {
-
+        public List<Map<String, String>> exceptionMessage {get;set;}
     }
 
     @TestVisible
@@ -26,9 +26,9 @@ public with sharing class HDT_SRV_GarbageMan {
 
         @TestVisible private String codiceRDS {get;set;}
         
-        @TestVisible private Datetime dataOraIniziale {get;set;}
+        @TestVisible private String dataOraIniziale {get;set;}
     
-        @TestVisible private Datetime dataOraFinale {get;set;}
+        @TestVisible private String dataOraFinale {get;set;}
     
         @TestVisible private String codiceIdRichiesta {get;set;}
 
@@ -40,10 +40,10 @@ public with sharing class HDT_SRV_GarbageMan {
         private HDT_WRP_GarbageManRequest(Case currentCase) {
             this.idSap = null;
             this.codiceRDS = currentCase.Id;
-            this.dataOraIniziale = currentCase.StartAppointment__c;
-            this.dataOraFinale = currentCase.EndAppointment__c;
+            this.dataOraIniziale = utlGarbage.outputDateEsito(currentCase.StartAppointment__c);
+            this.dataOraFinale = utlGarbage.outputDateEsito(currentCase.EndAppointment__c);
             this.codiceIdRichiesta = currentCase.WasterCode__c;
-            this.codiceEsito = null;
+            this.codiceEsito = '00';
             this.descrizioneEsito = null;
         }
     
@@ -51,8 +51,8 @@ public with sharing class HDT_SRV_GarbageMan {
         private HDT_WRP_GarbageManRequest(Case currentCase, String codiceEsito) {
             this.idSap = null;
             this.codiceRDS = currentCase.Id;
-            this.dataOraIniziale = currentCase.StartAppointment__c;
-            this.dataOraFinale = currentCase.EndAppointment__c;
+            this.dataOraIniziale = utlGarbage.outputDateEsito(currentCase.StartAppointment__c);
+            this.dataOraFinale = utlGarbage.outputDateEsito(currentCase.EndAppointment__c);
             this.codiceIdRichiesta = currentCase.WasterCode__c;
             this.codiceEsito = codiceEsito;
             this.descrizioneEsito = utlGarbage.DESCRIZIONE_ESITI.get(codiceEsito);        
@@ -160,17 +160,18 @@ public with sharing class HDT_SRV_GarbageMan {
             String street = currentCase.InvoicingStreetName__c + currentCase.InvoicingStreetNumber__c + currentCase.InvoicingPostalCode__c + currentCase.InvoicingCity__c;
             HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrpDataApp = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp (this.caseid, currentCase.InvoicingStreetCode__c, 
             street, currentCase.InvoicingStreetNumber__c, currentCase.TypeOperation__c, currentCase.InvoicingCity__c);
+            errorCode= '06';
             HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse response = HDT_LC_AppointmentTariAgenda.handleSearch(wrpDataApp);
 
             if(response?.data?.appointmentData?.isEmpty() != false){
-                errorCode= '06';
+                errorCode= '04';
                 if(!Test.isRunningTest()) throw new HDT_UTL_HeraException('Slot not found'); 
             }else{
                 wrpDataApp.startDate = utlGarbage.formatDate(response.data.appointmentData[0].startDate);
                 wrpDataApp.endDate = utlGarbage.formatDate(response.data.appointmentData[0].endDate);
+                errorCode= '07';
                 HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(currentCase, wrpDataApp);
                 if(String.isBlank(res?.data?.noticeNumber)){
-                    errorCode= '07';
                     if(!Test.isRunningTest()) throw new HDT_UTL_HeraException('Unable to confirm appointment'); 
                 }
             }

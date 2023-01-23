@@ -451,8 +451,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
                 {
                     ordersNonEnergy.add(o);
-                }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && 'Modifica Tariffa'.equalsIgnoreCase( o.ProcessType__c) && !o.IntegratedSAP__c){
-                    ordersCompletata.add(o);
+                }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
+                    if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
+                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else{   ordersHeroku.add(o);    }
                 }
                 else{
                     ordersHeroku.add(o);

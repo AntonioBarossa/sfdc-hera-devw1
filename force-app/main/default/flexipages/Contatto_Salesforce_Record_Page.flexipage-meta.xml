@@ -44,6 +44,74 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>childLookupField</name>
+                    <value>ParentId__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>childObjectApiName</name>
+                    <value>SalesforceContactPointPhone__x</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>fieldsToRetrieve</name>
+                    <value>Id,DisplayUrl</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linesToDisplay</name>
+                    <value>6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>nameField</name>
+                    <value>ExternalId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentRecordTargetField</name>
+                    <value>Ind_Id__c</value>
+                </componentInstanceProperties>
+                <componentName>hdtCustomRelatedList</componentName>
+                <identifier>c_hdtCustomRelatedList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-176596bf-c041-44db-9293-dc4a7bc73477</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>childLookupField</name>
+                    <value>ParentId__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>childObjectApiName</name>
+                    <value>SalesforceContactPointEmail__x</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>fieldsToRetrieve</name>
+                    <value>Id,DisplayUrl</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linesToDisplay</name>
+                    <value>6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>nameField</name>
+                    <value>ExternalId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentRecordTargetField</name>
+                    <value>Ind_Id__c</value>
+                </componentInstanceProperties>
+                <componentName>hdtCustomRelatedList</componentName>
+                <identifier>c_hdtCustomRelatedList2</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-nmcuxoqiey</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>parentFieldApiName</name>
                     <value>SalesforceContact__x.Id</value>
                 </componentInstanceProperties>
@@ -251,6 +319,34 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>relatedListsTab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-176596bf-c041-44db-9293-dc4a7bc73477</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Telefono punti di contatto</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab7</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-nmcuxoqiey</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Email punti di contatto</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab8</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
