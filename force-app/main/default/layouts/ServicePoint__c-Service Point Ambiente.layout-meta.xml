@@ -120,7 +120,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SupplyStreet__c</field>
+                <field>SupplyStreetName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
