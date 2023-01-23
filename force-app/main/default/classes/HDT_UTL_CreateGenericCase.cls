@@ -40,7 +40,8 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'CreatedDate',
                 'CreatedById',
                 'OwnerId',
-                'LastModifiedById'
+                'LastModifiedById',
+                'Origin'
             };
         Case childCase = new Case();
         
@@ -49,12 +50,7 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         for(String fieldName : populateFields.keySet()){
             try{
                 if(!fieldExcludeList.contains(fieldName)){
-                    if (caseType=='Riattivazione Fornitura' && fieldName=='Origin' && currentUser!=null) {
-                        childCase.put(fieldName, currentUser.LoginChannel__c);
-                    }
-                    else {
-                        childCase.put(fieldName, populateFields.get(fieldName));
-                    }
+                    childCase.put(fieldName, populateFields.get(fieldName));
                 }
             }catch(Exception e){
                 System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
