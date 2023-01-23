@@ -47,7 +47,7 @@ public with sharing class HDT_LC_ReletedListAccount {
                     List<AccountContactRelation> otherAcr= [SELECT Id 
                     FROM AccountContactRelation 
                     WHERE AccountId = :dataContact.get('accountId') 
-                    AND Id != :listAccCon[0].Id 
+                    AND (Id != :listAccCon[0].Id) 
                     AND Roles INCLUDES ('Titolare')
                     WITH SECURITY_ENFORCED];
                     updateAcr = otherAcr.isEmpty();
