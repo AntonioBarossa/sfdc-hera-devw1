@@ -4,8 +4,8 @@
     <assignments>
         <name>AssignIdricoTrue</name>
         <label>AssignIdricoTrue</label>
-        <locationX>649</locationX>
-        <locationY>518</locationY>
+        <locationX>781</locationX>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>checkIdrico</assignToReference>
             <operator>Assign</operator>
@@ -14,7 +14,55 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LoopChilds</targetReference>
+            <targetReference>LoopForOffer</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentFlat</name>
+        <label>AssignmentFlat</label>
+        <locationX>649</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>isFlat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkIsIdrico</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignmentSpecialFlat</name>
+        <label>AssignmentSpecialFlat</label>
+        <locationX>913</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>isSpecialFlat</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>checkIsIdrico</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssOff</name>
+        <label>AssOff</label>
+        <locationX>913</locationX>
+        <locationY>398</locationY>
+        <assignmentItems>
+            <assignToReference>Offerta</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>LoopForOffer.CommercialProductLink__r.OfferteVocalOrder__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>CheckDecisionOfferte</targetReference>
         </connector>
     </assignments>
     <choices>
@@ -37,7 +85,7 @@
         <name>CallTypeDecision</name>
         <label>CallTypeDecision</label>
         <locationX>1766</locationX>
-        <locationY>1310</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0</targetReference>
         </defaultConnector>
@@ -62,7 +110,7 @@
         <name>CallTypeDecision_0</name>
         <label>CallTypeDecision</label>
         <locationX>1238</locationX>
-        <locationY>1310</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici</targetReference>
         </defaultConnector>
@@ -87,7 +135,7 @@
         <name>CallTypeDecision_0_0</name>
         <label>CallTypeDecision</label>
         <locationX>446</locationX>
-        <locationY>1310</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafica_VAS_Screen_0</targetReference>
         </defaultConnector>
@@ -112,7 +160,7 @@
         <name>CategoriaDecision</name>
         <label>CategoriaDecision</label>
         <locationX>1502</locationX>
-        <locationY>1190</locationY>
+        <locationY>1646</locationY>
         <defaultConnector>
             <targetReference>CallTypeDecision</targetReference>
         </defaultConnector>
@@ -137,7 +185,7 @@
         <name>CategoriaDecision_0</name>
         <label>CategoriaDecision</label>
         <locationX>644</locationX>
-        <locationY>1190</locationY>
+        <locationY>1646</locationY>
         <defaultConnector>
             <targetReference>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -159,19 +207,59 @@
         </rules>
     </decisions>
     <decisions>
+        <name>CheckDecisionOfferte</name>
+        <label>CheckDecisionOfferte</label>
+        <locationX>913</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>checkIsIdrico</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isFlatTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Offerta</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PiuControllo Flat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentFlat</targetReference>
+            </connector>
+            <label>isFlatTrue</label>
+        </rules>
+        <rules>
+            <name>isSpecialFlatTrue</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Offerta</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Special Flat</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentSpecialFlat</targetReference>
+            </connector>
+            <label>isSpecialFlatTrue</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>checkIsIdrico</name>
         <label>LoopCheckIdrico</label>
-        <locationX>781</locationX>
-        <locationY>398</locationY>
+        <locationX>913</locationX>
+        <locationY>854</locationY>
         <defaultConnector>
-            <targetReference>LoopChilds</targetReference>
+            <targetReference>LoopForOffer</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>idIdricoTrue</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>LoopChilds.CommodityFormula__c</leftValueReference>
+                <leftValueReference>LoopForOffer.CommodityFormula__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Acqua</stringValue>
@@ -187,7 +275,7 @@
         <name>isIdrico</name>
         <label>isIdrico</label>
         <locationX>561</locationX>
-        <locationY>950</locationY>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>VasDecision</targetReference>
         </defaultConnector>
@@ -212,7 +300,7 @@
         <name>VasDecision</name>
         <label>VasDecision</label>
         <locationX>1073</locationX>
-        <locationY>1070</locationY>
+        <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>CategoriaDecision</targetReference>
         </defaultConnector>
@@ -237,14 +325,14 @@
     <interviewLabel>HDT Script - Anagrafica {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT Script - Anagrafica</label>
     <loops>
-        <name>LoopChilds</name>
-        <label>LoopChilds</label>
+        <name>LoopForOffer</name>
+        <label>LoopForOffer</label>
         <locationX>561</locationX>
         <locationY>278</locationY>
         <collectionReference>getFigli</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>checkIsIdrico</targetReference>
+            <targetReference>AssOff</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>getChild_0</targetReference>
@@ -273,7 +361,7 @@
         <name>getChild_0</name>
         <label>getChild</label>
         <locationX>561</locationX>
-        <locationY>830</locationY>
+        <locationY>1286</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>isIdrico</targetReference>
@@ -297,7 +385,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>LoopChilds</targetReference>
+            <targetReference>LoopForOffer</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -315,7 +403,7 @@
         <name>Anagrafica_Servizio_Idrico</name>
         <label>Anagrafica_Servizio_Idrico</label>
         <locationX>50</locationX>
-        <locationY>1070</locationY>
+        <locationY>1526</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -436,7 +524,7 @@
         <name>Dati_Anagrafica_VAS_Screen_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>578</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -502,7 +590,7 @@
         <name>Dati_Anagrafica_VAS_Screen_0_0</name>
         <label>Dati Anagrafica VAS</label>
         <locationX>314</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -568,7 +656,7 @@
         <name>Dati_Anagrafici</name>
         <label>Dati Anagrafici</label>
         <locationX>1370</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -684,21 +772,82 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>text11</name>
+            <fieldText>&lt;p&gt;•	In deroga a quanto previsto dall’articolo 8 delle condizioni generali di contratto, la bolletta sarà inviata tramite mail. Mi conferma che vuole ricevere le bollette al suo indirizzo email {!OrderData.ShippingMail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>(1 OR 3) AND 2</conditionLogic>
+                <conditions>
+                    <leftValueReference>isFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>text5_3</name>
             <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con {!ModalitaPagamentoInput}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text16</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con domiciliazione bancaria?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text6</name>
             <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;/p&gt;&lt;p&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>ModalitaPagamentoInput</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>RID</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -716,6 +865,13 @@
                         <stringValue>Bollettino postale</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
@@ -725,7 +881,7 @@
         <name>Dati_Anagrafici_0</name>
         <label>Dati Anagrafici</label>
         <locationX>1106</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -817,6 +973,35 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>text13</name>
+            <fieldText>&lt;p&gt;•	In deroga a quanto previsto dall’articolo 8 delle condizioni generali di contratto, la bolletta sarà inviata tramite mail. Mi conferma che vuole ricevere le bollette al suo indirizzo mail {!OrderData.ShippingMail__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>(1 OR 3) AND 2</conditionLogic>
+                <conditions>
+                    <leftValueReference>isFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>OrderData.ShippingMail__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>text11_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che vuole ricevere le bollette al suo indirizzo postale {!OrderData.ShippingAddressFormula__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -842,18 +1027,50 @@
             <name>text12_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con {!ModalitaPagamentoInput}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text14</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che vuole pagare le bollette con domiciliazione bancaria?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>text6_0</name>
             <fieldText>&lt;p&gt;•	Mi conferma quindi che per la domiciliazione bancaria posso utilizzare il codice IBAN già in nostro possesso?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	Mi conferma che il suo codice IBAN per la domiciliazione bancaria è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!getChild_0.IbanCountry__c}{!getChild_0.IbanCIN_IBAN__c}{!getChild_0.IbanCIN__c}{!getChild_0.IbanABI__c}{!getChild_0.IbanCAB__c}{!getChild_0.IbanCodeNumber__c}&lt;/span&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>ModalitaPagamentoInput</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>RID</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -871,6 +1088,13 @@
                         <stringValue>Bollettino postale</stringValue>
                     </rightValue>
                 </conditions>
+                <conditions>
+                    <leftValueReference>isSpecialFlat</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -885,7 +1109,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1898</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1166,7 +1390,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>1634</locationX>
-        <locationY>1430</locationY>
+        <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1476,7 +1700,7 @@
         <name>Dati_Anagrafici_Inbound_Aziende_0_0_0_0_0</name>
         <label>Dati Anagrafici Inbound Aziende</label>
         <locationX>842</locationX>
-        <locationY>1310</locationY>
+        <locationY>1766</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1648,6 +1872,26 @@
         </value>
     </variables>
     <variables>
+        <name>isFlat</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isSpecialFlat</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
         <name>ModalitaPagamento</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1666,6 +1910,13 @@
         <value>
             <stringValue>Bollettino postale</stringValue>
         </value>
+    </variables>
+    <variables>
+        <name>Offerta</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>OrderData</name>
