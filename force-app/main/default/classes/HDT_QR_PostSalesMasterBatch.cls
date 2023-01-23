@@ -12,6 +12,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     Set<String> typeSet = new Set<String>{typeInstallments,dunningBlock};
     String nonRequestedContract = 'Contratto Non Richiesto';
     String phaseQuotations = 'Attesa conferma preventivo cliente';
+    String phaseQuotationsPred = 'Ammissibilità OK';
+    String quotationTypePred = 'Predeterminabile';
     String bozzaCase = 'Bozza';
     String autoletturaCase = 'Autolettura';
 
@@ -84,7 +86,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         QuotationValidityDate__c
         FROM Case
         WHERE QuotationValidityDate__c < :this.todayDate
-        AND Phase__c = :this.phaseQuotations
+        AND (Phase__c = :this.phaseQuotations OR (Phase__c = :this.phaseQuotationsPred AND QuotationType__c = :this.quotationTypePred))
         WITH SECURITY_ENFORCED];
 
     }

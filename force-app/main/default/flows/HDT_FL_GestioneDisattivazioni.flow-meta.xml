@@ -520,6 +520,13 @@
                 <elementReference>GetCaseAggiornatoForUpdate.DistributorNote__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorFlowCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>KO</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Update_Status_0_0_0_0_0</targetReference>
         </connector>
@@ -541,6 +548,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.NotPerformedBefore__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoForUpdate_0.NotPerformedBefore__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DistributorNote__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoForUpdate_0.DistributorNote__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

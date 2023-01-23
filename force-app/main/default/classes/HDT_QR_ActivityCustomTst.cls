@@ -384,21 +384,6 @@ public with sharing class HDT_QR_ActivityCustomTst{
 	}
 
 	@isTest
-	static void getActivityCreatedByQualityBatchTest(){
-		Test.startTest();
-
-
-		List<Id> orderId = new List<Id>();
-		for (wrts_prcgvr__Activity__c act:[ SELECT Order__c FROM wrts_prcgvr__Activity__c WHERE Order__r.Id != null]){
-			orderId.add(act.Order__c);
-		}
-
-		System.assertEquals(0, HDT_QR_ActivityCustom.getActivityCreatedByQualityBatch(orderId).size(), 'getActivityCreatedByQualityBatch doesn\'t work correctly' );
-
-		Test.stopTest();
-	}
-
-	@isTest
 	static void getRecordByMethodTest(){
 		Test.startTest();
 

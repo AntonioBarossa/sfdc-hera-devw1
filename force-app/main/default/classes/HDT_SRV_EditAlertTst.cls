@@ -2,7 +2,10 @@
 public with sharing class HDT_SRV_EditAlertTst {
 
     private static final HDT_UTL_Constants constants = new HDT_UTL_Constants();
-
+    private static Boolean isOk = true;
+    
+    
+    //TEST SETUP
     @TestSetup
     static void mySetup(){
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -21,6 +24,11 @@ public with sharing class HDT_SRV_EditAlertTst {
 
     @isTest
     private static void executeTest_OK() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - executeTest_OK';
+        System.debug(debugString);
+        
         Case myCase = [SELECT Id FROM Case];
         Map<String, Object> argsMap = new Map<String, Object>();
         argsMap.put('sender', myCase);
@@ -36,6 +44,13 @@ public with sharing class HDT_SRV_EditAlertTst {
 
     @isTest
     private static void executeTest_Error() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - executeTest_Error';
+        System.debug(debugString);
+        
+        //SETUP
+        isOk = false;
         Case myCase = [SELECT Id FROM Case];
         Map<String, Object> argsMap = new Map<String, Object>();
         argsMap.put('sender', myCase);
@@ -51,6 +66,12 @@ public with sharing class HDT_SRV_EditAlertTst {
 
     @isTest
     private static void updateFutureTest() {
+        
+        //DEBUG
+        String debugString = TEST_NAME + ' - updateFutureTest';
+        System.debug(debugString);
+        
+        //TESTING
         Case myCase = [SELECT Id FROM Case];
         Test.startTest();
         HDT_SRV_EditAlert.updateFuture(JSON.serialize(myCase));
