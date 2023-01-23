@@ -1,6 +1,7 @@
 @isTest
 public with sharing class HDT_SRV_EditAlertTst {
-
+    //DEBUG
+    public static final String TEST_NAME = 'HDT_SRV_EditAlertTst';
     private static final HDT_UTL_Constants constants = new HDT_UTL_Constants();
     private static Boolean isOk = true;
     
