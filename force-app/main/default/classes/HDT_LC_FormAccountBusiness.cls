@@ -275,7 +275,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         Boolean upMainAcr = false;
         for(AccountContactRelation signleAct : finalAcr)
         {
-            if(signleAct.Id != mainAcrId && signleAct.Roles.containsIgnoreCase('Titolare'))
+            if(signleAct.Id != mainAcrId && String.isNotBlank(singleAct.Roles) && signleAct.Roles.containsIgnoreCase('Titolare'))
             {
                 upMainAcr = true;
                 break;
