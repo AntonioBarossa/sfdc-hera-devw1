@@ -35569,10 +35569,6 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
         <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
