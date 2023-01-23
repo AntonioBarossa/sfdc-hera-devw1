@@ -102,13 +102,14 @@ public with sharing class HDT_SRV_GenericSolHandler {
         }
     }
 
-    public static void handleVolturaH2O(Map<String,Object> inputParams){
+    public static void handleVolturaH2o(Map<String,Object> inputParams){
         String accountId = (String) inputParams.get('accountId');
         String contactId = (String) inputParams.get('contactId');
         String serviceRequest = (String) inputParams.get('serviceRequest');
         if(String.isBlank(serviceRequest)){
             Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Voltura Idrica da Web');
-            HDT_UTL_GenericSolHandler.createBaseOrder(inputParams,sale.Id);
+            //HDT_UTL_GenericSolHandler.createBaseOrder(inputParams,sale.Id);
+            HDT_UTL_GenericSolHandler.createBaseOrderVoltura(inputParams,sale.Id);
         }else{
             //HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
         }
