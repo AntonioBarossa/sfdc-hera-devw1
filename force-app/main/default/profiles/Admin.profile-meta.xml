@@ -37801,6 +37801,18 @@
         <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Order-Dossier</layout>
         <recordType>Order.HDT_RT_OrderDossier</recordType>
     </layoutAssignments>
