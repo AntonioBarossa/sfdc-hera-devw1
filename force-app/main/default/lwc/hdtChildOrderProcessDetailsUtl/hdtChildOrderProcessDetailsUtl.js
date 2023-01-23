@@ -72,7 +72,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
             ].reduce(
                 (Fields, elem) => {
-                        if(elem.required && !(elem.disabled || elem.value)){
+                        if(elem.value !== false && elem.required && !(elem.disabled || elem.value)){
                             let fname = elem.outerText?.match(reg)?.[1];
                             Fields.labels+=`, ${fname}`;
                             Fields.apinames.push(elem.fieldName);

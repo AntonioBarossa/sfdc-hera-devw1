@@ -2668,6 +2668,13 @@
                     <elementReference>Calcola_Totale_Unit_Domestiche_Case</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Unit_ND_Comm_Sp</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <elementReference>Unit_ND_Comm_Case</elementReference>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Is_Incremento_Unita_0</targetReference>
             </connector>
@@ -4144,7 +4151,7 @@
     <formulas>
         <name>Calcola_Totale_Unita_Abitative_Generico</name>
         <dataType>Boolean</dataType>
-        <expression>IF({!Calcola_Totale_Unit_Domestiche_Case} + IF(ISBLANK({!GetCaseAggiornatoModificaUnitaImmobiliari_0.Unita_Abitative__c}), 0 , {!GetCaseAggiornatoModificaUnitaImmobiliari_0.Unita_Abitative__c}) &gt; {!Calcola_Totale_Unit_Domestiche_SP} + IF(ISBLANK({!Get_Service_Point.NotDomesticHousingUnit__c}),0, {!Get_Service_Point.NotDomesticHousingUnit__c}), True, False)</expression>
+        <expression>IF({!Calcola_Totale_Unit_Domestiche_Case}+IF(ISBLANK({!GetCaseAggiornatoModificaUnitaImmobiliari_0.Unita_Abitative__c}),0,{!GetCaseAggiornatoModificaUnitaImmobiliari_0.Unita_Abitative__c})+IF(ISBLANK({!GetCaseAggiornatoModificaUnitaImmobiliari_0.CommercialHousingUnit__c}),0,{!GetCaseAggiornatoModificaUnitaImmobiliari_0.CommercialHousingUnit__c})&gt;{!Calcola_Totale_Unit_Domestiche_SP}+IF(ISBLANK({!Get_Service_Point.NotDomesticHousingUnit__c}),0,{!Get_Service_Point.NotDomesticHousingUnit__c})+IF(ISBLANK({!Get_Service_Point.CommercialHousingUnit__c}),0,{!Get_Service_Point.CommercialHousingUnit__c}),True,False)</expression>
     </formulas>
     <formulas>
         <name>DistributorNoteFormula</name>
@@ -4175,6 +4182,18 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>ProcessTypeCambioCont</name>
         <dataType>String</dataType>
         <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
+    </formulas>
+    <formulas>
+        <name>Unit_ND_Comm_Case</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!GetCaseAggiornatoModificaUnitaImmobiliari_0.CommercialHousingUnit__c}), 0,{!GetCaseAggiornatoModificaUnitaImmobiliari_0.CommercialHousingUnit__c})</expression>
+        <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>Unit_ND_Comm_Sp</name>
+        <dataType>Number</dataType>
+        <expression>IF(ISBLANK({!Get_Service_Point.CommercialHousingUnit__c}), 0, {!Get_Service_Point.CommercialHousingUnit__c})</expression>
+        <scale>2</scale>
     </formulas>
     <formulas>
         <name>Unit_Non_Dom_Case</name>

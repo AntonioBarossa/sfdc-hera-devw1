@@ -471,6 +471,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>

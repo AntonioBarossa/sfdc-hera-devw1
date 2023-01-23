@@ -140,4 +140,8 @@
         <label>Nessun record di configurazione trovato</label>
         <name>no_configuration_found</name>
     </customLabels>
+    <customLabels>
+        <label>Visualizza tutto</label>
+        <name>ViewAll</name>
+    </customLabels>
 </Translations>

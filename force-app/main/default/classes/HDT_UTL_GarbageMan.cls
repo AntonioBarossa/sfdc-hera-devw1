@@ -119,6 +119,11 @@ public with sharing class HDT_UTL_GarbageMan {
         return theCase;
     }
 
+    public String outputDateEsito(Datetime d){
+        if(d==null) return '';
+        return d.format('YYYY-MM-dd hh:mm:ss');
+    }
+
     public DateTime formatDate(String dateToFormat){
         Matcher matcher = PATTERN_DATA.matcher(dateToFormat);
         if(!matcher.find()){
