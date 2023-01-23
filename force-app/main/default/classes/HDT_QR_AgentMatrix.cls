@@ -71,7 +71,7 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgencyName__c,
             OwnerId,
             AreaManager__c
-            FROM AgentMatrix__c WHERE AgencyName__c=:agencyName
+            FROM AgentMatrix__c WHERE AgencyName__c=:agencyName AND (CollaborationEndDate__c > TODAY OR CollaborationEndDate__c = NULL)
             WITH SECURITY_ENFORCED
         ];
 
@@ -112,7 +112,7 @@ public inherited sharing class HDT_QR_AgentMatrix {
             AgencyName__c,
             OwnerId,
             AreaManager__c
-            FROM AgentMatrix__c WHERE AgencyName__c=:agencyName AND Channel__c=:channel
+            FROM AgentMatrix__c WHERE AgencyName__c=:agencyName AND Channel__c=:channel AND (CollaborationEndDate__c > TODAY OR CollaborationEndDate__c = NULL)
             WITH SECURITY_ENFORCED
             ];
     

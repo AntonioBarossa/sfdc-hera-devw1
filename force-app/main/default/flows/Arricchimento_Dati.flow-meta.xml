@@ -116,7 +116,29 @@
         </rules>
     </decisions>
     <description>Arricchimento Dati Case SOL</description>
-    <interviewLabel>Arricchimento_Dati-3_InterviewLabel</interviewLabel>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(ISBLANK([Case].Account.CustomerCode__c) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_2_myRule_1_A2_9045878119</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!myVariable_current.Account.CustomerCode__c}) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</expression>
+    </formulas>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>IF(ISBLANK([Case].Account.CustomerCode__c) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_3_myRule_1_A1_1519927389</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!myVariable_current.Account.CustomerCode__c}) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</expression>
+    </formulas>
+    <interviewLabel>Arricchimento_Dati-7_InterviewLabel</interviewLabel>
     <label>Arricchimento Dati</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -675,12 +697,12 @@
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Formula</stringValue>
                 </value>
             </processMetadataValues>
             <field>TecnicalPhase__c</field>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <elementReference>formula_3_myRule_1_A1_1519927389</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -857,12 +879,12 @@
             <processMetadataValues>
                 <name>rightHandSideType</name>
                 <value>
-                    <stringValue>String</stringValue>
+                    <stringValue>Formula</stringValue>
                 </value>
             </processMetadataValues>
             <field>TecnicalPhase__c</field>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <elementReference>formula_2_myRule_1_A2_9045878119</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

@@ -21,10 +21,19 @@
                 <default>false</default>
                 <label>Protocollo Gestito</label>
             </value>
+            <value>
+                <fullName>Contratto Caricato</fullName>
+                <default>false</default>
+                <label>Contratto Caricato</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Chiusa</controllingFieldValue>
             <valueName>Protocollo Gestito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Chiusa</controllingFieldValue>
+            <valueName>Contratto Caricato</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Scartata</controllingFieldValue>

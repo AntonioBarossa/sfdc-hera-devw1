@@ -652,6 +652,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancanza del presupposto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Mancanza titolarità</fullName>
             <default>false</default>
         </values>
@@ -1987,17 +1991,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DeliveredDocumentation__c</picklist>
-        <values>
-            <fullName>N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Y</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Disconnectable__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2611,6 +2604,10 @@
 		</values>
 		<values>
 			<fullName>Annullato per decorrenza dei termini</fullName>
+			<default>false</default>
+		</values>
+        <values>
+			<fullName>Approvata</fullName>
 			<default>false</default>
 		</values>
 		<values>

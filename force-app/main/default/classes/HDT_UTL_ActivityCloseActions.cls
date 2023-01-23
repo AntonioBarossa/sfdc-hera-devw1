@@ -14,6 +14,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         @TestVisible
         private String phase;
         private String parentSObjectPhase;
+        @TestVisible
         private Sobject sobjToUpdate; 
 
         HDT_WRP_Actions(){
@@ -132,7 +133,12 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         } 
 
         if(!caseToNewActivityType.isEmpty() || !orderToNewActivityType.isEmpty()){
-            System.enqueueJob(new HDT_WRP_Queue(caseToNewActivityType, orderToNewActivityType));
+            //System.enqueueJob(new HDT_WRP_Queue(caseToNewActivityType, orderToNewActivityType));
+            Map<Id, HDT_WRP_Actions> allActivities = new Map<Id, HDT_WRP_Actions>();
+            allActivities.putAll(caseToNewActivityType);
+            allActivities.putAll(orderToNewActivityType);
+            HDT_UTL_ActivityTemplate utilsTemplate = new HDT_UTL_ActivityTemplate();
+            utilsTemplate.handlePclickActivityCreation(allActivities);
         }
         if(!sObjectToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(sObjectToUpdate);
@@ -154,7 +160,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if (allActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
         List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Case__r.Subprocess__c, Case__r.RequestSource__c , Case__r.ModuleFromContributor__c, Case__r.RecordType.DeveloperName,
-                                                            Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, 
+                                                            Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, Order__r.CommercialProduct__c,
                                                             wrts_prcgvr__ActivityTemplate__r.Name 
                                                      FROM wrts_prcgvr__Activity__c 
                                                      WHERE Id IN :allActivity  
@@ -190,6 +196,8 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         if( 'HDT_RT_VariazioniTari'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName) ||
             'HDT_RT_DisattivazioniTari'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName)) return tariLogicVarDis(selectedCase, activity);
 
+        if('HDT_RT_PosizionamentoContenitore'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName)) return posContenitoreLogic(selectedCase, activity);
+
         //END >>> marco.arci@webresults.it
         /*if(caseType == 'Gestione Rifiuti' && 'Risposta Ricevuta'.equalsIgnoreCase(activityType)){
             if('si'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Annullato');
@@ -215,18 +223,32 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         
         String orderType = selectedOrder?.ProcessType__c;
 
-        if( String.isNotEmpty(activityType) && String.isNotEmpty(orderType) &&
-            'Approvazione Agevolazione'.containsIgnoreCase(activityType) && 
-            new set<String>{'Modifica Tariffa', 'Modifica Tariffa - Rimozione Agevolazione'}.contains(orderType) )
-        {
-            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Contattare Cliente', false, '');
-            if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj('Documentazione Validata');
+        if( 'Approvazione Agevolazione'.equalsIgnoreCase(activityType) && 'Modifica Tariffa'.equalsIgnoreCase(orderType) ) {
+            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Annullato', 'Contattare Cliente', false, '');
+            if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj(
+                'Istruttoria DL116'.equalsIgnoreCase(selectedOrder.CommercialProduct__c)?
+                    'Approvata' : 'Documentazione Validata'
+            );
         }
-        
+        if( 'Elaborazione Manuale'.equalsIgnoreCase(activityType) && 'Modifica Tariffa - Rimozione Agevolazione'.equalsIgnoreCase(orderType) ) { //START >>> carmine.scalise@webresults.it
+            return new HDT_WRP_UpdateSobj('Completata');
+        }  
         return null;
     }
 
     //START >>> marco.arci@webresults.it
+
+    @TestVisible
+    private static HDT_WRP_Actions posContenitoreLogic(Case selectedCase, wrts_prcgvr__Activity__c activity){
+        String outcome = activity.ActivityOutcome__c;
+        if('Positivo'.equalsIgnoreCase(outcome)){
+            return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+        }else{
+            Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), Status = 'Closed');
+            return new HDT_WRP_UpdateSobj(caseUpdate);
+        }
+    }
+
     @TestVisible
     private static HDT_WRP_Actions tariLogicVarDis(Case selectedCase, wrts_prcgvr__Activity__c activity){
 
@@ -260,6 +282,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
 
         if( 'Modifica post accertamento'.equalsIgnoreCase(caseType) || 
+            'Variazione indirizzo di fornitura'.equalsIgnoreCase(caseType) ||
             'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
             ('Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
              subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){

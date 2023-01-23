@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Dettaglio Fattura </label>
+    <label>Dettaglio Fattura</label>
     <type>Checkbox</type>
 </CustomField>

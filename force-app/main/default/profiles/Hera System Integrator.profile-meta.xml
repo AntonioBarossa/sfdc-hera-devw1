@@ -471,12 +471,22 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.RetroactiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.RefundStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -5144,7 +5154,7 @@
         <field>OrderItem.PowerFlow__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>OrderItem.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -5224,7 +5234,7 @@
         <field>Product2.Cloned__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>Product2.DefaulStartTime__c</field>
         <readable>true</readable>
@@ -35450,6 +35460,84 @@
     <layoutAssignments>
         <layout>Reading__c-HDT_LetturaAcqua</layout>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceAsset__x-Asset Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceCase__x-Caso Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceCommTracking__x-Comunicazione Migrata da Siebel a SFDC Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContactPointEmail__x-Email punto di contatto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContactPointPhone__x-Telefono punto di contatto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContactRelation__x-Relazione referenti-account Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContact__x-Contatto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContentVersion__x-Content Version Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContract__x-Contratto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceCustomer__x-Cliente Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocActivity__x-Attività Documentale Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocSelected__x-Documento Selezionato Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocSendTracking__x-Comunicazione Documentale Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocumentLink__x-Documento Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceEmailResult__x-Individual Email Result Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceIndEmailResult__x-Notifica SOL Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceLandRegistry__x-Dato Catastale Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceOrderItem__x-Ordine prodotto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceOrder__x-Ordine Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforcePushTracking__x-Push Tracking Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceReading__x-Lettura Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceSMSTracking__x-SMS Tracking Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceStandardActivity__x-Task Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceSubscription__x-Subscription Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceSurvey__x-Survey Response Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceWrtsActivity__x-Attivita Salesforce Layout</layout>
     </layoutAssignments>
     <objectPermissions>
         <allowCreate>true</allowCreate>

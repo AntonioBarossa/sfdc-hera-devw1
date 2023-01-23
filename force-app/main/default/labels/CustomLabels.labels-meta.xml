@@ -193,6 +193,20 @@
         <value>Error</value>
     </labels>
     <labels>
+        <fullName>HDT_M03_Distributors_Energy_To_Include</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Distributori Processo M03 Energy</shortDescription>
+        <value>13D0000001;</value>
+    </labels>
+    <labels>
+        <fullName>HDT_M03_Distributors_Gas_To_Exclude</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>Distributori M03 Gas Da Escludere</shortDescription>
+        <value>10D1900000;13D1900000;10D8060000;10D7010000;13D7010000;</value>
+    </labels>
+    <labels>
         <fullName>HDT_CPQ_TemplateProductCode</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -1182,5 +1196,12 @@
         <protected>false</protected>
         <shortDescription>casePhaseAttesaCliente</shortDescription>
         <value>Attesa risposta cliente</value>
+    </labels>
+    <labels>
+        <fullName>ViewAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ViewAll</shortDescription>
+        <value>View All</value>
     </labels>
 </CustomLabels>

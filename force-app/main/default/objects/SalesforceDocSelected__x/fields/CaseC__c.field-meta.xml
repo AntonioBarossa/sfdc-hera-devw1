@@ -8,7 +8,9 @@
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Case</label>
-    <length>1000</length>
-    <type>LongTextArea</type>
-    <visibleLines>10</visibleLines>
+    <length>18</length>
+    <referenceTo>SalesforceCase__x</referenceTo>
+    <relationshipLabel>Documenti Selezionati Salesforce</relationshipLabel>
+    <relationshipName>DocumentiSelezionatiSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>

@@ -16,7 +16,9 @@ global with sharing class HDT_WS_IntermediateResults {
             HDT_WRP_Request request = (HDT_WRP_Request) JSON.deserialize(body, HDT_WS_IntermediateResults.HDT_WRP_Request.class);
             //launch async job
             HDT_QBL_IntermediateResultsJob job = new HDT_QBL_IntermediateResultsJob(request);
-            System.enqueueJob(job);
+            //System.enqueueJob(job);
+            //Make it Sync
+            job.execute(null);
         }catch(Exception e){
             return new HDT_WRP_Response('failed', e.getMessage());
         }
@@ -95,7 +97,7 @@ global with sharing class HDT_WS_IntermediateResults {
             if(casePhase=='Approvata'){
                 orderToUpdate.Phase__c = 'Documentazione Validata';
             } else if(casePhase=='Rifiutata'){
-                orderToUpdate.Phase__c = 'Annullata';
+                orderToUpdate.Phase__c = 'Annullato';
                 orderToUpdate.CancellationReason__c = 'Mancanza del presupposto';
             }
             return orderToUpdate;

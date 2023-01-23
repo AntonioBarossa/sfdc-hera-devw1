@@ -14,6 +14,12 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
         Case parentCase = (Case) inputs.get('inputSObj');
+        User currentUser=new User();
+
+        if (caseType=='Riattivazione Fornitura') {
+            string uid=UserInfo.getUserId();
+            currentUser=HDT_QR_UserQueries.getCurrentUser(uid);
+        }
 
         List<Case> childCases = new List<Case>();
         Map<String, Object> populateFields = new Map<String, Object>();
@@ -34,7 +40,8 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'CreatedDate',
                 'CreatedById',
                 'OwnerId',
-                'LastModifiedById'
+                'LastModifiedById',
+                'Origin'
             };
         Case childCase = new Case();
         
@@ -43,15 +50,11 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         for(String fieldName : populateFields.keySet()){
             try{
                 if(!fieldExcludeList.contains(fieldName)){
-
                     childCase.put(fieldName, populateFields.get(fieldName));
-
                 }
             }catch(Exception e){
                 System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
-
             }
-
         }
         
         System.debug(LoggingLevel.DEBUG,'RecordTypeId' +recordTypeId);

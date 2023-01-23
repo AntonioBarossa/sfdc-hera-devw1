@@ -101,7 +101,7 @@ export default class HdtAttachmentManager extends LightningElement {
         let objectToReturn = { 
             isValid: true
         };
-        /*
+        
         if(this.objectName?.toUpperCase() == 'CASE'){
             switch(this.currObject.Type.toUpperCase()) {
                 case 'MODIFICA DATI CONTRATTUALI':
@@ -111,8 +111,16 @@ export default class HdtAttachmentManager extends LightningElement {
                             errorMessage: 'È obbligatorio inserire almeno un allegato' 
                         };  
                     }
-                
+                    break;
                 case 'MODIFICA POST ACCERTAMENTO':
+                    if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' ){
+                        objectToReturn = { 
+                            isValid: false, 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                        };  
+                    }
+                    break;
+                /*
                     if( 'SUPERFICIE' == this.currObject.Subprocess__c?.toUpperCase() && 
                         'NON DOMESTICO' == this.currObject.ServicePoint__r?.SupplyType__c.toUpperCase() && 
                         this.currObject.DeclaredArea__c < this.currObject.Surface__c){
@@ -138,12 +146,12 @@ export default class HdtAttachmentManager extends LightningElement {
                         errorMessage: 'È obbligatorio inserire almeno un allegato' 
                     };
                     break;
-                
+                */
                 default:
                     break;
             }
         }
-        */
+        
         return objectToReturn;
     }
 

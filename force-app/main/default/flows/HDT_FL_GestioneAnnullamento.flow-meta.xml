@@ -1102,7 +1102,7 @@
         <name>Controllo_Allegati_Obbligatori</name>
         <label>Controllo Allegati Obbligatori</label>
         <locationX>1384</locationX>
-        <locationY>1522</locationY>
+        <locationY>1523</locationY>
         <defaultConnector>
             <targetReference>Passa_Fase_In_Lavorazione_0</targetReference>
         </defaultConnector>
@@ -1121,7 +1121,7 @@
                 <leftValueReference>GetCaseScreen.RequestSource__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>D’ufficio</stringValue>
+                    <stringValue>D&apos;ufficio</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
