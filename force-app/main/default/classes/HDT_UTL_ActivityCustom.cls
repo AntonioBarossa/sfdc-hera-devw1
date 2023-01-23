@@ -5,7 +5,7 @@
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
 
-@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
 
     public final Static String ANNULLAMENTO_SIEBEL = 'Annullamento processo transitorio Siebel';
@@ -21,7 +21,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
-
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 18/06/2021
@@ -537,32 +536,6 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         return null;
     }
 
-    public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
-
-        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
-
-    }
-
-    @AuraEnabled
-    public static void setNoteRicontattoCliente(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
-        Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
-        Datetime nowDate = null;
-        String nowDateFormat = '';
-        try {
-            for(wrts_prcgvr__Activity__c act : oldList){
-                mapOld.put(act.id,act);
-            }
-            for(wrts_prcgvr__Activity__c act : newList){
-                if((mapOld.get(act.id).ContactResult__c != act.ContactResult__c) && !String.isBlank(act.ContactResult__c) && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c)){
-                    nowDate = Datetime.now();
-                    nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
-                    act.NoteRicontattoCliente__c = !String.isBlank(mapOld.get(act.id).NoteRicontattoCliente__c) ? mapOld.get(act.id).NoteRicontattoCliente__c + '\n' + act.ContactResult__c + ' in data ' + nowDateFormat : act.ContactResult__c + ' in data ' + nowDateFormat;
-                }
-            }
-        } catch (Exception e) {
-            System.debug(LoggingLevel.DEBUG, 'Throwed exception: ' + e.getMessage());
-        }
-    }
 
     public static void setAccountIdFromCaseOrder(List<SObject> sObjectList){
         
