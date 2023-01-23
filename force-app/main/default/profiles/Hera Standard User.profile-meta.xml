@@ -578,6 +578,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -28056,7 +28061,7 @@
         <editable>true</editable>
         <field>ServicePoint__c.CorrectorDigitNumber__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.CorrectorSN__c</field>

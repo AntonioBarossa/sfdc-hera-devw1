@@ -74,6 +74,40 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>childLookupField</name>
+                    <value>ServicePointC__c</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>childObjectApiName</name>
+                    <value>SalesforceLandRegistry__x</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>fieldsToRetrieve</name>
+                    <value>Id,DisplayUrl</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>linesToDisplay</name>
+                    <value>6</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>nameField</name>
+                    <value>ExternalId</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>parentRecordTargetField</name>
+                    <value>Ser_Id__c</value>
+                </componentInstanceProperties>
+                <componentName>hdtCustomRelatedList</componentName>
+                <identifier>c_hdtCustomRelatedList</identifier>
+            </componentInstance>
+        </itemInstances>
+        <name>Facet-cf0ff0dd-f2ac-41d2-8afd-1c97b080bec4</name>
+        <type>Facet</type>
+    </flexiPageRegions>
+    <flexiPageRegions>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
                     <name>active</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -115,6 +149,20 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>flexipage_tab</identifier>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>body</name>
+                    <value>Facet-cf0ff0dd-f2ac-41d2-8afd-1c97b080bec4</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>title</name>
+                    <value>Dati Catastali</value>
+                </componentInstanceProperties>
+                <componentName>flexipage:tab</componentName>
+                <identifier>flexipage_tab2</identifier>
             </componentInstance>
         </itemInstances>
         <name>maintabs</name>

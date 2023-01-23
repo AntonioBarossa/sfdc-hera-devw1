@@ -52,6 +52,14 @@
                 <behavior>Edit</behavior>
                 <field>MethodsForOutgoingPayments__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RonchiCategoryCode__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RonchiSubCategoryCode__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -74,6 +82,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>Resident__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>SAPImplantCode__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -108,7 +120,7 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>SupplyStreet__c</field>
+                <field>SupplyStreetName__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>

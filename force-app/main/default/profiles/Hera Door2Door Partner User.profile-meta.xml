@@ -896,6 +896,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -34055,12 +34060,12 @@
         <editable>false</editable>
         <field>Lead.PurchaseDate__c</field>
         <readable>false</readable>
-</fieldPermissions>
-	<fieldPermissions>
-    <editable>true</editable>
-    <field>Order.AnnualTARIPayment__c</field>
-    <readable>true</readable>
-</fieldPermissions>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AnnualTARIPayment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
         <field>Order.IsMassive__c</field>
@@ -34881,10 +34886,10 @@
         <field>SlaTracking__c.Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
- <layoutAssignments>
-    <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</layout>
-    <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
-</layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_AttivitaGestionali2</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_AttivitaGestionali</recordType>
+    </layoutAssignments>
     <layoutAssignments>
         <layout>Account-Account Layout</layout>
     </layoutAssignments>

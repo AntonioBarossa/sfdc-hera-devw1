@@ -41,6 +41,20 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     }
 
     @AuraEnabled
+    public static string getProcessDriver(Order order)
+    {
+        try
+        {
+            return  HDT_UTL_OrderProcessAssignment.getProcessDriver(order);
+        }
+        catch(Exception e)
+        {
+            return '';
+        }
+    
+    }
+
+    @AuraEnabled
     public static String getConsumptionAnnualForVas(String orderId){
         
         try{
@@ -139,7 +153,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.SapContractCode__c = sapCode;
                     newOrder.Id = orderId;
                     //@frpanico "Chiamata Arricchimento Dati" per ulteriori predefault
-                    callDataEnrichment(order.SAPImplantCode__c,sapCode,JSON.serialize(newOrder));
+                    if( !'Acqua'.equalsIgnoreCase(order.CommodityFormula__c) && !'Teleriscaldamento'.equalsIgnoreCase(order.CommodityFormula__c) ){
+                        callDataEnrichment(order.SAPImplantCode__c,sapCode,JSON.serialize(newOrder));
+                    }
                     String tax = order.CommodityFormula__c == 'Energia Elettrica' ? newOrder.ExciseEle__c : newOrder.ExciseGAS__c;
                     String city = order.SupplyCity__c;
                     String region = '';
