@@ -96,8 +96,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
         system.debug(LoggingLevel.DEBUG,'Fine afterUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         
     }
-    
-    @SuppressWarnings('PMD.AvoidDebugStatements')
+
     protected override void beforeInsert() {
         HDT_UTL_Utils.setUsersField(trigger.new);
     }
