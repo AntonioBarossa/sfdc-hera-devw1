@@ -8,6 +8,44 @@
                     <valueList>
                         <valueListItems>
                             <value>Account.Catalogo_Servizi</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 AND 2) OR 3 OR (4 AND 5) OR (6 AND 7)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>MMS</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>MMS</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_BackOffice</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>HERA_COMM</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HERA COMM</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>AAAEBT</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>AAA-EBT</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.HDT_AccountStatement</value>
@@ -1138,6 +1176,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>
