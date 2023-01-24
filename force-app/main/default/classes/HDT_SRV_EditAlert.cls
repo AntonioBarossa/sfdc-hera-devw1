@@ -71,6 +71,9 @@ global with sharing class HDT_SRV_EditAlert implements wrts_prcgvr.Interfaces_1_
                     Case caseToUpdate = new Case();
                     caseToUpdate.Id = sapIntegration.recordId;
                     caseToUpdate.TecnicalPhase__c = 'Errore Lavorazione SAP';
+                    if ('Errore Lavorazione SAP'.equalsIgnoreCase(caseToUpdate.TecnicalPhase__c)){
+                        caseToUpdate.distributorflowcode__c = 'KO';
+                    }
                     HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
                 }
             }

@@ -256,7 +256,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         String whereq;
         String fromq = 'Case';
         String queryString;
-        fieldq = 'Id,Account.CustomerCode__c,Account.CustomerMarking__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
+        fieldq = 'Id,Account.CustomerCode__c,Account.CustomerMarking__c,CustomerMarking__c,CaseNumber,PhoneNumber__c,LastName__c,Mobile__c,Email__c,Fax__c';
         whereq = 'Id = \''+inputParams.recordId+'\'';
         queryString = 'SELECT ' + fieldq + ' FROM ' + fromq + ' WHERE ' +  whereq;
         List<SObject> sobjectRecordList = HDT_QR_GenericQuery.getGenericRecords(queryString, fromQ);
@@ -268,7 +268,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.dataCreazione = getFormattedToday();
         requestBody.account.partner = (String) acc.get('CustomerCode__c');
         // SAP usa la marcatura cliente solo per fare dei controlli di coerenza per la MAI, ma non la modifica.
-        requestBody.account.marcaturaCliente = (String) acc.get('CustomerMarking__c');
+        // Up 2023-01-18 Sembra invece che SAP usi la marcatura per eseguire la modifica quindi e' opportuno utilizzare la marcatura inserita sul Case
+        requestBody.account.marcaturaCliente = (String) caseRecord.get('CustomerMarking__c');
         requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
         requestBody.account.cellulare = (String) caseRecord.get('Mobile__c') != null ? (String) caseRecord.get('Mobile__c') : '';
         requestBody.account.fax = (String) caseRecord.get('Fax__c') != null ? (String) caseRecord.get('Fax__c') : '';

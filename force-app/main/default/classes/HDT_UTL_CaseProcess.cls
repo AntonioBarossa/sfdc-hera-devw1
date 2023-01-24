@@ -7,6 +7,7 @@ public with sharing class HDT_UTL_CaseProcess {
     private static HDT_SRV_Account accountSrv = new HDT_SRV_Account();
     private static HDT_QR_CampaignMember campaignMemberQr = new HDT_QR_CampaignMember();
     private static HDT_SRV_CampaignMember campaignMemberSrv = new HDT_SRV_CampaignMember();
+    private static String childOpinionCanc = '[REC-0001] Annullato per annullamento case padre';
 
     public static void checkSatisfationIndex(Map<Id,SObject> newMap, Map<Id,SObject> oldMap) {
         List<Account> accountsToUpdate = new List<Account>();
@@ -190,6 +191,7 @@ public with sharing class HDT_UTL_CaseProcess {
                         for(Case child : childCases){
                             if(!(child.Phase__c.equalsIgnoreCase('Completata'))){
                                 caseIds.add(child.Id);
+                                child.CancellationNote__c = childOpinionCanc;
                                 child.Phase__c = 'Annullato';
                                 child.Status = 'Closed';
                             }
@@ -239,8 +241,12 @@ public with sharing class HDT_UTL_CaseProcess {
                 }
                 /* Richiesta Parere
                 * Il case padre (reclamo scritto) viene riportato In Lavorazione
+                * Se le CancellationNote sono vuote o diverse da '[REC-0001] Annullato per annullamento case padre' 
+                * si procede alla movimentazione del case padre di Reclamo Scritto
+                * in caso contrario siamo nelle condizioni di annullamento top -> bottom e dunque non si deve movimentare il case di Reclamo 
                 */
-                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null)
+                if(caseNew.Type.equalsIgnoreCase('Richiesta Parere') && newPhase.equalsIgnoreCase('Annullato') && caseNew.ParentId != null 
+                    && (String.isBlank(caseNew.CancellationNote__c) || (String.isNotBlank(caseNew.CancellationNote__c) && !caseNew.CancellationNote__c.equalsIgnoreCase(childOpinionCanc))))
                 {
                     Case complaintCase = new Case();
                     complaintCase.Id = caseNew.ParentId;

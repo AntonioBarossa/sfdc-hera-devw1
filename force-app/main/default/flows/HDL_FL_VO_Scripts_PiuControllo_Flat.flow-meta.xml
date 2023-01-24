@@ -441,19 +441,12 @@
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus</name>
-            <conditionLogic>3 AND (1 OR 2)</conditionLogic>
+            <conditionLogic>1 AND 2</conditionLogic>
             <conditions>
                 <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>PiuControllo Flat Casa Luce</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -854,7 +847,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo</name>
-            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -874,13 +867,6 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>PiuControllo Flat Casa Luce</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -900,7 +886,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_1</name>
-            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -929,6 +915,13 @@
                     <stringValue>PiuControllo Flat Casa Gas</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Promozioni_0</targetReference>
             </connector>
@@ -946,7 +939,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_2</name>
-            <conditionLogic>(1 OR 2) AND (3 OR 4)</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -968,13 +961,6 @@
                     <stringValue>PiuControllo Flat Casa Luce</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Promozioni_2</targetReference>
             </connector>
@@ -992,7 +978,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_INB_GAS</name>
-            <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -1019,6 +1005,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1659,7 +1652,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>1 AND 2</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
@@ -1672,13 +1665,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>PiuControllo Flat Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1765,7 +1751,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>1 AND 2</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
@@ -1778,13 +1764,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>PiuControllo Flat Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1832,7 +1811,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_SL</name>
-            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;Sole &lt;/strong&gt;- &lt;strong&gt;Luna&lt;/strong&gt; prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula} €/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula} €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!FormulaPricePick} €/kWh Ore Vuote: {!FormulaPricePickOut} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;Sole &lt;/strong&gt;- &lt;strong&gt;Luna&lt;/strong&gt; prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula} €/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula} €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!FormulaPricePick} €/kWh Ore Vuote: {!FormulaPricePickOut} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,0% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1861,7 +1840,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_24</name>
-            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;24&lt;/strong&gt; prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!FormulaPriceF0} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;24&lt;/strong&gt; prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!FormulaPriceF0} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,0% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1876,7 +1855,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_1</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’85% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 15% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1951,7 +1930,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_SL</name>
-            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;Sole &lt;/strong&gt;- &lt;strong&gt;Luna&lt;/strong&gt; prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula} €/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula} €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!FormulaPricePick} €/kWh Ore Vuote: {!FormulaPricePickOut} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;Sole &lt;/strong&gt;- &lt;strong&gt;Luna&lt;/strong&gt; prevede un prezzo applicato alla componente energia biorario, differenziato cioè tra ore piene ed ore vuote.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Le ore piene, sono quelle dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali. Le ore vuote sono invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Il prezzo della componente energia per il periodo da lei scelto assumerà il valore di {!PrezzoLordoOrePieneFormula} €/kWh nelle ore piene e {!PrezzoLordoOreVuoteFormula} €/kWh nelle ore vuote.&lt;/p&gt;&lt;p&gt;I prezzi comunicati sono inclusivi delle perdite di rete; in bolletta invece saranno esposti al netto delle perdite e pari a: Ore Piene: {!FormulaPricePick} €/kWh Ore Vuote: {!FormulaPricePickOut} €/kWh.&lt;/p&gt;&lt;p&gt;Tali prezzi saranno applicati sia ai consumi effettivi che alle relative perdite di rete, (10,0% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1980,7 +1959,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_24</name>
-            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;24&lt;/strong&gt; prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!FormulaPriceF0} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,2% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il profilo &lt;strong&gt;24&lt;/strong&gt; prevede un prezzo applicato alla componente energia uguale in tutte le ore del giorno ed assumerà, per il periodo da lei scelto, il valore di {!PrezzoLordoFormula} €/kWh.&lt;/p&gt;&lt;p&gt;Il prezzo comunicato è inclusivo delle perdite di rete; in bolletta invece sarà esposto al netto delle perdite e pari a: {!FormulaPriceF0} €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo sarà applicato sia ai consumi effettivi che alle relative perdite di rete, (10,0% per un cliente domestico), ottenendo lo stesso risultato del prezzo al lordo delle perdite applicato ai consumi effettivi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1995,7 +1974,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’85% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 15% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2070,7 +2049,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 99% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 1% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 2% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2140,7 +2119,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 99% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 1% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 2% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2213,7 +2192,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>1 AND 2</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
@@ -2226,13 +2205,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>PiuControllo Flat Casa Luce</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2267,13 +2239,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>100</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2324,7 +2289,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>1 AND 2</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
@@ -2337,13 +2302,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>PiuControllo Flat Casa Luce</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2400,13 +2358,6 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Promo Hera</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4339,7 +4290,7 @@
         </fields>
         <fields>
             <name>PCF_DURATA_CONTRATTO_FAM_TEXTBOX2_END</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta &lt;strong&gt;bimestrale &lt;/strong&gt;per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	In deroga all&apos;articolo 8 delle condizioni generali di contratto, riceverà una bolletta con periodicità &lt;strong&gt;mensile&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4429,7 +4380,7 @@
         </fields>
         <fields>
             <name>PCF_DURATA_CONTRATTO_FAM_TEXTBOX2_END2</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l&apos;indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta &lt;strong&gt;bimestrale &lt;/strong&gt;per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l&apos;indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	In deroga all&apos;articolo 8 delle condizioni generali di contratto, riceverà una bolletta con periodicità &lt;strong&gt;mensile&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
