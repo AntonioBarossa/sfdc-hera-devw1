@@ -224,7 +224,7 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         String orderType = selectedOrder?.ProcessType__c;
 
         if( new Set<String>{'Approvazione Agevolazione', 'Istruttoria Back Office'}.contains(activityType) && 'Modifica Tariffa'.equalsIgnoreCase(orderType) ) {
-            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Annullato', 'Contattare Cliente', false, '');
+            if('Negativo'.equalsIgnoreCase(outcome)) return new HDT_WRP_CreateActivity('Annullato', 'CBS_CRP001__CONTATTARE_IL_CLIENTE_SALES', false, '');
             if('Positivo'.equalsIgnoreCase(outcome)) return new HDT_WRP_UpdateSobj(
                 'Istruttoria DL116'.equalsIgnoreCase(selectedOrder.CommercialProduct__c)?
                     'Approvata' : 'Documentazione Validata'
