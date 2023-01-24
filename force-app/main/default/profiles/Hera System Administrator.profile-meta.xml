@@ -37266,11 +37266,11 @@
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
+        <layout>Order-Attivazioni Ambiente</layout>
         <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
+        <layout>Order-Attivazioni Ambiente</layout>
         <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
