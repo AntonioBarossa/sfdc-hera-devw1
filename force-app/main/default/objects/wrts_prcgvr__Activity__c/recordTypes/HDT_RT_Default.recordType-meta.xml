@@ -2806,6 +2806,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Approvazione Agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Gestione Fuga</fullName>
             <default>false</default>
         </values>
