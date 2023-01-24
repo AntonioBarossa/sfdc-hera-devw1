@@ -58,7 +58,19 @@ global with sharing class HDT_WS_GarbageMan {
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
         
         try{
-            if(STRING.isBlank(request.requestCode)){    throw new HDT_UTL_HeraException('wasterCode blank');    }
+            if(
+                STRING.isBlank(request.requestCode)
+                || STRING.isBlank(request.streetCode)
+                || STRING.isBlank(request.fiscalCode)
+                || STRING.isBlank(request.contactName)
+                || STRING.isBlank(request.city)
+                || STRING.isBlank(request.street)
+                || STRING.isBlank(request.typeInt)
+                || STRING.isBlank(request.phoneNumber)
+            ){
+                throw new HDT_UTL_HeraException('incomplete data');
+            }
+            
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
             if(!accounts.isEmpty()){

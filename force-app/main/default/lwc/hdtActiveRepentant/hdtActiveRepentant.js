@@ -19,6 +19,9 @@ class outputData{
     }
 }//Prendere anche data dichiarazione in maniera dinamica
 
+const processTypeTranscode = new Map();
+processTypeTranscode.set("Modifica Tariffa - Rimozione Agevolazione", "Modifica Tariffa");
+
 class sieExport{
     constructor(period, subtype, cityCode, declarationDate, effectiveDate, limitDateX, missingDue){
         this.period=period;
@@ -221,7 +224,10 @@ export default class HdtActiveRepentant extends LightningElement {
     }
 
     async getTablesConfig(){
-        let wrp = await getTables({ comune: this.city, sottotipo: this.sottotipo });
+        let sottotipo;
+        sottotipo = processTypeTranscode.get(this.sottotipo), sottotipo=sottotipo? sottotipo : this.sottotipo;
+        console.log('getTables '+sottotipo)
+        let wrp = await getTables({ comune: this.city, sottotipo: sottotipo });
         let {termsTable : data, termsAdministration: terms, cityData} = wrp;
         this.cityData=cityData?.[0];
         this.loading--;
