@@ -139,31 +139,19 @@ public with sharing class HDT_UTL_Utils {
 
         try{
             String sObjectName = String.valueOf(newObject.getSObjectType());
-            system.debug('PUNTO 1');
             if(u != null){
-                system.debug('PUNTO 2');
                 newObject.put('CreatorGroup__c', u.CreatorGroup__c);
-                system.debug('PUNTO 3');
                 if(sObjectName == 'Order'){
-                    system.debug('PUNTO 4');
                     newObject.put('LoginChannel__c', u.LoginChannel__c);
-                    system.debug('PUNTO 5');
                 }
                 else{
-                    system.debug('PUNTO 6');
                     newObject.put('LoginGroup__c', u.LoginChannel__c); 
-                    system.debug('PUNTO 7');
                 }
-                system.debug('PUNTO 8');
                 if(u.Station__c != '' && u.Station__c != null){
-                    system.debug('PUNTO 9');
                     newObject.put('LoginWorkstation__c', u.Station__c);
-                    system.debug('PUNTO 10');
                 }
                 else{
-                    system.debug('PUNTO 11');
                     newObject.put('LoginWorkstation__c', '-');
-                    system.debug('PUNTO 12');
                 }
             }
         }
