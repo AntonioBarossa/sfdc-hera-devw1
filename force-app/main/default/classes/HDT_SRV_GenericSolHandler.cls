@@ -95,7 +95,7 @@ public with sharing class HDT_SRV_GenericSolHandler {
         String serviceRequest = (String) inputParams.get('serviceRequest');
         String integrationId = (String) inputParams.get('integrationId');
         if(String.isBlank(serviceRequest)){
-            Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Vendita Analisi Consumi da Web ');
+            Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Vendita Analisi Consumi da Web');
             HDT_UTL_GenericSolHandler.createBaseOrder(inputParams,sale.Id);
         }else{
             HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
@@ -108,7 +108,6 @@ public with sharing class HDT_SRV_GenericSolHandler {
         String serviceRequest = (String) inputParams.get('serviceRequest');
         if(String.isBlank(serviceRequest)){
             Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Voltura Idrica da Web');
-            //HDT_UTL_GenericSolHandler.createBaseOrder(inputParams,sale.Id);
             HDT_UTL_GenericSolHandler.createBaseOrderVoltura(inputParams,sale.Id);
         }else{
             //HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
