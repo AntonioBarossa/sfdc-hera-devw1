@@ -56,6 +56,11 @@
                 <label>Anticipo Appuntamento</label>
             </value>
             <value>
+                <fullName>Approvazione Agevolazione</fullName>
+                <default>false</default>
+                <label>Approvazione Agevolazione</label>
+            </value>
+            <value>
                 <fullName>Approvazione Bonus Commerciale</fullName>
                 <default>false</default>
                 <label>Approvazione Bonus Commerciale</label>
