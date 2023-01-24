@@ -1228,7 +1228,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                        if (
+                            !(
+                                'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) 
+                                || 'Contattare il Cliente'.equalsIgnoreCase(activity.Type__c)
+                            )
+                        ){
                             activity.wrts_prcgvr__Status__c = 'Annullata';
                             activitiesToUpdate.add(activity);
                         }
