@@ -11,6 +11,8 @@ global with sharing class HDT_WS_GarbageMan {
   
     private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
     private static HDT_QR_Account qrAccount = new HDT_QR_Account();
+    private static final String CF_REG ='^[A-Za-z]{6}[0-9]{2}[A-Za-z]{1}[0-9]{2}[A-Za-z]{1}[0-9]{3}[A-Za-z]{1}$';
+    private static final Pattern CF_PATTERN = Pattern.compile(CF_REG);
 
     //public HDT_WS_GarbageMan(){}
     
@@ -58,6 +60,18 @@ global with sharing class HDT_WS_GarbageMan {
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
         
         try{
+            if(
+                STRING.isBlank(request.requestCode)
+                || STRING.isBlank(request.streetCode)
+                || !( STRING.isBlank(request.fiscalCode) || CF_PATTERN.matcher(request.fiscalCode).matches() )
+                || STRING.isBlank(request.contactName)
+                || STRING.isBlank(request.city)
+                || STRING.isBlank(request.street)
+                || STRING.isBlank(request.typeInt)
+            ){
+                throw new HDT_UTL_HeraException('incomplete data');
+            }
+            
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
             if(!accounts.isEmpty()){
@@ -94,8 +108,8 @@ global with sharing class HDT_WS_GarbageMan {
 
         }catch(Exception e){
             System.debug(LoggingLevel.ERROR,'HDT_WS_GarbageMan Error ' + e.getMessage());
-            RestContext.response.statusCode=400;
-            RestContext.response.headers.put('Content-Type', 'application/json');
+            /*RestContext.response.statusCode=400;
+            RestContext.response.headers.put('Content-Type', 'application/json');*/
         }
 
         return new HDT_WRP_WasteDisposalResponse('N',null, request.requestCode, null);

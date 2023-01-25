@@ -14,6 +14,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
 
         system.debug(LoggingLevel.DEBUG,'Inizio beforeUpdate - Query utilizzate: '+Limits.getQueries()+'/'+Limits.getLimitQueries());
         if (!HDT_UTL_OrderProcess.transitorySiebelManagement(Trigger.new, Trigger.oldMap)){
+            Boolean skipForSap = HDT_UTL_Scarti.changeSapPhaseHandler(Trigger.newMap, Trigger.oldMap);
             HDT_UTL_OrderProcess.updatePhase(trigger.new,trigger.old);
 
             /**@frpanico 15/12/2021 
@@ -24,7 +25,7 @@ public inherited sharing class HDT_TRH_Order extends HDT_TRH_TriggerHandler {
             HDT_UTL_OrderProcess.updatePhaseForFirm(trigger.new);
             Boolean skipForCancellation = HDT_UTL_OrderProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
             //EVERIS: Gestione Scarti SAP
-            Boolean skipForGestioneScarti = HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
+            Boolean skipForGestioneScarti = skipForSap || HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
             //Gestione Credit Check
             if(!skipForCancellation && !skipForGestioneScarti){
                 Map<SObject,SObject> mapOrderNotSkipCreditCheck = HDT_UTL_CreditCheck.verifyCreditCheckStatus(Trigger.new, (Map<Id,Order>) Trigger.oldMap);
