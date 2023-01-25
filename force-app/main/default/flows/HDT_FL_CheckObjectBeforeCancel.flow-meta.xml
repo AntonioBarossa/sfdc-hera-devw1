@@ -293,6 +293,20 @@
                 <stringValue>Bozza Annullata</stringValue>
             </value>
         </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Ripensato</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Status</field>
+            <operator>NotEqualTo</operator>
+            <value>
+                <stringValue>Annullato</stringValue>
+            </value>
+        </filters>
         <object>Order</object>
         <outputAssignments>
             <assignToReference>childId</assignToReference>

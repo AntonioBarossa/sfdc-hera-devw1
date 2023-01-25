@@ -183,6 +183,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Skip_Callout__c = ordToCheck[0].Skip_Callout__c == null ? -1 : null,
+                CancellationReason__c = causal,
                 WorkedQualityCall__c = qualityMessage
             ));
         }
