@@ -19,6 +19,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SalesforceAsset__x.AccountIdOnline__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SalesforceAsset__x.AgencyC__c</field>
         <readable>true</readable>
     </fieldPermissions>

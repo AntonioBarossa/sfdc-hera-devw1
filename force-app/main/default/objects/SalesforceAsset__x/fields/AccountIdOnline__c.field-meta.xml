@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ContactId__c</fullName>
-    <description>ContactId</description>
-    <externalDeveloperName>ContactId</externalDeveloperName>
+    <fullName>AccountIdOnline__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>ContactId</label>
-    <length>255</length>
+    <label>Cliente Online</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Assets Salesforce</relationshipLabel>
+    <relationshipName>AssetsSalesforce</relationshipName>
     <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Lookup</type>
 </CustomField>

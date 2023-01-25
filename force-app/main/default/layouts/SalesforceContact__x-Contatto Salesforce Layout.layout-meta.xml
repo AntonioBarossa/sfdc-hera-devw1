@@ -423,11 +423,6 @@
         <relatedList>SalesforcePushTracking__x.ContactIDC__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>GlobalMigrationKeyC__c</fields>
-        <fields>DisplayUrl</fields>
-        <relatedList>SalesforceContactRelation__x.ContactId__c</relatedList>
-    </relatedLists>
-    <relatedLists>
         <fields>NameC__c</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceSMSTracking__x.ContactIDC__c</relatedList>
@@ -436,6 +431,11 @@
         <fields>ExternalId</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceSurvey__x.ContactC__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>GlobalMigrationKeyC__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceContactRelation__x.Id__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
