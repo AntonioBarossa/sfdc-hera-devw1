@@ -9,8 +9,7 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>ContactId</label>
     <length>255</length>
-    <referenceTo>SalesforceContact__x</referenceTo>
-    <relationshipLabel>Relazioni referenti-account Salesforce</relationshipLabel>
-    <relationshipName>RelazioniReferentiAccountSalesforce</relationshipName>
-    <type>ExternalLookup</type>
+    <required>false</required>
+    <type>Text</type>
+    <unique>false</unique>
 </CustomField>
