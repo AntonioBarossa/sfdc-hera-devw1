@@ -274,6 +274,11 @@
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceWrtsActivity__x.AccountC__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceAsset__x.AccountIdOnline__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
