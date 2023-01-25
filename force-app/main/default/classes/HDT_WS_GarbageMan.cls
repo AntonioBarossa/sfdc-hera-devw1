@@ -11,6 +11,8 @@ global with sharing class HDT_WS_GarbageMan {
   
     private static HDT_UTL_GarbageMan utlGarbage = new HDT_UTL_GarbageMan();
     private static HDT_QR_Account qrAccount = new HDT_QR_Account();
+    private static final String CF_REG ='^[A-Za-z]{6}[0-9]{2}[A-Za-z]{1}[0-9]{2}[A-Za-z]{1}[0-9]{3}[A-Za-z]{1}$';
+    private static final Pattern CF_PATTERN = Pattern.compile(CF_REG);
 
     //public HDT_WS_GarbageMan(){}
     
@@ -61,12 +63,11 @@ global with sharing class HDT_WS_GarbageMan {
             if(
                 STRING.isBlank(request.requestCode)
                 || STRING.isBlank(request.streetCode)
-                || STRING.isBlank(request.fiscalCode)
+                || !( STRING.isBlank(request.fiscalCode) || CF_PATTERN.matcher(request.fiscalCode).matches() )
                 || STRING.isBlank(request.contactName)
                 || STRING.isBlank(request.city)
                 || STRING.isBlank(request.street)
                 || STRING.isBlank(request.typeInt)
-                || STRING.isBlank(request.phoneNumber)
             ){
                 throw new HDT_UTL_HeraException('incomplete data');
             }
