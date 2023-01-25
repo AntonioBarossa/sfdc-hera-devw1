@@ -177,6 +177,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_CloseQualityCall</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_ComfortCall</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -354,6 +358,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_BA_OrderEstimateExpirationTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_BA_OrderQualityCallManagement</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -1046,6 +1054,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_LC_CustomLookupControllerTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_LC_CustomRelatedList</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -4574,6 +4586,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_ProductStObjStatusUpdateTst</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_QualityCall</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>

@@ -1197,4 +1197,11 @@
         <shortDescription>casePhaseAttesaCliente</shortDescription>
         <value>Attesa risposta cliente</value>
     </labels>
+    <labels>
+        <fullName>ViewAll</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>ViewAll</shortDescription>
+        <value>View All</value>
+    </labels>
 </CustomLabels>

@@ -94,7 +94,7 @@ public with sharing class HDT_UTL_CalculateTransition {
                 }
             }
             if(calculateTransitionMap.get('sale') != null){
-                sale = [SELECT Id, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c, Account__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
+                sale = [SELECT Id, Account__r.CustomerCode__c, Account__r.CompanyOwner__c, Account__r.Category__c, Account__r.CustomerMarking__c, Account__c FROM Sale__c WHERE Id =: ((Sale__c)calculateTransitionMap.get('sale')).Id WITH SECURITY_ENFORCED LIMIT 1];
                 if( 'MMS'.equalsIgnoreCase(sale.Account__r.CompanyOwner__c) ){
                     return false;
                 }
@@ -113,14 +113,15 @@ public with sharing class HDT_UTL_CalculateTransition {
             //    sale.Account__r.Category__c != 'Piccoli Condomini') || 
             //    (city.SDV__c == 'HC' && 
             //    (String)calculateTransitionMap.get('commodity') == 'Gas')){
-            
-            /** Check comune, punto reseller, categoria Account */
-            if(stabbedData.contains(city.Province__c) &&
-               (servicePoint == null || (servicePoint != null && !servicePoint.IsReseller__c)) && 
-               sale.Account__r.CompanyOwner__c != 'Reseller' && 
-               (sale.Account__r.Category__c == 'Famiglie' || 
-               sale.Account__r.Category__c == 'Aziende Soho' || 
-               sale.Account__r.Category__c == 'Piccoli Condomini')){
+             String regex = '^[DG][0-9] - .*';
+            Pattern regexPattern = Pattern.compile(regex);
+            /** Check comune, punto reseller, categoria Account, Codice cliente non valorizzato o Codice cliente valorizzato e marcatura nuovo modello */
+            if(stabbedData.contains(city.Province__c) 
+                && (servicePoint == null || (servicePoint != null && !servicePoint.IsReseller__c)) 
+                && (sale.Account__r.CompanyOwner__c != 'Reseller') 
+                && (sale.Account__r.Category__c == 'Famiglie' || sale.Account__r.Category__c == 'Aziende Soho' || sale.Account__r.Category__c == 'Piccoli Condomini')
+                && (sale.Account__r.CustomerCode__c == null || (sale.Account__r.CustomerCode__c != null && regexPattern.matcher(sale.Account__r.CustomerMarking__c).matches()))
+               ){
                 /** Check se Gas HC --> Transitorio */
                 /** infrawave: non più richiesto controllo*/
  /*                   if((String)calculateTransitionMap.get('commodity') == 'Gas' && !markerConverted.isEmpty() && markerConverted != null && !(markerConverted[0] == 'D' && markerConverted[1].isNumeric())){

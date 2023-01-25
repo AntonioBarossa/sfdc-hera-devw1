@@ -2455,11 +2455,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus mancante</fullName>
+            <fullName>Altro compenso mancante</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Business</fullName>
+            <fullName>Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2587,7 +2587,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Legge 80_Istanza EE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2823,7 +2823,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica colonnine</fullName>
+            <fullName>Verifica colonnine e Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2937,15 +2937,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamenti contratti</fullName>
+            <fullName>Order Management MUI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi Ultima Istanza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione processi di Misura</fullName>
+            <fullName>Gestione Misure Energy</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2966,10 +2962,6 @@
         </values>
         <values>
             <fullName>Segnalazioni Commissioni Agenzie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Migrazione dati</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3002,10 +2994,6 @@
         </values>
         <values>
             <fullName>Verifiche Morosità Business</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche contratti</fullName>
             <default>false</default>
         </values>
     </picklistValues>

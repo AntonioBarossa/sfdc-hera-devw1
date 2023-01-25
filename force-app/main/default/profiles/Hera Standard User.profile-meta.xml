@@ -578,6 +578,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1339,6 +1344,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.RateCategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ManagedSapDiscard__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28374,6 +28384,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SAPContractAccountCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SAPContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -35395,24 +35410,24 @@
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
+        <layout>Order-Attivazioni Ambiente</layout>
         <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
+        <layout>Order-Attivazioni Ambiente</layout>
         <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Dossier</layout>

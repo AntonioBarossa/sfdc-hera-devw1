@@ -162,7 +162,9 @@
         <type>AutoNumber</type>
     </nameField>
     <pluralLabel>Dati Tecnici Comunali</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <listViewButtons>Rapporto_Dati_Tecnici_Comunali</listViewButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -58,6 +58,7 @@ global with sharing class HDT_WS_GarbageMan {
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
         
         try{
+            if(STRING.isBlank(request.requestCode)){    throw new HDT_UTL_HeraException('wasterCode blank');    }
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
             if(!accounts.isEmpty()){
@@ -94,8 +95,8 @@ global with sharing class HDT_WS_GarbageMan {
 
         }catch(Exception e){
             System.debug(LoggingLevel.ERROR,'HDT_WS_GarbageMan Error ' + e.getMessage());
-            RestContext.response.statusCode=400;
-            RestContext.response.headers.put('Content-Type', 'application/json');
+            /*RestContext.response.statusCode=400;
+            RestContext.response.headers.put('Content-Type', 'application/json');*/
         }
 
         return new HDT_WRP_WasteDisposalResponse('N',null, request.requestCode, null);
