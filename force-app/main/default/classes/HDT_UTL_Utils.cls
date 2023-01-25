@@ -138,10 +138,21 @@ public with sharing class HDT_UTL_Utils {
     public static void setUsersField(SObject newObject, HDT_SRV_LogService logService, User u){
 
         try{
+            String sObjectName = String.valueOf(newObject.getSObjectType());
             if(u != null){
-                newObject.put('CreatorGroup__c', u.CreatorGroup__c);  
-                newObject.put('LoginGroup__c', u.LoginChannel__c);
-                newObject.put('LoginWorkstation__c', u.Station__c);
+                newObject.put('CreatorGroup__c', u.CreatorGroup__c);
+                if(sObjectName == 'Order'){
+                    newObject.put('LoginChannel__c', u.LoginChannel__c);
+                }
+                else{
+                    newObject.put('LoginGroup__c', u.LoginChannel__c); 
+                }
+                if(u.Station__c != '' && u.Station__c != null){
+                    newObject.put('LoginWorkstation__c', u.Station__c);
+                }
+                else{
+                    newObject.put('LoginWorkstation__c', '-');
+                }
             }
         }
         catch(Exception e){
