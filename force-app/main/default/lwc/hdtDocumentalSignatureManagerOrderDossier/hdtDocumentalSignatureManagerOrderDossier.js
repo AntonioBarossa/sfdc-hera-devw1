@@ -417,13 +417,18 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             this.dataToSubmit['ShippingCountry__c'] = resultWrapper.addressWrapper.Stato;
             fields[ShippingStreetName.fieldApiName] = resultWrapper.addressWrapper.Via;
             this.dataToSubmit['ShippingStreetName__c'] = resultWrapper.addressWrapper.Via;
-            fields[SignedDate.fieldApiName] = this.actualSignedDate;
-            this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            /* Se non controllato il null/undefined della data firma, e' possibile sbiancarla */
+            if(this.actualSignedDate)
+            {
+                fields[SignedDate.fieldApiName] = this.actualSignedDate;
+                this.dataToSubmit['SignedDate__c'] = this.actualSignedDate;
+            }
             //HRADTR_GV_Main
             fields[RelatedPractice.fieldApiName] = this.actualRelatedPractice;
             this.dataToSubmit['RelatedPractice__c'] = this.actualRelatedPractice;
             fields[ContractSigned.fieldApiName] = resultWrapper.signMode.localeCompare(signModeFirmato) === 0;
             const recordInput = { fields };
+            console.log('dati da aggiornare: ' + JSON.stringify(recordInput));
            
             updateRecord(recordInput)
                 .then(() => {
