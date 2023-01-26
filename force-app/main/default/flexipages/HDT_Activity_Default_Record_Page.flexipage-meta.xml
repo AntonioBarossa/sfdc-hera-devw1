@@ -244,7 +244,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
+                                <booleanFilter>(1 AND 2) OR (3 AND 4 AND 5)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ShowEdit__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -264,6 +264,11 @@
                                     <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
