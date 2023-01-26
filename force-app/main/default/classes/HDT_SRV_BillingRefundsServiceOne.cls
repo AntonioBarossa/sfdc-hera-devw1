@@ -54,7 +54,7 @@ global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgv
             caseId=c.Id;
             sapContract=contr.SAPContractCode__c;
             status='01';
-            reading=c.AbnormalReading__c;
+            reading=c.AbnormalReading__c != null ? String.valueOf(c.AbnormalReading__c):'';
             readingDate=c.AbnormalReadingDate__c != null ? String.valueOf(c.AbnormalReadingDate__c) : '';
         }
         private String getCompanyCode(String companyOwner){
