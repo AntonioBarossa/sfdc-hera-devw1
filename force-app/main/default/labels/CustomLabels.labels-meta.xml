@@ -1009,6 +1009,13 @@
         <value>N</value>
     </labels>
     <labels>
+        <fullName>TRB_Commodity</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>Commodity Turbobilling</shortDescription>
+        <value>N</value>
+    </labels>
+    <labels>
         <fullName>HDT_ActivityCompleteProcess</fullName>
         <language>en_US</language>
         <protected>false</protected>
