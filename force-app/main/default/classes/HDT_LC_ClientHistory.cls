@@ -87,16 +87,25 @@ public with sharing class HDT_LC_ClientHistory {
         else return null;
     }
     
-    public static List<String> getSilosFromRole(){
+    public static Map<String,Object> getSilosFromRole(){
+        Map<String,Object> mapResult = new Map<String,Object>{};
         String uRoleId = UserInfo.getUserRoleId();
         if(uRoleId != null){
             if (!Schema.sObjectType.UserRole.fields.DeveloperName.isAccessible()){
-                return null;
+                mapResult.put('isBackOfficeUser', false);
+                mapResult.put('silosPermessi', new List<String>{});
+                return mapResult;
             }    
-            String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;            
-            return mappingRoleToCompanyOwner.get(roleDevName);
+            String roleDevName = [SELECT DeveloperName FROM UserRole  WHERE Id = :uRoleId LIMIT 1].DeveloperName;    
+            mapResult.put('isBackOfficeUser', 'HDT_BackOffice'.equalsIgnoreCase(roleDevName));
+            mapResult.put('silosPermessi', mappingRoleToCompanyOwner.get(roleDevName));
+            return mapResult;
+            //return mappingRoleToCompanyOwner.get(roleDevName);
+        }else {
+            mapResult.put('isBackOfficeUser', false);
+            mapResult.put('silosPermessi', new List<String>{});
+            return mapResult;
         }
-        else return null;
     }
 
     @AuraEnabled
@@ -116,47 +125,50 @@ public with sharing class HDT_LC_ClientHistory {
             return wrapperToreturn;
         }
 
-        List<String> silosPermessi = getSilosFromRole();
+        Map<String,Object> silosResult = getSilosFromRole();
+        List<String> silosPermessi = (List<String>) silosResult.get('silosPermessi');
+        Boolean isBackOfficeUser = (Boolean) silosResult.get('isBackOfficeUser');
         system.debug(silosPermessi);
-        if(silosPermessi != null && !silosPermessi.contains(silos)){
+        if(!isBackOfficeUser && silosPermessi != null && !silosPermessi.contains(silos)){
             return null;
         }
- 
+
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
 
             //>>> QUERY SU SIEBELCUSTOMER
-            String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
-            if(filterby=='Codice Fiscale'){
-                queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
-            }else if(filterby=='Partita Iva'){
-                queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
-            }else if(filterby=='Codice Cliente'){
-                queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
-            }
+            if(!isBackOfficeUser){
+                String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
+                if(filterby=='Codice Fiscale'){
+                    queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
+                }else if(filterby=='Partita Iva'){
+                    queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
+                }else if(filterby=='Codice Cliente'){
+                    queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
+                }
+                if (marcaturePermesse.size() > 0){
+                    queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
+                }
+                if (sortBy != null && sortDirection != null ) {
+                    queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
+                }
+                List<SiebelCustomer__x> listSiebelCustomer = 'SiebelCustomer__x'.equalsIgnoreCase(whatToMock) ? 
+                                                            HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )) :
+                                                            Database.query( String.escapeSingleQuotes(queryStoricizzati) );
 
-            if (marcaturePermesse.size() > 0)
-                queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
-
-            if (sortBy != null && sortDirection != null ) {
-                queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
-            }
-            List<SiebelCustomer__x> listSiebelCustomer = 'SiebelCustomer__x'.equalsIgnoreCase(whatToMock) ? 
-                                                         HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )) :
-                                                         Database.query( String.escapeSingleQuotes(queryStoricizzati) );
-
-            for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
-                wrapperToreturn.add(
-                    new HDT_LC_Customer(
-                        SiebelCustomer.ALIAS_NAME__c,                       
-                        SiebelCustomer.TAX_IDEN_NUM__c,
-                        SiebelCustomer.VAT_REGN_NUM__c,
-                        SiebelCustomer.OU_NUM__c,
-                        SiebelCustomer.Id,
-                        'SI',
-                        SiebelCustomer.NAME_1__c,
-                        null
-                        )
-                );
+                for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
+                    wrapperToreturn.add(
+                        new HDT_LC_Customer(
+                            SiebelCustomer.ALIAS_NAME__c,                       
+                            SiebelCustomer.TAX_IDEN_NUM__c,
+                            SiebelCustomer.VAT_REGN_NUM__c,
+                            SiebelCustomer.OU_NUM__c,
+                            SiebelCustomer.Id,
+                            'SI',
+                            SiebelCustomer.NAME_1__c,
+                            null
+                            )
+                    );
+                }
             }
             
             //>>> QUERY SU SALESFORCECUSTOMER
@@ -168,10 +180,11 @@ public with sharing class HDT_LC_ClientHistory {
             }else if(filterby=='Codice Cliente'){
                 querySvecchiati += ' WHERE CustomerCodeC__c = :searchKey';
             }
-
-            if (marcaturePermesse.size() > 0)
-                querySvecchiati += ' AND CompanyOwnerC__c IN :silosPermessi ';
-
+            if (silosPermessi.size() != null && silosPermessi.size() > 0 && !isBackofficeUser){
+                querySvecchiati += ' AND CompanyOwnerC__c IN :silosPermessi';
+            }else if(isBackofficeUser){
+                querySvecchiati += ' AND CompanyOwnerC__c = :silos';
+            }
             if (sortBy != null && sortDirection != null ) {
                 querySvecchiati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
             }
