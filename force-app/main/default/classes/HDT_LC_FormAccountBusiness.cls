@@ -57,12 +57,13 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 account.put(s, accountAddress.get(s));
             }
         }
-
+        /* TK 938126C -- Il codice fiscale per Aziende e Associazione deve essere numerico (PIVA) per ditta individuale può essere alfanumerico */
         if( !String.isBlank(account.VATNumber__c) && !account.CustomerMarking__c.equalsIgnoreCase('Condominio') ){
             if( !checkVatNumber(account.VATNumber__c) ){
                 throw new AuraHandledException('Partita Iva non corretta.');
             }
-            if(!String.isBlank(account.FiscalCode__c) &&  account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)){
+            if(!String.isBlank(account.FiscalCode__c) &&  ((!account.FiscalCode__c.isNumeric() && !account.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale')) 
+                || (account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)))){
                 throw new AuraHandledException('Partita Iva non corretta.');
             }
         } else if( account.FiscalCode__c.isNumeric() ){
