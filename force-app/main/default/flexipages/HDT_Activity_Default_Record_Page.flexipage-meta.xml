@@ -244,58 +244,33 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_EditScartiComplessi</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND (5 OR ((6 OR 7 OR 8) AND 9))</booleanFilter>
+                                <booleanFilter>(1 AND 2) OR (3 AND 4)</booleanFilter>
                                 <criteria>
-                                    <leftValue>{!Record.DiscardCategory__c}</leftValue>
+                                    <leftValue>{!Record.ShowEdit__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Scarto complesso</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_Scarto</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.wrts_prcgvr__IsClosed__c}</leftValue>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>false</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Type__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Esito KO da DL</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>HDT_RT_Morosita</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Votive Modena Pagamenti Morosità</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Case__r.Type}</leftValue>
+                                    <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
                                     <operator>EQUAL</operator>
-                                    <rightValue>Gestione Disalimentabilità</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Type}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>Riattivazione Fornitura</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.RecordType.DeveloperName}</leftValue>
-                                    <operator>EQUAL</operator>
-                                    <rightValue>HDT_RT_Morosita</rightValue>
+                                    <rightValue>true</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.annullaPratica</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3 AND  4 AND 5 AND 6 AND 7 AND 8</booleanFilter>
+                                <booleanFilter>(1 OR 2) AND 3 AND  4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -317,24 +292,9 @@
                                     <rightValue>false</rightValue>
                                 </criteria>
                                 <criteria>
-                                    <leftValue>{!Record.Case__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Case__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Order__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Ammissibilità KO</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.Order__r.Phase__c}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>Annullamento - Esito KO da DL/SII</rightValue>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -465,7 +425,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_CloseActivity</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR ( 2 AND 3 ) OR 4 OR 5</booleanFilter>
+                                <booleanFilter>1 OR ( 2 AND 3 ) OR 4 OR 5 OR (6 AND 7)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.ShowcompletedActivity__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -490,6 +450,16 @@
                                     <leftValue>{!Record.wrts_prcgvr__Description__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Scarto EMAIL Marketing Cloud</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>false</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -549,8 +519,14 @@
                         <valueListItems>
                             <value>CustomButton.wrts_prcgvr__Activity__c.HDT_RipristinaFase</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.AnnulmentManagement__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>true</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.DiscardCancellation__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>true</rightValue>
                                 </criteria>
