@@ -1263,7 +1263,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if (!objectIdSet.isEmpty()){
             List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
             String listId = '(\''+String.join((Iterable<String>) objectIdSet, '\',\'') +'\')';
-            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c', '(Order__c IN ' + listId + ' OR Case__c IN' + listId + ') AND wrts_prcgvr__IsClosed__c = false AND DiscardCategory__c = \'Tracciatura\'');
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c', '(Order__c IN ' + listId + ' OR Case__c IN' + listId + ') AND wrts_prcgvr__IsClosed__c = false AND (DiscardCategory__c = \'Tracciatura\' OR DiscardCancellation__c = true)');
             for (wrts_prcgvr__Activity__c act : activities){
                 activitiesToUpdate.add(closeDiscardActivity(act.Id));
             }
