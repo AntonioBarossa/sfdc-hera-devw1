@@ -562,7 +562,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi)
                             /* 2023-01-06 Dato che i Piccoli Condomini possono essere sia Residenziali che Business il ricalcolo si fa solo se preavviso receso nullo o 0 */ 
                             String category = newOrder.CustomerCategory__c;
-                            if(newOrder.RecessNotice__c == null ||/*('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category))*/ || newOrder.RecessNotice__c == 0){
+                            if(newOrder.RecessNotice__c == null ||/*('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category))*/newOrder.RecessNotice__c == 0){
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
