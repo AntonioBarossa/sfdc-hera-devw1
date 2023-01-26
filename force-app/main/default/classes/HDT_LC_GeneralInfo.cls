@@ -31,15 +31,6 @@ public inherited sharing class HDT_LC_GeneralInfo {
             system.debug('***********' + e);
         }
 
-        if(sale.SalesContact__c != null)
-        {
-            List<Contact> salesCon = [SELECT Phone, MobilePhone, Email FROM Contact WHERE Id = :sale.SalesContact__c WITH SECURITY_ENFORCED];
-            if(!salesCon.isEmpty() && salesCon[0].Phone == null && salesCon[0].MobilePhone == null && salesCon[0].Email == null)
-            {
-                throw new AuraHandledException('Il contatto selezionato non dispone di alcun tipo di recapito. Aggiornare il contatto o selezionarne uno differente');
-            }
-        }
-
         saleSrv.updateRecord(sale);
         
         //if(sale.CommissioningCampaign__c != null){
