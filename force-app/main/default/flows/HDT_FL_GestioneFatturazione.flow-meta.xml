@@ -60,8 +60,8 @@
     <actionCalls>
         <name>Clona_Reading_Case_Padre</name>
         <label>Clona Reading Case Padre</label>
-        <locationX>5203</locationX>
-        <locationY>2990</locationY>
+        <locationX>4411</locationX>
+        <locationY>3350</locationY>
         <actionName>HDT_SRV_SelfReadings</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -81,8 +81,8 @@
     <actionCalls>
         <name>Crea_Case_Autolettura</name>
         <label>Crea Case Autolettura</label>
-        <locationX>5203</locationX>
-        <locationY>2270</locationY>
+        <locationX>4411</locationX>
+        <locationY>2630</locationY>
         <actionName>HDT_UTL_CreateGenericCase</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -119,8 +119,8 @@
     <assignments>
         <name>Assegna_Codice_Causale</name>
         <label>Assegna Codice Causale</label>
-        <locationX>5203</locationX>
-        <locationY>2750</locationY>
+        <locationX>4411</locationX>
+        <locationY>3110</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -135,8 +135,8 @@
     <assignments>
         <name>Assegna_Note</name>
         <label>Assegna Note</label>
-        <locationX>4538</locationX>
-        <locationY>1454</locationY>
+        <locationX>3746</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>UpdatedCase.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -151,8 +151,8 @@
     <assignments>
         <name>Assegna_Valori</name>
         <label>Assegna Valori</label>
-        <locationX>4406</locationX>
-        <locationY>1238</locationY>
+        <locationX>3614</locationX>
+        <locationY>1598</locationY>
         <assignmentItems>
             <assignToReference>UpdatedCase.StartDate__c</assignToReference>
             <operator>Assign</operator>
@@ -206,7 +206,7 @@
     <assignments>
         <name>Predefault_Telefono</name>
         <label>Predefault Telefono</label>
-        <locationX>2514</locationX>
+        <locationX>4408</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>Query_Case.PhoneNumber__c</assignToReference>
@@ -317,8 +317,8 @@
     <assignments>
         <name>Set_Fase</name>
         <label>Set Fase Inviata a SAP</label>
-        <locationX>5203</locationX>
-        <locationY>2630</locationY>
+        <locationX>4411</locationX>
+        <locationY>2990</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Autolettura.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -413,8 +413,8 @@
     <decisions>
         <name>Argomento</name>
         <label>Argomento?</label>
-        <locationX>4538</locationX>
-        <locationY>998</locationY>
+        <locationX>3746</locationX>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Assegna_Note</targetReference>
         </defaultConnector>
@@ -514,8 +514,8 @@
     <decisions>
         <name>Check_Inserire_Letture</name>
         <label>Inserire Letture?</label>
-        <locationX>4098</locationX>
-        <locationY>1118</locationY>
+        <locationX>3306</locationX>
+        <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
         </defaultConnector>
@@ -564,8 +564,8 @@
     <decisions>
         <name>Check_Motivo_Richiesta</name>
         <label>Check Motivo Richiesta</label>
-        <locationX>3438</locationX>
-        <locationY>998</locationY>
+        <locationX>2646</locationX>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Rimozione_Data_Termine_Agevolazione</targetReference>
         </defaultConnector>
@@ -636,8 +636,8 @@
     <decisions>
         <name>Check_Processo</name>
         <label>Quale Processo?</label>
-        <locationX>4142</locationX>
-        <locationY>878</locationY>
+        <locationX>3350</locationX>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>Next_Step</targetReference>
         </defaultConnector>
@@ -842,8 +842,8 @@
     <decisions>
         <name>Choose_Next_Phase</name>
         <label>Next Phase?</label>
-        <locationX>4840</locationX>
-        <locationY>1910</locationY>
+        <locationX>4048</locationX>
+        <locationY>2270</locationY>
         <defaultConnector>
             <targetReference>Update_status_case</targetReference>
         </defaultConnector>
@@ -1016,10 +1016,9 @@
     <decisions>
         <name>Commodity</name>
         <label>Commodity?</label>
-        <locationX>2514</locationX>
+        <locationX>4408</locationX>
         <locationY>878</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>InputFieldsFatturazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altre Commodity</defaultConnectorLabel>
@@ -1042,8 +1041,8 @@
     <decisions>
         <name>Is_Richiesta_Ricalcolo_Fuga_Acq</name>
         <label>Is Richiesta Ricalcolo Fuga</label>
-        <locationX>5599</locationX>
-        <locationY>2150</locationY>
+        <locationX>4807</locationX>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_In_Lavorazione_con_Stato</targetReference>
         </defaultConnector>
@@ -1067,8 +1066,8 @@
     <decisions>
         <name>Next_Step</name>
         <label>Next Step?</label>
-        <locationX>4142</locationX>
-        <locationY>1790</locationY>
+        <locationX>3350</locationX>
+        <locationY>2150</locationY>
         <defaultConnector>
             <targetReference>Choose_Next_Phase</targetReference>
         </defaultConnector>
@@ -1142,8 +1141,8 @@
     <decisions>
         <name>Prima_Bolletta_non_ancora_emessa</name>
         <label>Prima Bolletta non ancora emessa?</label>
-        <locationX>5797</locationX>
-        <locationY>2582</locationY>
+        <locationX>5005</locationX>
+        <locationY>2942</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Avvisare_Cliente</name>
@@ -1203,8 +1202,8 @@
     <decisions>
         <name>Update_status_case</name>
         <label>Update status case?</label>
-        <locationX>5797</locationX>
-        <locationY>2030</locationY>
+        <locationX>5005</locationX>
+        <locationY>2390</locationY>
         <defaultConnector>
             <targetReference>Set_Phase_In_Lavorazione</targetReference>
         </defaultConnector>
@@ -1252,6 +1251,7 @@
         <locationX>666</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>InputFieldsFatturazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Vecchio Processo</defaultConnectorLabel>
@@ -1411,8 +1411,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Copy_1_of_Calcolo_Codice_Causale</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>5203</locationX>
-        <locationY>2510</locationY>
+        <locationX>4411</locationX>
+        <locationY>2870</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Set_Fase</targetReference>
@@ -1446,8 +1446,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Get_Case_Autolettura</name>
         <label>Get Case Autolettura</label>
-        <locationX>5203</locationX>
-        <locationY>2390</locationY>
+        <locationX>4411</locationX>
+        <locationY>2750</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_Calcolo_Codice_Causale</targetReference>
@@ -1467,8 +1467,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>Get_RT_Autolettura</name>
         <label>Get RT Autolettura</label>
-        <locationX>5203</locationX>
-        <locationY>2150</locationY>
+        <locationX>4411</locationX>
+        <locationY>2510</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_Autolettura</targetReference>
@@ -1538,8 +1538,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordLookups>
         <name>UpdatedCase</name>
         <label>Refresh Case</label>
-        <locationX>4142</locationX>
-        <locationY>758</locationY>
+        <locationX>3350</locationX>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Processo</targetReference>
@@ -1583,8 +1583,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Aggiorna_Case_2</name>
         <label>Aggiorna Case</label>
-        <locationX>4538</locationX>
-        <locationY>1574</locationY>
+        <locationX>3746</locationX>
+        <locationY>1934</locationY>
         <connector>
             <targetReference>Next_Step</targetReference>
         </connector>
@@ -1593,8 +1593,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Aggiorna_Case_Autolettura</name>
         <label>Aggiorna Case Autolettura</label>
-        <locationX>5203</locationX>
-        <locationY>2870</locationY>
+        <locationX>4411</locationX>
+        <locationY>3230</locationY>
         <connector>
             <targetReference>Clona_Reading_Case_Padre</targetReference>
         </connector>
@@ -1603,8 +1603,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Copy_1_of_Set_Phase_In_Lavorazione</name>
         <label>Copy 1 of Set Phase In Lavorazione</label>
-        <locationX>3883</locationX>
-        <locationY>2030</locationY>
+        <locationX>3091</locationX>
+        <locationY>2390</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1630,8 +1630,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Predefault_Data_Termine_Agevolazione</name>
         <label>Predefault Data Termine Agevolazione</label>
-        <locationX>3174</locationX>
-        <locationY>1118</locationY>
+        <locationX>2382</locationX>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Campi_Comunicazione_Cessazione</targetReference>
         </connector>
@@ -1654,8 +1654,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Predefault_Email_Rimozione_Data_Termine_Bonus</name>
         <label>Predefault Email + Rimozione Data Termine Bonus</label>
-        <locationX>3438</locationX>
-        <locationY>1118</locationY>
+        <locationX>2646</locationX>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Campi_Richiesta_Documentazione</targetReference>
         </connector>
@@ -1681,8 +1681,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Rimozione_Data_Termine_Agevolazione</name>
         <label>Rimozione Data Termine Agevolazione</label>
-        <locationX>3702</locationX>
-        <locationY>1118</locationY>
+        <locationX>2910</locationX>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Next_Step</targetReference>
         </connector>
@@ -1702,8 +1702,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Comunicazioni_con_il_DL</name>
         <label>Set Phase Comunicazioni con il DL</label>
-        <locationX>4675</locationX>
-        <locationY>2030</locationY>
+        <locationX>3883</locationX>
+        <locationY>2390</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1723,8 +1723,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Da_Inviare</name>
         <label>Set Phase Da Inviare</label>
-        <locationX>4411</locationX>
-        <locationY>2030</locationY>
+        <locationX>3619</locationX>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -1747,8 +1747,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Da_inviare_ric_acq</name>
         <label>Set Phase Da inviare</label>
-        <locationX>5467</locationX>
-        <locationY>2270</locationY>
+        <locationX>4675</locationX>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1777,8 +1777,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Elaborazione_Manuale</name>
         <label>Set Phase Elaborazione Manuale</label>
-        <locationX>4147</locationX>
-        <locationY>2030</locationY>
+        <locationX>3355</locationX>
+        <locationY>2390</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1798,8 +1798,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione</name>
         <label>Set Phase In Lavorazione</label>
-        <locationX>5995</locationX>
-        <locationY>2150</locationY>
+        <locationX>5203</locationX>
+        <locationY>2510</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1822,8 +1822,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_In_Lavorazione_con_Stato</name>
         <label>Set Phase In Lavorazione con Stato</label>
-        <locationX>5731</locationX>
-        <locationY>2270</locationY>
+        <locationX>4939</locationX>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>Prima_Bolletta_non_ancora_emessa</targetReference>
         </connector>
@@ -1852,8 +1852,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Set_Phase_Sospesa</name>
         <label>Set Phase Sospesa</label>
-        <locationX>5203</locationX>
-        <locationY>2030</locationY>
+        <locationX>4411</locationX>
+        <locationY>2390</locationY>
         <connector>
             <targetReference>Get_RT_Autolettura</targetReference>
         </connector>
@@ -1882,7 +1882,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <recordUpdates>
         <name>Update_Case_Inversione</name>
         <label>Update Case Inversione</label>
-        <locationX>2514</locationX>
+        <locationX>4408</locationX>
         <locationY>758</locationY>
         <connector>
             <targetReference>Commodity</targetReference>
@@ -1903,8 +1903,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Campi_Comunicazione_Cessazione</name>
         <label>Campi Comunicazione Cessazione</label>
-        <locationX>3174</locationX>
-        <locationY>1238</locationY>
+        <locationX>2382</locationX>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2021,8 +2021,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Campi_Richiesta_Documentazione</name>
         <label>Campi Richiesta Documentazione</label>
-        <locationX>3438</locationX>
-        <locationY>1238</locationY>
+        <locationX>2646</locationX>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2330,12 +2330,13 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Input_Campi_Gestione_Bonus_Sociale</name>
         <label>Input Campi Gestione Bonus Sociale</label>
-        <locationX>4142</locationX>
+        <locationX>5995</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>UpdatedCase</targetReference>
         </connector>
         <fields>
@@ -2514,13 +2515,12 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Input_Campi_Inversione_del_Contatore</name>
         <label>Input Campi Inversione del Contatore</label>
-        <locationX>2382</locationX>
+        <locationX>3350</locationX>
         <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>UpdatedCase</targetReference>
         </connector>
         <fields>
@@ -2699,7 +2699,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Input_Campi_Ricostruzione_Consumi</name>
         <label>Input Campi Ricostruzione Consumi</label>
-        <locationX>2910</locationX>
+        <locationX>5731</locationX>
         <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3069,8 +3069,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>InputFieldsFatturazione</name>
         <label>Input Campi Fatturazione</label>
-        <locationX>1018</locationX>
-        <locationY>1334</locationY>
+        <locationX>5467</locationX>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3599,8 +3599,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Inserire_letture</name>
         <label>Inserire letture?</label>
-        <locationX>4098</locationX>
-        <locationY>998</locationY>
+        <locationX>3306</locationX>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -3628,8 +3628,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Screen_Letture</name>
         <label>Screen Letture</label>
-        <locationX>3966</locationX>
-        <locationY>1238</locationY>
+        <locationX>3174</locationX>
+        <locationY>1598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3728,8 +3728,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Screen_Modifica_Campi</name>
         <label>Screen Modifica Campi</label>
-        <locationX>4406</locationX>
-        <locationY>1118</locationY>
+        <locationX>3614</locationX>
+        <locationY>1478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3879,6 +3879,12 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
                     <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>contractService</name>
+                <value>
+                    <elementReference>Query_Case.Contract__r.CommoditySectorFormula__c</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <outputParameters>
@@ -3920,8 +3926,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>SollecitoEmissioneBollettaEndScreen</name>
         <label>Fine flow Sollecito Emissione Bolletta</label>
-        <locationX>5665</locationX>
-        <locationY>2702</locationY>
+        <locationX>4873</locationX>
+        <locationY>3062</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -3941,8 +3947,8 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
     <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>4411</locationX>
-        <locationY>2150</locationY>
+        <locationX>3619</locationX>
+        <locationY>2510</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3981,7 +3987,7 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
         <locationX>3594</locationX>
-        <locationY>3518</locationY>
+        <locationY>3974</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

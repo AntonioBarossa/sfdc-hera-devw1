@@ -44,6 +44,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                     code = 'meterReading_ele';
                 } else if(contractService.equalsIgnoreCase('Gas')){
                     code = 'meterReading_gas';
+                }else{
+                    code = 'meterReading';
                 }
             } else {
                 code = 'meterReading';
