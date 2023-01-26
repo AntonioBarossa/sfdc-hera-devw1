@@ -536,4 +536,57 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         return null;
     }
 
+
+    public static void setAccountIdFromCaseOrder(List<SObject> sObjectList){
+        
+        List<String> caseIds= new List<String>();
+        List<String> orderIds= new List<String>();
+        List<Case> casesList= new List<Case>();
+        List<Order> ordersList= new List<Order>();
+        Map<String,Case> casesMap=new Map<String,Case>();
+        Map<String,Order> ordersMap=new Map<String,Order>();
+        String objectApiName = '';
+        
+        for(SObject obj : sObjectList){
+            objectApiName = String.valueOf(obj.getSObjectType());
+            if(objectApiName == 'wrts_prcgvr__Activity__c'){
+                if(String.valueOf(obj.get('Case__c')) != '' && String.valueOf(obj.get('Case__c')) != null)
+                    caseIds.add(String.valueOf(obj.get('Case__c')));
+                if(String.valueOf(obj.get('Order__c')) != '' && String.valueOf(obj.get('Order__c')) != null)
+                    orderIds.add(String.valueOf(obj.get('Order__c')));
+            }
+        }
+        if(!caseIds.isEmpty()){
+            casesList = caseQr.getRecordsById(caseIds, 'Id,CompanyOwner__c,AccountId');
+        }
+        if(!orderIds.isEmpty()){
+            ordersList=orderQr.getRecordsByIdWithFields(orderIds, 'Id,CompanyOwner__c,AccountId');
+        }
+        for(Case c : casesList){
+            casesMap.put(c.Id,c);
+        }
+        for(Order o : ordersList){
+            ordersMap.put(o.Id,o);
+        }
+
+        for(SObject obj : sObjectList){
+            objectApiName = String.valueOf(obj.getSObjectType());
+            if(objectApiName == 'wrts_prcgvr__Activity__c'){
+                if(String.valueOf(obj.get('Account__c')) == '' || String.valueOf(obj.get('Account__c')) == null){
+                    if (casesMap.containsKey(String.valueOf(obj.get('Case__c')))){
+                        Case caseObj = casesMap.get(String.valueOf(obj.get('Case__c')));
+                        if (caseObj != null){
+                            obj.put('Account__c', caseObj.AccountId);
+                        }
+                    }else{
+                        Order orderObj = ordersMap.get(String.valueOf(obj.get('Order__c')));
+                        if (orderObj != null){
+                            obj.put('Account__c', orderObj.AccountId);
+                        }
+                    }
+                }
+            }
+        }    
+    }
+
 }

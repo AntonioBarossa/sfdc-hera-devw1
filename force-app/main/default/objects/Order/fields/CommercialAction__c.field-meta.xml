@@ -101,6 +101,11 @@
                 <label>UPGRADE OFFERTA</label>
             </value>
             <value>
+                <fullName>verifica winback</fullName>
+                <default>false</default>
+                <label>verifica winback</label>
+            </value>
+            <value>
                 <fullName>XLISTA AZ</fullName>
                 <default>false</default>
                 <label>XLISTA AZ</label>
