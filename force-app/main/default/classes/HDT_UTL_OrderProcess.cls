@@ -1428,7 +1428,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              *  Se l'ordine e' gia' in Completata non eseguo alcuna modifica aggiuntiva
              */
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
-                && (String.isNotBlank((String)oldOrder.get('Phase__c')) && !(String)oldOrder.get('Phase__c').equalsIgnoreCase('Completata'))
+                && (String.isNotBlank((String)oldOrder.get('Phase__c')) && !((String)oldOrder.get('Phase__c')).equalsIgnoreCase('Completata'))
                 && (oldOrder.SiebelStatus__c == null 
                     || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c'))) 
                     || negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
