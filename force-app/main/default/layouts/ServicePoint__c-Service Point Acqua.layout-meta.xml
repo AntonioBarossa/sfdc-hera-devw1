@@ -47,11 +47,11 @@
                 <field>JointBottomAdhesion__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>RateCategory__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>MethodsForOutgoingPayments__c</field>
             </layoutItems>
             <layoutItems>
