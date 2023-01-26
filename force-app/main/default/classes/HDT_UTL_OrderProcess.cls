@@ -559,9 +559,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 newOrder.DateSentToSII__c = newOrder.isTransition__c ? Date.today().addDays(1) : Date.today();
                             }
                             //Se la data di decorrenza non è stata calcolata per qualsiasi motivo (1) oppure ho superato la data di invio al SII (2)
-                            //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi) 
+                            //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi)
+                            /* 2023-01-06 Dato che i Piccoli Condomini possono essere sia Residenziali che Business il ricalcolo si fa solo se preavviso receso nullo o 0 */ 
                             String category = newOrder.CustomerCategory__c;
-                            if(('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category)) || newOrder.RecessNotice__c == 0){
+                            if(newOrder.RecessNotice__c == null ||/*('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category))*/ || newOrder.RecessNotice__c == 0){
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
