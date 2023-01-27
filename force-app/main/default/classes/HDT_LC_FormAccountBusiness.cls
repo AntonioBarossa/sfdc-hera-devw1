@@ -64,7 +64,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             }
             if(!String.isBlank(account.FiscalCode__c) &&  ((!account.FiscalCode__c.isNumeric() && !account.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale')) 
                 || (account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)))){
-                throw new AuraHandledException('Partita Iva non corretta.');
+                throw new AuraHandledException('Il Codice Fiscale deve contenere una Partita Iva corretta.');
             }
         } else if( account.FiscalCode__c.isNumeric() ){
             if( !checkVatNumber(account.FiscalCode__c) ){
