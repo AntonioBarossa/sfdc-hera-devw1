@@ -136,39 +136,37 @@ public with sharing class HDT_LC_ClientHistory {
         if ( searchKey != null && searchKey != '' && searchKey.length() > 5) {
 
             //>>> QUERY SU SIEBELCUSTOMER
-            if(!isBackOfficeUser){
-                String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';   
-                if(filterby=='Codice Fiscale'){
-                    queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
-                }else if(filterby=='Partita Iva'){
-                    queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
-                }else if(filterby=='Codice Cliente'){
-                    queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
-                }
-                if (marcaturePermesse.size() > 0){
-                    queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
-                }
-                if (sortBy != null && sortDirection != null ) {
-                    queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
-                }
-                List<SiebelCustomer__x> listSiebelCustomer = 'SiebelCustomer__x'.equalsIgnoreCase(whatToMock) ? 
-                                                            HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )) :
-                                                            Database.query( String.escapeSingleQuotes(queryStoricizzati) );
+            String queryStoricizzati = 'select Id, ALIAS_NAME__c, TAX_IDEN_NUM__c ,VAT_REGN_NUM__c,NAME_1__c , OU_NUM__c FROM SiebelCustomer__x ';
+            if(filterby=='Codice Fiscale'){
+                queryStoricizzati +=' WHERE TAX_IDEN_NUM__c = :searchKey';
+            }else if(filterby=='Partita Iva'){
+                queryStoricizzati += ' WHERE VAT_REGN_NUM__c = :searchKey';
+            }else if(filterby=='Codice Cliente'){
+                queryStoricizzati += ' WHERE OU_NUM__c = :searchKey';
+            }
+            if (marcaturePermesse.size() > 0){
+                queryStoricizzati += ' AND X_MARCATURA_CLIENTE__c = :marcaturePermesse ';
+            }
+            if (sortBy != null && sortDirection != null ) {
+                queryStoricizzati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
+            }
+            List<SiebelCustomer__x> listSiebelCustomer = 'SiebelCustomer__x'.equalsIgnoreCase(whatToMock) ? 
+                                                        HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(queryStoricizzati) )) :
+                                                        Database.query( String.escapeSingleQuotes(queryStoricizzati) );
 
-                for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
-                    wrapperToreturn.add(
-                        new HDT_LC_Customer(
-                            SiebelCustomer.ALIAS_NAME__c,                       
-                            SiebelCustomer.TAX_IDEN_NUM__c,
-                            SiebelCustomer.VAT_REGN_NUM__c,
-                            SiebelCustomer.OU_NUM__c,
-                            SiebelCustomer.Id,
-                            'SI',
-                            SiebelCustomer.NAME_1__c,
-                            null
-                            )
-                    );
-                }
+            for(SiebelCustomer__x SiebelCustomer:listSiebelCustomer){
+                wrapperToreturn.add(
+                    new HDT_LC_Customer(
+                        SiebelCustomer.ALIAS_NAME__c,                       
+                        SiebelCustomer.TAX_IDEN_NUM__c,
+                        SiebelCustomer.VAT_REGN_NUM__c,
+                        SiebelCustomer.OU_NUM__c,
+                        SiebelCustomer.Id,
+                        'SI',
+                        SiebelCustomer.NAME_1__c,
+                        null
+                        )
+                );
             }
             
             //>>> QUERY SU SALESFORCECUSTOMER
