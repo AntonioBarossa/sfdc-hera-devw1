@@ -54,8 +54,8 @@ global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgv
             caseId=c.Id;
             sapContract=contr.SAPContractCode__c;
             status='01';
-            reading=c.AbnormalReading__c != null ? String.valueOf(c.AbnormalReading__c):'';
-            readingDate=c.AbnormalReadingDate__c != null ? String.valueOf(c.AbnormalReadingDate__c) : '';
+            reading=getReading(c);
+            readingDate=getReadingDate(c);
         }
         private String getCompanyCode(String companyOwner){
             String company='';
@@ -75,6 +75,26 @@ global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgv
             }
             HDT_HeraCompany__mdt matrixCompanyCode = HDT_HeraCompany__mdt.getInstance(company);
             return matrixCompanyCode.CompanyCode__c;
+        }
+
+        private String getReading(Case c){
+            if(c.AbnormalReading__c != null){
+                return String.valueOf(c.AbnormalReading__c);
+            }
+            if(c.CustomerSelfReading__c != null){
+                return String.valueOf(c.CustomerSelfReading__c);
+            }
+            return '';
+        }
+
+        private String getReadingDate(Case c){
+            if(c.AbnormalReadingDate__c != null){
+                return String.valueOf(c.AbnormalReadingDate__c);
+            }
+            if(c.ReadingDate__c != null){
+                return String.valueOf(c.ReadingDate__c);
+            }
+            return '';
         }
     }
 }
