@@ -182,4 +182,40 @@ public with sharing class HDT_UTL_Utils {
         }
         return isRightPhase ? phase : '';
     }
+    
+    public static void setFieldsSize(SObject o){
+        Map<String,Map<String,Integer>> mapField = new Map<String,Map<String,Integer>>{
+            'Case' => new Map<String,Integer>{
+                'CancellationNote__c' => 255, 
+                'DiscardDescription__c' => 255
+            }
+        };
+        String objectName = o?.getSObjectType().getDescribe().getName();
+        setFieldsSize(mapField.get(objectName), o);
+    }
+
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    private static void setFieldsSize(Map<String,Integer> mapFieldsSize, SObject o){
+        if (o == null || mapFieldsSize.isEmpty()){
+            return;
+        }
+        try{
+            String objectName = o.getSObjectType().getDescribe().getName();
+            Map<String,Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap();
+            for(String fieldToCheck :mapFieldsSize.keySet()){
+                Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldToCheck).getDescribe();
+                if (fieldDescribe.getType() != Schema.DisplayType.STRING && fieldDescribe.getType() != Schema.DisplayType.TEXTAREA){
+                    continue;
+                }
+                Integer sizeField = mapFieldsSize.get(fieldToCheck);
+                String fieldValue = o.get(fieldToCheck) == null ? '' : (String)o.get(fieldToCheck);
+                if (String.isNotBlank(fieldValue) && fieldValue.length() > sizeField){
+                    o.put(fieldToCheck,fieldValue.substring(0,255));
+                }
+            }
+        }catch (Exception e){
+            System.debug(LoggingLevel.ERROR, 'HDT_UTL_Utils setFieldsSize : ' + e.getStackTraceString());
+        }
+        
+    }
 }
