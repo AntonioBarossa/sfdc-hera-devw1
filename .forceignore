@@ -65,8 +65,6 @@ force-app/main/default/classes/HDT_WRP_TechnicalOffer.cls
 force-app/main/default/classes/HDT_WRP_TechnicalOffer.cls-meta.xml
 force-app/main/default/classes/HDT_WS_MulesoftCaller.cls
 force-app/main/default/classes/HDT_WS_MulesoftCaller.cls-meta.xml
-force-app/main/default/classes/HDT_WS_SelfReadingsTst.cls
-force-app/main/default/classes/HDT_WS_SelfReadingsTst.cls-meta.xml
 
 force-app/main/default/globalValueSets/HDT_ChoiseSource.globalValueSet-meta.xml
 
