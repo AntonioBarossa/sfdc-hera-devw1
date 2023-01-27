@@ -281,7 +281,8 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.makerequired= true;
             this.requiredVat=true; //HRAWRM-776 07/10/2021
         }
-        else if(this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')  ){
+        /* TK 938126C -- Associazione deve comportarsi come Azienda */
+        else if(this.markingValue.includes("Condominio")/*||this.markingValue.includes('Associazione') */ ){
             this.requiredVat= false;
             this.makerequired=true;
 
