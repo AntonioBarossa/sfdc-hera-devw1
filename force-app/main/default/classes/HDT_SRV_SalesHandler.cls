@@ -350,8 +350,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Amm. Precheck OK SII' {
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
-                                    ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
-                                    //ord.VATNumberUdb__c = mapRequestFields.get('EXT_PIVA_DISTR');
+                                    if(mapRequestFields.get('EXT_CABINA_REMI') != null){
+                                        ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
+                                    }
+                                    if(ord.RemiCode__c != null){
+                                        ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVATNumberUdb(ordRetrieved.SupplyCity__c, ordRetrieved.SalesCompany__c, ord.RemiCode__c);
+                                    }
                                     if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                         ord.PrecheckResultSII__c = 'OK';
                                     }

@@ -1599,4 +1599,41 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<SObject> sobjList = (List<SObject>)JSON.deserialize(serializedList, List<SObject>.class);
         HDT_UTL_DatabaseService.updateSObject(sobjList);
     }
+
+
+    public static String calculateVATNumberUdb(String supplyCity, String salesCompany, String remiCode){
+        
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVATNumberUdb(remiCode, supplyCity, salesCompany);
+        system.debug('calculateVATNumberUdb - remiList -->'+remiList);    
+        String vatNumberUdb = '';
+
+        if(!remiList.isEmpty()){
+            system.debug('calculateVATNumberUdb - remiList.isNotEmpty');    
+            vatNumberUdb = remiList[0].VatNumberUdb__c;
+        }
+        else{
+            system.debug('calculateVATNumberUdb - remiList.isEmpty'); 
+            vatNumberUdb = '02060500390';
+        }
+        system.debug('calculateVATNumberUdb - remiList.vatNumberUdb --> '+vatNumberUdb); 
+        return vatNumberUdb;
+        
+    }
+
+    public static Map<String, MatriceRemiCode__c> calculateRemiCodeVATNumberServicePoint(Set<String> supplyCities, Set<String> salesCompanies){
+
+        Map<String, MatriceRemiCode__c> remiCodeMap = new Map<String, MatriceRemiCode__c>();
+
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVATNumberUdbServicePoint(supplyCities, salesCompanies);
+
+        if(!remiList.isEmpty()){
+            for(MatriceRemiCode__c mr : remiList){
+                remiCodeMap.put(mr.Comune__c + '-' + mr.SalesCompany__c, mr);
+            }
+        }
+        
+
+        return remiCodeMap;
+
+    }
 }
