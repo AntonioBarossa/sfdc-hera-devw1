@@ -460,7 +460,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         //DisconnectableLogic
         this.disconnectableLogic();
         //Variazioni customLogic
-        this.variationsLogic();     //MODIFICA 21/07/22 marco.arci@webresults.it Logica form compilazione Variazioni
+        this.variationsTerminationsLogic();     //MODIFICA 27/01/23 marco.arci@webresults.it Logica form compilazione Variazioni/Cessazioni
     }
 
     disconnectedCallback(){
@@ -468,19 +468,19 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.subscription = null;
     }
 
-    variationsLogic(){
+    variationsTerminationsLogic(){
         //Sottoprocessi di varaiazioni
         if(['AGEVOLAZIONE','DOM_COMPONENTI RESIDENTI','DOM_COMPONENTI NON RESIDENTI','DOM_COABITAZIONI','DATI CATASTALI',
-            'NON DOM_ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO'].includes(this.processType.toUpperCase())){
-            let RequestSource = this.selector('RequestSource__c');
-            let SubscriberType = this.selector('SubscriberType__c');
-            if(RequestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
-                SubscriberType.required = false;
-                SubscriberType.value = null;
-                SubscriberType.disabled = true;
+            'NON DOM_ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO','CESSAZIONEPOSTFORM','CESSAZIONEFORM'].includes(this.processType.toUpperCase())){
+            let requestSource = this.selector('RequestSource__c');
+            let subscriberType = this.selector('SubscriberType__c');
+            if(requestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
+                subscriberType.required = false;
+                subscriberType.value = null;
+                subscriberType.disabled = true;
             } else {
-                SubscriberType.required = true;
-                SubscriberType.disabled = false;
+                subscriberType.required = true;
+                subscriberType.disabled = false;
             }
         }
     }
