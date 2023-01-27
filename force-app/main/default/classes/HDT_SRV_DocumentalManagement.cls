@@ -408,7 +408,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					String dNote = String.isNotBlank(requestBody.declinedReason) && requestBody.declinedReason.length() > 255 ? requestBody.declinedReason.substring(0,255) : requestBody.declinedReason;
 					List<Order> ordList = new List<Order>();
 					record.put('DocumentalPhase__c','Plico rifiutato');
-					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'),requestBody.declinedReason);
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'),dNote);
 					record.put('CancellationNote__c',dNote);
 					ordList.add((Order)record);
 					HDT_UTL_DatabaseService.updateSObject(ordList);
