@@ -34,3 +34,82 @@ force-app/main/default/customMetadata/HDT_Informative_Configuration*
 # This permissionset can only be deployed in Production orgs
 force-app/main/default/permissionsets/HDT_CASB_Permission.permissionset-meta.xml
 
+# Temporarely added for Intrawave 1.2 validation
+force-app/main/default/flexipages/Contract_Record_Page.flexipage-meta.xml
+force-app/main/default/flexipages/Contract_Record_Page1.flexipage-meta.xml
+
+force-app/main/default/labels/CustomLabels.labels-meta.xml
+force-app/main/default/translations
+
+force-app/main/default/objects/Contract/Contract.object-meta.xml
+
+force-app/main/default/layouts/AccountContactRelation-Account Contact Relationship Layout.layout-meta.xml
+
+force-app/main/default/classes/HDT_LC_ConsActivityListController.cls
+force-app/main/default/classes/HDT_LC_ConsActivityListController.cls-meta.xml
+force-app/main/default/classes/HDT_LC_MeterReadingController.cls
+force-app/main/default/classes/HDT_LC_MeterReadingController.cls-meta.xml
+force-app/main/default/classes/HDT_LC_MeterReadingControllerHelper.cls
+force-app/main/default/classes/HDT_LC_MeterReadingControllerHelper.cls-meta.xml
+force-app/main/default/classes/HDT_LC_OfferConfiguratorCtrlHelper.cls
+force-app/main/default/classes/HDT_LC_OfferConfiguratorCtrlHelper.cls-meta.xml
+force-app/main/default/classes/HDT_QR_MeterReading.cls
+force-app/main/default/classes/HDT_QR_MeterReading.cls-meta.xml
+force-app/main/default/classes/HDT_QR_TechnicalOffer.cls
+force-app/main/default/classes/HDT_QR_TechnicalOffer.cls-meta.xml
+force-app/main/default/classes/HDT_UTL_ConsActivityListController.cls
+force-app/main/default/classes/HDT_UTL_ConsActivityListController.cls-meta.xml
+force-app/main/default/classes/HDT_WRP_MeterReading.cls
+force-app/main/default/classes/HDT_WRP_MeterReading.cls-meta.xml
+force-app/main/default/classes/HDT_WRP_TechnicalOffer.cls
+force-app/main/default/classes/HDT_WRP_TechnicalOffer.cls-meta.xml
+force-app/main/default/classes/HDT_WS_MulesoftCaller.cls
+force-app/main/default/classes/HDT_WS_MulesoftCaller.cls-meta.xml
+force-app/main/default/classes/HDT_WS_SelfReadingsTst.cls
+force-app/main/default/classes/HDT_WS_SelfReadingsTst.cls-meta.xml
+
+force-app/main/default/globalValueSets/HDT_ChoiseSource.globalValueSet-meta.xml
+
+force-app/main/default/objects/AccountContactRelation/fields/RegistrationType__c.field-meta.xml
+
+force-app/main/default/lwc/hdtChooseTypeModal/hdtChooseTypeModal.js
+force-app/main/default/lwc/hdtChooseTypeModal/hdtChooseTypeModal.html
+force-app/main/default/lwc/hdtChooseTypeModal/hdtChooseTypeModal.css
+force-app/main/default/lwc/hdtChooseTypeModal/hdtChooseTypeModal.js-meta.xml
+force-app/main/default/lwc/hdtConsActivityListModal/hdtConsActivityListModal.js
+force-app/main/default/lwc/hdtConsActivityListModal/hdtConsActivityListModal.html
+force-app/main/default/lwc/hdtConsActivityListModal/hdtConsActivityListModal.css
+force-app/main/default/lwc/hdtConsActivityListModal/hdtConsActivityListModal.js-meta.xml
+force-app/main/default/lwc/hdtConsumptionActivityList/hdtConsumptionActivityList.js
+force-app/main/default/lwc/hdtConsumptionActivityList/hdtConsumptionActivityList.html
+force-app/main/default/lwc/hdtConsumptionActivityList/hdtConsumptionActivityList.css
+force-app/main/default/lwc/hdtConsumptionActivityList/hdtConsumptionActivityList.js-meta.xml
+force-app/main/default/lwc/hdtCustomIllustration/hdtCustomIllustration.js
+force-app/main/default/lwc/hdtCustomIllustration/hdtCustomIllustration.html
+force-app/main/default/lwc/hdtCustomIllustration/hdtCustomIllustration.css
+force-app/main/default/lwc/hdtCustomIllustration/hdtCustomIllustration.js-meta.xml
+force-app/main/default/lwc/hdtMeterReading/hdtMeterReading.js
+force-app/main/default/lwc/hdtMeterReading/hdtMeterReading.html
+force-app/main/default/lwc/hdtMeterReading/hdtMeterReading.css
+force-app/main/default/lwc/hdtMeterReading/hdtMeterReading.js-meta.xml
+force-app/main/default/lwc/hdtMeterReadingDetailTable/hdtMeterReadingDetailTable.js
+force-app/main/default/lwc/hdtMeterReadingDetailTable/hdtMeterReadingDetailTable.html
+force-app/main/default/lwc/hdtMeterReadingDetailTable/hdtMeterReadingDetailTable.css
+force-app/main/default/lwc/hdtMeterReadingDetailTable/hdtMeterReadingDetailTable.js-meta.xml
+
+force-app/main/default/profiles/Admin.profile-meta.xml
+force-app/main/default/profiles/Hera M2M Integration User.profile-meta.xml
+force-app/main/default/profiles/Hera Standard User OneShot.profile-meta.xml
+force-app/main/default/profiles/Hera Standard User.profile-meta.xml
+force-app/main/default/profiles/Hera System Administrator.profile-meta.xml
+force-app/main/default/profiles/Hera System Integrator.profile-meta.xml
+force-app/main/default/profiles/Hera Teleseller Partner User.profile-meta.xml
+
+force-app/main/default/customMetadata/HDT_AccountDataEnrichment.activityList2g.md-meta.xml
+force-app/main/default/customMetadata/HDT_AccountDataEnrichment.consumptionList2g.md-meta.xml
+force-app/main/default/customMetadata/HDT_AccountDataEnrichment.meterReading.md-meta.xml
+force-app/main/default/customMetadata/HDT_AccountDataEnrichment.meterReading_ele.md-meta.xml
+force-app/main/default/customMetadata/HDT_AccountDataEnrichment.meterReading_gas.md-meta.xml
+
+force-app/main/default/flows/Arricchimento_Dati.flow-meta.xml
+
