@@ -435,7 +435,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             }
 
             // chiamare metodo per calcolo remicode/vatNumber
-            Map<String, MatriceRemiCode__c> remiCodeMap = HDT_UTL_OrderProcess.calculateRemiCodeVATNumberServicePoint(comuni, companies);
+            Map<String, MatriceRemiCode__c> remiCodeMap = HDT_UTL_OrderProcess.calculateRemiCodeVatNumberServicePoint(comuni, companies);
 
             if(!remiCodeMap.isEmpty()){
                 for(ServicePoint__c sr :spList){

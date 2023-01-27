@@ -221,7 +221,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                                 ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
                                             }
                                             if(ord.RemiCode__c != null){
-                                                ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVATNumberUdb(supplyCity, salesCompany, ord.RemiCode__c);
+                                                ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVatNumberUdb(supplyCity, salesCompany, ord.RemiCode__c);
                                             }
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';

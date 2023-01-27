@@ -1609,30 +1609,30 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     }
 
 
-    public static String calculateVATNumberUdb(String supplyCity, String salesCompany, String remiCode){
+    public static String calculateVatNumberUdb(String supplyCity, String salesCompany, String remiCode){
         
-        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVATNumberUdb(remiCode, supplyCity, salesCompany);
-        system.debug('calculateVATNumberUdb - remiList -->'+remiList);    
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVatNumberUdb(remiCode, supplyCity, salesCompany);
+        system.debug('calculateVatNumberUdb - remiList -->'+remiList);    
         String vatNumberUdb = '';
 
         if(!remiList.isEmpty()){
-            system.debug('calculateVATNumberUdb - remiList.isNotEmpty');    
+            system.debug('calculateVatNumberUdb - remiList.isNotEmpty');    
             vatNumberUdb = remiList[0].VatNumberUdb__c;
         }
         else{
-            system.debug('calculateVATNumberUdb - remiList.isEmpty'); 
+            system.debug('calculateVatNumberUdb - remiList.isEmpty'); 
             vatNumberUdb = '02060500390';
         }
-        system.debug('calculateVATNumberUdb - remiList.vatNumberUdb --> '+vatNumberUdb); 
+        system.debug('calculateVatNumberUdb - remiList.vatNumberUdb --> '+vatNumberUdb); 
         return vatNumberUdb;
         
     }
 
-    public static Map<String, MatriceRemiCode__c> calculateRemiCodeVATNumberServicePoint(Set<String> supplyCities, Set<String> salesCompanies){
+    public static Map<String, MatriceRemiCode__c> calculateRemiCodeVatNumberServicePoint(Set<String> supplyCities, Set<String> salesCompanies){
 
         Map<String, MatriceRemiCode__c> remiCodeMap = new Map<String, MatriceRemiCode__c>();
 
-        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVATNumberUdbServicePoint(supplyCities, salesCompanies);
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVatNumberUdbServicePoint(supplyCities, salesCompanies);
 
         if(!remiList.isEmpty()){
             for(MatriceRemiCode__c mr : remiList){

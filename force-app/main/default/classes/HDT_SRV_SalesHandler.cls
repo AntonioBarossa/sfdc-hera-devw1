@@ -354,7 +354,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                         ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
                                     }
                                     if(ord.RemiCode__c != null){
-                                        ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVATNumberUdb(ordRetrieved.SupplyCity__c, ordRetrieved.SalesCompany__c, ord.RemiCode__c);
+                                        ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVatNumberUdb(ordRetrieved.SupplyCity__c, ordRetrieved.SalesCompany__c, ord.RemiCode__c);
                                     }
                                     if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                         ord.PrecheckResultSII__c = 'OK';

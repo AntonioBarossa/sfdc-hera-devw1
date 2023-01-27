@@ -19,11 +19,11 @@ public with sharing class HDT_QR_MatriceRemiCode {
         return [SELECT RemiCode__c, Comune__c, SalesCompany__c, Id, VATNumberUdb__c FROM MatriceRemiCode__c where SalesCompany__c != null and comune__c IN :comuni WITH SECURITY_ENFORCED];
     }
 
-    public static List<MatriceRemiCode__c> getAllRemiVATNumberUdb(String orderRemiCode, String orderSupplyCity, String orderSalesCompany){
+    public static List<MatriceRemiCode__c> getAllRemiVatNumberUdb(String orderRemiCode, String orderSupplyCity, String orderSalesCompany){
         return [SELECT RemiCode__c, Comune__c, SalesCompany__c, Id, VATNumberUdb__c, isActive__c FROM MatriceRemiCode__c where isActive__c = true AND RemiCode__c =: orderRemiCode AND SalesCompany__c =: orderSalesCompany AND SalesCompany__c != null AND comune__c =: orderSupplyCity WITH SECURITY_ENFORCED];
     }
 
-    public static List<MatriceRemiCode__c> getAllRemiVATNumberUdbServicePoint(Set<String> orderSupplyCities, Set<String> orderSalesCompanies){
+    public static List<MatriceRemiCode__c> getAllRemiVatNumberUdbServicePoint(Set<String> orderSupplyCities, Set<String> orderSalesCompanies){
         return [SELECT RemiCode__c, Comune__c, SalesCompany__c, Id, VATNumberUdb__c, isActive__c FROM MatriceRemiCode__c where isActive__c = true AND SalesCompany__c != null AND SalesCompany__c in: orderSalesCompanies AND comune__c in: orderSupplyCities WITH SECURITY_ENFORCED];
     }
 
