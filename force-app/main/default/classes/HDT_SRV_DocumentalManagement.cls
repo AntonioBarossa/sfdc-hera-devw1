@@ -407,7 +407,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				}else if(status.equalsIgnoreCase('declined')){
 					List<Order> ordList = new List<Order>();
 					record.put('DocumentalPhase__c','Plico rifiutato');
-					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'));
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'),requestBody.declinedReason);
 					ordList.add((Order)record);
 					HDT_UTL_DatabaseService.updateSObject(ordList);
 					return;
