@@ -490,7 +490,7 @@ public with sharing class HDT_UTL_Sales {
             link = [SELECT Id, RecordingLink__c FROM wrts_prcgvr__Activity__c WHERE CreatedById =: UserInfo.getUserId() AND Type__c = 'Chiamata outbound' WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC  LIMIT 1].RecordingLink__c;
         } catch (Exception e) {
             link = 'ERRORE - ATTIVITA CHIAMATA OUTBOUND NON TROVATA';
-            errorLog.insertSingleLog('OuboundCall', 'instanceActVocalOrd', '', '', e.getMetssage() + 'at line: ' + e.getLineNumber(), '', null, null);
+            errorLog.insertSingleLog('OuboundCall', 'instanceActVocalOrd', '', '', e.getMessage() + 'at line: ' + e.getLineNumber(), '', null, null);
         }
         if(String.isBlank(link)) {
             link = 'ERRORE - NESSUN LINK REGISTRAZIONE NELL\'ATTIVITA DI CHIAMATA OUTBOUND';
