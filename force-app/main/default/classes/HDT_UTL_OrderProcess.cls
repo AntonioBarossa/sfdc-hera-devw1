@@ -906,7 +906,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             singleChild.Status = 'Annullato';
             singleChild.CancellationReason__c = 'Annullamento da cliente';
             if (String.isNotBlank(declineNote)){
-                singleChild.CancellationNote__c = declineNote;
+                singleChild.CancellationNote__c = declineNote.length() > 255 ? declineNote.substring(0,255) : declineNote;
             }
         }
         return childOrderList;
