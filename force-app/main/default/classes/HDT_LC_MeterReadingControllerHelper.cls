@@ -1,8 +1,8 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessivePublicCount')
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
-    public static Boolean enableNewService(){
-        return (Label.TRB_Enable.equalsIgnoreCase('Y'));
+    public static Boolean enableTurbobilling(String commodity){
+        return (Label.TRB_Enable.equalsIgnoreCase('Y') && Label.TRB_Commodity.contains(commodity));
     }
 
     public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDataHelper(){
@@ -38,12 +38,14 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         try{
 
             String code;
-            columnsMetadata.trbEnable = enableNewService();
+            columnsMetadata.trbEnable = enableTurbobilling(contractService);
             if(columnsMetadata.trbEnable){
                 if(contractService.equalsIgnoreCase('Energia Elettrica')){
                     code = 'meterReading_ele';
                 } else if(contractService.equalsIgnoreCase('Gas')){
                     code = 'meterReading_gas';
+                }else{
+                    code = 'meterReading';
                 }
             } else {
                 code = 'meterReading';
@@ -121,13 +123,15 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         try{
 
             String code;
-            Boolean trbEnable = enableNewService();
+            Boolean trbEnable = enableTurbobilling(contractService);
 
             if(trbEnable){
                 if(contractService.equalsIgnoreCase('Energia Elettrica')){
                     code = 'meterReading_ele';
                 } else if(contractService.equalsIgnoreCase('Gas')){
                     code = 'meterReading_gas';
+                }else {
+                    code = 'meterReading';
                 }
             } else {
                 code = 'meterReading';
@@ -187,7 +191,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             HDT_WRP_EstrattoLettureResponse responseWrapper;
             responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
 
-            if(!enableNewService()){
+            if(!enableTurbobilling(contractService)){
                 transcodeSapData(responseWrapper.data);
             }
 
@@ -204,8 +208,10 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     public static String generateBodyOrParameters(Contract contr, String modality){
         String body;
+        String contractService = contr.ServicePoint__r.CommoditySector__c;
+        Set<String> trbCommodity = new Set<String>{'Energia Elettrica','Gas'};
 
-        if(enableNewService()){
+        if(enableTurbobilling(contractService)){
 
             //body = 'pod=pariatur Duis&dataInizio=1963-10-26&dataFine=1963-10-26&modalita=FULL';
             body = '?';
@@ -249,8 +255,9 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
             httpObj.endPoint = enrichmentbMetadataList[0].Credential__c;
             //httpObj.headersMap.put('Authorization', enrichmentbMetadataList[0].Authorization__c);
+            Set<String> trbCode = new Set<String>{'meterReading_gas','meterReading_ele'};
 
-            if(trbEnable){
+            if(trbEnable && trbCode.contains(code)){
                 httpObj.httpMethod = 'GET';
                 httpObj.headersMap.put('Accept', 'application/json');
                 httpObj.headersMap.put('CLIENT_ID', 'clientid');

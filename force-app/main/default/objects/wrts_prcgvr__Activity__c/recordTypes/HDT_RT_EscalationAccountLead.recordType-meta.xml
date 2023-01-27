@@ -2447,11 +2447,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus mancante</fullName>
+            <fullName>Altro compenso mancante</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Business</fullName>
+            <fullName>Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2547,7 +2547,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Legge 80_Istanza EE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2679,7 +2679,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica colonnine</fullName>
+            <fullName>Verifica colonnine e Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2761,10 +2761,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamenti contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
@@ -2781,19 +2777,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Migrazione dati</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto Anomalia processo%2Fsistema</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Supporto TL Front</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto emissione SD_singola</fullName>
             <default>false</default>
         </values>
         <values>

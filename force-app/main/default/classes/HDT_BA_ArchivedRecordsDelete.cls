@@ -21,6 +21,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
     @TestVisible 
     private String currentObject = '';
     private Integer currentObjectIndex = 0;
+    private Integer queryLimit = 0;
 
     // Batch size to use in the finish for the batch to relaunch iself
     private Integer batchScope = 200;
@@ -50,11 +51,30 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         
     }
 
+    public HDT_BA_ArchivedRecordsDelete (Integer batchSize, Integer index, Integer queryLimit) {
+
+        this.batchScope = batchSize;
+        this.currentObjectIndex = index;
+        this.queryLimit = queryLimit;
+        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        
+    }
+
     public HDT_BA_ArchivedRecordsDelete (Integer batchSize, Integer index, Boolean relaunchBatch) {
 
         this.relaunchBatch = relaunchBatch;
         this.batchScope = batchSize;
         this.currentObjectIndex = index;
+        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        
+    }
+
+    public HDT_BA_ArchivedRecordsDelete (Integer batchSize, Integer index, Integer queryLimit, Boolean relaunchBatch) {
+
+        this.relaunchBatch = relaunchBatch;
+        this.batchScope = batchSize;
+        this.currentObjectIndex = index;
+        this.queryLimit = queryLimit;
         this.currentObject = objectsToProcess.get(this.currentObjectIndex);
         
     }
@@ -96,6 +116,10 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
             queryString += ' WHERE Account.IsArchived__c = true AND StageName = \'Closed Won\'';
         } else if(!this.objectsThatAreNotArchived.contains(this.currentObject)) {
             queryString += ' WHERE IsArchived__c = true';
+        }
+
+        if (this.queryLimit > 0) {
+            queryString += ' LIMIT ' + this.queryLimit;
         }
 
         this.queryUsed = queryString;
@@ -203,7 +227,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         
         if (this.relaunchBatch && this.currentObjectIndex < this.objectsToProcess.size()) {
             System.debug('Next object is ' + this.objectsToProcess.get(this.currentObjectIndex));
-            Database.executeBatch(new HDT_BA_ArchivedRecordsDelete(this.batchScope, this.currentObjectIndex), this.batchScope);
+            Database.executeBatch(new HDT_BA_ArchivedRecordsDelete(this.batchScope, this.currentObjectIndex, this.queryLimit), this.batchScope);
         }
 
         Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
@@ -213,10 +237,10 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         mail.setOrgWideEmailAddressId([SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'].Id);
     
         if (String.isNotBlank(this.exceptionErr)) {
-            mail.setPlainTextBody('Exedcution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nthe execution resulted in the following errors: ' + this.exceptionErr);
+            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nthe execution resulted in the following errors: ' + this.exceptionErr);
         } else {
-            // mail.setPlainTextBody('Exedcution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe following records of type ' + this.currentObject + ' have been deleted:\n' + JSON.serializePretty(this.recordsDeleted));
-            mail.setPlainTextBody('Exedcution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe records of type ' + this.currentObject + ' have been deleted');
+            // mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe following records of type ' + this.currentObject + ' have been deleted:\n' + JSON.serializePretty(this.recordsDeleted));
+            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
         }
 
         Messaging.sendEmail(new Messaging.Email[] { mail });

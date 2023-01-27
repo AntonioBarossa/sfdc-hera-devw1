@@ -559,6 +559,11 @@
         <relatedList>SalesforceCase__x.Cas_AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceAsset__x.AccountIdOnline__c</relatedList>
+    </relatedLists>
+    <relatedLists>
         <fields>Con_Name__c</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceContract__x.Con_AccountId__c</relatedList>

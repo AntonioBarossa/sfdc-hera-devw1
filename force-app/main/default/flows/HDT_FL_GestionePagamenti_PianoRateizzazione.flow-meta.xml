@@ -1016,7 +1016,7 @@
             <name>Processo_Approvativo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Case.DocumentalProcessType__c</leftValueReference>
+                <leftValueReference>Get_Case.ApprovalProcess__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>

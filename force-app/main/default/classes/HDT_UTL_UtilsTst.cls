@@ -154,4 +154,19 @@ public class HDT_UTL_UtilsTst{
 		datePhase = HDT_UTL_Utils.exctrPhaseTransDateFromStory(phaseStory, 'Documentazione Validata');
 		System.assert(datePhase != null, 'Calcolo exctrPhaseTransDateFromStory non valido');
 	}
+
+	@IsTest
+	static void testBeforeSapPhase(){
+		String response = '';
+		Test.startTest();
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', '');
+			System.assertEquals('', response, 'Calcolo non valido quando la story è vuota');
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@M||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||');
+			System.assertEquals('Ammissibilità OK', response, 'Calcolo non valido caso 1');
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||');
+			System.assertEquals('', response, 'Calcolo non valido caso 2');
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', 'Errore tecnico invio a SAP@@Bozza@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@M||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||');
+			System.assertEquals('', response, 'Calcolo non valido caso 3');
+		Test.stopTest();
+	}
 }
