@@ -72,6 +72,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             }
         }
 
+        /* TK 951554C -- Aggiunto controllo su codice fiscale, formalita' e match con nome e cognome */
 
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
