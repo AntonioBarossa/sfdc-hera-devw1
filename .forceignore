@@ -26,6 +26,8 @@ force-app/main/default/objects/Case/fields/InformativeCluster__c.field-meta.xml
 force-app/main/default/objects/Case/fields/InformativeType__c.field-meta.xml
 force-app/main/default/objects/Case/fields/InformationDetail__c.field-meta.xml
 force-app/main/default/objects/Case/fields/MacroTopic__c.field-meta.xml
+force-app/main/default/objects/wrts_prcgvr__Activity__c/fields/Subject__c.field-meta.xml
+force-app/main/default/objects/wrts_prcgvr__Activity__c/fields/Type__c.field-meta.xml
 
 force-app/main/default/globalValueSets/HDT_InformationDetail.globalValueSet-meta.xml
 
