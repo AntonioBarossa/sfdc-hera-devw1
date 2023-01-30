@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>SBQQ__PackageProductDescriptionC</label>
+    <label>Descrizione Prodotto Pacchetto</label>
     <length>32000</length>
     <type>LongTextArea</type>
     <visibleLines>10</visibleLines>

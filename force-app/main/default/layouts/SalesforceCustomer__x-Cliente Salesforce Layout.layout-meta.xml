@@ -348,7 +348,7 @@
         <relatedList>SalesforceStandardActivity__x.AccountId__c</relatedList>
     </relatedLists>
     <relatedLists>
-        <fields>Con_Name__c</fields>
+        <fields>Con_ContractNumber__c</fields>
         <fields>DisplayUrl</fields>
         <relatedList>SalesforceContract__x.TitolareSalesforce__c</relatedList>
     </relatedLists>
@@ -363,7 +363,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1w000000TwRM</masterLabel>
+        <masterLabel>00h3N0000046aMe</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

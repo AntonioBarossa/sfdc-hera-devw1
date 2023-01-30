@@ -11,7 +11,7 @@
                 <field>Name</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>CommoditySector__c</field>
             </layoutItems>
             <layoutItems>
@@ -33,11 +33,11 @@
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>MeterStatus__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Status__c</field>
             </layoutItems>
             <layoutItems>
@@ -49,7 +49,7 @@
                 <field>AreaDeclaredTARI__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>MethodsForOutgoingPayments__c</field>
             </layoutItems>
             <layoutItems>
@@ -78,7 +78,7 @@
                 <field>ImplantType__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>Disconnectable__c</field>
             </layoutItems>
         </layoutColumns>
@@ -88,7 +88,7 @@
                 <field>Resident__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
+                <behavior>Readonly</behavior>
                 <field>ImplantTypeTemp__c</field>
             </layoutItems>
             <layoutItems>
