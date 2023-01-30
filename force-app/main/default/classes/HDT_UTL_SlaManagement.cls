@@ -91,9 +91,11 @@ public inherited sharing class HDT_UTL_SlaManagement {
             //++Set<Id> adminIds;
             for(HDT_WRP_SlaManagement.HDT_WRP_Event eventObj : wrpCaseList){
 
-                //++adminIds = new Set<Id>();
+                System.debug(logginglevel.DEBUG, '>>> eventObj.eventType: ' + eventObj.eventType);
 
-                if(trackingMap.containsKey(eventObj.recordId)){
+                //++adminIds = new Set<Id>();
+                //
+                if(eventObj.eventType.equalsIgnoreCase('UPDATE') && trackingMap.containsKey(eventObj.recordId)){
 
                     System.debug(logginglevel.DEBUG, '>>> update tracking context');
 
@@ -120,7 +122,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 }
 
                 // check for new tracking record to insert
-                if(wrpAdminMap.size() > 0){
+                // 
+                if(eventObj.eventType.equalsIgnoreCase('CREATE') && wrpAdminMap.size() > 0){
                     System.debug(logginglevel.DEBUG, '>>> check for new tracking record to insert...');
                     for(Id adminRuleId : wrpAdminMap.keySet()){
 
