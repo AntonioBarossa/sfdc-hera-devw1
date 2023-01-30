@@ -185,10 +185,29 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 CustomerFiscalCode__c=acc.FiscalCode__c,
                 EffectiveDate = Date.today(),
                 Status = 'In Lavorazione',
-                BillingProfile__c = bp.Id
+                BillingProfile__c = bp.Id,
+                PaymentMode__c=(String) params.get('paymentMode'),
+                Note__c=(String) params.get('note')
         );
         HDT_UTL_DatabaseService.insertSObject(placeholderOrder);
         //HDT_UTL_Order.calculateRateCategory(childOrder);
+    }
+
+    public static void createChildOrderVoltura(Map<String,Object> params){
+        HDT_QR_Order qrOrder = new HDT_QR_Order();
+        HDT_QR_Sale qrSale = new HDT_QR_Sale();
+        String orderNumber = (String)params.get('serviceRequest');
+        List<Order> childOrderList = qrOrder.getRecordByOrderNumber(orderNumber);
+        Id saleId = childOrderList[0].Sale__c;
+        Sale__c sale = qrSale.getRecordById(saleId,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name,LowerChannelAgency__c,UpperChannelAgency__c');
+        Order childOrder = new Order();
+        childOrder.Id = childOrderList[0].Id;
+        childOrder = createChildOrderWithItem(childOrder,params);
+        Order parentOrder = createParentOrder(childOrder,sale);
+        HDT_UTL_DatabaseService.insertSObject(parentOrder);
+        childOrder.ParentOrder__c = parentOrder.Id;
+        childOrder.Phase__c = 'Comunicazione verso Heroku';
+        HDT_UTL_DatabaseService.updateSObject(childOrder);
     }
 
     public static Order createChildOrderWithItem(Order childOrder, Map<String,Object> params){

@@ -109,8 +109,10 @@ public with sharing class HDT_SRV_GenericSolHandler {
         if(String.isBlank(serviceRequest)){
             Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Voltura Idrica da Web');
             HDT_UTL_GenericSolHandler.createBaseOrderVoltura(inputParams,sale.Id);
+            //modalita pagamento
         }else{
-            //HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
+            HDT_UTL_GenericSolHandler.createChildOrderVoltura(inputParams);
+            //creazione order child
         }
     }
     
