@@ -89,6 +89,79 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 
 			List<MatriceRemiCode__c> tMatRemiCodes=HDT_QR_MatriceRemiCode.getAllPartitaUdbConfiguration(tComuni);
 
+
+			test.stopTest();
+
+			System.assertEquals(true, tMatRemiCodes[0].Id!=null, 'Matrice Remi Code not found');
+			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null, 'Value of parameter is not matching');
+		}
+	}
+
+	@isTest
+	public static void testGetAllRemiVATNumberUdb(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<MatriceRemiCode__c> tMatRemiCode=[SELECT Id, RemiCode__c
+			                                       FROM MatriceRemiCode__c
+			                                       WHERE RemiCode__c='test'];
+
+			tMatRemiCode[0].SalesCompany__c='testSaleCo';
+			tMatRemiCode[0].EndDate__c= Date.newInstance(2023, 1, 27);
+			tMatRemiCode[0].StartDate__c=Date.newInstance(2023, 1, 25);
+
+			update tMatRemiCode;
+
+			String comune = 'testComune'; 
+
+			List<MatriceRemiCode__c> tMatRemiCodes=HDT_QR_MatriceRemiCode.getAllRemiVATNumberUdb(tMatRemiCode[0].RemiCode__c , comune, tMatRemiCode[0].SalesCompany__c);
+			List<MatriceRemiCode__c> remiCodeList=[SELECT Id, RemiCode__c, Comune__c, SalesCompany__c, VATNumberUdb__c, isActive__c FROM MatriceRemiCode__c];
+
+			test.stopTest();
+
+			System.assertEquals(true, tMatRemiCodes[0].Id!=null, 'Matrice Remi Code not found');
+			System.assertNotEquals(false, tMatRemiCodes[0].Id!=null, 'Value of parameter is not matching');
+		}
+	}
+
+	@isTest
+	public static void tesGetAllRemiVATNumberUdbServicePoint(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<MatriceRemiCode__c> tMatRemiCode=[SELECT Id, RemiCode__c
+			                                       FROM MatriceRemiCode__c
+			                                       WHERE RemiCode__c='test'];
+
+			tMatRemiCode[0].SalesCompany__c='testSaleCo';
+			tMatRemiCode[0].EndDate__c= Date.newInstance(2023, 1, 27);
+			tMatRemiCode[0].StartDate__c=Date.newInstance(2023, 1, 25);
+
+			update tMatRemiCode;
+
+			Set<String> tComuni=new Set<String>();
+			Set<String> tCompanies=new Set<String>();
+
+			tcomuni.add('testComune');
+			tCompanies.add('testSaleCo');
+
+			List<MatriceRemiCode__c> tMatRemiCodes=HDT_QR_MatriceRemiCode.getAllRemiVATNumberUdbServicePoint(tcomuni, tCompanies);
+			List<MatriceRemiCode__c> remiCodeList=[SELECT Id, RemiCode__c, Comune__c, SalesCompany__c, VATNumberUdb__c, isActive__c FROM MatriceRemiCode__c];
+
 			test.stopTest();
 
 			System.assertEquals(true, tMatRemiCodes[0].Id!=null, 'Matrice Remi Code not found');

@@ -44,7 +44,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             account.put('FirstName__c', dataAccount.get('firstIndividualName'));
             name= dataAccount.get('firstIndividualName');
         }
-        if(dataAccount.get('lastIndividualName') != null && dataAccount.get('firstIndividualName') != ''){
+        if(dataAccount.get('lastIndividualName') != null && dataAccount.get('lastIndividualName') != ''){
             account.put('LastName__c', dataAccount.get('lastIndividualName'));
             name= name + ' '+ dataAccount.get('lastIndividualName');
         }
@@ -72,7 +72,21 @@ public with sharing class HDT_LC_FormAccountBusiness {
             }
         }
 
-
+        /* TK 951554C -- Aggiunto controllo su codice fiscale, formalita' e match con nome e cognome per ditta individuale */
+        if('Ditta Individuale'.equalsIgnoreCase(account.CustomerMarking__c))
+        {
+            String result = '';
+            HDT_UTL_CaseValidations formalValidation = new HDT_UTL_CaseValidations();
+            result = formalValidation.validateFiscalCode(account.FiscalCode__c);
+            if(String.isNotBlank(result))
+            {
+                throw new AuraHandledException('Codice Fiscale non corretto.');
+            }
+            if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(account.FiscalCode__c, account.FirstName__c, account.LastName__c))
+            {
+                throw new AuraHandledException('Codice Fiscale non coerente con i dati inseriti');
+            }
+        }
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
       //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
