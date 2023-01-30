@@ -17,7 +17,9 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 
 			List<MatriceRemiCode__c> matriceRemiCodes=HDT_UTL_DataFactoryTst.createMatriceRemiCode(1, false);
 			matriceRemiCodes[0].Comune__c='testComune';
-
+            date stDate=date.today();
+			matriceRemiCodes[0].startDate__c=stdate.addDays(-5);
+            matriceRemiCodes[0].endDate__c=stdate.addDays(5);
 			insert matriceRemiCodes;
 		}
 	}
@@ -114,8 +116,8 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 			                                       WHERE RemiCode__c='test'];
 
 			tMatRemiCode[0].SalesCompany__c='testSaleCo';
-			tMatRemiCode[0].EndDate__c= Date.newInstance(2023, 1, 27);
-			tMatRemiCode[0].StartDate__c=Date.newInstance(2023, 1, 25);
+			//tMatRemiCode[0].EndDate__c= Date.newInstance(2023, 1, 27);
+			//tMatRemiCode[0].StartDate__c=Date.newInstance(2023, 1, 25);
 
 			update tMatRemiCode;
 
@@ -148,8 +150,8 @@ public with sharing class HDT_QR_MatriceRemiCodeTst{
 			                                       WHERE RemiCode__c='test'];
 
 			tMatRemiCode[0].SalesCompany__c='testSaleCo';
-			tMatRemiCode[0].EndDate__c= Date.newInstance(2023, 1, 27);
-			tMatRemiCode[0].StartDate__c=Date.newInstance(2023, 1, 25);
+			//tMatRemiCode[0].EndDate__c= Date.newInstance(2023, 1, 27);
+			//tMatRemiCode[0].StartDate__c=Date.newInstance(2023, 1, 25);
 
 			update tMatRemiCode;
 
