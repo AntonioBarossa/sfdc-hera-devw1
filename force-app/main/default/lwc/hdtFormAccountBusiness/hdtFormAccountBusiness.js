@@ -644,7 +644,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             }
             /* TK 951554C -- Anche il Nome deve essere un campo obbligatorio */
             if(!firstIndividualName.reportValidity()){
-                isValidated
+                isValidated=false;
             }
 
             if(!fiscalCode.reportValidity()){

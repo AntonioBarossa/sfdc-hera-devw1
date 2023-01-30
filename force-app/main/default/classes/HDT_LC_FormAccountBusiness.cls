@@ -44,7 +44,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             account.put('FirstName__c', dataAccount.get('firstIndividualName'));
             name= dataAccount.get('firstIndividualName');
         }
-        if(dataAccount.get('lastIndividualName') != null && dataAccount.get('firstIndividualName') != ''){
+        if(dataAccount.get('lastIndividualName') != null && dataAccount.get('lastIndividualName') != ''){
             account.put('LastName__c', dataAccount.get('lastIndividualName'));
             name= name + ' '+ dataAccount.get('lastIndividualName');
         }
