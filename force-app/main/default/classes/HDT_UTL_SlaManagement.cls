@@ -88,10 +88,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
             }
 
             SlaTracking__c currentTrack;
-            Set<Id> adminIds;
+            //++Set<Id> adminIds;
             for(HDT_WRP_SlaManagement.HDT_WRP_Event eventObj : wrpCaseList){
 
-                adminIds = new Set<Id>();
+                //++adminIds = new Set<Id>();
 
                 if(trackingMap.containsKey(eventObj.recordId)){
 
@@ -101,7 +101,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
                     for(SlaTracking__c track : trackingMap.get(eventObj.recordId)){
                         System.debug(logginglevel.DEBUG, '>>> checking trckSla: ' + track.Id);
-                        adminIds.add(track.SlaAdministration__c);
+                        //++adminIds.add(track.SlaAdministration__c);
 
                         if(wrpAdminMap.containsKey(track.SlaAdministration__c) && track.Status__c.equalsIgnoreCase('Aperto')){
 
@@ -124,7 +124,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                     System.debug(logginglevel.DEBUG, '>>> check for new tracking record to insert...');
                     for(Id adminRuleId : wrpAdminMap.keySet()){
 
-                        if(!adminIds.contains(adminRuleId)){
+                        ///++if(!adminIds.contains(adminRuleId)){
                             /// check if this rule have to create new tracking record
                             System.debug(logginglevel.DEBUG, '>>> check if this rule have to create new tracking record...');
                             currentTrack = createNewTrackingRecord(currentTrack, wrpAdminMap.get(adminRuleId), eventObj);
@@ -134,14 +134,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
                             } else {
                                 System.debug(logginglevel.DEBUG, '>>> no track to insert');
                             }
-                        }
+                        //++}
                     }
                 }
 
             }
 
             if(trackToUpsert.size() > 0){
-                System.debug(logginglevel.DEBUG, '>>> ' + String.valueOf(trackToUpsert));
                 HDT_UTL_DatabaseService.upsertSObject(trackToUpsert);
             }
             
@@ -324,11 +323,16 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
         if(eventObj.fieldMap.containsKey(singleRule.startRule.field)){
 
-            System.debug(logginglevel.DEBUG, '>>> startRule.field: ' +singleRule.startRule.field);
+            System.debug(logginglevel.DEBUG, '>>> startRule.field: ' + singleRule.startRule.field);
             currentTrack = new SlaTracking__c();
             currentTrack.Status__c = 'Aperto';
             //currentTrack.Case__c = eventObj.recordId;
             currentTrack.SlaAdministration__c = singleRule.adminRuleId;
+
+            if(eventObj.activityEvent != null && eventObj.activityEvent.Id != null){
+                currentTrack.Activity__c = eventObj.activityEvent.Id;
+            }
+
             currentTrack.put(trackingFieldKey, eventObj.recordId);
 
             Object dt;
