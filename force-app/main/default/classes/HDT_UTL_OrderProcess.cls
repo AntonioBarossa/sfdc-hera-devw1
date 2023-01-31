@@ -899,12 +899,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * NTTDATA
      * Annulla gli ordini figli
      * **/
-    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
+    public static List<Order> cancellAllEligibleOrder(Id parentOrderId,String declineNote){
         List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
         for(Order singleChild : childOrderList){
             singleChild.Phase__c = 'Annullato';
             singleChild.Status = 'Annullato';
             singleChild.CancellationReason__c = 'Annullamento da cliente';
+            if (String.isNotBlank(declineNote)){
+                singleChild.CancellationNote__c = declineNote;
+            }
         }
         return childOrderList;
     }
