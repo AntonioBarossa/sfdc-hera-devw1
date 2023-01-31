@@ -899,12 +899,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * NTTDATA
      * Annulla gli ordini figli
      * **/
-    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
+    public static List<Order> cancellAllEligibleOrder(Id parentOrderId,String declineNote){
         List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
         for(Order singleChild : childOrderList){
             singleChild.Phase__c = 'Annullato';
             singleChild.Status = 'Annullato';
             singleChild.CancellationReason__c = 'Annullamento da cliente';
+            if (String.isNotBlank(declineNote)){
+                singleChild.CancellationNote__c = declineNote;
+            }
         }
         return childOrderList;
     }
@@ -1606,5 +1609,42 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     {
         List<SObject> sobjList = (List<SObject>)JSON.deserialize(serializedList, List<SObject>.class);
         HDT_UTL_DatabaseService.updateSObject(sobjList);
+    }
+
+
+    public static String calculateVatNumberUdb(String supplyCity, String salesCompany, String remiCode){
+        
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVatNumberUdb(remiCode, supplyCity, salesCompany);
+        system.debug('calculateVatNumberUdb - remiList -->'+remiList);    
+        String vatNumberUdb = '';
+
+        if(!remiList.isEmpty()){
+            system.debug('calculateVatNumberUdb - remiList.isNotEmpty');    
+            vatNumberUdb = remiList[0].VatNumberUdb__c;
+        }
+        else{
+            system.debug('calculateVatNumberUdb - remiList.isEmpty'); 
+            vatNumberUdb = '02060500390';
+        }
+        system.debug('calculateVatNumberUdb - remiList.vatNumberUdb --> '+vatNumberUdb); 
+        return vatNumberUdb;
+        
+    }
+
+    public static Map<String, MatriceRemiCode__c> calculateRemiCodeVatNumberServicePoint(Set<String> supplyCities, Set<String> salesCompanies){
+
+        Map<String, MatriceRemiCode__c> remiCodeMap = new Map<String, MatriceRemiCode__c>();
+
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVatNumberUdbServicePoint(supplyCities, salesCompanies);
+
+        if(!remiList.isEmpty()){
+            for(MatriceRemiCode__c mr : remiList){
+                remiCodeMap.put(mr.Comune__c + '-' + mr.SalesCompany__c, mr);
+            }
+        }
+        
+
+        return remiCodeMap;
+
     }
 }

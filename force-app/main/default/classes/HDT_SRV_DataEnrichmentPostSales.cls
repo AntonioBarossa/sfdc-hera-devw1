@@ -137,6 +137,9 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
             when '13V0000000'{
                 salesCompany = 'Hera Comm S.p.A.';
             }
+            when '10V0000000'{
+                salesCompany = 'Hera Comm S.p.A.';
+            }
             when '10V0000160'{
                 salesCompany = 'Hera Comm Marche';
             }
