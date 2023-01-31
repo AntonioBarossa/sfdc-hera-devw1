@@ -1013,7 +1013,7 @@
         <language>it</language>
         <protected>false</protected>
         <shortDescription>Commodity Turbobilling</shortDescription>
-        <value>N</value>
+        <value>Energia Elettrica;Gas</value>
     </labels>
     <labels>
         <fullName>HDT_ActivityCompleteProcess</fullName>

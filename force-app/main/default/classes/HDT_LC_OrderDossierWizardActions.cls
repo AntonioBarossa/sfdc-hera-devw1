@@ -602,7 +602,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             {
                 podOrderItemMap.get(item.Order.ServicePointCode__c).put('offertaCommerciale',item);
             }
-            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c != null && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
             {
                 podOrderItemMap.get(item.Order.ServicePointCode__c).put('analisiConsumi',item);
             }
