@@ -8,10 +8,19 @@ public inherited sharing class HDT_UTL_SlaTracking {
         Map<Id, SlaAdministration__c> adminRuleMap;
 
         for(SlaTracking__c track : slaTrackingFromTrigger){
+
+            if(track.Status__c.equalsIgnoreCase('Chiuso')){
+                continue;
+            }
+
             if(track.StartDateTime__c != null && track.EndDateTime__c != null){
                 adminRuleIds.add(track.SlaAdministration__c);
                 slaTrackingToElaborate.add(track);
             }
+        }
+
+        if(slaTrackingToElaborate.size()==0){
+            return;
         }
 
         List<SlaAdministration__c> slaAdminList = HDT_QR_SlaTracking.getSlaAdminList(adminRuleIds);
