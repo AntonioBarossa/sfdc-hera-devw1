@@ -6,7 +6,7 @@
     ISPICKVAL(DiscardCategory__c, &apos;Scarto complesso&apos;),
 				RecordType.DeveloperName = &apos;HDT_RT_Scarto&apos;,
 				NOT(wrts_prcgvr__IsClosed__c),
-				NOT(ISPICKVAL(Type__c, &apos;Esito KO da DL&apos;),
+				NOT(ISPICKVAL(Type__c, &apos;Esito KO da DL&apos;)),
 				NOT(ISPICKVAL(Type__c, &apos;Esito KO da DBO&apos;)),
 				OR(
 								 Case__r.RecordType.DeveloperName != &apos;HDT_RT_Morosita&apos;,
