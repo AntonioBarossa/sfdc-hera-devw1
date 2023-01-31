@@ -92,6 +92,9 @@
                 <stringValue>La pratica è già in una fase finale</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Gestione_da_Activity</targetReference>
+        </connector>
     </assignments>
     <assignments>
         <name>Set_Response_Fase_Non_Annullabile</name>
@@ -132,6 +135,9 @@
                 <stringValue>La pratica è in attesa dell&apos;esito di un processo di Annullamento/Ripensamento e pertanto non è annullabile.</stringValue>
             </value>
         </assignmentItems>
+        <connector>
+            <targetReference>Gestione_da_Activity</targetReference>
+        </connector>
     </assignments>
     <decisions>
         <name>Check_Final_Phase</name>
@@ -161,6 +167,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Voltura Rifiutata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KO Definitivo</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -333,6 +346,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Gestione_da_Activity</name>
+        <label>Gestione da Activity</label>
+        <locationX>721</locationX>
+        <locationY>2534</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>activityId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activityId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusura_Activity</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Stop_Cancel</name>
         <label>Stop Cancel</label>
         <locationX>182</locationX>
@@ -484,6 +526,63 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
+    <recordUpdates>
+        <name>Chiusura_Activity</name>
+        <label>Chiusura Activity</label>
+        <locationX>589</locationX>
+        <locationY>2654</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ActivityEndTime__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosedByUsername__c</field>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosingCreatorGroup__c</field>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosingUserChannel__c</field>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EndDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserCompany__c</field>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+    </recordUpdates>
     <start>
         <locationX>595</locationX>
         <locationY>0</locationY>
@@ -492,6 +591,16 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>activityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
     <variables>
         <name>Case</name>
         <dataType>SObject</dataType>

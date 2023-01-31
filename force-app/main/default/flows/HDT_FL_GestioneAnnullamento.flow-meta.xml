@@ -2866,6 +2866,12 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_CheckObjectBeforeCancel</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>Case</name>
             <value>
                 <elementReference>GetRecord</elementReference>
@@ -2882,6 +2888,12 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <targetReference>Check_Result_Order</targetReference>
         </connector>
         <flowName>HDT_FL_CheckObjectBeforeCancel</flowName>
+        <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
         <inputAssignments>
             <name>order</name>
             <value>
