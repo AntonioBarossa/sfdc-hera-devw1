@@ -24,7 +24,7 @@
     <assignments>
         <name>Set_phase_From_Case</name>
         <label>Set phase From Case</label>
-        <locationX>776</locationX>
+        <locationX>798</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>phase</assignToReference>
@@ -56,8 +56,8 @@
     <assignments>
         <name>Set_Response</name>
         <label>Set Response</label>
-        <locationX>468</locationX>
-        <locationY>1802</locationY>
+        <locationX>50</locationX>
+        <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -76,8 +76,8 @@
     <assignments>
         <name>Set_Response_Fase_Finale</name>
         <label>Set Response</label>
-        <locationX>732</locationX>
-        <locationY>1922</locationY>
+        <locationX>325</locationX>
+        <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -89,15 +89,15 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>La pratica è già in una fase di annullamento</stringValue>
+                <stringValue>La pratica è già in una fase finale</stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <assignments>
         <name>Set_Response_Fase_Non_Annullabile</name>
         <label>Set Response</label>
-        <locationX>996</locationX>
-        <locationY>1922</locationY>
+        <locationX>853</locationX>
+        <locationY>2198</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -109,15 +109,35 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Non si può annullare la pratica fintanto che si trova in questa fase</stringValue>
+                <stringValue>Non si può annullare la pratica fintanto che si trova nella fase attuale.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Response_InCorso</name>
+        <label>Set Response</label>
+        <locationX>589</locationX>
+        <locationY>2198</locationY>
+        <assignmentItems>
+            <assignToReference>stopAnnullamento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>La pratica è in attesa dell&apos;esito di un processo di Annullamento/Ripensamento e pertanto non è annullabile.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
     <decisions>
         <name>Check_Final_Phase</name>
         <label>Check Final Phase</label>
-        <locationX>996</locationX>
-        <locationY>1802</locationY>
+        <locationX>721</locationX>
+        <locationY>2078</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Fase_Finale</name>
@@ -143,6 +163,14 @@
                     <stringValue>Voltura Rifiutata</stringValue>
                 </rightValue>
             </conditions>
+            <connector>
+                <targetReference>Set_Response_Fase_Finale</targetReference>
+            </connector>
+            <label>Fase Finale</label>
+        </rules>
+        <rules>
+            <name>Processo_Annullamento_in_corso</name>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>phase</leftValueReference>
                 <operator>Contains</operator>
@@ -158,9 +186,9 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Set_Response_Fase_Finale</targetReference>
+                <targetReference>Set_Response_InCorso</targetReference>
             </connector>
-            <label>Fase Finale</label>
+            <label>Processo Annullamento in corso</label>
         </rules>
         <rules>
             <name>Fase_Non_Annullabile</name>
@@ -181,7 +209,7 @@
     <decisions>
         <name>Check_Object_Type</name>
         <label>Tipo Oggetto</label>
-        <locationX>732</locationX>
+        <locationX>721</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>null</defaultConnectorLabel>
         <rules>
@@ -218,8 +246,8 @@
     <decisions>
         <name>Check_Rule</name>
         <label>Esiste Regola</label>
-        <locationX>732</locationX>
-        <locationY>1682</locationY>
+        <locationX>182</locationX>
+        <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Check_Final_Phase</targetReference>
         </defaultConnector>
@@ -243,7 +271,7 @@
     <decisions>
         <name>Check_SAP_Phase</name>
         <label>Check SAP Phase</label>
-        <locationX>776</locationX>
+        <locationX>798</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Check_Final_Phase</targetReference>
@@ -378,8 +406,8 @@
     <recordLookups>
         <name>Check_Phase</name>
         <label>Check Phase</label>
-        <locationX>732</locationX>
-        <locationY>1562</locationY>
+        <locationX>182</locationX>
+        <locationY>1310</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Rule</targetReference>
@@ -457,13 +485,13 @@
         </outputAssignments>
     </recordLookups>
     <start>
-        <locationX>606</locationX>
+        <locationX>595</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Check_Object_Type</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <variables>
         <name>Case</name>
         <dataType>SObject</dataType>
