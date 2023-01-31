@@ -9,9 +9,9 @@ public inherited sharing class HDT_UTL_SlaTracking {
 
         for(SlaTracking__c track : slaTrackingFromTrigger){
 
-            if(track.Status__c.equalsIgnoreCase('Chiuso')){
-                continue;
-            }
+            //if(track.Status__c.equalsIgnoreCase('Chiuso')){
+            //    continue;
+            //}
 
             if(track.StartDateTime__c != null && track.EndDateTime__c != null){
                 adminRuleIds.add(track.SlaAdministration__c);
