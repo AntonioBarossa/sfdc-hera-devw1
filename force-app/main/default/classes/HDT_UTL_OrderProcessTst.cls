@@ -271,7 +271,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Contact__c, ParentOrder__c, PhaseStory__c 
             FROM Order WHERE ParentOrder__c = null];
             Test.startTest();
-            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id);
+            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id,'Test message');
             Test.stopTest();
             System.assertEquals(false, ordChildList.isEmpty(), 'child returned');
         }

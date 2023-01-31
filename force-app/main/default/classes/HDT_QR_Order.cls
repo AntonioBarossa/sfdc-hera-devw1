@@ -109,11 +109,12 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Account.OwnerId,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
-            Sale__r.Account__c,
+            Sale__r.Account__r.OwnerId,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -1044,7 +1045,8 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        SalesCompany__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1141,7 +1143,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        SalesCompany__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
