@@ -1211,4 +1211,18 @@
         <shortDescription>ViewAll</shortDescription>
         <value>View All</value>
     </labels>
+    <labels>
+        <fullName>phaseBozza</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>phaseBozza</shortDescription>
+        <value>Bozza</value>
+    </labels>
+    <labels>
+        <fullName>statusInLavorazione</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>statusInLavorazione</shortDescription>
+        <value>In Lavorazione</value>
+    </labels>
 </CustomLabels>
