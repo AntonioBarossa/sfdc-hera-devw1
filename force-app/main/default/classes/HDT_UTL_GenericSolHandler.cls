@@ -170,10 +170,10 @@ public with sharing class HDT_UTL_GenericSolHandler {
         BillingProfile__c bp = qrBilling.getRecordByContractAccount(contractAccount);
         Account acc = accContRel.Account;
         Order placeholderOrder = new Order(
-                IntegrationId__c=(String) params.get('integrationId'),
+                IntegrationId__c= params.containsKey('integrationId') ?  (String) params.get('integrationId'):'',
                 Contact__c=cont.Id,
                 AccountId=accountId,
-                RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId(),
+                RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId(),
                 Sale__c=saleId,
                 ProcessType__c='Voltura',
                 EffectiveDate__c=Date.today(),
@@ -184,22 +184,28 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 CustomerVATNumber__c=acc.VATNumber__c,
                 CustomerFiscalCode__c=acc.FiscalCode__c,
                 EffectiveDate = Date.today(),
+                EffectiveDate__c=Date.today(),
                 Status = 'In Lavorazione',
+                Phase__c=System.label.phaseBozza,
                 BillingProfile__c = bp.Id,
-                PaymentMode__c=(String) params.get('paymentMode'),
-                Note__c=(String) params.get('note')
+                PaymentMode__c=params.containsKey('paymentMode') ? (String) params.get('paymentMode'):'',
+                Note__c=params.containsKey('note') ? (String) params.get('note'):''
         );
         HDT_UTL_DatabaseService.insertSObject(placeholderOrder);
         //HDT_UTL_Order.calculateRateCategory(childOrder);
     }
 
-    public static void createChildOrderVoltura(Map<String,Object> params){
+    public static void handleServiceRequestVoltura(Map<String,Object> params){
         HDT_QR_Order qrOrder = new HDT_QR_Order();
         HDT_QR_Sale qrSale = new HDT_QR_Sale();
+        if(!params.containsKey('serviceRequest')){
+            throw new CalloutException('Service request missing');
+        }
         String orderNumber = (String)params.get('serviceRequest');
-        List<Order> childOrderList = qrOrder.getRecordByOrderNumber(orderNumber);
-        Id saleId = childOrderList[0].Sale__c;
-        Sale__c sale = qrSale.getRecordById(saleId,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name,LowerChannelAgency__c,UpperChannelAgency__c');
+        Order parentOrder = qrOrder.getParentOrderVolturaSOL(orderNumber);
+        Sale__c sale = qrSale.getRecordById(parentOrder.Sale__c,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name,LowerChannelAgency__c,UpperChannelAgency__c');
+        Order childOrder=createChildOrderVoltura(parentOrder,params);
+        /*
         Order childOrder = new Order();
         childOrder.Id = childOrderList[0].Id;
         childOrder = createChildOrderWithItem(childOrder,params);
@@ -208,6 +214,24 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ParentOrder__c = parentOrder.Id;
         childOrder.Phase__c = 'Comunicazione verso Heroku';
         HDT_UTL_DatabaseService.updateSObject(childOrder);
+         */
+
+    }
+
+    public static Order createChildOrderVoltura(Order parentOrder, Map<String,Object> params){
+        String contractNumber = (String)params.get('contractNumber');
+        List<Contract> contractList = getContractByNumber(contractNumber);
+        if(contractList.size()<=0){
+            throw new CalloutException('Contract not found');
+        }
+        Order childOrder=parentOrder.clone(false,true,false,false);
+        childOrder.ParentOrder__c=parentOrder.Id;
+        childOrder.IntegrationId__c='';
+        childOrder.Phase__c=System.label.phaseBozza;
+        childOrder.Subprocess__c='Standard';
+
+        HDT_UTL_DatabaseService.insertSObject(childOrder);
+        return childOrder;
     }
 
     public static Order createChildOrderWithItem(Order childOrder, Map<String,Object> params){
