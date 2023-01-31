@@ -242,9 +242,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.Market__c = contractList[0].ServicePoint__r.MarketOrigin__c;
             childOrder.SupplyPostalCode__c = contractList[0].ServicePoint__r.SupplyPostalCode__c;
             OrderItem oi=generateOrderItem(contractList[0],childOrder,params);
-            HDT_UTL_DatabaseService.updateSObject(oi);
+            HDT_UTL_DatabaseService.insertSObject(oi);
         }
-        HDT_UTL_DatabaseService.updateSObject(childOrder);
+        HDT_UTL_DatabaseService.insertSObject(childOrder);
         return childOrder;
     }
 
