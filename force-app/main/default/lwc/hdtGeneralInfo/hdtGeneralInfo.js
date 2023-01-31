@@ -64,12 +64,17 @@ export default class HdtGeneralInfo extends LightningElement {
     @track filterLookup = '';
 
     @track valueObj = '';
+    @track isSportelloLogin = false;
+    @track isOtherChannel = true;
 
     channelOptionsComm = [
         {label: 'Teleselling Inbound', value: 'Teleselling Inbound'},
         {label: 'Teleselling Outbound', value: 'Teleselling Outbound'}
     ];
-
+    channelOptionsSportello = [
+        {label: 'Sportello', value: 'Sportello'},
+        {label: 'HC Point', value: 'HC Point'}
+    ];
     completeListcolumns = [];
     get isCampaignVisible() {
         return (this.isCampaignTableVisible && !this.disabledInput)  || (this.saleRecord.Campaign__c !== undefined && this.disabledInput);
@@ -229,6 +234,13 @@ export default class HdtGeneralInfo extends LightningElement {
 
             this.userRole = data.userRole;
             this.isProfileTeleselling = data.userProfile === 'Hera Teleseller Partner User';
+            this.isSportelloLogin = data.loginchannel === 'Sportello';
+            console.log('#Other CHannel >> ' + !this.isProfileTeleselling && !this.isSportelloLogin);
+            this.isOtherChannel = !this.isProfileTeleselling && !this.isSportelloLogin;
+
+            console.log('#IsProfileTeleselling >> ' + this.isProfileTeleselling);
+            console.log('#IsSportelloLogin >> ' + this.isSportelloLogin);
+            console.log('#IsOtherChannel >> ' + this.isOtherChannel);
 
         }).catch(error => {
             this.loading = false;
@@ -289,6 +301,7 @@ export default class HdtGeneralInfo extends LightningElement {
         }*/
         
         /* Controllo sales contact */
+        this.loading = true;
         console.log('# SalesContact >>>' + this.dataToSubmit['SalesContact__c']);
         if(this.dataToSubmit['SalesContact__c'] == null || this.dataToSubmit['SalesContact__c'] == undefined || this.dataToSubmit['SalesContact__c'] == '')
         {
@@ -407,8 +420,20 @@ export default class HdtGeneralInfo extends LightningElement {
         }
         this.dataToSubmit['Channel__c'] = this.template.querySelector('[data-id="Channel__c"]').value;
         console.log('*******1: ' + JSON.stringify(this.dataToSubmit) );
-        this.updateSaleRecord(this.dataToSubmit);
-        this.toggle();
+        updateSale({ sale: this.dataToSubmit }).then(data => {
+            this.loading = false;
+            this.toggle();
+            this.dispatchEvent(new CustomEvent('saleupdate'));
+        }).catch(error => {
+            this.loading = false;
+            console.log(error.body.message);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: error.body.message,
+                variant: 'error'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
         this.disabledAgency = true;
     }
 
@@ -702,11 +727,11 @@ export default class HdtGeneralInfo extends LightningElement {
     renderedCallback() {
         let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
         let channelCheck = '';
-        if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
+        /*if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
             this.channelValue = 'Sportello';
             channelCheck = 'Sportello';
             this.ChannelSelection = 'Sportello';
-            this.channelDisabled = true;
+            //this.channelDisabled = true;
             handleAutomaticAgentAssign ({Channel:'Sportello',saleId:this.saleRecord.Id }).then(data =>{
                 console.log("************* "+JSON.stringify(data))
                 this.loaded = true;
@@ -730,7 +755,7 @@ export default class HdtGeneralInfo extends LightningElement {
                 //this.dispatchEvent(toastErrorMessage);
             });
         }
-        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
+        else */if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
             this.channelValue = 'Telefono';
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
@@ -881,7 +906,8 @@ export default class HdtGeneralInfo extends LightningElement {
         this.dataToSubmit['Channel'] = event.target.value;
         this.disabledAgency = false;
 
-        this.hiddenAgency = true;
+        if(this.isProfileTeleselling) this.hiddenAgency = true;
+        if(this.isSportelloLogin) this.disabledAgency = true;
         handleAutomaticAgentAssign ({Channel:event.target.value,saleId:this.saleRecord.Id }).then(data =>{
             console.log("************* "+JSON.stringify(data))
             this.loaded = true;
@@ -889,6 +915,7 @@ export default class HdtGeneralInfo extends LightningElement {
             this.template.querySelector("[data-id='CommercialId']").value = data[0].AgentCode__c;
             this.template.querySelector("[data-id='VendorFirstName__c']").value = data[0].AgentFirstName__c;
             this.template.querySelector("[data-id='VendorLastName__c']").value = data[0].AgentLastName__c;
+            if(data.length > 1 && this.isSportelloLogin) this.disabledAgency = false;
         }).catch(error => {
             this.loaded = true;
             this.disabledAgency = false;

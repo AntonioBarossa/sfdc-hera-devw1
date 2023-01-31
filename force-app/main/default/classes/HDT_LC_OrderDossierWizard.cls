@@ -202,10 +202,37 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         //Case Sale is 'Attiva'
         if(check){
             //When there is no parent order
-            if(createOrder){
-                
-                AccountContactRelation acr = acrQr.getPrimaryContactRelationBusiness(sale.Account__c);
-                Id contactId = acr != null ? acr.ContactId : null;
+            if(listOrderParent.isEmpty()){
+
+                Order parentOrderNew = new Order(
+                    Name = sale.Name.length() < 80-7 ? 'Ordine '+sale.Name : 'Ordine '+sale.Name.substring(0, 80-7), //max length - size('Ordine ')
+                    AccountId = sale.Account__c,
+                    // EVERIS_NTTDATA START
+                    Contact__c = contactId,
+                    // EVERIS_NTTDATA END
+                    Sale__c = sale.Id,
+                    Status = 'Draft',
+                    RecordTypeId = recordTypeIdOrderDossier,
+                    EffectiveDate = Date.today(),
+                    Step__c = 1,
+                    Channel__c = sale.Channel__c,
+                    LoginChannel__c = sale.CreatedBy.LoginChannel__c,
+                    VendorLastName__c = sale.VendorLastName__c,
+                    VendorFirstName__c = sale.VendorFirstName__C,
+                    DocumentDate__c = sale.DocumentDate__c,
+                    DocumentNumber__c = sale.DocumentNumber__c,
+                    DocumentType__c = sale.DocumentType__c,
+                    CommercialId__c = sale.CommercialId__c,
+                    AgencyCode__c = sale.AgencyCode__c,
+                    Agency__c = sale.Agency__c,
+                    AreaManager__c = sale.AreaManager__c,
+                    SalesContact__c = sale.SalesContact__c,
+                    Interaction__c = sale.Interaction__c,
+                    LowerChannelAgency__c = sale.LowerChannelAgency__c,
+                    UpperChannelAgency__c = sale.UpperChannelAgency__c
+                );
+
+                orderSrv.createRecord(parentOrderNew);
                 
                 List<Order> childOrderToUpdate = createOrderStructure(sale, contactId, macroProcessType);
 
