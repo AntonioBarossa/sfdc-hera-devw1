@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ComputeType__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Tipo di Calcolo</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>S</fullName>
+                <default>true</default>
+                <label>S</label>
+            </value>
+            <value>
+                <fullName>W</fullName>
+                <default>false</default>
+                <label>W</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

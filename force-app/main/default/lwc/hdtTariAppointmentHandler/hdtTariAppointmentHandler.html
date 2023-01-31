@@ -1,0 +1,89 @@
+<!--
+  @description       : 
+  @author            : Giacinto Florio
+  @group             : 
+  @last modified on  : 28-06-2022
+  @last modified by  : Giacinto Florio
+-->
+<template>
+    <template if:true={recordId}>
+
+
+            <template if:true={showAgenda}>
+                <c-hdt-tari-appointment-agenda caseid={recordId} params={params} oncancelevent={cancelEvent} ></c-hdt-tari-appointment-agenda>
+            </template>
+            <template if:true={showForm}>
+                <c-hdt-appointment-self activityid={recordId} oncancelevent={cancelEvent} ></c-hdt-appointment-self>
+            </template>
+            <template if:true={isRendered}>
+                <lightning-quick-action-panel header="Gestisci Appuntamento">
+                    <div class="slds-modal__content" id="welcome-mat-403-content">
+                        <template if:true={confirmed}>
+                            <c-hdt-appointment-alert variant="error" is-dismissible="true">
+                                <h2>L'appuntamento è già stato confermato. Per modificarlo o annullarlo contatta il servizio clienti.</h2>
+                            </c-hdt-appointment-alert>
+                        </template>
+                        <template if:false={confirmed}>
+                            <template if:true={isCommunity}>
+                                <c-hdt-appointment-alert variant={variant} is-dismissible="true">
+                                    <h2>{alertMessage}</h2>
+                                </c-hdt-appointment-alert>
+                            </template>
+                            <div class="slds-welcome-mat">
+                                <div class="slds-welcome-mat__content slds-grid">
+                                    <ul class="slds-welcome-mat__tiles slds-size_1-of-1">
+                                        <template iterator:it={stmtValue} >
+                                            <template if:true={it.value.visible}>
+                                                <template if:true={it.value.enable}>
+                                                    <li data-id={it.value.name} id={it.value.name} data-label={it.value.label} key={it.value.name} class="slds-welcome-mat__tile  slds-m-left_small" >
+                                                        <a href="#" class="slds-box slds-box_link slds-media" name={it.value.name} onclick={clickOperation}>
+                                                            <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                                                <div class="slds-welcome-mat__tile-figure">
+                                                                <div class="slds-welcome-mat__tile-icon-container">
+                                                                    <span class="slds-icon_container">
+                                                                        <lightning-icon icon-name={it.value.iconName} alternative-text={it.value.label} title={it.value.label} ></lightning-icon>
+                                                                    </span>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <div class="slds-welcome-mat__tile-body">
+                                                                <h3 class="slds-welcome-mat__tile-title">{it.value.label}</h3>
+                                                                <p class="slds-welcome-mat__tile-description">{it.value.desc}</p>
+                                                                </div>
+                                                            </div>
+                                                        </a>
+                                                    </li>
+                                                </template>
+                                                <template if:false={it.value.enable}>
+                                                    <li data-id={it.value.name} data-label={it.value.label} key={it.value.name} class="slds-welcome-mat__tile slds-welcome-mat__tile_complete  slds-m-left_small">
+                                                        <div class="slds-box slds-media">
+                                                            <div class="slds-media__figure slds-media__figure_fixed-width slds-align_absolute-center">
+                                                                <div class="slds-welcome-mat__tile-figure">
+                                                                <div class="slds-welcome-mat__tile-icon-container">
+                                                                    <span class="slds-icon_container">
+                                                                        <lightning-icon icon-name={it.value.iconName} alternative-text={it.value.label} title={it.value.label} ></lightning-icon>
+                                                                    </span>
+                                                                </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="slds-media__body">
+                                                                <div class="slds-welcome-mat__tile-body">
+                                                                <h3 class="slds-welcome-mat__tile-title">{it.value.label}</h3>
+                                                                <p class="slds-welcome-mat__tile-description">{it.value.desc}</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </template>
+                                            </template>
+                                        </template>
+                                    </ul>
+                                </div>
+                            </div>-
+                        </template>
+                    </div>
+                </lightning-quick-action-panel>
+            </template>
+    </template>
+</template>

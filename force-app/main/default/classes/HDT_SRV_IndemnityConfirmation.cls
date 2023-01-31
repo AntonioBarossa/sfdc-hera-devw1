@@ -94,7 +94,7 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
     private static Boolean calculateIndemnityNotConfirmed(Case targetCase, List<Case> checkingCases)
     {
         Boolean result = false;
-        if(String.isBlanK(targetCase.FirstLevelComplaintClassification__c) || targetCase.FirstLevelComplaintClassification__c.equalsIgnoreCase('Richiesta di Informazioni'))
+        if(String.isBlanK(targetCase.FirstLevelComplaintClassification__c) || ( targetCase.FirstLevelComplaintClassification__c.equalsIgnoreCase('Richiesta di Informazioni') && !targetCase.Commodity__c.equalsIgnoreCase('Acqua') ) )
         {
             return true;
         }

@@ -53,6 +53,27 @@
 
     },
 
+    getCustomerCode : function(component) {
+
+        var recId = component.get('v.recordId');
+        console.log('PUNTO HELPER -> recordId --> '+recId);
+
+        var actCustomerCode = component.get("c.getAccountCustomerCode");
+        actCustomerCode.setParams({"id" : recId});
+
+        actCustomerCode.setCallback(this, function(response){
+            var state = response.getState();
+            if(state == 'SUCCESS') {
+                var retrievedCustomerCode = response.getReturnValue();
+                component.set('v.customerCode', retrievedCustomerCode);
+            } else {
+                console.log('ERROR --> '+JSON.stringify(response.getError()));
+            }
+        });
+        $A.enqueueAction(actCustomerCode);
+
+    },
+
     redirectToSObjectSubtab : function(component,objectId,objectApiname){
         var workspaceAPI = component.find("workspace");
         console.log("Begin Redirect");

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ChannelOfPayment__c</fullName>
-    <description>Canale di pagamento </description>
+    <description>Canale di pagamento</description>
     <externalId>false</externalId>
     <label>Canale di pagamento</label>
     <required>false</required>
@@ -72,6 +72,21 @@
                 <fullName>Rate</fullName>
                 <default>false</default>
                 <label>Rate</label>
+            </value>
+            <value>
+                <fullName>F24</fullName>
+                <default>false</default>
+                <label>F24</label>
+            </value>
+            <value>
+                <fullName>PagaPA</fullName>
+                <default>false</default>
+                <label>PagaPA</label>
+            </value>
+            <value>
+                <fullName>Bonifico Tesoreria ente creditore</fullName>
+                <default>false</default>
+                <label>Bonifico Tesoreria ente creditore</label>
             </value>
         </valueSetDefinition>
     </valueSet>

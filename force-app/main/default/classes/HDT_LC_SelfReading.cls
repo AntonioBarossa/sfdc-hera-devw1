@@ -79,7 +79,7 @@ public inherited sharing class HDT_LC_SelfReading {
 
     @AuraEnabled
     public static string getRecordTypeId(String commodity){
-        String recordTypeName = commodity == 'Gas' ? 'HDT_RT_LetturaGas' : 'HDT_RT_LetturaEle';
+        String recordTypeName = commodity == 'Gas' ? 'HDT_RT_LetturaGas' : ( commodity == 'Acqua' ? 'HDT_RT_LetturaAcqua':'HDT_RT_LetturaEle');
         RecordType rtId = [SELECT Id FROM RecordType WHERE DeveloperName = :recordTypeName WITH SECURITY_ENFORCED];
         return rtId.Id;
     }

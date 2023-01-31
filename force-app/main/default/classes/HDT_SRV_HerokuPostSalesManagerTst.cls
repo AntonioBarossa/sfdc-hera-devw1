@@ -1,6 +1,27 @@
 @isTest
 public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
 
+    public static Map<String,Map<String,String>> genericResponseMap =
+    new Map<String,Map<String,String>>
+    {
+        'Callout:Prova' => 
+        new Map<String,String>{ 'body' => '{"responses":[{"header":{"requestId":"","requestTimestamp":null,"requestType":"CREA_RIC","fields":'
+        +'[{"fieldType": "TEXT","name": "PROCESS_CATEGORY","value": "postsales"}]'
+        +'},"code":null,"description":null,'
+        +'"objects":[{"fields":[{"fieldType":"TEXT","name":"result","value":"OK"},'
+        +'{"fieldType":"TEXT","name":"requestId","value":"00002349"},'
+        +'{"fieldType":"TEXT","name":"errorMessage","value":""},'
+        +'{"fieldType":"TEXT","name":"rifRich","value":""},'
+        +'{"fieldType":"TEXT","name":"COD_PRAT_DISTR","value":"345345"},'
+        +'{"fieldType":"TEXT","name":"DT_INVIO_DL","value":"'+ Date.today() +'"},'
+        +'{"fieldType":"TEXT","name":"RECORD_ID","value": xxxxx},'
+        +'{"fieldType":"TEXT","name":"FASE","value":""},'
+        +'{"fieldType":"TEXT","name":"comunicationChannel","value":"ATOA"}],'
+        +'"id":null,"name":null,"objectType":null,"objects":null}]}]}',
+        'statuscode' => '200'
+        }
+    };
+
     @TestSetup
     static void setup(){
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
@@ -815,5 +836,113 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         
     }
 
+    @isTest
+    static void handleMrrFieldsTestAfundi()
+    {
+        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
 
+        //Mock
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
+
+        Test.startTest();
+
+        testCase.Phase__c = 'Da Inviare';
+        testCase.Type = 'Modifica Unita Immobiliari Componenti';
+        testCase.RateCategory__c = 'AITBNDOME0';
+        update testCase;
+        
+        Test.stopTest();
+
+        //Assertions
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
+        
+    }
+
+    @isTest
+    static void handleMrrFieldsTestAfunda()
+    {
+        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+
+        //Mock
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
+
+        Test.startTest();
+
+        testCase.Phase__c = 'Da Inviare';
+        testCase.Type = 'Modifica Unita Immobiliari Componenti';
+        testCase.RateCategory__c = 'ACAGRICO00';
+        update testCase;
+
+        Test.stopTest();
+
+        //Assertions
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
+        
+    }
+
+    @isTest
+    static void handleMrrFieldsTestAfundc()
+    {
+        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+
+        //Mock
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
+
+        Test.startTest();
+        testCase.Phase__c = 'Da Inviare';
+        testCase.Type = 'Modifica Unita Immobiliari Componenti';
+        testCase.RateCategory__c = 'ACARTCOMM0';
+        update testCase;
+        Test.stopTest();
+
+        //Assertions
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
+        
+    }
+
+    @isTest
+    static void handleMrrFieldsTestAfundz()
+    {
+        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+
+        //Mock
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
+
+        Test.startTest();
+        testCase.Phase__c = 'Da Inviare';
+        testCase.Type = 'Modifica Unita Immobiliari Componenti';
+        testCase.RateCategory__c = 'ACAGRIZOO0';
+        update testCase;
+        Test.stopTest();
+
+        //Assertions
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
+        
+    }
+
+    @isTest
+    static void handleMrrFieldsTestAfund()
+    {
+        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+
+        //Mock
+        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
+
+        Test.startTest();
+        testCase.Phase__c = 'Da Inviare';
+        testCase.Type = 'Modifica Unita Immobiliari Componenti';
+        testCase.RateCategory__c = 'ACAUGENER0';
+        update testCase;
+        Test.stopTest();
+
+        //Assertions
+        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
+        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
+        
+    }
+    
 }

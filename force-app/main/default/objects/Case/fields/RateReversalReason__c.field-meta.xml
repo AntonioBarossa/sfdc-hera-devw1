@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>RateReversalReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivazione storno rate</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Piano Rate errato</fullName>
+                <default>false</default>
+                <label>Piano Rate errato</label>
+            </value>
+            <value>
+                <fullName>Plico Rate non ricevute</fullName>
+                <default>false</default>
+                <label>Plico Rate non ricevute</label>
+            </value>
+            <value>
+                <fullName>Rinuncia piano rate</fullName>
+                <default>false</default>
+                <label>Rinuncia piano rate</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

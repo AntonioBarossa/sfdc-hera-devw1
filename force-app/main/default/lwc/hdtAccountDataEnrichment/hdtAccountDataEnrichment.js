@@ -27,32 +27,33 @@ export default class HdtAccountDataEnrichment extends LightningElement {
 
     @api recordId;
     @api type;
+    @api relatedToId;
 
     get showSocialBonusButton(){
         return this.type === 'socialBonus';
     }
 
     connectedCallback(){
-        console.log('# type: ' + this.type);
+        console.log('--------------');
+        console.log('### hdtAccountDataEnrichment ###');
+        console.log('>>> recordId: ' + this.recordId);
+        console.log('>>> type: ' + this.type);
+        console.log('>>> relatedToId: ' + this.relatedToId);
+        console.log('--------------');
         this.getConfiguration();
-        this.backendCall();
+        
     }
 
     getConfiguration(){
         console.log('# getConfiguration #');
     
-        getTableConfig({recordId: this.recordId, type: this.type})
+        getTableConfig({recordId: this.recordId, relatedToId: this.relatedToId, type: this.type})
 
         .then(result => {
 
             console.log('# getTableConfig #');
  
-            if(this.type != 'cmor'){
-                this.tableTitle = result.tables[0].tableTitle;
-                this.iconName = result.tables[0].iconName;
-                this.columns = result.tables[0].columns;
-                this.height1 = 'singleTable';
-            } else {
+            if(this.type == 'cmor'){
                 this.showSecondTable = true;
                 this.tableTitle = result.tables[0].tableTitle;
                 this.iconName = result.tables[0].iconName;
@@ -63,8 +64,19 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 this.iconName2 = result.tables[1].iconName;
                 this.columns2 = result.tables[1].columns;
                 this.height2 = 'bottomTable';
+            } else if(this.type == 'socialBonus') {
+                this.tableTitle = result.tables[0].tableTitle;
+                this.iconName = result.tables[0].iconName;
+                this.columns = result.tables[0].columns;
+                this.height1 = 'topTable';
+            } else {
+                this.tableTitle = result.tables[0].tableTitle;
+                this.iconName = result.tables[0].iconName;
+                this.columns = result.tables[0].columns;
+                this.height1 = 'singleTable';
             } 
-
+            
+            this.backendCall();
 
         }).catch(error => {
             console.log('# error -> ' + error);
@@ -79,7 +91,7 @@ export default class HdtAccountDataEnrichment extends LightningElement {
     backendCall(){
         console.log('# Get data from SAP #');
     
-        callSap({recordId: this.recordId, type: this.type}).then(result => {
+        callSap({recordId: this.recordId, relatedToId: this.relatedToId, type: this.type}).then(result => {
             console.log('# SAP result #');
             var obj = JSON.parse(result);
             console.log('# success: ' + obj.status);
@@ -88,27 +100,36 @@ export default class HdtAccountDataEnrichment extends LightningElement {
                 console.log('# SAP result failed #');
                 this.showError = true;
                 console.log('>>> ' + obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message);
-                this.showErrorMessage = obj.errorDetails[0].message;
+                this.showErrorMessage = obj.errorDetails[0].code + ' - ' + obj.errorDetails[0].message;
                 this.showSpinner = false;            
             } else {
-                if(this.type != 'cmor'){
-                    this.data = obj.data.posizioni;
-                } else {
-                    this.showSecondTable = true;
-                    this.data = obj.data.venditoreEntrante;
-                    this.data2 = obj.data.venditoreUscente;
+                switch (this.type) {
+                    case 'cmor':
+                        this.showSecondTable = true;
+                        this.data = obj.data.venditoreEntrante;
+                        this.data2 = obj.data.venditoreUscente;
+                        break;
+
+                    case 'bonusSocialeIdrico':
+                        this.data = obj.data;
+                        break;
+                    case 'gaaView':
+                        this.data = obj.data;
+                        break;
+                    case 'odlAdsView':
+                        this.data = obj.data.posizioni;
+                        break;
+                    default:
+                        this.data = obj.data.posizioni;
                 }
+
             }
 
             this.showSpinner = false;
             
         }).catch(error => {
-            //var obj = JSON.parse(error.body.message);
+            console.log('### error: ' + JSON.parse(error));
             this.showError = true;
-            //var s = '';
-            //obj.errorDetails.forEach(element => {
-            //    s += element.code + ': ' + element.message;
-            //});
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;
         });

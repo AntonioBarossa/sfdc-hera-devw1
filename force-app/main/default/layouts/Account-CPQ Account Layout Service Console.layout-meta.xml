@@ -183,14 +183,14 @@
             <sortOrder>5</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Account.raiFee</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Account.HDT_PrintAccount</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.raiFee</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Account.cmor</actionName>
@@ -206,6 +206,11 @@
             <actionName>ChangeOwnerOne</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>10</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Account.HDT_OdlAds</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>11</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -395,6 +400,7 @@
         <relatedList>SBQQ__Subscription__c.SBQQ__Account__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.CREATED_DATE_DATE_ONLY</fields>
         <fields>Cluster__c</fields>
@@ -547,6 +553,26 @@
         <sortField>DATA_INVIO__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
+    <relatedLists>
+        <fields>Cas_CaseNumber__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceCase__x.Cas_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceAsset__x.AccountIdOnline__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Con_Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceContract__x.Con_AccountId__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>Name__c</fields>
+        <fields>DisplayUrl</fields>
+        <relatedList>SalesforceWrtsActivity__x.AccountC__c</relatedList>
+    </relatedLists>
     <relatedObjects>ParentId</relatedObjects>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
@@ -554,7 +580,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002MyGI</masterLabel>
+        <masterLabel>00h1X0000027QgN</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

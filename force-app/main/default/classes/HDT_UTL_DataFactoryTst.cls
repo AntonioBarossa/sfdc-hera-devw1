@@ -117,24 +117,25 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);  //String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
 			Account acc=new Account();
 
 			acc.RecordTypeId=rt;
-			acc.Name='test account'+i;
+			acc.Name='test account bsn'+i;
 			acc.CompanyOwner__c=companyOwner;
 			acc.CustomerMarking__c=customerMarking;
 			acc.Category__C=category;
 			acc.BillingCityCode__c='Roma';
 			acc.BillingStreetName__c='via roma';
 			acc.BillingStreetNumber__c='55';
-			acc.LastName__c='test account'+i;
+			acc.LastName__c='test account bsn'+i;
 			acc.BillingIsAddressVerified__c=true;
+			acc.IsArchived__c = true;
 			
 			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
 				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
@@ -173,9 +174,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -262,9 +263,9 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
+			//Decimal numCustomerCode = Decimal.valueOf('1003616210');
+			//Decimal result = numCustomerCode + i;
+			String stringResult = '1'+generateRandomChars(9,true,false, false);//String.valueOf(result);
 			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
 			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
 
@@ -357,6 +358,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			ord.SignedDate__c=Date.today();
 			ord.SignatureMethod__c='Vocal Order';
 			ord.DocSendingMethod__c='E-mail';
+			ord.IsArchived__c = true;
 
 			orderList.add(ord);
 		}
@@ -649,6 +651,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testContact.Company__c='HC+HCM+EENE';
 			testContact.CompanyOwner__c='HERA COMM';
 			testContact.AccountId=accId;
+			testContact.IsArchived__c=true;
 
 			contactList.add(testContact);
 		}
@@ -684,6 +687,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testContract.AccountId=accId;
 			//@frpanico 06/08 Added contract code
 			testContract.SAPContractCode__c='301191347'+i;
+			testContract.IsArchived__c = true;
 
 			contractList.add(testContract);
 		}
@@ -703,7 +707,30 @@ public with sharing class HDT_UTL_DataFactoryTst{
 	public static List<Case> createCase(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 		return createCaseMorosita(amount, doInsert, accId, contactId, servPointId, contractId, orderId);
 	}
-	
+
+	public static List<Case> createCaseAnomaloIdricoBulk(Integer amount, Boolean doInsert, Id accId, Id servPointId, Id contractId,id billingProfileId,String signMode, String sendMode){
+		List<Case> caseList=new List<Case>();
+		Id consumoAnomaloRTId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConsumoAnomaloIdrico').getRecordTypeId();
+		for (Integer i=0; i<amount; i++){
+			caseList.add(new Case(
+					AccountId=accId,
+					ServicePoint__c=servPointId,
+					Contract__c=contractId,
+					BillingProfile__c=billingProfileId,
+					Status='In Lavorazione',
+					Phase__c='in attesa processo doc massivo',
+					Type='Consumo Anomalo Idrico',
+					Cluster__c='Segnalazioni',
+					RecordTypeId=consumoAnomaloRTId,
+					SignMode__c=signMode,
+					SendMode__c=sendMode
+			));
+		}
+		if(doInsert){
+			insert caseList;
+		}
+		return caseList;
+	}
 	public static List<Case> createCaseMorosita(Integer amount, Boolean doInsert, Id accId, Id contactId, Id servPointId, Id contractId, Id orderId){
 		
 		List<Case> caseList=new List<Case>();
@@ -727,6 +754,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			testCase.Cluster__c='Pagamenti';
 			testCase.RecordTypeId=rtId;
 			testCase.CompanyOwner__c='HERA COMM';
+			testCase.IsArchived__c = true;
 
 			caseList.add(testCase);
 		}
@@ -969,6 +997,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			orderItem.PricebookEntryId=pricebookEntryId;
 			orderItem.UnitPrice=0;
 			orderItem.Quantity=1;
+			orderItem.IsArchived__c = true;
 
 			orderItemsList.add(orderItem);
 		}
@@ -1935,6 +1964,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			wrts_prcgvr__Activity__c actCustom=new wrts_prcgvr__Activity__c();
 
 			actCustom.Account__c=accId;
+			actCustom.IsArchived__c=true;
 
 			activityCustomList.add(actCustom);
 		}
@@ -2182,7 +2212,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			ContactPointPhone cpp = new ContactPointPhone(
             ParentId = individualId,
-            TelephoneNumber = '982591380'
+            TelephoneNumber = '982591380',
+			IsArchived__c = true
         );
 
 			cppList.add(cpp);
@@ -2204,7 +2235,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 			ContactPointEmail cpe = new ContactPointEmail(
             ParentId = individualId,
-            EmailAddress = 'sales@force.com'
+            EmailAddress = 'sales@force.com',
+			IsArchived__c = true
         );
 
 			cpeList.add(cpe);
@@ -2744,7 +2776,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 				MessageID__c='12321421',
 				Mobile__c='234234234',
 				MobileMessageTrackingID__c='12343143',
-				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0)
+				ModifiedDateTime__c=Datetime.newInstance(2021, 11, 11, 11, 30, 0),
+				IsArchived__c = true
 			);
 			
 			smsTrackList.add(smsTrack);
@@ -2767,7 +2800,8 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			et4ae5__IndividualEmailResult__c ier = new et4ae5__IndividualEmailResult__c(
 				Name = 'tester',
 				EmailAddress__c = 'my@email.com',
-				et4ae5__TriggeredSendDefinition__c = triggeredSendId
+				et4ae5__TriggeredSendDefinition__c = triggeredSendId,
+				IsArchived__c = true
 			);
 
 			indEmailRes.add(ier);
@@ -3490,5 +3524,236 @@ public with sharing class HDT_UTL_DataFactoryTst{
 			insert eligibCriteriaList;
 		}
 		return eligibCriteriaList;
+	}
+
+	//@author marco.arci@webresults.it 06/09/2022
+	public static List<CityTechnicalData__c> createCityTechnicalData(Integer numberRecords, Boolean doInsert, String city, Date startDate, Date endDate, Date endCutOver, String errorMessage){
+		List<CityTechnicalData__c> cityTechnicalData = new List<CityTechnicalData__c>();
+
+		for(Integer i=0; i<numberRecords; i++){
+			CityTechnicalData__c singleData = new CityTechnicalData__c();
+			singleData.TARIManagingStartDate__c = startDate;
+			singleData.TARIManagingEndDate__c = endDate;
+			singleData.CutOverEndDate__c = endCutOver;
+			singleData.CadastralCity__c = city;
+			singleData.CityNotManagedAlert__c = errorMessage;
+			cityTechnicalData.add(singleData);
+		}
+
+		if(doInsert){
+			insert cityTechnicalData;
+		}
+		return cityTechnicalData;
+	}
+
+
+	/**
+	* @author Cristiano Salvati (c.salvati@key2.it)
+	* @date 20/10/2022
+	* @description HDT_UTL_DataFactoryTst – the method generates a random string, which can be numeric/letters/alphanumeric
+	* @param1 len – length of the output string
+	* @param2 isNumeric – determines whether the string will be numeric
+	* @param3 isText – determines whether the string will be only letters
+	* @param4 isAlphaNumeric – determines whether the string will be alphanumeric
+	* @return returns the random string generated
+	*/
+	public static String generateRandomChars(Integer len,Boolean isNumeric,Boolean isText, Boolean isAlphaNumeric) {
+        String numbers = '123456789';
+		String letters = 'ABCDEFGHILMOPQRSTUVZWXYabcdefghilmopqrstuvzwxy';
+		String alphaNumeric = numbers+letters;
+		String randStr='';
+		final String CHARS;
+		if(isNumeric){
+			CHARS=numbers;
+		}
+		if(isText){
+			CHARS=alphaNumeric;
+		}
+		if(isAlphaNumeric){
+			CHARS=alphaNumeric;
+		} 
+        while (randStr.length() < len) {
+            Integer idx = Math.mod(Math.abs(Crypto.getRandomInteger()), chars.length());
+            randStr += CHARS.substring(idx, idx+1);
+        }
+        return randStr;
+    }
+
+	// Create a list of Interaction__c
+	public static List<Interaction__c> createInteraction (List<Contact> contacts, Boolean doInsert) {
+
+		List<Interaction__c> interactions = new List<Interaction__c>();
+
+		for (Contact con : contacts) {
+			interactions.add( new Interaction__c (
+				Account__c = con.AccountId, 
+				Contact__c = con.Id)
+			);
+		}
+
+		if (doInsert) {
+			insert interactions;
+		}
+
+		return interactions;
+	}
+
+	// Create a list of PushTracking__c
+	public static List<PushTracking__c> createPushTracking(Integer amount, Boolean doInsert, Id contactId) {
+
+		List<PushTracking__c> pushTrackings = new List<PushTracking__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			pushTrackings.add(new PushTracking__c (
+				IsArchived__c = true,
+				ContactID__c = contactId)
+			);
+		}
+
+		if (doInsert) {
+			insert pushTrackings;
+		}
+
+		return pushTrackings;
+	}
+	
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailMessage instances/records
+	* @param1 - amount EmailMessage 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailMessage just created
+    */
+	public static List<EmailMessage> createEmailMessage(Integer amount, Boolean doInsert){
+	
+		List<EmailMessage> emailMessageList = new List<EmailMessage>();
+
+		for(Integer i = 0; i<amount; i++){
+			EmailMessage temp = new EmailMessage();
+			temp.status = '3';
+			temp.fromAddress = 'test' + i + '@test.com';
+			temp.fromName = 'test' + i;
+			temp.toAddress = 'toTest' + i + '@test.com';
+			temp.Subject = 'Hello ' + temp.ToAddress;
+			temp.HtmlBody = '<h1>How are you?</h1><br><br><h1>'+ temp.FromName +'</h1>';
+			
+			emailMessageList.add(temp);
+		}
+
+		if (doInsert){
+
+			insert emailMessageList;
+		}
+
+		return emailMessageList;
+
+	}
+
+	/**​
+    * @author Elvin Iluca
+    * @date 20/10/2022
+    * @description HDT_UTL_DataFactoryTst – Utility method to create/insert N EmailTemplate instances/records
+	* @param1 - amount EmailTemplate 
+	* @param2 - boolean to choose if insert records or not
+	* @return - the list of EmailTemplate just created
+    */
+
+	public static List<EmailTemplate> createEmailTemplate(Integer amount, Boolean doInsert){
+		List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+		System.runAs (new User(Id = UserInfo.getUserId()) ){
+
+			for(Integer i = 0; i<amount; i++){
+				EmailTemplate temp = new EmailTemplate();
+				temp.isActive = true;
+				temp.Name = 'name'+ i;
+				temp.DeveloperName = 'unique_name_addSomethingSpecialHere' + i;
+				temp.TemplateType = 'text';
+				temp.FolderId = UserInfo.getUserId();
+				
+				emailTemplateList.add(temp);
+			}
+
+			if (doInsert){
+
+				insert emailTemplateList;
+			}
+		}
+
+		return emailTemplateList;
+
+	}
+
+	public static List<SlaAdministration__c> createSlaAdministration(Integer amount, Boolean doInsert, Map<String,Object> fieldsValue){
+		List<SlaAdministration__c> slaAdminRules= new List<SlaAdministration__c>();
+		for(Integer i = 0; i<amount; i++){
+			SObject slaRule=new SlaAdministration__c();
+			for(String field:fieldsValue.keySet()){
+				slaRule.put(field,fieldsValue.get(field));
+			}
+			slaRule.put('StartDate__c',Date.today());
+			slaRule.put('EndDate__c',Date.today().addDays(3));
+			slaAdminRules.add((SlaAdministration__c)slaRule);
+		}
+		if (doInsert){
+			insert slaAdminRules;
+		}
+		return slaAdminRules;
+
+	}
+
+	public static List<SlaTracking__c> createSlaTracking(Integer amount,Boolean doInsert,Id pClickActivity, Id slaAdmin, Id caseId, Id orderId, Integer slaValue, String status){
+		List<SlaTracking__c> slaList=new List<SlaTracking__c>();
+		for(Integer i = 0; i<amount; i++){
+			SlaTracking__c slaTrack =new SlaTracking__c(Activity__c=pClickActivity,SlaAdministration__c=slaAdmin,SlaValue__c=slaValue,Status__c=status);
+			if(String.isNotBlank(caseId)){
+				slaTrack.Case__c=caseId;
+			}
+			if(String.isNotBlank(orderId)){
+				slaTrack.Order__c=orderId;
+			}
+			slaList.add(slaTrack);
+		}
+		if(doInsert){
+			insert slaList;
+		}
+		return slaList;
+
+	}
+
+	public static List<LandRegistry__c> createLandRegistries(List<String> legalCities, Id recordtypeId, ServicePoint__c servicePoint, Boolean doInsert) {
+
+		List<LandRegistry__c> landRegistries = new List<LandRegistry__c>();
+
+		for(String city : legalCities) {
+
+			landRegistries.add(new LandRegistry__c(LegalCity__c = city, RecordTypeId = recordtypeId, ServicePoint__c = servicePoint.Id));
+
+		}
+
+		if(doInsert) {
+
+			insert landRegistries;
+			
+		}
+
+		return landRegistries;
+
+	}
+
+	public static List<FreeWithdraw__c> createFreeWithdraws(Id servicepointId, Date lastWithdrawDate, Integer amount, Boolean doInsert) {
+
+		List<FreeWithdraw__c> results = new List<FreeWithdraw__c>();
+
+		for(Integer i = 0; i < amount; i++){
+			results.add(new FreeWithdraw__c(ServicePoint__c = servicepointId, LastFreeWithdrawDate__c = lastWithdrawDate));
+		}
+
+		if(doInsert){
+			insert results;
+		}
+
+		return results;
+		
 	}
 }

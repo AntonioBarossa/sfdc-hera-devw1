@@ -20,8 +20,8 @@ public inherited sharing class HDT_QR_SelfReadings {
         List<String> errorTypes = new List<String>();
         errorTypes.add('Esito KO pre-MDM');
         errorTypes.add('Esito KO da SAP');
-        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, ControllingCommodity__c, IsActive__c,ControllingValue__c,ActivityType__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes AND ProcessValue__c = 'Autolettura da cliente' AND IsActive__c = true  WITH SECURITY_ENFORCED]);
-        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, ControllingCommodity__c, IsActive__c,ControllingValue__c,ActivityType__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes AND ProcessValue__c = 'Autolettura da cliente'  AND IsActive__c = true  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> firstQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, ControllingCommodity__c, IsActive__c, ControllingValue__c, ActivityType__c, DiscardReason__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND DiscardCode__c IN :errorCodes AND ProcessValue__c = 'Autolettura da cliente' AND IsActive__c = true AND RecordType.DeveloperName = 'HDT_RT_Automatic'  WITH SECURITY_ENFORCED]);
+        Map<Id, DiscardAnnullmentRule__c> secondQuery = new Map<Id, DiscardAnnullmentRule__c>([SELECT Id, DiscardCode__c, ControllingCommodity__c, IsActive__c, ControllingValue__c, ActivityType__c, DiscardReason__c FROM DiscardAnnullmentRule__c WHERE ActivityType__c IN :errorTypes AND ControllingValue__c IN :errorCodes AND ProcessValue__c = 'Autolettura da cliente'  AND IsActive__c = true AND RecordType.DeveloperName = 'HDT_RT_Automatic'  WITH SECURITY_ENFORCED]);
         firstQuery.putAll(secondQuery);
 
         System.debug(LoggingLevel.DEBUG, 'firstQuery.values() size:' + firstQuery.values().size());
@@ -35,7 +35,7 @@ public inherited sharing class HDT_QR_SelfReadings {
 
         if(objRes.isAccessible()) {
             
-            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r'; // TODO WAVE 2: adeguare per altre commodity.
+            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : (commodity.equals('Acqua')?'AcquaReadings__r':'EleReadings__r');
             String queryTemplate = 'SELECT Id, (Select Id from {0} LIMIT 1) FROM {1} WHERE Id = :objectId';
             List<String> queryParameters = new List<String> { relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);
@@ -65,7 +65,7 @@ public inherited sharing class HDT_QR_SelfReadings {
         
         if(objRes.isAccessible()) {
             
-            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : 'EleReadings__r';
+            String relationshipName = commodity.equals('Gas') ? 'GasReadings__r' : (commodity.equals('Acqua')?'AcquaReadings__r':'EleReadings__r');
             String queryTemplate = 'SELECT Id, (Select {0} from {1} LIMIT 1) FROM {2} WHERE Id = :objectId';
             List<String> queryParameters = new List<String> { readingFields, relationshipName, objectName };
             String query = String.format(queryTemplate, queryParameters);
@@ -88,6 +88,7 @@ public inherited sharing class HDT_QR_SelfReadings {
             Id,
             AccountId,
             ServicePoint__r.Distributor__r.Code__c,
+            ServicePoint__r.CommoditySector__c,
             ServicePoint__r.ServicePointCode__c,
             ServicePoint__c,
             Status

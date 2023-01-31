@@ -61,8 +61,14 @@ public inherited sharing class HDT_SRV_ServicePoint {
     public ServicePoint__c createRecord(ServicePoint__c servicePoint) {
 
         checkReadAccess('ServicePointCode__c');
-        List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordByCode(servicePoint.ServicePointCode__c, 'ServicePointCode__c');
-
+        checkReadAccess('CommoditySector__c');
+        String commodity = servicePoint.CommoditySector__c != null? servicePoint.CommoditySector__c:'';
+        List<ServicePoint__c> existingServicePoint = new List<ServicePoint__c>();
+        if(String.isNotBlank(commodity) && (commodity.equalsIgnoreCase('Acqua') || commodity.equalsIgnoreCase('Ambiente'))){
+            existingServicePoint = new List<ServicePoint__c>();
+        }else{
+            existingServicePoint = servicePointQuery.getRecordByCode(servicePoint.ServicePointCode__c, 'ServicePointCode__c');
+        }
         if (!existingServicePoint.isEmpty() && (servicePoint.PlugPresence__c == null ||(servicePoint.PlugPresence__c != null && servicePoint.PlugPresence__c == 'Si'))) {
             throw new AuraHandledException('Codice POD/PDR duplicato');
         } else {
@@ -71,7 +77,10 @@ public inherited sharing class HDT_SRV_ServicePoint {
             //     servicePoint.ServicePointCode__c = 'IT001E56897542';
             // }
             List<String> fields = helperMethods.getObjAttrList(servicePoint);
+            fields.add('MarketOrigin__c');
             checkCreateAccess(String.join(fields, ','));
+
+            servicePoint.MarketOrigin__c = servicePoint.MarketOrigin__c == null && (servicePoint.CommoditySector__c == 'Acqua' || servicePoint.CommoditySector__c == 'Ambiente')? 'Regolamentato':'Libero';
 
             HDT_UTL_DatabaseService.insertSObject(servicePoint);
             return servicePoint;

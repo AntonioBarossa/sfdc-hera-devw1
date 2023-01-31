@@ -18,6 +18,8 @@
             
             <property name="contractNumber" type="String" label="Numero Contratto" description="Numero Contratto per cui richiedere le letture" role="inputOnly"/>
             
+            <property name="contractService" type="String" label="Commodity" description="Commodity Contratto" role="inputOnly"/>
+            
             <property name="nextLabel" type="String" label="Next Label" description="Label next Button" role="inputOnly" default="Conferma Pratica"/>
             
             <property name="nextVariant" type="String" label="Next Variant" description="Variant del next Button" role="inputOnly" default="brand"/>

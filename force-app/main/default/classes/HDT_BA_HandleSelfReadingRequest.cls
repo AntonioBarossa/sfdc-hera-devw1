@@ -120,6 +120,9 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
                         System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage());
                         System.debug(LoggingLevel.DEBUG, 'Stacktrace: ' + e.getStackTraceString());
                     }
+                }
+                if(dar != null) {
+                    caseToUpdate.abnormalReading__c = dar.DiscardReason__c;
                 } 
                 Boolean isAutomaticDiscard = (dar != null && dar.IsActive__c && dar.ActivityType__c.equalsIgnoreCase(caseToUpdate.Phase__c) && (String.isBlank(dar.ControllingCommodity__c)  || dar.ControllingCommodity__c.equalsIgnoreCase(mapCaseCommodity.get(caseToUpdate.Id))));
                 

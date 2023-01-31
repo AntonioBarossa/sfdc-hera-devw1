@@ -1,0 +1,813 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_Ambiente</fullName>
+    <active>true</active>
+    <description>Punto di fornitura Ambiente</description>
+    <label>Punto Ambiente</label>
+    <picklistValues>
+        <picklist>AuthorizedNotToConfer__c</picklist>
+        <values>
+            <fullName>0-Non autorizzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1-Autorizzato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CommoditySector__c</picklist>
+        <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Company__c</picklist>
+        <values>
+            <fullName>AAA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EB</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EENE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC%2BHCM%2BEENE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HSPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ContractualExpensesCharged__c</picklist>
+        <values>
+            <fullName>Nessun addebito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nessuno sconto</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Disconnectable__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DisconnectibilityType__c</picklist>
+        <values>
+            <fullName>01- App%2E medico terapeutiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02- Pubblica utilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rilevanza continuità serv%2E GAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Elettromedicale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Non Disalimentab%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - PESSE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sempre ap%2E - Pubblica utilita</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ImplantTypeTemp__c</picklist>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ImplantType__c</picklist>
+        <values>
+            <fullName>1201-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1202-Non domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>JointBottomAdhesion__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MarketOrigin__c</picklist>
+        <values>
+            <fullName>Default</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Libero</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Regolamentato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MeterClass__c</picklist>
+        <values>
+            <fullName>100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>100 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>230 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>400 Volt</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Biorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DIR Orario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1%2C6 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G10 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G100 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1000 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G16 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G160 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1600 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2%2C5 pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G25 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G250G Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G40 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G400 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4000 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pareti def%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G65 Turbina</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Pistoni rot%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G650 Turbina</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MeterStatus__c</picklist>
+        <values>
+            <fullName>Attivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inattivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MeterType__c</picklist>
+        <values>
+            <fullName>Monorario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multiorario</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MethodsForOutgoingPayments__c</picklist>
+        <values>
+            <fullName>Bollettino postale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RID</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>NumberOfTARIMembers__c</picklist>
+        <values>
+            <fullName>1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>6 o più</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PlugPresence__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PressureLevel__c</picklist>
+        <values>
+            <fullName>AP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MP</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PurificationInfoOnTheInvoice__c</picklist>
+        <values>
+            <fullName>Utenza non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza temporaneamente non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RequestPhase__c</picklist>
+        <values>
+            <fullName>Monofase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Trifase</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Impianto compl%2E chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Impianto compl%2E in funzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Impianto in attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Impianto parzialmente chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione avviata</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplySubtype__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplyTypeTemp__c</picklist>
+        <values>
+            <fullName>A-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B-Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Aziende di pubblica utilita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplyType_Deprecate__c</picklist>
+        <values>
+            <fullName>A-Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>B-Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>C-Aziende di pubblica utilita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D-Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplyType__c</picklist>
+        <values>
+            <fullName>Domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseCategory__c</picklist>
+        <values>
+            <fullName>001-Uso cottura cibi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>002-Prod%2Eacqua calda sanitaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>003-CotturaCibi%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>004-Uso tecnologico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>005-Uso condizionamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>006-Riscald%2E individ%2E%2Fcentral%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>007-Ris%2EInd%2BCottura%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>008-Ris%2EInd%2E%2BCottura Cibi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>009-Ris%2EInd%2E%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>010-Ris%2ECen%2E%2BCott%2E%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>011-Ris%2ECen%2E%2BAcquaCalda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>012-Uso Tecnologico %2B Riscald%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseTypeEnergy__c</picklist>
+        <values>
+            <fullName>03 Illuminazione Pubblica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cantiere %28Temp%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cottimo %28Perm%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>For temp abit%28Temp Straord 6h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Illuminaz Monum %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Imp Risalita %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ins Lum Pubb %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inst Non presid %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavim%28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavim%28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Leviga Pavimenti%28Temp Straord%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie %28Temp Straord 16h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Luminarie %28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp Straord 16h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp Straord 6h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manifest %28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non raggiungibile%28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ordinaria %28Perm%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripr cine tv%28Temp Straord 8h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripr cine tv%28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Roulottes simili %28Perm Partic%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg %28Temp Straord 6h%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg %28Temp Straord%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spett viagg %28Temp permanente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ville rifugi simili%28Perm Part%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>VoltageLevel__c</picklist>
+        <values>
+            <fullName>AAT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>AT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>WithdrawalClass__c</picklist>
+        <values>
+            <fullName>001 - 7 giorni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>002 - 6 giorni %28no dom%2E %2B fest%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>003 - 5 giorni %28no sab%2E dom%2E fest%29</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Vista GAA</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_GaaView</value>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;GAA&quot;,
+    &quot;iconName&quot;: &quot;standard:endorsement&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;contratto&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Cognome&quot;,
+        &quot;fieldName&quot;: &quot;cognome&quot;,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Nome&quot;,
+        &quot;fieldName&quot;: &quot;nome&quot;,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Data inizio validità&quot;,
+        &quot;fieldName&quot;: &quot;dataInizioValidita&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Data fine validità&quot;,
+        &quot;fieldName&quot;: &quot;dataFineValidita&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Codice fiscale&quot;,
+        &quot;fieldName&quot;: &quot;codiceFiscale&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Rilevante tari&quot;,
+        &quot;fieldName&quot;: &quot;rilevanteTari&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Numero comp&quot;,
+        &quot;fieldName&quot;: &quot;numeroComp&quot;
+      },
+      {
+        &quot;label&quot;: &quot;Data var F&quot;,
+        &quot;fieldName&quot;: &quot;dataVarF&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
+      },
+      {
+        &quot;label&quot;: &quot;Data var L&quot;,
+        &quot;fieldName&quot;: &quot;dataVarL&quot;,
+        &quot;initialWidth&quot;: 220,
+        &quot;sortable&quot;: true
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">Callout:MulesoftBasePath/data-enrichment/household</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

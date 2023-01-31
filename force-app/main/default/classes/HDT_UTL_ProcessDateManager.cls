@@ -115,12 +115,14 @@ public with sharing class HDT_UTL_ProcessDateManager {
 	public static void setEffectiveDateBusiness(List<Order> orderList){
 		for(Order order : orderList){
 			Date signDate = order.SignedDate__c;
+			Date sendDateToSii = order.DateSentToSII__c;
 			if(!order.IsActivationDeferred__c){
 				if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && order.ClientCategoryFormula__c != 'Famiglie'){
 					if (order.RecessNotice__c == null) {
 						order.RecessNotice__c = 0;
 					}
-					Date dateDecorrenzaTmp = signDate.addMonths((Integer)order.RecessNotice__c);
+					/**TK 940864C -- Per il calcolo della data decorrenza viene ora utilizzata la data invio SII invece della data firma (qualora data invio sii non nulla) */
+					Date dateDecorrenzaTmp = sendDateToSii != null ? sendDateToSii.addMonths((Integer)order.RecessNotice__c) : signDate.addMonths((Integer)order.RecessNotice__c);
 					Date effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
 					order.EffectiveDate__c = effectiveDateTmp;
 				}
@@ -239,7 +241,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 				}
 				
 				if( order.SignedDate__c != null && ( order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ) ){
-					order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					if(order.CommodityFormula__c != null && 'Acqua'.equalsIgnoreCase(order.CommodityFormula__c)){
+						order.EffectiveDate__c = System.today();
+					}else{
+						order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					}	
 				}
 
 				if(dateToFrom != null){

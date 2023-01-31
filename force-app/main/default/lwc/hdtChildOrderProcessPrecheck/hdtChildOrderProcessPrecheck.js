@@ -7,10 +7,11 @@ import getConsumptionAnnualForVas from '@salesforce/apex/HDT_LC_ChildOrderProces
 import checkContendibilita from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.checkContendibilita';
 import checkCompatibility from '@salesforce/apex/HDT_UTL_MatrixCompatibility.checkCompatibilitySales';
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
-
-
+/* Import Info Point Data Fetch */
+import getInfoPointData from '@salesforce/apex/HDT_LC_ChildOrderProcessPrecheck.getProcessDriver';
 // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
 import callServiceCreditCheck from '@salesforce/apex/HDT_WS_CreditCheck.callService';
+import ConfRuleConfimSelectBody from '@salesforce/label/c.ConfRuleConfimSelectBody';
 export default class hdtChildOrderProcessPrecheck extends LightningElement {
     @api order;
     precheck = false;
@@ -37,6 +38,40 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     causaleContendibilita = '';
     consumptionAnnualForVas;
 
+
+    /* Info Point componente variables and methods*/
+    @track infoObj = [];
+    @track columnsObj = [];
+    @track modalHeader = 'Matrice Processi';
+    @track keyField = 'driverName';
+    @track modalSpinner = true;
+    @track infoDisabled = false;
+
+    handleModalOpening(event)
+    {
+        console.log('Received Open Modal Event');
+        this.modalSpinner = true;
+        console.log('Callout Condition: ' + !this.infoObj);
+        /* Fetch process matrix driver */
+        if(this.infoObj.length <= 0)
+        {
+            console.log('@@@ Fetching Data');
+            getInfoPointData({order: this.order})
+            .then(data => 
+                {
+                    const returnObj = JSON.parse(data);
+                    this.columnsObj = returnObj['columnsObj'];
+                    this.infoObj = returnObj['infoObj'];
+                    this.modalSpinner = false;
+                })
+        }
+        else
+        {
+            console.log('@@@ Data already fetched');
+            this.modalSpinner = false;
+        }
+    }    
+
     get isNotBillable(){
         return this.order.RecordType.DeveloperName === 'HDT_RT_VAS' && !this.order.IsBillableVas__c;
     }
@@ -47,7 +82,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
     get isCreditCheckVisible(){
         return this.order.Step__c >= 2 && 
         (
-            this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' 
+            ( this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' && this.order.ProcessType__c !== 'Voltura - Subentro Scarico produttivo')
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione'
@@ -57,6 +92,10 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'
         );
+    }
+
+    get isCheckAssessmentsVisible(){
+        return ["HDT_RT_SubentroAmbiente", "HDT_RT_ModificaTariffaRimozione","HDT_RT_CambioTariffa","HDT_RT_AttivazioneAmbiente", "HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName);
     }
 
     get disabledNext(){
@@ -350,6 +389,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
                 this.incompatibilityfound(this.selectedProcessObject, data);
                 this.loaded = true;
             }else{
+                //this.infoDisabled = true;
                 this.loaded = true;
                 this.dispatchEvent(new CustomEvent('refreshorderchild'));
             }
@@ -383,7 +423,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
          console.log('# Full Condition >>> ' + (this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS' && this.order.SBQQ__Quote__c != this.order?.OrderReference__r?.SBQQ__Quote__c ) || (['HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.processType !== 'Switch in Ripristinatorio'));
         //if((this.selectedProcessObject.RecordTypeName__c === 'HDT_RT_VAS' && (this.order.OrderReferenceNumber == null || this.order.OrderReferenceNumber === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || (['HDT_RT_Voltura', 'HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.processType != 'Switch in Ripristinatorio')){
         console.log('# ProcessType >>> ' + this.selectedProcessObject.processType);
-        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio')){
+        if( (['HDT_RT_VAS','HDT_RT_Voltura','HDT_RT_VolturaConSwitch','HDT_RT_Subentro', 'HDT_RT_AttivazioneConModifica', 'HDT_RT_ConnessioneConAttivazione', 'HDT_RT_TemporaneaNuovaAtt', 'HDT_RT_SwitchIn', 'HDT_RT_Attivazione'].includes(this.selectedProcessObject.RecordTypeName__c) && ( this.selectedProcessObject.ProcessName__c != 'Switch in Ripristinatorio' || this.selectedProcessObject.ProcessName__c != 'Voltura - Subentro Scarico produttivo' ))){
             this.callCreditCheckSAP();
         }
         console.log('****13');
@@ -498,6 +538,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             this.value = this.selectedProcessObject.ProcessName__c;
             // this.checkCompatibilityProcess();
             this.pickValue = this.value;
+            //this.infoDisabled = true;
             this.startCheckContendibilita();
         }
 
@@ -637,6 +678,9 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             if(this.order.ServicePoint__r.CommoditySector__c == 'Gas'){
                 typeOfCommodity = 'GAS';
             }
+            if(this.order.ServicePoint__r.CommoditySector__c == 'Acqua'){
+                typeOfCommodity = 'ACQUA';
+            }
         }
         if(this.order.SalesCompany__c !== undefined){
             companyGroup = this.order.SalesCompany__c;
@@ -673,7 +717,7 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
             activationUser:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             account:"AccountCommercialePRM", //this.order.Owner.Username (parte prima @)
             jobTitle:this.order.ChannelTransCode__c,
-            internalCustomerId:this.order.Account.Id.slice(7,15),
+            internalCustomerId:this.order.Account.CustomerCode__c ? this.order.Account.CustomerCode__c : '1-'+this.order.Account.Id.slice(7,15),
             companyName:companyName,
             externalCustomerId:this.order.Account.FiscalCode__c? this.order.Account.FiscalCode__c : this.order.Account.VATNumber__c,
             secondaryCustomerId:secondaryCustomerId,
@@ -854,41 +898,43 @@ export default class hdtChildOrderProcessPrecheck extends LightningElement {
 
     @api
     async executeCreditCheckPoll(){
-        console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - START');
+        if(!this.isCheckAssessmentsVisible){
+            console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - START');
 
-        const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
-            setTimeout(() => {
-                cb();
-                resolve();
-            }, timeout);
-        });
+            const setAsyncTimeout = (cb, timeout = 0) => new Promise(resolve => {
+                setTimeout(() => {
+                    cb();
+                    resolve();
+                }, timeout);
+            });
 
-        let count = 1;
-        let time = 18000;
+            let count = 1;
+            let time = 18000;
 
-        console.log('executePoll - this.order.IncomingCreditCheckResult__c: ' + JSON.stringify(this.order.IncomingCreditCheckResult__c));
-        console.log('executePoll - this.order.OutgoingCreditCheckResult__c: ' + JSON.stringify(this.order.OutgoingCreditCheckResult__c));
-        console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
-        console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
+            console.log('executePoll - this.order.IncomingCreditCheckResult__c: ' + JSON.stringify(this.order.IncomingCreditCheckResult__c));
+            console.log('executePoll - this.order.OutgoingCreditCheckResult__c: ' + JSON.stringify(this.order.OutgoingCreditCheckResult__c));
+            console.log('executePoll - this.order.CreditCheckDescription__c: ' + JSON.stringify(this.order.CreditCheckDescription__c));
+            console.log('executePoll - this.creditCheckResult: ' + JSON.stringify(this.creditCheckResult));
 
-        while(count <= 8
-            && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
-            && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
-            ){
+            while(count <= 8
+                && !(this.order.IncomingCreditCheckResult__c !== undefined || this.order.OutgoingCreditCheckResult__c !== undefined || this.order.CreditCheckDescription__c !== undefined)
+                && !(this.creditCheckResult.IncomingCreditCheckResult__c !== undefined || this.creditCheckResult.OutgoingCreditCheckResult__c !== undefined || this.creditCheckResult.CreditCheckDescription__c !== undefined)
+                ){
 
-            if (count > 1) {
-                time = 3000;
+                if (count > 1) {
+                    time = 3000;
+                }
+
+                await setAsyncTimeout(() => {
+                    this.retryEsitiCreditCheck();
+                }, time);
+
+                console.log('OK poll! ' + count + ' ' + time);
+                count++;
             }
 
-            await setAsyncTimeout(() => {
-                this.retryEsitiCreditCheck();
-            }, time);
-
-            console.log('OK poll! ' + count + ' ' + time);
-            count++;
+            console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - END');
         }
-
-        console.log('hdtChildOrderProcessPrecheck - executeCreditCheckPoll - END');
     }
 
     /**@Author: Salvatore Alessandro Sarà 01/11/2021

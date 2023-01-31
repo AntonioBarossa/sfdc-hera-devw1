@@ -1,0 +1,545 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material__c</fullName>
+    <externalId>false</externalId>
+    <label>Materiale</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>TypeOperation__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_Material</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>Ritiro a pagamento</controllingFieldValue>
+            <controllingFieldValue>Scarichi abusivi</controllingFieldValue>
+            <controllingFieldValue>Rumori di Mezzi/Impianti</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Segnalaz comportamen cittadini</controllingFieldValue>
+            <controllingFieldValue>Servizi a feste e manifestaz</controllingFieldValue>
+            <controllingFieldValue>Servizi deiezioni canine</controllingFieldValue>
+            <controllingFieldValue>Segnalazione su CDR</controllingFieldValue>
+            <controllingFieldValue>Servizio Bora</controllingFieldValue>
+            <controllingFieldValue>Servizio Neve</controllingFieldValue>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Consegna KIT Porta a Porta</controllingFieldValue>
+            <controllingFieldValue>Consegna pannolini</controllingFieldValue>
+            <controllingFieldValue>Diserbo</controllingFieldValue>
+            <controllingFieldValue>Spazzamento meccaniz</controllingFieldValue>
+            <controllingFieldValue>FE - MO - Spazzamento meccaniz</controllingFieldValue>
+            <controllingFieldValue>Cancellazione scritte murarie</controllingFieldValue>
+            <controllingFieldValue>Cimiteriali</controllingFieldValue>
+            <controllingFieldValue>Svuotamento cestini/cestoni</controllingFieldValue>
+            <controllingFieldValue>Muschio_Erba murella</controllingFieldValue>
+            <controllingFieldValue>Noleggio cassoni</controllingFieldValue>
+            <controllingFieldValue>Prelievo carcasse animali</controllingFieldValue>
+            <controllingFieldValue>Pulizia arenile</controllingFieldValue>
+            <controllingFieldValue>Pulizia Caditoie</controllingFieldValue>
+            <controllingFieldValue>Raccolta siringhe</controllingFieldValue>
+            <controllingFieldValue>AperturaElettronicaNonFunziona</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO TUTTI I CONTEN</controllingFieldValue>
+            <controllingFieldValue>Rich. verifica sconti racc.dif</controllingFieldValue>
+            <controllingFieldValue>Lamentele Comportam Operatore</controllingFieldValue>
+            <controllingFieldValue>Richiesta Informazioni</controllingFieldValue>
+            <controllingFieldValue>Odori Mezzi/Dotazione/Impianti</controllingFieldValue>
+            <controllingFieldValue>Pulizia Giardini</controllingFieldValue>
+            <valueName>Nessun materiale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Carta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Dismissione compostiera</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta compostiera</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Organico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Plastica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Plastica/Lattine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>Chiavetta elettronica_consegna</controllingFieldValue>
+            <controllingFieldValue>Chiavetta elettronica_manutenz</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>rifiuti attorno al contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione Cestini</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>RSU</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Verde</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Vetro</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>RichiestaContenitAggiuntivoPAP</controllingFieldValue>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore PAP</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione Contenitore PAP</controllingFieldValue>
+            <valueName>Vetro/Vetro + lattine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <valueName>Abiti usati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <valueName>Carta/Cartone</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <valueName>cestini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <valueName>Ingombranti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <controllingFieldValue>Rimozione contenitore</controllingFieldValue>
+            <valueName>Lattine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <valueName>Pannolini/Pannoloni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>Pseudoedili</controllingFieldValue>
+            <valueName>Pseudoedili</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>SE_segnalazione disservizi</controllingFieldValue>
+            <controllingFieldValue>Lavaggio strade</controllingFieldValue>
+            <controllingFieldValue>Pulizia suolo pubblico</controllingFieldValue>
+            <valueName>Sede stradale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Smaltimento Rifiuti Speciali</controllingFieldValue>
+            <valueName>Fangosi non pericolosi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Smaltimento Rifiuti Speciali</controllingFieldValue>
+            <valueName>Fangosi pericolosi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Smaltimento Rifiuti Speciali</controllingFieldValue>
+            <valueName>Liquidi non pericolosi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Smaltimento Rifiuti Speciali</controllingFieldValue>
+            <valueName>Liquidi pericolosi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Smaltimento Rifiuti Speciali</controllingFieldValue>
+            <valueName>Solidi non pericolosi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Smaltimento Rifiuti Speciali</controllingFieldValue>
+            <valueName>Solidi pericolosi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <controllingFieldValue>Richiesta Informazioni</controllingFieldValue>
+            <valueName>Amianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <valueName>Farmaci</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <valueName>Ingombranti+Raee</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <valueName>Macerie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <valueName>Pile/Batterie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <valueName>Potature</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito conApp</controllingFieldValue>
+            <controllingFieldValue>Sollec RitiroGratuito senzaApp</controllingFieldValue>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <valueName>RAEE</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sollecito Ritiro a Pagamento</controllingFieldValue>
+            <valueName>Rifiuti Speciali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Spostamento Cassonetto</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <valueName>Multimateriale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <valueName>Olio vegetale/Alimentare</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>spostamento contenitore</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <valueName>Pile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contenitore danneggiato</controllingFieldValue>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Lavaggio contenitore</controllingFieldValue>
+            <controllingFieldValue>Calotta_manutenzione</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>GuastoCheImpedisceConferimento</controllingFieldValue>
+            <controllingFieldValue>Manutenzione contenitore</controllingFieldValue>
+            <valueName>Vetro/Plastica/Lattine</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <valueName>Cartone_soloAziende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta sacchi</controllingFieldValue>
+            <valueName>Organico_soloUTNonDom</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Consegna KIT Pannolini ECO</controllingFieldValue>
+            <valueName>Pannolini</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Sostituzione contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <valueName>Sfalci e potature</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Cessazione_RestituzContenitore</controllingFieldValue>
+            <controllingFieldValue>RestituzContenitore</controllingFieldValue>
+            <valueName>RSU_SoloAziende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <valueName>ECOSELF (carta e plastica)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <valueName>FITOFARMACI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Consegna/Ritiro cassone</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <valueName>LEGNO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>raccolta porta a porta</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <valueName>Legno_soloAziende</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>svuotamento contenitore</controllingFieldValue>
+            <controllingFieldValue>Richiesta contenitore</controllingFieldValue>
+            <controllingFieldValue>rimozione Cassonetto</controllingFieldValue>
+            <valueName>Toner</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lavaggio Portici</controllingFieldValue>
+            <controllingFieldValue>Pulizia suolo pubblico</controllingFieldValue>
+            <valueName>Portico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Amianto/Ethernit</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Buche su strada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Caduta calcinacci</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Carcasse animali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Lavaggio/pulizia sede stradale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Olio su strada</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Rimozione/Rovesciamento casson</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Siringhe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pronto Intervento</controllingFieldValue>
+            <valueName>Vetri a terra</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pulizia suolo pubblico</controllingFieldValue>
+            <valueName>Con rimozione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica tariffa</controllingFieldValue>
+            <valueName>DistanzaCassonDaDomicilioUT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica tariffa</controllingFieldValue>
+            <valueName>Utenza inserita in PAP_CENTRO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica tariffa</controllingFieldValue>
+            <valueName>Utenza inserita in PAP_ZAI</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>rifiuti attorno al contenitore</controllingFieldValue>
+            <valueName>RD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ritiro animali morti</controllingFieldValue>
+            <valueName>Animali d&apos;affezione</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

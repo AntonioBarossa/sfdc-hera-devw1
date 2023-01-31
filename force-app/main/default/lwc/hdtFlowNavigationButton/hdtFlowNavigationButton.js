@@ -1,7 +1,9 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import getAsyncJobByJobItem from '@salesforce/apex/HDT_UTL_HerokuPostSalesManager.getAsyncJobByJobItem';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import { MessageContext, publish } from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 //Time out for callout in seconds
 const timeOut = 30;
@@ -19,8 +21,14 @@ export default class HdtFlowNavigationButton extends LightningElement {
     @api saveDraft;
     @api loadingSpinner = false;
     @api recordId;
+    @api disabledNavigationEvent;
+    @api sessionid;
+    @api stopNavigationEvent;
 
     @api availableActions = [];
+
+    @wire(MessageContext)
+	messageContext;
 
 
     connectedCallback(){
@@ -107,10 +115,15 @@ export default class HdtFlowNavigationButton extends LightningElement {
 
         console.log('AVAILABLE_ACTIONS --> ' +this.availableActions);
 
+        if(this.sessionid){
+            const payload = { message: event.target.name,  sessionid : this.sessionid};
+            publish(this.messageContext, BUTTONMC, payload);
+        }
+
         if(this.standAlone){
 
             if(event.target.name === 'save'){
-
+            
                 this.saveDraft = false;
                 this.cancelCase = false;
 
@@ -149,19 +162,20 @@ export default class HdtFlowNavigationButton extends LightningElement {
     }
 
     handleGoNext() {
-        if(this.availableActions.find(action => action === 'NEXT')){
+        if(!this.disabledNavigationEvent){
+            if(this.availableActions.find(action => action === 'NEXT')){
 
-            const navigateNextEvent = new FlowNavigationNextEvent();
+                const navigateNextEvent = new FlowNavigationNextEvent();
 
-            this.dispatchEvent(navigateNextEvent);
+                this.dispatchEvent(navigateNextEvent);
 
-        } else {
+            } else {
 
-            const navigateFinish = new FlowNavigationFinishEvent();
+                const navigateFinish = new FlowNavigationFinishEvent();
 
-            this.dispatchEvent(navigateFinish);
+                this.dispatchEvent(navigateFinish);
+            }
         }
-
     }
 
     handlePrevious(){

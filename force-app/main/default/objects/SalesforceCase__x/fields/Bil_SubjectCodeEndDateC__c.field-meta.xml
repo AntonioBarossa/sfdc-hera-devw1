@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Bil_SubjectCodeEndDateC__c</fullName>
+    <description>Bil_SubjectCodeEndDateC</description>
+    <externalDeveloperName>Bil_SubjectCodeEndDateC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Bil_SubjectCodeEndDateC</label>
+    <required>false</required>
+    <type>DateTime</type>
+</CustomField>

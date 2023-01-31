@@ -1,0 +1,455 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Amianto/Eternit_NOApp-IURD0026</fullName>
+        <default>false</default>
+        <label>Amianto/Eternit_NOApp-IURD0026</label>
+    </customValue>
+    <customValue>
+        <fullName>Amianto/Eternit-IURD0026</fullName>
+        <default>false</default>
+        <label>Amianto/Eternit-IURD0026</label>
+    </customValue>
+    <customValue>
+        <fullName>AperturaElettronicaNonFunziona</fullName>
+        <default>false</default>
+        <label>AperturaElettronicaNonFunziona</label>
+    </customValue>
+    <customValue>
+        <fullName>Calotta_manutenzione</fullName>
+        <default>false</default>
+        <label>Calotta_manutenzione</label>
+    </customValue>
+    <customValue>
+        <fullName>Cancellazione scritte murarie</fullName>
+        <default>false</default>
+        <label>Cancellazione scritte murarie</label>
+    </customValue>
+    <customValue>
+        <fullName>Cessazione_RestituzContenitore</fullName>
+        <default>false</default>
+        <label>Cessazione_RestituzContenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiavetta elettronica_consegna</fullName>
+        <default>false</default>
+        <label>Chiavetta elettronica_consegna</label>
+    </customValue>
+    <customValue>
+        <fullName>Chiavetta elettronica_manutenz</fullName>
+        <default>false</default>
+        <label>Chiavetta elettronica_manutenz</label>
+    </customValue>
+    <customValue>
+        <fullName>Cimiteriali</fullName>
+        <default>false</default>
+        <label>Cimiteriali</label>
+    </customValue>
+    <customValue>
+        <fullName>Consegna/Ritiro cassone</fullName>
+        <default>false</default>
+        <label>Consegna/Ritiro cassone</label>
+    </customValue>
+    <customValue>
+        <fullName>CONSEGNA/RITIRO TUTTI I CONTEN</fullName>
+        <default>false</default>
+        <label>CONSEGNA/RITIRO TUTTI I CONTEN</label>
+    </customValue>
+    <customValue>
+        <fullName>Consegna KIT Pannolini ECO</fullName>
+        <default>false</default>
+        <label>Consegna KIT Pannolini ECO</label>
+    </customValue>
+    <customValue>
+        <fullName>Consegna KIT Porta a Porta</fullName>
+        <default>false</default>
+        <label>Consegna KIT Porta a Porta</label>
+    </customValue>
+    <customValue>
+        <fullName>Consegna pannolini</fullName>
+        <default>false</default>
+        <label>Consegna pannolini</label>
+    </customValue>
+    <customValue>
+        <fullName>Contenitore danneggiato</fullName>
+        <default>false</default>
+        <label>Contenitore danneggiato</label>
+    </customValue>
+    <customValue>
+        <fullName>Diserbo</fullName>
+        <default>false</default>
+        <label>Diserbo</label>
+    </customValue>
+    <customValue>
+        <fullName>Dismissione compostiera</fullName>
+        <default>false</default>
+        <label>Dismissione compostiera</label>
+    </customValue>
+    <customValue>
+        <fullName>FE - MO - Spazzamento meccaniz</fullName>
+        <default>false</default>
+        <label>FE - MO - Spazzamento meccaniz</label>
+    </customValue>
+    <customValue>
+        <fullName>GuastoCheImpedisceConferimento</fullName>
+        <default>false</default>
+        <label>GuastoCheImpedisceConferimento</label>
+    </customValue>
+    <customValue>
+        <fullName>Ingombr+RAEE_NOAPP-IURD0033</fullName>
+        <default>false</default>
+        <label>Ingombr+RAEE_NOAPP-IURD0033</label>
+    </customValue>
+    <customValue>
+        <fullName>Ingombr+RAEE-IURD0033</fullName>
+        <default>false</default>
+        <label>Ingombr+RAEE-IURD0033</label>
+    </customValue>
+    <customValue>
+        <fullName>Ingombr-IURD0033</fullName>
+        <default>false</default>
+        <label>Ingombr-IURD0033</label>
+    </customValue>
+    <customValue>
+        <fullName>Lamentele Comportam Operatore</fullName>
+        <default>false</default>
+        <label>Lamentele Comportam Operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavaggio contenitore</fullName>
+        <default>false</default>
+        <label>Lavaggio contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavaggio Portici</fullName>
+        <default>false</default>
+        <label>Lavaggio Portici</label>
+    </customValue>
+    <customValue>
+        <fullName>Lavaggio strade</fullName>
+        <default>false</default>
+        <label>Lavaggio strade</label>
+    </customValue>
+    <customValue>
+        <fullName>Manutenzione Cestini</fullName>
+        <default>false</default>
+        <label>Manutenzione Cestini</label>
+    </customValue>
+    <customValue>
+        <fullName>Manutenzione contenitore</fullName>
+        <default>false</default>
+        <label>Manutenzione contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Manutenzione contenitore PAP</fullName>
+        <default>false</default>
+        <label>Manutenzione contenitore PAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Muschio_Erba murella</fullName>
+        <default>false</default>
+        <label>Muschio_Erba murella</label>
+    </customValue>
+    <customValue>
+        <fullName>Noleggio cassoni</fullName>
+        <default>false</default>
+        <label>Noleggio cassoni</label>
+    </customValue>
+    <customValue>
+        <fullName>Odori Mezzi/Dotazione/Impianti</fullName>
+        <default>false</default>
+        <label>Odori Mezzi/Dotazione/Impianti</label>
+    </customValue>
+    <customValue>
+        <fullName>PAP</fullName>
+        <default>false</default>
+        <label>PAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Pile-IURD0041</fullName>
+        <default>false</default>
+        <label>Pile-IURD0041</label>
+    </customValue>
+    <customValue>
+        <fullName>Prelievo carcasse animali</fullName>
+        <default>false</default>
+        <label>Prelievo carcasse animali</label>
+    </customValue>
+    <customValue>
+        <fullName>Pronto Intervento</fullName>
+        <default>false</default>
+        <label>Pronto Intervento</label>
+    </customValue>
+    <customValue>
+        <fullName>Pseudoedili</fullName>
+        <default>false</default>
+        <label>Pseudoedili</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia arenile</fullName>
+        <default>false</default>
+        <label>Pulizia arenile</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia Caditoie</fullName>
+        <default>false</default>
+        <label>Pulizia Caditoie</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia Giardini</fullName>
+        <default>false</default>
+        <label>Pulizia Giardini</label>
+    </customValue>
+    <customValue>
+        <fullName>Pulizia suolo pubblico</fullName>
+        <default>false</default>
+        <label>Pulizia suolo pubblico</label>
+    </customValue>
+    <customValue>
+        <fullName>raccolta porta a porta</fullName>
+        <default>false</default>
+        <label>raccolta porta a porta</label>
+    </customValue>
+    <customValue>
+        <fullName>Raccolta siringhe</fullName>
+        <default>false</default>
+        <label>Raccolta siringhe</label>
+    </customValue>
+    <customValue>
+        <fullName>RAEE-IURD0031</fullName>
+        <default>false</default>
+        <label>RAEE-IURD0031</label>
+    </customValue>
+    <customValue>
+        <fullName>RestituzContenitore</fullName>
+        <default>false</default>
+        <label>RestituzContenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Rich. verifica sconti racc.dif</fullName>
+        <default>false</default>
+        <label>Rich. verifica sconti racc.dif</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta compostiera</fullName>
+        <default>false</default>
+        <label>Richiesta compostiera</label>
+    </customValue>
+    <customValue>
+        <fullName>RichiestaContenitAggiuntivo</fullName>
+        <default>false</default>
+        <label>RichiestaContenitAggiuntivo</label>
+    </customValue>
+    <customValue>
+        <fullName>RichiestaContenitAggiuntivoPAP</fullName>
+        <default>false</default>
+        <label>RichiestaContenitAggiuntivoPAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta contenitore</fullName>
+        <default>false</default>
+        <label>Richiesta contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta Informazioni</fullName>
+        <default>false</default>
+        <label>Richiesta Informazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta sacchi</fullName>
+        <default>false</default>
+        <label>Richiesta sacchi</label>
+    </customValue>
+    <customValue>
+        <fullName>rifiuti attorno al contenitore</fullName>
+        <default>false</default>
+        <label>rifiuti attorno al contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>rimozione Cassonetto</fullName>
+        <default>false</default>
+        <label>rimozione Cassonetto</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimozione contenitore</fullName>
+        <default>false</default>
+        <label>Rimozione contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimozione Contenitore PAP</fullName>
+        <default>false</default>
+        <label>Rimozione Contenitore PAP</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritiro animali morti</fullName>
+        <default>false</default>
+        <label>Ritiro animali morti</label>
+    </customValue>
+    <customValue>
+        <fullName>Ritiro a pagamento</fullName>
+        <default>false</default>
+        <label>Ritiro a pagamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Rumori di Mezzi/Impianti</fullName>
+        <default>false</default>
+        <label>Rumori di Mezzi/Impianti</label>
+    </customValue>
+    <customValue>
+        <fullName>Scarichi abusivi</fullName>
+        <default>false</default>
+        <label>Scarichi abusivi</label>
+    </customValue>
+    <customValue>
+        <fullName>SE_segnalazione disservizi</fullName>
+        <default>false</default>
+        <label>SE_segnalazione disservizi</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalaz comportamen cittadini</fullName>
+        <default>false</default>
+        <label>Segnalaz comportamen cittadini</label>
+    </customValue>
+    <customValue>
+        <fullName>Segnalazione su CDR</fullName>
+        <default>false</default>
+        <label>Segnalazione su CDR</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizi a feste e manifestaz</fullName>
+        <default>false</default>
+        <label>Servizi a feste e manifestaz</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizi deiezioni canine</fullName>
+        <default>false</default>
+        <label>Servizi deiezioni canine</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizio Bora</fullName>
+        <default>false</default>
+        <label>Servizio Bora</label>
+    </customValue>
+    <customValue>
+        <fullName>Servizio Neve</fullName>
+        <default>false</default>
+        <label>Servizio Neve</label>
+    </customValue>
+    <customValue>
+        <fullName>Smaltimento Rifiuti Speciali</fullName>
+        <default>false</default>
+        <label>Smaltimento Rifiuti Speciali</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollecito Ritiro a Pagamento</fullName>
+        <default>false</default>
+        <label>Sollecito Ritiro a Pagamento</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollec RitiroGratuito conApp</fullName>
+        <default>false</default>
+        <label>Sollec RitiroGratuito conApp</label>
+    </customValue>
+    <customValue>
+        <fullName>Sollec RitiroGratuito senzaApp</fullName>
+        <default>false</default>
+        <label>Sollec RitiroGratuito senzaApp</label>
+    </customValue>
+    <customValue>
+        <fullName>Sostituzione contenitore</fullName>
+        <default>false</default>
+        <label>Sostituzione contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Spazzamento meccaniz</fullName>
+        <default>false</default>
+        <label>Spazzamento meccaniz</label>
+    </customValue>
+    <customValue>
+        <fullName>Spostamento Cassonetto</fullName>
+        <default>false</default>
+        <label>Spostamento Cassonetto</label>
+    </customValue>
+    <customValue>
+        <fullName>spostamento contenitore</fullName>
+        <default>false</default>
+        <label>spostamento contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Svuotamento cestini/cestoni</fullName>
+        <default>false</default>
+        <label>Svuotamento cestini/cestoni</label>
+    </customValue>
+    <customValue>
+        <fullName>svuotamento contenitore</fullName>
+        <default>false</default>
+        <label>svuotamento contenitore</label>
+    </customValue>
+    <customValue>
+        <fullName>Toner-IURD0053</fullName>
+        <default>false</default>
+        <label>Toner-IURD0053</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/fascine_NOApp-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/fascine_NOApp-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/fascine-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/fascine-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/pot&lt;=3mc_NOApp-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/pot&lt;=3mc_NOApp-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/pot&gt;3mc_NOApp-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/pot&gt;3mc_NOApp-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potature_NOApp-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potature_NOApp-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potature(18m3)-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potature(18m3)-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potature(4,5m3)-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potature(4,5m3)-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potature&lt;=3mc-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potature&lt;=3mc-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potature&gt;3mc-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potature&gt;3mc-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potatureAutogru-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potatureAutogru-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verde/potature-IURD0043</fullName>
+        <default>false</default>
+        <label>Verde/potature-IURD0043</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica tariffa</fullName>
+        <default>false</default>
+        <label>Verifica tariffa</label>
+    </customValue>
+    <masterLabel>Tipo Operazione</masterLabel>
+    <sorted>true</sorted>
+</GlobalValueSet>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__AppPage</target>
+        <target>lightning__RecordPage</target>
+        <target>lightning__HomePage</target>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__HomePage">
+            <property name="orderId" type="String"/>
+            <property name="caseId" type="String"/>
+            <property name="servicePointId" type="String"/>
+        </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="orderId" type="String" label="Order Id" description="Id of the Order to show the land registry child records" role="inputOnly"/>
+            <property name="caseId" type="String" label="Case Id" description="Id of the Case to show the land registry child records" role="inputOnly"/>
+            <property name="servicePointId" type="String" label="Service Point Id" description="Id of the service point to show the land registry child records" role="inputOnly"/>
+            <property name="preSelectedLandRegistryId" type="String" label="Pre-Selected Land Registry Id" description="Id of the child record to preselect" role="inputOnly"/>
+            <property name="required" type="Boolean" label="Required" description="If the fields has to be required" role="inputOnly"/>
+            <property name="readonly" type="Boolean" label="Readonly" description="if the component has to be in readonly mode" role="inputOnly"/>
+            <property name="selectedLandRegistryId" type="String" label="Selected Land Registry Id" description="Id of the child record selected" role="outputOnly"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

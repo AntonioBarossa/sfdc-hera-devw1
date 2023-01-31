@@ -525,6 +525,54 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
@@ -1102,6 +1150,54 @@
         </values>
         <values>
             <fullName>HSPA_TESORERIA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2164,11 +2260,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus mancante</fullName>
+            <fullName>Altro compenso mancante</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Business</fullName>
+            <fullName>Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2312,7 +2408,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Legge 80_Istanza EE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2612,7 +2708,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica colonnine</fullName>
+            <fullName>Verifica colonnine e Prodotti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2742,6 +2838,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Inviare Resoconto Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione Offerte</fullName>
             <default>false</default>
         </values>
@@ -2762,7 +2862,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamenti contratti</fullName>
+            <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2783,14 +2883,6 @@
         </values>
         <values>
             <fullName>Credit Management %E2%80%93 affidi ADR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Management %E2%80%93 affidi legale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Management %E2%80%93 cessioni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2826,6 +2918,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da DL%2FSII</fullName>
             <default>false</default>
         </values>
@@ -2842,6 +2938,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Gestione contratto colonnetta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Gestione Iva e Accise</fullName>
             <default>false</default>
         </values>
@@ -2854,15 +2954,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi Ultima Istanza</fullName>
+            <fullName>Order Management MUI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione processi di Misura</fullName>
+            <fullName>Gestione Misure Energy</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Back Office</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2962,7 +3066,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifiche contratti</fullName>
+            <fullName>Sblocco Processo verso SII/DL</fullName>
             <default>false</default>
         </values>
         <values>

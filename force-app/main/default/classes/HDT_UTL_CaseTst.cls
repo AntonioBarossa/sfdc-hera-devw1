@@ -20,7 +20,9 @@ public with sharing class HDT_UTL_CaseTst {
         update myServicePoint;
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);   
+        contractList[0].StartDate = Date.today();
+        update contractList;
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
 
         
         wrts_prcgvr__ActivityTemplate__c myactivityTemplate = new wrts_prcgvr__ActivityTemplate__c();
@@ -30,16 +32,23 @@ public with sharing class HDT_UTL_CaseTst {
         myactivityTemplate.wrts_prcgvr__DueDateField__c = 'my text Due Date Field';
         insert myactivityTemplate;
 
-        City__c city = new City__c();
-        city.Name = 'TEST';
-        city.Province__c = 'TS';
-        city.SDV__C = 'HCM';
-        insert city;
+        List<City__c> cityList = new List<City__c>();
+        cityList.add(new City__c(Name='TEST',Province__c='TS',SDV__C='HCM'));
+        cityList.add(new City__c(Name='TESTHC',Province__c='TA',SDV__C='HC'));
+        cityList.add(new City__c(Name='TESTEENE',Province__c='TE',SDV__C='EENE'));
+        insert cityList;
 
-        AtecoMatrix__c atecoMatrix = new AtecoMatrix__c();
-        atecoMatrix.AtecoCode__c = '9999';
-        atecoMatrix.City__c = 'TEST';
-        insert atecoMatrix;
+        List<AtecoMatrix__c>matrixEntries=new List<atecoMatrix__c>();
+        matrixEntries.add(new AtecoMatrix__c(AtecoCode__c='9999',City__c='TEST'));
+        matrixEntries.add(new AtecoMatrix__c(AtecoCode__c='9998',City__c='TESTHC'));
+        matrixEntries.add(new AtecoMatrix__c(AtecoCode__c='9997',City__c='TESTEENE'));
+        insert matrixEntries;
+
+        AllineamentoGAA__c gaaAlignment1 = new AllineamentoGAA__c();
+        gaaAlignment1.Rate_Category__c = 'ACDOMRESP0';
+        insert gaaAlignment1;
+
+
     }
     
     //TESTS
@@ -47,11 +56,13 @@ public with sharing class HDT_UTL_CaseTst {
     @isTest
     private static void caseFlowPredefaultsTest(){
 
-        List<Case> caseList = [SELECT Id, Note__c, Type FROM Case];
+        List<Case> caseList = [SELECT Id, Note__c, Type,Distributor__r.Code__c, ParentId, PODPDRFormula__c FROM Case];
 
         Case myCase = caseList[0];
         myCase.Note__c = 'Note';
-        myCase.type = 'Riattivazione Fornitura';
+        myCase.type = 'Nuovo Impianto';
+        myCase.Commodity__c='Acqua';
+        myCase.SupplyCity__c='TEST';
         update myCase;
 
 
@@ -60,7 +71,6 @@ public with sharing class HDT_UTL_CaseTst {
         HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
 
         Date myDate = Date.newInstance(2021, 09, 16);
-
         myInput.cluster = 'Preventivi';
         myInput.process = '';
         myInput.effectiveDate = myDate;
@@ -68,12 +78,17 @@ public with sharing class HDT_UTL_CaseTst {
         myInput.powerRequested = 5.5;
         myInput.salesCompany = 'mySalesCompany';
         myInput.currentCase = myCase;
+        myInput.genericInputString = '';
+
         inputs.add(myInput);
         
         //TESTING
         Test.startTest();
         Try{
-            
+
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
+            myInput.powerRequested = 0;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
             myInput.powerRequested = 0.9;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
@@ -87,6 +102,8 @@ public with sharing class HDT_UTL_CaseTst {
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
             myInput.implantType = '13EM-Non domestici MT';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+            myInput.powerRequested = 0;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
             myInput.powerRequested = 108.5;
             HDT_UTL_Case.caseFlowPredefaults(inputs);
@@ -116,14 +133,34 @@ public with sharing class HDT_UTL_CaseTst {
             myInput.process = 'Contenitore';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+          /*   myInput.process = 'CreaBpCa';
+            HDT_UTL_Case.caseFlowPredefaults(inputs); */
+
+            myInput.process = 'CheckIsCommunity';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
             myInput.process = 'Annullamento';
             HDT_UTL_Case.caseFlowPredefaults(inputs);
 
+            myInput.process = 'getServicePointFromContract';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
 
 
-
+            /* myInput.process = 'calculateExpirationDate';
+            myInput.cluster = 'Reclami';
+            HDT_UTL_Case.caseFlowPredefaults(inputs); */
             
-            
+
+            myInput.process = 'Adesione Rinuncia Fondo Fughe';
+            myInput.cluster = 'Variazioni';
+            //myInput.joinBottomAdhesion = 'Y';
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
+
+            myInput.process = 'Modifica Unita Immobiliari Componenti';
+            myInput.cluster = 'Variazioni';
+            myCase.RateCategory__c = 'ACDOMRESP0';
+            update myCase;
+            HDT_UTL_Case.caseFlowPredefaults(inputs);
         }catch(DmlException e) {
             System.debug('The following exception has occurred: ' + e.getMessage());
         }        
@@ -133,6 +170,133 @@ public with sharing class HDT_UTL_CaseTst {
         System.assert(caseList != null, 'Attenzione, caseList non può essere null!');
         System.assert(inputs != null,  'Attenzione, inputs non può essere null!');
         
+    }
+
+    /**​
+    * @author Elvin Iluca
+    * @date 10/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    private static void caseFlowPredefaultsTestInvioSollecitoOk(){
+        
+        List<Case> caseList = [SELECT Id, Note__c, Type,CaseNumber, NoticeId__c, Status FROM Case LIMIT 1];
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
+
+        myInput.process = System.Label.invio_sollecito;
+        myInput.currentCase = caseList[0];
+
+        inputs.add(myInput);
+
+        // public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, Map<String,Object> data)
+        //ok response
+        Map<String, Object> dataMock = new Map<String,Object>{'esito'=>'test esito'};
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_CaseTstMock(200, 'ok', 'success', dataMock));
+
+        Test.startTest();
+        Try{
+            outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }
+        Test.stopTest();
+        
+        System.assertEquals(String.isBlank(outputs[0].cancellationNote), true ,'Error: invio sollecito non riuscito');
+
+    }
+
+        /**​
+    * @author Elvin Iluca
+    * @date 10/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    private static void caseFlowPredefaultsTestInvioSollecitoKo(){
+        
+        List<Case> caseList = [SELECT Id, Note__c, Type,CaseNumber, NoticeId__c, Status FROM Case LIMIT 1];
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        List<HDT_UTL_Case.HDT_UTL_FlowOutputs> outputs = new List<HDT_UTL_Case.HDT_UTL_FlowOutputs>();
+
+        myInput.process = System.Label.invio_sollecito;
+        myInput.currentCase = caseList[0];
+
+        inputs.add(myInput);
+
+        // public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, Map<String,Object> data)
+        //ko response
+        Map<String, Object> errorDetail = new Map<String,Object>{
+            'code' => 'BAD_REQUEST',
+            'message' => 'There was an issue with your request message',
+             'additionalInfo' => 'Bad Request : There was an issue with your request message'
+        };
+
+        List<Map<String, Object>> errorDetails = new List<Map<String, Object>>();
+        errorDetails.add(errorDetail);
+
+        Test.setMock(HttpCalloutMock.class, new HDT_UTL_CaseTstMock(500, 'ko', 'failed', errorDetails));
+
+        Test.startTest();
+        Try{
+            outputs = HDT_UTL_Case.caseFlowPredefaults(inputs);
+        }catch(DmlException e) {
+            System.debug('The following exception has occurred: ' + e.getMessage());
+        }
+        Test.stopTest();
+        
+        
+        System.assertEquals(String.isBlank(outputs[0].cancellationNote), false ,'Error: invio sollecito non riuscito');
+
+    }
+
+    @isTest
+    static void removeFacilityBundle(){
+
+        Test.startTest();
+        List<Account> accs = [Select id FROM Account];
+        HDT_UTL_DataFactoryTst.pClickInstance();
+		HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        Id pricebookId = Test.getStandardPricebookId();
+        
+        List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1, true, accs[0].id, 'Bozza');
+        
+        List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+        points[0].CommoditySector__c = 'Gas';
+        insert points;
+        Test.stopTest();
+        
+        List<Order> orders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(1, false, accs[0].id, sales, pricebookId);
+        orders[0].ServicePointCode__c = 'servicepointcode';
+        orders[0].HerokuPracticeCode__c = 'herokucode';
+        orders[0].SupplyType__c = 'Domestico';
+        orders[0].ServicePoint__c = points[0].id;
+        insert orders;
+        
+        List<Product2> prods = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+        prods[0].Family = 'Bonus Percentuale';
+        prods[0].Name = 'Bonus Percentuale GAS Pippo';
+        prods[0].Version__c = 'V1';
+        insert prods;
+        
+        List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(prods, true, pricebookId);
+        
+        HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].id, points[0].id, prods[0].id, entries[0].id);
+
+        List<HDT_UTL_Case.HDT_UTL_FlowInputs> inputs = new List<HDT_UTL_Case.HDT_UTL_FlowInputs>();
+        HDT_UTL_Case.HDT_UTL_FlowInputs myInput = new HDT_UTL_Case.HDT_UTL_FlowInputs();
+
+        myInput.process = 'RemoveFacilityBundle';
+        myInput.quoteId='';
+        inputs.add(myInput);
+        System.assert(HDT_UTL_Case.caseFlowPredefaults(inputs) != null, 'Attenzione, result non può essere null!');
     }
     
     @isTest
@@ -193,8 +357,90 @@ public with sharing class HDT_UTL_CaseTst {
         inputs.add(input);
         Test.startTest();
             List<HDT_UTL_Case.HDT_UTL_FlowOutputs> result = HDT_UTL_Case.caseFlowPredefaults(inputs);
+            inputs[0].currentCase.SupplyCity__c='TESTHC';
+            result.addAll(HDT_UTL_Case.caseFlowPredefaults(inputs));
+            inputs[0].currentCase.SupplyCity__c='TESTEENE';
+            result.addAll(HDT_UTL_Case.caseFlowPredefaults(inputs));
         Test.stopTest();
         System.assertEquals(true, !result.isEmpty(), 'Test Fallito');
     }
 
+    /**​
+    * @author Elvin Iluca
+    * @date 02/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    @isTest
+    static void calculateSalesCompanyCodeHcTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('HC');
+        Test.stopTest();
+        System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
+
+    @isTest
+    static void calculateSalesCompanyCodeHcmTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('HCM');
+        Test.stopTest();
+        System.assertEquals('10V0000160', ret, 'Error calculate sales company');
+    }
+
+    @isTest
+    static void calculateSalesCompanyCodeElseTst(){
+        String ret;
+        Test.startTest();
+        ret = HDT_UTL_Case.calculateSalesCompanyCode('Else');
+        Test.stopTest();
+        System.assertEquals('13V0000000', ret, 'Error calculate sales company');
+    }
+
+     /**​
+    * @author Elvin Iluca
+    * @date 10/11/2022
+    * @description HDT_UTL_CaseTst – Test Class for HDT_UTL_Case.cls
+    */
+
+    public class HDT_UTL_CaseTstMock implements HttpCalloutMock {
+        String status;
+        Map<String,Object> data;
+        List<Map<String, Object>> errorDetails;
+        Integer setStatusCode;
+        String setStatus;
+
+        public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, Map<String,Object> data){
+            this.setStatusCode = setStatusCode;
+            this.setStatus = setStatus; 
+            this.status = status;
+            this.data = data;
+
+        }
+
+        public HDT_UTL_CaseTstMock(Integer setStatusCode, String setStatus, String status, List<Map<String, Object>> errorDetails){
+            this.setStatusCode = setStatusCode;
+            this.setStatus = setStatus; 
+            this.status = status;
+            this.errorDetails = errorDetails;    
+        }
+
+        public HTTPResponse respond(HTTPRequest request) {
+            HttpResponse response = new HttpResponse();
+            response.setHeader('Content-Type', 'application/json');
+            map<String, Object> bodyMap = new map<String, Object>{
+                'status'=> status,
+                'correlationId'=>'2ddbd94c-96c0-4aa2-a0fe-bb7603ebca7c',
+                'timestamp'=>'2022-08-06T17:49:57.819+02:00',
+                'data'=> data,
+                'errorDetails' => errorDetails
+            };
+
+            response.setBody(JSON.serialize(bodyMap));
+            response.setStatusCode(setStatusCode);
+            response.setStatus(setStatus);
+            return response; 
+        }
+    }
 }

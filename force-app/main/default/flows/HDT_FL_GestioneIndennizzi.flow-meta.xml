@@ -1,10 +1,85 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Calculate_Expiration_Date</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>getInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <description>Calcolo delle date per case di indennizzo Relaclami Invo Acqua</description>
+        <name>Calculate_Expiration_Date_Water</name>
+        <label>Calculate Expiration Date Acqua</label>
+        <locationX>2426</locationX>
+        <locationY>758</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Input_Case_Date_Assignment</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>getInputCase</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>52.0</apiVersion>
     <assignments>
         <name>AddToCollection_0_0_0_0_0</name>
         <label>AddToCollection</label>
-        <locationX>974</locationX>
+        <locationX>1238</locationX>
         <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>IndemnityCollection</assignToReference>
@@ -20,7 +95,7 @@
     <assignments>
         <name>AddToCollection_0_0_0_0_0_0</name>
         <label>AddToCollection</label>
-        <locationX>1238</locationX>
+        <locationX>1502</locationX>
         <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>IndemnityCollection</assignToReference>
@@ -43,7 +118,7 @@
     <assignments>
         <name>AssignCausalCode</name>
         <label>AssignCausalCode</label>
-        <locationX>974</locationX>
+        <locationX>1238</locationX>
         <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.CausalCode__c</assignToReference>
@@ -66,7 +141,7 @@
     <assignments>
         <name>AssignCausalCode_0</name>
         <label>AssignCausalCode</label>
-        <locationX>1238</locationX>
+        <locationX>1502</locationX>
         <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.CausalCode__c</assignToReference>
@@ -101,9 +176,53 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignExpirationDate</name>
+        <label>AssignExpirationDate</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignPhase</name>
         <label>AssignPhase</label>
-        <locationX>1194</locationX>
+        <locationX>1458</locationX>
         <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>UpdatePhase.Phase__c</assignToReference>
@@ -126,7 +245,7 @@
     <assignments>
         <name>AssignToCollection</name>
         <label>AssignToCollection</label>
-        <locationX>1194</locationX>
+        <locationX>1458</locationX>
         <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>UpdateCollection</assignToReference>
@@ -142,7 +261,7 @@
     <assignments>
         <name>AssignVariables</name>
         <label>AssignVariables</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -165,7 +284,7 @@
     <assignments>
         <name>AssignVariables_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -188,7 +307,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -211,7 +330,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -234,7 +353,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -257,7 +376,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>314</locationX>
+        <locationX>578</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -294,7 +413,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -317,7 +436,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -338,9 +457,33 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Assegnazione importo e tipologia indennizzo per case Acqua mancata risposta</description>
+        <name>AssignVariables_Acqua_Invio</name>
+        <label>AssignVariables</label>
+        <locationX>2426</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>AmountTypeFirst</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Invio</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignVariablesFirst</name>
         <label>AssignVariablesFirst</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.AccountId</assignToReference>
@@ -524,7 +667,7 @@
     <assignments>
         <name>AssignVariablesSecond</name>
         <label>AssignVariablesSecond</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>SecondIndemnityCase.AccountId</assignToReference>
@@ -691,10 +834,55 @@
             <targetReference>Switch_Casistica</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <description>Assegnazione delle date specifiche estratte dal metodo UTL</description>
+        <name>Input_Case_Date_Assignment</name>
+        <label>Input Case Date Assignment</label>
+        <locationX>2426</locationX>
+        <locationY>878</locationY>
+        <assignmentItems>
+            <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_Water.amountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_Water.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_Water.completedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_Water.depositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getInputCase.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_Water.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssignVariables_Acqua_Invio</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>Doppio_Indennizzo</name>
         <label>Doppio Indennizzo?</label>
-        <locationX>512</locationX>
+        <locationX>776</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Quale_importo_prendere</targetReference>
@@ -726,7 +914,7 @@
     <decisions>
         <name>HowManyCase</name>
         <label>HowManyCase?</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>GetSecondCausalCode</targetReference>
@@ -739,7 +927,7 @@
                 <leftValueReference>AmountTypeSecond</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue/>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -758,7 +946,7 @@
     <decisions>
         <name>Quale_importo_prendere</name>
         <label>Quale importo prendere?</label>
-        <locationX>710</locationX>
+        <locationX>974</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>AssignVariables_0_0_0_0_0_0_0_0_0</targetReference>
@@ -783,9 +971,45 @@
     <decisions>
         <name>Switch_Casistica</name>
         <label>Switch Casistica</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>No Indennizzo</defaultConnectorLabel>
+        <rules>
+            <name>X0_Reclamo_da_Cittadino</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityConfirmed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risposta Inviata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Calculate_Expiration_Date</targetReference>
+            </connector>
+            <label>0 - Reclamo da Cittadino</label>
+        </rules>
         <rules>
             <name>X1_Invio_Ind_Confermato</name>
             <conditionLogic>and</conditionLogic>
@@ -1065,14 +1289,63 @@
             </connector>
             <label>6 - Doppia Rettifica Attesa</label>
         </rules>
+        <rules>
+            <name>X7_Richiesta_Info_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di informazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityConfirmed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risposta Inviata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Calculate_Expiration_Date_Water</targetReference>
+            </connector>
+            <label>7 - Richiesta Info Acqua</label>
+        </rules>
     </decisions>
     <description>Flow per la gestione degli indennizzi</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>SupplyCityFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!getInputCase.SupplyCity__c}), {!getInputCase.ServicePoint__r.SupplyCity__c},{!getInputCase.SupplyCity__c})</expression>
+    </formulas>
     <interviewLabel>Gestione Indennizzi {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Indennizzi</label>
     <loops>
         <name>UpdatePhase</name>
         <label>UpdatePhase</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>2342</locationY>
         <collectionReference>getCreatedIndemnities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1105,7 +1378,7 @@
     <recordCreates>
         <name>CreateIndemnityRecords</name>
         <label>CreateIndemnityRecords</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>getCreatedIndemnities</targetReference>
@@ -1115,7 +1388,7 @@
     <recordLookups>
         <name>getCreatedIndemnities</name>
         <label>getCreatedIndemnities</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>2222</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1150,7 +1423,7 @@
     <recordLookups>
         <name>GetFirstCausalCode</name>
         <label>GetFirstCausalCode</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1192,7 +1465,7 @@
     <recordLookups>
         <name>getIndemnityRecordType</name>
         <label>getIndemnityRecordType</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1213,7 +1486,7 @@
     <recordLookups>
         <name>getInputCase</name>
         <label>getInputCase</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1234,7 +1507,7 @@
     <recordLookups>
         <name>GetSecondCausalCode</name>
         <label>GetSecondCausalCode</label>
-        <locationX>1238</locationX>
+        <locationX>1502</locationX>
         <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1276,12 +1549,12 @@
     <recordUpdates>
         <name>UpdatePhaseCollection</name>
         <label>UpdatePhaseCollection</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>2798</locationY>
         <inputReference>UpdateCollection</inputReference>
     </recordUpdates>
     <start>
-        <locationX>980</locationX>
+        <locationX>1244</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getInputCase</targetReference>

@@ -12,7 +12,7 @@
     <valueSet>
         <controllingField>Type</controllingField>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Accise - Agevolazione cliente</fullName>
                 <default>false</default>
@@ -29,6 +29,61 @@
                 <label>Accise - Errata applicazione</label>
             </value>
             <value>
+                <fullName>Account</fullName>
+                <default>false</default>
+                <label>Account</label>
+            </value>
+            <value>
+                <fullName>Account e Billing Profile</fullName>
+                <default>false</default>
+                <label>Account e Billing Profile</label>
+            </value>
+            <value>
+                <fullName>Adesione Fondo Fughe</fullName>
+                <default>false</default>
+                <label>Adesione Fondo Fughe</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Attacco</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Attacco senza Attivazione</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco senza Attivazione</label>
+            </value>
+            <value>
+                <fullName>Antincendio</fullName>
+                <default>false</default>
+                <label>Antincendio</label>
+            </value>
+            <value>
+                <fullName>Autorizzazione allo scarico</fullName>
+                <default>false</default>
+                <label>Autorizzazione allo scarico</label>
+            </value>
+            <value>
+                <fullName>Billing Profile</fullName>
+                <default>false</default>
+                <label>Billing Profile</label>
+            </value>
+            <value>
+                <fullName>BP</fullName>
+                <default>false</default>
+                <label>BP</label>
+            </value>
+            <value>
+                <fullName>BP e CA</fullName>
+                <default>false</default>
+                <label>BP e CA</label>
+            </value>
+            <value>
+                <fullName>CA</fullName>
+                <default>false</default>
+                <label>CA</label>
+            </value>
+            <value>
                 <fullName>Cambio Amministratore</fullName>
                 <default>false</default>
                 <label>Cambio Amministratore</label>
@@ -39,9 +94,69 @@
                 <label>Cambio Intest/Indirizzo Amministratore</label>
             </value>
             <value>
+                <fullName>Cartografia</fullName>
+                <default>false</default>
+                <label>Cartografia</label>
+            </value>
+            <value>
+                <fullName>Dati catastali</fullName>
+                <default>false</default>
+                <label>Dati catastali</label>
+            </value>
+            <value>
+                <fullName>DGRER569/19 non allacciato/uso irriguo</fullName>
+                <default>false</default>
+                <label>DGRER569/19 non allacciato/uso irriguo</label>
+            </value>
+            <value>
+                <fullName>DOM_Coabitazioni</fullName>
+                <default>false</default>
+                <label>DOM_Coabitazioni</label>
+            </value>
+            <value>
+                <fullName>DOM_Componenti non residenti</fullName>
+                <default>false</default>
+                <label>DOM_Componenti non residenti</label>
+            </value>
+            <value>
+                <fullName>DOM_Componenti residenti</fullName>
+                <default>false</default>
+                <label>DOM_Componenti residenti</label>
+            </value>
+            <value>
+                <fullName>Domiciliato in nucleo residente</fullName>
+                <default>false</default>
+                <label>Domiciliato in nucleo residente</label>
+            </value>
+            <value>
                 <fullName>Elementi di dettaglio</fullName>
                 <default>false</default>
                 <label>Elementi di dettaglio</label>
+            </value>
+            <value>
+                <fullName>Errore di Lettura</fullName>
+                <default>false</default>
+                <label>Errore di Lettura</label>
+            </value>
+            <value>
+                <fullName>Errore Stima Consumi</fullName>
+                <default>false</default>
+                <label>Errore Stima Consumi</label>
+            </value>
+            <value>
+                <fullName>Fognatura</fullName>
+                <default>false</default>
+                <label>Fognatura</label>
+            </value>
+            <value>
+                <fullName>In Continuità</fullName>
+                <default>false</default>
+                <label>In Continuità</label>
+            </value>
+            <value>
+                <fullName>Incorporazione societaria</fullName>
+                <default>false</default>
+                <label>Incorporazione societaria</label>
             </value>
             <value>
                 <fullName>IVA - Agevolazione cliente</fullName>
@@ -64,6 +179,11 @@
                 <label>IVA - Revoca Esenzione</label>
             </value>
             <value>
+                <fullName>Lettura su Contratto Aperto</fullName>
+                <default>false</default>
+                <label>Lettura su Contratto Aperto</label>
+            </value>
+            <value>
                 <fullName>Modifica Dati di Contatto</fullName>
                 <default>false</default>
                 <label>Modifica Dati di Contatto</label>
@@ -84,29 +204,9 @@
                 <label>Modifica Dati Fiscali</label>
             </value>
             <value>
-                <fullName>Report disaggregato</fullName>
+                <fullName>Modifica Fognatura e Depurazione</fullName>
                 <default>false</default>
-                <label>Report disaggregato</label>
-            </value>
-            <value>
-                <fullName>Report storno di adeguamento</fullName>
-                <default>false</default>
-                <label>Report storno di adeguamento</label>
-            </value>
-            <value>
-                <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
-                <default>false</default>
-                <label>Rettifica per segnalazione cassetto fiscale</label>
-            </value>
-            <value>
-                <fullName>Variazione Gruppo IVA</fullName>
-                <default>false</default>
-                <label>Variazione Gruppo IVA</label>
-            </value>
-            <value>
-                <fullName>Ordinaria</fullName>
-                <default>false</default>
-                <label>Ordinaria</label>
+                <label>Modifica Fognatura e Depurazione</label>
             </value>
             <value>
                 <fullName>Mortis Causa</fullName>
@@ -114,19 +214,24 @@
                 <label>Mortis Causa</label>
             </value>
             <value>
-                <fullName>Incorporazione societaria</fullName>
+                <fullName>NON DOM_ISTAT/Ronchi</fullName>
                 <default>false</default>
-                <label>Incorporazione societaria</label>
+                <label>NON DOM_ISTAT/Ronchi</label>
             </value>
             <value>
-                <fullName>Errore di Lettura</fullName>
+                <fullName>Nuovo Allaccio</fullName>
                 <default>false</default>
-                <label>Errore di Lettura</label>
+                <label>Nuovo Allaccio</label>
             </value>
             <value>
-                <fullName>Errore Stima Consumi</fullName>
+                <fullName>Ordinaria</fullName>
                 <default>false</default>
-                <label>Errore Stima Consumi</label>
+                <label>Ordinaria</label>
+            </value>
+            <value>
+                <fullName>Parere Preventivo</fullName>
+                <default>false</default>
+                <label>Parere Preventivo</label>
             </value>
             <value>
                 <fullName>Processo M01</fullName>
@@ -144,44 +249,104 @@
                 <label>Processo M03</label>
             </value>
             <value>
-                <fullName>BP</fullName>
-                <default>false</default>
-                <label>BP</label>
-            </value>
-            <value>
-                <fullName>BP e CA</fullName>
-                <default>false</default>
-                <label>BP e CA</label>
-            </value>
-            <value>
-                <fullName>CA</fullName>
-                <default>false</default>
-                <label>CA</label>
-            </value>
-            <value>
-                <fullName>Account</fullName>
-                <default>false</default>
-                <label>Account</label>
-            </value>
-            <value>
-                <fullName>Account e Billing Profile</fullName>
-                <default>false</default>
-                <label>Account e Billing Profile</label>
-            </value>
-            <value>
-                <fullName>Billing Profile</fullName>
-                <default>false</default>
-                <label>Billing Profile</label>
-            </value>
-            <value>
-                <fullName>In Continuità</fullName>
-                <default>false</default>
-                <label>In Continuità</label>
-            </value>
-            <value>
                 <fullName>Recupero</fullName>
                 <default>false</default>
                 <label>Recupero</label>
+            </value>
+            <value>
+                <fullName>Report disaggregato</fullName>
+                <default>false</default>
+                <label>Report disaggregato</label>
+            </value>
+            <value>
+                <fullName>Report storno di adeguamento</fullName>
+                <default>false</default>
+                <label>Report storno di adeguamento</label>
+            </value>
+            <value>
+                <fullName>Rettifica per segnalazione cassetto fiscale</fullName>
+                <default>false</default>
+                <label>Rettifica per segnalazione cassetto fiscale</label>
+            </value>
+            <value>
+                <fullName>Rid. Agev. Dopo Accertamento</fullName>
+                <default>false</default>
+                <label>Rid. Agev. Dopo Accertamento</label>
+            </value>
+            <value>
+                <fullName>Rinuncia Fondo Fughe</fullName>
+                <default>false</default>
+                <label>Rinuncia Fondo Fughe</label>
+            </value>
+            <value>
+                <fullName>Sezionamento Allacciamento</fullName>
+                <default>false</default>
+                <label>Sezionamento Allacciamento</label>
+            </value>
+            <value>
+                <fullName>Soppressione Attacco</fullName>
+                <default>false</default>
+                <label>Soppressione Attacco</label>
+            </value>
+            <value>
+                <fullName>Sostituzione Contatore per Incuria</fullName>
+                <default>false</default>
+                <label>Sostituzione Contatore per Incuria</label>
+            </value>
+            <value>
+                <fullName>Spostamento Impianto</fullName>
+                <default>false</default>
+                <label>Spostamento Impianto</label>
+            </value>
+            <value>
+                <fullName>Superficie</fullName>
+                <default>false</default>
+                <label>Superficie</label>
+            </value>
+            <value>
+                <fullName>Variazione Gruppo IVA</fullName>
+                <default>false</default>
+                <label>Variazione Gruppo IVA</label>
+            </value>
+            <value>
+                <fullName>Variazione Portata</fullName>
+                <default>false</default>
+                <label>Variazione Portata</label>
+            </value>
+            <value>
+                <fullName>Verifica interna apertura contatore chiuso</fullName>
+                <default>false</default>
+                <label>Verifica interna apertura contatore chiuso</label>
+            </value>
+            <value>
+                <fullName>Verifica interna consumo abusivo</fullName>
+                <default>false</default>
+                <label>Verifica interna consumo abusivo</label>
+            </value>
+            <value>
+                <fullName>Verifica interna inversione contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna lettura a carico HERA</fullName>
+                <default>false</default>
+                <label>Verifica interna lettura a carico HERA</label>
+            </value>
+            <value>
+                <fullName>Verifica interna SISMA chiusura contatore</fullName>
+                <default>false</default>
+                <label>Verifica interna SISMA chiusura contatore</label>
+            </value>
+            <value>
+                <fullName>Verifica interna sul posto gratuita</fullName>
+                <default>false</default>
+                <label>Verifica interna sul posto gratuita</label>
+            </value>
+            <value>
+                <fullName>Verifica Rottura Impianto Cliente</fullName>
+                <default>false</default>
+                <label>Verifica Rottura Impianto Cliente</label>
             </value>
         </valueSetDefinition>
         <valueSettings>
@@ -190,7 +355,43 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Incorporazione societaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Mortis Causa</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
+            <valueName>Ordinaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
             <valueName>Recupero</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Elementi di dettaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Report disaggregato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
+            <valueName>Report storno di adeguamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>Account</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>Account e Billing Profile</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
+            <valueName>Billing Profile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>BP/CA - errata categoria</controllingFieldValue>
@@ -205,16 +406,150 @@
             <valueName>CA</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Elementi di dettaglio</valueName>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Aggiunta Attacco</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report disaggregato</valueName>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Aggiunta Attacco senza Attivazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Dettaglio Bolletta</controllingFieldValue>
-            <valueName>Report storno di adeguamento</valueName>
+            <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
+            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
+            <valueName>Nuovo Allaccio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <valueName>Spostamento Impianto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica Impianto</controllingFieldValue>
+            <valueName>Variazione Portata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
+            <valueName>Sezionamento Allacciamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Rimozione Impianto</controllingFieldValue>
+            <valueName>Soppressione Attacco</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Dati catastali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>DOM_Coabitazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>DOM_Componenti non residenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>DOM_Componenti residenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Domiciliato in nucleo residente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>NON DOM_ISTAT/Ronchi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica dati contrattuali</controllingFieldValue>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Superficie</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Agevolazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Modifica post accertamento</controllingFieldValue>
+            <valueName>Rid. Agev. Dopo Accertamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Adesione Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Adesione Rinuncia Fondo Fughe</controllingFieldValue>
+            <valueName>Rinuncia Fondo Fughe</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>DGRER569/19 non allacciato/uso irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
+            <valueName>Modifica Fognatura e Depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna apertura contatore chiuso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna consumo abusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna inversione contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna lettura a carico HERA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna SISMA chiusura contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica interna sul posto gratuita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica Interna</controllingFieldValue>
+            <valueName>Verifica Rottura Impianto Cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Autorizzazione allo scarico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Cartografia</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Fognatura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Istruttoria</controllingFieldValue>
+            <valueName>Parere Preventivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Lettura su Contratto Aperto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Interventi con Verifica</controllingFieldValue>
+            <valueName>Sostituzione Contatore per Incuria</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Dichiarazione di intento</controllingFieldValue>
@@ -247,18 +582,6 @@
         <valueSettings>
             <controllingFieldValue>Fiscale</controllingFieldValue>
             <valueName>IVA - Errata applicazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Ordinaria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Mortis Causa</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Voltura Tecnica</controllingFieldValue>
-            <valueName>Incorporazione societaria</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

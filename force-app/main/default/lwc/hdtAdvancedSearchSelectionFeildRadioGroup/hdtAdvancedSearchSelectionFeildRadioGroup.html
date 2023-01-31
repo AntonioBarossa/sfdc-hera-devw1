@@ -1,10 +1,22 @@
 <template>
-    <lightning-radio-group disabled={disabledinput}
-                           name="radioGroup"
-                           label="Ricerca per:"
-                           options={options}
-                           value={value}
-                           type="radio"
-                            onchange={handleChange}>
-    </lightning-radio-group>
+    <fieldset class="slds-form-element" >
+      <legend class="slds-form-element__legend slds-form-element__label">{label}</legend>
+      <div class="slds-form-element__control">
+          <template for:each={options} for:item="option">
+                <div key={option.key}>
+                  <input type="radio" onchange={handleSelected} value={option.value} checked={option.checked} disabled={option.disabled}/>
+                    <label class="slds-radio__label" >
+                    <span class="slds-radio_faux"></span>
+                    <span class="slds-form-element__label slds-p-left_xx-small">{option.label} 
+                        <template  for:each={option.imageName} for:item="nameOption"> 
+                            <span key={option.key}>
+                                 <img class="img-item" src={nameOption} style="width:1.04vw;height:1.54vh;padding-left: 3px;"/>
+                            </span>
+                        </template>
+                    </span>
+                    </label>
+                </div>
+            </template>
+        </div>
+    </fieldset>
 </template>

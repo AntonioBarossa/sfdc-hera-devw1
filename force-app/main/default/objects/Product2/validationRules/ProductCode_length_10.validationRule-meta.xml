@@ -2,6 +2,6 @@
 <ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>ProductCode_length_10</fullName>
     <active>true</active>
-    <errorConditionFormula>AND(LEN(ProductCode) &gt;10,   ISPICKVAL(Family, &apos;Offerta Commerciale&apos;), NOT(CONTAINS(LOWER(ProductCode), &apos;template&apos;)))</errorConditionFormula>
+    <errorConditionFormula>AND(LEN(ProductCode) &gt;10,   ISPICKVAL(Family, &apos;Offerta Commerciale&apos;), NOT(ISPICKVAL(Service__c, &apos;Ambiente&apos;)), NOT(CONTAINS(LOWER(ProductCode), &apos;template&apos;)))</errorConditionFormula>
     <errorMessage>Il codice del prodotto non può contenere più di 10 caratteri</errorMessage>
 </ValidationRule>

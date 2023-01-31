@@ -1,9 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Richiesta non accolta</fullName>
+        <default>false</default>
+        <label>Richiesta non accolta</label>
+    </customValue>
+    <customValue>
         <fullName>Annullamento da cliente</fullName>
         <default>false</default>
         <label>Annullamento da cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento dal SII</fullName>
+        <default>false</default>
+        <label>Annullamento dal SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento Ordine di Riferimento</fullName>
+        <default>false</default>
+        <label>Annullamento Ordine di Riferimento</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento per dati discordanti</fullName>
+        <default>false</default>
+        <label>Annullamento per dati discordanti</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullamento per Parere Negativo</fullName>
+        <default>false</default>
+        <label>Annullamento per Parere Negativo</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullato per no conferma cliente</fullName>
+        <default>false</default>
+        <label>Annullato per no conferma cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Annullato per possibile frode</fullName>
+        <default>false</default>
+        <label>Annullato per possibile frode</label>
     </customValue>
     <customValue>
         <fullName>Annullo cambio offerta</fullName>
@@ -16,14 +51,34 @@
         <label>Annullo voltura</label>
     </customValue>
     <customValue>
+        <fullName>Assenza del presupposto di applicazione del tributo</fullName>
+        <default>false</default>
+        <label>Assenza del presupposto di applicazione del tributo</label>
+    </customValue>
+    <customValue>
+        <fullName>Autolettura non acquisibile</fullName>
+        <default>false</default>
+        <label>Autolettura non acquisibile</label>
+    </customValue>
+    <customValue>
         <fullName>Classificazione errata</fullName>
         <default>false</default>
         <label>Classificazione errata</label>
     </customValue>
     <customValue>
+        <fullName>Cliente Non Trovato</fullName>
+        <default>false</default>
+        <label>Cliente Non Trovato</label>
+    </customValue>
+    <customValue>
         <fullName>Codice ABI obsoleto</fullName>
         <default>false</default>
         <label>Codice ABI obsoleto</label>
+    </customValue>
+    <customValue>
+        <fullName>Consegna/Installazione Rifiutata</fullName>
+        <default>false</default>
+        <label>Consegna/Installazione Rifiutata</label>
     </customValue>
     <customValue>
         <fullName>Contattare banca</fullName>
@@ -36,6 +91,16 @@
         <label>Contatto Quality Fallito</label>
     </customValue>
     <customValue>
+        <fullName>Delibera ARERA 155/2020</fullName>
+        <default>false</default>
+        <label>Delibera ARERA 155/2020</label>
+    </customValue>
+    <customValue>
+        <fullName>Disattivato/Disdetto (Servizio)</fullName>
+        <default>false</default>
+        <label>Disattivato/Disdetto (Servizio)</label>
+    </customValue>
+    <customValue>
         <fullName>Disattivazione in corso</fullName>
         <default>false</default>
         <label>Disattivazione in corso</label>
@@ -46,9 +111,34 @@
         <label>Domiciliazione già presente</label>
     </customValue>
     <customValue>
+        <fullName>Esito KO sopralluogo</fullName>
+        <default>false</default>
+        <label>Esito KO sopralluogo</label>
+    </customValue>
+    <customValue>
         <fullName>Firma falsa</fullName>
         <default>false</default>
         <label>Firma falsa</label>
+    </customValue>
+    <customValue>
+        <fullName>Gestione Scarto</fullName>
+        <default>false</default>
+        <label>Gestione Scarto</label>
+    </customValue>
+    <customValue>
+        <fullName>Il cliente rinuncia</fullName>
+        <default>false</default>
+        <label>Il cliente rinuncia</label>
+    </customValue>
+    <customValue>
+        <fullName>Installazione Fallita</fullName>
+        <default>false</default>
+        <label>Installazione Fallita</label>
+    </customValue>
+    <customValue>
+        <fullName>Mancanza del presupposto</fullName>
+        <default>false</default>
+        <label>Mancanza del presupposto</label>
     </customValue>
     <customValue>
         <fullName>Mancanza titolarità</fullName>
@@ -86,6 +176,16 @@
         <label>Quality - Annullo cambio offerta</label>
     </customValue>
     <customValue>
+        <fullName>Registrazione non conforme</fullName>
+        <default>false</default>
+        <label>Registrazione non conforme</label>
+    </customValue>
+    <customValue>
+        <fullName>Reso (Prodotto)</fullName>
+        <default>false</default>
+        <label>Reso (Prodotto)</label>
+    </customValue>
+    <customValue>
         <fullName>Revoca ai sensi del comma 14.3 del TIMOE</fullName>
         <default>false</default>
         <label>Revoca ai sensi del comma 14.3 del TIMOE</label>
@@ -99,6 +199,11 @@
         <fullName>Revoca ai sensi del comma 8.2 del TIMG</fullName>
         <default>false</default>
         <label>Revoca ai sensi del comma 8.2 del TIMG</label>
+    </customValue>
+    <customValue>
+        <fullName>Rifiutato Preventivamente</fullName>
+        <default>false</default>
+        <label>Rifiutato Preventivamente</label>
     </customValue>
     <customValue>
         <fullName>Ripensamento da cliente</fullName>
@@ -126,86 +231,6 @@
         <label>Volontà estorta</label>
     </customValue>
     <customValue>
-        <fullName>Gestione Scarto</fullName>
-        <default>false</default>
-        <label>Gestione Scarto</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullato per no conferma cliente</fullName>
-        <default>false</default>
-        <label>Annullato per no conferma cliente</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullato per possibile frode</fullName>
-        <default>false</default>
-        <label>Annullato per possibile frode</label>
-    </customValue>
-    <customValue>
-        <fullName>Il cliente rinuncia</fullName>
-        <default>false</default>
-        <label>Il cliente rinuncia</label>
-    </customValue>
-    <customValue>
-        <fullName>Rifiutato Preventivamente</fullName>
-        <default>false</default>
-        <label>Rifiutato Preventivamente</label>
-    </customValue>
-    <customValue>
-        <fullName>Consegna/Installazione Rifiutata</fullName>
-        <default>false</default>
-        <label>Consegna/Installazione Rifiutata</label>
-    </customValue>
-    <customValue>
-        <fullName>Installazione Fallita</fullName>
-        <default>false</default>
-        <label>Installazione Fallita</label>
-    </customValue>
-    <customValue>
-        <fullName>Reso (Prodotto)</fullName>
-        <default>false</default>
-        <label>Reso (Prodotto)</label>
-    </customValue>
-    <customValue>
-        <fullName>Disattivato/Disdetto (Servizio)</fullName>
-        <default>false</default>
-        <label>Disattivato/Disdetto (Servizio)</label>
-    </customValue>
-    <customValue>
-        <fullName>Cliente Non Trovato</fullName>
-        <default>false</default>
-        <label>Cliente Non Trovato</label>
-    </customValue>
-    <customValue>
-        <fullName>Autolettura non acquisibile</fullName>
-        <default>false</default>
-        <label>Autolettura non acquisibile</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullamento dal SII</fullName>
-        <default>false</default>
-        <label>Annullamento dal SII</label>
-    </customValue>
-    <customValue>
-        <fullName>Delibera ARERA 155/2020</fullName>
-        <default>false</default>
-        <label>Delibera ARERA 155/2020</label>
-    </customValue>
-    <customValue>
-        <fullName>Registrazione non conforme</fullName>
-        <default>false</default>
-        <label>Registrazione non conforme</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullamento per dati discordanti</fullName>
-        <default>false</default>
-        <label>Annullamento per dati discordanti</label>
-    </customValue>
-    <customValue>
-        <fullName>Annullamento Ordine di Riferimento</fullName>
-        <default>false</default>
-        <label>Annullamento Ordine di Riferimento</label>
-    </customValue>
-    <customValue>
         <fullName>Ammissibilità KO</fullName>
         <default>false</default>
         <label>Ammissibilità KO</label>
@@ -220,6 +245,16 @@
         <default>false</default>
         <label>Esito KO da SII</label>
     </customValue>
+    <customValue>
+        <fullName>Variazione non necessaria</fullName>
+        <default>false</default>
+        <label>Variazione non necessaria</label>
+    </customValue>
+	<customValue>
+        <fullName>Mancata corrispondenza Anagrafe</fullName>
+        <default>false</default>
+        <label>Mancata corrispondenza Anagrafe</label>
+    </customValue>
     <masterLabel>Motivazione Annullamento</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

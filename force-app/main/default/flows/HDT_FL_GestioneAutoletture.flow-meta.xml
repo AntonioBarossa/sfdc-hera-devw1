@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Cerca_Processi_di_vendita_elegibili</name>
         <label>Cerca Processi di vendita elegibili</label>
-        <locationX>642</locationX>
-        <locationY>346</locationY>
+        <locationX>2272</locationX>
+        <locationY>398</locationY>
         <actionName>HDT_UTL_SelfReadings</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -40,8 +40,8 @@
     <actionCalls>
         <name>Close_Discard_Activity</name>
         <label>Close Discard Activity</label>
-        <locationX>2148</locationX>
-        <locationY>255</locationY>
+        <locationX>1986</locationX>
+        <locationY>2078</locationY>
         <actionName>HDT_LC_EditScartiComplessi</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -59,8 +59,8 @@
     <actionCalls>
         <name>selfReading</name>
         <label>selfReading</label>
-        <locationX>2653</locationX>
-        <locationY>228</locationY>
+        <locationX>1986</locationX>
+        <locationY>2318</locationY>
         <actionName>HDT_UTL_Scarti</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -89,10 +89,33 @@
     </actionCalls>
     <apiVersion>51.0</apiVersion>
     <assignments>
+        <name>AssegnaLetturaAvvisoCliente</name>
+        <label>AssegnaLetturaAvvisoCliente</label>
+        <locationX>754</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case_Avviso_Cliente.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case_Avviso_Cliente.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Record_Lettura_Avviso_Cliente</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assign_codice_causale_da_switch</name>
         <label>Assign codice causale (da switch)</label>
-        <locationX>1150</locationX>
-        <locationY>65</locationY>
+        <locationX>1524</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CausalCodeProcessReading</assignToReference>
             <operator>Assign</operator>
@@ -107,8 +130,8 @@
     <assignments>
         <name>Assign_Codice_Causale_da_voltura</name>
         <label>Assign Codice Causale (da voltura)</label>
-        <locationX>1148</locationX>
-        <locationY>179</locationY>
+        <locationX>3482</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>CausalCodeProcessReading</assignToReference>
             <operator>Assign</operator>
@@ -121,37 +144,62 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssignErrorMessage</name>
-        <label>AssignErrorMessage</label>
-        <locationX>1266</locationX>
-        <locationY>955</locationY>
+        <name>Inviata_a_SAP</name>
+        <label>Inviata a SAP</label>
+        <locationX>2514</locationX>
+        <locationY>2198</locationY>
         <assignmentItems>
-            <assignToReference>ReadingError</assignToReference>
+            <assignToReference>NextPhase</assignToReference>
             <operator>Assign</operator>
             <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>ErrorMessage</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Attenzione! Autolettura non inserita correttamente si prega di reinserirla.</stringValue>
+                <stringValue>Inviata a SAP</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Inserimento_Letture</targetReference>
+            <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
         </connector>
     </assignments>
+    <choices>
+        <name>Delibera_2018</name>
+        <choiceText>Delibera 2018</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Delibera 2018</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>Servizio_Avviso_Sms_mail</name>
+        <choiceText>Servizio Avviso Sms/mail</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>Servizio Avviso Sms/mail</stringValue>
+        </value>
+    </choices>
     <decisions>
         <name>Autolettura_da_processo_check</name>
         <label>Autolettura da processo?</label>
-        <locationX>788</locationX>
-        <locationY>396</locationY>
+        <locationX>2272</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Set_Codice_Venditore</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Autolettura da cliente</defaultConnectorLabel>
+        <rules>
+            <name>Set_Lettura_Acqua_Avviso_al_Cliente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Lettura_Acqua_Avviso_al_Cliente</targetReference>
+            </connector>
+            <label>Lettura Acqua Avviso al Cliente</label>
+        </rules>
         <rules>
             <name>Set_Autolettura_da_processo</name>
             <conditionLogic>and</conditionLogic>
@@ -178,8 +226,8 @@
     <decisions>
         <name>Check_Codice_Causale_Autolettura_da_processo</name>
         <label>Codice Causale Autolettura da processo?</label>
-        <locationX>793</locationX>
-        <locationY>112</locationY>
+        <locationX>2635</locationX>
+        <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Lettura_da_switch</name>
@@ -222,8 +270,8 @@
     <decisions>
         <name>Check_Lettura</name>
         <label>Check Lettura</label>
-        <locationX>1676</locationX>
-        <locationY>551</locationY>
+        <locationX>2030</locationX>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Refresh_Case_Final</targetReference>
         </defaultConnector>
@@ -254,8 +302,8 @@
     <decisions>
         <name>Check_Processo</name>
         <label>Check Processo</label>
-        <locationX>2138</locationX>
-        <locationY>549</locationY>
+        <locationX>2602</locationX>
+        <locationY>1838</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>discard_Rework</name>
@@ -306,8 +354,8 @@
     <decisions>
         <name>Check_pulsante_premuto</name>
         <label>Pulsante premuto?</label>
-        <locationX>1402</locationX>
-        <locationY>551</locationY>
+        <locationX>1524</locationX>
+        <locationY>1478</locationY>
         <defaultConnector>
             <targetReference>Check_Lettura</targetReference>
         </defaultConnector>
@@ -346,8 +394,8 @@
     <decisions>
         <name>Check_Service_Point</name>
         <label>Check Service Point</label>
-        <locationX>634</locationX>
-        <locationY>562</locationY>
+        <locationX>1161</locationX>
+        <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Cerca_Processi_di_vendita_elegibili</targetReference>
         </defaultConnector>
@@ -371,8 +419,11 @@
     <decisions>
         <name>Check_Type</name>
         <label>Check Type</label>
-        <locationX>2304</locationX>
-        <locationY>195</locationY>
+        <locationX>1986</locationX>
+        <locationY>2198</locationY>
+        <defaultConnector>
+            <targetReference>UpdateCaseAmmKO</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>Esito predefinito</defaultConnectorLabel>
         <rules>
             <name>Check_Preliminari_KO</name>
@@ -413,28 +464,79 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Lettura_Inserita_Correttamente</name>
-        <label>Lettura Inserita Correttamente?</label>
-        <locationX>1984</locationX>
-        <locationY>864</locationY>
+        <name>Pulsante_Premuto_Avviso_Cliente</name>
+        <label>Pulsante Premuto Avviso Cliente</label>
+        <locationX>534</locationX>
+        <locationY>878</locationY>
         <defaultConnector>
-            <targetReference>Check_Processo</targetReference>
+            <targetReference>AssegnaLetturaAvvisoCliente</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Inserita</defaultConnectorLabel>
+        <defaultConnectorLabel>Conferma Pratica</defaultConnectorLabel>
         <rules>
-            <name>Non_Inserita</name>
+            <name>Conferma_Pratica</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetReadings</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>Record_Edit_Avviso_Al_Cliente.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva in bozza</label>
+        </rules>
+        <rules>
+            <name>Annulla</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Record_Edit_Avviso_Al_Cliente.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssignErrorMessage</targetReference>
+                <targetReference>Gestione_Annullamento</targetReference>
             </connector>
-            <label>Non Inserita</label>
+            <label>Annulla</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Turbobilling</name>
+        <label>Turbobilling</label>
+        <locationX>2646</locationX>
+        <locationY>2078</locationY>
+        <defaultConnector>
+            <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>$Label.TRB_Enable</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Y</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Inviata_a_SAP</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <formulas>
@@ -461,7 +563,7 @@ TODO: Formula da adeguare in Wave 2.</description>
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -474,11 +576,11 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Calcolo_Codice_Causale</name>
         <label>Calcolo Codice Causale</label>
-        <locationX>2395</locationX>
-        <locationY>441</locationY>
+        <locationX>2646</locationX>
+        <locationY>1958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
+            <targetReference>Turbobilling</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -509,8 +611,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Calcolo_Codice_Causale_Lettura_da_Switch</name>
         <label>Calcolo Codice Causale Lettura da Switch</label>
-        <locationX>1025</locationX>
-        <locationY>65</locationY>
+        <locationX>1524</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_codice_causale_da_switch</targetReference>
@@ -544,8 +646,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Calcolo_Codice_Causale_Lettura_da_Voltura</name>
         <label>Calcolo Codice Causale Lettura da Voltura</label>
-        <locationX>1026</locationX>
-        <locationY>179</locationY>
+        <locationX>3482</locationX>
+        <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assign_Codice_Causale_da_voltura</targetReference>
@@ -579,8 +681,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Get_Case</name>
         <label>Get Case</label>
-        <locationX>466</locationX>
-        <locationY>560</locationY>
+        <locationX>1161</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Service_Point</targetReference>
@@ -598,10 +700,31 @@ TODO: Formula da adeguare in Wave 2.</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Case_Avviso_Cliente</name>
+        <label>Get Case</label>
+        <locationX>534</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Pulsante_Premuto_Avviso_Cliente</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetDiscardActivity</name>
         <label>GetDiscardActivity</label>
-        <locationX>2143</locationX>
-        <locationY>376</locationY>
+        <locationX>1986</locationX>
+        <locationY>1958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Close_Discard_Activity</targetReference>
@@ -622,38 +745,10 @@ TODO: Formula da adeguare in Wave 2.</description>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>GetReadings</name>
-        <label>GetReadings</label>
-        <locationX>1970</locationX>
-        <locationY>637</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Lettura_Inserita_Correttamente</targetReference>
-        </connector>
-        <filterLogic>or</filterLogic>
-        <filters>
-            <field>CaseEle__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Refresh_Case.Id</elementReference>
-            </value>
-        </filters>
-        <filters>
-            <field>CaseGas__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>Refresh_Case.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Reading__c</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
         <name>Refresh_Case</name>
         <label>Refresh Case</label>
-        <locationX>1138</locationX>
-        <locationY>551</locationY>
+        <locationX>1524</locationX>
+        <locationY>1238</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Letture</targetReference>
@@ -673,11 +768,11 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordLookups>
         <name>Refresh_Case_Final</name>
         <label>Refresh Case</label>
-        <locationX>1855</locationX>
-        <locationY>547</locationY>
+        <locationX>2602</locationX>
+        <locationY>1718</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>GetReadings</targetReference>
+            <targetReference>Check_Processo</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -695,8 +790,8 @@ TODO: Formula da adeguare in Wave 2.</description>
         <description>Il tracciato del DL prevede solo autoletture da processo ELE mono-orario, in caso di multi annulliamo il Case che rimane solo su sfdc per tracciatura.</description>
         <name>Annullamento_Autolettura_Multi_oraria</name>
         <label>Annullamento Autolettura Multi-oraria</label>
-        <locationX>1684</locationX>
-        <locationY>214</locationY>
+        <locationX>1458</locationX>
+        <locationY>1718</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -728,8 +823,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Codice_Venditore</name>
         <label>Set Codice Venditore + Distributore</label>
-        <locationX>994</locationX>
-        <locationY>552</locationY>
+        <locationX>1524</locationX>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Refresh_Case</targetReference>
         </connector>
@@ -747,19 +842,13 @@ TODO: Formula da adeguare in Wave 2.</description>
                 <elementReference>Get_Case.ServicePoint__r.Distributor__r.Code__c</elementReference>
             </value>
         </inputAssignments>
-        <inputAssignments>
-            <field>SalesCompanyCode__c</field>
-            <value>
-                <elementReference>CompanyCodeFormula</elementReference>
-            </value>
-        </inputAssignments>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>Set_Data_Lettura_Cliente</name>
         <label>Set Data Lettura Cliente</label>
-        <locationX>1410</locationX>
-        <locationY>301</locationY>
+        <locationX>1018</locationX>
+        <locationY>1598</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -779,8 +868,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Dati_Autolettura_da_processo</name>
         <label>Set Dati Autolettura da processo</label>
-        <locationX>1333</locationX>
-        <locationY>58</locationY>
+        <locationX>1524</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Set_Codice_Venditore</targetReference>
         </connector>
@@ -815,8 +904,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Fase_Attesa_check_preliminari</name>
         <label>Set Fase Attesa check preliminari</label>
-        <locationX>2529</locationX>
-        <locationY>441</locationY>
+        <locationX>2646</locationX>
+        <locationY>2414</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -837,7 +926,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Attesa check preliminari</stringValue>
+                <elementReference>NextPhase</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -851,8 +940,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Set_Fase_Da_Inviare</name>
         <label>Set Fase Da Inviare</label>
-        <locationX>2477</locationX>
-        <locationY>675</locationY>
+        <locationX>2954</locationX>
+        <locationY>1958</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -881,8 +970,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <recordUpdates>
         <name>Update_Case_Phase</name>
         <label>Update Case Phase</label>
-        <locationX>2809</locationX>
-        <locationY>69</locationY>
+        <locationX>1722</locationX>
+        <locationY>2318</locationY>
         <connector>
             <targetReference>Spinner</targetReference>
         </connector>
@@ -903,11 +992,40 @@ TODO: Formula da adeguare in Wave 2.</description>
         <object>Case</object>
     </recordUpdates>
     <recordUpdates>
+        <name>Update_Record_Lettura_Avviso_Cliente</name>
+        <label>Update Record Lettura Avviso Cliente</label>
+        <locationX>754</locationX>
+        <locationY>1118</locationY>
+        <inputReference>Get_Case_Avviso_Cliente</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdateCaseAmmKO</name>
+        <label>UpdateCaseAmmKO</label>
+        <locationX>2250</locationX>
+        <locationY>2318</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetDiscardActivity.Case__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>UpdateCaseForVoltura</name>
         <label>UpdateCaseForVoltura</label>
-        <locationX>1265</locationX>
-        <locationY>188</locationY>
+        <locationX>3482</locationX>
+        <locationY>998</locationY>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Set_Codice_Venditore</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
@@ -941,8 +1059,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <screens>
         <name>Inserimento_Letture</name>
         <label>Inserimento Letture</label>
-        <locationX>1265</locationX>
-        <locationY>549</locationY>
+        <locationX>1524</locationX>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1003,21 +1121,6 @@ TODO: Formula da adeguare in Wave 2.</description>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>ErrorMessageDisplay</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(0, 0, 0);&quot;&gt;{!ErrorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ReadingError</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>displayTextMiddle</name>
@@ -1122,8 +1225,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <screens>
         <name>Invalid_Case_Screen</name>
         <label>Invalid Case Screen</label>
-        <locationX>645</locationX>
-        <locationY>780</locationY>
+        <locationX>50</locationX>
+        <locationY>398</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1136,10 +1239,116 @@ TODO: Formula da adeguare in Wave 2.</description>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Lettura_Acqua_Avviso_al_Cliente</name>
+        <label>Lettura Acqua Avviso al Cliente</label>
+        <locationX>534</locationX>
+        <locationY>638</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Get_Case_Avviso_Cliente</targetReference>
+        </connector>
+        <fields>
+            <name>Record_Edit_Avviso_Al_Cliente</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Lettura Acqua Avviso al Cliente</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>FINISH</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>Get_Case.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Spinner</name>
         <label>Spinner</label>
-        <locationX>2813</locationX>
-        <locationY>550</locationY>
+        <locationX>2602</locationX>
+        <locationY>2750</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1167,8 +1376,8 @@ TODO: Formula da adeguare in Wave 2.</description>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>70</locationX>
-        <locationY>542</locationY>
+        <locationX>1035</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>Get_Case</targetReference>
         </connector>
@@ -1177,8 +1386,8 @@ TODO: Formula da adeguare in Wave 2.</description>
     <subflows>
         <name>Gestione_Annullamento</name>
         <label>Gestione Annullamento</label>
-        <locationX>1411</locationX>
-        <locationY>760</locationY>
+        <locationX>2272</locationX>
+        <locationY>3374</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1233,16 +1442,6 @@ TODO: Formula da adeguare in Wave 2.</description>
         </value>
     </variables>
     <variables>
-        <name>ErrorMessage</name>
-        <dataType>String</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </variables>
-    <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
@@ -1250,13 +1449,13 @@ TODO: Formula da adeguare in Wave 2.</description>
         <isOutput>false</isOutput>
     </variables>
     <variables>
-        <name>ReadingError</name>
-        <dataType>Boolean</dataType>
+        <name>NextPhase</name>
+        <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
         <value>
-            <booleanValue>false</booleanValue>
+            <stringValue>Attesa check preliminari</stringValue>
         </value>
     </variables>
     <variables>

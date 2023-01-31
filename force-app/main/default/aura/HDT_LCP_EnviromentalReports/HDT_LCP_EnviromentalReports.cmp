@@ -1,0 +1,7 @@
+<aura:component implements="force:lightningQuickAction">
+    <aura:handler name="init" value="{!this}" action="{!c.doInit}" />
+    <aura:html tag="style"> .slds-modal__container { min-width: 75vw; } </aura:html><!-- ENLARGE Standard modal container global action -->
+    <div class="slds-box slds-theme_default">
+    	<lightning:flow aura:id="flowData" onstatuschange="{!c.handleStatusChange}" />
+    </div>
+</aura:component>	

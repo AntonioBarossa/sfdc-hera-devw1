@@ -162,6 +162,10 @@ private class HDT_UTL_OrderProcessAssignmentTst {
   @isTest 
   static void testFieldsTransition() {     
     Sale__c sale = [SELECT Id FROM Sale__c WHERE Name='testSaleName0' LIMIT 1];
+    ServicePoint__c sptest = [SELECT Id,PlugPresence__c FROM ServicePoint__c LIMIT 1];
+    sptest.PlugPresence__c = 'Si';
+    sptest.PowerRequested__c = null;
+    update sptest;
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
   
     System.assertEquals('Subentro_Remi', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
@@ -179,6 +183,20 @@ private class HDT_UTL_OrderProcessAssignmentTst {
   
   }
 
+  @isTest
+  static void getProcessDriverTst()
+  {
+    Order oneOrder = [select id,Name,AccountId,MarketOrigin__c,PowerRequested__c,PowerCommitted__c,IsWinback__c,
+                      ServicePoint__r.MeterStatus__c,ServicePoint__r.Account__c, ServicePoint__r.PlugPresence__c,ServicePoint__r.ServicePointCode__c,
+                      SBQQ__Quote__r.AllowChangeUse__c,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.RecordType.DeveloperName,SBQQ__Quote__r.ContractReference__c,isSTG__c,
+                      ServicePoint__r.CommoditySector__c,ServicePoint__r.SapContractStatus__c,ServicePoint__r.isReseller__c
+                      FROM Order 
+                      WHERE PowerRequested__c=10];
 
+    Test.startTest();
+      String result = HDT_UTL_OrderProcessAssignment.getProcessDriver(oneOrder);
+    Test.stopTest();
+    System.assertEquals(true, String.isNotBlank(result), 'Driver non calcolati correttamente');
+  }
 
 }

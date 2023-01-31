@@ -28,9 +28,11 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
         List<Order> upList = new List<Order>();
+        String qualityMessage = 'Attività lavorata da ' + UserInfo.getUserId()+ ' il ' +Date.today()+ '. Esito Contatto: ' + confirmText +' OK.';
         Order orderUpdate = new Order(
             Id = ordId,
-            ConfirmCustomerContract__c = confirmText
+            ConfirmCustomerContract__c = confirmText,
+            WorkedQualityCall__c = qualityMessage
         );
 
         if(confirmtext == 'Comfort call'){
@@ -137,7 +139,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             for (Order currOrd:allOrders){
                 if (currOrd.Id!=ordToCheck[0].Id) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
-                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) )) {
+                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
                         break;
                     }
@@ -146,7 +148,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
         
         String result = ordToCheck[0].DateComfortCall__c == null ? 'Annullato Quality Call' : 'Annullato Comfort Call';
-
+        String qualityMessage = 'Attività lavorata da ' + UserInfo.getUserId()+ ' il ' +Date.today()+ '. Esito Contatto: ' + result +'. Causale: ' + causal;
         if (notCancelPhase.contains(ordToCheck[0].Phase__c) || notCancelNonBillable.contains(ordToCheck[0].Phase__c) || notCancelBillable.contains(ordToCheck[0].Phase__c)) {
             if ('Il cliente rinuncia'.equalsIgnoreCase(causal) || 'Firma Falsa'.equalsIgnoreCase(causal) || 'Volontà estorta'.equalsIgnoreCase(causal) || causal.equalsIgnoreCase('Contatto Quality Fallito')) {
                 
@@ -178,6 +180,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             /*if(!causal.equalsIgnoreCase('Contatto Quality Fallito')){
                 throw new AuraHandledException('Non è possibile procedere all’annullamento, effettuare una richiesta di recesso');
             }*/
+            orderSrv.updateRecord(new Order(
+                Id = ordId,
+                Skip_Callout__c = ordToCheck[0].Skip_Callout__c == null ? -1 : null,
+                CancellationReason__c = causal,
+                WorkedQualityCall__c = qualityMessage
+            ));
         }
         else
         {
@@ -201,7 +209,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 Phase__c = phase,
                 CancellationReason__c = causal,
                 CancellationRequestDate__c = System.today(),
-                Status = status
+                Status = status,
+                WorkedQualityCall__c = qualityMessage
             ));
 
         }

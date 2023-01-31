@@ -4,9 +4,32 @@
     <description>Qualifica Titolare</description>
     <externalId>false</externalId>
     <label>Qualifica Titolare</label>
-    <length>30</length>
     <required>false</required>
     <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <type>Picklist</type>
+    <valueSet>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>1</fullName>
+                <default>false</default>
+                <label>Proprietario</label>
+            </value>
+            <value>
+                <fullName>2</fullName>
+                <default>false</default>
+                <label>Usufruttuario</label>
+            </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>Locatario</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>Titolare di altri diritto su immobile</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
 </CustomField>

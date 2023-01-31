@@ -1,8 +1,10 @@
+@SuppressWarnings('PMD.AvoidDebugStatements')
 /**
 * @author Luca Molino (luca.molino@engdb.com.br)
 * @date 23/03/2021
 * @description HDT_UTL_ServicePoint Class
 * @history Luca Molino – 23/03/2021 – Created Class
+* 18/11/2022 - Fabio Palladino - Class refactoring e gestione dati castali 
 */
 public with sharing class HDT_UTL_ServicePoint {
     
@@ -10,10 +12,22 @@ public with sharing class HDT_UTL_ServicePoint {
     private static HDT_QR_Account accountQr = new HDT_QR_Account();
     private static HDT_QR_ServicePoint servicePointQr = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint serviceSrv = new HDT_SRV_ServicePoint();
+   
+
+    @InvocableMethod(label='Invoke ServicePoint Enrichment')
+    public static List<ServicePoint__c> servicePointEnrichment( List<HDT_UTL_FlowInput> inputs){
+        //  List<ServicePoint__c> sp, List<String> responseSerialized
+
+        HDT_WS_ArrichmentDataEntityResponse response = (HDT_WS_ArrichmentDataEntityResponse) JSON.deserialize(inputs[0].responseSerialized, HDT_WS_ArrichmentDataEntityResponse.class);
+        List<ServicePoint__c> ret = extractDataFromArriccDataServiceWithExistingSp(inputs[0].servicePoint, response); 
+
+        return ret;
+    }
     
     @AuraEnabled
     public static List<ServicePoint__c> extractDataFromArriccDataServiceWithExistingSp(ServicePoint__c sp, HDT_WS_ArrichmentDataEntityResponse response){
-        
+        HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+        HDT_QR_LandRegistry landRegistryQr = new HDT_QR_LandRegistry();
         ServicePoint__c spNew = new ServicePoint__c();
         if(sp != null){
             spNew = sp;
@@ -24,7 +38,7 @@ public with sharing class HDT_UTL_ServicePoint {
         for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_posizioniResponseObject r : response.data.posizioni){
             if(!String.isBlank(r.campo) && mapRes.get(r.campo.toUpperCase()) == null){
                 mapRes.put(r.campo.toUpperCase(),r.valore);
-            }            
+            }         
         }
 
         if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
@@ -132,31 +146,77 @@ public with sharing class HDT_UTL_ServicePoint {
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
             spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
-        /**@frpanico 2022-05-27
-         * Aggiunta gestione campo VENDITORE
-         */
-        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE')))
-        {
+        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE'))){
             String codiceVenditore = (String)mapRes.get('VENDITORE');
             List<HDT_MatriceSocietaVendita__mdt> salesCompanies = [SELECT SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c = :codiceVenditore WITH SECURITY_ENFORCED];
-            if(!salesCompanies.isEmpty())
-            {
+            if(!salesCompanies.isEmpty()){
                 spNew.Vendor__c = salesCompanies[0].SellerCompany__c;
             }
             spNew.SalesCompanyCode__c = codiceVenditore;
+        } else if(mapRes.get('COMPANY')!=null && !String.isBlank(mapRes.get('COMPANY'))){
+            /* recupero il codice società per i casi di non energy -- cr005 */
+            spNew.SalesCompanyCode__c = mapRes.get('COMPANY');
         }
         if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
             spNew.Name   = mapRes.get('POD');            
         }
+        if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){            
+            spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
+        }
         if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){            
             if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
                 spNew.CommoditySector__c = 'Energia Elettrica';
-                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele'); //21/08/2021 - gabriele.rota@webresults.it
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele');
             }
-            else{
+            else if(mapRes.get('DESCRCOMM')== 'Gas'){
                 spNew.CommoditySector__c = 'Gas';
-                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas'); //21/08/2021 - gabriele.rota@webresults.it
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Gas');
+            }
+            else if(mapRes.get('DESCRCOMM')== 'Acqua'){
+                spNew.CommoditySector__c = 'Acqua';
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Acqua');
+                //Per la commodity Acqua l'impianto è sempre presente in SAP
+                spNew.PlugPresence__c = 'Si';
+            }
+            else if(mapRes.get('DESCRCOMM')== 'Ambiente'){
+                spNew.CommoditySector__c = 'Ambiente';
+                spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ambiente'); 
+                if(response.datiCatastali!=null && response.datiCatastali.size()>0 && spNew.Id != null) {
+                    List <LandRegistry__c> landLstToInsert = new List<LandRegistry__c>();
+                    try {     
+                        List <LandRegistry__c> landLstToDelete = landRegistryQr.getTARILandRegistryByServicePointIds(new list<Id>{spNew.Id});
+                        Id idLand = qrRecordType.getRecordTypeIdByName('HDT_RT_DatiCatastali_TARI');
+                        
+                        for(HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_DatiCatastaliResponseObject l : response.datiCatastali){                       
+                            LandRegistry__c landReg = new LandRegistry__c();
+                            landReg.DestinationUsage__c = l.destinazione;
+                            landReg.CodeMissingRegistryData__c = l.codiceAssenzaDatiCatastali;
+                            landReg.SapProgressive__c = l.progressivo;
+                            landReg.LegalCity__c = l.comuneAmministrativo;
+                            landReg.RegistryCity__c = l.comuneCatastale;
+                            landReg.RegistryCityCode__c = l.codiceComuneCatastale;
+                            landReg.Province__c = l.codiceProvincia;
+                            landReg.UnitType__c = l.tipoUnita;
+                            landReg.Sheet__c = l.foglio;
+                            landReg.ParticleSheet__c = l.particella;
+                            landReg.Subaltern__c = l.subalterno;
+                            landReg.Title__c = l.qualificaTitolareUtenza;
+                            landReg.RegistrySurface__c = Decimal.valueOf(l.superficeCatastale);
+                            landReg.RecordTypeId = idLand;
+                            landReg.ServicePoint__c = spNew.Id;
+                            landReg.StartDate__c = dataEnrich.getDateFromString(mapRes.get('DATAATTIVAZIONE'));
+                            landReg.EndDate__c = dataEnrich.getDateFromString('99991231'.equals(mapRes.get('DATACESSAZIONE'))? null: mapRes.get('DATACESSAZIONE'));
+                            landReg.GlobalMigrationKey__c = 'DC_'+ spNew.SAPImplantCode__c + '_' + landReg.DestinationUsage__c + '_' + landReg.SapProgressive__c;
+                            landLstToInsert.add(landReg);
+                            
+                        }
+                        HDT_UTL_DatabaseService.deleteSObject(landLstToDelete);
+                        HDT_UTL_DatabaseService.insertSObject(landLstToInsert);
+                    } catch (Exception e) { 
+                        System.debug(LoggingLevel.DEBUG,' Arricchimaneto LandRegistry Fallito: ' + e.getMessage());
+                    }
+                }
             }
         }
         if(mapRes.get('MOTGARANZIAFORN')==null){            
@@ -165,9 +225,6 @@ public with sharing class HDT_UTL_ServicePoint {
         else if(mapRes.get('MOTGARANZIAFORN') == ''){            
             spNew.Disconnectable__c = 'No';
         }        
-        if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){            
-            spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
-        }
         if(mapRes.get('RESELLER')!=null && !String.isBlank(mapRes.get('RESELLER'))){
             spNew.isReseller__c = mapRes.get('RESELLER') == 'X';
         }
@@ -210,15 +267,116 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.SwitchInWinback__c = false;
             spNew.SwitchOutDate__c = null;
         }
-        if(mapRes.get('TIPOIMPIANTO')!=null && !String.isBlank(mapRes.get('TIPOIMPIANTO'))){
-            HDT_SRV_DataEnrichmentPostSales dataEnrich = new HDT_SRV_DataEnrichmentPostSales();
+        if(!String.isBlank(mapRes.get('TIPOIMPIANTO'))){
             spNew.ImplantType__c = dataEnrich.getPicklistValue('ServicePoint__c', 'ImplantType__c', mapRes.get('TIPOIMPIANTO'));
+        }
+        if(!String.isBlank(mapRes.get('MODPAGUSCITA'))){
+            spNew.MethodsForOutgoingPayments__c = dataEnrich.getPicklistValue('ServicePoint__c', 'MethodsForOutgoingPayments__c', mapRes.get('MODPAGUSCITA'));
+        }
+        if(!String.isBlank(mapRes.get('AFPAG_FFUG'))){
+            spNew.JointBottomAdhesion__c = dataEnrich.getPicklistValue('ServicePoint__c', 'JointBottomAdhesion__c', mapRes.get('AFPAG_FFUG'));
+        }
+        if(!String.isBlank(mapRes.get('AFPAGA_DEP'))){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 0) {
+                spNew.PayPurification__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 1) {
+                spNew.PayPurification__c = 'Si - Paga';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_DEP')))== 2) {
+                spNew.PayPurification__c = 'Si - Ridotta';                
+            }
+        }
+        if(mapRes.get('AFPAGA_FOG')!=null && !String.isBlank(mapRes.get('AFPAGA_FOG'))){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 0) {
+                spNew.PaySewer__c = 'No - Esente';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 1) {
+                spNew.PaySewer__c = 'Si - Paga';                
+            }
+        }
+        if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 0) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza non servita';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 1) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza servita';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 2) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza non servita con progettazione in corso';                
+            }
+            if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 3) {
+                spNew.PurificationInfoOnTheInvoice__c = 'Utenza temporaneamente non servita';                
+            }
+        }        
+        if(mapRes.get('CODICE_ATECO')!=null && !String.isBlank(mapRes.get('CODICE_ATECO'))){
+            spNew.IstatCode__c = mapRes.get('CODICE_ATECO');
+        }
+        if(mapRes.get('TUCATCOM00')!=null && !String.isBlank(mapRes.get('TUCATCOM00'))){
+            spNew.RonchiCategoryCode__c = mapRes.get('TUCATCOM00');
+        }
+        if(mapRes.get('TUSCATCOM0')!=null && !String.isBlank(mapRes.get('TUSCATCOM0'))){
+            spNew.RonchiSubCategoryCode__c = mapRes.get('TUSCATCOM0');
+        }
+        if(mapRes.get('TRATAUNICA')!=null && !String.isBlank(mapRes.get('TRATAUNICA'))){
+            spNew.SingleInstallmentOperating__c = mapRes.get('TRATAUNICA');
+        }
+        if(mapRes.get('DI_TRATAUNICA')!=null && !String.isBlank(mapRes.get('DI_TRATAUNICA'))){
+            spNew.SingleInstallmentValidityDate__c = date.parse(mapRes.get('DI_TRATAUNICA'));
+        }
+        if(mapRes.get('AFVASCA_AC')!=null && !String.isBlank(mapRes.get('AFVASCA_AC'))){
+            spNew.HasAccumulationTanks__c = Boolean.valueOf(mapRes.get('AFVASCA_AC'));
         }
         if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){            
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOCAPDR')));
         }
         if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){         
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOANNUOEE')));
+        }
+        if(mapRes.get('AQCNS_ANNO')!=null && !String.isBlank(mapRes.get('AQCNS_ANNO'))){         
+            spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('AQCNS_ANNO')));
+        }
+        if(mapRes.get('TFNCE0000')!=null && !String.isBlank(mapRes.get('TFNCE0000'))){      
+            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCE0000'));
+        } 
+        if(mapRes.get('TFNCDC0000')!=null && !String.isBlank(mapRes.get('TFNCDC0000'))){    
+            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCDC0000'));
+        }        
+        if(mapRes.get('AFNUM_COMP')!=null && !String.isBlank(mapRes.get('AFNUM_COMP'))){         
+            spNew.NumberOfCommunityMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNUM_COMP')));
+        }        
+        if(mapRes.get('AFUADRS')!=null && !String.isBlank(mapRes.get('AFUADRS'))){         
+            spNew.ResidentDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUADRS')));
+        }
+        if(mapRes.get('AFUADNR')!=null && !String.isBlank(mapRes.get('AFUADNR'))){         
+            spNew.NotResidentDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUADNR')));
+        }
+        if(mapRes.get('AFUND')!=null && !String.isBlank(mapRes.get('AFUND'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUND')));
+        }
+        if(mapRes.get('AFUNDA')!=null && !String.isBlank(mapRes.get('AFUNDA'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
+        }
+        if(mapRes.get('AFUNDC')!=null && !String.isBlank(mapRes.get('AFUNDC'))){         
+            spNew.CommercialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
+        }
+        if(mapRes.get('AFUNDI')!=null && !String.isBlank(mapRes.get('AFUNDI'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
+        }
+        if(mapRes.get('AFUNDZ')!=null && !String.isBlank(mapRes.get('AFUNDZ'))){         
+            spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
+        }
+        if(mapRes.get('AFBI_DIAM1')!=null && !String.isBlank(mapRes.get('AFBI_DIAM1'))){         
+            spNew.HydrantMouthsNumberA__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM1')));
+        }
+        if(mapRes.get('AFBI_DIAM2')!=null && !String.isBlank(mapRes.get('AFBI_DIAM2'))){         
+            spNew.HydrantMouthsNumberB__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM2')));
+        }
+        if(mapRes.get('AF_BOC_IDR')!=null && !String.isBlank(mapRes.get('AF_BOC_IDR'))){         
+            spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
+        }
+        if(mapRes.get('TFRS000000')!=null && !String.isBlank(mapRes.get('TFRS000000'))){         
+            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('TFRS000000')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
@@ -276,6 +434,15 @@ public with sharing class HDT_UTL_ServicePoint {
         {
             spNew.SupplyisAddressVerified__c = true;
         }
+        if(mapRes.get('AFNCOMP')!=null && !String.isBlank(mapRes.get('AFNCOMP'))){
+            spNew.NumberOfFamilyMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNCOMP')));
+        }
+         /**Edoardo Zanatta 2023-01-11
+         * Aggiunta gestione SAPContractAccountCode__c
+         */
+        if(mapRes.get('CA')!=null && !String.isBlank(mapRes.get('CA'))){
+            spNew.SAPContractAccountCode__c = mapRes.get('CA');
+        }
         Map<String, Account> accBpMap = new Map<String, Account>();
         if(mapRes.get('BP') != null){
             List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));
@@ -310,6 +477,9 @@ public with sharing class HDT_UTL_ServicePoint {
 
         if(servizio.equalsIgnoreCase('Energia Elettrica')){
             tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('13A0-Usi di Abitazione BT') ? 'Domestico' : 'Non Domestico';
+        }
+        else if(servizio.equalsIgnoreCase('Acqua')){
+            tipoFornitura = tipoImpianto != null && tipoImpianto.equalsIgnoreCase('1101-Domestico') ? 'Domestico' : 'Non Domestico';    
         }
         else {
             String fields = 'Id, SupplyType__c';
@@ -485,5 +655,14 @@ public with sharing class HDT_UTL_ServicePoint {
         else{
             return false;
         }
+    }
+
+    public class HDT_UTL_FlowInput{
+
+        @InvocableVariable
+        public ServicePoint__c servicePoint;
+        @InvocableVariable
+        public String responseSerialized;
+
     }
 }

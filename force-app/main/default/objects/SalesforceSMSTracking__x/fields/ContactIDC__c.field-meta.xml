@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ContactIDC__c</fullName>
+    <description>ContactIDC</description>
+    <externalDeveloperName>ContactIDC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>ID Contatto</label>
+    <length>255</length>
+    <referenceTo>SalesforceContact__x</referenceTo>
+    <relationshipLabel>SMS Trackings Salesforce</relationshipLabel>
+    <relationshipName>SMSTrackingsSalesforce</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

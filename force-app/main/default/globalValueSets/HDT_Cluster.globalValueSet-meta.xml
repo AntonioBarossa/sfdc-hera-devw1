@@ -76,6 +76,11 @@
         <label>Reclami</label>
     </customValue>
     <customValue>
+        <fullName>Segnalazioni</fullName>
+        <default>false</default>
+        <label>Segnalazioni</label>
+    </customValue>
+    <customValue>
         <fullName>Social</fullName>
         <default>false</default>
         <label>Social</label>

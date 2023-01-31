@@ -1,8 +1,8 @@
 <template>
-    <template if:true={theCase.AccountId}>
-        <c-hdt-target-object-address-fields accountid={theCase.AccountId} ></c-hdt-target-object-address-fields>
-    </template>
-
+    <!-- <template if:true={theCase.AccountId}> -->
+        <c-hdt-target-object-address-fields accountid={theCase.AccountId} hide-button-from-flow={hideButtonAccountLogic} visible-copia-residenza={theCase.AccountId} visible-selezione-indirizzi={theCase.AccountId}></c-hdt-target-object-address-fields>
+<!--     </template>
+ -->
     <template if:false={hideNavigationButtons}>
         <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
             <div class="actionsLeft">

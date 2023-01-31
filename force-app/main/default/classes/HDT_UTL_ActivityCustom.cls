@@ -5,7 +5,7 @@
 * @history Keltin Mesonjesi – 18/06/2021 – Created class
 */
 
-@SuppressWarnings('PMD.AvoidDebugStatements')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ActivityCustom {
 
     public final Static String ANNULLAMENTO_SIEBEL = 'Annullamento processo transitorio Siebel';
@@ -21,6 +21,7 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     private static HDT_QR_Order orderQr = new HDT_QR_Order();
+
     /**
     * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
     * @date 18/06/2021
@@ -272,24 +273,41 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             wrts_prcgvr__Activity__c oldActivityToUpdate = HDT_UTL_Scarti.closeDiscardActivity(recordid);
             oldActivityToUpdate.validation__c = validazione;
             activityCustomSrv.updateRecord(oldActivityToUpdate);
+            List<Order> orderToUpd = new List<Order>();
             if(validazione == 'Si'){
                 // res = true;
                  Order ord = new Order();
                  ord.id = oldActivity.order__c;
                  ord.DocumentPackage__c = 'Validato';
-                 //ord.SignedDate__c = Date.today();
+                 //
                  //ord.DocumentalPhase__c = 'Plico firmato';
                  if(oldActivity.Type__c.containsIgnoreCase('Vocal Order'))
                  {
-                     ord.Phase__c = 'Registrazione validata';
+                    ord.Phase__c = 'Registrazione validata';
+                    if(!oldActivity.Order__r?.Account?.Category__c.equalsIgnoreCase('Famiglie'))
+                    {
+                        ord.SignedDate__c = Date.today();
+                    }
+                    else
+                    {
+                        /* Per evitare eventuali ordini per cui manca la configurazione CC */
+                        List<Order> ol = [SELECT Id,SignedDate__c FROM Order WHERE ComfortCallDaysDue__c = null AND ParentOrder__c = :ord.id WITH SECURITY_ENFORCED];
+                        for(order o : ol)
+                        {
+                            o.SignedDate__c = Date.today();
+                            o.ConfirmCustomerContract__c = 'Comfort call';
+                            orderToUpd.add(o);
+                        }
+                    }   
                  }
                  else
                  {
                      ord.phase__c = 'Documentazione Gestita';
                      ord.status = 'Completed';
-                 
+                     ord.SignedDate__c = Date.today();
                  }
-                 orderSrv.updateRecord(ord);
+                 orderToUpd.add(ord);  
+                 HDT_UTL_DatabaseService.updateSObject(orderToUpd);
              }
              else{
                  // Id rt = rtQr.getRecordTypeIdByName('HDT_RT_AttivitaGestionali');
@@ -432,6 +450,37 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
     }
 
+    public static void postSurvayWorkActivity(List<wrts_prcgvr__Activity__c> newActsList){
+        try{
+            Set<Id> newActsId = new Set<Id>();
+            Map<Id,String> objsId = new Map<Id,String>();
+            for (wrts_prcgvr__Activity__c newAct : newActsList){
+                newActsId.add(newAct.Id);
+                if (!'Lavorazione Reclamo Post Survey'.equalsIgnoreCase(newAct.Type__c)){
+                    continue;
+                }
+                Id recordId = newAct.Case__c != null ? newAct.Case__c : newAct.Order__c;
+                if (recordId == null) {
+                    continue;
+                }
+                objsId.put(recordId,newAct.Name);
+            }
+            if (objsId.isEmpty()){
+                return;
+            }
+            List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getOpenActivityByType('Lavorazione Reclamo Post Survey',objsId.keySet(),newActsId)){
+                Id recordId = act.Case__c != null ? act.Case__c : act.Order__c;
+                actToUpdate.add(new wrts_prcgvr__Activity__c(Id = act.Id, wrts_prcgvr__Status__c = 'Annullata', ClosingNote__c = 'Annullata per apertura attività più recente: ' + objsId.get(recordId)));
+            }
+            if (!actToUpdate.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(actToUpdate);
+            }
+        }catch(Exception ex){
+            System.debug(LoggingLevel.ERROR, ex.getStackTraceString());
+        }
+    }
+
     public static void setCompanyName(List<wrts_prcgvr__Activity__c> activities){
         List<wrts_prcgvr__Activity__c> actToCheckList = new List<wrts_prcgvr__Activity__c>();
         Set<Id> setActivityId = new Set<Id>();
@@ -486,6 +535,33 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             }
         }
         return null;
+    }
+
+    public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
+
+        HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
+
+    }
+
+    @AuraEnabled
+    public static void setNoteRicontattoCliente(List<wrts_prcgvr__Activity__c> oldList,List<wrts_prcgvr__Activity__c> newList){
+        Map<String,wrts_prcgvr__Activity__c> mapOld = new Map<String,wrts_prcgvr__Activity__c>();
+        Datetime nowDate = null;
+        String nowDateFormat = '';
+        try {
+            for(wrts_prcgvr__Activity__c act : oldList){
+                mapOld.put(act.id,act);
+            }
+            for(wrts_prcgvr__Activity__c act : newList){
+                if((mapOld.get(act.id).ContactResult__c != act.ContactResult__c) && !String.isBlank(act.ContactResult__c) && 'Presa Appuntamento'.equalsIgnoreCase(act.Type__c)){
+                    nowDate = Datetime.now();
+                    nowDateFormat = nowDate.format('dd/MM/yyyy h:mm a');
+                    act.NoteRicontattoCliente__c = !String.isBlank(mapOld.get(act.id).NoteRicontattoCliente__c) ? mapOld.get(act.id).NoteRicontattoCliente__c + '\n' + act.ContactResult__c + ' in data ' + nowDateFormat : act.ContactResult__c + ' in data ' + nowDateFormat;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed exception: ' + e.getMessage());
+        }
     }
 
 }

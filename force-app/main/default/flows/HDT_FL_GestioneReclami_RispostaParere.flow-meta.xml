@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <apiVersion>49.0</apiVersion>
     <assignments>
         <name>AssegnaStatoAcitivty</name>
         <label>AssegnaStatoAcitivty</label>
@@ -251,6 +252,7 @@
         <connector>
             <targetReference>GetParentCase</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -271,6 +273,7 @@
         <connector>
             <targetReference>AssegnaStatoAcitivty</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Case__c</field>
             <operator>EqualTo</operator>
@@ -291,6 +294,7 @@
         <connector>
             <targetReference>Parent_Process_0</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -311,6 +315,7 @@
         <connector>
             <targetReference>Parent_Process</targetReference>
         </connector>
+        <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
@@ -431,6 +436,7 @@
                     <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
@@ -455,6 +461,13 @@
     </variables>
     <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

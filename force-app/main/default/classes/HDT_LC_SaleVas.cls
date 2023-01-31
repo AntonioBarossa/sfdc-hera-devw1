@@ -186,7 +186,7 @@ public inherited sharing class HDT_LC_SaleVas {
     * @param key 
     * @return List<SObject> 
     **/
-    @AuraEnabled
+    @AuraEnabled(cacheable=true)
     public static List<SObject> getFornitura(String searchString, String key){
         List<SObject> records = new List<SObject>();
         system.debug('searchString '+searchString);
@@ -330,6 +330,42 @@ public inherited sharing class HDT_LC_SaleVas {
                     AND (ServicePoint__r.CommoditySector__c='Energia Elettrica' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Energia Elettrica')
                     WITH SECURITY_ENFORCED];
             }
+            //Generiche Tari
+            when 'RICHIESTA_SERVIZIO_ASSOCIATA'{
+
+                records.addAll([SELECT OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                FROM Order
+                WHERE ServicePoint__c =:searchString 
+                AND AccountId IN (SELECT Account__c FROM ServicePoint__c WHERE Id =:searchString)
+                WITH SECURITY_ENFORCED
+                ]);
+                records.addAll(
+                    [SELECT Type, CaseNumber, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                    FROM Case
+                    WHERE  ServicePoint__c =:searchString
+                    AND RecordTypeId!=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_GenericheTari').getRecordTypeId()
+                    AND AccountId IN (SELECT Account__c FROM ServicePoint__c WHERE Id =:searchString)
+                    WITH SECURITY_ENFORCED
+                    ]
+                );
+            }
+            when 'RIMOZIONE_AGEVOLAZIONE'{
+                Set<Id> contrIds = new Set<Id>();
+                List<AggregateResult> results = [
+                    Select SBQQ__Contract__c 
+                    From SBQQ__Subscription__c 
+                    WHERE  
+                        SBQQ__Contract__r.Status = 'Attivo' AND SBQQ__Account__c=:searchString 
+                        AND SBQQ__Contract__r.ServicePoint__r.CommoditySector__c='Ambiente'
+                    WITH SECURITY_ENFORCED
+                    Group by SBQQ__Contract__c 
+                    HAVING Count(Id)>1
+                ];
+                for(AggregateResult res : results){
+                    contrIds.add((Id) res.get('SBQQ__Contract__c'));
+                }
+                records = [ Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where Id IN :contrIds WITH SECURITY_ENFORCED];
+            }
         }
         return records;
     }
@@ -453,9 +489,6 @@ public inherited sharing class HDT_LC_SaleVas {
 
     @AuraEnabled
     public static String handleNotMigratedContract(String contract, Sale__c sale){
-        system.debug('contract --> '+contract);
-        system.debug('sale --> '+sale);
-        system.debug('PUNTO 1');
         sale = saleQr.getRecordById(sale.id, 'AgencyCode__c,CommercialId__c ,Account__c,Account__r.Category__c,Account__r.CustomerMarking__c,Agency__c,Account__r.CompanyOwner__c,Channel__c,FriendCode__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,Name, Campaign__r.CampaignEligibilityGroup__c');
         //REQUEST
         String result = '';
@@ -463,7 +496,6 @@ public inherited sharing class HDT_LC_SaleVas {
         HDT_SRV_DataEnrichmentPostSales dataEnrichmentPostSales = new HDT_SRV_DataEnrichmentPostSales(); 
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioniList = new List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
 
-        system.debug('PUNTO 2');
         String resPosizioni = HDT_WS_ArricchimentoDatiTemp.submitRequest('',contract);
         String dataCessazioneString = '';
         String commodity = '';
@@ -471,37 +503,47 @@ public inherited sharing class HDT_LC_SaleVas {
         String venditore = '';
         String sellerCompany = '';
         Date dataCessazione = null;
-
-        system.debug('PUNTO 3');
-
+        Map<String,String> addressMap = new Map<String,String>{};
 
         if(resPosizioni != null && resPosizioni != ''){
 
-            system.debug('PUNTO 4');
 
             posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>)
             JSON.deserialize(resPosizioni, List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>.class);
             // posizioniList = (List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>) JSON.deserialize(resPosizioni, HDT_WS_ArricchimentoDatiTemp.class);
-            system.debug('PUNTO 5');
             for(HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni posizione : posizioniList){
                 if(posizione.campo == 'DATACESSAZIONE'){
-                    system.debug('PUNTO 6');
                     dataCessazioneString = posizione.valore;
                 }
                 if(posizione.campo == 'DESCRCOMM'){
-                    system.debug('PUNTO 6.1');
                     commodity = posizione.valore;
                 }
                 if(posizione.campo == 'MERCATO'){
-                    system.debug('PUNTO 6.1');
                     mercato = posizione.valore;
                     mercato = mercato.substring(0, 1).toUpperCase() + mercato.substring(1).toLowerCase();
-                    system.debug('mercato --> '+mercato);
-
                 }
                 if(posizione.campo == 'VENDITORE'){
-                    system.debug('PUNTO 6.1');
                     venditore = posizione.valore;
+                }
+                if(posizione.campo == 'CAP')
+                {
+                    addressMap.put('SupplyPostalCode__c',posizione.valore);
+                }
+                if(posizione.campo == 'LOCALITA')
+                {
+                    addressMap.put('SupplyCity__c',posizione.valore);
+                }
+                if(posizione.campo == 'VIA')
+                {
+                    addressMap.put('SupplyStreetName__c',posizione.valore);
+                }
+                if(posizione.campo == 'CIVICO')
+                {
+                    addressMap.put('SupplyStreetNumber__c',posizione.valore);
+                }
+                if(posizione.campo == 'REGIONE')
+                {
+                    addressMap.put('SupplyState__c',posizione.valore);
                 }
             }
 
@@ -564,11 +606,17 @@ public inherited sharing class HDT_LC_SaleVas {
                 IsVAS__c = true,
                 IsBillableVas__c = false,
                 IsTransition__c = true,
-                SBQQ__PricebookId__c = commodity == 'Energia Elettrica' ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                SBQQ__PricebookId__c = commodity.equalsIgnoreCase('Energia Elettrica') ? getPricebookId('VAS ELE') : commodity == 'Gas' ? getPricebookId('VAS GAS') : null,
+                /**@frpanico 2022-12-15 Aggiunto in quanto la mancanza sulla commodity manda in errore Postel
+                 * Energia Elettrica dal servizio viene ritornato come "Energia elettrica"
+                 * Ed essendo Commodity__c sull'order un campo picklist andrebbe in errore
+                 */
+                VasCommodity__c = commodity.equalsIgnoreCase('Energia Elettrica') ? 'Energia Elettrica' : commodity,
                 AgencyCode__c = sale.AgencyCode__c,
                 CommercialId__c = sale.CommercialId__c,
                 SapContractCode__c = contract,
-                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
+                CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null,
+                VasSupplyAddress__c = !addressMap.isEmpty() ? JSON.serialize(addressMap) : null
                 );
                 // if(order.ContractReference__c != null)
                 // {

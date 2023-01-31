@@ -77,16 +77,28 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             
             mrrList = removeNonCommoditySubscriptions(mrrList);
             String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            System.debug(LoggingLevel.DEBUG, 'processType: ' + processType);
             if(String.isNotBlank(processType) && 
             (processType.equalsIgnoreCase('Richiesta Domiciliazione')
             || processType.equalsIgnoreCase('Variazione Domiciliazione')
-            || processType.equalsIgnoreCase('Rimborso')))
+            || processType.equalsIgnoreCase('Rimborso')
+            || processType.equalsIgnoreCase('Attivazione Click&Pay')))
             {
                 mrrList = addIbanCountry(mrrList); 
             }
             if (String.isNotBlank(meterCode)){
                 mrrList = changeMeterCode(mrrList,meterCode);
             }
+            mrrList = supplyTypeTech(mrrList);
+            if(String.isNotBlank(processType) && 
+            (processType.equalsIgnoreCase('Modifica Unita Immobiliari Componenti'))){
+                System.debug(LoggingLevel.DEBUG, 'Processo di Modifica Unita -->');
+                Map<String,Object> objFields = new Map<String,Object>();
+                objFields.put('RateCategory__c', obj.get('RateCategory__c'));
+                objFields.put('Unita_Abitative__c', obj.get('Unita_Abitative__c'));
+                mrrList = handleMrrFields(mrrList, objFields);
+            }
+
             arg.put('endpoint', endpoint);
             arg.put('timeout', 20000);
             arg.put('payload',mrrList);
@@ -421,4 +433,70 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         return mrrList;
     }
 
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields)
+    {
+        String fieldName = '';
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case'))
+            {
+
+                Set<String> afundiRateCategories = new Set<String>{'AITBNDOME0', 'AITMNDOME0', 'ACAUGRUNI0', 'ACINDSTR00', 'ACTINDSTR0'};
+                Set<String> afundaRateCategories = new Set<String>{'ACAGRICO00', 'ACTAGRICO0', 'ACTMAGRIC0'};
+                Set<String> afundcRateCategories = new Set<String>{'ACARTCOMM0', 'ACAUGRUNC0', 'ACTCOMMER0'};
+                Set<String> afundzRateCategories = new Set<String>{'ACAGRIZOO0', 'ACTMZOOTE0', 'ACZOOTECN0'};
+
+                System.debug(LoggingLevel.DEBUG, 'RateCategory: ' + String.valueOf(objFields.get('RateCategory__c')));
+
+                if(afundiRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                    fieldName = 'UND_IND';
+                }else if (afundaRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                    fieldName = 'UND_AGR';
+                }else if(afundcRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                    fieldName = 'UND_COM';
+                }else if(afundzRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                    fieldName = 'AFUNDZ';
+                }else if ('ACAUGENER0'.equalsIgnoreCase(String.valueOf(objFields.get('RateCategory__c')))){
+                    fieldName = 'UND';
+                }
+
+                if(!String.isBlank(fieldName))
+                {
+                    wrts_prcgvr.MRR_1_0.Field newField = new wrts_prcgvr.MRR_1_0.Field();
+                    newField.name = fieldName;
+                    newField.fieldType = 'STRING';
+                    newField.value = String.valueOf(objFields.get('Unita_Abitative__c'));
+                    obj.fields.add(newField);
+                }
+                break;
+            }
+        }
+        return mrrList;
+    }
+    @TestVisible
+    private static wrts_prcgvr.MRR_1_0.MultiRequest supplyTypeTech(wrts_prcgvr.MRR_1_0.MultiRequest mrrList)
+    {
+        Boolean fieldChanged = false;
+        for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
+        {
+            if(fieldChanged)
+            {
+                break;
+            }
+            if(obj.objectType != null && obj.objectType.equalsIgnoreCase('Case'))
+            {
+                for(wrts_prcgvr.MRR_1_0.Field f : obj.fields)
+                {
+                    if(f.name.equalsIgnoreCase('CAN_VEND'))
+                    {
+                        f.value = String.isNotBlank(f.value) && (f.value.equalsIgnoreCase('A-Domestico') || f.value.equalsIgnoreCase('Domestico')) ? 'Domestico' : 'Non Domestico';
+                        fieldChanged = true;
+                        break;
+                    }
+                }
+            }
+        }
+        return mrrList;
+    }
 }

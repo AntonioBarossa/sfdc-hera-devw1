@@ -36,6 +36,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             system.debug(Logginglevel.Debug, e);
         }
     }
+    public static Boolean isChangedPhase(List<Order> orderList, Map<Id,SObject> orderOldMap){
+        Order orderNew = orderList[0];
+		Order orderOld = (Order) orderOldMap.get(orderNew.Id);
+		String phaseNew = orderNew.Phase__c != null? orderNew.Phase__c:'';
+		String phaseOld = orderOld.Phase__c != null? orderOld.Phase__c:'';
+        if(
+            (String.isNotBlank(phaseNew) && String.isNotBlank(phaseOld) && phaseNew != phaseOld) || 
+            (String.isBlank(phaseOld) && String.isNotBlank(phaseNew))
+        )return true;
+        return false;
+    }
 
     public static List<Order> updateChildOrderIvr(Map<String,Order> oldMap, Map<String,Order> newMap) {
         List<String> orderParentList = new List<String>();
@@ -261,12 +272,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String newValue = newOrder.Phase__c;
             Date oldDate = oldOrder.SignedDate__c;
             Date newDate = newOrder.SignedDate__c;
+
             if((String.isNotBlank(oldValue) && String.isNotBlank(newValue) &&
                 !newValue.equalsIgnoreCase(oldValue) && 
                 newOrder.ParentOrder__c == null && 
                 newOrder.Phase__c == 'Documentazione Gestita' &&
-                (!newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound') ||
-                newOrder.Channel__c.equalsIgnoreCase('Teleselling Outbound') && newOrder.SignatureMethod__c.equalsIgnoreCase('Contratto già firmato'))
+                (!'Teleselling Outbound'.equalsIgnoreCase(newOrder.Channel__c) ||
+                'Teleselling Outbound'.equalsIgnoreCase(newOrder.Channel__c) && 'Contratto già firmato'.equalsIgnoreCase(newOrder.SignatureMethod__c))
                 )
             || (newOrder.ParentOrder__c == null && (oldDate == null && newDate != null) || (oldDate != null && newDate != null && oldDate != newDate))
             ){
@@ -359,10 +371,23 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                                             && (myOrder.PhaseStory__c.containsIgnoreCase('Attesa Credit Check')
                                                             || myOrder.PhaseStory__c.containsIgnoreCase('Credit Check KO'))
                                                             && myOrder.PhaseStory__c.containsIgnoreCase('Accettazione Voltura') ? false : true; 
+
+                    String newPhase = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked && !myOrder.Commodity__c.containsIgnoreCase('Acqua')? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione';
+                    newPhase = myOrder.ProcessType__c == 'Voltura - Subentro Scarico produttivo'? 'In attesa esito SAP' : newPhase;
+                    if(
+                            'Documentazione Validata'== newPhase && STRING.isNotBlank(myOrder.ApprovalType__c) 
+                            && !'3 - Nessuna'.equalsIgnoreCase(myOrder.ApprovalType__c) 
+                            && 'Modifica Tariffa'.equalsIgnoreCase(myOrder.ProcessType__c)
+                    ){
+                        newPhase = '1 - Avviso di servizio'.equalsIgnoreCase(myOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'In Lavorazione';//Approvazione Agevolazione
+                    }
+
                     childOrdersDocValid.add(new Order(
                         Id = myOrder.Id,
                     // phase__c = 'In attesa validazione'
-                        phase__c = (myOrder.ProcessType__c == 'Voltura') && isNotVoltureAcceptanceWorked ? 'Accettazione Voltura': HDT_LC_OrderDossierWizardActions.checkRequiredDocs(myOrder) ? 'Documentazione Validata': 'In attesa validazione'));
+                        phase__c = newPhase
+                    ));
+                        
                 }
             }
             if(ordersFullList != null && !ordersFullList.isEmpty()){
@@ -412,11 +437,26 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
-
+            List<Order> ordersNonEnergy = new List<Order>();
+            List<Order> ordersCompletata = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
-                }else{
+                }
+                /* Gli ordini Ambiente ed Acqua hanno la necessita' di avere il BP e il CA prima di poter essere inviati verso Heroku
+                * e' stata percio' introdotta una fase intermedia "Creazione BP-CA" per permettere la chiamata verso SAP per la registrazione
+                * delle due entita' e aggiornarle con i relativi codici
+                * Update 2022-10-10 logica non risulta essere necessaria per la commodity ambiente
+                */
+                else if(o.Commodity__c.equalsIgnoreCase('Acqua') && String.isBlank(o.ContractAccountCode__c) /*|| o.Commodity__c.equalsIgnoreCase('Ambiente')*/)
+                {
+                    ordersNonEnergy.add(o);
+                }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
+                    if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
+                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else{   ordersHeroku.add(o);    }
+                }
+                else{
                     ordersHeroku.add(o);
                 }
             }
@@ -424,6 +464,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 updateChildOrdersPhase(ordersSiebel,'Documentazione Validata', 'Esportazione VS Siebel ','Documentazione Validata','Esportazione VS Siebel ');
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersHeroku, 'Documentazione Validata', 'Comunicazione verso Heroku','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
+            );
+            vasOrdersToUpdate.putAll(
+                updateChildOrdersPhase(ordersCompletata, 'Documentazione Validata', 'Completata','Documentazione Validata','Comunicazione Motore VAS')
             );
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
@@ -505,7 +551,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         for (Order newOrder : newOrdersList) {
             Order oldOrder = mapOldOrder.get(newOrder.id);
             if(oldOrder != null){
-                if( newOrder.DocumentalProcessType__c != null
+                if(String.isNotBlank(newOrder.CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(newOrder.CommodityFormula__c)){
+                    handleNoEnergyEffectiveDate(newOrder,oldOrder);
+                }
+                else if( newOrder.DocumentalProcessType__c != null
                     && newOrder.SignedDate__c != null
                     && (newOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
                         || newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura')
@@ -538,6 +587,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                         || (oldOrder.Phase__c == 'Quality Call OK' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.Phase__c == 'Documentazione Validata' && newOrder.Phase__c == 'Esportazione VS Siebel')
+                        /**@frpanico nel caso di nessun documento da validare il passaggio e' Accettazione Voltura --> Documentazione Validata
+                         * Ma essendo a transitorio nei primi step del trigger la newPhase viene cambiata in Esportazione VS Siebel
+                         * Dunque si ha oldPhase Accettazione Voltura e newPhase Esportazione VS Siebel in cui e' necessario il ricalcolo
+                         */
+                        || (oldOrder.Phase__c == 'Accettazione Voltura' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         //@ealpi aggiunto in caso di sblocco OK credit check
                         ||(!'OK'.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))
                         ||(!'OK'.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c))
@@ -556,11 +610,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             //Se la data di decorrenza non è stata calcolata per qualsiasi motivo (1) oppure ho superato la data di invio al SII (2)
                             //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi) 
                             String category = newOrder.CustomerCategory__c;
-                            if('Famiglie'.equalsIgnoreCase(category) || newOrder.RecessNotice__c == 0){
+                            if(('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category)) || newOrder.RecessNotice__c == 0){
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
-                            newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                            if(String.isNotBlank(newOrder.CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(newOrder.CommodityFormula__c)){
+                                newOrder.EffectiveDate__c = System.today();
+                            }else{
+                                newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
+                            }
+                            
                         }
                     }else if(
                             (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 
@@ -576,6 +635,25 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(!newOrdersListComfort.isEmpty()){
             HDT_UTL_ProcessDateManager.calculateOrderProcessDate(newOrdersListComfort);
+        }
+    }
+
+    /**
+     * @Author NTTData
+     * Description: This method handle the EffectiveDate calculation of H2O process.
+     * For DBO the effective date must be today or in the future, 
+     * an effective date in the past will generate an Ammissibilità KO
+     * **/
+    private static void handleNoEnergyEffectiveDate(Order newOrder, Order oldOrder){
+        Set<String> newPhaseSet = new Set<String>();
+        newPhaseSet.add('Comunicazione verso Heroku');
+        newPhaseSet.add('Documentazione Validata');
+        String newPhase = newOrder.Phase__c;
+        String oldPhase = oldOrder.Phase__c;
+        if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
+            if((newOrder.EffectiveDate__c != null && newOrder.EffectiveDate__c < System.today()) || newOrder.EffectiveDate__c == null){
+                newOrder.EffectiveDate__c = System.today();
+            }
         }
     }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
@@ -710,6 +788,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         List<String> isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         Order notManagedOrder = new Order();
         Boolean isNotManaged = false;
+        /* Temporanea Nuova Attivazione */
         for(Order childOrder : parentOrderIds)
         {
             if(childOrder.recordType.Developername == 'HDT_RT_TemporaneaNuovaAtt')
@@ -723,6 +802,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             isNotManaged = isNotManaged(notManagedOrder);
         }
         for (Order childOrder : parentOrderIds) {
+            /* Gestione VAS */
             if(childOrder.recordType.Developername == 'HDT_RT_VAS' && childOrder.Phase__c == currentPhase){
                 String phase = HDT_UTL_VasManagement.updateVasPhase( newVasPhase, childOrder );
                 Order orderToUpdate = new Order(
@@ -742,6 +822,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }
             }
             else{
+                /* Gestione Transitorio */
                 if('Esportazione VS Siebel ' == newPhase){
                     if (childOrder.Phase__c == currentPhase) {
                         Order orderToUpdate = new Order(
@@ -755,11 +836,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 else{
                     if (childOrder.Phase__c == currentPhase
                         //@frpanico 06/09/2021 added voltura condition
-                        && childOrder.ProcessType__c != 'Voltura' ) {
+                        /* Solo la voltura Energy deve rimanere nella fase Documentazione Validata, per il non energy deve procedere verso Creazione BP-CA */
+                        && (childOrder.ProcessType__c != 'Voltura')
+                        && childOrder.ImplantType__c != '1107-Colonnetta' ) {
                         Order orderToUpdate = new Order(
                             Id = childOrder.Id,
                                 Phase__c = newPhase
                         );
+                        if('completata'.equalsIgnoreCase(newPhase)){
+                            orderToUpdate.Status='Activated';
+                        }
                         childOrdersToUpdate.add(orderToUpdate);
                     }
                 }
@@ -844,7 +930,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     || newOrder.Phase__c=='Preventivo Accettato' 
                     || newOrder.Phase__c=='Comunicazione Motore VAS' 
                     || newOrder.Phase__c=='Documentazione da firmare'
-                    || newOrder.Phase__c=='Ammissibilità OK')){
+                    || newOrder.Phase__c=='Ammissibilità OK'
+                    || newOrder.Phase__c=='Creazione BP-CA')){
                     newOrder.Phase__c = newOrder.TecnicalPhase__c;
                     newOrder.TecnicalPhase__c = null;
                 }
@@ -889,7 +976,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             update  mapObjToUpdate.values();
         }
     }
-
+    /**
+     * NTTDATA
+     * Annulla gli ordini figli
+     * **/
+    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
+        List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
+        for(Order singleChild : childOrderList){
+            singleChild.Phase__c = 'Annullato';
+            singleChild.Status = 'Annullato';
+            singleChild.CancellationReason__c = 'Annullamento da cliente';
+        }
+        return childOrderList;
+    }
     /**
      * @description  FIX METODO DEFELICE
      * @param newOrdersMap
@@ -943,7 +1042,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
           
         
-        if(!orderMapNew.get('newCustomer').isEmpty() || !orderMapNew.get('newCustomer').isEmpty()){
+        if(!orderMapNew.get('newCustomer').isEmpty() || !orderMapNew.get('oldCustomer').isEmpty()){
             HDT_UTL_ActivityCustomProcess.createActivityForCreditCheck(orderMapNew);
         }        
         if(!orderListcreditCheckPhaseManager.isEmpty()){
@@ -1134,7 +1233,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                        if (
+                            !(
+                                'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) 
+                                || 'Contattare il Cliente'.equalsIgnoreCase(activity.Type__c)
+                            )
+                        ){
                             activity.wrts_prcgvr__Status__c = 'Annullata';
                             activitiesToUpdate.add(activity);
                         }
@@ -1401,8 +1505,21 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             String oldPhase = newOrder.Phase__c;
             Order oldOrder = (Order) oldOrderMap.get(newOrder.Id);
             DateTime nowDateTime = DateTime.now();
+            /**@frpanico 2022-12-13 Transitorio: Ci sono delle casistiche in cui
+             * Arriva "Annullato" prima del "Caricamento Siebel OK"
+             * In questi casi non scatta il secondo giro di update a causa dell'istruzione 
+             * "!(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))"
+             * Dunque per coprire queste casistiche sono state aggiunte le istruzioni
+             * "negativeOutcomes.contains(newOrder.get('SiebelStatus__c'))"
+             * "positiveOutcomes.contains(newOrder.get('SiebelStatus__c'))"
+             */
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
-                && (oldOrder.SiebelStatus__c == null || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c')))))
+                && (oldOrder.SiebelStatus__c == null 
+                    || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c'))) 
+                    || negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
+                    || positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
+                    )
+                )
             {
                 String newPhase = positiveOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
                     ? 'Completata'

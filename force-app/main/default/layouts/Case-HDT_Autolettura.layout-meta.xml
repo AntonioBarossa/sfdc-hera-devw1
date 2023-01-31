@@ -23,6 +23,10 @@
                 <behavior>Readonly</behavior>
                 <field>AddressFormula__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ParentId</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -416,6 +420,14 @@
         <fields>TASK.LAST_UPDATE</fields>
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <fields>ReadingValueMeter__c</fields>
+        <fields>ReadingOldValueMeter__c</fields>
+        <fields>ReadingSerialNumberMeter__c</fields>
+        <fields>ReadingDate__c</fields>
+        <relatedList>Reading__c.CaseAcqua__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
@@ -426,7 +438,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000002LiYI</masterLabel>
+        <masterLabel>00h1X0000025oT7</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

@@ -58,6 +58,11 @@
                 <default>false</default>
                 <label>Riattivazione non morose</label>
             </value>
+            <value>
+                <fullName>Modifica dati contr. stesso Cli</fullName>
+                <default>false</default>
+                <label>Modifica dati contr. stesso Cli</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

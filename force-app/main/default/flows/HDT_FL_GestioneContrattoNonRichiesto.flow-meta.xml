@@ -1153,7 +1153,7 @@
     <formulas>
         <name>NextMonthDate</name>
         <dataType>Date</dataType>
-        <expression>DATE( YEAR({!$Flow.CurrentDate}), MONTH({!$Flow.CurrentDate}) + 1, DAY({!$Flow.CurrentDate}))</expression>
+        <expression>IF(MONTH({!$Flow.CurrentDate} ) = 12,DATE( YEAR( {!$Flow.CurrentDate}), 1, DAY({!$Flow.CurrentDate}) ),DATE( YEAR({!$Flow.CurrentDate}), MONTH({!$Flow.CurrentDate}) + 1, DAY({!$Flow.CurrentDate})))</expression>
     </formulas>
     <formulas>
         <name>OrderAccise</name>

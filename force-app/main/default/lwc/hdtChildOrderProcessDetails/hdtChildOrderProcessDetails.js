@@ -10,22 +10,9 @@ import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPre
 import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.retrieveOrderCreditCheck';
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
+import checkPermissionSet from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkPermissionSet';
+import {handleSections, equalsIgnoreCase, safeStr} from 'c/hdtChildOrderProcessDetailsUtl';
 
-class fieldData{
-    constructor(label, apiname, typeVisibility, required, disabled, processVisibility, value) {
-        this.label = label;
-        this.apiname=apiname;
-        this.typeVisibility = typeVisibility;
-        this.required=required;
-        this.disabled=disabled;
-        this.processVisibility=processVisibility;
-        this.value=value;
-    }
-    static justLabelAndVisibilityEx(label,typeVisibility){
-        return new MyClass(label,null,typeVisibility);
-    }
-    
-}
 export default class hdtChildOrderProcessDetails extends LightningElement {
     @api order;
     title = '';
@@ -53,13 +40,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track fields = {};
     extraFieldsToSubmit = {}; 
     @api mainOrderItem;
+    @api isRepeatedStep;
     wrapAddressObjectAttivazione = {};
     wrapAddressObjectSpedizione = {};
     @api analisiConsumi;
     acceptedFormatsIvaAcciseUpload = ['.pdf', '.png'];
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
+    @track permissionFlag = true;
     loginChannel;
+    closeAttachmentEvent;
+    @track additionalAttachments;
+
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
        return {...this.order, ...this.sectionDataToSubmit};
@@ -120,6 +112,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(event.target.name !== undefined){
             this.sectionDataToSubmit[event.target.name] = event.target.value;
         }
+
+        const DynamicOnChange = this.pendingSteps[event.target.getAttribute('data-section-index')]?.data?.[event.target.getAttribute('data-field-index')]?.changeFunction;
+        if(DynamicOnChange && DynamicOnChange instanceof Function ){
+            DynamicOnChange.call(this, event);
+        }
+
+        /*  # Le logiche degli eventi onchange dei singoli campi sono configurabili direttamente nel JSON del wizard
+
         if(event.target.fieldName === 'VATfacilitationFlag__c' && event.target.value) {
             this.template.querySelector("[data-id='VAT__c']").disabled = false;
             this.template.querySelector("[data-id='VAT__c']").required = true;
@@ -182,17 +182,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     delete this.sectionDataToSubmit.EffectiveDate__c;
                 }
             }
-        }
+        } */
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
         if(this.lastStepNumber === this.currentSection.step) {
             this.lastStepData = draftData;
         }
+
+        if(draftData.AdditionalAttachments__c){
+            this.additionalAttachments = draftData.AdditionalAttachments__c;
+            console.log('data AdditionalAttachments__c '+ draftData.AdditionalAttachments__c);
+        }
+
         this.dispatchEvent(new CustomEvent('emitdraftdata', {detail: {
             objectApiName: this.currentSectionObjectApi,
             fields: draftData,
             lastStepData: this.lastStepData
         }}));
+        
     }
 
     handleShowModuloInformativo(){
@@ -214,6 +221,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.showDelibera40 = true;
         }
     } 
+
+    landSelected(event){
+        this.landRedistrySelected=true;
+    }
 
     handleShowInviaModulistica(caliber = ''){
         if(this.order.ServicePoint__c !== undefined && this.order.ServicePoint__r.MeterClass__c !== undefined){
@@ -238,11 +249,37 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     break;
                 case 'gas':
                     result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas';
-                    break
+                    break;
+                case 'tari':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Ambiente';
+                    break;
+                case 'acqua':
+                    result = this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Acqua';
+                    break;
                 default:
                     result = true;
                     break;
             }
+        }
+        return result;
+    }
+
+    rateCategoryVisibility(evaluationRateCategories)
+    {
+        let evaluationType = evaluationRateCategories.evaluationType;
+        let rateCategories = evaluationRateCategories.rateCategories;
+
+        // !Acqua, then if 'required', set 'notrequired', if 'visible/notvisible', set 'visible'
+        if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua' || !Array.isArray(rateCategories) ) return evaluationType !== 'required';
+        
+        // case Acqua
+        let rateCategory = this.order.RateCategory__c;
+        let result = evaluationType === 'notvisible';
+        for(let rate of rateCategories)
+        {
+            if(rate === rateCategory && evaluationType === 'visible') result = true;
+            if(rate === rateCategory && evaluationType === 'notvisible') result = false;
+            if(rate === rateCategory && evaluationType === 'required') result = true;
         }
         return result;
     }
@@ -312,10 +349,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
     }
 
+    handleSectionDiffDataToSubmitCollection(){
+        return;
+    }
+
     getConfirmedSteps(){
         this.confirmedSteps = this.availableStepsFirst.filter(section => (
         section.name !== 'reading'
         && section.name !== 'processVariables' 
+        && section.name !== 'variabiliDiProcesso'
+        && section.name !== 'datiSottoscrittore'
+        && section.name !== 'datiCatastali'
         && section.name !== 'Switchout' 
         && section.name !== 'dettaglioImpianto' 
         && section.name !== 'fatturazione' 
@@ -332,6 +376,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log("PREFILTER:" + this.availableStepsFirst); 
         this.pendingSteps = this.availableStepsFirst.filter(section => (section.name === 'reading' 
         || section.name === 'processVariables'
+        || section.name === 'variabiliDiProcesso'
+        || section.name === 'datiSottoscrittore'
+        || section.name === 'datiCatastali'
         || section.name === 'Switchout'
         || section.name === 'dettaglioImpianto' 
         || section.name === 'fatturazione' 
@@ -518,7 +565,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loading = true;
         let currentSectionName = event.currentTarget.value;
         this.currentSectionName = currentSectionName;
-        console.log("currentSectionName "+currentSectionName);
+        console.log('currentSectionName '+currentSectionName);
         let currentSection = this.availableSteps.filter(section => section.name === currentSectionName);
         let currentObjectApiName = currentSection[0].objectApiName;
         let currentRecordId = currentSection[0].recordId;
@@ -527,9 +574,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let nextSectionStep =  currentSectionName === 'processVariables'
         ? (event.target.name === 'goReading' 
         ? this.availableSteps[currentSectionIndex + 1].step
-        : this.availableSteps[currentSectionIndex + 2].step)
+        : this.availableSteps[currentSectionIndex + 2].step) 
         : this.availableSteps[currentSectionIndex + 1].step;
         this.isReading = currentSectionName === 'reading';
+
+        const sectionNextActions = this.pendingSteps[event.target.getAttribute('data-section-index')]?.nextActions;
+        if(sectionNextActions && sectionNextActions instanceof Function ){
+            if(sectionNextActions(event, currentSectionIndex, nextSectionStep)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
+        }
+        
+        console.log('currentSectionName '+currentSectionName);
+
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
         if(currentSectionName === 'reading'){
             let readingComponent = this.template.querySelector('c-hdt-self-reading');
@@ -588,13 +643,82 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 }
             }
             if(currentSectionName === 'processVariables'){
-            if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
-            {
-                this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
-                return;
+                console.log('inside '+currentSectionName);
+                if( this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && 
+                    this.typeVisibility('acqua') &&
+                    this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' )
+                {
+                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value < 2 )
+                    {
+                        this.showMessage('Errore', 'In caso di Tipo Impianto Promiscuo è necessario che il numero delle Unita Immobiliari sia maggiore di 1', 'error');
+                        return;
+                    }
+                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value != 1 )
+                    {
+                        this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
+                        return;
+                    }
+                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value) : 0;
+                    let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
+                    let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
+                    let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
+                    let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
+                    let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
+                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit;
+                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
+                    {
+                        this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
+                        return;
+                    }
+                }
+                if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
+                    return;
+                }
             }
-            }
+            console.log('currentSectionName '+currentSectionName);
             if(currentSectionName === 'dettaglioImpianto'){
+                console.log('inside '+currentSectionName);
+                if( this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && 
+                    this.typeVisibility('acqua') && 
+                    ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || 
+                    this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || 
+                    this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) )
+                {
+                    if( this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value < 2 )
+                    {
+                        this.showMessage('Errore', 'In caso di Tipo Impianto Promiscuo è necessario che il numero delle Unita Immobiliari sia maggiore di 1', 'error');
+                        return;
+                    }
+                    if( !this.template.querySelector("[data-id='ImplantType__c']").value.includes('Promiscuo') && this.template.querySelector("[data-id='RealEstateUnit__c']").value != 1 )
+                    {
+                        this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
+                        return;
+                    }
+                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value) : 0;
+                    let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
+                    let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
+                    let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
+                    let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
+                    let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
+                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit;
+                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
+                    {
+                        this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
+                        return;
+                    }
+                }
+                if( this.checkFieldAvailable('EffectiveDate__c', true) === '' && this.typeVisibility('acqua'))
+                {
+                    this.showMessage('Errore', 'Popolare il campo Data Decorrenza', 'error');
+                    return;
+                }
+                if( this.checkFieldAvailable('NotDomesticHousingUnit__c', true) === '' && this.order.RateCategory__c === 'ACAUNOPOT0' )
+                {
+                    this.showMessage('Errore', 'Popolare il campo Unita abitative non domestiche', 'error');
+                    return;
+                }
                 if( this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
                 {
                     this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
@@ -736,6 +860,84 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
+                    && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
+                        || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Numero Componenti Domestico Residente',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='HydrantMouthsNumber__c']") !== null 
+                && (this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === ''
+                    || this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Numero Bocche Idrante',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null 
+                && (this.template.querySelector("[data-id='IntendedUse__c']").value === ''
+                    || this.template.querySelector("[data-id='IntendedUse__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Destinazione Uso',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") !== null 
+                && (this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === ''
+                    || this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Unita abitative domestico non residente',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='NotDomesticHousingUnit__c']") !== null 
+                && (this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value === ''
+                    || this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value === null)) {
+                this.loading = false;
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: 'Popolare il campo Unita abitative non domestiche',
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                this.dispatchEvent(toastErrorMessage);
+                return;
+                }
+                if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
+                    && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
+                        || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Tipo di Connessione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
                 if(this.template.querySelector("[data-id='ConnectionType__c']") !== null 
                     && (this.template.querySelector("[data-id='ConnectionType__c']").value === ''
                         || this.template.querySelector("[data-id='ConnectionType__c']").value === null)) {
@@ -848,7 +1050,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.getQuoteType(currentSectionIndex, nextSectionStep);
                 return;
             }
-
             this.updateProcess(currentSectionIndex, nextSectionStep);
         }
     }
@@ -1036,7 +1237,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Potenzialità massima richiesta','MaxRequiredPotential__c', this.typeVisibility('gas') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' , this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro', false, '',''),
                 new fieldData('Classe prelievo','WithdrawalClass__c',  this.typeVisibility('gas'), this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
-                new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
+                new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', !(this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'), this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso', '',''),
                 new fieldData('','Revoke__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
                 new fieldData('','CreditAcquire__c', this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
                 new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,this.permissionFlag, '',''),
@@ -1605,8 +1806,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.template.querySelector("c-hdt-target-object-address-fields").getInstanceWrapObjectBilling(this.wrapAddressObjectSpedizione);
     }
 
-    
+
     async connectedCallback(){
+
+        checkPermissionSet({}).then(data =>{
+            console.log('DATA£££' + data);
+
+            this.permissionFlag = !data;
+            console.log('PERMISSIONFLAG££' + this.permissionFlag);
+        })
+
         console.log('Details Callback Start');
 
         console.log('### VasSubtype__c >>> ' + this.order.VasSubtype__c);
@@ -1621,8 +1830,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.handleShowModuloInformativo();
         this.handleShowDelibera40();
         this.handleShowInviaModulistica();
-        this.handleFields();
-
+        handleSections.apply(this);
+       
         // @Picchiri 07/06/21 Credit Check Innesco per chiamata al ws
         if((this.selectedProcess === 'HDT_RT_VAS' && (this.order.OrderReference__c == null || this.order.OrderReference__c === undefined) && (this.order.ContractReference__c == null || this.order.ContractReference__c === undefined)) || this.selectedProcess === 'HDT_RT_Voltura' ||this.selectedProcess === 'HDT_RT_Subentro' || this.selectedProcess === 'HDT_RT_AttivazioneConModifica' || (this.selectedProcess === 'HDT_RT_SwitchIn' && this.order.ProcessType__c != 'Switch in Ripristinatorio') || this.selectedProcess === 'HDT_RT_ConnessioneConAttivazione' || this.selectedProcess === 'HDT_RT_TemporaneaNuovaAtt'){
             this.retryEsitiCreditCheck();
@@ -1634,7 +1843,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.getFirstStepName();
         this.loadAccordion();
 
-        if(this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        if( this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || 
+        ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) ){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
             console.log('IsVolture--> '+this.isVolture);
@@ -1655,10 +1865,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.isNoDayAfterthought = await isAfterthoughtDaysZero({order: this.order});
         }
 
+        if(this.order.AdditionalAttachments__c != ''){
+            this.additionalAttachments = this.order.AdditionalAttachments__c;
+        }
+        
         console.log('hdtChildOrderProcessDetails - connectedCallback - END');
     }
 
     renderedCallback(){
+
         if(this.currentSection.name === 'indirizzodiAttivazione'){
             this.handleWrapAddressObjectAttivazioniReverse();
         }
@@ -1712,8 +1927,54 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }, 3000)
     }
 
+    handleCloseAttachment(event){
+        console.log('###CloseAttachmentEvent in details>>> ' + JSON.stringify(event.detail));
+        event.detail.buttonPressed=true;
+        this.closeAttachmentEvent = event.detail;
+        if(event.detail.required){
+            this.template.querySelector("[data-id='MandatoryAttachments__c']").value = event.detail.required, this.sectionDataToSubmit["MandatoryAttachments__c"]=event.detail.required;
+        }
+        if(event.detail.additional){
+            this.additionalAttachments = event.detail.additional;
+            this.template.querySelector("[data-id='AdditionalAttachments__c']").value = event.detail.additional, this.sectionDataToSubmit["AdditionalAttachments__c"]=event.detail.additional;
+        }
+        
+    }
+
     handleUpdateCodAtecoEvent(event){
         console.log('###Ateco Event >>> ' + JSON.stringify(event.detail));
-        this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
+        if(event.detail?.isRonchi){
+            this.template.querySelector("[data-id='AtecoCode__c']").value = safeStr(event.detail?.atecoCode);
+            this.template.querySelector("[data-id='RonchiCode__c']").value = safeStr(event.detail?.ronchiCode);
+            this.template.querySelector("[data-id='RonchiSubcat__c']").value = safeStr(event.detail?.ronchiSubcategory);
+        }
+        else{
+            this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
+        }
     }
+
+    handleActiveRepentantStart(event){
+        console.log("test call");
+        let decorrenza =this.template.querySelector("[data-id='EffectiveDate__c']")?.value;
+        let dichiarazione =this.template.querySelector("[data-id='DeclarationDate__c']")?.value;
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = "", this.sectionDataToSubmit["OnerousReviewableStartDate__c"]="";
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = "", this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]="";
+        this.template.querySelector("c-hdt-active-repentant").startActiveRepentant(decorrenza, dichiarazione);
+    }
+
+    handleActiveRepentantFinish(event) {
+        console.log('###Missed Due Event >>> ');
+        this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
+        this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
+        //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
+        const MissingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
+        MissingDueAmount.required = event.detail.missedDue? true : false;
+        MissingDueAmount.disabled = event.detail.missedDue? false : true;
+        let isPeriodY = event.detail.period=="Y";
+        const declineSupport = this.template.querySelector("[data-id='DeclineComputationSupport__c']");
+        if(declineSupport)  declineSupport.required = isPeriodY;
+        const blockCalcolo = this.template.querySelector("[data-id='BlockOnComputation__c']");
+        if(blockCalcolo)    blockCalcolo.value = isPeriodY? "Y" : "", this.sectionDataToSubmit["BlockOnComputation__c"]=isPeriodY? "Y" : "N";
+    }
+    
 }

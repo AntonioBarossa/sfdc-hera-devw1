@@ -14,35 +14,67 @@
                                             density={density}>
                 <template if:true={showInputSection}>
                     <div class="slds-section slds-is-open">
-                        <h3 class="slds-section__title slds-theme_shade">
+                        <h3 if:true={labelInputSection} class="slds-section__title slds-theme_shade">
                             <span class="slds-truncate slds-p-horizontal_small" title="Section Title">{labelInputSection}</span>
                         </h3>
                         <div aria-hidden="false" class="slds-section__content">
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-3">
                                     <template for:each={firstColumn} for:item="field">
-                                        <lightning-input-field 
-                                        data-id={field.FieldName}
-                                        field-name={field.FieldName} 
-                                        key={field.FieldName} 
-                                        required={field.Required} 
-                                        disabled={field.ReadOnly}
-                                        onchange={handleChange}>
-                                        </lightning-input-field>
+                                        <template if:false={field.Label}>
+                                            <lightning-input-field
+                                            data-id={field.FieldName} 
+                                            field-name={field.FieldName} 
+                                            key={field.FieldName} 
+                                            required={field.Required} 
+                                            disabled={field.ReadOnly}
+                                            onchange={handleChange}>
+                                            </lightning-input-field>
+                                        </template>
+                                        <template if:true={field.Label}>
+                                            <div if:true={showCustomLabels} key={field.FieldName} class={customLabelClass}>
+                                                <label class="slds-form-element__label" for={field.FieldName}><abbr if:true={field.Required} class="slds-required" title="required">*</abbr> {field.Label}</label>
+                                                <lightning-input-field
+                                                data-id={field.FieldName} 
+                                                field-name={field.FieldName} 
+                                                required={field.Required} 
+                                                disabled={field.ReadOnly}
+                                                onchange={handleChange}
+                                                id={field.FieldName}
+                                                variant="label-hidden">
+                                            </lightning-input-field>
+                                            </div>                                            
+                                        </template>
                                     </template>
                                 </div>
                                 <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
                                 </div>
                                 <div class="slds-col slds-size_1-of-3">
                                     <template for:each={secondColumn} for:item="field">
-                                        <lightning-input-field
-                                        data-id={field.FieldName} 
-                                        field-name={field.FieldName} 
-                                        key={field.FieldName} 
-                                        required={field.Required} 
-                                        disabled={field.ReadOnly}
-                                        onchange={handleChange}>
-                                        </lightning-input-field>
+                                        <template if:false={field.Label}>
+                                            <lightning-input-field
+                                            data-id={field.FieldName} 
+                                            field-name={field.FieldName} 
+                                            key={field.FieldName} 
+                                            required={field.Required} 
+                                            disabled={field.ReadOnly}
+                                            onchange={handleChange}>
+                                            </lightning-input-field>
+                                        </template>
+                                        <template if:true={field.Label}>
+                                            <div if:true={showCustomLabels} key={field.FieldName} class={customLabelClass}>
+                                                <label class="slds-form-element__label" for={field.FieldName}><abbr if:true={field.Required} class="slds-required" title="required">*</abbr> {field.Label}</label>
+                                                <lightning-input-field
+                                                data-id={field.FieldName} 
+                                                field-name={field.FieldName} 
+                                                required={field.Required} 
+                                                disabled={field.ReadOnly}
+                                                onchange={handleChange}
+                                                id={field.FieldName}
+                                                variant="label-hidden">
+                                            </lightning-input-field>
+                                            </div>                                            
+                                        </template>
                                     </template>
                                 </div>
                             </div>
@@ -61,16 +93,42 @@
                                 <div class="slds-grid">
                                     <div class="slds-col slds-size_1-of-3">
                                         <template for:each={firstColumnReadOnly} for:item="field">
-                                            <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
-                                            </lightning-output-field>
+                                            <template if:false={field.Label}>
+                                                <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
+                                                </lightning-output-field>
+                                            </template>
+                                            <template if:true={field.Label}>
+                                                <div if:true={showCustomLabels} key={field.FieldName} class={customLabelClass}>
+                                                    <label class="slds-form-element__label" for={field.FieldName}><abbr if:true={field.Required} class="slds-required" title="required">*</abbr> {field.Label}</label>
+                                                    <lightning-output-field field-name={field.FieldName} id={field.FieldName}
+                                                    variant="label-hidden" >
+                                                    </lightning-output-field>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        <template for:each={firstColumnRelatedReadOnly} for:item="field">
+                                            <lightning-input type="text" key={field.apiName} label={field.label} id={field.apiName} value={field.value} variant="label-inline" readonly></lightning-input>
                                         </template>
                                     </div>
                                     <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
                                     </div>
                                     <div class="slds-col slds-size_1-of-3">
                                         <template for:each={secondColumnReadOnly} for:item="field">
-                                            <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
-                                            </lightning-output-field>
+                                            <template if:false={field.Label}>
+                                                <lightning-output-field field-name={field.FieldName} key={field.FieldName}>
+                                                </lightning-output-field>
+                                            </template>
+                                            <template if:true={field.Label}>
+                                                <div if:true={showCustomLabels} key={field.FieldName} class={customLabelClass}>
+                                                    <label class="slds-form-element__label" for={field.FieldName}><abbr if:true={field.Required} class="slds-required" title="required">*</abbr> {field.Label}</label>
+                                                    <lightning-output-field field-name={field.FieldName} id={field.FieldName}
+                                                    variant="label-hidden" >
+                                                    </lightning-output-field>
+                                                </div>
+                                            </template>
+                                        </template>
+                                        <template for:each={secondColumnRelatedReadOnly} for:item="field">
+                                            <lightning-input type="text" key={field.apiName} label={field.label} id={field.apiName} value={field.value} variant="label-inline" readonly></lightning-input>
                                         </template>
                                     </div>
                                 </div>
@@ -105,12 +163,10 @@
 
                     </div>
                     <div class="actionsRight">
-                        <template if:true={saveButton}> 
-                            <lightning-button
-                                class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
-                                variant={variantButton} type="submit" name="save" label={labelSaveButton}>
-                            </lightning-button>
-                        </template>
+                        <lightning-button
+                            data-id="submitButton" class={submitButtonClass}
+                            variant={variantButton} type="submit" name="save" label={labelSaveButton}>
+                        </lightning-button>
                         <template if:true={draftButton}>
                             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
                                 variant="neutral" type="button" name="draft" label={labelDraftButton} onclick={handleDraft}>

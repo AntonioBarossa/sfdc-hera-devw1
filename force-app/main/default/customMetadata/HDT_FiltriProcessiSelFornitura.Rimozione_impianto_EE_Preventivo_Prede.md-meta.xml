@@ -15,8 +15,12 @@
         <value xsi:type="xsd:string">SI</value>
     </values>
     <values>
+        <field>RateCategory__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>StatoContratto__c</field>
-        <value xsi:type="xsd:string">Inattivo</value>
+        <value xsi:type="xsd:string"/>
     </values>
     <values>
         <field>StatoFornitura__c</field>
@@ -28,6 +32,6 @@
     </values>
     <values>
         <field>TipoServizio__c</field>
-        <value xsi:type="xsd:string">Energia Elettrica,Gas</value>
+        <value xsi:type="xsd:string">Acqua,Energia Elettrica,Gas</value>
     </values>
 </CustomMetadata>

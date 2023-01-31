@@ -1,11 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Calculate_Expiration_Date</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>842</locationX>
+        <locationY>1790</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assegna_Indennizzo</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetCaseAggiornato</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Copy_1_of_Calculate_Expiration_Date</name>
+        <label>Copy 1 of Calculate Expiration Date</label>
+        <locationX>138</locationX>
+        <locationY>2198</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Copy_1_of_Assegna_Indennizzo</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Aggiorna_Case_Contenuti</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Copy_2_of_Calculate_Expiration_Date</name>
+        <label>Copy 2 of Calculate Expiration Date</label>
+        <locationX>666</locationX>
+        <locationY>2198</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Copy_2_of_Assegna_Indennizzo</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Aggiorna_Case_Contenuti</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>Assegna_Case_Contenuti</name>
         <label>Assegna Case Contenuti</label>
         <locationX>688</locationX>
-        <locationY>2270</locationY>
+        <locationY>2630</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -21,7 +132,7 @@
         <name>Assegna_Diritto_Rettifica_e_Data_Emissione</name>
         <label>Assegna Diritto Rettifica e Data Emissione</label>
         <locationX>666</locationX>
-        <locationY>1958</locationY>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -37,14 +148,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_Case_Contenuti</targetReference>
+            <targetReference>Copy_2_of_Calculate_Expiration_Date</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0</name>
         <label>Assegna Diritto Rettifica e Data Emissione</label>
         <locationX>402</locationX>
-        <locationY>1958</locationY>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +171,7 @@
         <name>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0_0</name>
         <label>Assegna Diritto Rettifica e Data Emissione</label>
         <locationX>138</locationX>
-        <locationY>1958</locationY>
+        <locationY>2078</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -76,14 +187,30 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_Case_Contenuti</targetReference>
+            <targetReference>Copy_1_of_Calculate_Expiration_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Indennizzo</name>
+        <label>Assegna Indennizzo</label>
+        <locationX>842</locationX>
+        <locationY>1910</locationY>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Fase_Elaborazione_Risposta</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Societa_non_selezionata</name>
         <label>Assegna Societa non selezionata</label>
         <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>SalesComapnyEmpty</assignToReference>
             <operator>Assign</operator>
@@ -92,6 +219,7 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>ScreenInput_0</targetReference>
         </connector>
     </assignments>
@@ -99,7 +227,7 @@
         <name>Assegna_Societa_Vendita</name>
         <label>Assegna Societa Vendita</label>
         <locationX>50</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Contenitore.SalesCompany__c</assignToReference>
             <operator>Assign</operator>
@@ -115,7 +243,7 @@
         <name>AssegnaModInvio</name>
         <label>AssegnaModInvio</label>
         <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +259,7 @@
         <name>AssegnaModInvio_0</name>
         <label>AssegnaModInvio</label>
         <locationX>842</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +275,7 @@
         <name>AssegnaModInvio_0_0</name>
         <label>AssegnaModInvio</label>
         <locationX>1106</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>GetCaseInvioRisposta.MotivatedResponseSendMode__c</assignToReference>
             <operator>Assign</operator>
@@ -163,7 +291,7 @@
         <name>AssegnaParentCaseToCollection</name>
         <label>AssegnaParentCaseToCollection</label>
         <locationX>50</locationX>
-        <locationY>2702</locationY>
+        <locationY>3062</locationY>
         <assignmentItems>
             <assignToReference>CaseContenutiRecord</assignToReference>
             <operator>Add</operator>
@@ -179,7 +307,7 @@
         <name>AssegnaStringCaseContenuti</name>
         <label>AssegnaStringCaseContenuti</label>
         <locationX>50</locationX>
-        <locationY>2582</locationY>
+        <locationY>2942</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Contenitore.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -195,12 +323,12 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>974</locationX>
-        <locationY>1790</locationY>
+        <locationY>2150</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Risposta</stringValue>
+                <elementReference>destinationPhase</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -208,10 +336,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignPhase_Default</name>
+        <label>assignPhase</label>
+        <locationX>512</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>destinationPhase</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Contenitore_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignProcessType</name>
         <label>AssignProcessType</label>
         <locationX>710</locationX>
-        <locationY>1214</locationY>
+        <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>RequestAccomplished</assignToReference>
             <operator>Assign</operator>
@@ -224,10 +368,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Copy_1_of_Assegna_Indennizzo</name>
+        <label>Copy 1 of Assegna Indennizzo</label>
+        <locationX>138</locationX>
+        <locationY>2318</locationY>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Copy_1_of_Assegna_Societa_non_selezionata</name>
         <label>Copy 1 of Assegna Societa non selezionata</label>
         <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>SalesComapnyEmpty</assignToReference>
             <operator>Assign</operator>
@@ -240,10 +400,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Copy_2_of_Assegna_Indennizzo</name>
+        <label>Copy 2 of Assegna Indennizzo</label>
+        <locationX>666</locationX>
+        <locationY>2318</locationY>
+        <assignmentItems>
+            <assignToReference>Aggiorna_Case_Contenuti.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Assegna_Case_Contenuti</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Popola_risposta_template</name>
         <label>Popola risposta template</label>
         <locationX>688</locationX>
-        <locationY>1598</locationY>
+        <locationY>1718</locationY>
         <assignmentItems>
             <assignToReference>Aggiorna_Case_Contenuti.ComplaintBodyResponse__c</assignToReference>
             <operator>Assign</operator>
@@ -269,7 +445,7 @@
             <assignToReference>Aggiorna_Case_Contenuti.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Elaborazione Risposta</stringValue>
+                <elementReference>destinationPhase</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -283,35 +459,11 @@
             <targetReference>Tipo_Reclamo_Child</targetReference>
         </connector>
     </assignments>
-    <choices>
-        <name>EmptyValue</name>
-        <choiceText>Seleziona la società di vendita</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue></stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>HeraCommMarche</name>
-        <choiceText>Hera Comm Marche</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Hera Comm Marche</stringValue>
-        </value>
-    </choices>
-    <choices>
-        <name>HeraCommSpa</name>
-        <choiceText>Hera Comm S.p.A.</choiceText>
-        <dataType>String</dataType>
-        <value>
-            <stringValue>Hera Comm S.p.A.</stringValue>
-        </value>
-    </choices>
     <decisions>
         <name>Case_Contenitore_0</name>
         <label>Case Contenitore?</label>
         <locationX>512</locationX>
-        <locationY>278</locationY>
+        <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Composizione_Risposta_Reclamo_0_0</targetReference>
         </defaultConnector>
@@ -336,7 +488,7 @@
         <name>Data_Emissione_Documento_Rettifica</name>
         <label>Data Emissione Documento Rettifica</label>
         <locationX>798</locationX>
-        <locationY>1838</locationY>
+        <locationY>1958</locationY>
         <defaultConnector>
             <targetReference>Assegna_Case_Contenuti</targetReference>
         </defaultConnector>
@@ -361,7 +513,7 @@
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica</label>
         <locationX>270</locationX>
-        <locationY>1838</locationY>
+        <locationY>1958</locationY>
         <defaultConnector>
             <targetReference>Assegna_Diritto_Rettifica_e_Data_Emissione_0_0</targetReference>
         </defaultConnector>
@@ -386,9 +538,9 @@
         <name>Fase_Elaborazione_Risposta</name>
         <label>Fase: Elaborazione Risposta?</label>
         <locationX>842</locationX>
-        <locationY>1550</locationY>
+        <locationY>2030</locationY>
         <defaultConnector>
-            <targetReference>GetCaseAggiornato</targetReference>
+            <targetReference>AssegnaValori</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Non Elaborazione Risposta</defaultConnectorLabel>
         <rules>
@@ -408,7 +560,7 @@
         <name>Il_Case_Contenuto_stato_selezionato</name>
         <label>Il Case Contenuto è stato selezionato?</label>
         <locationX>985</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
         </defaultConnector>
@@ -433,19 +585,26 @@
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
         <locationX>842</locationX>
-        <locationY>1094</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>ScreenInput</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Reclamo/Doppia Fatt.</defaultConnectorLabel>
         <rules>
             <name>Richieste_Info</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetCaseInvioRisposta.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Richiesta di informazioni</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseInvioRisposta.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamoDaCittadino</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -456,9 +615,9 @@
     </decisions>
     <decisions>
         <name>SocietaSelezionata</name>
-        <label>Societa&apos; selezionata?</label>
+        <label>Societa&apos; Selezionata?</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <defaultConnector>
             <targetReference>Assegna_Societa_non_selezionata</targetReference>
         </defaultConnector>
@@ -475,7 +634,7 @@
             </conditions>
             <conditions>
                 <leftValueReference>SalesCompanyPicklist.outcome</leftValueReference>
-                <operator>IsNull</operator>
+                <operator>NotEqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
@@ -490,7 +649,7 @@
         <name>Tipo_Reclamo_Child</name>
         <label>Tipo Reclamo Child</label>
         <locationX>688</locationX>
-        <locationY>1718</locationY>
+        <locationY>1838</locationY>
         <defaultConnector>
             <targetReference>Assegna_Case_Contenuti</targetReference>
         </defaultConnector>
@@ -530,7 +689,7 @@
         <name>ValoreCanaleDiIngresso</name>
         <label>ValoreCanaleDiIngresso?</label>
         <locationX>842</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>AssegnaModInvio_0_0</targetReference>
         </defaultConnector>
@@ -624,13 +783,11 @@
         <object>Case</object>
         <valueField>Id</valueField>
     </dynamicChoiceSets>
+    <environments>Default</environments>
     <formulas>
-        <name>DefaultSalesCompany</name>
+        <name>SupplyCityFormula</name>
         <dataType>String</dataType>
-        <expression>CASE( {!Get_Input_Case.SalesCompany__c}, 
-&quot;Hera Comm Marche&quot;, {!HeraCommMarche}, 
-&quot;Hera Comm S.p.A.&quot;, {!HeraCommSpa},
-{!EmptyValue})</expression>
+        <expression>IF(ISBLANK({!GetCaseInvioRisposta.SupplyCity__c}), {!GetCaseInvioRisposta.ServicePoint__r.SupplyCity__c},{!GetCaseInvioRisposta.SupplyCity__c})</expression>
     </formulas>
     <interviewLabel>Gestione Reclami - Composizione Corpo Risposta {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Composizione Corpo Risposta</label>
@@ -638,7 +795,7 @@
         <name>Aggiorna_Case_Contenuti</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <collectionReference>Get_Case_Contenuti</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -671,7 +828,7 @@
         <name>Get_Case_Contenitore</name>
         <label>Get Case Contenitore</label>
         <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Societa_Vendita</targetReference>
@@ -692,7 +849,7 @@
         <name>Get_Case_Contenuti</name>
         <label>Get Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>1238</locationY>
+        <locationY>1358</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Case_Contenuti</targetReference>
@@ -716,7 +873,7 @@
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Case_Contenitore_0</targetReference>
+            <targetReference>assignPhase_Default</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -733,11 +890,11 @@
     <recordLookups>
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
-        <locationX>974</locationX>
+        <locationX>842</locationX>
         <locationY>1670</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AssegnaValori</targetReference>
+            <targetReference>Calculate_Expiration_Date</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -755,7 +912,7 @@
         <name>GetCaseInvioRisposta</name>
         <label>GetCaseInvioRisposta</label>
         <locationX>842</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ValoreCanaleDiIngresso</targetReference>
@@ -776,21 +933,21 @@
         <name>Aggiorna_Case_Contenuti_0</name>
         <label>Aggiorna Case Contenuti</label>
         <locationX>50</locationX>
-        <locationY>2822</locationY>
+        <locationY>3182</locationY>
         <inputReference>CaseContenutiRecord</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>974</locationX>
-        <locationY>1910</locationY>
+        <locationY>2270</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>AggiornaCaseModInvio</name>
         <label>AggiornaCaseModInvio</label>
         <locationX>842</locationX>
-        <locationY>974</locationY>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Quale_Processo</targetReference>
         </connector>
@@ -800,7 +957,7 @@
         <name>Composizione_Risposta_Reclamo_0_0</name>
         <label>Composizione Risposta Reclamo</label>
         <locationX>842</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -839,7 +996,7 @@
         <name>Copy_1_of_Composizione_Risposta_Reclamo</name>
         <label>Copy 1 of Composizione Risposta Reclamo</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -878,12 +1035,12 @@
         <name>ScreenInput</name>
         <label>ScreenInput</label>
         <locationX>842</locationX>
-        <locationY>1430</locationY>
+        <locationY>1550</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Fase_Elaborazione_Risposta</targetReference>
+            <targetReference>GetCaseAggiornato</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader</name>
@@ -983,7 +1140,7 @@
         <name>ScreenInput_0</name>
         <label>ScreenInput</label>
         <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1000,9 +1157,9 @@
             <extensionName>c:hdtCustomPicklist</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>placeholder</name>
+                <name>value</name>
                 <value>
-                    <stringValue>Seleziona Società di Vendita</stringValue>
+                    <elementReference>Get_Input_Case.SalesCompany__c</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1018,15 +1175,15 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>required</name>
+                <name>placeholder</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <stringValue>Seleziona Società di Vendita</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>value</name>
+                <name>required</name>
                 <value>
-                    <elementReference>Get_Input_Case.SalesCompany__c</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -1035,18 +1192,8 @@
         </fields>
         <fields>
             <name>SalesCompanyEmptyString</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(255, 0, 0);&quot;&gt;*Per poter procedere è necessario selezionare una società di vendita&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(255, 0, 0);&quot;&gt;*Per poter procedere è necessario selezionare una società di vendita&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>SalesComapnyEmpty</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>hdtRecordEditForm_0</name>
@@ -1068,6 +1215,12 @@
                 <name>draftButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1135,7 +1288,7 @@
         <name>Seleziona_Case_Contenuti_0</name>
         <label>Seleziona Case Contenuti</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -1185,7 +1338,24 @@
         </value>
     </variables>
     <variables>
+        <name>destinationPhase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue>Elaborazione Risposta</stringValue>
+        </value>
+    </variables>
+    <variables>
         <name>InputCase</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ParentRecordId</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>

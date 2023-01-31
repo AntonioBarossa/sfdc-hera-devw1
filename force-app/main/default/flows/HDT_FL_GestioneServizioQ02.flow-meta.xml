@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Creazione_Request</name>
         <label>Creazione Request</label>
-        <locationX>998</locationX>
-        <locationY>886</locationY>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
         <actionName>HDT_SRV_QservHandler</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -22,8 +22,8 @@
     <actionCalls>
         <name>Gestione_Response</name>
         <label>Gestione Response</label>
-        <locationX>998</locationX>
-        <locationY>1048</locationY>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
         <actionName>HDT_SRV_QservFlowResponseHandler</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>Automatic</flowTransactionModel>
@@ -44,8 +44,8 @@
     <assignments>
         <name>AssegnaPivaAccount</name>
         <label>Assegna PIVA da Account</label>
-        <locationX>714</locationX>
-        <locationY>344</locationY>
+        <locationX>380</locationX>
+        <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.VatNumber__c</assignToReference>
             <operator>Assign</operator>
@@ -60,17 +60,24 @@
     <decisions>
         <name>CaseStatusBozza</name>
         <label>Check Case Status</label>
-        <locationX>707</locationX>
-        <locationY>529</locationY>
+        <locationX>380</locationX>
+        <locationY>398</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>BozzaStatus</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>2 AND 1</conditionLogic>
             <conditions>
                 <leftValueReference>GetInputCase.Status</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>New</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Status</leftValueReference>
+                <operator>WasSet</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -82,8 +89,8 @@
     <decisions>
         <name>Check_Distributore_InRete</name>
         <label>Check Distributore InRete</label>
-        <locationX>992</locationX>
-        <locationY>654</locationY>
+        <locationX>182</locationX>
+        <locationY>638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Distributore_InRete</name>
@@ -109,7 +116,7 @@
     <processMetadataValues>
         <name>CanvasMode</name>
         <value>
-            <stringValue>FREE_FORM_CANVAS</stringValue>
+            <stringValue>AUTO_LAYOUT_CANVAS</stringValue>
         </value>
     </processMetadataValues>
     <processMetadataValues>
@@ -122,8 +129,8 @@
     <recordLookups>
         <name>Get_Local_Dispatcher_InRete</name>
         <label>Get Local Dispatcher InRete</label>
-        <locationX>827</locationX>
-        <locationY>652</locationY>
+        <locationX>182</locationX>
+        <locationY>518</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Distributore_InRete</targetReference>
@@ -143,8 +150,8 @@
     <recordLookups>
         <name>GetInputCase</name>
         <label>GetCase</label>
-        <locationX>714</locationX>
-        <locationY>205</locationY>
+        <locationX>380</locationX>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaPivaAccount</targetReference>
@@ -162,8 +169,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <start>
-        <locationX>589</locationX>
-        <locationY>53</locationY>
+        <locationX>254</locationX>
+        <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
         </connector>

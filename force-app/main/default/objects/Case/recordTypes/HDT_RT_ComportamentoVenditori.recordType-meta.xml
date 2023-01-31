@@ -882,6 +882,48 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>ClientType__c</picklist>
+		<values>
+			<fullName>Alberghi Bar Ristoranti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Bagnini</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo privato</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo pubblico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Ditte</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Enti Associazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Scuole</fullName>
+			<default>false</default>
+		</values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ClientTypology__c</picklist>
+		<values>
+			<fullName>Domestico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Non Domestico</fullName>
+			<default>false</default>
+		</values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
             <fullName>Ambiente</fullName>
@@ -1742,6 +1784,54 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
@@ -1942,6 +2032,30 @@
         </values>
         <values>
             <fullName>FUTURENERGY-Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G1 - MMS Persona fisica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G2 - MMS Ditta individuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G3 - MMS Azienda</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G4 - MMS Parti comuni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G5 - MMS Condominio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>G6 - MMS Associazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7024,7 +7138,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7722,6 +7836,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>OperationType__c</picklist>
+		<values>
+			<fullName>Modifica dati contr. stesso Cli</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Separazione CA</fullName>
             <default>false</default>
@@ -8632,9 +8750,6 @@
             <fullName>13FM-Non domestici AT</fullName>
             <default>false</default>
         </values>
-        
-        
-        
     </picklistValues>
     <picklistValues>
         <picklist>SignMode__c</picklist>
@@ -9962,6 +10077,130 @@
             <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>MMS_SP_Acqualagna_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Apecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cagli_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cantiano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cartoceto_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fermignano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fossombrone_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Gabicce_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Lunano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Macerata_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Orciano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pergola_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Piobbico_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_San_Lorenzo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Sant_Angelo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbania_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_4</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Subprocess__c</picklist>
@@ -10605,6 +10844,10 @@
             <fullName>Altre Verifiche</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Annullamento Contratti</fullName>
             <default>false</default>
@@ -10661,6 +10904,10 @@
             <fullName>Condizioni Contrattuali Errate</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Conferimento Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Consegna copia chiave GdM</fullName>
             <default>false</default>
@@ -10713,6 +10960,10 @@
             <fullName>Fiscale</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Formulari Richiesta Sconto</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
@@ -10725,6 +10976,10 @@
             <fullName>Gestione Disalimentabilità</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Gestione Rifiuti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>HVAC</fullName>
             <default>false</default>
@@ -10781,6 +11036,10 @@
             <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Pagamento Unico Annuale TARI</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Paperless</fullName>
             <default>false</default>
@@ -10849,8 +11108,20 @@
             <fullName>Ricostruzione Consumi</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10881,6 +11152,14 @@
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
             <default>false</default>
         </values>
+		<values>
+			<fullName>Sconti Collettivi Pap</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Segnalazioni Ambientali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Segnalazioni VAS</fullName>
             <default>false</default>

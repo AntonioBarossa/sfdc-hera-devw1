@@ -25,6 +25,147 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>UseSubCategory__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso agricolo e zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SeasonUse__c</picklist>
+        <values>
+            <fullName>Nessuna stagionalita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Giu/Ago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Apr/Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>BonusDeliveryMode__c</picklist>
+        <values>
+            <fullName>Bonus in continuita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus su ultima fattura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ActivationType__c</picklist>
+        <values>
+            <fullName>Primo soggetto passivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro precedente soggetto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura obbligato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketingPrivacyAcquired__c</picklist>
         <values>
             <fullName>Si</fullName>
@@ -90,10 +231,6 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
-            <fullName>Bolletta per e-mail %2B Carta</fullName>
-            <default>false</default>
-        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -1981,10 +2118,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-<!--         <values>
-            <fullName>Amm%2E Precheck OK SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullato</fullName>
             <default>false</default>
@@ -2069,10 +2202,6 @@
             <fullName>Registrazione  da validare</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Registrazione da validare</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Plico Firmato da inviare</fullName>
             <default>false</default>
@@ -2128,6 +2257,17 @@
         <picklist>ProcessType__c</picklist>
         <values>
             <fullName>To define</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RequestSource__c</picklist>
+        <values>
+            <fullName>Da contribuente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>D'ufficio</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2323,6 +2463,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

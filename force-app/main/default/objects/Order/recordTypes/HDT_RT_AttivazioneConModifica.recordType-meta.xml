@@ -25,6 +25,108 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SeasonUse__c</picklist>
+        <values>
+            <fullName>Nessuna stagionalita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Giu/Ago</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso stagionale estate Apr/Set</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>BonusDeliveryMode__c</picklist>
+        <values>
+            <fullName>Bonus in continuita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus su ultima fattura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>ActivationType__c</picklist>
+        <values>
+            <fullName>Primo soggetto passivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro precedente soggetto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura obbligato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>MarketingPrivacyAcquired__c</picklist>
         <values>
             <fullName>Si</fullName>
@@ -90,10 +192,6 @@
             <fullName>Bolletta per e-mail</fullName>
             <default>false</default>
         </values>
-        <!--<values>
-            <fullName>Bolletta per e-mail %2B Carta</fullName>
-            <default>false</default>
-        </values>-->
         <values>
             <fullName>Cartaceo</fullName>
             <default>false</default>
@@ -2163,14 +2261,6 @@
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
-<!--         <values>
-            <fullName>Accettazione pagamento a DL</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>Amm%2E Precheck OK SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
@@ -2179,14 +2269,6 @@
             <fullName>Ammissibilità OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Ammissibilità conformità KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ammissibilità conformità OK</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullamento - Ammissibilità KO</fullName>
             <default>false</default>
@@ -2219,10 +2301,6 @@
             <fullName>Annullamento - Inviato al DL%2FSII</fullName>
             <default>false</default>
         </values>
-        <!-- <values>
-            <fullName>Annullamento - Revocato</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
             <default>false</default>
@@ -2275,10 +2353,6 @@
             <fullName>Comunicazione verso Heroku OK</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Conferma Appuntamento KO</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Credit Check KO</fullName>
             <default>false</default>
@@ -2287,18 +2361,6 @@
             <fullName>Dati Tecnici Ricevuti</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>DL Documentazione completa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DL accertamento OK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DL documentazione incompleta</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Da Inviare</fullName>
             <default>false</default>
@@ -2319,38 +2381,14 @@
             <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Esecuzione Appuntamento KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Esecuzione Appuntamento OK</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Esito KO da DL</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Esito KO da SII</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Esito OK da DL</fullName>
             <default>false</default>
         </values>
- <!--        <values>
-            <fullName>Esito OK da SII</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>Gestione appuntamento su portale DL</fullName>
-            <default>false</default>
-        </values> -->
- <!--        <values>
-            <fullName>In Lavorazione</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Flusso bloccato in assenza del precedente</fullName>
             <default>false</default>
@@ -2359,22 +2397,6 @@
             <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>In attesa appuntamento DL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa conferma cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa esecuzione appuntamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa tempi di ripensamento</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
@@ -2395,10 +2417,6 @@
             <fullName>Caricamento Siebel KO</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>In sequenzializzazione</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Inviato al DL</fullName>
             <default>false</default>
@@ -2407,14 +2425,6 @@
             <fullName>Inviare preventivo</fullName>
             <default>false</default>
         </values>
-<!--         <values>
-            <fullName>Invio allegato a DL</fullName>
-            <default>false</default>
-        </values> -->
-<!--         <values>
-            <fullName>OK SAP</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Preventivo Accettato</fullName>
             <default>false</default>
@@ -2475,10 +2485,6 @@
             <fullName>Ripensamento - Inviato al SII</fullName>
             <default>false</default>
         </values>
- <!--        <values>
-            <fullName>Ripensamento - Revocato</fullName>
-            <default>false</default>
-        </values> -->
         <values>
             <fullName>Ripensato</fullName>
             <default>false</default>
@@ -2800,6 +2806,14 @@
         </values>
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S.p.A</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
         </values>
     </picklistValues>

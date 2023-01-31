@@ -229,9 +229,137 @@
                 <label>Nuova Impronta Zero Amministratori</label>
             </value>
             <value>
+                <fullName>Tariffa Idrico</fullName>
+                <default>false</default>
+                <label>Tariffa Idrico</label>
+            </value>
+            <value>
+                <fullName>Tariffa TARI</fullName>
+                <default>false</default>
+                <label>Tariffa TARI</label>
+            </value>
+            <value>
+                <fullName>Casa Dolce Casa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Casa Dolce Casa</label>
+            </value>
+            <value>
+                <fullName>Gente Hera</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gente Hera</label>
+            </value>
+            <value>
+                <fullName>Hello Hera Casa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Hello Hera Casa</label>
+            </value>
+            <value>
+                <fullName>Hera Bebe&apos;</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Hera Bebe&apos;</label>
+            </value>
+            <value>
+                <fullName>Hera Comm Placet</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Hera Comm Placet</label>
+            </value>
+            <value>
+                <fullName>Hera Eta Piu</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Hera Eta Piu</label>
+            </value>
+            <value>
+                <fullName>M Giusto Casa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>M Giusto Casa</label>
+            </value>
+            <value>
+                <fullName>Prezzo Certo</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Certo</label>
+            </value>
+            <value>
+                <fullName>Prezzo Garantito</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Garantito</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Hera</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Hera</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Impresa</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Impresa</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Lavoro</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Lavoro</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Natura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Natura</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Special</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Special Web</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Special Web</label>
+            </value>
+            <value>
+                <fullName>Prezzo Netto Verde</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Prezzo Netto Verde</label>
+            </value>
+            <value>
+                <fullName>TBD</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>TBD</label>
+            </value>
+            <value>
+                <fullName>Tre per te</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Tre per te</label>
+            </value>
+            <value>
                 <fullName>Nuova Impronta Zero 12 Mesi</fullName>
                 <default>false</default>
                 <label>Nuova Impronta Zero 12 Mesi</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Active</fullName>
+                <default>false</default>
+                <label>PiuControllo Active</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat</label>
             </value>
         </valueSetDefinition>
     </valueSet>

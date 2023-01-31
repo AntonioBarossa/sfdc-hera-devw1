@@ -23,13 +23,14 @@ public with sharing class HDT_BA_QualityCallTst {
             
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Ammissibilità OK','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+            /* HDT_UTL_DataFactoryTst.newPhaseTransition('Ammissibilità OK','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);  
             HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Motore VAS','Bozza',utlConstants.ORDER_RECORDTYPEID_SWITCHIN,utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);  
-             
-            List<AgentMatrix__c> agentMatrix = HDT_UTL_DataFactoryTst.createAgentMatrix(1,true,'Sportello') ; 
+              */
+            List<AgentMatrix__c> agentMatrix = HDT_UTL_DataFactoryTst.createAgentMatrix(1,false,'Sportello') ; 
             agentMatrix[0].IsMonitoring__c=true;
             agentMatrix[0].AgencyCode__c='001';
+            insert agentMatrix;
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
@@ -40,102 +41,134 @@ public with sharing class HDT_BA_QualityCallTst {
             insert contacts;
             Id contactId = contacts[0].id;
             Id anotherContactId = contacts[1].id;
+            List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(16, true, accId, 'Attiva');
             
-            List<Order> parentOrders = HDT_UTL_DataFactoryTst.createOrder(2,true,accId,'Bozza');
-            Id parentOrderId = parentOrders[0].id;
-            parentOrders[0].Contact__c = contactId;
-            parentOrders[0].VASType__c = 'VAS Fatturabili';
-            parentOrders[0].phase__c = 'Comunicazione verso Heroku';
-            parentOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            parentOrders[1].Contact__c = contactId;
-            parentOrders[1].VASType__c = 'VAS Fatturabili';
-            parentOrders[1].phase__c = 'Comunicazione verso Heroku';
-            parentOrders[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            update parentOrders;
-
-            List<Order> orderss = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
-            orderss[0].Username__c='test';
-            orderss[0].Password__c='test1';
-            orderss[0].NotRegisteredMeterCase__c=true;
-            orderss[0].EffectiveDate__c=date.today();
-            orderss[0].PowerCommitted__c=2;
-            orderss[0].ImplantType__c='13A0-Usi di Abitazione BT';
-            orderss[0].RequestOption__c='Domestici-TD';
-            orderss[0].CreditCheckDescription__c='test1';
-            orderss[0].QualityCall__c=true;  
-            orderss[0].ComfortCallDaysDue__c=null;
-            orderss[0].WizardCompletedDate__c=date.today().addDays(-60);
-            orderss[0].ParentOrder__c = parentOrders[1].Id;
-            orderss[0].Contact__c = contactId;
-            orderss[0].QualityCallUnique__c=true;
-            orderss[0].AgencyCode__c='001';
-            orderss[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            orderss[0].Phase__c = 'Ammissibilità OK';
-            insert orderss;
+            List<Order> parentOrders = HDT_UTL_DataFactoryTst.createOrder(8,false,accId,'Documentazione Gestita');
+            for (Integer i = 0;i<8;i++){
+                parentOrders[i].Name = 'P'+String.valueOf(i);
+                parentOrders[i].Contact__c = (Math.mod(i, 2) == 0)?contactId : anotherContactId;
+                parentOrders[i].Status = 'Completed';
+                parentOrders[i].recordTypeId = utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            }
+            insert parentOrders;
+            List<Order> childOrders = HDT_UTL_DataFactoryTst.createOrderWithPricebook(16, false, accId, sales, Test.getStandardPricebookId());//HDT_UTL_DataFactoryTst.createOrder(16,false,accId,'Comunicazione verso Heroku');
+            for (Integer i = 0;i<16;i++){
+                childOrders[i].Name = 'C'+String.valueOf(i);
+                childOrders[i].Status='In Lavorazione';
+                childOrders[i].Phase__c = 'Ammissibilità KO';
+                childOrders[i].Username__c=(Math.mod(i, 2) == 0)? 'test' : 'test2';
+                childOrders[i].Password__c=(Math.mod(i, 2) == 0)?'test1' : 'test21';
+                childOrders[i].NotRegisteredMeterCase__c=true;
+                childOrders[i].EffectiveDate__c=date.today();
+                childOrders[i].PowerCommitted__c=2;
+                childOrders[i].ImplantType__c='13A0-Usi di Abitazione BT';
+                childOrders[i].RequestOption__c='Domestici-TD';
+                childOrders[i].QualityCall__c=(i != 4 && i != 7 && i!= 14);  
+                childOrders[i].QualityCallUnique__c = ( i != 0 && i != 1);
+                childOrders[i].ComfortCallDaysDue__c=null;
+                childOrders[i].WizardCompletedDate__c=date.today().addDays(-60);
+                childOrders[i].IsVas__c= (i==3 || i ==6);
+                childOrders[i].AgencyCode__c='001';
+                childOrders[i].Channel__c = 'Agenzia';
+                childOrders[i].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
+            
+            }
+            //P1
+            childOrders[0].ParentOrder__c = parentOrders[0].Id;
+            childOrders[0].Contact__c = parentOrders[0].Contact__c;
+            childOrders[0].Sale__c = sales[0].Id;
+            //P2
+            childOrders[1].Phase__c = 'Comunicazione verso Heroku OK';
+            childOrders[1].ParentOrder__c = parentOrders[1].Id;
+            childOrders[1].Contact__c = parentOrders[1].Contact__c;
+            childOrders[1].Sale__c = sales[1].Id;
+            //P3
+            childOrders[2].Phase__c = 'Voltura Rifiutata';
+            childOrders[2].ParentOrder__c = parentOrders[2].Id;
+            childOrders[2].Contact__c = parentOrders[2].Contact__c;
+            childOrders[2].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VOLTURA;
+            childOrders[2].Sale__c = sales[2].Id;
+            
+            childOrders[3].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VAS;
+            childOrders[3].Phase__c = 'Comunicazione verso Heroku KO';
+            childOrders[3].ParentOrder__c = parentOrders[2].Id;
+            childOrders[3].Sale__c = sales[2].Id;
+            childOrders[3].Contact__c = parentOrders[2].Contact__c;
+            
+            childOrders[4].Phase__c = 'Attesa Credit Check';
+            childOrders[4].ParentOrder__c = parentOrders[2].Id;
+            childOrders[4].Sale__c = sales[2].Id;
+            childOrders[4].Contact__c = parentOrders[2].Contact__c;
+            //P4
+            childOrders[5].Phase__c = 'Comunicazione verso Heroku OK';
+            childOrders[5].ParentOrder__c = parentOrders[3].Id;
+            childOrders[5].Sale__c = sales[3].Id;
+            childOrders[5].Contact__c = parentOrders[3].Contact__c;
+            
+            childOrders[6].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VAS;
+            childOrders[6].Phase__c = 'Comunicazione verso Heroku OK';
+            childOrders[6].ParentOrder__c = parentOrders[3].Id;
+            childOrders[6].VASType__c = 'VAS Fatturabili';
+            childOrders[6].Sale__c = sales[3].Id;
+            childOrders[6].Contact__c = parentOrders[3].Contact__c;
+            
+            childOrders[7].ParentOrder__c = parentOrders[3].Id;
+            childOrders[7].Sale__c = sales[3].Id;
+            childOrders[7].Contact__c = parentOrders[3].Contact__c;
+            //P5
+            childOrders[8].Phase__c = 'Comunicazione verso Heroku OK';
+            childOrders[8].ParentOrder__c = parentOrders[4].Id;
+            childOrders[8].Sale__c = sales[4].Id;
+            childOrders[8].Contact__c = parentOrders[4].Contact__c;
+            
+            childOrders[9].Phase__c = 'Credit Check KO';
+            childOrders[9].ParentOrder__c = parentOrders[4].Id;
+            childOrders[9].Sale__c = sales[4].Id;
+            childOrders[9].Contact__c = parentOrders[4].Contact__c;
+            
+            childOrders[10].ParentOrder__c = parentOrders[4].Id;
+            childOrders[10].Sale__c = sales[4].Id;
+            childOrders[10].Contact__c = parentOrders[4].Contact__c;
+            //P6
+            childOrders[11].WizardCompletedDate__c=date.today().addDays(3);
+            childOrders[11].ParentOrder__c = parentOrders[5].Id;
+            childOrders[11].Sale__c = sales[5].Id;
+            childOrders[11].Contact__c = parentOrders[5].Contact__c;
+            
+            childOrders[12].ParentOrder__c = parentOrders[5].Id;
+            childOrders[12].Sale__c = sales[5].Id;
+            childOrders[12].Contact__c = parentOrders[5].Contact__c;
+            
+            childOrders[13].ParentOrder__c = parentOrders[5].Id;
+            childOrders[13].Sale__c = sales[5].Id;
+            childOrders[13].Contact__c = parentOrders[5].Contact__c;
+            //P7
+            childOrders[14].ParentOrder__c = parentOrders[6].Id;
+            childOrders[14].Sale__c = sales[6].Id;
+            childOrders[14].Contact__c = parentOrders[6].Contact__c;
+            
+            childOrders[15].VasSubtype__c = 'Analisi consumi';
+            childOrders[15].Phase__c = 'Comunicazione verso Heroku KO';
+            childOrders[15].ParentOrder__c = parentOrders[6].Id;
+            childOrders[15].Contact__c = parentOrders[6].Contact__c;
+            childOrders[15].Sale__c = sales[6].Id;
+            childOrders[15].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_VAS;
+            
+            insert childOrders;
             
             List<Campaign> campaigns = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaigns[0].Name = 'Comfort Campaign';
             insert campaigns;
             
-            List<Order> moreOrders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Bozza');
-            moreOrders[0].qualityCall__c = true;
-            moreOrders[0].DateComfortCall__c = System.today() - 3;
-            moreOrders[0].ComfortCallDaysDue__c = 6.2;
-            moreOrders[0].ParentOrder__c = parentOrderId;
-            moreOrders[0].Contact__c = anotherContactId;
-            moreOrders[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            moreOrders[0].Phase__c = 'Bozza';
-            insert moreOrders;
-        
-            List<Order> ordersToday = HDT_UTL_DataFactoryTst.createOrder(2,false,accId,'Bozza');
-            ordersToday[0].Username__c='test';
-            ordersToday[0].Password__c='test1';
-            ordersToday[0].NotRegisteredMeterCase__c=true;
-            ordersToday[0].EffectiveDate__c=date.today();
-            ordersToday[0].PowerCommitted__c=2;
-            ordersToday[0].ImplantType__c='13A0-Usi di Abitazione BT';
-            ordersToday[0].RequestOption__c='Domestici-TD';
-            ordersToday[0].CreditCheckDescription__c='test1';
-            ordersToday[0].QualityCall__c=true;  
-            ordersToday[0].ComfortCallDaysDue__c=null;
-            ordersToday[0].WizardCompletedDate__c=date.today();
-            ordersToday[0].QualityCallUnique__c=true;
-            ordersToday[0].ParentOrder__c = parentOrderId;
-            ordersToday[0].Contact__c = contactId;
-            ordersToday[0].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            ordersToday[0].VASType__c = 'VAS Fatturabili';
-            ordersToday[0].Phase__c = 'Comunicazione verso Heroku';
-            
-            ordersToday[1].Username__c='test2';
-            ordersToday[1].Password__c='test21';
-            ordersToday[1].NotRegisteredMeterCase__c=true;
-            ordersToday[1].EffectiveDate__c=date.today();
-            ordersToday[1].PowerCommitted__c=2;
-            ordersToday[1].ImplantType__c='13A0-Usi di Abitazione BT';
-            ordersToday[1].RequestOption__c='Domestici-TD';
-            ordersToday[1].CreditCheckDescription__c='test2';
-            ordersToday[1].QualityCall__c=true;  
-            ordersToday[1].ComfortCallDaysDue__c=null;
-            ordersToday[1].WizardCompletedDate__c=date.today().addDays(-100);
-            ordersToday[1].QualityCallUnique__c=true;
-            ordersToday[1].ParentOrder__c = parentOrderId;
-            ordersToday[1].Contact__c = contactId;
-            ordersToday[1].recordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
-            ordersToday[1].VASType__c = 'VAS Fatturabili';
-            ordersToday[1].Phase__c = 'Comunicazione verso Heroku';
-            insert ordersToday;
-
-            wrts_prcgvr__Activity__c activityVas=new wrts_prcgvr__Activity__c(
-                        RecordTypeId = (new  HDT_QR_RecordType()).getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c').Id,
-                        Account__c = ordersToday[0].AccountId,
-                        Order__c = ordersToday[0].Id,
-                        wrts_prcgvr__Description__c = 'TEST',
-                        wrts_prcgvr__Status__c = 'Aperta',
-                        Type__c = HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL
-                    );
-            List<Contract> con = HDT_UTL_DataFactoryTst.createContract(1,true,accId);
+           
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,false);
+            products[0].family = 'VAS Servizio';
+            products[0].CancelableQC__c = true;
+            insert products;
             List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
-            HDT_UTL_DataFactoryTst.createCaseDocumentale(1,true,accId,contactId,sp[0].Id,con[0].Id,orderss[0].Id);
+            List<PricebookEntry> entries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true,Test.getStandardPricebookId());
+            
+            HDT_UTL_DataFactoryTst.createOrderItem(1,true,childOrders[0].Id,sp[0].Id,products[0].Id,entries[0].id);
 
             List<Campaign> campaign = HDT_UTL_DataFactoryTst.createCampaign(1,false);
             campaign[0].Name='Quality Campaign';
@@ -153,22 +186,21 @@ public with sharing class HDT_BA_QualityCallTst {
             List<CampaignMember> campaignMember = HDT_UTL_DataFactoryTst.createCampaignMember( false, campaign[0].Id, leads, contacts);
             insert campaignMember;
 
-            List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(2,false,accId);
-            activity[0].order__c=orderss[0].Id;
-            activity[0].Type__c='Quality Call';
-            activity[0].RecordTypeId = utlConstants.ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL ;
-            activity[0].wrts_prcgvr__Status__c = 'Aperta';
-            activity[0].order__c=parentOrders[1].Id;
-            activity[0].Type__c='Quality Call';
-            activity[0].RecordTypeId = utlConstants.ACTIVITYCUSTOM_RECORDTYPEID_COMFORTQUALITYCALL ;
-            activity[0].wrts_prcgvr__Status__c = 'Aperta';
-            activity.add(activityVas);
-            insert activity;
+            
 
             List<ComfortQualityCall__c> cqcRecords = HDT_UTL_DataFactoryTst.createComfortQualityCall(1, false);
             cqcRecords[0].DocumentValidation__c = true;
             cqcRecords[0].QualityEnabled__c = true;
             insert cqcRecords;
+
+            List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(2,false,accId);
+            activity[0].order__c=childOrders[0].Id;
+            activity[0].Type__c='Esito KO DL';
+            activity[0].wrts_prcgvr__Status__c = 'Aperta';
+            activity[1].order__c=childOrders[0].Id;
+            activity[1].Type__c='Ammissibilità KO';
+            activity[1].wrts_prcgvr__Status__c = 'Aperta';
+            insert activity;
         } 
     }
 
@@ -176,34 +208,98 @@ public with sharing class HDT_BA_QualityCallTst {
     public static void testQualityCallExecute(){
         Test.startTest();
         
-        HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
-        Database.executeBatch(batch,200);
+            HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
+            Database.executeBatch(batch,200);
 
         Test.stopTest();
         
-        System.assertEquals(1, [Select id From wrts_prcgvr__Activity__c LIMIT 1].size(), 'HDT_BA_QualityCall did not work correctly: wrong amount of custom activities');
-        System.assertNotEquals(0, [Select id From wrts_prcgvr__Activity__c LIMIT 1].size() ,'HDT_BA_QualityCall did not work correctly: wrong amount of CampaignMember');
+        List<wrts_prcgvr__Activity__c> activities = [SELECT id,Order__r.Name, Order__r.Phase__c, Type__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Type__c IN ('Quality Call','Quality Scaduta')];
+        Set<String> qcActivity = new Set<String>{
+            'C0',
+            'C1',
+            'P2',
+            'P3',
+            'P4',
+            'P5'
+        };
+        Set<String> qsActivity = new Set<String>{
+            'P3'
+        };
+        Set<String> phaseOrder = new Set<String>{
+            'C0-Annullato',
+            'C1-Comunicazione verso Heroku OK'
+        };
+        Set<String> closedActivity = new Set<String>{
+            'C0',
+            'C1',
+            'P2',
+            'P3'
+        };
+        for (wrts_prcgvr__Activity__c act : activities){
+            phaseOrder.remove(act.Order__r.Name + '-' + act.Order__r.Phase__c);
+            if ('Quality Call'.equalsIgnoreCase(act.Type__c)){
+                qcActivity.remove(act.Order__r.Name);
+            }
+            if ('Quality Scaduta'.equalsIgnoreCase(act.Type__c)){
+                qsActivity.remove(act.Order__r.Name);
+                continue;
+            }
+            if (!'Chiusa'.equalsIgnoreCase(act.wrts_prcgvr__Status__c)){
+                System.assert(!closedActivity.contains(act.Order__r.Name), 'Le quality call non sono state chiuse correttamente');
+            }
+        }
+        System.assertEquals(qcActivity.size(), 0, 'Non sono state create tutte le activity di Quality Call');
+        System.assertEquals(qsActivity.size(), 0, 'Non sono state create le activity di Quality Scaduta');
+        System.assertEquals(phaseOrder.size(), 0, 'Gli ordini non sono correttamente aggiornati');
+        System.assertEquals(2, [SELECT id FROM wrts_prcgvr__Activity__c WHERE Type__c IN ('Esito KO DL','Ammissibilità KO') AND wrts_prcgvr__Status__c = 'Annullata'].size(), 'Le activitie non sono state chiuse');
     }
 
     @isTest
     public static void testQualityCallClosed(){
-        
-        Order ord = [SELECT id FROM Order WHERE WizardCompletedDate__c = TODAY LIMIT 1];
-        ord.QualityCallStatus__c='Attività gestita';
-        update ord;
-        wrts_prcgvr__Activity__c act = [Select id From wrts_prcgvr__Activity__c LIMIT 1];
-        act.wrts_prcgvr__Status__c = 'Chiusa';
-        act.wrts_prcgvr__IsClosed__c = true;
-        act.Order__c = ord.Id;
-        update act;
+        delete [SELECT id FROM CampaignMember];
+        List<Order> orders =[SELECT Id,AccountId, Name FROM Order WHERE Name IN ('C0','C9','P4','P5','C12')];
+        List<wrts_prcgvr__Activity__c> acts = new List<wrts_prcgvr__Activity__c>();
+        List<Order> ords = new List<Order>();
+        for (order o : orders){
+            if ('C0'.equals(o.Name) || 'P4'.equals(o.Name) || 'P5'.equals(o.Name)){
+                acts.add(
+                    new wrts_prcgvr__Activity__c(
+                        RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_ComfortQualityCall'),
+                        Type__c = 'Quality Call',
+                        wrts_prcgvr__Status__c = 'Aperta',
+                        ActivatedDate__c = Date.today(),
+                        LoginChannel__c = 'Agenzia',
+                        Order__c = o.Id
+                    )
+                );
+            }
+            if ('C0'.equals(o.Name) || 'P5'.equals(o.Name)){
+                acts.add(
+                    new wrts_prcgvr__Activity__c(
+                        RecordTypeId = HDT_UTL_ActivityCustom.getRecordTypeId('HDT_RT_AttivitaGestionali'),
+                        Account__c = o.AccountId,
+                        Order__c =  o.Id,
+                        Type__c = 'Quality Scaduta',
+                        wrts_prcgvr__Status__c = 'Aperta',
+                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
+                    )
+                );
+
+            }
+            if ('C9'.equals(o.Name) || 'C12'.equals(o.Name)){
+                ords.add(new Order(Id = o.Id, QualityCallStatus__c = HDT_UTL_QualityCall.HANDLE_DEADLINE));
+
+            }
+        }
+        insert acts;
+        update ords;
         Test.startTest();
         
-        HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
-        Database.executeBatch(batch,200);
+            HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
+            Database.executeBatch(batch,200);
 
         Test.stopTest();
-        
-        System.assertEquals(1, [Select id From wrts_prcgvr__Activity__c LIMIT 1].size(), 'HDT_BA_QualityCall did not work correctly: wrong amount of custom activities');
-        System.assertNotEquals(0, [Select id From wrts_prcgvr__Activity__c LIMIT 1].size() ,'HDT_BA_QualityCall did not work correctly: wrong amount of CampaignMember');
+        System.assertEquals(3, [SELECT Id FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Chiusa' AND RecordType.DeveloperName = 'HDT_RT_ComfortQualityCall' AND Order__r.NAme IN ('C0','P4','P5')].size(), 'Le activity di QC non sono state chiuse');
     }
+
 }

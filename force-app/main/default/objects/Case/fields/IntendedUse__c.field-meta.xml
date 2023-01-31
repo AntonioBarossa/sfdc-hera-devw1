@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>IntendedUse__c</fullName>
+    <externalId>false</externalId>
+    <label>Destinazione Uso</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Alberghi/pensioni</fullName>
+                <default>false</default>
+                <label>Alberghi/pensioni</label>
+            </value>
+            <value>
+                <fullName>Antincendio</fullName>
+                <default>false</default>
+                <label>Antincendio</label>
+            </value>
+            <value>
+                <fullName>Attività di intratten. e altro</fullName>
+                <default>false</default>
+                <label>Attività di intratten. e altro</label>
+            </value>
+            <value>
+                <fullName>Completamento allacciamento</fullName>
+                <default>false</default>
+                <label>Completamento allacciamento</label>
+            </value>
+            <value>
+                <fullName>NO DOM TEMPOR. &gt;40kW-FIERA</fullName>
+                <default>false</default>
+                <label>NO DOM TEMPOR. &gt;40kW-FIERA</label>
+            </value>
+            <value>
+                <fullName>Ospedali/case di cura/</fullName>
+                <default>false</default>
+                <label>Ospedali/case di cura/</label>
+            </value>
+            <value>
+                <fullName>Stralcio di allac. - Uso cant.</fullName>
+                <default>false</default>
+                <label>Stralcio di allac. - Uso cant.</label>
+            </value>
+            <value>
+                <fullName>Uso domestico</fullName>
+                <default>false</default>
+                <label>Uso domestico</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

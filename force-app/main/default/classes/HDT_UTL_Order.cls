@@ -104,6 +104,11 @@ public inherited sharing class HDT_UTL_Order {
         boolean res = false;
         String code = '';
         List<RateCategory__c> listRate = new List<RateCategory__c>();
+
+        if( 'Acqua'.equalsIgnoreCase(o.Commodity__c) || 'Ambiente'.equalsIgnoreCase(o.Commodity__c)) {
+            return true;
+        }
+
         if(o.Market__c != null && o.Market__c.equalsIgnoreCase('Regolamentato'))
         {
             listRate = HDT_QR_RateCategory.getRecordByMarket(o.Market__c);
@@ -293,6 +298,10 @@ public inherited sharing class HDT_UTL_Order {
         orderToUpdate.Contact__c = oldOrder.Contact__c;
         orderToUpdate.OrderReference__c = oldOrder.Id;
         orderToUpdate.AggregateBilling__c = oldOrder.AggregateBilling__c;
+        /**@frpanico 2022-12-02 tk 929838C Date su SW Fittizio */
+        orderToUpdate.SignedDate__c = oldOrder.SignedDate__c;
+        orderToUpdate.DateSentToSII__c = oldOrder.DateSentToSII__c;
+        orderToUpdate.EffectiveDate__c = oldOrder.EffectiveDate__c;
         HDT_UTL_DatabaseService.updateSObject(orderToUpdate);
     }
 

@@ -145,6 +145,46 @@
         <default>false</default>
         <label>Cambio Offerta Gas</label>
     </customValue>
+    <customValue>
+        <fullName>Subentro</fullName>
+        <default>false</default>
+        <label>Subentro</label>
+    </customValue>
+    <customValue>
+        <fullName>Prima Attivazione</fullName>
+        <default>false</default>
+        <label>Prima Attivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Cambio Tariffa</fullName>
+        <default>false</default>
+        <label>Cambio Tariffa</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Tariffa</fullName>
+        <default>false</default>
+        <label>Modifica Tariffa</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Tariffa - Rimozione Agevolazione</fullName>
+        <default>false</default>
+        <label>Modifica Tariffa - Rimozione Agevolazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Subentro Cambio Cat.Tariffa</fullName>
+        <default>false</default>
+        <label>Subentro Cambio Cat.Tariffa</label>
+    </customValue>
+    <customValue>
+        <fullName>Voltura - Subentro Scarico produttivo</fullName>
+        <default>false</default>
+        <label>Voltura - Subentro Scarico produttivo</label>
+    </customValue>
+    <customValue>
+        <fullName>Aggiunta Attacco con Attivazione</fullName>
+        <default>false</default>
+        <label>Aggiunta Attacco con Attivazione</label>
+    </customValue>
     <description>Lista Processi Ordine</description>
     <masterLabel>Processo Ordine</masterLabel>
     <sorted>false</sorted>

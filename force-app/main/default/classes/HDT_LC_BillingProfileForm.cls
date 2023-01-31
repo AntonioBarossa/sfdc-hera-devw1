@@ -136,17 +136,25 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
             billingProfile.IBAN__c = iban;
         }
+        if(billingProfile.IbanIsForeign__c != null && billingProfile.IbanIsForeign__c)
+        {
+            billingProfile.IbanCountry__c = String.isNotBlank(billingProfile.Iban__c) ? billingProfile.Iban__c.substring(0,2) : '';
+        }
 
        Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c');
 
        Map<String,String> mapCustMarkToAccClass = new Map<String,String>{
            'D2 - Ditta individuale' => 'Small Business',
+           'G2 - MMS Ditta individuale' => 'Small Business',
+           'G3 - MMS Azienda' => 'Small Business',
            'D3 - Azienda' => 'Small Business',
            'Associazione' => 'Small Business',
            'D6 - Associazione' => 'Small Business',
+           'G6 - MMS Associazione' => 'Small Business',
            'Ditta individuale' => 'Small Business',
            'Azienda' => 'Small Business',
            'MMS Parti comuni' => 'Small Business',
+           'G4 - MMS Parti comuni' => 'Small Business',
            'AAS Azienda' => 'Small Business',
            'AAS Associazione' => 'Small Business',
            'D4 - Parti comuni' => 'Small Business',
@@ -155,10 +163,12 @@ public inherited sharing class HDT_LC_BillingProfileForm {
            'Persona fisica' => 'Privati',
            'D1 - Persona fisica' => 'Privati',
            'MMS Persona fisica' => 'Privati',
+           'G1 - MMS Persona fisica' => 'Privati',
            'AAS Persona fisica' => 'Privati',
            
            'Condominio' => 'Piccoli Condomini',
            'D5 - Condominio' => 'Piccoli Condomini',
+           'G5 - MMS Condominio' => 'Piccoli Condomini',
            'AAS Condominio' => 'Piccoli Condomini'
 
        };
@@ -174,7 +184,11 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         {
             billingProfile.ContractAccountCode__c = '';
         }
-
+        HDT_UTL_ErrorHandler validator = validateForm(billingProfile);
+        if(!validator.isSuccess)
+        {
+            throw new AuraHandledException(validator.errorDescription);
+        }
         return billingProfileSrv.createRecord(billingProfile);
     }
 
@@ -212,4 +226,28 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     public static BillingProfile__c getCloneBillingProfile(String billingProfileId){
         return billingProfileQr.getRecordById(billingProfileId);
     }
+
+    private static HDT_UTL_ErrorHandler validateForm(BillingProfile__c bp)
+    {
+        String errorCode = '';
+        String errorMessage = '';
+        if(bp.BillSendingMethod__c != null && bp?.BillSendingMethod__c?.equalsIgnoreCase('Bolletta per e-mail') 
+            && (!String.isBlank(bp?.InvoiceCertifiedEmailAddress__c) || bp?.SendCertifiedEmailConsentDate__c != null))
+        {
+            errorCode = 'ERRBP-000001';
+            errorMessage = 'Per Modalità Invio "Bolletta per Email" non è possibile valorizzare "Email PEC" e "Data consenso email PEC"';
+        }
+        if(bp.BillSendingMethod__c != null && bp?.BillSendingMethod__c?.equalsIgnoreCase('Fatturazione PA') && bp?.ElectronicInvoicingMethod__c?.equalsIgnoreCase('XML + carta/email'))
+        {
+            errorCode = 'ERRBP-000002';
+            errorMessage = 'Per Modalità Invio "Fatturazione PA" non è possibile inserire Modalità Fattura "XML + Carta/Email"';
+        }
+        if(bp?.IbanIsForeign__c && bp?.IBAN__c?.deleteWhitespace().startsWithIgnoreCase('IT'))
+        {
+            errorCode = 'ERRBP-000003';
+            errorMessage = 'Per IBAN Estero non è possibile inserire un IBAN Italiano';
+        }
+        return new HDT_UTL_ErrorHandler(errorCode,errorMessage);
+    }
+
 }

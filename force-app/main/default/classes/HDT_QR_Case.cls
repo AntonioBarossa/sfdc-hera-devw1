@@ -44,7 +44,13 @@ public inherited sharing class HDT_QR_Case {
             Commodity__c,
             SalesCompanyCode__c,
             CausalCode__c,
-            RecordType.DeveloperName
+            RecordType.DeveloperName,
+            MaxInstallmentsNumber__c,
+            MinInstallmentAmount__c,
+            MandatoryAttachments__c,
+            Note__c,
+            SupplyCity__c,
+            Distributor__r.Code__c
             FROM Case
             where Id = :Id
             WITH SECURITY_ENFORCED
@@ -107,7 +113,8 @@ public inherited sharing class HDT_QR_Case {
         return [SELECT Id,
         Type,
         Phase__c,
-        DistributorName__c
+        DistributorName__c,
+        Commodity__c
         FROM Case
         WHERE Id = :caseId
         WITH SECURITY_ENFORCED
@@ -155,6 +162,7 @@ public inherited sharing class HDT_QR_Case {
     }
 
     public List<Case> getCaseModificaContratti(String podPdr){
+        if(String.isBlank(podPdr))return new List<Case>();
         return [Select Phase__c, CaseNumber from Case where ServicePointCode__c=:podPdr AND RecordType.DeveloperName='HDT_RT_GenericheAttivazioni' AND ServicePoint__c='' AND Type LIKE 'Modifica Contr Preattivazione%'  WITH SECURITY_ENFORCED ORDER BY Phase__c DESC ]; // aggiunti campi alla query
     }
 
@@ -280,7 +288,7 @@ public inherited sharing class HDT_QR_Case {
         List<Case> childCases = new List<Case>();
         try
         {
-            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
+            childCases = [SELECT Id, CorrectionRight__c, ServicePoint__c,FirstLevelComplaintClassification__c,SecondLevelComplaintClassification__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Commodity__c, CustomerRequestAccomplished__c, Status FROM Case WHERE ParentId = :recordId AND Id IN :childIds WITH SECURITY_ENFORCED];
         }
         catch(Exception e)
         {
@@ -295,6 +303,19 @@ public inherited sharing class HDT_QR_Case {
     public List<Case> getCaseByAccountid(String accountid, Set<String> types)
     {
         return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type IN :types AND isClosed = false WITH SECURITY_ENFORCED];
+    }
+
+    public List<Case> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+        return [
+            SELECT
+            Id,
+            Phase__c
+            FROM
+            Case
+            WHERE AccountId = :accountId
+            AND Phase__c IN :phases
+            WITH SECURITY_ENFORCED
+        ];
     }
 
 }

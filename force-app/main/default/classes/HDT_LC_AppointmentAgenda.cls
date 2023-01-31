@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 28-06-2022
+ * @last modified by  : Giacinto Florio
+**/
 public with sharing class HDT_LC_AppointmentAgenda {
     
     private static HDT_SRV_AppointmentAgenda srvAgenda = new HDT_SRV_AppointmentAgenda();

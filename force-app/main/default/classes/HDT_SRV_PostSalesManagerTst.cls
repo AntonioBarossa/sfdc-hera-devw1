@@ -56,6 +56,28 @@ public class HDT_SRV_PostSalesManagerTst {
     
         insert caseList3;
         
+        List<Case> caseList4 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList4[0].ParentId  = parentCase.Id;
+        caseList4[0].BillingProfile__c  = billingProfileList[0].Id;
+        caseList4[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_FatturazioneConsumi').getRecordTypeId();
+        caseList4[0].Type  = 'Rettifica Consumi';
+        caseList4[0].SubProcess__c  = 'Errore Stima Consumi';
+        caseList4[0].ServicePoint__c = servPointList[0].Id;
+    
+        insert caseList4;
+
+        Case parentRettCons = [SELECT Id FROM Case WHERE Type = 'Rettifica Consumi' AND Subprocess__c = 'Errore Stima Consumi'];
+
+        List<Case> caseList5 = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList5[0].ParentId  = parentRettCons.Id;
+        caseList5[0].BillingProfile__c  = billingProfileList[0].Id;
+        caseList5[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
+        caseList5[0].Type  = 'Autolettura da cliente';
+        caseList5[0].Phase__c  = 'Validazione OK da DL';
+        caseList5[0].ServicePoint__c = servPointList[0].Id;
+    
+        insert caseList5;
+        
         List<wrts_prcgvr__ActivityTemplate__c> actTempList = new List<wrts_prcgvr__ActivityTemplate__c>();
 
         wrts_prcgvr__ActivityTemplate__c actTemplate1 = new wrts_prcgvr__ActivityTemplate__c();
@@ -95,6 +117,7 @@ public class HDT_SRV_PostSalesManagerTst {
 
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Completata', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO definitivo', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO definitivo', 'Bozza', rtIdAllineamentoAnagraf, rtNameAllineamentoAnagraf,'A','','','');
 
     }
@@ -678,6 +701,28 @@ public class HDT_SRV_PostSalesManagerTst {
         HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
         psm.execute(setArgs('setContractAccountCode', currentCase));
         
+        Test.stopTest();
+        System.assert(currentCase != null,'currentCase è null');
+        
+    }
+
+    @IsTest
+    static void handleSelfReadingsTest(){
+
+        Case currentCase = [SELECT Id, ParentId, Phase__c, Subprocess__c  FROM Case WHERE Type  = 'Autolettura da cliente' LIMIT 1];
+        Test.startTest();
+
+        //Test con Phase Validazione OK da DL
+        HDT_SRV_PostSalesManager psm = new HDT_SRV_PostSalesManager();
+        psm.execute(setArgs('handleSelfReadings', currentCase));
+
+        //Test con Phase Annullato
+        currentCase.Phase__c = 'Annullato';
+        update currentCase;
+        psm.execute(setArgs('handleSelfReadings', currentCase));
+        
+
+
         Test.stopTest();
         System.assert(currentCase != null,'currentCase è null');
         

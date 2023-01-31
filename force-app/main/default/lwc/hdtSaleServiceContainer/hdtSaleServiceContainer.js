@@ -9,6 +9,7 @@ export default class hdtSaleServiceContainer extends LightningElement {
     @api saleRecord;
     @api processType;
     @api accountId;
+    @api customercode;
     @api targetObject;
     @api addititionalParam;
     @track servicePoint;
@@ -75,11 +76,22 @@ export default class hdtSaleServiceContainer extends LightningElement {
         if(event.detail.oldSupplyType !== undefined) {
             oldSupplyType = event.detail.oldSupplyType;
         }
-
+        console.log('##17012022## ServicePoint >>> ' + JSON.stringify(this.servicePoint));
         createSaleServiceItemTile({servicePoint:this.servicePoint, sale:this.saleRecord, oldSupplyType: oldSupplyType}).then(data =>{
 
             this.refreshTileData();
             this.dispatchEvent(new CustomEvent('newtile'));
+            
+            console.log('isMeterRelation ---> '+ data.isMeterRelation);
+            if( data.isMeterRelation ){
+                const toastWarning = new ShowToastEvent({
+                    title: 'Warning',
+                    message: 'Relazione Contatore non nullo!',
+                    variant: 'warning'
+                });
+                this.dispatchEvent(toastWarning);
+            }
+
             if(data.isTransition && data.message === false){
                 const toastWarning = new ShowToastEvent({
                     title: 'Warning',
@@ -146,10 +158,10 @@ export default class hdtSaleServiceContainer extends LightningElement {
 
     handleNext(){
         this.loading = true;
-
+        /**TK 944536C - softening del controllo di entrata Subentro_Remi in quanto per piu' punti potrebbe uscire Subentro_Remi_Remi ecc. */
         fieldsTransition({sale: this.saleRecord}).then(data =>{
-            if(data == null || data == '' ||  data == 'Subentro' || data == 'Subentro_Remi' || data == '_Remi'){
-                if(data == 'Subentro' || data == 'Subentro_Remi'){
+            if(data == null || data == '' ||  data == 'Subentro' || data.indexOf('Subentro_Remi') > -1 || data == '_Remi'){
+                if(data == 'Subentro' || data.indexOf('Subentro_Remi') > -1){
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'warning',
                         message: 'Per i punti di fornitura gas se si tratta di Subentro ricordarsi di prendere l\'appuntamento su Siebel oppure annullare la vendita ed inserire la richiesta su Siebel.',
@@ -176,7 +188,18 @@ export default class hdtSaleServiceContainer extends LightningElement {
                 });
                 this.dispatchEvent(toastErrorMessage);
                 this.updateSaleRecord({Id: this.saleRecord.Id, CurrentStep__c: this.nextStep});  
-            }else{
+            }
+            else if(data === 'MmsMisto')
+            {
+                const toastErrorMessage = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Per clienti con Marcatura MMS non è possibile eseguire vendite miste Energy/Non Energy',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(toastErrorMessage);
+            }
+            else{
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
                     message: 'Transitorio: Processo non Innescabile da Salesforce Per i Seguenti Punti Di Fornitura:' + data,

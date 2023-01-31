@@ -2,6 +2,7 @@ import { LightningElement, track,wire,api} from 'lwc';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getFields';
+import getRelatedFields from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getRelatedFields';
 import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.validateRecord';
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
@@ -10,6 +11,9 @@ import { getRecord } from 'lightning/uiRecordApi';
 import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 import TYPE from '@salesforce/schema/Case.Type';
 import ACCOUNTID from '@salesforce/schema/Case.AccountId';
+
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 export default class HdtRecordEditFormFlow extends LightningElement {
 
@@ -38,16 +42,22 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     @api variantSaveButton;
     @api outputId;
     @api documentRecordId;
+    @api sessionid;
 
     @track errorMessage;
     @track error;
     @track fieldsJSON;
     @track fieldsJSONReadOnly;
+    @track fieldsRelatedReadOnly;
     @track wiredResponse;
     @track firstColumn = [];
     @track secondColumn = [];
     @track firstColumnReadOnly = [];
     @track secondColumnReadOnly = [];
+    @track firstColumnRelatedReadOnly = [];
+    @track secondColumnRelatedReadOnly = [];
+    @track allRelatedFieldsList = [];
+    @track fieldRelatedToQuery;
     @track validateClass="";
     @track contentDocument;
     @track formats=[];
@@ -58,6 +68,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     //@track notificationType = '';
     //@track delay = 3000;
     @track show = false;
+    showCustomLabels= false;
+
+    get submitButtonClass(){
+        let styleHideShow = this.saveButton? "slds-show" : "slds-hide";
+        return `slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right ${styleHideShow}`;
+    }
+
+    get customLabelClass(){
+        if(this.density)    return "slds-form-element "+(this.density=="comfy"? "slds-form-element_stacked" : "slds-form-element_horizontal");
+        let clist = this.template.querySelector('lightning-input-field.slds-form-element')?.classList?.value;
+        return clist? clist : "slds-form-element slds-form-element_horizontal";
+    }
 
     @track assisted;
     @track type;
@@ -94,6 +116,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
                 if(this.showReadOnly){
                     this.fieldsJSONReadOnly = JSON.parse(this.wiredResponse[0].ReadOnlyFields__c);
+                    if(this.wiredResponse[0].ReadOnlyRelatedFields__c)
+                        this.fieldsRelatedReadOnly = JSON.parse(this.wiredResponse[0].ReadOnlyRelatedFields__c);
                     this.fieldsJSONReadOnly.forEach(obj => {
                         if(obj.Column == 1){
                             this.firstColumnReadOnly.push(obj);
@@ -101,6 +125,17 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                             this.secondColumnReadOnly.push(obj);
                         }
                     });
+                    if(this.fieldsRelatedReadOnly){
+                        this.fieldsRelatedReadOnly.forEach(obj => {
+                            if(obj.column == 1){
+                                this.firstColumnRelatedReadOnly.push(obj);
+                            }else{
+                                this.secondColumnRelatedReadOnly.push(obj);
+                            }
+                            this.allRelatedFieldsList.push(obj.relatedObject + '.' + obj.apiName);
+                        });
+                        this.handleRelatedFieldsReadOnly();
+                    }
                 }
                 
                 if(this.processType.localeCompare('Richiesta Parere') === 0
@@ -130,9 +165,44 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }
         }
 
+        handleRelatedFieldsReadOnly(){
+            var fieldsSplitted = this.allRelatedFieldsList.join();
+            getRelatedFields({
+                recordId:this.recordId,
+                fields:fieldsSplitted,
+                objectType:this.objectName
+                })
+                .then(result => {
+                    console.log('# related field ' + JSON.stringify(result));
+                    var object = JSON.parse(result);
+
+                    console.log('# related field 2 ' + object.ServicePoint__r);
+                    console.log('# related field 3 ' + object['ServicePoint__r']);
+                    this.firstColumnRelatedReadOnly.forEach(obj => {
+                        var relatedObj = object[obj.relatedObject];
+                        var fieldValue = relatedObj[obj.apiName];
+                        obj.value = fieldValue;
+                    });
+
+                    this.secondColumnRelatedReadOnly.forEach(obj => {
+                        var relatedObj = object[obj.relatedObject];
+                        var fieldValue = relatedObj[obj.apiName];
+                        obj.value = fieldValue;
+                    });
+                })
+                .catch(error => {
+                    this.error = error;
+                });
+        }
+
         updateRecordView(recordId) {
             updateRecord({fields: { Id: recordId }});
         }
+
+    //subscribe
+    @wire(MessageContext)
+	messageContext;
+    //subscribe
 
         @api
         get variantButton() {
@@ -175,6 +245,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     }
     
     connectedCallback(){
+        this.subscribeMC();
         if(this.addContentDocument){
             this.selectContentDocument();
         }
@@ -244,7 +315,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
         console.log('Edit Form Loaded ' + fields);
+        
         }
+        this.showCustomLabels=true;
     }
 
     handleError(event){
@@ -370,8 +443,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         : this.secondColumn.filter(element => element['FieldName'] === fieldName);
     }
 
-    handleChange(event){
+    virtualChange(event){
+        return;
+    }
 
+    handleChange(event){
+        this.virtualChange(event);
         //Reclami customizations
         this.complaintsLogic();
         //PianoRata customizations
@@ -382,6 +459,30 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.reimbursmentLogic();
         //DisconnectableLogic
         this.disconnectableLogic();
+        //Variazioni customLogic
+        this.variationsTerminationsLogic();     //MODIFICA 27/01/23 marco.arci@webresults.it Logica form compilazione Variazioni/Cessazioni
+    }
+
+    disconnectedCallback(){
+        if(this.subscription) unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
+    variationsTerminationsLogic(){
+        //Sottoprocessi di varaiazioni
+        if(['AGEVOLAZIONE','DOM_COMPONENTI RESIDENTI','DOM_COMPONENTI NON RESIDENTI','DOM_COABITAZIONI','DATI CATASTALI',
+            'NON DOM_ISTAT/RONCHI','SUPERFICIE','DOMICILIATO IN NUCLEO RESIDENTE','RID. AGEV. DOPO ACCERTAMENTO','CESSAZIONEPOSTFORM','CESSAZIONEFORM'].includes(this.processType.toUpperCase())){
+            let requestSource = this.selector('RequestSource__c');
+            let subscriberType = this.selector('SubscriberType__c');
+            if(requestSource.value.toUpperCase() != 'DA CONTRIBUENTE'){
+                subscriberType.required = false;
+                subscriberType.value = null;
+                subscriberType.disabled = true;
+            } else {
+                subscriberType.required = true;
+                subscriberType.disabled = false;
+            }
+        }
     }
 
     paymentLogic(){ 
@@ -400,7 +501,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             }
             
         }*/
-        if(this.type == 'Comunicazione Pagamento'){
+        if(this.type == 'Comunicazione Pagamento'
+        && this.processType != 'Comunicazione Pagamento TARI'){
             let canalePagamento = this.selector('ChannelOfPayment__c');
             if(canalePagamento && canalePagamento.value === 'Banca BONIFICO'){
                 this.labelSaveButton  = 'Avanti';
@@ -424,11 +526,13 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
+                if(soldBy != null){
                 if(fifthLevel.value !== '' && fifthLevel.value !== undefined && fifthLevel !== null){
                     soldBy.disabled = false;
                 }else{
                     soldBy.disabled = true;
                 }
+            }
             }
         } else if(!(Object.keys(channel).length === 0)){
             let entryChannel = this.selector('ComplaintEntryChannel__c');
@@ -457,6 +561,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
                         let workStatus = this.selector('WorkStatus__c');
+                        let refundableEscape = this.selector('RefundableEscape__c');
                         console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza sociale (cliente)') === 0 && payType != null){
                             if(this.assisted){
@@ -479,6 +584,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                         }else if(reason.value.localeCompare('Fattura SD') === 0 && workStatus != null){
                             workStatus.disabled = false;
                             workStatus.required = true;
+                        }else if(reason.value.localeCompare('Bolletta Fuga H2O') === 0 && refundableEscape != null){
+                            refundableEscape.disabled = false;
+                            refundableEscape.required = false;
                         } 
                         else {
                             payType.disabled = true;
@@ -608,5 +716,37 @@ export default class HdtRecordEditFormFlow extends LightningElement {
                 }
             }
         }
+    }
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {
+                if(this.sessionid==mc.sessionid){
+                    switch (mc.message){
+                        case "draft":
+                        case "cancel":
+                            this.handleDraft({target:{name:mc.message}});
+                            break;
+                        case "save":
+                            this.template.querySelector("[data-id='submitButton']")?.click();
+                        break;
+                        default:
+                        break;
+                    }                    
+                }
+            
+            },
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 }

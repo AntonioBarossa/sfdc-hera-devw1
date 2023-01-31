@@ -1,11 +1,294 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
+    <actionCalls>
+        <name>Calculate_Expiration_Date</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>50</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_2</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>1106</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_2</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_3</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>1370</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_3</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_4</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>1634</locationX>
+        <locationY>1454</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_4</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>GetParentCase.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>GetRichiestaParere</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_5</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>2866</locationX>
+        <locationY>638</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_5</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case_0</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Calculate_Expiration_Date_6</name>
+        <label>Calculate Expiration Date</label>
+        <locationX>3130</locationX>
+        <locationY>638</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>AssignExpirationDate_6</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case_0</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
+        <name>Copy_1_of_Calculate_Expiration_Date</name>
+        <label>Copy 1 of Calculate Expiration Date</label>
+        <locationX>2074</locationX>
+        <locationY>638</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Copy_1_of_AssignExpirationDate</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case_0</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>process</name>
+            <value>
+                <stringValue>calculateExpirationDate</stringValue>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>salesCompany</name>
+            <value>
+                <elementReference>SupplyCityFormula</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
         <name>AssegnaCollection</name>
         <label>AssegnaCollection</label>
-        <locationX>380</locationX>
-        <locationY>1550</locationY>
+        <locationX>974</locationX>
+        <locationY>1790</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
             <operator>Add</operator>
@@ -25,9 +308,69 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValori</name>
+        <label>AssegnaValori</label>
+        <locationX>1370</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospeso parere interno</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_Manuali</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValori_2</name>
+        <label>AssegnaValori</label>
+        <locationX>1634</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospeso parere interno</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_Manuali</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValoriEditForm</name>
         <label>AssegnaValoriEditForm</label>
-        <locationX>116</locationX>
+        <locationX>50</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>EditFormProcessType</assignToReference>
@@ -43,7 +386,7 @@
     <assignments>
         <name>AssegnaValoriEditForm_0</name>
         <label>AssegnaValoriEditForm</label>
-        <locationX>820</locationX>
+        <locationX>2074</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>EditFormProcessType</assignToReference>
@@ -53,13 +396,13 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Case_Layout</targetReference>
+            <targetReference>Copy_1_of_Calculate_Expiration_Date</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssegnaValoriEditForm_0_0</name>
         <label>AssegnaValoriEditForm</label>
-        <locationX>380</locationX>
+        <locationX>314</locationX>
         <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>EditFormProcessType</assignToReference>
@@ -73,9 +416,89 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValoriEditForm_0_0_0</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>2338</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere 2</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriEditForm_0_0_0_0</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>578</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaValoriParent_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriEditForm_0_0_0_0_0</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>2602</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere 2</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriEditForm_0_0_0_0_0_0</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>842</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaValoriParent_0_0_0_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriEditForm_3</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>3130</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere 2</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculate_Expiration_Date_6</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValoriParent_0</name>
         <label>AssegnaValoriParent</label>
-        <locationX>116</locationX>
+        <locationX>50</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetParentCase.Phase__c</assignToReference>
@@ -98,7 +521,7 @@
     <assignments>
         <name>AssegnaValoriParent_0_0</name>
         <label>AssegnaValoriParent</label>
-        <locationX>380</locationX>
+        <locationX>314</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetParentCase.Phase__c</assignToReference>
@@ -112,15 +535,61 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValoriParent_0_0_0</name>
+        <label>AssegnaValoriParent</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospeso parere interno</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_Manuali</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParent_0_0_0_0</name>
+        <label>AssegnaValoriParent</label>
+        <locationX>842</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospeso parere interno</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_Manuali</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValoriParere_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>50</locationX>
-        <locationY>2126</locationY>
+        <locationX>842</locationX>
+        <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Annullato</stringValue>
+                <stringValue>Bozza Annullata</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -137,7 +606,255 @@
     <assignments>
         <name>AssegnaValoriParere_0_0_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>116</locationX>
+        <locationX>50</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculate_Expiration_Date</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>314</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclami</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0_0_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>1106</locationX>
+        <locationY>3662</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa risposta parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0_0_0_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>1370</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0_0_0_0_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>1634</locationX>
+        <locationY>3302</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa risposta parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_0_0_0_0_0_0_0_0</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>578</locationX>
         <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.AccountId</assignToReference>
@@ -235,9 +952,9 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValoriParere_0_0_0_0</name>
+        <name>AssegnaValoriParere_0_0_0_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>380</locationX>
+        <locationX>842</locationX>
         <locationY>1334</locationY>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.AccountId</assignToReference>
@@ -251,6 +968,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -272,6 +996,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ServicePoint__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -299,7 +1030,7 @@
             <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Reclami</stringValue>
+                <elementReference>GetParentCase.Cluster__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -321,10 +1052,110 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValoriParere_0_0_0_0_0</name>
+        <name>AssegnaValoriParere_5</name>
         <label>AssegnaValoriParere</label>
-        <locationX>314</locationX>
-        <locationY>2726</locationY>
+        <locationX>1634</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculate_Expiration_Date_4</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_6</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>2426</locationX>
+        <locationY>3542</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -344,15 +1175,375 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValoriParere_0_0_0_0_0_0</name>
+        <name>AssignExpirationDate</name>
+        <label>AssignExpirationDate</label>
+        <locationX>50</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AmountToPayInInstallments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_2</name>
+        <label>AssignExpirationDate</label>
+        <locationX>1106</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_2.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_3</name>
+        <label>AssignExpirationDate</label>
+        <locationX>1370</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_3.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_4</name>
+        <label>AssignExpirationDate</label>
+        <locationX>1634</locationX>
+        <locationY>1574</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_4.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssegnaCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_5</name>
+        <label>AssignExpirationDate</label>
+        <locationX>2866</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_5.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignExpirationDate_6</name>
+        <label>AssignExpirationDate</label>
+        <locationX>3130</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Calculate_Expiration_Date_6.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignParamsAttachments</name>
+        <label>assignParamsAttachments</label>
+        <locationX>1832</locationX>
+        <locationY>2606</locationY>
+        <assignmentItems>
+            <assignToReference>paramsAttachmentsTari.city</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachmentsTari.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsAttachmentsTari.cluster</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachmentsTari.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>paramsAttachmentsTari.processType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreAttachmentsTari.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_Allegati_Tari</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_AssegnaValoriEditForm</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>1106</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Copy_1_of_AssegnaValoriParent</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_AssegnaValoriParent</name>
+        <label>AssegnaValoriParent</label>
+        <locationX>1106</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>GetParentCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Sospeso parere interno</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetParentCase.ChangePhaseDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Inserimento_dati_Manuali</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_AssegnaValoriParere</name>
         <label>AssegnaValoriParere</label>
-        <locationX>578</locationX>
-        <locationY>2486</locationY>
+        <locationX>1106</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculate_Expiration_Date_2</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_AssignExpirationDate</name>
+        <label>Copy 1 of AssignExpirationDate</label>
+        <locationX>2074</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.AmountToPayInInstallments__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.EndDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.endDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.CompletedDocumentationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.completedDocumentationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.DepositExpirationDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.depositExpirationDate</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_0.DepositAmount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Copy_1_of_Calculate_Expiration_Date.depositAmount</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Case_Layout</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_2_of_AssegnaValoriEditForm</name>
+        <label>AssegnaValoriEditForm</label>
+        <locationX>2866</locationX>
+        <locationY>518</locationY>
+        <assignmentItems>
+            <assignToReference>EditFormProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere 2</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculate_Expiration_Date_5</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_2_of_AssegnaValoriParere</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>1898</locationX>
+        <locationY>3542</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa risposta parere</stringValue>
+            </value>
+        </assignmentItems>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>New</stringValue>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -360,10 +1551,110 @@
         </connector>
     </assignments>
     <assignments>
-        <name>AssegnaValoriParere_0_0_0_0_0_0_0</name>
+        <name>Copy_3_of_AssegnaValoriParere</name>
         <label>AssegnaValoriParere</label>
-        <locationX>842</locationX>
-        <locationY>2366</locationY>
+        <locationX>1370</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In attesa risposta parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecordTypeRichiestaParere.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.Cluster__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRichiestaParere.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetParentCase.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Calculate_Expiration_Date_3</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_4_of_AssegnaValoriParere</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>2162</locationX>
+        <locationY>3542</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -385,8 +1676,8 @@
     <assignments>
         <name>Id_Reclamo</name>
         <label>Assegna Id Parere</label>
-        <locationX>380</locationX>
-        <locationY>1790</locationY>
+        <locationX>974</locationX>
+        <locationY>2030</locationY>
         <assignmentItems>
             <assignToReference>IdParere</assignToReference>
             <operator>Assign</operator>
@@ -401,8 +1692,8 @@
     <assignments>
         <name>Id_Reclamo_0</name>
         <label>Assegna Id Parere</label>
-        <locationX>952</locationX>
-        <locationY>854</locationY>
+        <locationX>2734</locationX>
+        <locationY>1094</locationY>
         <assignmentItems>
             <assignToReference>IdParere</assignToReference>
             <operator>Assign</operator>
@@ -417,8 +1708,8 @@
     <assignments>
         <name>OutputCase_0</name>
         <label>OutputCase</label>
-        <locationX>776</locationX>
-        <locationY>3158</locationY>
+        <locationX>1964</locationX>
+        <locationY>4094</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -430,8 +1721,8 @@
     <decisions>
         <name>Avanzamento_0</name>
         <label>Avanzamento</label>
-        <locationX>666</locationX>
-        <locationY>2006</locationY>
+        <locationX>1854</locationX>
+        <locationY>2246</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla_0</name>
@@ -501,7 +1792,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Parere_Aggiornato</targetReference>
+                <targetReference>TariProcess</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -509,7 +1800,7 @@
     <decisions>
         <name>Il_Parere_esiste</name>
         <label>Il Parere esiste?</label>
-        <locationX>666</locationX>
+        <locationX>1854</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Get_Input_Case_0</targetReference>
@@ -534,8 +1825,8 @@
     <decisions>
         <name>Modalit_Comunicazione</name>
         <label>Modalità Comunicazione</label>
-        <locationX>446</locationX>
-        <locationY>2366</locationY>
+        <locationX>1238</locationX>
+        <locationY>3302</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -594,7 +1885,7 @@
     <decisions>
         <name>Quale_Processo_Parent</name>
         <label>Quale Processo Parent?</label>
-        <locationX>380</locationX>
+        <locationX>974</locationX>
         <locationY>518</locationY>
         <defaultConnector>
             <targetReference>Inserimento_dati_Manuali</targetReference>
@@ -630,11 +1921,93 @@
             </connector>
             <label>Esercizio Diritti Privacy</label>
         </rules>
+        <rules>
+            <name>PosizionamentoContenitore_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Posizionamento contenitore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriEditForm_0_0_0_0</targetReference>
+            </connector>
+            <label>PosizionamentoContenitore</label>
+        </rules>
+        <rules>
+            <name>ReclamoScrittoDaCittadino_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriEditForm_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>ReclamoScrittoDaCittadino</label>
+        </rules>
+        <rules>
+            <name>Esenzione_Modifica_Fognatura_Depurazione_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_AssegnaValoriEditForm</targetReference>
+            </connector>
+            <label>Esenzione Modifica Fognatura Depurazione</label>
+        </rules>
+        <rules>
+            <name>Errore_di_Fatturazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori</targetReference>
+            </connector>
+            <label>Errore di Fatturazione</label>
+        </rules>
+        <rules>
+            <name>Ricostruzione_Consumi_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetParentCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValori_2</targetReference>
+            </connector>
+            <label>Ricostruzione Consumi Acqua</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Quale_Processo_Parent_0</name>
         <label>Quale Processo Parent?</label>
-        <locationX>952</locationX>
+        <locationX>2734</locationX>
         <locationY>398</locationY>
         <defaultConnector>
             <targetReference>Case_Layout</targetReference>
@@ -655,11 +2028,78 @@
             </connector>
             <label>Reclamo Scritto/Rich. Info</label>
         </rules>
+        <rules>
+            <name>PosizionamentoContenitore_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case_0.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Posizionamento contenitore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriEditForm_0_0_0</targetReference>
+            </connector>
+            <label>PosizionamentoContenitore</label>
+        </rules>
+        <rules>
+            <name>ReclamoDaCittadino</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case_0.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriEditForm_0_0_0_0_0</targetReference>
+            </connector>
+            <label>ReclamoDaCittadino</label>
+        </rules>
+        <rules>
+            <name>Esenzione_Modifica_Fognatura_Depurazione_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_AssegnaValoriEditForm</targetReference>
+            </connector>
+            <label>Esenzione Modifica Fognatura Depurazione</label>
+        </rules>
+        <rules>
+            <name>Ricostruzione_Consumi_Acqua_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetParentCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriEditForm_3</targetReference>
+            </connector>
+            <label>Ricostruzione Consumi Acqua</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Quale_Processo_Parent_0_0</name>
         <label>Quale Processo Parent?</label>
-        <locationX>380</locationX>
+        <locationX>974</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>AssegnaCollection</targetReference>
@@ -695,24 +2135,120 @@
             </connector>
             <label>Esercizio Diritti Privacy</label>
         </rules>
+        <rules>
+            <name>PosizionamentoContenitore_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Posizionamento contenitore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriParere_0_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>PosizionamentoContenitore</label>
+        </rules>
+        <rules>
+            <name>ReclamoScrittoDaCittadino_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriParere_0_0_0_0_0_0_0_0_0</targetReference>
+            </connector>
+            <label>ReclamoScrittoDaCittadino</label>
+        </rules>
+        <rules>
+            <name>Esenzione_Modifica_Fognatura_Depurazione</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_AssegnaValoriParere</targetReference>
+            </connector>
+            <label>Esenzione Modifica Fognatura Depurazione</label>
+        </rules>
+        <rules>
+            <name>Errore_di_Fatturazione_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_3_of_AssegnaValoriParere</targetReference>
+            </connector>
+            <label>Errore di Fatturazione</label>
+        </rules>
+        <rules>
+            <name>Ricostruzione_Consumi_Acqua_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetParentCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssegnaValoriParere_5</targetReference>
+            </connector>
+            <label>Ricostruzione Consumi Acqua</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Quale_Processo_Parent_0_0_0</name>
         <label>Quale Processo Parent?</label>
-        <locationX>776</locationX>
-        <locationY>2246</locationY>
+        <locationX>1964</locationX>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Altri processi</defaultConnectorLabel>
         <rules>
             <name>Reclamo_Scritto_Rich_Info_0_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Parere_Aggiornato.Parent.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Reclamo Scritto/Rich. Info</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Posizionamento Contenitore</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -735,12 +2271,95 @@
             </connector>
             <label>Esercizio Diritti Privacy</label>
         </rules>
+        <rules>
+            <name>Esenzione_Modifica_Fognatura_Depurazione_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esenzione Modifica Fognatura Depurazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Get_Template</targetReference>
+            </connector>
+            <label>Esenzione Modifica Fognatura Depurazione</label>
+        </rules>
+        <rules>
+            <name>Errore_di_Fatturazione_0_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore di Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Get_Template</targetReference>
+            </connector>
+            <label>Errore di Fatturazione</label>
+        </rules>
+        <rules>
+            <name>Ricostruzione_Consumi_Acqua_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.Parent.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ricostruzione Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Parere_Aggiornato.Parent.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Template_3</targetReference>
+            </connector>
+            <label>Ricostruzione Consumi Acqua</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>TariProcess</name>
+        <label>TariProcess?</label>
+        <locationX>1964</locationX>
+        <locationY>2366</locationY>
+        <defaultConnector>
+            <targetReference>Get_Parere_Aggiornato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>YesTariProcess</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetParentCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getPreAttachmentsTari</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
     </decisions>
     <description>Flow per la gestione della Richiesta Parere</description>
+    <environments>Default</environments>
     <formulas>
         <name>RemoveSpaceFromTo</name>
         <dataType>String</dataType>
         <expression>SUBSTITUTE(TEXT({!Get_Parere_Aggiornato.RecipientStructure__c}),&quot; &quot;,&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>SupplyCityFormula</name>
+        <dataType>String</dataType>
+        <expression>IF(ISBLANK({!GetRichiestaParere.SupplyCity__c}), {!GetRichiestaParere.ServicePoint__r.SupplyCity__c},{!GetRichiestaParere.SupplyCity__c})</expression>
     </formulas>
     <interviewLabel>GestioneReclami_RichiestaParere {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Reclami - Richiesta Parere</label>
@@ -764,10 +2383,80 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>Copy_1_of_Crea_Activity_Richiesta_Parere</name>
+        <label>Crea Activity Richiesta Parere</label>
+        <locationX>1898</locationX>
+        <locationY>3422</locationY>
+        <connector>
+            <targetReference>Copy_2_of_AssegnaValoriParere</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>Copy_1_of_Get_Template.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>Copy_1_of_Get_Template.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Copy_1_of_Get_Template.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
+        <name>Copy_2_of_Crea_Activity_Richiesta_Parere</name>
+        <label>Crea Activity Richiesta Parere</label>
+        <locationX>2162</locationX>
+        <locationY>3422</locationY>
+        <connector>
+            <targetReference>Copy_4_of_AssegnaValoriParere</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>Copy_2_of_Get_Template.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>Copy_2_of_Get_Template.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Copy_2_of_Get_Template.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
-        <locationX>314</locationX>
-        <locationY>2606</locationY>
+        <locationX>1106</locationX>
+        <locationY>3542</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0</targetReference>
         </connector>
@@ -775,6 +2464,12 @@
             <field>Case__c</field>
             <value>
                 <elementReference>Get_Parere_Aggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>DueDate__c</field>
+            <value>
+                <elementReference>GetParentCase.EndDate__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -798,10 +2493,87 @@
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordCreates>
+    <recordCreates>
+        <name>Crea_Activity_Richiesta_Parere_3</name>
+        <label>Crea Activity Richiesta Parere</label>
+        <locationX>2426</locationX>
+        <locationY>3422</locationY>
+        <connector>
+            <targetReference>AssegnaValoriParere_6</targetReference>
+        </connector>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>Get_Template_3.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>Get_Template_3.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>Get_Template_3.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordLookups>
+        <name>Copy_1_of_Get_Template</name>
+        <label>Get Template</label>
+        <locationX>1898</locationX>
+        <locationY>3302</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Copy_1_of_Crea_Activity_Richiesta_Parere</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Copy_2_of_Get_Template</name>
+        <label>Get Template</label>
+        <locationX>2162</locationX>
+        <locationY>3302</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Copy_2_of_Crea_Activity_Richiesta_Parere</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>Get_Input_Case_0</name>
         <label>Get Input Case</label>
-        <locationX>952</locationX>
+        <locationX>2734</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -822,8 +2594,8 @@
     <recordLookups>
         <name>Get_Parere_Aggiornato</name>
         <label>Get Parere Aggiornato</label>
-        <locationX>776</locationX>
-        <locationY>2126</locationY>
+        <locationX>1964</locationX>
+        <locationY>3062</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quale_Processo_Parent_0_0_0</targetReference>
@@ -843,8 +2615,8 @@
     <recordLookups>
         <name>Get_Template</name>
         <label>Get Template</label>
-        <locationX>314</locationX>
-        <locationY>2486</locationY>
+        <locationX>1106</locationX>
+        <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere</targetReference>
@@ -862,9 +2634,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Template_3</name>
+        <label>Get Template</label>
+        <locationX>2426</locationX>
+        <locationY>3302</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Crea_Activity_Richiesta_Parere_3</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Richiesta Parere</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetParentCase</name>
         <label>GetParentCase</label>
-        <locationX>380</locationX>
+        <locationX>974</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -883,9 +2676,30 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getPreAttachmentsTari</name>
+        <label>getPreAttachmentsTari</label>
+        <locationX>1832</locationX>
+        <locationY>2486</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignParamsAttachments</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetRecordTypeRichiestaParere</name>
         <label>GetRecordTypeRichiestaParere</label>
-        <locationX>380</locationX>
+        <locationX>974</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -906,7 +2720,7 @@
     <recordLookups>
         <name>GetRichiestaParere</name>
         <label>GetRichiestaParere</label>
-        <locationX>380</locationX>
+        <locationX>974</locationX>
         <locationY>1094</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -927,8 +2741,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_Richiesta_Parere</name>
         <label>Aggiorna Case Richiesta Parere</label>
-        <locationX>776</locationX>
-        <locationY>3038</locationY>
+        <locationX>1964</locationX>
+        <locationY>3974</locationY>
         <connector>
             <targetReference>OutputCase_0</targetReference>
         </connector>
@@ -937,8 +2751,8 @@
     <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
-        <locationX>380</locationX>
-        <locationY>1670</locationY>
+        <locationX>974</locationX>
+        <locationY>1910</locationY>
         <connector>
             <targetReference>Id_Reclamo</targetReference>
         </connector>
@@ -947,15 +2761,25 @@
     <recordUpdates>
         <name>AggiornaParere</name>
         <label>AggiornaParere</label>
-        <locationX>50</locationX>
-        <locationY>2246</locationY>
+        <locationX>842</locationX>
+        <locationY>2486</locationY>
         <inputReference>GetRichiestaParere</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateAttachmentsTari</name>
+        <label>updateAttachmentsTari</label>
+        <locationX>1832</locationX>
+        <locationY>2846</locationY>
+        <connector>
+            <targetReference>Get_Parere_Aggiornato</targetReference>
+        </connector>
+        <inputReference>getPreAttachmentsTari</inputReference>
     </recordUpdates>
     <screens>
         <name>Case_Layout</name>
         <label>Case Layout</label>
-        <locationX>952</locationX>
-        <locationY>734</locationY>
+        <locationX>2734</locationX>
+        <locationY>974</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1045,9 +2869,116 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Gestione_Allegati_Tari</name>
+        <label>Gestione Allegati Tari</label>
+        <locationX>1832</locationX>
+        <locationY>2726</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>updateAttachmentsTari</targetReference>
+        </connector>
+        <fields>
+            <name>headerAttachmentsTari</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Richiesta Parere&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px;&quot;&gt;Richiedi il parere compilando il campo sottostante&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>componentAttachmentsTari</name>
+            <extensionName>c:hdtAttachmentManager</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>paramsWrap</name>
+                <value>
+                    <elementReference>paramsAttachmentsTari</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>Brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Inserimento_dati_Manuali</name>
         <label>Inserimento dati Manuali</label>
-        <locationX>380</locationX>
+        <locationX>974</locationX>
         <locationY>974</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -1150,7 +3081,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>540</locationX>
+        <locationX>1728</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Il_Parere_esiste</targetReference>
@@ -1215,6 +3146,14 @@
         <isInput>true</isInput>
         <isOutput>false</isOutput>
         <objectType>Case</objectType>
+    </variables>
+    <variables>
+        <name>paramsAttachmentsTari</name>
+        <apexClass>HDT_LC_AttachmentManager</apexClass>
+        <dataType>Apex</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
     </variables>
     <variables>
         <name>ParentRecordId</name>

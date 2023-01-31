@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SupplySubtype__c</fullName>
+    <externalId>false</externalId>
+    <label>Sottotipo Uso Fornitura</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Uso domestico residente</fullName>
+                <default>false</default>
+                <label>Uso domestico residente</label>
+            </value>
+            <value>
+                <fullName>Uso agricolo e zootecnico</fullName>
+                <default>false</default>
+                <label>Uso agricolo e zootecnico</label>
+            </value>
+            <value>
+                <fullName>Uso domestico non residente</fullName>
+                <default>false</default>
+                <label>Uso domestico non residente</label>
+            </value>
+            <value>
+                <fullName>Uso domestico condominiale</fullName>
+                <default>false</default>
+                <label>Uso domestico condominiale</label>
+            </value>
+            <value>
+                <fullName>Uso pubblico disalimentabile</fullName>
+                <default>false</default>
+                <label>Uso pubblico disalimentabile</label>
+            </value>
+            <value>
+                <fullName>Uso pubblico non disalimentabile</fullName>
+                <default>false</default>
+                <label>Uso pubblico non disalimentabile</label>
+            </value>
+            <value>
+                <fullName>Uso industriale</fullName>
+                <default>false</default>
+                <label>Uso industriale</label>
+            </value>
+            <value>
+                <fullName>Uso artigianale e commerciale</fullName>
+                <default>false</default>
+                <label>Uso artigianale e commerciale</label>
+            </value>
+            <value>
+                <fullName>Altri usi</fullName>
+                <default>false</default>
+                <label>Altri usi</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

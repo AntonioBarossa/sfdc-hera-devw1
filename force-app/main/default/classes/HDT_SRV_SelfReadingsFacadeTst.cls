@@ -36,10 +36,22 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
             myCase.Origin = 'Sportello';
         }
         insert caseList;
+
+        List<Case> caseList2 = HDT_UTL_DataFactoryTst.createCase(1, false, acc[0].Id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
+        caseList2.get(0).Type = 'Rettifica Consumi';
+        caseList2.get(0).Subprocess__c = 'Errore Stima Consumi';
+        caseList2.get(0).RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_FatturazioneConsumi').getRecordTypeId();
+        insert caseList2;
+
+        List<Case> caseList3 = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactList[0].Id, servPoint.Id, contractList[0].id, ordList[0].id);
+        caseList3.get(0).ParentId = caseList2.get(0).Id;
+        caseList3.get(0).Type = 'Autolettura da cliente';
+        insert caseList3;
         
         //READING
         if(isMeterCorrector){
             List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReadingMeterCorrector(1, true, caseList[0].Id);
+            List<Reading__c> readingsList2 = HDT_UTL_DataFactoryTst.createReadingMeterCorrector(1, true, caseList2[0].Id);
         } else {
             List<Reading__c> readings = HDT_UTL_DataFactoryTst.createReading(1, true, caseList[0].Id);
         }
@@ -66,17 +78,17 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     //execute
     ///CheckAutolettura - GAS
     @isTest
-    private static void executeTest_CheckAutolettura() {
+    private static void executeTestCheckAutolettura() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_CheckAutolettura';
+		String debugString = TEST_NAME + ' - executeTestCheckAutolettura';
 		System.debug(debugString);
         
         //SETUP
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'CheckAutolettura');
@@ -102,20 +114,20 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //ASSERTS
-        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c);
+        System.assertEquals('Bozza', myUpdatedCase.Phase__c, '');
         
     }
     
     
     ///CheckAutolettura - NON GAS
     @isTest
-    private static void executeTest_CheckAutolettura_NG() {
+    private static void executeTestCheckAutoletturaNg() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_CheckAutolettura_NG';
+		String debugString = TEST_NAME + ' - executeTestCheckAutoletturaNg';
 		System.debug(debugString);
         
         //SETUP
@@ -124,7 +136,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'CheckAutolettura');
@@ -149,11 +161,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //ASSERTS
-        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c);
-        
+        System.assertEquals('Check preliminari OK', myUpdatedCase.Phase__c, '');
     }
     
     
@@ -164,17 +175,17 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     ///InvioLettureForzato - GAS
     @isTest
-    private static void executeTest_InvioLettureForzato_NG() {
+    private static void executeTestInvioLettureForzatoNg() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato_NG';
+		String debugString = TEST_NAME + ' - executeTestInvioLettureForzatoNg';
 		System.debug(debugString);
         
         //SETUP
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'InvioLettureForzato');//TODO: IMPLEMENTARE CASI ALTERNATIVI
@@ -199,20 +210,20 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //ASSERTS
-        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c, '');
         
     }
     
     
     ///InvioLettureForzato - NON GAS
     @isTest
-    private static void executeTest_InvioLettureForzato() {
+    private static void executeTestInvioLettureForzato() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_InvioLettureForzato';
+		String debugString = TEST_NAME + ' - executeTestInvioLettureForzato';
 		System.debug(debugString);
         
         //SETUP
@@ -221,7 +232,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'InvioLettureForzato');//TODO: IMPLEMENTARE CASI ALTERNATIVI
@@ -246,10 +257,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, Phase__c FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //ASSERTS
-        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c);
+        System.assertEquals('Inviata a SAP', myUpdatedCase.Phase__c, 'Errore');
         
     }
     
@@ -258,10 +269,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     ///Eccezione intenzionale - Causata con submitRequest
     @isTest
-    private static void executeTest_Exception() {
+    private static void executeTestException() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - executeTest_Exception';
+		String debugString = TEST_NAME + ' - executeTestException';
 		System.debug(debugString);
         
         //SETUP
@@ -269,7 +280,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'CheckAutolettura');
@@ -292,9 +303,8 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
         
         //ASSERTS
-       
-        System.assert(result.success);
-        System.assertEquals('KO', result.message);
+        System.assert(!result.success, '');
+        System.assertEquals('KO', result.message, '');
         
     }
     
@@ -315,7 +325,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         HDT_WRP_GenericSapIntegration result = HDT_SRV_SelfReadings.generateJson(inputParams);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, '');
         
     }
     
@@ -334,7 +344,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         HDT_WRP_GenericSapIntegration result = HDT_SRV_SelfReadings.generateJsonCheckAutolettura(inputParams);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, '');
         
         
         //TESTING - NO CASES
@@ -343,7 +353,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         result = HDT_SRV_SelfReadings.generateJsonCheckAutolettura(inputParams);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, '');
         
     }
     
@@ -363,7 +373,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         HDT_WRP_GenericSapIntegration result = HDT_SRV_SelfReadings.generateJsonInvioLetture(inputParams);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, '');
         
         
         //TESTING - NO CASES
@@ -372,7 +382,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         result = HDT_SRV_SelfReadings.generateJsonInvioLetture(inputParams);
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, '');
         
     }
     
@@ -393,7 +403,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         HDT_SRV_SelfReadings.HDT_WRP_SelfReadingResponse result = HDT_SRV_SelfReadings.handleResponse(sapIntegration, '');
         
         //ASSERTS
-        System.assertEquals(null, result);
+        System.assertEquals(null, result, '');
         
     }
     
@@ -404,10 +414,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
     
     //handleResponseCheckAutolettura - RESPONSE CODE NOT 200 OR 201
     @isTest
-    private static void handleResponseCheckAutolettura_NOT200() {
+    private static void handleResponseCheckAutoletturaNot200() {
         
 		//DEBUG
-		String debugString = TEST_NAME + ' - handleResponseCheckAutolettura_NOT200';
+		String debugString = TEST_NAME + ' - handleResponseCheckAutoletturaNot200';
 		System.debug(debugString);
         
         //SETUP
@@ -416,7 +426,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         Map<String,String> parameters = new Map<String,String>();
         parameters.put('requestType', 'CheckAutolettura');
@@ -441,10 +451,10 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //RETRIEVING DATA
-        Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case];
+        Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //ASSERTS
-        System.assertEquals('Check preliminari KO', myUpdatedCase.TecnicalPhase__c);
+        System.assertEquals('Esito KO da SAP', myUpdatedCase.TecnicalPhase__c, '');
         
     }
     
@@ -464,7 +474,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         mySetup();
         
         //PREPARAZIONE ARGS
-        Case myCase = [SELECT Id FROM Case];
+        Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //WEBSERVICE MOCKS
         Test.setMock(HttpCalloutMock.class, new myWebServiceMock());
@@ -474,6 +484,37 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Test.stopTest();
         
         //
+        
+    }
+
+    @isTest
+    private static void cloneReadingFromParentCaseTest(){
+        
+		//DEBUG
+		String debugString = TEST_NAME + ' - cloneReadingFromParentCaseTest';
+		System.debug(LoggingLevel.DEBUG, debugString);
+        
+        //SETUP
+        isMeterCorrector = true;
+        mySetup();
+
+        Case myParentCase = [SELECT Id FROM Case WHERE Type = 'Rettifica Consumi' AND Subprocess__c = 'Errore Stima Consumi'];
+        Case myChildCase = [SELECT Id, CommodityFormula__c FROM Case WHERE Type = 'Autolettura da cliente'];
+
+        List<HDT_SRV_SelfReadings.HDT_UTL_FlowFatturazioneInputs> inputs = new List<HDT_SRV_SelfReadings.HDT_UTL_FlowFatturazioneInputs>();
+        HDT_SRV_SelfReadings.HDT_UTL_FlowFatturazioneInputs input = new HDT_SRV_SelfReadings.HDT_UTL_FlowFatturazioneInputs();
+        input.parentCase = myParentCase;
+        input.childCase = myChildCase;
+        inputs.add(input);
+        
+
+        //TESTING
+        Test.startTest();
+        HDT_SRV_SelfReadings.cloneReadingFromParentCase(inputs);
+        Test.stopTest();
+        
+        Reading__c letturaChild = [SELECT Id FROM Reading__c WHERE CaseGas__c =: myChildCase.Id];
+        System.assertNotEquals(null, letturaChild, 'Si è verificato un errore in fase di clonazione della lettura');
         
     }
     

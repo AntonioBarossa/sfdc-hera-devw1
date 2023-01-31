@@ -6,7 +6,11 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;UseCategory__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;SupplyType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;ServicePointType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1}]</value>
+{&quot;FieldName&quot;:&quot;ServicePointType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{
+    &quot;FieldName&quot;: &quot;Commodity__c&quot;,
+    &quot;ReadOnly&quot;: true,
+    &quot;Column&quot;: 1
+}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>

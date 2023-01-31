@@ -1,0 +1,28 @@
+<template>
+    <template if:false={hideFields}>
+        <template if:true={showSpinner}>
+            <lightning-spinner alternative-text="Loading"></lightning-spinner>
+        </template>
+        <lightning-record-edit-form record-id={recordId} object-api-name={objectApiName} onload={loadedForm}>
+            <div class="slds-grid slds-wrap slds-m-top_small">
+                <lightning-input-field name="DeclarationDate__c" data-id='DeclarationDate__c' value={outputWrp.dateDichiarazione} field-name="DeclarationDate__c"
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <lightning-input-field name="EffectiveDate__c" field-name="EffectiveDate__c" data-id='EffectiveDate__c' value={outputWrp.dateDecorrenza}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <lightning-input-field name="BlockOnComputation__c" field-name="BlockOnComputation__c"  data-id='BlockOnComputation__c' value={outputWrp.bloccoCalcolo}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked" disabled> </lightning-input-field>
+                <lightning-input-field if:false={isCase} name="DeclineComputationSupport__c" field-name="DeclineComputationSupport__c" data-id='DeclineComputationSupport__c' value={outputWrp.declineSupport} 
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <lightning-input-field if:true={isCase} name="CustomerRepentanceRefusal__c" field-name="CustomerRepentanceRefusal__c" data-id='CustomerRepentanceRefusal__c' value={outputWrp.declineSupport} 
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <lightning-input-field name="OnerousReviewableStartDate__c" data-id='OnerousReviewableStartDate__c' field-name="OnerousReviewableStartDate__c" disabled value={outputWrp.dateX}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <lightning-input-field name="OnerousUnreviewableStartDate__c" field-name="OnerousUnreviewableStartDate__c" data-id='OnerousUnreviewableStartDate__c' disabled value={outputWrp.dateY}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+                <lightning-input-field if:false={isCase} name="MissingDueAmount__c" field-name="MissingDueAmount__c" data-id='MissingDueAmount__c' value={outputWrp.missedDue}
+                    class="slds-size_1-of-3 fieldsData" variant="label-stacked"> </lightning-input-field>
+            </div>
+        </lightning-record-edit-form>
+    </template>
+    <lightning-button disabled={disabled} onclick={buttonPressed} label="Verifica Ravvedimento Operoso" variant="brand" class="slds-m-left_x-small"></lightning-button>
+</template>

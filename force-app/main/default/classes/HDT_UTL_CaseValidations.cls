@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 09-07-2022
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.CyclomaticComplexity')
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
@@ -69,7 +76,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Chiusura Contatore'){
 
-            result = validateDisattivazioni(fields);
+            result = validateDisattivazioni(fields,currentCase);
 
         } else if(caseType == 'Contratto Non Richiesto'){
 
@@ -110,7 +117,12 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else if(cluster.equalsIgnoreCase('Attivazioni'))
         {
             result = validateAttivazioniPostSales(fields);
-
+        }else if(   'Cessazione'.equalsIgnoreCase(caseType) || 'Cessazione post accertamento'.equalsIgnoreCase(caseType) ||
+                    'Modifica dati contrattuali'.equalsIgnoreCase(caseType) || 'Modifica post accertamento'.equalsIgnoreCase(caseType) )   
+        {
+            result = cessazioneVariazioneValidate(currentCase, fields);
+        }else if(caseType=='Errore di Fatturazione'){
+            result = validateErroreFatturazione(currentCase, fields);
         }else {
 
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
@@ -121,6 +133,20 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
+    private String cessazioneVariazioneValidate(Case currCase, String fields){
+        //system.debug('init validate');
+        //String result = '';
+        HDT_UTL_CityDataTariValidation cityDataTariValidation = new HDT_UTL_CityDataTariValidation();
+        if( getFieldValue(fields, 'EffectiveDate__c') > getFieldValue(fields, 'DeclarationDate__c') || getFieldValue(fields, 'EffectiveDate__c') > String.valueOf(Date.today())) {
+            //system.debug('Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna');
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Attenzione! La data di decorrenza non può essere maggiore della data dichiarazione e non può essere maggiore della data odierna'));
+        }
+        //system.debug('preClass');
+        //result = cityDataTariValidation.validate(fields, currCase.Id);
+        //system.debug('end validate');
+        return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+    }
+    
     /*
     * @Author: Salvatore A. Sarà 19/10/2021
     * Risoluzione "Debug Should Use Logging Level"
@@ -235,11 +261,29 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile selezionare \"'+ sendPaperlessMode + '\" se Email non valorizzata'));
 
-                } else {
+                }else if(reason != null && reason.equalsIgnoreCase('Bolletta Fuga H2O')){
+                    List<Case> caseToCheck;
+                    caseToCheck = caseValidationQr.getCaseByTypeBillingProfile('Consumo Anomalo Idrico',currentCase.AccountId,currentCase.ContractAccountCode__c);
+                    if(caseToCheck != null && caseToCheck.isEmpty()){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è presente alcun processo di Consumo Anomalo Idrico in corso per il cliente'));
+                    }else {
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                    }
+                }else if( reason != null && reason.equalsIgnoreCase('Malfunzione Gruppo di misura')){
+                    List<Case> caseToCheck;
+                    caseToCheck = caseValidationQr.getCaseByTypeBillingProfile('Verifica GDM',currentCase.AccountId,currentCase.ContractAccountCode__c);
+                    if(caseToCheck != null && caseToCheck.isEmpty()){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è presente alcun processo di Verifica GdM in corso per il cliente'));
+                    }else {
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+                    }
+                } 
+                 else {
 
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
 
                 }
+                
             }        
         }else if (caseType == 'Blocco Sollecito/Interessi'){
 
@@ -669,12 +713,19 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
 
         String relatedCaseId = getFieldValue(fields, 'RelatedCase__c');
+        String customerSelfReading = getFieldValue(fields, 'CustomerSelfReading__c');
+        String readingDate = getFieldValue(fields, 'ReadingDate__c');
 
+        Case currentCase = caseValidationQr.getCaseById(caseId);
+        
+        if('Acqua'.equals(currentCase.CommodityFormula__c) && !String.isBlank(customerSelfReading) && (readingDate == null || String.isBlank(readingDate) || String.isEmpty(readingDate) || readingDate.equalsIgnoreCase('null'))){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire la data di lettura nell\'apposito campo.'));
+        }
+        
         if (relatedCaseId == null || String.isBlank(relatedCaseId) || String.isEmpty(relatedCaseId) || relatedCaseId.equalsIgnoreCase('null')) {
             return result;
         }
-
-        Case currentCase = caseValidationQr.getCaseById(caseId);
+        
         Case relatedCase = caseValidationQr.getCaseById(relatedCaseId);
 
         if (!relatedCase.CommodityFormula__c.equalsIgnoreCase(currentCase.CommodityFormula__c)) {
@@ -682,7 +733,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         } else if (relatedCase.ServicePoint__r.ServicePointCode__c.equalsIgnoreCase(currentCase.ServicePoint__r.ServicePointCode__c)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Non è possibile correlare due processi di Inversione Contatore sullo stesso impianto'));
         } 
-
+        
         return result;
     }
 
@@ -1001,30 +1052,33 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     }
 
-    public String validateDisattivazioni(String fields){
-
-        String result;
-
-        Date notBeforeDate = Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c'));
-        Date requestDate = Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c'));
-
-        if(notBeforeDate < System.today()){
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel passato'));
-
-        } else if(requestDate > System.today()){
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data non può essere nel futuro'));
-
-        } else {
-
-            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
-
+    public String validateDisattivazioni(String fields,Case currentCase){
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
+        Date notBeforeDate = (String.isNotBlank(getFieldValue(fields, 'NotPerformedBefore__c'))) ? Date.valueOf(getFieldValue(fields, 'NotPerformedBefore__c')) : null;
+        Date requestDate   = (String.isNotBlank(getFieldValue(fields, 'WrittenReceiptRequestDate__c'))) ? Date.valueOf(getFieldValue(fields, 'WrittenReceiptRequestDate__c')) : null;
+        Boolean requiredAttachment = false;
+        Boolean isAcqua = false;
+        String salesCompanyNoAttachment = 'Marche Multiservizi S.p.A';
+        if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            isAcqua = true;
+            if(!salesCompanyNoAttachment.containsIgnoreCase(currentCase.SalesCompany__c)){
+                List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+                requiredAttachment = attachedDocument != null && attachedDocument.size() > 0?false:true;    
+            }else{}
         }
-
-
+        if(notBeforeDate < System.today()){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" non può essere nel passato'));
+        } else if(requestDate > System.today()){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data richiesta non può essere nel futuro'));
+        } else if(isAcqua && notBeforeDate != null && requestDate != null){
+            Date lowBoundary = requestDate.addDays(5);
+            Date upBoundary = requestDate.addDays(60);
+            Boolean isInBoundary = (notBeforeDate >= lowBoundary && notBeforeDate <= upBoundary);
+            result = (!isInBoundary) ? JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','La data "Da non eseguire prima del" deve essere compresa fra '+lowBoundary.format()+' e '+upBoundary.format())) : result;
+        } else if(isAcqua && requiredAttachment){
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error','Inserire un allegato'));
+        }
         return result;
-
     }
 
     public String validateAnnullamento(String fields){
@@ -1168,7 +1222,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String taxes = getFieldValue(fields, 'Taxes__c');
         String servicePointType = getFieldValue(fields, 'ServicePointType__c');
-        if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco')){
+        if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco') || currentCase.Type.equalsIgnoreCase('Istruttoria')){
             if(currentCase.ShipmentAddressAssign__c == null){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
             } 
@@ -1303,14 +1357,25 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
     // Validazione CF. Se il CF è vuoto lo consideriamo valido.
     public String validateFiscalCode(String fiscalCode) {
+        String errorMessage = 'Il Codice Fiscale inserito non è valido.';
+        
         if (String.isBlank(fiscalCode)) {
             return '';
         }
-
-        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9]{3})[a-zA-Z]{1}$');
+        /**TK 945657C -- Modificato pattern regex per includere anche i casi di omocodia
+         * aggiunto controllo su ultimo carattere CF: viene ricalcolato il carattere di controllo partendo dal CF inserito e viene confrontato con il CF inserito*/
+        Pattern pattern = Pattern.compile('^[a-zA-Z]{6}[0-9]{2}[abcdehlmprstABCDEHLMPRST]{1}[0-9]{2}([a-zA-Z]{1}[0-9LMNOPQRSTUV]{3})[a-zA-Z]{1}$');
         Matcher matcher = pattern.matcher(fiscalCode);
 
-        return matcher.matches() ? '' : 'Il Codice Fiscale inserito non è valido.';
+        if(!matcher.matches()) 
+        {
+            return errorMessage;
+        }
+        if(!(fiscalCode.substring(0,15) + HDT_UTL_CalculateFiscalCode.getControlLetter(fiscalCode.substring(0,15))).equalsIgnoreCase(fiscalCode))
+        {
+            return errorMessage;
+        }
+        return '';
     }
 
     // Validazione CF, considerando anche variazioni rispetto al vecchio CF. Se il nuovo CF è vuoto lo consideriamo valido.
@@ -1372,6 +1437,33 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         }else{
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         }
+        return result;
+    }
+
+    public String validateErroreFatturazione(Case currentCase, String fields) {
+        String result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+        Set<String> argSet = new Set<String>{'Richiesta di ricalcolo fuga acqua', 'Rimborso retroattivo importo fognatura e depurazione'};
+        String argument = getFieldValue(fields, 'BillingErrorArgument__c');
+        String refundStartDate = getFieldValue(fields, 'RefundStartDate__c');
+        String customerSelfReading = getFieldValue(fields, 'CustomerSelfReading__c');
+        String readingDate = getFieldValue(fields, 'ReadingDate__c');
+        String note = getFieldValue(fields, 'Note__c');
+
+        if('Acqua'.equals(currentCase.CommodityFormula__c) && !String.isBlank(customerSelfReading) && (readingDate == null || String.isBlank(readingDate) || String.isEmpty(readingDate) || readingDate.equalsIgnoreCase('null'))){
+            return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire la data di lettura nell\'apposito campo.'));
+        }
+        
+        if ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) && argSet.contains(argument)){
+            List<ContentDocumentLink> attachedDocument = caseValidationQr.getDocumentByCaseId(currentCase.Id);
+            if(attachedDocument.size() == 0){
+                return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Necessario inserire allegato.'));
+            }
+        }
+
+        if ('Acqua'.equalsIgnoreCase(currentCase.CommodityFormula__c) && 'Rimborso retroattivo importo fognatura e depurazione'.equalsIgnoreCase(argument) && String.isBlank(refundStartDate)) {
+            return result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per l\'argomento selezionato occorre valorizzare la Data Inizio Rimborso.'));
+        }
+
         return result;
     }
 

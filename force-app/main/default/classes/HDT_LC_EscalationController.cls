@@ -39,7 +39,7 @@ public with sharing class HDT_LC_EscalationController {
                     
                     caseList = [SELECT id, Status FROM Case WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
 
-                    if(caseList.Status == 'Bozza' || caseList.Status == 'In Lavorazione'){
+                    if(caseList.Status == 'New' || caseList.Status == 'In Lavorazione'){
                         recordTypeName = 'HDT_RT_EscalationCase';
                         parentEntityField = 'Case__c';
                         showPriorityField = 'false';
@@ -85,9 +85,9 @@ public with sharing class HDT_LC_EscalationController {
 
                     Order orderList = new Order();
 
-                    orderList = [SELECT id, Status FROM Order WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
+                    orderList = [SELECT id, Status, RecordType.DeveloperName FROM Order WHERE Id = :parentEntityId WITH SECURITY_ENFORCED LIMIT 1];
 
-                    if(orderList.Status == 'Draft' || orderList.Status == 'In Lavorazione'){
+                    if((orderList.Status == 'Draft' || orderList.Status == 'In Lavorazione' || orderList.Status=='Annullato') && orderList.RecordType.DeveloperName!='HDT_RT_OrderDossier'){
                         recordTypeName = 'HDT_RT_EscalationOrder';
                         parentEntityField = 'Order__c';
                         showPriorityField = 'false';

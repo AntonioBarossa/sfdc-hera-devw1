@@ -1,0 +1,51 @@
+<template>
+
+    <template if:true={showSpinner}>
+        <div class="spinner">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
+    </template>
+    <div>
+        <lightning-card title="Dati Catastali">
+            <!-- Tabella con Button 'Nuovo' -->
+            <div class="slds-grid slds-wrap">
+            
+                <div class="slds-size_1-of-1">
+                    <template if:true={showTable}>
+                        <lightning-datatable
+                            data={tableData}
+                            columns={tableColumns}
+                            key-field="Id"
+                            selected-rows={tableSelectedRows}
+                            onrowselection={handleTableSelection}
+                            max-row-selection="1">
+                        </lightning-datatable>
+                    </template>
+                    <template if:false={showTable}>
+                        
+                        <div class="slds-m-horizontal_xxx-small slds-text-align_center slds-text-heading_small">
+                            Non sono presenti dati catastali per questo punto di fornitura.
+                        </div>
+                    </template>
+                </div>
+                
+                <div class="slds-size_1-of-1 slds-box_x-small slds-text-align_center">
+                    </br><lightning-button variant="brand" icon-name="utility:record_create" disabled={_readonly} label="Nuovo" title="Nuovo" onclick={handleNuovoClick}></lightning-button>
+                </div>
+                
+            </div>
+            
+            <c-hdt-land-registry-edit record-id={_selectedLandRegistryId}
+                                        case-id={caseId}
+                                        order-id={orderId}
+                                        required={_required}
+                                        readonly={_readonly}
+                                        onformsuccess={handleEditSave}
+                                        ondeletion={handleEditDeletion}
+                                        service-point-id={servicePointId}
+                                        show-edit
+                                        show-delete></c-hdt-land-registry-edit>
+            
+        </lightning-card>
+    </div>
+</template>

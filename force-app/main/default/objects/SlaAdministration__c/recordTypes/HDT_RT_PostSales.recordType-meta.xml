@@ -1,0 +1,3775 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_RT_PostSales</fullName>
+    <active>true</active>
+    <label>Post Sales</label>
+    <picklistValues>
+        <picklist>ActivityType__c</picklist>
+        <values>
+            <fullName>Accettazione Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Anticipo Appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Offerte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Preventivo DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Catalogo Prodotti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Preventivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Tari%2FTCP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Vas e HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Busta Docusign non consegnata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamenti contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata Callback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazioni con DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma Preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confermare Cambio Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Creare Istruttoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 affidi ADR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 affidi legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 cessioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 sospensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Del%2E 40 gestione doc%2Einvio a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale%2FCopia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documenti non validati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eliminato esito in scarto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore determinazione variante SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Eseguire Gestione Manuale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Da Gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Lavori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito non elaborato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito ricevuto su richiesta chiusa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Iva e Accise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione M01%2FM02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Sblocco al Calcolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Votive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione procedurale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Back Office</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestire fuga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione manuale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione processi Ultima Istanza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione processi di Misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Giro contatore da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Comunicazione Disconoscimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Lettera di Legittimità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Iva e Accise da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Motore VAS da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Precedente Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Precheck KO precedente intestatario</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presa Appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Da tipizzare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Disattivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Modifiche Anagrafiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Preventivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Variazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rapporti con i distributori e SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recupero contratto da Postel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riapertura urgenti Errori DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta informazioni appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC cliente da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarto Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarto Canone RAI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarto transitorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Commissioni Agenzie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Migrazione dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Agenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Esercizio Sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto TL Front</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto emissione SD_massiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto emissione SD_singola</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto su migrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione Documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione Vocal Order</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Venditore Non Definito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica comportamento Banca%2C Istituti Finanziari e Carte di Credito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica rimborsi Clienti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Credito Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Morosità Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche layout bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vocal Order non validato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Ato__c</picklist>
+        <values>
+            <fullName>AATO 1 MARCHE NORD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Bacchiglione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ATO Orientale Triestino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ato 9</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CaseField__c</picklist>
+        <values>
+            <fullName>CustomerRequestDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PaymentDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WrittenReceiptRequestDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Cluster__c</picklist>
+        <values>
+            <fullName>Annullamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Generiche VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifiche Anagrafiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PostSales VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Commodity__c</picklist>
+        <values>
+            <fullName>Acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Energia Elettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Multi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Teleriscaldamento</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CompanyOwner__c</picklist>
+        <values>
+            <fullName>AAA-EBT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HERA COMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reseller</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CustomerType__c</picklist>
+        <values>
+            <fullName>Account</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cittadino</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EndCasePhase__c</picklist>
+        <values>
+            <fullName>Accettato Motore VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettazione Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acconto Paperless Non Pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acconto Paperless Pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento RCU Concluso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Extra Sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Info da Banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Lavorazione BO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa check preliminari</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avvenuta Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BL010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocco Effettuato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocco Non Effettuato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione EngageOne KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazioni con il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da inviare a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da lavorare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Esecuzione Prevista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Mail Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Mail Non Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP simulato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura messa a perdita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Procedurale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR020</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento RCU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa possibile contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Classificazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione - Inviare Comunicazione Disconoscimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione - Inviare Lettera di Legittimità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Data Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo ricalcolato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Creata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria non necessaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Sap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavori Sospesi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Applicabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Approvata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Non Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rata Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica Riclassificata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione non concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presenza Atti Autorizzativi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo Extra Sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Parere Ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Non Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso manualmente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso per richiesta parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso per verifica DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK DL simulata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica in laboratorio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>EndOrderPhase__c</picklist>
+        <values>
+            <fullName>Accettato Motore Vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettazione Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettazione pagamento a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità conformità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità conformità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento per Switch-out</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato per Dati Discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check TIMOE OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione EngageOne KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Motore VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazone verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL Documentazione completa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL accertamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL documentazione incompleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati TIMOE Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione appuntamento su portale DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa appuntamento DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esecuzione appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa tempi di ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato Precheck al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio allegato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ko prodotto vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Motore vas ko</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo Accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Accettata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura c%2Fo VT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>FirstLevelComplaintClassification__c</picklist>
+        <values>
+            <fullName>Reclamo Scritto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Doppia Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di informazioni</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>OrderField__c</picklist>
+        <values>
+            <fullName>EffectiveDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SendCertifiedEmailConsentDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SendRequestDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SubjectCodeStartDate%5F%5Fc</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Process__c</picklist>
+        <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Altre Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Associazione Utente Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione Click%26Pay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autoelettrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura da cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autolettura da processo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura Acqua Avviso al Cliente - Acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BP%2FCA - errata categoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caduta Linea%2FChiamata Muta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio contatore non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusura Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento Altri Venditori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento Venditori HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione di Fallimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Condizioni Contrattuali Errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumo Anomalo Idrico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contenzioso In Corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto Non Richiesto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Copia Bolletta%2FBollettino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dettaglio Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dichiarazione di intento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disassociazione Utente Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivazione VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale%2FCopia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doppi Pagamenti%2FIncassi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emissione Impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esercizio Diritti Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fiscale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Disalimentabilità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Indennizzo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni servizi Hera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inversione del Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata Telelettura%2Flettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marcatura%2FUso PdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Alert</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contratto Preattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Layout di dettaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Portale SOL Gestione Energia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Privacy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Tariffa Residente%2FNon Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifica Attivazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Notifica Variazione Stato PDR SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento ClickPay</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione Fatture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Altri Motivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Rifiuto Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso su Richiesta Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rettifica Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Revoca Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Non Morose</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione a seguito di cessato pericolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta lettura cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricostruzione Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripristino Fornitura Interrotta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Varie %2F Ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Emissione Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Canone Rai Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospensione a seguito di potenziale pericolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sost%2E contatore cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Split Payment</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Votive Modena</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storno Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch Out SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch Out per Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Testo Contratto in Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tutti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione POD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FIntervento Riattivazione luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FNuovo contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VOTIVE Modena%2FSubentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Anagrafica Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Fase</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Portata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Tensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione su Amministratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Dati al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica GDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Tensione - Pressione</fullName>
+            <default>false</default>
+        </values>
+        
+        
+        
+        
+    
+        <values>
+            <fullName>Interventi con Verifica - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Pressione - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Integrita Sigilli - ACQ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Fuga Idrica - Acqua</fullName>
+            <default>false</default>
+        </values>
+
+
+        <values>
+            <fullName>Verifica Titolarità POD%2FPDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Contestazione Fattura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Votive Modena Pagamenti Morosità</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>RangeType__c</picklist>
+        <values>
+            <fullName>Giorni Lavorativi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Giorni Solari</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SalesCompany__c</picklist>
+        <values>
+            <fullName>Acegas Aps Service</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EstEnergy S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Comm Marche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Comm NordEst</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Marche Multiservizi TARI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SecondLevelComplaintClassification__c</picklist>
+        <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonus sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Connessioni%2C lavori e qualità tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doppia Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mercato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Misura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morosità e sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualità Commerciale</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>StartCasePhase__c</picklist>
+        <values>
+            <fullName>Accettato Motore VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettazione Voltura Tecnica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acconto Paperless Non Pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acconto Paperless Pagato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Allineamento RCU Concluso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Extra Sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Info da Banca</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Lavorazione BO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Modulo Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa check preliminari</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa risposta fornitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Avvenuta Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>BL010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocco Effettuato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Blocco Non Effettuato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione EngageOne KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazioni con il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da inviare a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da lavorare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Data Esecuzione Prevista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disattivato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Mail Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>E-Mail Non Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP simulato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO tentativo riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fattura messa a perdita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Procedurale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR020</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento Anagrafica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Allineamento RCU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Approvazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa possibile contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Classificazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione - Inviare Comunicazione Disconoscimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione - Inviare Lettera di Legittimità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Data Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa Documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa risposta parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo ricalcolato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria Creata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria non necessaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Sap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavori Sospesi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Applicabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Approvata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non Inviata a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Paperless Non Generato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rata Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica Riclassificata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione non concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presenza Atti Autorizzativi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RC010</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo Extra Sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Parere Ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMS Non Inviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso manualmente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso per richiesta parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso per verifica DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK DL simulata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica in laboratorio</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>StartOrderPhase__c</picklist>
+        <values>
+            <fullName>Accettato Motore Vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettazione Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accettazione pagamento a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck KO SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Amm%2E Precheck OK SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità conformità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ammissibilità conformità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito KO da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Esito OK da DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Inviato al DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento SII - Ricezione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento dal SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullamento per Switch-out</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato per Dati Discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Credit Check</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa conferma preventivo cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bozza Annullata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Siebel OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check TIMOE OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiuso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione EngageOne KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Motore VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione verso Motore VAS OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazone verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Check KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL Documentazione completa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL accertamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>DL documentazione incompleta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati TIMOE Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati Tecnici Ricevuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione Validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL%2FSII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esecuzione Appuntamento OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DBO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esportazione VS Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso bloccato in assenza del precedente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione appuntamento su portale DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Attesa Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Corso caricamento Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa appuntamento DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa conferma cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esecuzione appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa tempi di ripensamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa validazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In registrazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In sequenzializzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato Precheck al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Invio allegato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Definitivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO Rilavorato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ko prodotto vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Motore vas ko</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>OK SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da firmare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico inviato da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Plico validato Firmato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica In Attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo Accettato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo rifiutato %E2%80%93 Amm OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivo scaduto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione da validare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Registrazione validata Firmato%2FInviato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Preventivo extra sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Ammissibilità OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Comunicazione verso Heroku OK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Da inviare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito KO da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Esito OK da SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Inviato al SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensamento - Revocato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripensato KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospeso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Accettata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura Rifiutata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura c%2Fo VT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>01</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>03</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>04</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>05</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

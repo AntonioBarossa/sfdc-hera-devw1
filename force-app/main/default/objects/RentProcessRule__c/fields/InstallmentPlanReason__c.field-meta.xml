@@ -125,6 +125,16 @@
                 <default>false</default>
                 <label>Assistenza sociale (ente)</label>
             </value>
+            <value>
+                <fullName>Autorità idrico 655</fullName>
+                <default>false</default>
+                <label>Autorità idrico 655</label>
+            </value>
+            <value>
+                <fullName>Costituzione in mora (REMSI)</fullName>
+                <default>false</default>
+                <label>Costituzione in mora (REMSI)</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

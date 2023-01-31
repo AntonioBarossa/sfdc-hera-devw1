@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
+    <customValue>
+        <fullName>Da contribuente</fullName>
+        <default>false</default>
+        <label>Da contribuente</label>
+    </customValue>
+    <customValue>
+        <fullName>D'ufficio</fullName>
+        <default>false</default>
+        <label>D'ufficio</label>
+    </customValue>
+    <customValue>
+        <fullName>Da utente</fullName>
+        <default>false</default>
+        <label>Da utente</label>
+    </customValue>
+    <customValue>
+        <fullName>Da gestore</fullName>
+        <default>false</default>
+        <label>Da gestore</label>
+    </customValue>
+    <masterLabel>Provenienza Richiesta</masterLabel>
+    <sorted>false</sorted>
+</GlobalValueSet>

@@ -60,6 +60,8 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
                    ClientAgeMax__c,ConsumptionRangeEEmax__c,ConsumptionRangeGASmax__c,PowerRangeMax__c,EligibleForAllCities__c,
                    CampaignName__c,
                    CategoryTypeClientOperator__c,ChannelOperator__c,OriginMarketOperator__c,ClientMarkerOperator__c,CompanyOwnerOperator__c,
+                   // W2
+                   AtoReference__c, AtoReferenceOperator__c, ImplantType__c, ImplantTypeOperator__c,
                    (SELECT Id, Name, AreaCode__c, JSONCode__c FROM Comuni_Eleggibili__r)
             FROM EligibilityCriteria__c
             WHERE Id =: recIdToClone

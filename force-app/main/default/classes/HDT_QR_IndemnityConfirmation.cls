@@ -15,6 +15,7 @@ public inherited sharing class HDT_QR_IndemnityConfirmation {
         AND Parent.FirstLevelComplaintClassification__c = :firstLevel
         AND Parent.SecondLevelComplaintClassification__c = :secondLevel
         AND Parent.IndemnityConfirmed__c = true
+        AND Parent.Id != :recordId
         AND CreatedDate = LAST_N_DAYS:365
         WITH SECURITY_ENFORCED];
     }

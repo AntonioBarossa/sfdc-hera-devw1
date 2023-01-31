@@ -27,6 +27,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             resultMap.put('result',result);
             resultMap.put('message',message);
             resultMap.put('status',status);
+            HDT_SRV_DocumentalManagement.traceRequest(resultMap, body,recordId);
             /*
             system.debug(LoggingLevel.DEBUG,'body --> '+body);
             system.debug(LoggingLevel.DEBUG,'documentalResponse --> '+documentalResponse);
@@ -85,7 +86,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
             if (context == 'EC' || context == 'GC') {
                 HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
             }
-            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context);
+            HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context,formParams);
 
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());

@@ -1,0 +1,46 @@
+<template>
+    <!--
+    <template if:true={showNumber}>
+        <lightning-input type="number" name="inputNumber" label="Numero Componenti Non Residenti" onchange = "{handleChangeNumber}" ></lightning-input>
+        <lightning-button variant="brand" label="Inserisci Componenti" title="Inserisci Componenti" onclick={handleClickFirst} class="slds-m-left_x-small"></lightning-button>
+    </template>
+    -->
+
+    <template if:true={showForm}>
+        <div class="slds-grid slds-wrap">
+        <template for:each={numberOfLoop} for:item="index">
+            <div key={index.number} class="slds-col slds-size_4-of-12 slds-box_x-small slds-text-align_left">
+                <lightning-input 
+                    key={index.number} 
+                    data-id={index.labelNome} 
+                    type="text" 
+                    value={index.valueNome} 
+                    label={index.labelNome} 
+                    required={isRequired}></lightning-input>
+            </div>
+            <div key={index.number} class="slds-col slds-size_4-of-12 slds-box_x-small slds-text-align_left">
+                <lightning-input 
+                    key={index.number} 
+                    data-id={index.labelCognome} 
+                    type="text" 
+                    value={index.valueCognome} 
+                    label={index.labelCognome} 
+                    required={isRequired}></lightning-input>
+            </div>
+            <div key={index.number} class="slds-col slds-size_4-of-12 slds-box_x-small slds-text-align_left">
+                <lightning-input 
+                    key={index.number} 
+                    data-id={index.labelCf} 
+                    type="text" 
+                    value={index.valueCf} 
+                    label={index.labelCf} 
+                    minlength="16"
+                    maxlength="16"
+                    message-when-too-short="Il codice fiscale deve essere composto da 16 caratteri."
+                    message-when-too-long="Il codice fiscale deve essere composto da 16 caratteri."
+                    required={isRequired}></lightning-input>
+            </div>
+        </template>
+        </div>
+    </template>
+</template>

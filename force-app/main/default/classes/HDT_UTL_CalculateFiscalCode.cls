@@ -144,6 +144,16 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             if(String.isBlank(lastNameCode) && consonantsLetters.size() <3 && vowelsLetters.size()<1){
                 lastNameCode= consonantsLetters.get(0)+consonantsLetters.get(1) + 'X';
             }
+            else if(String.isBlank(lastNameCode) && vowelsLetters.size() <3 && consonantsLetters.size()<1){
+                lastNameCode= vowelsLetters.get(0)+vowelsLetters.get(1) + 'X';
+            }
+            //Caso di Cognome con una lettera, bisogna aggiungere due X
+            if(String.isBlank(lastNameCode) && consonantsLetters.size() ==0 && vowelsLetters.size()==1){
+                lastNameCode= vowelsLetters.get(0)+ 'X' + 'X';
+            } 
+            else if(String.isBlank(lastNameCode) && vowelsLetters.size() ==0 && consonantsLetters.size()==1){
+                lastNameCode= consonantsLetters.get(0)+ 'X' + 'X';
+            }
         }
         return lastNameCode;   
     }
@@ -156,13 +166,20 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             firstNameCode= consonantsLetters.get(0)+consonantsLetters.get(1)+consonantsLetters.get(2);
         }else if(consonantsLetters.size()==2 && vowelsLetters.size()>=1){
             firstNameCode=consonantsLetters.get(0)+consonantsLetters.get(1)+vowelsLetters.get(0);
-        }else if(consonantsLetters.size()==1 ){
-            if( vowelsLetters.size()>=2){
-                firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+vowelsLetters.get(1);
-            }else{
-                firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+'X';
-            }
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()>=2){
+            firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+vowelsLetters.get(1);
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()==1){
+            firstNameCode=consonantsLetters.get(0)+vowelsLetters.get(0)+'X';
+        }else if(consonantsLetters.size()==1 && vowelsLetters.size()==0){
+            firstNameCode=consonantsLetters.get(0)+'X'+'X';
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()>2){
+            firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+vowelsLetters.get(2);
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()==2){
+            firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+'X';
+        }else if(consonantsLetters.size()==0 && vowelsLetters.size()==1){
+            firstNameCode=vowelsLetters.get(0)+'X'+'X';
         }
+        
         return firstNameCode;
     }
     
@@ -457,5 +474,36 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             }
         }
         return letter;
+    }
+
+    public static String getControlNumberPiva(String s){
+		List<Integer> evenNums=new List<Integer>();
+		List<Integer> oddNums= new List<Integer>();
+        String controllNum='';
+		Integer oddCounter=0;
+        Integer evenCounter=0;
+
+		for(Integer i=0;i<s.length();i++){
+			if(math.mod(i,2)==0){
+                oddNums.add(Integer.valueOf(s.substring(i,i+1)));
+            }else{
+                evenNums.add(Integer.valueOf(s.substring(i,i+1)));
+            }
+		}
+        for (Integer i=0; i<oddNums.size(); i++){
+            oddCounter+=oddNums[i];
+        }
+        for (Integer i=0; i<evenNums.size(); i++){
+            integer tempNum=0;
+            tempNum=evenNums[i]*2;
+            if(tempNum>9){
+                tempNum-=9;
+            }
+            evenCounter+=tempNum;
+        }
+
+        integer sumMod=math.mod((oddCounter+evenCounter),10);
+        controllNum=string.valueOf(math.mod((10-sumMod),10));
+        return controllNum;
     }
 }

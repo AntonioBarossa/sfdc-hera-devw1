@@ -24,6 +24,8 @@ import ShippingStreetName from '@salesforce/schema/Order.ShippingStreetName__c';
 import SignedDate from '@salesforce/schema/Order.SignedDate__c';
 import RelatedPractice from '@salesforce/schema/Order.RelatedPractice__c';
 import ContractSigned from '@salesforce/schema/Order.ContractSigned__c';
+import RequestSource from '@salesforce/schema/Order.RequestSource__c';
+import DeliveredDocumentation from '@salesforce/schema/Order.DeliveredDocumentation__c';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import updateContactForScartoDocumentale from '@salesforce/apex/HDT_UTL_Scarti.updateContactForScartoDocumentale'; //costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
 const signModeFirmato = 'Contratto già firmato';
@@ -72,7 +74,10 @@ const FIELDS = [
 	'Order.Account.BillingStreetNumberExtension__c',
 	'Order.Account.BillingStreetCode__c',
     'Order.Contact__c',
-    'Order.SalesContact__c'
+    'Order.SalesContact__c',
+    'Order.RequestSource__c',
+    'Order.WasteCommodityType__c',
+    'Order.DeliveredDocumentation__c'
 ];
 
 export default class hdtOrderDossierWizardSignature extends LightningElement {
@@ -81,6 +86,9 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
     dataToSubmit = {};
     isDisabledSignedDate = true;
     isVisibleSignedDate = false;
+    isVisibleAmbiente=false;
+    isVisbleDocumentazioneContribuente=false;
+    lastDocContrValue;
     areInputsVisible = true;
     loading = false;
     currentStep = 1;
@@ -194,6 +202,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 contractSigned = this.orderRecord.fields.ContractSigned__c.value;
                 var contactEmail = '';
 				var contactPhone = '';
+                var provenienzaRichiesta = '';
                 if(this.orderRecord.fields.Contact__r.value != null){
 					contactEmail = this.orderRecord.fields.Contact__r.value.fields.Email.value;
 					contactPhone = this.orderRecord.fields.Contact__r.value.fields.MobilePhone.value;
@@ -281,16 +290,32 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     enableEdit:this.disabledInput,
                     setDefault:!this.disabledInput,
                     checkAgencies:'Y',
-                    contactId:this.orderRecord.fields.SalesContact__c.value
+                    contactId:this.orderRecord.fields.SalesContact__c.value/*,
+                    provenienza:this.orderRecord.fields.RequestSource__c.value,
+                    ambiente:this.orderRecord.fields.WasteCommodityType__c.value*/
                 }
                 this.inputParams = JSON.stringify(inputParams);
-                /* if(contractSigned){
-                    console.log('Dentro Signed');
-                    this.loadData = false;
+                var provenienza = this.orderRecord.fields.RequestSource__c.value;
+                var ambiente = this.orderRecord.fields.WasteCommodityType__c.value;
+                var docContribuente = this.orderRecord.fields.DeliveredDocumentation__c.value;
+                this.lastDocContrValue = docContribuente;
+                if(ambiente!= null && ambiente != undefined && ambiente != '' && ambiente==='Ambiente'){
+                    this.isVisibleAmbiente = true;
+                    if(provenienza!= null && provenienza != undefined && provenienza != '' && provenienza ==='Da contribuente'){
+                        this.isVisbleDocumentazioneContribuente = true;
+                        if(docContribuente != null && docContribuente != undefined && docContribuente == true){
+                            this.loadData = true;
+                        }else{
+                            this.loadData = false;
+                        }
+                    }else{
+                        this.loadData = false;
+                        this.isVisibleSignedDate = false;
+                    }
                 }else{
-                    console.log('Fuori Signed'); */
                     this.loadData = true;
-                /* } */
+                }
+                
                 
 
                 console.log(this.inputParams);
@@ -325,7 +350,37 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
         return streetName + streetNumber + streetNumberExtension + place + province + postalCode + country;
     }
-
+    handleRequestSourceChange(event){
+        let fieldName = event.target.fieldName;
+        let name = event.target.name;
+        let fieldValue = event.target.value;
+        if(fieldName === 'RequestSource__c'){
+            if(fieldValue != null && fieldValue === 'Da contribuente'){
+                this.isVisbleDocumentazioneContribuente=true;
+                /*var deliveryDoc = this.template.querySelector("[data-id='DeliveredDocumentation__c']").value;*/
+                if(this.lastDocContrValue != null && this.lastDocContrValue == false){
+                    this.loadData = true;
+                }else{
+                    this.loadData = false;
+                }
+                
+            }else{
+                this.lastDocContrValue = this.template.querySelector("[data-id='DeliveredDocumentation__c']").value;
+                this.loadData = false;
+                this.isVisbleDocumentazioneContribuente=false;
+                this.isVisibleSignedDate = false;
+            }
+        }else if(fieldName === 'DeliveredDocumentation__c'){
+            if(fieldValue === 'Y'){
+                this.loadData = false;
+                this.isVisibleSignedDate = false;
+            }else{
+                this.loadData = true;
+            }
+            this.lastDocContrValue = fieldValue;
+        }
+        this.dataToSubmit[fieldName] = fieldValue;
+    }
     handleDataCollection(event){
         let fieldName = event.target.fieldName;
         let name = event.target.name;
@@ -346,15 +401,6 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         }
 
         this.dataToSubmit[fieldName] = fieldValue;
-
-        /* if (fieldName === 'ContractSigned__c') {
-            this.isVisibleSignedDate = !this.isVisibleSignedDate;
-            this.areInputsVisible = !this.areInputsVisible;
-            if(fieldValue)
-                this.loadData = false;
-            else
-                this.loadData = true;
-        } */
 
         if (fieldName === 'DocSendingMethod__c') {
             this.isMailVisible = (fieldValue === 'Mail');
@@ -423,21 +469,16 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
             fields[RelatedPractice.fieldApiName] = this.actualRelatedPractice;
             this.dataToSubmit['RelatedPractice__c'] = this.actualRelatedPractice;
             fields[ContractSigned.fieldApiName] = resultWrapper.signMode.localeCompare(signModeFirmato) === 0;
+            if(this.template.querySelector("[data-id='RequestSource__c']") != null){
+                fields[RequestSource.fieldApiName] = this.template.querySelector("[data-id='RequestSource__c']").value;
+            }
+            if(this.template.querySelector("[data-id='DeliveredDocumentation__c']") != null){
+                fields[DeliveredDocumentation.fieldApiName] = this.template.querySelector("[data-id='DeliveredDocumentation__c']").value;
+            }
             const recordInput = { fields };
            
             updateRecord(recordInput)
                 .then(() => {
-
-                    
-                    //START>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
-
-                    /*updateContactForScartoDocumentale({accountId: this.orderParentRecord.AccountId,
-                                                       oldPhone: this.oldPhoneValue,
-                                                       oldEmail: this.oldEmailValue,
-                                                       newPhone: resultWrapper.phone,
-                                                       newMail: resultWrapper.email}).then(data=>{*/
-
-                    //END>> costanzo.lomele@webresults.it 31/08/21 - aggiornamento dati su contatto
                     // Display fresh data in the form
                       console.log('Record aggiornato');
                       next({orderUpdates: this.dataToSubmit}).then(data =>{
@@ -484,79 +525,117 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
         let returnValue = this.template.querySelector('c-hdt-document-signature-manager');
         var dataFirma = this.actualSignedDate;
         var dataFirmaDate = new Date(); //dd-mm-YYYY
-        if(dataFirma != null){
-            dataFirmaDate = new Date(dataFirma); //dd-mm-YYYY
-        }
-        var today = new Date();
-        if (this.isVisibleSignedDate && this.actualSignedDate === null){
-            this.loading = false;
-            const errorDataFirma = new ShowToastEvent({
-                title: 'Errore',
-                message: 'Popolare il campo Data Firma',
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(errorDataFirma);
-        }else if(dataFirma != null && dataFirmaDate > today){
-            const errorDataFirma = new ShowToastEvent({
-                title: 'Errore',
-                message: 'La data firma non può essere nel futuro',
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(errorDataFirma);
-        }
-        else if(returnValue){
-            returnValue.checkForm();
-        }else{
+        if(this.isVisibleAmbiente && !this.loadData){
             this.loading = true;
-            let validErrorMessage = 'Popolare il campo ';
-
-            if(this.template.querySelector("[data-id='ContractSigned__c']").value && this.template.querySelector("[data-id='SignedDate__c']").value === null){
-                validErrorMessage = validErrorMessage.concat('Data Firma, ');
-            }
-
-            if(this.template.querySelector("[data-id='SignatureMethod__c']") !== null && this.template.querySelector("[data-id='SignatureMethod__c']").value === null){
-                validErrorMessage = validErrorMessage.concat('Metodo Firma, ');
-            }
-
-            if(this.template.querySelector("[data-id='DocSendingMethod__c']") !== null && this.template.querySelector("[data-id='DocSendingMethod__c']").value === null){
-                validErrorMessage = validErrorMessage.concat('Modalità Invio Doc, ');
-            }
-            
-            if(validErrorMessage === 'Popolare il campo '){
-                updateRecord(recordInput)
-                .then(goNext => {
-                    next({orderUpdates: this.dataToSubmit}).then(data =>{
-                        getRecordNotifyChange([{recordId: this.recordId}])
-                        .then(data =>{
-                            console.log('### Inside Notify Then ###')
-                            this.loading = false;
-                            this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
-                            this.dispatchEvent(new CustomEvent('tablerefresh'));
-                        })
-                    }).catch(error => {
-                        this.loading = false;
-                        console.log((error.body.message !== undefined) ? error.body.message : error.message);
-                        const toastErrorMessage = new ShowToastEvent({
-                            title: 'Errore',
-                            message: (error.body.message !== undefined) ? error.body.message : error.message,
-                            variant: 'error',
-                            mode: 'sticky'
-                        });
-                        this.dispatchEvent(toastErrorMessage);
-                    });
-                })
-            } else {
+            var provenienzaRichiesta = this.template.querySelector("[data-id='RequestSource__c']").value;
+            if(!provenienzaRichiesta){
                 this.loading = false;
-                console.log(validErrorMessage);
-                const toastErrorMessage = new ShowToastEvent({
+                const errorProvenienza = new ShowToastEvent({
                     title: 'Errore',
-                    message: validErrorMessage.slice(0, -2), //remove space and comma at end of error string
+                    message: 'Popolare il campo Provenienza Richiesta',
                     variant: 'error',
                     mode: 'sticky'
                 });
-                this.dispatchEvent(toastErrorMessage);
+                this.dispatchEvent(errorProvenienza);
+            }else{
+                fields['RequestSource__c'] = provenienzaRichiesta;
+                const recordUpdate = { fields };
+                updateRecord(recordUpdate)
+                        .then(goNext => {
+                            next({orderUpdates: this.dataToSubmit}).then(data =>{
+                                getRecordNotifyChange([{recordId: this.recordId}])
+                                console.log('### Inside Notify Then ###')
+                                this.loading = false;
+                                this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                                this.dispatchEvent(new CustomEvent('tablerefresh'));
+                            }).catch(error => {
+                                this.loading = false;
+                                console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                                const toastErrorMessage = new ShowToastEvent({
+                                    title: 'Errore',
+                                    message: (error.body.message !== undefined) ? error.body.message : error.message,
+                                    variant: 'error',
+                                    mode: 'sticky'
+                                });
+                                this.dispatchEvent(toastErrorMessage);
+                            });
+                        })
+            }
+        }else{
+            if(dataFirma != null){
+                dataFirmaDate = new Date(dataFirma); //dd-mm-YYYY
+            }
+            var today = new Date();
+            if (this.isVisibleSignedDate && this.actualSignedDate === null){
+                this.loading = false;
+                const errorDataFirma = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'Popolare il campo Data Firma',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(errorDataFirma);
+            }else if(dataFirma != null && dataFirmaDate > today){
+                const errorDataFirma = new ShowToastEvent({
+                    title: 'Errore',
+                    message: 'La data firma non può essere nel futuro',
+                    variant: 'error',
+                    mode: 'sticky'
+                });
+                this.dispatchEvent(errorDataFirma);
+            }
+            else if(returnValue){
+                returnValue.checkForm();
+            }else{
+                this.loading = true;
+                let validErrorMessage = 'Popolare il campo ';
+
+                if(this.template.querySelector("[data-id='ContractSigned__c']").value && this.template.querySelector("[data-id='SignedDate__c']").value === null){
+                    validErrorMessage = validErrorMessage.concat('Data Firma, ');
+                }
+
+                if(this.template.querySelector("[data-id='SignatureMethod__c']") !== null && this.template.querySelector("[data-id='SignatureMethod__c']").value === null){
+                    validErrorMessage = validErrorMessage.concat('Metodo Firma, ');
+                }
+
+                if(this.template.querySelector("[data-id='DocSendingMethod__c']") !== null && this.template.querySelector("[data-id='DocSendingMethod__c']").value === null){
+                    validErrorMessage = validErrorMessage.concat('Modalità Invio Doc, ');
+                }
+                
+                if(validErrorMessage === 'Popolare il campo '){
+                    updateRecord(recordInput)
+                    .then(goNext => {
+                        next({orderUpdates: this.dataToSubmit}).then(data =>{
+                            getRecordNotifyChange([{recordId: this.recordId}])
+                            .then(data =>{
+                                console.log('### Inside Notify Then ###')
+                                this.loading = false;
+                                this.dispatchEvent(new CustomEvent('orderrefresh', { bubbles: true }));
+                                this.dispatchEvent(new CustomEvent('tablerefresh'));
+                            })
+                        }).catch(error => {
+                            this.loading = false;
+                            console.log((error.body.message !== undefined) ? error.body.message : error.message);
+                            const toastErrorMessage = new ShowToastEvent({
+                                title: 'Errore',
+                                message: (error.body.message !== undefined) ? error.body.message : error.message,
+                                variant: 'error',
+                                mode: 'sticky'
+                            });
+                            this.dispatchEvent(toastErrorMessage);
+                        });
+                    })
+                } else {
+                    this.loading = false;
+                    console.log(validErrorMessage);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: validErrorMessage.slice(0, -2), //remove space and comma at end of error string
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                }
             }
         }
     }
@@ -592,11 +671,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
 
     handleFormInit(){
         if (this.orderParentRecord.ContractSigned__c !== undefined) {
-            /* this.isVisibleSignedDate = this.orderParentRecord.ContractSigned__c; */
             this.areInputsVisible = !this.orderParentRecord.ContractSigned__c;
-            /* if(this.orderParentRecord.ContractSigned__c){
-               this.loadData = false;
-            } */
         }
 
         if (this.orderParentRecord.DocSendingMethod__c === 'Mail') {

@@ -121,7 +121,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Comunicazione verso Heroku KO', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -169,7 +169,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullamento - Comunicazione verso Heroku OK', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -217,7 +217,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullato', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -267,7 +267,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullato', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -317,7 +317,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -367,7 +367,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -417,7 +417,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();      
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('034', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -468,7 +468,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, PrecheckResultSII__c FROM Order]; 
+        myOrder = [SELECT Id, PrecheckResultSII__c, VASType__c FROM Order]; 
         
         System.assertEquals('OK', myOrder.PrecheckResultSII__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -518,7 +518,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -568,7 +568,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, CausalCode__c FROM Order]; 
+        myOrder = [SELECT Id, CausalCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('testflusso', myOrder.CausalCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -618,7 +618,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest();
         
-        myOrder = [SELECT Id, DiscardReason__c FROM Order]; 
+        myOrder = [SELECT Id, DiscardReason__c, VASType__c FROM Order]; 
         
         System.assertEquals('testnote', myOrder.DiscardReason__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -668,7 +668,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
 
-        myOrder = [SELECT Id, ContractAccountCode__c FROM Order]; 
+        myOrder = [SELECT Id, ContractAccountCode__c, VASType__c FROM Order]; 
         
         System.assertEquals('something', myOrder.ContractAccountCode__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -718,7 +718,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Annullamento - Comunicazione verso Heroku OK', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -768,7 +768,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Comunicazione verso Heroku OK', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');
@@ -818,7 +818,7 @@ public with sharing class HDT_WS_SalesApexCalloutActionTst{
         
         Test.stopTest(); 
         
-        myOrder = [SELECT Id, TecnicalPhase__c FROM Order]; 
+        myOrder = [SELECT Id, TecnicalPhase__c, VASType__c FROM Order]; 
         
         System.assertEquals('Comunicazione verso Heroku KO', myOrder.TecnicalPhase__c, 'HDT_WS_SalesApexCalloutAction did not work correctly');
         System.assertNotEquals(null,  responseReturn, 'HDT_WS_SalesApexCalloutAction did not work correctly');

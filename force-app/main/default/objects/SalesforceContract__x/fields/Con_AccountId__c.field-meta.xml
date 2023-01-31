@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Con_AccountId__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <description>Con_AccountId</description>
+    <externalDeveloperName>Con_AccountId</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Titolare Online</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Contratti Salesforce</relationshipLabel>
+    <relationshipName>ContrattiSalesforce</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

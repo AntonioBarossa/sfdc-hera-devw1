@@ -9,6 +9,7 @@
     <trackHistory>true</trackHistory>
     <type>Picklist</type>
     <valueSet>
+        
         <controllingField>CompanyOwner__c</controllingField>
         <restricted>true</restricted>
         <valueSetName>HDT_CustomerMarking</valueSetName>
@@ -94,27 +95,27 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
-            <valueName>MMS Associazione</valueName>
+            <valueName>G1 - MMS Persona fisica</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
-            <valueName>MMS Azienda</valueName>
+            <valueName>G2 - MMS Ditta individuale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
-            <valueName>MMS Condominio</valueName>
+            <valueName>G3 - MMS Azienda</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
-            <valueName>MMS Ditta individuale</valueName>
+            <valueName>G4 - MMS Parti comuni</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
-            <valueName>MMS Parti comuni</valueName>
+            <valueName>G5 - MMS Condominio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>MMS</controllingFieldValue>
-            <valueName>MMS Persona fisica</valueName>
+            <valueName>G6 - MMS Associazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reseller</controllingFieldValue>

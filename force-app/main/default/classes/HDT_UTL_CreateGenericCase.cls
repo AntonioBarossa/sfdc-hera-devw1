@@ -14,6 +14,12 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         String caseType = (String) inputs.get('type');
         String caseCluster = (String) inputs.get('cluster');
         Case parentCase = (Case) inputs.get('inputSObj');
+        User currentUser=new User();
+
+        if (caseType=='Riattivazione Fornitura') {
+            string uid=UserInfo.getUserId();
+            currentUser=HDT_QR_UserQueries.getCurrentUser(uid);
+        }
 
         List<Case> childCases = new List<Case>();
         Map<String, Object> populateFields = new Map<String, Object>();
@@ -34,7 +40,8 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'CreatedDate',
                 'CreatedById',
                 'OwnerId',
-                'LastModifiedById'
+                'LastModifiedById',
+                'Origin'
             };
         Case childCase = new Case();
         
@@ -43,15 +50,11 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         for(String fieldName : populateFields.keySet()){
             try{
                 if(!fieldExcludeList.contains(fieldName)){
-
                     childCase.put(fieldName, populateFields.get(fieldName));
-
                 }
             }catch(Exception e){
                 System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
-
             }
-
         }
         
         System.debug(LoggingLevel.DEBUG,'RecordTypeId' +recordTypeId);
@@ -223,6 +226,91 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
         newCase.Phase__c = 'Bozza';
 
         return newCase;
+    }
+
+    //METODO PER CREARE DA FLOW UN CASE PARTENDO DA UN CASE GIA' ESISTENTE
+    @InvocableMethod(label = 'Crea Case da Case Padre')
+    public static List<HDT_UTL_FlowOutputsCreaCase> createCaseFromCaseForFlow(List<HDT_UTL_FlowInputsCreaCase> inputs){
+
+        String recordTypeId = inputs[0].recordTypeId;
+        String caseType = inputs[0].caseType;
+        String caseCluster = inputs[0].caseCluster;
+        Case parentCase = inputs[0].inputSObj;
+
+        Map<String, Object> populateFields = new Map<String, Object>();
+        Set<String> fieldExcludeList = new Set<String>
+            {
+                'LastModifiedDate', 
+                'Id', 
+                'SystemModstamp', 
+                'Phase__c', 
+                'PhaseStory__c', 
+                'Status',
+                'Cluster__c',
+                'DistributorNote__c',
+                'Type',
+                'Subprocess__c',
+                'RecordTypeId',
+                'ServiceRequestID__c',
+                'CreatedDate',
+                'CreatedById',
+                'OwnerId',
+                'LastModifiedById'
+            };
+        Case childCase = new Case();
+        
+        populateFields = parentCase.getPopulatedFieldsAsMap();
+        
+        for(String fieldName : populateFields.keySet()){
+            try{
+                if(!fieldExcludeList.contains(fieldName)){
+
+                    childCase.put(fieldName, populateFields.get(fieldName));
+
+                }
+            }catch(Exception e){
+                System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
+
+            }
+
+        }
+        
+        System.debug(LoggingLevel.DEBUG,'RecordTypeId' +recordTypeId);
+
+        try {
+            childCase.put('Phase__c', 'Bozza');
+            childCase.put('Status', 'New');
+            childCase.put('Cluster__c', caseCluster);
+            childCase.put('Type',caseType);
+            childCase.put('RecordTypeId', recordTypeId);
+            childCase.put('ParentId',parentCase.Id);
+            insert childCase;
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG,'Exception--> '+e.getMessage());
+        }
+
+        List<HDT_UTL_FlowOutputsCreaCase> outputs = new List<HDT_UTL_FlowOutputsCreaCase>();
+        HDT_UTL_FlowOutputsCreaCase output = new HDT_UTL_FlowOutputsCreaCase();
+        output.idChildCase = childCase.Id;
+        outputs.add(output);
+        return outputs;
+    }
+
+    public class HDT_UTL_FlowInputsCreaCase{
+
+        @InvocableVariable
+        public String recordTypeId;
+        @InvocableVariable
+        public String caseType;
+        @InvocableVariable
+        public String caseCluster;
+        @InvocableVariable
+        public Case inputSObj;
+    }
+
+    public class HDT_UTL_FlowOutputsCreaCase{
+        @InvocableVariable
+        public String idChildCase;
     }
 
 }

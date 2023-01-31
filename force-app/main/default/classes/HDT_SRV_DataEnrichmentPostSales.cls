@@ -1,6 +1,12 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public with sharing class HDT_SRV_DataEnrichmentPostSales {
     
+    private final Map<String,String> SALESCOMPANY_MAP = new Map<String,String>{
+        '13V0000000'=>'Hera Comm S.p.A.',
+        '10V0000160'=>'Hera Comm Marche',
+        '11-HERASPA'=>'Marche Multiservizi S.p.A',
+        '1200000000'=>'Marche Multiservizi TARI'};
+    
     private HDT_QR_DataEnrichmentPostSales depsQr = new HDT_QR_DataEnrichmentPostSales();
 
     public String getPicklistValue(String objectName, String fieldName, String condition){
@@ -131,113 +137,72 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
 
 
     public String calculateSalesCompany(String salesCompanyCode){
-
-        String salesCompany;
-        switch on salesCompanyCode {
-            when '13V0000000'{
-                salesCompany = 'Hera Comm S.p.A.';
-            }
-            when '10V0000160'{
-                salesCompany = 'Hera Comm Marche';
-            }
-        }
         
-        return salesCompany;
+        return SALESCOMPANY_MAP.get(salesCompanyCode);
     }
 
 
     public String getCaliber(String caliber){
+        Map<String, String> caliberMap = new Map<String, String>{
+            'A0101' => '5 x 20 - 4 mc',
+            'A0202' => '6 x 20 - 4 mc',
+            'A0701' => '7 x 20 - 4 mc',
+            'A0112' => '10 x 30 - 10 mc',
+            'A0205' => '11 x 30 - 10 mc',
+            'A0206' => '20 x 40 - 16 mc',
+            'A0102' => '3 x 15 - 2.5 mc',
+            'A0201' => '4 x 15 - 2.5 mc',
+            'A0501' => '5 x 15 - 2.5 mc',
+            'A0207' => '30 x 50 - 30 mc',
+            'A0215' => '31 x 50 - 30 mc',
+            'A0301' => '32 x 50 - 30 mc',
+            'A0208' => '7 x 25 - 6.3 mc',
+            'A0209' => 'WV 100 - 100 mc',
+            'A0304' => 'WV 100 - 100 mc',
+            'A0407' => 'WV 100 - 100 mc',
+            'A0408' => 'WV 100 - 100 mc',
+            'A0805' => 'WV 100 - 100 mc',
+            'A0104' => 'WV 50 - 25 mc',
+            'A0302' => 'WV 50 - 25 mc',
+            'A0402' => 'WV 50 - 25 mc',
+            'A0801' => 'WV 50 - 25 mc',
+            'A0802' => 'WV 50 - 25 mc',
+            'A0403' => 'WV 65 - 50 mc',
+            'A0404' => 'WV 65 - 50 mc',
+            'A0421' => 'WV 65 - 50 mc',
+            'A0803' => 'WV 65 - 50 mc',
+            'A0303' => 'WV 80 - 63 mc',
+            'A0405' => 'WV 80 - 63 mc',
+            'A0406' => 'WV 80 - 63 mc',
+            'A0422' => 'WV 80 - 63 mc',
+            'A0804' => 'WV 80 - 63 mc',
+            'A0305' => 'WV150 - 300 mc',
+            'A0411' => 'WV150 - 300 mc',
+            'A0412' => 'WV150 - 300 mc',
+            'A0807' => 'WV150 - 300 mc',
+            'A0904' => 'WV150 - 300 mc',
+            'GRT005' => 'G10',
+            'GRT010' => 'G100',
+            'GRT015' => 'G1000',
+            'GRT006' => 'G16',
+            'GRT011' => 'G160',
+            'GRT016' => 'G1600',
+            'GRT002' => 'G2,5',
+            'GRT007' => 'G25',
+            'GRT012' => 'G250',
+            'GRT003' => 'G4',
+            'GRT008' => 'G40',
+            'GRT013' => 'G400',
+            'GRT017' => 'G4000',
+            'GRT004' => 'G6',
+            'GRT009' => 'G65',
+            'GRT014' => 'G650',
+            'GRT018' => 'G6500'
+        };
 
         String result;
 
-        switch on caliber{
-
-            when 'GRT005'{
-
-                result = 'G10';
-
-            }
-            when 'GRT010'{
-
-                result = 'G100';
-
-            }
-            when 'GRT015'{
-
-                result = 'G1000';
-
-            }
-            when 'GRT006'{
-
-                result = 'G16';
-
-            }when 'GRT011'{
-
-                result = 'G160';
-
-            }
-            when 'GRT016'{
-
-                result = 'G1600';
-
-            }
-            when 'GRT002'{
-
-                result = 'G2,5';
-
-            }
-            when 'GRT007'{
-
-                result = 'G25';
-
-            }when 'GRT012'{
-
-                result = 'G250';
-
-            }
-            when 'GRT003'{
-
-                result = 'G4';
-
-            }
-            when 'GRT008'{
-
-                result = 'G40';
-
-            }
-            when 'GRT013'{
-
-                result = 'G400';
-
-            }when 'GRT017'{
-
-                result = 'G4000';
-
-            }
-            when 'GRT004'{
-
-                result = 'G6';
-
-            }
-            when 'GRT009'{
-
-                result = 'G65';
-
-            }
-            when 'GRT014'{
-
-                result = 'G650';
-
-            }when 'GRT018'{
-
-                result = 'G6500';
-
-            }
-
-
-        }
-
-        return result;
+        return caliberMap.get(caliber) != null? caliberMap.get(caliber):'';
 
     }
 
@@ -326,27 +291,116 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
     }
 
     public Date getDateFromString(String stringDate){
-
-        //String Date is yyyymmdd
-        
-        Integer year = Integer.valueOf(stringDate.substring(0,4));
-        Integer month = Integer.valueOf(stringDate.substring(4,6));
-        Integer day = Integer.valueOf(stringDate.substring(6,8));
-
-        if(year > 4000){
-
-            year = 4000;
-
+        //String Date format must be yyyymmdd
+        Date toReturn = null;
+        if(String.isNotBlank(stringDate)){
+            Integer year = Integer.valueOf(stringDate.substring(0,4));
+            Integer month = Integer.valueOf(stringDate.substring(4,6));
+            Integer day = Integer.valueOf(stringDate.substring(6,8));
+            year = year > 4000 ? 4000 : year;
+            toReturn = Date.newInstance(year,month,day);
         }
-
-        return Date.newInstance(Integer.valueOf(year), Integer.valueOf(month), Integer.valueOf(day));
-        
+        return toReturn;       
     }
 
     public Boolean variationsBlock(String sapValue){
-
-        return sapValue.equalsIgnoreCase('T1');
-
+        return 'T1'.equalsIgnoreCase(sapValue);
     }
+
+    public static AmministrazioneSottotipologiaUso__c handleSubType (String salesComp, String prodCode) {
+
+        List <HDT_HeraCompany__mdt> compCodeList = [SELECT CompanyCode__c FROM HDT_HeraCompany__mdt  WHERE MasterLabel =: salesComp WITH SECURITY_ENFORCED];
+            
+        String campCode = null;
+        
+        if(compCodeList.size() > 0) {
+            campCode = compCodeList[0].CompanyCode__c;
+        }
+        
+        System.debug(LoggingLevel.DEBUG, campCode);
+    
+        List <AmministrazioneSottotipologiaUso__c> subTypList = [SELECT SottotipologiaUso__c, IntendedUse__c FROM AmministrazioneSottotipologiaUso__c WHERE Societa__c=: campCode AND
+        CodiceCategoriaTariffa__c=: prodCode AND Attivo__c=TRUE WITH SECURITY_ENFORCED];
+
+        if(!subTypList.isEmpty()){
+            return subTypList[0];
+        }
+
+        return (new AmministrazioneSottotipologiaUso__c(SottotipologiaUso__c = null, IntendedUse__c = null));
+    
+    }
+
+    public String transCodeSiNo (String  valueIn) {
+        String valueOut = null;
+        valueOut = (valueIn == '0' || valueIn == '0.0000000') ? 'No' : valueOut;
+        valueOut = (valueIn == '1' || valueIn == '1.0000000') ? 'Si' : valueOut;
+        valueOut = (valueIn == '2' || valueIn == '2.0000000') ? 'Si - Ridotta' : valueOut;      
+        return valueOut;   
+    }
+
+    public String transcodificaInfoDepurazione (String  valueIn) {
+        String valueOut = null;
+        valueOut = (valueIn == '0' || valueIn == '0.0000000') ? 'Utenza non servita' : valueOut;
+        valueOut = (valueIn == '1' || valueIn == '1.0000000') ? 'Utenza servita' : valueOut;
+        valueOut = (valueIn == '2' || valueIn == '2.0000000') ? 'Utenza non servita con progettazione in corso' : valueOut;      
+        valueOut = (valueIn == '3' || valueIn == '3.0000000') ? 'Utenza temporaneamente non servita' : valueOut;      
+        return valueOut;   
+    }
+
+   /* public  String transCodeDoubleOppositeToDecimal(String doubleInput){
+
+        String doubleOutput = doubleInput == '0.0000000' ? '1' : '0';
+        doubleOutput = transCodeSiNo(doubleOutput);
+
+        System.debug(LoggingLevel.DEBUG, 'La transcodifica di AFPAG_FFUG risulta: ' + doubleOutput);
+        return doubleOutput;
+       }*/
+
+    public  String transCodeDoubleToString(String doubleInputStr){
+        String doubleOutStr = null;
+
+        doubleOutStr = (doubleInputStr =='0.0000000') ? 'Esente' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='1.0000000') ? 'Intera' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='2.0000000') ? 'Ridotta' : doubleOutStr;
+
+        return doubleOutStr;
+    }
+
+    public  String transCodeSiNoConDescr(String doubleInputStr){
+        String doubleOutStr = null;
+
+        doubleOutStr = (doubleInputStr =='0.0000000') ? 'No - Esente' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='1.0000000') ? 'Si - Paga' : doubleOutStr;
+        doubleOutStr = (doubleInputStr =='2.0000000') ? 'Si - Ridotta' : doubleOutStr;
+
+        return doubleOutStr;
+    }
+
+    public Date alignGaaDate(String inpDaOne, String InpDaTwo){
+
+        HDT_SRV_DataEnrichmentPostSales forAlign = new HDT_SRV_DataEnrichmentPostSales();
+
+        Date gaaOut= null;
+        Date convOne=null;
+
+        System.debug(LoggingLevel.DEBUG, 'DAONE: '  + inpDaOne);
+        System.debug(LoggingLevel.DEBUG, 'DATWO: '  + InpDaTwo);
+
+
+        Date convTwo = forAlign.getDateFromString(inpDaTwo);
+        
+        if(inpDaOne!=null){
+            convOne = Date.valueOf(inpDaOne);
+        } else {
+            convOne=null;
+        }
+
+        gaaOut = convOne > convTwo ? convOne : convTwo;
+
+        System.debug(LoggingLevel.DEBUG, 'L\' allineamento GAA risulta: ' + gaaOut);    
+        return gaaOut;
+        
+}
+
 
 }

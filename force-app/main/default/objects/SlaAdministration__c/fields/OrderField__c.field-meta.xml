@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OrderField__c</fullName>
+    <externalId>false</externalId>
+    <label>Campo Order</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>SendCertifiedEmailConsentDate__c</fullName>
+                <default>false</default>
+                <label>Data consenso E-mail PEC Invio Bolletta</label>
+            </value>
+            <value>
+                <fullName>SubjectCodeStartDate__c</fullName>
+                <default>false</default>
+                <label>Data Inizio Codice Destinatario</label>
+            </value>
+            <value>
+                <fullName>SendRequestDate__c</fullName>
+                <default>false</default>
+                <label>Data invio richiesta</label>
+            </value>
+            <value>
+                <fullName>EffectiveDate__c</fullName>
+                <default>false</default>
+                <label>Data decorrenza</label>
+            </value>
+            <value>
+                <fullName>DeferredDate__c</fullName>
+                <default>false</default>
+                <label>Data differita</label>
+            </value>
+            <value>
+                <fullName>CustomerRequestDate__c</fullName>
+                <default>false</default>
+                <label>Data inserimento richiesta</label>
+            </value>
+            <value>
+                <fullName>SignedDate__c</fullName>
+                <default>false</default>
+                <label>Data Firma</label>
+            </value>
+            <value>
+                <fullName>RetroactiveDate__c</fullName>
+                <default>false</default>
+                <label>Data Retroattiva</label>
+            </value>
+            <value>
+                <fullName>CancellationRequestDate__c</fullName>
+                <default>false</default>
+                <label>Data Richiesta Annullamento/Ripensamento</label>
+            </value>
+            <value>
+                <fullName>SendToDistributorDate__c</fullName>
+                <default>false</default>
+                <label>Data invio DL</label>
+            </value>
+            <value>
+                <fullName>ValidityDateEstimate__c</fullName>
+                <default>false</default>
+                <label>Data Validita Preventivo</label>
+            </value>
+            <value>
+                <fullName>WizardCompletedDate__c</fullName>
+                <default>false</default>
+                <label>Data completamento wizard</label>
+            </value>
+            <value>
+                <fullName>DocumentReceiptDate__c</fullName>
+                <default>false</default>
+                <label>Data ricezione documenti</label>
+            </value>
+            <value>
+                <fullName>TerminationDate__c</fullName>
+                <default>false</default>
+                <label>Data Cessazione</label>
+            </value>
+            <value>
+                <fullName>ChangePhaseDate__c</fullName>
+                <default>false</default>
+                <label>Data Cambio Fase</label>
+            </value>
+            <value>
+                <fullName>SubjectCodeEndDate__c</fullName>
+                <default>false</default>
+                <label>Data Fine Validità Codice Destinatario</label>
+            </value>
+            <value>
+                <fullName>SapContractActivationDate__c</fullName>
+                <default>false</default>
+                <label>Data Attivazione Contratto SAP</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

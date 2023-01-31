@@ -3,6 +3,10 @@
     <label>raiFee</label>
     <protected>false</protected>
     <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_DataEnrichmentView</value>
+    </values>
+    <values>
         <field>Authorization__c</field>
         <value xsi:nil="true"/>
     </values>

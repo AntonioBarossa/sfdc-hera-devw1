@@ -53,10 +53,10 @@ public inherited sharing class HDT_QR_Account {
      * @return Account
      */
     public Account getBillingAddressAccount(String accountId){
-        contractSrv.checkReadAccess('Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c');
+        contractSrv.checkReadAccess('Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c,BillingPlace__c');
         Account ac = new Account();
         //String query = 'SELECT Id,BillingAddress FROM Account WHERE Id ='+accountId;
-        ac= [SELECT Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c FROM Account WHERE Id =: AccountId WITH SECURITY_ENFORCED];
+        ac= [SELECT Id,BillingStreetNumber__c,BillingStreetNumberExtension__c,BillingStreetName__c,BillingCity,BillingState,BillingPostalCode,BillingCountry,BillingStreetCode__c,BillingCityCode__c,BillingPlace__c FROM Account WHERE Id =: AccountId WITH SECURITY_ENFORCED];
         //ac = database.query(query);
         system.debug('Account retrieved******'+ ac);
         return ac;
@@ -100,9 +100,13 @@ public inherited sharing class HDT_QR_Account {
      * @return List<Account>
      */
     public List<Account> getAccountByFiscalCode(String fiscalCode) {
+        if(STRING.isBlank(fiscalCode)){     return new List<Account>();     }
+        
         return [
             SELECT
-            Id
+                Id,
+                Phone, MobilePhone__c, OtherPhone__c,
+                CompanyOwner__c, BillingPlace__c
             FROM Account 
             WHERE FiscalCode__c = :fiscalCode
             WITH SECURITY_ENFORCED

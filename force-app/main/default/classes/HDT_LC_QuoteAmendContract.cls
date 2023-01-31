@@ -51,10 +51,14 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
         Map<id, List<id>> podToChilds = new Map<id, List<id>>(); //id pod to other QL with the same father as the pod
         Map<id, id> podToFather = new Map<id, id>(); // this map connect father with pod, I use to increase efficiency on mapping podToChilds 
         List<SBQQ__QuoteLine__c> quoteLinePods = new List<SBQQ__QuoteLine__c>(); //this contains just the ql pod/pdr
-        
+        Set<String> spProductNameSet = new Set<String>();
+        spProductNameSet.add('POD');
+        spProductNameSet.add('PDR');
+        spProductNameSet.add('Punto Fornitura Acqua');
+        spProductNameSet.add('Punto Fornitura Ambiente');
 
         for(SBQQ__QuoteLine__c ql : podsAndVas.values()){
-            if(ql.SBQQ__Product__r.Name=='POD' || ql.SBQQ__Product__r.Name=='PDR'){
+            if(String.isNotBlank(ql.SBQQ__Product__r.Name) && spProductNameSet.contains(ql.SBQQ__Product__r.Name)){
                 quoteLinePods.add(ql);
                 podToChilds.put(ql.id, new List<Id>());
                 podToFather.put(ql.SBQQ__RequiredBy__c, ql.id);

@@ -21,6 +21,26 @@
                 <default>false</default>
                 <label>Non lavorabile</label>
             </value>
+            <value>
+                <fullName>Contratto affitto registrato</fullName>
+                <default>false</default>
+                <label>Contratto affitto registrato</label>
+            </value>
+            <value>
+                <fullName>Rogito registrato</fullName>
+                <default>false</default>
+                <label>Rogito registrato</label>
+            </value>
+            <value>
+                <fullName>Cessione ramo d’azienda registrato</fullName>
+                <default>false</default>
+                <label>Cessione ramo d’azienda registrato</label>
+            </value>
+            <value>
+                <fullName>Altro atto registrato</fullName>
+                <default>false</default>
+                <label>Altro atto registrato</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

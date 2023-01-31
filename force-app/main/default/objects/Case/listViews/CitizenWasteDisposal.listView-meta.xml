@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CitizenWasteDisposal</fullName>
+    <columns>CASES.CASE_NUMBER</columns>
+    <columns>Cluster__c</columns>
+    <columns>CASES.TYPE</columns>
+    <columns>Phase__c</columns>
+    <columns>InvoicingStreetName__c</columns>
+    <columns>InvoicingStreetNumber__c</columns>
+    <columns>InvoicingCity__c</columns>
+    <columns>InvoicingProvince__c</columns>
+    <columns>AlternativeAddress__c</columns>
+    <columns>TypeOperation__c</columns>
+    <columns>MaterialDescription__c</columns>
+    <columns>PhoneNumber__c</columns>
+    <columns>ClientTypology__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CASES.TYPE</field>
+        <operation>equals</operation>
+        <value>Gestione Rifiuti</value>
+    </filters>
+    <filters>
+        <field>Phase__c</field>
+        <operation>equals</operation>
+        <value>Da Inviare,Inviata a SAP</value>
+    </filters>
+    <filters>
+        <field>ACCOUNT.NAME</field>
+        <operation>equals</operation>
+    </filters>
+    <label>Gestione Rifiuti - Da cittadino</label>
+</ListView>
