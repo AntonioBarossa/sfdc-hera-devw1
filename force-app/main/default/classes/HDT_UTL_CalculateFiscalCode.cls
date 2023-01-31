@@ -141,10 +141,10 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
                 }
             }
             //Caso di Cognome con Due lettere bisogna aggiungere una X
-            if(String.isBlank(lastNameCode) && consonantsLetters.size() <3 && vowelsLetters.size()<1){
+            if(String.isBlank(lastNameCode) && consonantsLetters.size() <3 && consonantsLetters.size() >1 && vowelsLetters.size()<1){
                 lastNameCode= consonantsLetters.get(0)+consonantsLetters.get(1) + 'X';
             }
-            else if(String.isBlank(lastNameCode) && vowelsLetters.size() <3 && consonantsLetters.size()<1){
+            else if(String.isBlank(lastNameCode) && vowelsLetters.size() <3  && vowelsLetters.size() >1 && consonantsLetters.size()<1){
                 lastNameCode= vowelsLetters.get(0)+vowelsLetters.get(1) + 'X';
             }
             //Caso di Cognome con una lettera, bisogna aggiungere due X
@@ -176,6 +176,8 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+vowelsLetters.get(2);
         }else if(consonantsLetters.size()==0 && vowelsLetters.size()==2){
             firstNameCode=vowelsLetters.get(0)+vowelsLetters.get(1)+'X';
+        }else if(consonantsLetters.size()==2 && vowelsLetters.size()==0){
+            firstNameCode=consonantsLetters.get(0)+consonantsLetters.get(1)+'X';
         }else if(consonantsLetters.size()==0 && vowelsLetters.size()==1){
             firstNameCode=vowelsLetters.get(0)+'X'+'X';
         }
