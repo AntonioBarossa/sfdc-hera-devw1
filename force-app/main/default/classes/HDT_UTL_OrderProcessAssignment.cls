@@ -431,22 +431,23 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             //String company = serviceSocieta.get(sr.id); //-> passare al nostro metodo
             
             for(ServicePoint__c sr :spList){
-                companies.add(serviceSocieta.get(sr.id));
+                companies.add(serviceSocieta.get(sr.id).toUpperCase());
             }
 
             // chiamare metodo per calcolo remicode/vatNumber
             Map<String, MatriceRemiCode__c> remiCodeMap = HDT_UTL_OrderProcess.calculateRemiCodeVatNumberServicePoint(comuni, companies);
 
+            system.debug('remiCodeMap --> '+remiCodeMap);
             if(!remiCodeMap.isEmpty()){
                 for(ServicePoint__c sr :spList){
-                    if(String.isNotBlank(remiCodeMap.get(sr.SupplyCity__c + '-' + serviceSocieta.get(sr.Id)).RemiCode__c)){
-                        sr.RemiCode__c = remiCodeMap.get(sr.SupplyCity__c + '-' + serviceSocieta.get(sr.Id)).RemiCode__c;
+                    if(String.isNotBlank(remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c)){
+                        sr.RemiCode__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c;
                     }
                     else{
                         res += '_Remi';            
                     }
-                    if(String.isNotBlank(sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c + '-' + serviceSocieta.get(sr.Id)).VATNumberUdb__c)){
-                        sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c + '-' + serviceSocieta.get(sr.Id)).VATNumberUdb__c;                    
+                    if(String.isNotBlank(sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c)){
+                        sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c;                    
                     }
                     else{
                         sr.VATNumberUdb__c = '02060500390';        
