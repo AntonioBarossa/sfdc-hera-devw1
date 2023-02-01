@@ -85,7 +85,7 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
         
         if(caseNumberSet.size()>0){
             caseList = [
-                SELECT Id, CaseNumber
+                SELECT Id, CaseNumber,Type
                 FROM Case
                 WHERE CaseNumber IN :caseNumberSet
                 WITH SECURITY_ENFORCED
@@ -173,7 +173,6 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
             }
             processObj.requestItem.Result__c = 'Aggiornato';
         }
-
     }
 
     public override void finalUpdate(){
@@ -190,7 +189,15 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
     //}
 
     public static Case setCase(Case caseToSet){
-        caseToSet.Phase__c = 'Da Inviare';
+        switch on caseToSet.Type {
+            when 'Consumo Anomalo Idrico' {		// when block 1
+                caseToSet.Phase__c=System.Label.consumoAnomaloIdricoDefaultPhase;
+            }
+            when else {
+                caseToSet.Phase__c = 'Da Inviare';
+            }
+        }
+
         return caseToSet;
     }
 
