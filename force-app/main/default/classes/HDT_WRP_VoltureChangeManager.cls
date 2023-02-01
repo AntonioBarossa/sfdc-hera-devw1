@@ -54,6 +54,12 @@ public with sharing class HDT_WRP_VoltureChangeManager {
         public String message;
         public SObject sobj;
 
+        public HDT_WRP_ProcessCheck(String result, String message)
+        {
+            this.result = result;
+            this.message = message;
+        }
+
         public HDT_WRP_ProcessCheck(String result, String message, SObject sobj)
         {
             this.result = result;

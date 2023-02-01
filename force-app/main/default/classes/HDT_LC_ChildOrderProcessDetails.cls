@@ -371,9 +371,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     @TestVisible
     private static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checkTechnicalTransfer(Order ord)
     {
-        HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck result = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck();
-        result.result = '';
-        result.message = '';
+        HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck result = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck('','');
 
         String koPers = 'KO_PERSONA_FISICA';
         String koComp = 'KO_AZIENDA';
@@ -394,6 +392,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         {
             result.message = 'Valorizzare i dati del precedente intestatario';
         }
+
+        return result;
     }
 
 }
