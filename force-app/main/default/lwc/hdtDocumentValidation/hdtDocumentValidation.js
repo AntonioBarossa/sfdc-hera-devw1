@@ -25,6 +25,7 @@ export default class HdtDocumentValidation extends LightningElement {
     @track completeButton = 'Completa';
     @track closeButton = 'Chiudi';
     @track disableButton = false;
+    @track showSpinner = false;
     @track showWaste = false;
     @track noteValidation;
     @track valueWaste;
@@ -102,6 +103,7 @@ export default class HdtDocumentValidation extends LightningElement {
             this.updateRecordCase(record,false,true);
             
         }else{
+            this.showSpinner=false;
             this.dispatchEvent(new CustomEvent('closeaction'));
         }
     }
@@ -131,6 +133,7 @@ export default class HdtDocumentValidation extends LightningElement {
             }else{
                 //const validated = { isValidated: true, subprocess: null };
                 //this.dispatchEvent(new CustomEvent('complete', { detail: { validated } }));
+                this.showSpinner=false;
                 this.dispatchEvent(new CustomEvent('closeaction'));
             }
         })
@@ -162,6 +165,7 @@ export default class HdtDocumentValidation extends LightningElement {
     }
 
     handleClick(event) {
+        this.showSpinner = true;
         this.disableButton = true;
         if (event.target.name === 'complete') {
             if(this.showWaste && this.valueWaste){
@@ -187,6 +191,7 @@ export default class HdtDocumentValidation extends LightningElement {
             }
             
         } else {
+            this.showSpinner=false;
             this.dispatchEvent(new CustomEvent('closeaction'));
         }
     }

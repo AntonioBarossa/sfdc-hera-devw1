@@ -1,6 +1,9 @@
 <template>
     <lightning-card>
         <div slot="title" class="slds-align_absolute-center">Validazione Documentale</div>
+        <div if:true={showSpinner} class="exampleHolder">
+            <lightning-spinner alternative-text="Loading" size="medium"></lightning-spinner>
+        </div>
         <template if:false={showWaste}>
             <template for:each={columns} for:item="column">
                 <lightning-input key={column.id} class="slds-p-around_small" type="checkbox" label={column.label}
@@ -15,7 +18,7 @@
             placeholder="Seleziona l'esito"
             options={optionsWaste}
             onchange={handleChange}></lightning-combobox>
-            <lightning-textarea label="Note validazione" value={noteValidation} data-id="noteWaste"></lightning-textarea>
+            <lightning-textarea label="Note validazione" value={noteValidation} data-id="noteWaste" placeholder="Inserisci qui eventuali note"></lightning-textarea>
         </template>
         <div class="slds-float_right" slot="footer">
             <lightning-button class="slds-m-right_xx-small slds-m-top_xx-small slds-m-bottom_xx-small"
