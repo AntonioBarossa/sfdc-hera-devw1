@@ -559,6 +559,11 @@
                 <label>Subentro su GdM chiuso</label>
             </value>
             <value>
+                <fullName>Subentro</fullName>
+                <default>false</default>
+                <label>Subentro</label>
+            </value>
+            <value>
                 <fullName>Prima Attivazione</fullName>
                 <default>false</default>
                 <label>Prima Attivazione</label>
@@ -940,6 +945,10 @@
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
             <valueName>Subentro su GdM chiuso</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazioni</controllingFieldValue>
+            <valueName>Subentro</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Attivazioni</controllingFieldValue>
