@@ -29,6 +29,16 @@ RID</description>
                 <default>false</default>
                 <label>RID</label>
             </value>
+            <value>
+                <fullName>PAGOPA</fullName>
+                <default>false</default>
+                <label>PAGOPA</label>
+            </value>
+            <value>
+                <fullName>F24</fullName>
+                <default>false</default>
+                <label>F24</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

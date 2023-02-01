@@ -37,9 +37,19 @@ export default class hdtApplyBillingProfileModal extends LightningElement {
         .then(result => 
             {
                 console.log('XXX getEligibleQuoteLinesToApply: resultData -->'+  result);
+
                 this.quoteBundleData = JSON.parse(result);
                 this.loading = false;
                 this.fetchError = undefined;
+
+                if( this.quoteBundleData === undefined || this.quoteBundleData.length === 0 ){
+                    const event = ShowToastEvent({
+                        title: '',
+                        message:  'Billing Profile non valido, selezionare un Billing Profile valido o crearne uno idoneo',
+                        variant: 'warning'
+                    });
+                    this.dispatchEvent(event);
+                }
             }
         )
         .catch(error => 
