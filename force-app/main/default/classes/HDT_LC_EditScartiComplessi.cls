@@ -55,6 +55,22 @@ public with sharing class HDT_LC_EditScartiComplessi {
 
     @AuraEnabled
     public static String resubmissionPractice(String orderId,String activityId, String processType, String phase){
+        /* Nel caso di KO precedente cliente (isTechnicalTransfer valorizzato a true) e fase Amm. Precheck KO SII
+        * L' operatore non puo' premere direttamente risottometti pratica in quanto deve necessariamente
+        * compilare i dati del precedente intestatario.
+        * viene querato l'ordine (ad ogni step l'ordine viene aggiornato quindi si otterra' sempre l'istanza piu' recente)
+        * e viene richiamato il metodo per il check della valorizzazione dei dati dell'intestatario
+        */
+        HDT_QR_VoltureChangeManager qrVlt = new HDT_QR_VoltureChangeManager();
+        Order orderCheck =  qrVlt.getOrderInfosById(orderId);
+        if(orderCheck.IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(phase))
+        {
+            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(orderCheck);
+            if(String.isNotBlank(check.result))
+            {
+                throw new AuraHandledException(check.message);
+            }
+        }
         String response;
         String fase = 'Comunicazione verso Heroku';
         switch on processType {

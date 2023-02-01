@@ -102,7 +102,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             }
             /* Aggiunto Controllo per verificare che in fase di lavorazione 
             scarto l'operatore inserisca i dati del precedente intestatario*/
-            if(currentOrder.IsTechnicalTransfer__c)
+            if(currentOrder.IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(currentOrder.Phase__c))
             {
                 HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(orderToUpdate);
                 if(String.isNotBlank(check.result))
