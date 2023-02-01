@@ -116,8 +116,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     (String.isBlank(currentOrder.PreviousHolderVatNumber__c) ? '' : currentOrder.PreviousHolderVatNumber__c) : orderToUpdate.PreviousHolderVatNumber__c;
                 trCheck.companyName = String.isBlank(orderToUpdate.PreviousHoldeCompanyName__c) ? 
                     (String.isBlank(currentOrder.PreviousHoldeCompanyName__c) ? '' : currentOrder.PreviousHoldeCompanyName__c) : orderToUpdate.PreviousHoldeCompanyName__c;
-                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck innerCheck = checkTechnicalTransfer(trCheck);
-                if(String.isNotBlank(innerCheck.result))
+                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(trCheck);
+                if(String.isNotBlank(check.result))
                 {
                     throw new AuraHandledException(check.message);
                 }
