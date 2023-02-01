@@ -62,10 +62,10 @@ public with sharing class HDT_LC_EditScartiComplessi {
         * e viene richiamato il metodo per il check della valorizzazione dei dati dell'intestatario
         */
         HDT_QR_VoltureChangeManager qrVlt = new HDT_QR_VoltureChangeManager();
-        Order orderCheck =  qrVlt.getOrderInfosById(orderId);
-        if(orderCheck.IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(phase))
+        List<Order> orderCheck =  qrVlt.getOrderInfosById(orderId);
+        if(!orderCheck.isEmpty() && orderCheck[0].IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(phase))
         {
-            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(orderCheck);
+            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(orderCheck[0]);
             if(String.isNotBlank(check.result))
             {
                 throw new AuraHandledException(check.message);
