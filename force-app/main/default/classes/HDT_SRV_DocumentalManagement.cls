@@ -296,6 +296,14 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
+	public static HDT_WRP_DocumentalResponse executeCalloutRequestSync(String body,String context,String formParamsInput){
+		formParams = formParamsInput;
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		manageResponse(documentalResponse, context);
+		return documentalResponse;
+	}
+
 	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
 		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
