@@ -56,9 +56,6 @@ public inherited sharing class HDT_LC_OrderDossierWizard {
         parentOrder.Interaction__c = sale.Interaction__c;
         parentOrder.LowerChannelAgency__c = sale.LowerChannelAgency__c;
         parentOrder.UpperChannelAgency__c = sale.UpperChannelAgency__c;
-        parentOrder.LoginWorkstation__c = sale.LoginWorkstation__c;
-        parentOrder.LoginGroup__c = sale.LoginGroup__c;
-        parentOrder.CreatorGroup__c = sale.CreatorGroup__c; 
 
         return parentOrder;
         

@@ -296,6 +296,14 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
+	public static HDT_WRP_DocumentalResponse executeCalloutRequestSync(String body,String context,String formParamsInput){
+		formParams = formParamsInput;
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		manageResponse(documentalResponse, context);
+		return documentalResponse;
+	}
+
 	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
 		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
@@ -414,9 +422,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
 				}else if(status.equalsIgnoreCase('declined')){
+					String dNote = String.isNotBlank(requestBody.declinedReason) && requestBody.declinedReason.length() > 255 ? requestBody.declinedReason.substring(0,255) : requestBody.declinedReason;
 					List<Order> ordList = new List<Order>();
 					record.put('DocumentalPhase__c','Plico rifiutato');
-					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'));
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'),dNote);
+					record.put('CancellationNote__c',dNote);
 					ordList.add((Order)record);
 					HDT_UTL_DatabaseService.updateSObject(ordList);
 					return;

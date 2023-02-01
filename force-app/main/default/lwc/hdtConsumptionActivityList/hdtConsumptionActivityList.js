@@ -35,6 +35,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
     queryTerm = '';
     spinner = true;
     error = false;
+    showMainTable = false;
     showDetailTable = false;
     hasDetailTable = false;
     showTimeButton = false;
@@ -85,7 +86,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
     }
 
     focusOnButton(thisButton){
-        this.template.querySelectorAll('slds-button').forEach((but) => {
+        this.template.querySelectorAll('button').forEach((but) => {
             but.classList.remove('slds-button_brand');
             but.classList.add('slds-button_neutral');
             if(but.name === thisButton){
@@ -143,7 +144,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 switch (this.tabType) {
 
                     case "consumptionList2g"://Elenco Consumi 2G
-                        this.contractColumns = firstColumn.concat(result.tables[0].columns);
+                        //this.contractColumns = firstColumn.concat(result.tables[0].columns);
+                        this.contractColumns = this.contractColumns.concat(firstColumn[0]);
                         this.contractColumns = this.contractColumns.concat(result.tables[0].columns);
                         this.mainTitle = result.tables[0].tableTitle;
                         this.mainIcon = result.tables[0].iconName;
@@ -189,8 +191,15 @@ export default class HdtConsumptionActivityList extends LightningElement {
             console.log('# success: ' + result);
 
             if(obj.response.item === null || obj.response.item === undefined){
-                this.errorMessage = obj.response.outcomeSapDescr;
-                this.error = true;
+                //this.errorMessage = obj.response.outcomeSapDescr;
+                //this.error = true;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione!',
+                        message: obj.response.outcomeSapDescr,
+                        variant: 'warning',
+                    }),
+                );
             } else {
                 this.contractDataToView = obj.response.item;
                 this.afterWsCall();
@@ -199,6 +208,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
             this.spinner = false;
             
         }).catch(error => {
+            console.log('>>>>>>>>>> ' + JSON.stringify(error));
             this.error = true;
             this.errorMessage = 'Errore nella chiamata WebService';
             this.spinner = false;
@@ -208,108 +218,47 @@ export default class HdtConsumptionActivityList extends LightningElement {
 
     afterWsCall(){
         if(this.tabType === 'consumptionList2g'){
-            if(this.contractDataToView[0].details.item.length > 0) {
+            if(this.contractDataToView[0].details.item != null && this.contractDataToView[0].details.item.length > 0) {
                 this.detailsDataToView.push(this.contractDataToView[0].details.item[0]);
                 this.showDetailTable = true;
+                this.showMainTable = true;
             } else {
                 this.showDetailTable = false;
             }
         } else {
-            this.showDetailTable = false;
+            if(this.contractDataToView != null && this.contractDataToView.length > 0) {
+                this.detailsDataToView.push(this.contractDataToView);
+                this.showDetailTable = true;
+                this.showMainTable = true;
+            } else {
+                this.showDetailTable = false;
+            }
         }
 
         this.spinner = false;  
     }
 
-    /*setMockData(){
-        this.contractDataToView.push(
-            {
-                idBrim: 'BDF',
-                contract: '3003108153',
-                consDateStart: '2022-05-28',
-                consDateEnd: '2022-05-28',
-                pod: 'IT230426051150',
-                scanningDate: '0000-00-00',
-                scanningType: 'SS',
-                bandDiscount: '00',
-                specialDay: 'null',
-                dailyCost: 'null',
-                dailyKwh: '4800',
-                dailyKwhNet: '0000',
-                dailyLossCost: 'null',
-                dailyLossKwh: 'null',
-                dailyDiscountKwh: '4800',
-                dailyLossDiscountKwh: '0490',
-                details: {
-                    item: [ {
-                        hour: '01',
-                        hourlyCost: null,
-                        hourlyKwh: '0,200'
-                    }]
-                }
-            });
-            this.contractDataToView.push(
-                {
-                    idBrim: 'BDF2',
-                    contract: '3003108153',
-                    consDateStart: '2022-05-28',
-                    consDateEnd: '2022-05-28',
-                    pod: 'IT230426051150',
-                    scanningDate: '0000-00-00',
-                    scanningType: 'SS',
-                    bandDiscount: '00',
-                    specialDay: 'null',
-                    dailyCost: 'null',
-                    dailyKwh: '4800',
-                    dailyKwhNet: '0000',
-                    dailyLossCost: 'null',
-                    dailyLossKwh: 'null',
-                    dailyDiscountKwh: '4800',
-                    dailyLossDiscountKwh: '0490',
-                    details: {
-                        item: [ {
-                            hour: '02',
-                            hourlyCost: null,
-                            hourlyKwh: '0,200'
-                        }]
-                    }
-                });
-                this.contractDataToView.push(
-                    {
-                        idBrim: 'BDF3',
-                        contract: '3003108153',
-                        consDateStart: '2022-05-28',
-                        consDateEnd: '2022-05-28',
-                        pod: 'IT230426051150',
-                        scanningDate: '0000-00-00',
-                        scanningType: 'SS',
-                        bandDiscount: '00',
-                        specialDay: 'null',
-                        dailyCost: 'null',
-                        dailyKwh: '4800',
-                        dailyKwhNet: '0000',
-                        dailyLossCost: 'null',
-                        dailyLossKwh: 'null',
-                        dailyDiscountKwh: '4800',
-                        dailyLossDiscountKwh: '0490',
-                        details: {
-                            item: []
-                        }
-                    });
-                    this.afterWsCall();
-    }*/
-
     handleRowAction(event) {
-        console.log('# handleRowAction #');
+        console.log('# handleRowAction # ' + this.requestObj.idAggregation);
         //console.log('# handleRowAction >>> ' + JSON.stringify(event.detail.row));
-        this.detailsDataToView = event.detail.row.details.item;
 
-        if(event.detail.row.details.item.length > 0) {
-            this.showDetailTable = true;
+        if(this.requestObj.idAggregation != 'D'){
+            this.dispatchEvent(
+                new ShowToastEvent({
+                    title: 'Attenzione!',
+                    message: 'Dettaglio disponibile solo per vista giornaliera',
+                    variant: 'warning',
+                }),
+            );
         } else {
-            this.showDetailTable = false;
+            this.detailsDataToView = event.detail.row.details.item;
+
+            if(event.detail.row.details.item.length > 0) {
+                this.showDetailTable = true;
+            } else {
+                this.showDetailTable = false;
+            }
         }
-        
     }
 
     buttonHandler(event){
@@ -319,6 +268,12 @@ export default class HdtConsumptionActivityList extends LightningElement {
             this.modalHeader = event.currentTarget.dataset.label;
             this.modalBody = 'bodyNotRequired';
             this.parameter = event.currentTarget.dataset.parameters;
+
+            //if(event.currentTarget.dataset.parameters!=null && event.currentTarget.dataset.parameters!=undefined&&event.currentTarget.dataset.parameters!='filter'){
+            if(this.tabType === 'consumptionList2g'){
+                this.requestObj.idAggregation = event.currentTarget.dataset.parameters;
+            }
+            
             this.buttonName = event.currentTarget.name;
             this.openModal = true;
         } catch(e){
@@ -331,6 +286,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
 
     applyConfirm(event){
         if(event.detail.decision === 'conf'){
+            this.spinner = true;
             console.log('## applyConfirm ' + JSON.stringify(event.detail));
             this.requestObj = event.detail.requestObject;
             this.backendCall();

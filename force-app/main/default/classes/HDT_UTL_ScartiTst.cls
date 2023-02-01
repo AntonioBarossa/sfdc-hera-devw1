@@ -532,9 +532,9 @@ public class HDT_UTL_ScartiTst {
         List<et4ae5__IndividualEmailResult__c> individualEmailResults = [Select id,BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c = null];
         
         individualEmailResults[0].BounceSubCategory__c = 'changed';
-        
-        update individualEmailResults;
-        
+        Test.startTest();
+            update individualEmailResults;
+        Test.stopTest();
         String newBounceSubCategory = [Select BounceSubCategory__c From et4ae5__IndividualEmailResult__c limit 1].BounceSubCategory__c;
         
         System.assertEquals('changed', newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
@@ -547,9 +547,9 @@ public class HDT_UTL_ScartiTst {
         List<et4ae5__IndividualEmailResult__c> individualEmailResults = [Select id,BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c != null ];
         
         individualEmailResults[0].BounceSubCategory__c = 'changed';
-        
-        update individualEmailResults;
-        
+        Test.startTest();
+            update individualEmailResults;
+        Test.stopTest();
         String newBounceSubCategory = [Select BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c != null limit 1].BounceSubCategory__c;
         
         System.assertEquals('changed', newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');

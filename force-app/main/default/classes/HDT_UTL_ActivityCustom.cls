@@ -452,10 +452,8 @@ public inherited sharing class HDT_UTL_ActivityCustom {
 
     public static void postSurvayWorkActivity(List<wrts_prcgvr__Activity__c> newActsList){
         try{
-            Set<Id> newActsId = new Set<Id>();
-            Map<Id,String> objsId = new Map<Id,String>();
+            Map<Id,wrts_prcgvr__Activity__c> actToCreate = new Map<Id,wrts_prcgvr__Activity__c>();
             for (wrts_prcgvr__Activity__c newAct : newActsList){
-                newActsId.add(newAct.Id);
                 if (!'Lavorazione Reclamo Post Survey'.equalsIgnoreCase(newAct.Type__c)){
                     continue;
                 }
@@ -463,15 +461,20 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 if (recordId == null) {
                     continue;
                 }
-                objsId.put(recordId,newAct.Name);
+                actToCreate.put(recordId,newAct);
             }
-            if (objsId.isEmpty()){
+            if (actToCreate.isEmpty()){
                 return;
             }
             List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
-            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getOpenActivityByType('Lavorazione Reclamo Post Survey',objsId.keySet(),newActsId)){
+            for (wrts_prcgvr__Activity__c act : HDT_QR_ActivityCustom.getActivityByType('Lavorazione Reclamo Post Survey',actToCreate.keySet())){
                 Id recordId = act.Case__c != null ? act.Case__c : act.Order__c;
-                actToUpdate.add(new wrts_prcgvr__Activity__c(Id = act.Id, wrts_prcgvr__Status__c = 'Annullata', ClosingNote__c = 'Annullata per apertura attività più recente: ' + objsId.get(recordId)));
+                if (act.wrts_prcgvr__IsClosed__c){
+                    actToCreate.get(recordId).wrts_prcgvr__Status__c = 'Annullata';
+                    actToCreate.get(recordId).ClosingNote__c = 'Attività creata in stato annullato a causa dell\'avvenuta lavorazione della Survey (vedi '+act.Name+')';
+                    continue;
+                }
+                actToUpdate.add(new wrts_prcgvr__Activity__c(Id = act.Id, wrts_prcgvr__Status__c = 'Annullata', ClosingNote__c = 'Annullata per apertura nuova attività'));
             }
             if (!actToUpdate.isEmpty()){
                 HDT_UTL_DatabaseService.updateSObject(actToUpdate);
@@ -536,7 +539,57 @@ public inherited sharing class HDT_UTL_ActivityCustom {
         }
         return null;
     }
+    public static void setAccountIdFromCaseOrder(List<SObject> sObjectList){
+        
+        List<String> caseIds= new List<String>();
+        List<String> orderIds= new List<String>();
+        List<Case> casesList= new List<Case>();
+        List<Order> ordersList= new List<Order>();
+        Map<String,Case> casesMap=new Map<String,Case>();
+        Map<String,Order> ordersMap=new Map<String,Order>();
+        String objectApiName = '';
+        
+        for(SObject obj : sObjectList){
+            objectApiName = String.valueOf(obj.getSObjectType());
+            if(objectApiName == 'wrts_prcgvr__Activity__c'){
+                if(String.valueOf(obj.get('Case__c')) != '' && String.valueOf(obj.get('Case__c')) != null)
+                    caseIds.add(String.valueOf(obj.get('Case__c')));
+                if(String.valueOf(obj.get('Order__c')) != '' && String.valueOf(obj.get('Order__c')) != null)
+                    orderIds.add(String.valueOf(obj.get('Order__c')));
+            }
+        }
+        if(!caseIds.isEmpty()){
+            casesList = caseQr.getRecordsById(caseIds, 'Id,CompanyOwner__c,AccountId');
+        }
+        if(!orderIds.isEmpty()){
+            ordersList=orderQr.getRecordsByIdWithFields(orderIds, 'Id,CompanyOwner__c,AccountId');
+        }
+        for(Case c : casesList){
+            casesMap.put(c.Id,c);
+        }
+        for(Order o : ordersList){
+            ordersMap.put(o.Id,o);
+        }
 
+        for(SObject obj : sObjectList){
+            objectApiName = String.valueOf(obj.getSObjectType());
+            if(objectApiName == 'wrts_prcgvr__Activity__c'){
+                if(String.valueOf(obj.get('Account__c')) == '' || String.valueOf(obj.get('Account__c')) == null){
+                    if (casesMap.containsKey(String.valueOf(obj.get('Case__c')))){
+                        Case caseObj = casesMap.get(String.valueOf(obj.get('Case__c')));
+                        if (caseObj != null){
+                            obj.put('Account__c', caseObj.AccountId);
+                        }
+                    }else{
+                        Order orderObj = ordersMap.get(String.valueOf(obj.get('Order__c')));
+                        if (orderObj != null){
+                            obj.put('Account__c', orderObj.AccountId);
+                        }
+                    }
+                }
+            }
+        }    
+    }
     public static void executeOnCloseActions(List<wrts_prcgvr__Activity__c> newTriggerList,  Map<Id,SObject> oldTriggerMap){
 
         HDT_UTL_ActivityCloseActions.executeOnCloseActions(newTriggerList, oldTriggerMap);
@@ -563,5 +616,4 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             System.debug(LoggingLevel.DEBUG, 'Throwed exception: ' + e.getMessage());
         }
     }
-
 }
