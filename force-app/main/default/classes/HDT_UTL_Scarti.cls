@@ -1121,16 +1121,28 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             Boolean discardActivity = checkDiscardAnnullmentRule(recordId, fase,requestDiscardManagemnt.get('DISCARD_MESSAGE'));
             System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> checkDiscardAnnullmentRule: ' + discardActivity); 
             if (String.isNotEmpty(templateName) && !discardActivity){
+                Boolean isCancellation = 'Esito KO da DL/SII'.equalsIgnoreCase(fase) ? 
+                    setCancelProcess(HDT_QR_GenericQuery.getGenericRecords('Phase__c', objectType, 'Id = \''+recordId+'\''))
+                    :fase.indexOf('Annullamento') > -1;
                 wrts_prcgvr__Activity__c act = createActivityByObjectIdAndTemplateName(recordId, templateName,objectType);
                 String errore = String.isNotBlank(requestDiscardManagemnt.get('DISCARD_MESSAGE')) && requestDiscardManagemnt.get('DISCARD_MESSAGE').length()>255 ? requestDiscardManagemnt.get('DISCARD_MESSAGE').substring(0,255) : requestDiscardManagemnt.get('DISCARD_MESSAGE');
                 act.DiscardDescription__c = errore;
                 act.wrts_prcgvr__Description__c  = errore;
+                act.DiscardCancellation__c = isCancellation;
                 System.debug(LoggingLevel.DEBUG, 'HDT_UTL_Scarti -> act: ' +  act);
                 HDT_UTL_DatabaseService.insertSObject(act);
             }else if (String.isNotEmpty(templateName)){
                 annulmentProcess(recordId, objectType,requestDiscardManagemnt.get('DISCARD_MESSAGE'));
             }
         }
+    }
+
+    private static Boolean setCancelProcess(List<SObject> recs){
+        if (!recs.isEmpty()){
+            String fase = recs[0].get('Phase__c') != null ? (String)recs[0].get('Phase__c') : '';
+            return fase.indexOf('Annullamento') > -1;
+        }
+        return false;
     }
 
     public static void discardManagement(List<HDT_WRP_MrrRequest.HDT_WRP_Request> inboundRequests){
@@ -1281,7 +1293,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         if (!objectIdSet.isEmpty()){
             List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
             String listId = '(\''+String.join((Iterable<String>) objectIdSet, '\',\'') +'\')';
-            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c', '(Order__c IN ' + listId + ' OR Case__c IN' + listId + ') AND wrts_prcgvr__IsClosed__c = false AND DiscardCategory__c = \'Tracciatura\'');
+            List<wrts_prcgvr__Activity__c> activities = HDT_QR_GenericQuery.getGenericRecords('Id','wrts_prcgvr__Activity__c', '(Order__c IN ' + listId + ' OR Case__c IN' + listId + ') AND wrts_prcgvr__IsClosed__c = false AND (DiscardCategory__c = \'Tracciatura\' OR DiscardCancellation__c = true)');
             for (wrts_prcgvr__Activity__c act : activities){
                 activitiesToUpdate.add(closeDiscardActivity(act.Id));
             }

@@ -323,25 +323,32 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		String activityType;
 		if ('35'.equals(errorMessage)){
 			errorMessage = 'Indirizzo Email non valido.';
-			activityType = 'Busta Docusign non consegnata.';
+			activityType = 'Busta Docusign non consegnata';
 			try{
 				String sObjName = requestId.getSObjectType().getDescribe().getName();
 				wrts_prcgvr__Activity__c activityBusta = new wrts_prcgvr__Activity__c ();
 				Id actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+				String conditionById = '';
 				switch on sObjName {
 					when 'Case' {
 						activityBusta.Case__c = (Id) requestId;
+						conditionById = 'Case__c = \''+requestId+'\'';
 					}
 					when 'Order' {
+						conditionById = 'Order__c = \''+requestId+'\'';
 						activityBusta.Order__c = (Id) requestId;
 					}
 				}
 				activityBusta.RecordTypeId=actRecordTypeId;
 				activityBusta.wrts_prcgvr__Description__c='Indirizzo Email non valido.';
 				activityBusta.DiscardCategory__c = 'Scarto complesso';
-				activityBusta.Type__c='Busta Docusign non consegnata';
-				HDT_UTL_DatabaseService.insertSObject(activityBusta);
-				
+				activityBusta.Type__c=activityType;
+				List<wrts_prcgvr__Activity__c> actToUpdate = String.isBlank(conditionById)? 
+					new List<wrts_prcgvr__Activity__c>() :
+					HDT_QR_GenericQuery.getGenericRecords('Id, wrts_prcgvr__Status__c', 'wrts_prcgvr__Activity__c', 'Type__c = \''+activityType+'\' AND wrts_prcgvr__IsClosed__c = false AND ' + conditionById);
+				if (actToUpdate.isEmpty()){
+					HDT_UTL_DatabaseService.insertSObject(activityBusta);
+				}
 			} catch (Exception ex) {
 				System.debug(LoggingLevel.DEBUG, 'Errore nella classe HDT_UTL_DocumentalManagement metodo createDocumentalActivityForError ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 			}
