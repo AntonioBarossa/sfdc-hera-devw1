@@ -6008,11 +6008,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>Case.ConnId__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>Case.CorrectAddressToVerify__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
