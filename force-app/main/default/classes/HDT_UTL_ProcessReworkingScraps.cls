@@ -190,7 +190,7 @@ public inherited sharing class HDT_UTL_ProcessReworkingScraps extends HDT_UTL_Pr
 
     public static Case setCase(Case caseToSet){
         switch on caseToSet.Type {
-            when 'Consumo Anomalo Idrico' {		// when block 1
+            when 'Consumo Anomalo Idrico' {
                 caseToSet.Phase__c=System.Label.consumoAnomaloIdricoDefaultPhase;
             }
             when else {
