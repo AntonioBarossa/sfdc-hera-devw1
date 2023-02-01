@@ -138,10 +138,21 @@ public with sharing class HDT_UTL_Utils {
     public static void setUsersField(SObject newObject, HDT_SRV_LogService logService, User u){
 
         try{
+            String sObjectName = String.valueOf(newObject.getSObjectType());
             if(u != null){
-                newObject.put('CreatorGroup__c', u.CreatorGroup__c);  
-                newObject.put('LoginGroup__c', u.LoginChannel__c);
-                newObject.put('LoginWorkstation__c', u.Station__c);
+                newObject.put('CreatorGroup__c', u.CreatorGroup__c);
+                if(sObjectName == 'Order'){
+                    newObject.put('LoginChannel__c', u.LoginChannel__c);
+                }
+                else{
+                    newObject.put('LoginGroup__c', u.LoginChannel__c); 
+                }
+                if(u.Station__c != '' && u.Station__c != null){
+                    newObject.put('LoginWorkstation__c', u.Station__c);
+                }
+                else{
+                    newObject.put('LoginWorkstation__c', '-');
+                }
             }
         }
         catch(Exception e){
@@ -170,5 +181,41 @@ public with sharing class HDT_UTL_Utils {
             }
         }
         return isRightPhase ? phase : '';
+    }
+    
+    public static void setFieldsSize(SObject o){
+        Map<String,Map<String,Integer>> mapField = new Map<String,Map<String,Integer>>{
+            'Case' => new Map<String,Integer>{
+                'CancellationNote__c' => 255, 
+                'DiscardDescription__c' => 255
+            }
+        };
+        String objectName = o?.getSObjectType().getDescribe().getName();
+        setFieldsSize(mapField.get(objectName), o);
+    }
+
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    private static void setFieldsSize(Map<String,Integer> mapFieldsSize, SObject o){
+        if (o == null || mapFieldsSize.isEmpty()){
+            return;
+        }
+        try{
+            String objectName = o.getSObjectType().getDescribe().getName();
+            Map<String,Schema.SObjectField> fieldMap = Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap();
+            for(String fieldToCheck :mapFieldsSize.keySet()){
+                Schema.DescribeFieldResult fieldDescribe = fieldMap.get(fieldToCheck).getDescribe();
+                if (fieldDescribe.getType() != Schema.DisplayType.STRING && fieldDescribe.getType() != Schema.DisplayType.TEXTAREA){
+                    continue;
+                }
+                Integer sizeField = mapFieldsSize.get(fieldToCheck);
+                String fieldValue = o.get(fieldToCheck) == null ? '' : (String)o.get(fieldToCheck);
+                if (String.isNotBlank(fieldValue) && fieldValue.length() > sizeField){
+                    o.put(fieldToCheck,fieldValue.substring(0,255));
+                }
+            }
+        }catch (Exception e){
+            System.debug(LoggingLevel.ERROR, 'HDT_UTL_Utils setFieldsSize : ' + e.getStackTraceString());
+        }
+        
     }
 }

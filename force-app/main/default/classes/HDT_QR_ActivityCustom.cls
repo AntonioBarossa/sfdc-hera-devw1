@@ -619,10 +619,10 @@ public inherited sharing class HDT_QR_ActivityCustom {
         return parentActMap;
     }
 
-        public static List<wrts_prcgvr__Activity__c> getOpenActivityByType(String type, Set<Id> objectId, Set<Id> actsId){
+        public static List<wrts_prcgvr__Activity__c> getActivityByType(String type, Set<Id> objectId){
             return [
-                SELECT id, Case__c, Order__c, Type__c,wrts_prcgvr__IsClosed__c,wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c
-                WHERE wrts_prcgvr__IsClosed__c = false AND Type__c = :type AND (Order__c IN :objectId OR Case__c IN :objectId) AND Id NOT IN :actsId
+                SELECT id, Case__c, Order__c,wrts_prcgvr__IsClosed__c,Name FROM wrts_prcgvr__Activity__c
+                WHERE (wrts_prcgvr__Status__c != 'Annullata') AND Type__c = :type AND (Order__c IN :objectId OR Case__c IN :objectId)
                 WITH SECURITY_ENFORCED
             ];
 

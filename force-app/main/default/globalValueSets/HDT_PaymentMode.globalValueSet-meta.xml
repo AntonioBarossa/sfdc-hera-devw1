@@ -25,6 +25,16 @@
         <default>false</default>
         <label>Bonifico</label>
     </customValue>
+    <customValue>
+        <fullName>PAGOPA</fullName>
+        <default>false</default>
+        <label>PAGOPA</label>
+    </customValue>
+    <customValue>
+        <fullName>F24</fullName>
+        <default>false</default>
+        <label>F24</label>
+    </customValue>
     <masterLabel>Modalità di Pagamento</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

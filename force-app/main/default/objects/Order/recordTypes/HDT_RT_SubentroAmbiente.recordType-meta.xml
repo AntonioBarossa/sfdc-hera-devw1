@@ -2591,6 +2591,14 @@
             <fullName>Standard</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>PAGOPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F24</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>

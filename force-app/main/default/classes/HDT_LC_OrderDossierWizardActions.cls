@@ -289,7 +289,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             String CampaignMemberId = myCampaignMember.Id;
             HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
         }*/
-    
+        /* L'aggiornamento dello step previene lo sbiancamento della data firma */
+        if('Documentazione Gestita'.equalsIgnoreCase(orderToUpdate.Phase__c))
+        {
+            orderToUpdate.Step__c = 2;
+        }
         ordersToUpdate.add(orderToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
 

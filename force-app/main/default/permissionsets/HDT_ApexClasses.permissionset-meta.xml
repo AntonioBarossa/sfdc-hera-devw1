@@ -1025,6 +1025,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ConsActivityListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ContactSelection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -1686,6 +1690,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_QBL_GestioneScartiSap</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_QBL_GestioneScartiSapTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
@@ -3964,6 +3972,10 @@
         <apexClass>HDT_UTL_ComplaintsTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ConsActivityListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>  
     <classAccesses>
         <apexClass>HDT_UTL_Constants</apexClass>
         <enabled>true</enabled>

@@ -314,13 +314,13 @@ export default class hdtBillingProfileForm extends LightningElement {
             switch (fieldValue) {
                 case 'Stesso Sottoscrittore':
                     getAccountOwnerInfo({accountId: this.accountId}).then(data =>{
-                        this.loading = false;
                         
                         this.setTipologiaIntestatario({
                             fiscalCode: data.FiscalCode__c,
                             firstName: data.FirstName__c,
                             lastName: data.LastName__c
                         });
+
                     }).catch(error => {
                         this.loading = false;
                         const toastErrorMessage = new ShowToastEvent({
@@ -341,16 +341,15 @@ export default class hdtBillingProfileForm extends LightningElement {
 
                     if (this.cloneObject.LegalAgent__c !== undefined && this.cloneObject.LegalAgent__c !== '' && this.cloneObject.LegalAgent__c !== null) {
                         this.tipologiaIntestatarioFields[indexLegalAgent].value = this.cloneObject.LegalAgent__c;
-
+  
                         getLegalAccount({contactId: this.cloneObject.LegalAgent__c}).then(data =>{
-                            this.loading = false;
             
                             this.setTipologiaIntestatario({
                                 fiscalCode: data.FiscalCode__c,
                                 firstName: data.FirstName,
                                 lastName: data.LastName
                             });
-            
+
                         }).catch(error => {
                             this.loading = false;
                             const toastErrorMessage = new ShowToastEvent({
@@ -368,20 +367,18 @@ export default class hdtBillingProfileForm extends LightningElement {
                 case 'Pagatore Alternativo':
                     let indexOtherPayer = this.tipologiaIntestatarioFields.findIndex(el => el.fieldName === 'OtherPayer__c');
                     this.tipologiaIntestatarioFields[indexOtherPayer].visibility = true;
-
                     if (this.cloneObject.OtherPayer__c !== undefined && this.cloneObject.OtherPayer__c !== null && this.cloneObject.OtherPayer__c !== '') {
 
                         this.tipologiaIntestatarioFields[indexOtherPayer].value = this.cloneObject.OtherPayer__c;
 
                         getAccountOwnerInfo({accountId: this.cloneObject.OtherPayer__c}).then(data =>{
-                            this.loading = false;
+
             
                             this.setTipologiaIntestatario({
                                 fiscalCode: data.FiscalCode__c,
                                 firstName: data.FirstName__c,
                                 lastName: data.LastName__c
                             });
-            
                         }).catch(error => {
                             this.loading = false;
                             const toastErrorMessage = new ShowToastEvent({
@@ -400,9 +397,11 @@ export default class hdtBillingProfileForm extends LightningElement {
                 default:
                     break;
             }
+
     }
 
     handleCollectFieldsData(event){
+
         this.dataToSubmit[event.target.fieldName] = event.target.value;
 
         let notApplicableFields = ['SignatoryType__c','LegalAgent__c','OtherPayer__c','BillSendingMethod__c'];
@@ -415,25 +414,26 @@ export default class hdtBillingProfileForm extends LightningElement {
         }
 
         if (event.target.name === 'SignatoryType__c') {
+            this.loading = true;
             this.dataToSubmit[event.target.name] = event.target.value;
             this.resetTipologiaIntestatario();
             this.tipologiaIntestatarioInit(event.target.value);
+            setTimeout(() => {this.loading = false},3000);
         }
 
         if (event.target.fieldName === 'LegalAgent__c') {
-
+            this.loading = true;
             console.log('legale rapresentante: ', event.target.value);
 
             if(event.target.value != '') {
                 getLegalAccount({contactId: event.target.value}).then(data =>{
-                    this.loading = false;
-    
+                    
                     this.setTipologiaIntestatario({
                         fiscalCode: data.FiscalCode__c,
                         firstName: data.FirstName,
                         lastName: data.LastName
                     });
-    
+                    setTimeout(() => {this.loading = false},3000);
                 }).catch(error => {
                     this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
@@ -451,22 +451,22 @@ export default class hdtBillingProfileForm extends LightningElement {
                     firstName: '',
                     lastName: ''
                 });
+                this.loading = false;
             }
 
         }
 
         if (event.target.fieldName === 'OtherPayer__c') {
-
+            this.loading = true;
             if(event.target.value != '') {
                 getAccountOwnerInfo({accountId: event.target.value}).then(data =>{
-                    this.loading = false;
     
                     this.setTipologiaIntestatario({
                         fiscalCode: data.FiscalCode__c,
                         firstName: data.FirstName__c,
                         lastName: data.LastName__c
                     });
-    
+                    setTimeout(() => {this.loading = false},3000);
                 }).catch(error => {
                     this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
@@ -485,6 +485,7 @@ export default class hdtBillingProfileForm extends LightningElement {
                     firstName: '',
                     lastName: ''
                 });
+                this.loading = false;
             }
         }
 
@@ -629,14 +630,16 @@ export default class hdtBillingProfileForm extends LightningElement {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email Invio Bolletta, ');
         }
 
-        if ( this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC' &&
+        if ( this.template.querySelector("[data-id='BillSendingMethod__c']") !== null &&
+             this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC' &&
              ( this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']") === null || 
              this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value === null ||
              !this.validateEmail(this.template.querySelector("[data-id='InvoiceCertifiedEmailAddress__c']").value) )) {
             concatBillingErrorFields = concatBillingErrorFields.concat('Email PEC invio Bolletta, ');
         }
 
-        if ( this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC' &&
+        if ( this.template.querySelector("[data-id='BillSendingMethod__c']") !== null &&
+             this.template.querySelector("[data-id='BillSendingMethod__c']").value === 'Invio tramite PEC' &&
              ( this.template.querySelector("[data-id='SendCertifiedEmailConsentDate__c']") === null ||
              this.template.querySelector("[data-id='SendCertifiedEmailConsentDate__c']").value === null ||
              this.template.querySelector("[data-id='SendCertifiedEmailConsentDate__c']").value === '' )) {

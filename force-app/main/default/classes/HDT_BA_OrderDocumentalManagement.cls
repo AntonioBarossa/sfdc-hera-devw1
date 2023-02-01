@@ -1,7 +1,9 @@
-public with sharing class HDT_BA_OrderDocumentalManagement implements Database.Batchable<sObject>, Database.Stateful {
+public with sharing class HDT_BA_OrderDocumentalManagement implements Database.Batchable<sObject>, Database.Stateful,Database.AllowsCallouts {
     public Set<String> orderScartatiSet = new Set<String>();
     public Integer counterKo = 0;
     public Integer counterOk = 0;
+    Boolean calloutSyncOrder = false;
+    Boolean calloutSyncCase = false;
     Datetime start = null;
     private static HDT_SRV_BatchExecutionKpi srvBatchEx = new HDT_SRV_BatchExecutionKpi();
     BatchExecutionKpiConfiguration__mdt kpiMeta = BatchExecutionKpiConfiguration__mdt.getInstance('HDT_BA_OrderDocumentalManagement');
@@ -13,6 +15,8 @@ public with sharing class HDT_BA_OrderDocumentalManagement implements Database.B
         EnvelopeReminderConfiguration__c cs = EnvelopeReminderConfiguration__c.getInstance();
         Boolean enableCaseQuery = cs.EnableCaseQuery__c;
         Boolean enableOrderQuery = cs.EnableOrderQuery__c;
+        calloutSyncOrder = cs.CalloutSyncOrder__c;
+        calloutSyncCase = cs.CalloutSyncCase__c;
         String caseCommodity = cs.CaseCommodity__c;
         String orderCommodity = cs.OrderCommodity__c;
         Integer caseLastNdays = Integer.valueOf(cs.CaseLastnDay__c);
@@ -39,11 +43,11 @@ public with sharing class HDT_BA_OrderDocumentalManagement implements Database.B
                 caseConditions.add('CreatedDate < LAST_N_DAYS:' + String.valueOf(caseLastNdays));
             }
             String caseConditionQuery = String.join(caseConditions, ' AND ');
-            caseQuery = caseQuery + caseConditionQuery + ' AND DocumentalPhase != \'Plico sollecitato\'';
+            caseQuery = caseQuery + caseConditionQuery + ' AND DocumentalPhase__c != \'Plico sollecitato\'';
             System.debug('Case Query ' + caseQuery);
         }
         if(enableOrderQuery){
-            orderQuery = 'SELECT Id FROM Order WHERE ';
+            orderQuery = 'SELECT Id,ParentOrder__c FROM Order WHERE ';
             String[] orderConditions = new List<String>();
             if(String.isNotBlank(orderCommodity)){
                 orderConditions.add('CommodityFormula__c IN ('+orderCommodity+')'); 
@@ -59,7 +63,7 @@ public with sharing class HDT_BA_OrderDocumentalManagement implements Database.B
                 orderConditions.add('CreatedDate < LAST_N_DAYS:' + String.valueOf(orderLastNdays));
             }
             String orderConditionQuery = String.join(orderConditions, ' AND ');
-            orderQuery = orderQuery + orderConditionQuery + ' AND ParentOrder__c != null AND ParentOrder__r.DocumentalPhase != \'Plico sollecitato\'';
+            orderQuery = orderQuery + orderConditionQuery + ' AND ParentOrder__c != null AND ParentOrder__r.DocumentalPhase__c != \'Plico sollecitato\'';
             System.debug('Order Query ' + orderQuery);
         }
     }
@@ -115,7 +119,11 @@ public with sharing class HDT_BA_OrderDocumentalManagement implements Database.B
         params.put('mode', 'Print');
         params.put('Archiviato', 'Y');
         params.put('TipoPlico', 'Sollecito');
-        HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, 'Order',JSON.serialize(params));
+        if((objectType.equalsIgnoreCase('Order') && calloutSyncOrder) || (objectType.equalsIgnoreCase('Case') && calloutSyncCase)){
+            HDT_SRV_DocumentalManagementFacade.sendDocumentSync(recordId, objectType,JSON.serialize(params));
+        }else {
+            HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, 'Order',JSON.serialize(params));
+        }        
         counterOk++;
 }
     public void finish(Database.BatchableContext bc){

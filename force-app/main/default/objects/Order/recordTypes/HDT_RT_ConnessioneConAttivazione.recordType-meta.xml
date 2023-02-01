@@ -582,6 +582,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Esito KO sopralluogo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Firma falsa</fullName>
             <default>false</default>
         </values>
@@ -748,6 +752,10 @@
         </values>
         <values>
             <fullName>UPGRADE OFFERTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>verifica winback</fullName>
             <default>false</default>
         </values>
         <values>

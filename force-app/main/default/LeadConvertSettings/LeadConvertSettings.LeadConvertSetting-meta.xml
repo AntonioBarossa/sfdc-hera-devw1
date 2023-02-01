@@ -103,6 +103,10 @@
             <inputField>DegreeOfStudies__c</inputField>
             <outputField>DegreeOfStudies__c</outputField>
         </mappingFields>
+        <mappingFields>
+            <inputField>KeyIBMUnica__c</inputField>
+            <outputField>KeyIBMUnica__c</outputField>
+        </mappingFields>
         <outputObject>Contact</outputObject>
     </objectMapping>
     <opportunityCreationOptions>VisibleOptional</opportunityCreationOptions>
