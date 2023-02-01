@@ -368,7 +368,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
     }
 
-    @TestVisibile
+    @TestVisible
     private static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checkTechnicalTransfer(Order ord)
     {
         HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck result = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck();
