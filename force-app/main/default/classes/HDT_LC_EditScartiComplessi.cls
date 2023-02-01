@@ -65,7 +65,15 @@ public with sharing class HDT_LC_EditScartiComplessi {
         List<Order> orderCheck =  qrVlt.getOrderInfosById(orderId);
         if(!orderCheck.isEmpty() && orderCheck[0].IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(phase))
         {
-            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(orderCheck[0]);
+            HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck trCheck = new HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck();
+
+            trCheck.firstName = String.isBlank(orderCheck[0].PreviousHolderFirstName__c) ? '' : orderCheck[0].PreviousHolderFirstName__c;
+            trCheck.lastName = String.isBlank(orderCheck[0].PreviousHolderLastName__c) ? '' : orderCheck[0].PreviousHolderLastName__c;
+            trCheck.fiscalCode = String.isBlank(orderCheck[0].PreviousHolderFiscalCode__c) ? '' : orderCheck[0].PreviousHolderFiscalCode__c;
+            trCheck.vatNumber = String.isBlank(orderCheck[0].PreviousHolderVatNumber__c) ? '' : orderCheck[0].PreviousHolderVatNumber__c;
+            trCheck.companyName = String.isBlank(orderCheck[0].PreviousHoldeCompanyName__c) ? '' : orderCheck[0].PreviousHoldeCompanyName__c;
+
+            HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(trCheck);
             if(String.isNotBlank(check.result))
             {
                 throw new AuraHandledException(check.message);

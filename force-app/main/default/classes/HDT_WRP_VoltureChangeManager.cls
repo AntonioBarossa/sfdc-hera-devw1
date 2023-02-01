@@ -67,6 +67,14 @@ public with sharing class HDT_WRP_VoltureChangeManager {
             this.sobj = sobj;
         }
     }
+    public class HDT_WRP_TransferCheck
+    {
+        public string firstName;
+        public string lastName;
+        public string fiscalCode;
+        public string vatNumber;
+        public string companyName;
+    }
 
     public class HDT_WRP_BodyCall
     {
