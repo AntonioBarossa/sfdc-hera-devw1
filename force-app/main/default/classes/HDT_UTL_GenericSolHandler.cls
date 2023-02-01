@@ -196,12 +196,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
 
     public static void handleServiceRequestVoltura(Map<String,Object> params){
         HDT_QR_Order qrOrder = new HDT_QR_Order();
-        HDT_QR_Sale qrSale = new HDT_QR_Sale();
-        if(!params.containsKey('serviceRequest')){
-            throw new CalloutException('Service request missing');
-        }
-        String orderNumber = (String)params.get('serviceRequest');
-        Order parentOrder = qrOrder.getParentOrderVolturaSOL(orderNumber);
+        //HDT_QR_Sale qrSale = new HDT_QR_Sale();
+        Order parentOrder = qrOrder.getParentOrderVolturaSOL((String)params.get('serviceRequest'));
         //Sale__c sale = qrSale.getRecordById(parentOrder.Sale__c,'Account__c,Id,SalesContact__c,Channel__c,VendorLastName__c,VendorFirstName__c,CommercialId__c,AgencyCode__c,Agency__c,AreaManager__c,Name,LowerChannelAgency__c,UpperChannelAgency__c');
         createChildOrderVoltura(parentOrder,params);
         /*
