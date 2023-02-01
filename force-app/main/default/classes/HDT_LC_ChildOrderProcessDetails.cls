@@ -104,7 +104,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             scarto l'operatore inserisca i dati del precedente intestatario*/
             if(currentOrder.IsTechnicalTransfer__c)
             {
-                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(ord);
+                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(orderToUpdate);
                 if(String.isNotBlank(check.result))
                 {
                     throw new AuraHandledException(check.message);
