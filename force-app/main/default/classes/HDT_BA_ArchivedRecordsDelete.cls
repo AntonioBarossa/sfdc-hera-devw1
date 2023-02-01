@@ -34,6 +34,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
     private String queryUsed;
     private String exceptionErr = '';
     private Datetime executionTimeStamp;
+    private Integer numberOfDeletedRecords = 0;
     
     public HDT_BA_ArchivedRecordsDelete (Integer batchSize) {
 
@@ -203,6 +204,8 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
                         // Stop launch of next batch if there are errors in the delete
                         this.relaunchBatch = false;
+                    } else {
+                        this.numberOfDeletedRecords++;
                     }
 
                 }
@@ -222,11 +225,14 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
     public void finish (Database.BatchableContext bc) {
 
+        String nextObject = '';
+
         this.currentObjectIndex ++;
         System.debug('Index is at ' + this.currentObjectIndex);
         
         if (this.relaunchBatch && this.currentObjectIndex < this.objectsToProcess.size()) {
             System.debug('Next object is ' + this.objectsToProcess.get(this.currentObjectIndex));
+            nextObject = this.objectsToProcess.get(this.currentObjectIndex);
             Database.executeBatch(new HDT_BA_ArchivedRecordsDelete(this.batchScope, this.currentObjectIndex, this.queryLimit), this.batchScope);
         }
 
@@ -237,10 +243,16 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         mail.setOrgWideEmailAddressId([SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'].Id);
     
         if (String.isNotBlank(this.exceptionErr)) {
-            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nthe execution resulted in the following errors: ' + this.exceptionErr);
+            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + 
+                                  ', Records Deleted: ' + this.numberOfDeletedRecords + 
+                                  ', Next Object To Process: ' + nextObject + 
+                                  '\n\nQuery used: ' + this.queryUsed + '\n\nthe execution resulted in the following errors: ' + this.exceptionErr);
         } else {
             // mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe following records of type ' + this.currentObject + ' have been deleted:\n' + JSON.serializePretty(this.recordsDeleted));
-            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
+            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + 
+                                  ', Records Deleted: ' + this.numberOfDeletedRecords + 
+                                  ', Next Object To Process: ' + nextObject + 
+                                  '\n\nQuery used: ' + this.queryUsed + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
         }
 
         Messaging.sendEmail(new Messaging.Email[] { mail });
