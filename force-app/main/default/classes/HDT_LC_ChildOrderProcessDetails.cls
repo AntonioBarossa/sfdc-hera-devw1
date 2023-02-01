@@ -100,6 +100,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 }
 
             }
+            /* Aggiunto Controllo per verificare che in fase di lavorazione 
+            scarto l'operatore inserisca i dati del precedente intestatario*/
+            if(currentOrder.IsTechnicalTransfer__c)
+            {
+                HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck check = checkTechnicalTransfer(ord);
+                if(String.isNotBlank(check.result))
+                {
+                    throw new AuraHandledException(check.message);
+                }
+            }
             if(orderToUpdate.TemporaryConnectionStartDate__c != null 
             && orderToUpdate.TemporaryConnectionEndDate__c != null
             && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
@@ -356,6 +366,34 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return false;
 
+    }
+
+    @TestVisibile
+    private static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checkTechnicalTransfer(Order ord)
+    {
+        HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck result = new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck();
+        result.result = '';
+        result.message = '';
+
+        String koPers = 'KO_PERSONA_FISICA';
+        String koComp = 'KO_AZIENDA';
+
+        if(String.isBlank(ord.PreviousHolderFirstName__c) || String.isBlank(ord.PreviousHolderLastName__c) || String.isBlank(ord.PreviousHolderFiscalCode__c))
+        {
+            result.result = koPers;
+        }
+        if(String.isNotBlank(ord.PreviousHoldeCompanyName__c) && String.isNotBlank(ord.PreviousHolderVatNumber__c))
+        {
+            if(String.isNotBlank(result.result))
+            {
+                result.result = '';
+            }
+        }
+
+        if(String.isNotBlank(result.result))
+        {
+            result.message = 'Valorizzare i dati del precedente intestatario';
+        }
     }
 
 }
