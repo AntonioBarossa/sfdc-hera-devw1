@@ -11,12 +11,12 @@
 public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batchable<Sobject>, Database.Stateful {
 
     // List of objects to delete
-    private List<String> objectsToProcess = new List<String>{'ContentDocument', 'wrts_prcgvr__Activity__c', 'PushTracking__c', 'SMSTracking__c', 'SolTracking__c', 
+    private final List<String> OBJECTS_TO_PROCESS = new List<String>{'ContentDocument', 'wrts_prcgvr__Activity__c', 'PushTracking__c', 'SMSTracking__c', 'SolTracking__c', 
     'et4ae5__IndividualEmailResult__c', 'Reading__c', 'DocumentSelected__c', 'DocumentalActivity__c', 'DocumentSendTracking__c', 'CommunicationLog__c', 'Asset', 'Case', 'Contract', 
     'OrderItem', 'Order', 'Opportunity', 'BillingProfile__c', 'ServicePoint__c', 'SiebelCommTracking__c', 'SurveyResponse__c', 'ContactPointPhone', 'ContactPointEmail', 'Contact', 'Individual', 
     'Account', 'Interaction__c'};
 
-    private Set<String> objectsThatAreNotArchived = new Set<String>{'CommunicationLog__c', 'BillingProfile__c', 'ServicePoint__c', 'Individual', 'Interaction__c'};
+    private final Set<String> OBJECTS_THAT_ARE_NOT_ARCHIVED = new Set<String>{'CommunicationLog__c', 'BillingProfile__c', 'ServicePoint__c', 'Individual', 'Interaction__c'};
 
     @TestVisible 
     private String currentObject = '';
@@ -40,7 +40,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         this.batchScope = batchSize;
         this.currentObjectIndex = 0;
-        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        this.currentObject = OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
 
     }
 
@@ -48,7 +48,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         this.batchScope = batchSize;
         this.currentObjectIndex = index;
-        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        this.currentObject = OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
         
     }
 
@@ -57,7 +57,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         this.batchScope = batchSize;
         this.currentObjectIndex = index;
         this.queryLimit = queryLimit;
-        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        this.currentObject = OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
         
     }
 
@@ -66,7 +66,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         this.relaunchBatch = relaunchBatch;
         this.batchScope = batchSize;
         this.currentObjectIndex = index;
-        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        this.currentObject = OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
         
     }
 
@@ -76,7 +76,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         this.batchScope = batchSize;
         this.currentObjectIndex = index;
         this.queryLimit = queryLimit;
-        this.currentObject = objectsToProcess.get(this.currentObjectIndex);
+        this.currentObject = OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
         
     }
 
@@ -115,7 +115,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
             queryString += ' WHERE LatestPublishedVersion.IsArchived__c = true';
         } else if(this.currentObject == 'Opportunity') {
             queryString += ' WHERE Account.IsArchived__c = true AND StageName = \'Closed Won\'';
-        } else if(!this.objectsThatAreNotArchived.contains(this.currentObject)) {
+        } else if(!this.OBJECTS_THAT_ARE_NOT_ARCHIVED.contains(this.currentObject)) {
             queryString += ' WHERE IsArchived__c = true';
         }
 
@@ -156,7 +156,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
             }
 
             // Custom logic for records that are not archived but need to be deleted
-            if (this.objectsThatAreNotArchived.contains(this.currentObject)) {
+            if (this.OBJECTS_THAT_ARE_NOT_ARCHIVED.contains(this.currentObject)) {
                 for (SObject so : scope) {
                             
                     if (filterRecordForDeletedChildren(so, this.currentObject)) {
@@ -213,9 +213,9 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         this.currentObjectIndex ++;
         System.debug('Index is at ' + this.currentObjectIndex);
         
-        if (this.relaunchBatch && this.currentObjectIndex < this.objectsToProcess.size()) {
-            System.debug('Next object is ' + this.objectsToProcess.get(this.currentObjectIndex));
-            nextObject = this.objectsToProcess.get(this.currentObjectIndex);
+        if (this.relaunchBatch && this.currentObjectIndex < this.OBJECTS_TO_PROCESS.size()) {
+            nextObject = this.OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
+            System.debug('Next object is ' + nextObject);
             Database.executeBatch(new HDT_BA_ArchivedRecordsDelete(this.batchScope, this.currentObjectIndex, this.queryLimit), this.batchScope);
         }
 
