@@ -249,7 +249,13 @@ public with sharing class HDT_QR_VoltureChangeManager {
             RecordType.DeveloperName,
             NumeratorGroup__c,
             VASSubtype__c,
-            Phase__c
+            Phase__c,
+            IsTechnicalTransfer__c,
+            PreviousHoldeCompanyName__c,
+	        PreviousHolderFirstName__c,
+	        PreviousHolderFiscalCode__c,
+	        PreviousHolderLastName__c,
+	        PreviousHolderVatNumber__c
             FROM Order
             WHERE Id = :orderId]);
     

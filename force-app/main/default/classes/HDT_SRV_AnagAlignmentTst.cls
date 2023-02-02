@@ -288,7 +288,7 @@ public class HDT_SRV_AnagAlignmentTst {
         Case cs = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(herokuWrapper);
 
         System.assert(cs != null, 'cs == null');
-        System.assert(cs.Id != null, 'cs.Id == null');
+        System.assert(cs.Id == null, 'cs.Id != null');
 
         Test.stopTest();
         

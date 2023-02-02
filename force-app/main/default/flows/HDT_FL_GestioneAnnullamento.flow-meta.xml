@@ -1074,6 +1074,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Result_Order</name>
+        <label>Check Result Order</label>
+        <locationX>3702</locationX>
+        <locationY>1029</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValori_1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>go on cancel order</defaultConnectorLabel>
+        <rules>
+            <name>stop_cancel_order</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_Order_Before_Cancel.stopAnnullamento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Order_Error_Message</targetReference>
+            </connector>
+            <label>stop cancel order</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Ci_sono_Allegati</name>
         <label>Ci sono Allegati?</label>
         <locationX>1650</locationX>
@@ -1680,7 +1705,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>AssegnaValori</targetReference>
+                <targetReference>Check_Case_Before_Cancel</targetReference>
             </connector>
             <label>Annullamento Prestazione</label>
         </rules>
@@ -1773,7 +1798,7 @@
         <locationX>3841</locationX>
         <locationY>910</locationY>
         <defaultConnector>
-            <targetReference>AssegnaValori_1</targetReference>
+            <targetReference>Check_Order_Before_Cancel</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Annullamento/Ripensamento</defaultConnectorLabel>
         <rules>
@@ -1805,6 +1830,31 @@
                 <targetReference>Assegna_Causale_Annullamento</targetReference>
             </connector>
             <label>Gestione Dati Discordanti</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Result_Check_Case</name>
+        <label>Result Check Case</label>
+        <locationX>1462</locationX>
+        <locationY>1249</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValori</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>go on</defaultConnectorLabel>
+        <rules>
+            <name>Stop_Cancel</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Check_Case_Before_Cancel.stopAnnullamento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CancelProcessError</targetReference>
+            </connector>
+            <label>Stop Cancel</label>
         </rules>
     </decisions>
     <decisions>
@@ -2526,6 +2576,22 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <inputReference>Get_Voltura_Tecnica_Dati_Discordanti</inputReference>
     </recordUpdates>
     <screens>
+        <name>CancelProcessError</name>
+        <label>CancelProcessError</label>
+        <locationX>1473</locationX>
+        <locationY>1417</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>ErrorMessageCase</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;{!Check_Case_Before_Cancel.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Errore_Allegati_Obbligatori</name>
         <label>Errore Allegati Obbligatori</label>
         <locationX>1132</locationX>
@@ -3187,6 +3253,22 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Order_Error_Message</name>
+        <label>Order Error Message</label>
+        <locationX>3534</locationX>
+        <locationY>958</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>OrderMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;{!Check_Order_Before_Cancel.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Screen_Input_Dati</name>
         <label>Screen Input Dati</label>
         <locationX>3993</locationX>
@@ -3366,6 +3448,52 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
     </start>
     <status>Active</status>
+    <subflows>
+        <name>Check_Case_Before_Cancel</name>
+        <label>Check Case Before Cancel</label>
+        <locationX>1614</locationX>
+        <locationY>1248</locationY>
+        <connector>
+            <targetReference>Result_Check_Case</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckObjectBeforeCancel</flowName>
+        <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>Case</name>
+            <value>
+                <elementReference>GetRecord</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
+        <name>Check_Order_Before_Cancel</name>
+        <label>Check Order Before Cancel</label>
+        <locationX>4006</locationX>
+        <locationY>1019</locationY>
+        <connector>
+            <targetReference>Check_Result_Order</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckObjectBeforeCancel</flowName>
+        <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>order</name>
+            <value>
+                <elementReference>GetOrder</elementReference>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
     <subflows>
         <name>Chiudi_Activity_Custom_Ripristino_Fase_Case</name>
         <label>Chiudi Activity Custom Ripristino Fase Case</label>

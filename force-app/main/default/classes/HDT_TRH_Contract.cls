@@ -38,6 +38,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         // HDT_UTL_ContractProcess.orderCompletataPhaseManagement(Trigger.new);
         // system.debug('END HDT_TRH_Contract beforeUpdate');
         
+        HDT_QR_Order qrOrder = new HDT_QR_Order();
         List<id> listOrderId = new List<id>();
         List<Contract> listContract = new List<Contract>();
         for (Contract tempContract : (List<Contract>)Trigger.new) {
@@ -88,9 +89,9 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 }
             }
         }
-        //f. de Felice, il contract eredita il codice sap dall'ordine
-        //la global migration key deve essere quindi calcolata dopo che quest'ultimo eredita.
+
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
+
         list<Contract> newContracts = (List<Contract>) Trigger.New;
         Set<Id> orderToContract = new Set<Id>();
         for(Contract c : newContracts){
