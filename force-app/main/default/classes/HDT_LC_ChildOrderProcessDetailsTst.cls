@@ -491,4 +491,31 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 		}
 	}
 
+	@isTest
+	static void checkTechnicalTransferTst()
+	{
+		HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck testWrp = new HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck();
+		HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck testWrpErr = new HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck();
+
+		testWrp.firstName = 'Nome';
+		testWrp.lastName = 'Cognome';
+		testWrp.fiscalCode = '';
+		testWrp.vatNumber = 'TestVat';
+		testWrp.ragSoc ='OK';
+
+		testWrpErr.firstName = 'Nome';
+		testWrpErr.lastName = 'Cognome';
+		testWrpErr.fiscalCode = '';
+		testWrpErr.vatNumber = 'TestVat';
+		testWrpErr.ragSoc ='';
+
+		Test.startTest();
+			HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck resultWrp = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(testWrp);
+			HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck resultWrpErr = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(testWrpErr);
+		Test.stopTest();
+
+		System.assertEquals('', resultWrp.result, 'Check incorretto');
+		System.assertEquals(true, String.isNotBlank(resultWrpErr.result), 'Errore incorretto');
+
+	}
 }
