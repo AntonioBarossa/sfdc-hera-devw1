@@ -16,6 +16,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
     private static HDT_SRV_ActivityCustom activitySrv = new HDT_SRV_ActivityCustom();
     private static HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
+    private static final String ERR_TRANSFER_MSG = 'Valorizzare i dati del precedente intestatario (Nome, Cognome e Codice Fiscale o P.IVA e Ragione Sociale)';
 
     @AuraEnabled
     public static Map<String,Object> init(String id){
@@ -401,7 +402,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         if(String.isNotBlank(result.result))
         {
-            result.message = 'Valorizzare i dati del precedente intestatario';
+            result.message = ERR_TRANSFER_MSG; 
         }
 
         return result;
