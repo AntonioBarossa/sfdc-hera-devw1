@@ -9,6 +9,8 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Amm. Precheck KO SII',constants.ORDER_RECORDTYPEID_SWITCHIN,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Amm. Precheck KO SII','Bozza',constants.ORDER_RECORDTYPEID_SWITCHIN,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
 
         List<Account> acctList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, acctList[0].Id);
@@ -479,4 +481,27 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
 
     }
 
+    @isTest
+    static void transferCheck()
+    {
+        List<Order> orderTst = [SELECT Id FROM Order WHERE RecordType.DeveloperName = :constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN LIMIT 1];
+        Order updOrder = new Order (Id = orderTst[0].Id);
+        Account acc = [SELECT Id FROM Account];
+        List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
+        actList[0].Order__c = updOrder.Id;
+        insert actList;
+        
+        updOrder.PreviousHolderFirstName__c = 'Nome';
+        updOrder.PreviousHolderLastName__c = 'COgnome';
+        updOrder.PreviousHolderFiscalCode__c = 'FiscalCode';
+        updOrder.Phase__c = 'Amm. Precheck KO SII';
+        updOrder.IsTechnicalTransfer__c = true;
+
+        update updOrder;
+
+        Test.startTest();
+            String result = HDT_LC_EditScartiComplessi.resubmissionPractice(updOrder.Id, actList[0].Id,'Attivazione');
+        Test.stopTest();
+        System.assertEquals(null, result, 'Check Incorretto');
+    }
 }
