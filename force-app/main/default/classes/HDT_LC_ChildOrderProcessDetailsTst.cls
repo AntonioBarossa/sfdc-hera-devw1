@@ -501,13 +501,13 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 		testWrp.lastName = 'Cognome';
 		testWrp.fiscalCode = '';
 		testWrp.vatNumber = 'TestVat';
-		testWrp.ragSoc ='OK';
+		testWrp.companyName ='OK';
 
 		testWrpErr.firstName = 'Nome';
 		testWrpErr.lastName = 'Cognome';
 		testWrpErr.fiscalCode = '';
 		testWrpErr.vatNumber = 'TestVat';
-		testWrpErr.ragSoc ='';
+		testWrpErr.companyName ='';
 
 		Test.startTest();
 			HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck resultWrp = HDT_LC_ChildOrderProcessDetails.checkTechnicalTransfer(testWrp);
