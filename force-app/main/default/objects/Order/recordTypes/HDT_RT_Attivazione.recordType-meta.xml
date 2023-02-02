@@ -1973,10 +1973,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>ExciseGAS__c</picklist>
-        <values>
+        <!--<values>
             <fullName>Altro</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Imosta Autopr-Prod EE Industr %28Cod%2E G_I15%29</fullName>
             <default>false</default>

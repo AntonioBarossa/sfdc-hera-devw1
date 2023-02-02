@@ -559,9 +559,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 newOrder.DateSentToSII__c = newOrder.isTransition__c ? Date.today().addDays(1) : Date.today();
                             }
                             //Se la data di decorrenza non è stata calcolata per qualsiasi motivo (1) oppure ho superato la data di invio al SII (2)
-                            //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi) 
+                            //allora ricalcolo la data di decorrenza( caso (1) utilizzo sempre la stessa data invio al sii, caso (2) la correggo ad oggi)
+                            /* 2023-01-06 Dato che i Piccoli Condomini possono essere sia Residenziali che Business il ricalcolo si fa solo se preavviso receso nullo o 0 */ 
                             String category = newOrder.CustomerCategory__c;
-                            if(('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category)) || newOrder.RecessNotice__c == 0){
+                            if(newOrder.RecessNotice__c == null ||/*('Famiglie'.equalsIgnoreCase(category) || 'Piccoli Condomini'.equalsIgnoreCase(category))*/newOrder.RecessNotice__c == 0){
                                 newOrdersListRecalc.add(newOrder);
                             }
                         }else {
@@ -898,12 +899,15 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * NTTDATA
      * Annulla gli ordini figli
      * **/
-    public static List<Order> cancellAllEligibleOrder(Id parentOrderId){
+    public static List<Order> cancellAllEligibleOrder(Id parentOrderId,String declineNote){
         List<Order> childOrderList = orderQr.getChildOrdersByParentId(parentOrderId);
         for(Order singleChild : childOrderList){
             singleChild.Phase__c = 'Annullato';
             singleChild.Status = 'Annullato';
             singleChild.CancellationReason__c = 'Annullamento da cliente';
+            if (String.isNotBlank(declineNote)){
+                singleChild.CancellationNote__c = declineNote;
+            }
         }
         return childOrderList;
     }
@@ -1425,8 +1429,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Dunque per coprire queste casistiche sono state aggiunte le istruzioni
              * "negativeOutcomes.contains(newOrder.get('SiebelStatus__c'))"
              * "positiveOutcomes.contains(newOrder.get('SiebelStatus__c'))"
+             *  Se l'ordine e' gia' in Completata non eseguo alcuna modifica aggiuntiva
              */
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))
+                && (String.isNotBlank((String)oldOrder.get('Phase__c')) && !((String)oldOrder.get('Phase__c')).equalsIgnoreCase('Completata'))
                 && (oldOrder.SiebelStatus__c == null 
                     || !(((String)newOrder.get('SiebelStatus__c')).equalsIgnoreCase((String)oldOrder.get('SiebelStatus__c'))) 
                     || negativeOutcomes.contains((String)newOrder.get('SiebelStatus__c'))
@@ -1461,14 +1467,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 mapVasStatus.put(newOrder.SBQQ__Quote__c, vasStatus);
                 orderQuoteMap.put(newOrder.Id, newOrder.SBQQ__Quote__c);
                 //fine fix 915259C
-                /* Update Fase e Status */
+                /* Update Fase e Status 
+                * Scrivo il phasestory se e solo se le due fasi sono differenti
+                */
                 if(!String.isEmpty(newPhase))
                 {
                     newOrder.Phase__c = newPhase;
                     newOrder.Status = status;
-                    newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
-                    ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
-                    : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    if(!oldPhase.equalsIgnoreCase(newPhase))
+                    {
+                        newOrder.PhaseStory__c = !String.isBlank(newOrder.PhaseStory__c) 
+                        ? oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||'+newOrder.PhaseStory__c
+                        : oldPhase+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    }
                     /* Contracted */
                     /* if ('Completata'.equalsIgnoreCase(newOrder.Phase__c)&& newOrder.Status.equalsIgnoreCase('Activated') && !newOrder.SBQQ__Contracted__c && !oldOrder.SBQQ__Contracted__c && newOrder.recordTypeId!=bonusScontiRtId ) 
                     { 
@@ -1598,5 +1609,42 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     {
         List<SObject> sobjList = (List<SObject>)JSON.deserialize(serializedList, List<SObject>.class);
         HDT_UTL_DatabaseService.updateSObject(sobjList);
+    }
+
+
+    public static String calculateVatNumberUdb(String supplyCity, String salesCompany, String remiCode){
+        
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVatNumberUdb(remiCode, supplyCity, salesCompany);
+        system.debug('calculateVatNumberUdb - remiList -->'+remiList);    
+        String vatNumberUdb = '';
+
+        if(!remiList.isEmpty()){
+            system.debug('calculateVatNumberUdb - remiList.isNotEmpty');    
+            vatNumberUdb = remiList[0].VatNumberUdb__c;
+        }
+        else{
+            system.debug('calculateVatNumberUdb - remiList.isEmpty'); 
+            vatNumberUdb = '02060500390';
+        }
+        system.debug('calculateVatNumberUdb - remiList.vatNumberUdb --> '+vatNumberUdb); 
+        return vatNumberUdb;
+        
+    }
+
+    public static Map<String, MatriceRemiCode__c> calculateRemiCodeVatNumberServicePoint(Set<String> supplyCities, Set<String> salesCompanies){
+
+        Map<String, MatriceRemiCode__c> remiCodeMap = new Map<String, MatriceRemiCode__c>();
+
+        List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiVatNumberUdbServicePoint(supplyCities, salesCompanies);
+
+        if(!remiList.isEmpty()){
+            for(MatriceRemiCode__c mr : remiList){
+                remiCodeMap.put(mr.Comune__c.toUpperCase() + '-' + mr.SalesCompany__c.toUpperCase(), mr);
+            }
+        }
+        
+
+        return remiCodeMap;
+
     }
 }
