@@ -194,6 +194,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                    StartOrderPhase__c, EndOrderPhase__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c
             FROM SlaAdministration__c
             WHERE RecordType.DeveloperName = :slaRuleType
+            AND EndDate__c >= today
             AND IsActive__c = true
         ];
 
