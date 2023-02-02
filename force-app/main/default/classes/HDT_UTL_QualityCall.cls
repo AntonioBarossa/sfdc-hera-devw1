@@ -36,7 +36,7 @@ public with sharing class HDT_UTL_QualityCall {
         }
         Map<String,String> phaseResult = new Map<String,String>{
             'completata' => 'NO_CANCEL',
-            'In Corso caricamento Siebel' => 'NO_CANCEL',
+            'in corso caricamento siebel' => 'NO_CANCEL',
             'comunicazione verso heroku ok' => 'NO_CANCEL_BILL',
             'comunicazione verso heroku' => 'NO_CANCEL_BILL',
             'caricamento siebel ok' => 'NO_CANCEL_BILL',

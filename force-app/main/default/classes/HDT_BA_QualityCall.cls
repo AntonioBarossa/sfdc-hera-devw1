@@ -16,7 +16,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
-        System.debug(LoggingLevel.DEBUG, '@@@@@Query before ' +(Limit.getLimitQueries()-Limit.getQueries()) );
+        System.debug(LoggingLevel.DEBUG, '@@@@@Query before ' +(Limits.getLimitQueries()-Limits.getQueries()) );
         List<Order> ordersToUpdate = new List<Order>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
         Map<String,Order> orderMap = new Map<String,Order>();
@@ -164,7 +164,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             logs.addLog(LOG_SERVICE, 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
         }
         logs.saveMassiveRecords();
-        System.debug(LoggingLevel.DEBUG, '@@@@@Query after ' +(Limit.getLimitQueries()-Limit.getQueries()) );
+        System.debug(LoggingLevel.DEBUG, '@@@@@Query after ' +(Limits.getLimitQueries()-Limits.getQueries()) );
 
     }
 
