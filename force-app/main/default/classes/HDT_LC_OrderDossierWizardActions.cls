@@ -289,7 +289,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             String CampaignMemberId = myCampaignMember.Id;
             HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
         }*/
-    
+        /* L'aggiornamento dello step previene lo sbiancamento della data firma */
+        if('Documentazione Gestita'.equalsIgnoreCase(orderToUpdate.Phase__c))
+        {
+            orderToUpdate.Step__c = 2;
+        }
         ordersToUpdate.add(orderToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
 
@@ -602,7 +606,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             {
                 podOrderItemMap.get(item.Order.ServicePointCode__c).put('offertaCommerciale',item);
             }
-            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
+            if(item.Product2.Family != null && item.Product2.Family.equalsIgnoreCase('VAS Fatturabili') && item.Order.VasSubtype__c != null && item.Order.VasSubtype__c.equalsIgnoreCase('Analisi Consumi'))
             {
                 podOrderItemMap.get(item.Order.ServicePointCode__c).put('analisiConsumi',item);
             }

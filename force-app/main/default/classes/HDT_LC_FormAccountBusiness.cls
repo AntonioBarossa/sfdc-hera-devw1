@@ -16,6 +16,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
     public static Account insertAccount(Map<String,String> dataAccount, Map<String,String> accountAddress,Map<String,String> contactAddress){
 
         String name;
+        Id mainAcrId;
         String cType=dataAccount.get('customerMarking')=='Ditta individuale'?'Persona fisica':dataAccount.get('customerTypeValue');
         Account account= new Account(CustomerAccountStatus__c='Prospect',CustomerType__c=cType,RecordTypeId= dataAccount.get('recordTypeId') ,VATNumber__c= dataAccount.get('vatNumber'), FiscalCode__c= dataAccount.get('fiscalCode'), LegalFormType__c= dataAccount.get('legalForm'), CustomerMarking__c= dataAccount.get('customerMarking'), Category__c= dataAccount.get('category'), PrimaryEmail__c= dataAccount.get('email'), FAX__c= dataAccount.get('numberFax'), CompanyOwner__c=dataAccount.get('companyOwner'));
         //HRAWRM-491 Start 27/09/2021 Controllo codice fiscale stimato
@@ -43,7 +44,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             account.put('FirstName__c', dataAccount.get('firstIndividualName'));
             name= dataAccount.get('firstIndividualName');
         }
-        if(dataAccount.get('lastIndividualName') != null && dataAccount.get('firstIndividualName') != ''){
+        if(dataAccount.get('lastIndividualName') != null && dataAccount.get('lastIndividualName') != ''){
             account.put('LastName__c', dataAccount.get('lastIndividualName'));
             name= name + ' '+ dataAccount.get('lastIndividualName');
         }
@@ -56,13 +57,14 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 account.put(s, accountAddress.get(s));
             }
         }
-
+        /* TK 938126C -- Il codice fiscale per Aziende e Associazione deve essere numerico (PIVA) per ditta individuale può essere alfanumerico */
         if( !String.isBlank(account.VATNumber__c) && !account.CustomerMarking__c.equalsIgnoreCase('Condominio') ){
             if( !checkVatNumber(account.VATNumber__c) ){
                 throw new AuraHandledException('Partita Iva non corretta.');
             }
-            if(!String.isBlank(account.FiscalCode__c) &&  account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)){
-                throw new AuraHandledException('Partita Iva non corretta.');
+            if(!String.isBlank(account.FiscalCode__c) &&  ((!account.FiscalCode__c.isNumeric() && !account.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale')) 
+                || (account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)))){
+                throw new AuraHandledException('Il Codice Fiscale deve contenere una Partita Iva corretta.');
             }
         } else if( account.FiscalCode__c.isNumeric() ){
             if( !checkVatNumber(account.FiscalCode__c) ){
@@ -70,7 +72,21 @@ public with sharing class HDT_LC_FormAccountBusiness {
             }
         }
 
-
+        /* TK 951554C -- Aggiunto controllo su codice fiscale, formalita' e match con nome e cognome per ditta individuale */
+        if('Ditta Individuale'.equalsIgnoreCase(account.CustomerMarking__c))
+        {
+            String result = '';
+            HDT_UTL_CaseValidations formalValidation = new HDT_UTL_CaseValidations();
+            result = formalValidation.validateFiscalCode(account.FiscalCode__c);
+            if(String.isNotBlank(result))
+            {
+                throw new AuraHandledException('Codice Fiscale non corretto.');
+            }
+            if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(account.FiscalCode__c, account.FirstName__c, account.LastName__c))
+            {
+                throw new AuraHandledException('Codice Fiscale non coerente con i dati inseriti');
+            }
+        }
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
       //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
@@ -93,6 +109,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         List<AccountContactRelation> listAccCon= accoContRelQr.getAccountContactRelation(acct.Id, cont.Id, 'Id');
         if(listAccCon != null && listAccCon.size() > 0){
             AccountContactRelation acr= new AccountContactRelation(Id= listAccCon[0].Id,ContactId= cont.Id, AccountId= acct.Id, Roles= 'Titolare');
+            mainAcrId = listAccCon[0].Id;
            // HDT_SRV_AccountContactRelation.checkUpdateAccess(acr);
            accoContRelSrv.updateRecord(acr);
         }
@@ -268,6 +285,20 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // List<String> phones= new List<String>();
             // phones.add(cont.Phone);
             // HDT_UTL_GestionePrivacy.createDefaultPrivacyContact(cont.Id, emails, phones);
+        }
+        List<AccountContactRelation> finalAcr = accoContRelQr.getContactsByAccountWithRoles(acct.Id);
+        Boolean upMainAcr = false;
+        for(AccountContactRelation singleAcr : finalAcr)
+        {
+            if(singleAcr.Id != mainAcrId && String.isNotBlank(singleAcr.Roles) && singleAcr.Roles.containsIgnoreCase('Titolare'))
+            {
+                upMainAcr = true;
+                break;
+            }       
+        }
+        if(upMainAcr)
+        {
+            HDT_UTL_DatabaseService.updateSObject(new AccountContactRelation(Id = mainAcrId, Roles = 'Azienda'));
         }
         //HDT_UTL_Account.makeRequest(account,contact);
         System.enqueueJob(new HDT_QBL_BpCaRequest(account,contact));

@@ -112,13 +112,14 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.BillingPlace__c,
             Account.CompanyOwner__c,
+            Account.OwnerId,
             Account.RecordTypeName__c,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
             Sale__r.CreatedDate,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
-            Sale__r.Account__c,
+            Sale__r.Account__r.OwnerId,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -1083,6 +1084,7 @@ public inherited sharing class HDT_QR_Order {
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
+        SalesCompany__c,
         CausalCode__c,
         QuotationNumber__c
         FROM Order 
@@ -1184,6 +1186,7 @@ public inherited sharing class HDT_QR_Order {
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
+        SalesCompany__c,
         CausalCode__c,QuotationNumber__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];

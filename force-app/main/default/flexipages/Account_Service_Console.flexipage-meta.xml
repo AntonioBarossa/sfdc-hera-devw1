@@ -8,6 +8,44 @@
                     <valueList>
                         <valueListItems>
                             <value>Account.Catalogo_Servizi</value>
+                            <visibilityRule>
+                                <booleanFilter>(1 AND 2) OR 3 OR (4 AND 5) OR (6 AND 7)</booleanFilter>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>MMS</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>MMS</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HDT_BackOffice</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>HERA_COMM</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>HERA COMM</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!$User.UserRole.DeveloperName}</leftValue>
+                                    <operator>CONTAINS</operator>
+                                    <rightValue>AAAEBT</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CompanyOwner__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>AAA-EBT</rightValue>
+                                </criteria>
+                            </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Account.HDT_AccountStatement</value>
@@ -956,27 +994,31 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Account.Id</value>
+                    <name>childLookupField</name>
+                    <value>BPCodeC__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttivitaSalesforce__r</value>
+                    <name>childObjectApiName</name>
+                    <value>SalesforceWrtsActivity__x</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
+                    <name>fieldsToRetrieve</name>
+                    <value>Id,DisplayUrl</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
+                    <name>linesToDisplay</name>
                     <value>10</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
+                    <name>nameField</name>
+                    <value>GlobalMigrationKeyC__c</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer25</identifier>
+                <componentInstanceProperties>
+                    <name>parentRecordTargetField</name>
+                    <value>CustomerCode__c</value>
+                </componentInstanceProperties>
+                <componentName>hdtCustomRelatedList</componentName>
+                <identifier>c_hdtCustomRelatedList</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>
@@ -1164,6 +1206,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>

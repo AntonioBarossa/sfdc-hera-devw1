@@ -47,6 +47,8 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
             return "Conferma Pratica"
     }
 
+    @api contractService;
+
 
 
     connectedCallback() {

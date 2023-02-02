@@ -697,6 +697,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>verifica winback</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>XLISTA AZ</fullName>
             <default>false</default>
         </values>
@@ -2215,6 +2219,14 @@
         </values>
         <values>
             <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAGOPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F24</fullName>
             <default>false</default>
         </values>
     </picklistValues>
