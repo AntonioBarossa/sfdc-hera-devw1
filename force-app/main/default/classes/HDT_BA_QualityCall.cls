@@ -16,7 +16,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
-
+        System.debug(LoggingLevel.DEBUG, '@@@@@Query before ' +(Limit.getLimitQueries()-Limit.getQueries()) );
         List<Order> ordersToUpdate = new List<Order>();
         Map<Id,CampaignMember> campaignMembersUpdate = new Map<Id,CampaignMember>();
         Map<String,Order> orderMap = new Map<String,Order>();
@@ -57,6 +57,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         OwnerId = comfortQualityQueId,
                         ActivatedDate__c = ord.ActivatedDate,
                         LoginChannel__c = ord.LoginChannel__c,
+                        QualityCallStartDate__c = System.today(),
                         Order__c = actOrderId
                     ));
                     orderMap.put(ord.Id, ord);
@@ -90,7 +91,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
             }
 
             Map<Id,CampaignMember> notDuplicatedCampToIns = new Map<Id,CampaignMember>();
-
+            List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
             for (String ordId : orderActivityMap.keySet()) {
                 String compOwner = orderMap.get(ordId).Account.CompanyOwner__c;
                 if (orderMap.get(ordId).Contact__c != null && compOwnerToCampMap.get(compOwner) != null) {
@@ -100,14 +101,22 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                     Id activityId = null;
 
                     if (!campaignMembersBulk.isEmpty()) {
+                        Date startDate;
                         for (CampaignMember cmAlready : campaignMembersBulk) {
                             if (cmAlready.CampaignId == compOwnerToCampMap.get(compOwner).Id 
                                 && cmAlready.ContactId == orderMap.get(ordId).Contact__c) {
                                 isCmAlready = true;
                                 cmAlreadyId = cmAlready.Id;
                                 activityId = cmAlready.RelatedActivity__c;
+                                startDate = cmAlready.NumberingValidityStartDate__c;
                                 break;
                             }
+                        }
+                        if (startDate!= null && orderActivityMap.containsKey(ordId) && startDate != orderActivityMap.get(ordId).QualityCallStartDate__c){
+                            actToUpdate.add(new wrts_prcgvr__Activity__c(
+                                Id = orderActivityMap.get(ordId).Id,
+                                QualityCallStartDate__c = startDate
+                            ));
                         }
                     }
 
@@ -147,10 +156,16 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 List<Database.SaveResult> srList = Database.update(campaignMembersUpdate.values(), false);
                 qCall.setLogRecord(srList, campaignMembersUpdate.values(), logs, 'update Campaign Member');
             }
+            if(!actToUpdate.isEmpty()){
+                List<Database.SaveResult> srList = Database.update(actToUpdate, false);
+                qCall.setLogRecord(srList, actToUpdate, logs, 'update activity');
+            }
         }catch(Exception ex){
             logs.addLog(LOG_SERVICE, 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
         }
         logs.saveMassiveRecords();
+        System.debug(LoggingLevel.DEBUG, '@@@@@Query after ' +(Limit.getLimitQueries()-Limit.getQueries()) );
+
     }
 
     @SuppressWarnings('PMD.AvoidDebugStatements')

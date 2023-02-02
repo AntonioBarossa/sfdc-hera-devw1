@@ -208,19 +208,20 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 mapStartDate.remove(o.ParentOrder__c);
                 continue;
             }
-            Date startDate;
-            for (ComfortQualityCall__c cqc : docValidList) {
-                if (
-                    String.isNotBlank(o.PhaseStory__c) && o.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == o.RecordType.DeveloperName && cqc.Channel__c == o.Channel__c && cqc.CustomerType__c == o.CustomerCategory__c && cqc.QualitySignatureMethod__c == o.SignatureMethod__c
-                ) {
-                    startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(o.PhaseStory__c, 'Documentazione Validata');
-                    break;
+            Date startDate = this.actMap.get(o.ParentOrder__c).QualityCallStartDate__c;
+            if (startDate == null){
+                for (ComfortQualityCall__c cqc : docValidList) {
+                    if (
+                        String.isNotBlank(o.PhaseStory__c) && o.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == o.RecordType.DeveloperName && cqc.Channel__c == o.Channel__c && cqc.CustomerType__c == o.CustomerCategory__c && cqc.QualitySignatureMethod__c == o.SignatureMethod__c
+                    ) {
+                        startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(o.PhaseStory__c, 'Documentazione Validata');
+                        break;
+                    }
+                }
+                if (startDate == null){
+                    startDate = o.WizardCompletedDate__c;
                 }
             }
-            if (startDate == null){
-                startDate = o.WizardCompletedDate__c;
-            }
-
             if (!mapStartDate.containsKey(o.ParentOrder__c) || mapStartDate.get(o.ParentOrder__c) < startDate){
                 mapStartDate.put(o.ParentOrder__c,startDate);
             }
