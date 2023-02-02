@@ -173,7 +173,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
         childOrder.Type='New';
-        childOrder.Step__c=3.0;
+        childOrder.Step__c=1.0;
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;
