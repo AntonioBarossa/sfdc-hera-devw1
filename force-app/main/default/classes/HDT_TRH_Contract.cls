@@ -35,7 +35,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         // system.debug('START HDT_TRH_Contract beforeUpdate');
         // HDT_UTL_ContractProcess.orderCompletataPhaseManagement(Trigger.new);
         // system.debug('END HDT_TRH_Contract beforeUpdate');
-        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
+        
         HDT_QR_Order qrOrder = new HDT_QR_Order();
         List<id> listOrderId = new List<id>();
         List<Contract> listContract = new List<Contract>();
@@ -83,6 +83,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             }
         }
 
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
 
         list<Contract> newContracts = (List<Contract>) Trigger.New;
         Set<Id> orderToContract = new Set<Id>();
