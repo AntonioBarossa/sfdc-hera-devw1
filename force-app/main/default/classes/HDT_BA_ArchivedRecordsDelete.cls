@@ -153,36 +153,18 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                 when 'OrderItem' {
                     deactivateRecords(scope);
                 }
-                // Custom logic for records that are not archived but need to be deleted
-                when 'BillingProfile__c' {
-                    
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Casi__r', 'Orders__r', 'Order_Products__r', 'Contracts__r'}));
-                    needsDeletionWithSet = true;
+                when else {
+                    // Custom logic for records that are not archived but need to be deleted
+                    for (SObject so : scope) {
+                        
+                        if (filterRecordForDeletedChildren(so, this.currentObject)) {
 
-                }
-                when 'CommunicationLog__c' {
-                    
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'IndividualEmailResults__r', 'PushTracking__r', 'SMSTracking__r'}));
-                    needsDeletionWithSet = true;
+                            filteredRecordsToDelete.add(so.Id);
+                            needsDeletionWithSet = true;
 
-                }
-                when 'Individual' {
-                    
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Contacts', 'Leads'}));
-                    needsDeletionWithSet = true;
+                        }
 
-                }
-                when 'Interaction__c' {
-                    
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Orders__r', 'Vendite__r', 'Activities_Custom__r'}));
-                    needsDeletionWithSet = true;
-
-                }
-                when 'ServicePoint__c' {
-                    
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Activities_Custom__r'}));
-                    needsDeletionWithSet = true;
-
+                    }
                 }
             }
 
@@ -314,6 +296,55 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         }
 
         return result;
+
+    }
+
+    // Check that all children were deleted 2 (Avoids a nested loop)
+    public Boolean filterRecordForDeletedChildren(SObject currentRecord, String objectApiName) {
+
+        Integer numberOfChildren = 0;
+
+        switch on this.currentObject {
+            // Custom logic for records that are not archived but need to be deleted
+            when 'BillingProfile__c' {
+
+                numberOfChildren += currentRecord.getSObjects('Cases__r') != null ? currentRecord.getSObjects('Cases__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Casi__r') != null ? currentRecord.getSObjects('Casi__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Orders__r') != null ? currentRecord.getSObjects('Orders__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Order_Products__r') != null ? currentRecord.getSObjects('Order_Products__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Contracts__r') != null ? currentRecord.getSObjects('Contracts__r').size() : 0;
+
+            }
+            when 'CommunicationLog__c' {
+
+                numberOfChildren += currentRecord.getSObjects('IndividualEmailResults__r') != null ? currentRecord.getSObjects('IndividualEmailResults__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('PushTracking__r') != null ? currentRecord.getSObjects('PushTracking__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('SMSTracking__r') != null ? currentRecord.getSObjects('SMSTracking__r').size() : 0;
+
+            }
+            when 'Individual' {
+
+                numberOfChildren += currentRecord.getSObjects('Contacts') != null ? currentRecord.getSObjects('Contacts').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Leads') != null ? currentRecord.getSObjects('Leads').size() : 0;
+
+            }
+            when 'Interaction__c' {
+
+                numberOfChildren += currentRecord.getSObjects('Cases__r') != null ? currentRecord.getSObjects('Cases__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Orders__r') != null ? currentRecord.getSObjects('Orders__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Vendite__r') != null ? currentRecord.getSObjects('Vendite__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Activities_Custom__r') != null ? currentRecord.getSObjects('Activities_Custom__r').size() : 0;
+
+            }
+            when 'ServicePoint__c' {
+
+                numberOfChildren += currentRecord.getSObjects('Cases__r') != null ? currentRecord.getSObjects('Cases__r').size() : 0;
+                numberOfChildren += currentRecord.getSObjects('Activities_Custom__r') != null ? currentRecord.getSObjects('Activities_Custom__r').size() : 0;
+
+            }
+        }
+
+        return numberOfChildren == 0;
 
     }
 }
