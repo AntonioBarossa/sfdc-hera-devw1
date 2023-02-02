@@ -217,10 +217,6 @@
                 <behavior>Readonly</behavior>
                 <field>CommercialHousingUnit__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>DataUltimoAllineamentoGAA__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -236,8 +232,8 @@
                 <field>NotResidentDomesticHousingUnit__c</field>
             </layoutItems>
             <layoutItems>
-                <behavior>Edit</behavior>
-                <field>CohabitantsNumber__c</field>
+                <behavior>Readonly</behavior>
+                <field>DataUltimoAllineamentoGAA__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
