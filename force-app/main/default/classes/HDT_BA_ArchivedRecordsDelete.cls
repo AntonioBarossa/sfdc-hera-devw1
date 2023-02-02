@@ -153,18 +153,19 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                 when 'OrderItem' {
                     deactivateRecords(scope);
                 }
-                when else {
-                    // Custom logic for records that are not archived but need to be deleted
-                    for (SObject so : scope) {
-                        
-                        if (filterRecordForDeletedChildren(so, this.currentObject)) {
+            }
 
-                            filteredRecordsToDelete.add(so.Id);
-                            needsDeletionWithSet = true;
+            // Custom logic for records that are not archived but need to be deleted
+            if (this.objectsThatAreNotArchived.contains(this.currentObject)) {
+                for (SObject so : scope) {
+                            
+                    if (filterRecordForDeletedChildren(so, this.currentObject)) {
 
-                        }
+                        filteredRecordsToDelete.add(so.Id);
+                        needsDeletionWithSet = true;
 
                     }
+
                 }
             }
 
