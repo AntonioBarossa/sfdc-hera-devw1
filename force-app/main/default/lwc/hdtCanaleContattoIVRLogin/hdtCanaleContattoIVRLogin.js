@@ -36,6 +36,8 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
     @track orderSiblings = [];
     @track orderColumns;
     @track orderList = [];
+    @track buttonDisabled=true;
+    spinner=false;
 
     showTooltip = false;
 
@@ -57,7 +59,26 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         password.type = password.type == 'password' ? 'text' : 'password';
     }
 
+    handleInputChange() {
+
+        this.username = this.template.querySelector('[data-id = "usernameField"]').value;
+        this.password = this.template.querySelector('[data-id = "passwordField"]').value;
+
+        if(this.username!='' && this.password!=''){
+            this.buttonDisabled = false;
+            console.log('>>> accessButton Enablebled');
+        } else {
+            this.buttonDisabled = true;
+            console.log('>>> accessButton disabled');
+        }
+
+    }
+
     handleLogin(event) {
+
+        console.log('>>> accessButton click');
+        this.buttonDisabled = true;
+        this.spinner=true;
 
         let username = this.template.querySelector('[data-id = "usernameField"]').value;
         let password = this.template.querySelector('[data-id = "passwordField"]').value;
@@ -65,6 +86,15 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
         this.password = this.template.querySelector('[data-id = "passwordField"]').value;
        // console.log('prova  ' + username);
        // console.log('test  ' + password);
+
+        if(this.username==='' || this.password===''){
+            this.dispatchEvent(new ShowToastEvent({
+                title: 'Attenzione!',
+                message: 'Non hai inserito Username e/o Password',
+                variant: 'warning'
+            }));
+            return;
+        }
 
         checkLogin({
             username: username,
@@ -86,9 +116,10 @@ export default class HdtCanaleContattoIVRLogin extends LightningElement {
                 this.secondSectionVisible = true;
                 this.firstSectionVisible = false;
             }
-
+            this.spinner=false;
         }).catch(err => {
             console.log(JSON.stringify(err));
+            this.spinner=false;
         });
     }
     downloadPdf(base64String, fileName) {
