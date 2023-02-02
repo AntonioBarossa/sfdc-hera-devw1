@@ -152,6 +152,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
             if(contractMap.containsKey(processObj.csvSplitted[podIndex])){
                 contract = contractMap.get(processObj.csvSplitted[podIndex]);
                 processObj.newCase.Contract__c = contract.Id;
+                processObj.newCase.Commodity__c = contract.ServicePoint__r.CommoditySector__c;
                 processObj.newCase.ServicePoint__c = contract.ServicePoint__c;
                 processObj.newCase.BillingProfile__c = contract.BillingProfile__c;
                 processObj.newCase.AccountId = contract.AccountId;
@@ -181,6 +182,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                     //continue;
                     processObj.parentCase = new Case();
                     processObj.parentCase.Contract__c = contract.Id;
+                    processObj.newCase.Commodity__c = contract.ServicePoint__r.CommoditySector__c;
                     processObj.parentCase.ServicePoint__c = contract.ServicePoint__c;
                     processObj.parentCase.BillingProfile__c = contract.BillingProfile__c;
                     processObj.parentCase.AccountId = contract.AccountId;
