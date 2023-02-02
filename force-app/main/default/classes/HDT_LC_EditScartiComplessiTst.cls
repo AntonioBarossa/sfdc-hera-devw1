@@ -500,7 +500,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         update updOrder;
 
         Test.startTest();
-            String result = HDT_LC_EditScartiComplessi.resubmissionPractice(updOrder.Id, actList[0].Id,'Attivazione');
+            String result = HDT_LC_EditScartiComplessi.resubmissionPractice(updOrder.Id, actList[0].Id,'Attivazione','Amm. Precheck KO SII');
         Test.stopTest();
         System.assertEquals(null, result, 'Check Incorretto');
     }
