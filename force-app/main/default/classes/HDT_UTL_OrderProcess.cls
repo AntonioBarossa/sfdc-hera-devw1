@@ -1725,7 +1725,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         if(!remiList.isEmpty()){
             for(MatriceRemiCode__c mr : remiList){
-                remiCodeMap.put(mr.Comune__c + '-' + mr.SalesCompany__c, mr);
+                remiCodeMap.put(mr.Comune__c.toUpperCase() + '-' + mr.SalesCompany__c.toUpperCase(), mr);
             }
         }
         
