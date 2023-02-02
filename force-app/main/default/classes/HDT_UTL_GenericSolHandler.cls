@@ -1,6 +1,6 @@
 public with sharing class HDT_UTL_GenericSolHandler {
 
-WS    public static Sale__c createSale(String accountId, String contactId, String saleName,String saleStatus){
+    public static Sale__c createSale(String accountId, String contactId, String saleName,String saleStatus){
         String recordId;
         Sale__c sale = new Sale__c();
         try{
@@ -148,7 +148,8 @@ WS    public static Sale__c createSale(String accountId, String contactId, Strin
                 Phase__c=System.Label.phaseBozza,
                 BillingProfile__c = bp.Id,
                 PaymentMode__c=params.containsKey('paymentMode') ? (String) params.get('paymentMode'):'',
-                Note__c=params.containsKey('note') ? (String) params.get('note'):''
+                Note__c=params.containsKey('note') ? (String) params.get('note'):'',
+                Step__c=1.0
         );
         //System.Label.statusInLavorazione
         HDT_UTL_DatabaseService.insertSObject(placeholderOrder);
@@ -171,6 +172,8 @@ WS    public static Sale__c createSale(String accountId, String contactId, Strin
         childOrder.Subprocess__c='Standard';
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
+        childOrder.Type='New';
+        childOrder.Step__c=3.0;
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;

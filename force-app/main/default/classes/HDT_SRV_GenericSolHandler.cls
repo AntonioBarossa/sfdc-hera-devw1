@@ -95,7 +95,7 @@ public with sharing class HDT_SRV_GenericSolHandler {
         String serviceRequest = (String) inputParams.get('serviceRequest');
         String integrationId = (String) inputParams.get('integrationId');
         if(String.isBlank(serviceRequest)){
-Z            Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Vendita Analisi Consumi da Web','Bozza');
+            Sale__c sale = HDT_UTL_GenericSolHandler.createSale(accountId, contactId,'Vendita Analisi Consumi da Web','Bozza');
             HDT_UTL_GenericSolHandler.createBaseOrder(inputParams,sale.Id);
         }else{
             HDT_UTL_GenericSolHandler.handleAnalisiConsumiOrder(inputParams);
