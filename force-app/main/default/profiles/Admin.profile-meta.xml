@@ -38251,7 +38251,16 @@
         <allowCreate>false</allowCreate>
         <allowDelete>false</allowDelete>
         <allowEdit>false</allowEdit>
-        <allowRead>false</allowRead>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CadastralCategories__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
         <modifyAllRecords>false</modifyAllRecords>
         <object>TermsAdministration__c</object>
         <viewAllRecords>false</viewAllRecords>
@@ -38260,7 +38269,7 @@
             <allowCreate>false</allowCreate>
             <allowDelete>false</allowDelete>
             <allowEdit>false</allowEdit>
-            <allowRead>false</allowRead>
+            <allowRead>true</allowRead>
             <modifyAllRecords>false</modifyAllRecords>
             <object>TermTable__c</object>
             <viewAllRecords>false</viewAllRecords>
@@ -38269,7 +38278,7 @@
             <allowCreate>false</allowCreate>
             <allowDelete>false</allowDelete>
             <allowEdit>false</allowEdit>
-            <allowRead>false</allowRead>
+            <allowRead>true</allowRead>
             <modifyAllRecords>false</modifyAllRecords>
             <object>TariAppointment__c</object>
             <viewAllRecords>false</viewAllRecords>
