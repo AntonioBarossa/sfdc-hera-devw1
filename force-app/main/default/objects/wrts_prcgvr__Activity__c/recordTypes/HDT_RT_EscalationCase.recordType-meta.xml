@@ -2440,6 +2440,125 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Supporto Esercizio Sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cliente senza Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco Processo Post-Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica gestita erroneamente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Vas e HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 affidi ADR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 sospensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Order Management MUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Misure Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rapporti con i distributori e SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC cliente da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Agenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto TL Front</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica comportamento Banca%2C Istituti Finanziari e Carte di Credito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica rimborsi Clienti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Credito Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Morosità Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche layout bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche pagamenti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Validation__c</picklist>
         <values>
             <fullName>No</fullName>

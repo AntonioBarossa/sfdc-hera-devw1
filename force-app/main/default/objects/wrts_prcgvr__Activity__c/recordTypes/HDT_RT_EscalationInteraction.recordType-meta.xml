@@ -2440,6 +2440,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Supporto Esercizio Sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Vas e HVAC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto TL Front</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Validation__c</picklist>
         <values>
             <fullName>No</fullName>

@@ -2141,6 +2141,49 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Annullamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Anticipo Appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riapertura urgenti Errori DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta appuntamento DL %28fermo sistemi%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta informazioni appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Distributore</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Validation__c</picklist>
         <values>
             <fullName>No</fullName>

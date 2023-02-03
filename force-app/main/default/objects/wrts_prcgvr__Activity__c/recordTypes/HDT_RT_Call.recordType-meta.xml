@@ -2353,6 +2353,33 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Chiamata Callback</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata inbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiamata outbound</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Validation__c</picklist>
         <values>
             <fullName>No</fullName>

@@ -2125,6 +2125,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>KO Credit Check</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Validation__c</picklist>
         <values>
             <fullName>No</fullName>

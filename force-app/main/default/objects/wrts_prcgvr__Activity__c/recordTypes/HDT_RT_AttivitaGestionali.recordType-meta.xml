@@ -2149,6 +2149,81 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Annullamento processo transitorio Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Bonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Offerte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confermare Cambio Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto non richiesto da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale%2FCopia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documenti non validati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Votive</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione Documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Validazione Vocal Order</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Validation__c</picklist>
         <values>
             <fullName>No</fullName>
