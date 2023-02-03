@@ -8,7 +8,7 @@
  * Modified By:
  **/
 
-public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batchable<Sobject>, Database.Stateful {
+public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batchable<Sobject> {
 
     // List of objects to delete
     private final List<String> OBJECTS_TO_PROCESS = new List<String>{'ContentDocument', 'wrts_prcgvr__Activity__c', 'PushTracking__c', 'SMSTracking__c', 'SolTracking__c', 
@@ -31,10 +31,10 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
     private Boolean relaunchBatch = true;
 
     // private List<Sobject> recordsDeleted = new List<Sobject>();
-    private String queryUsed;
-    private String exceptionErr = '';
-    private Datetime executionTimeStamp;
-    private Integer numberOfDeletedRecords = 0;
+    // private String queryUsed;
+    // private String exceptionErr = '';
+    // private Datetime executionTimeStamp;
+    // private Integer numberOfDeletedRecords = 0;
     
     public HDT_BA_ArchivedRecordsDelete (Integer batchSize) {
 
@@ -123,9 +123,22 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
             queryString += ' LIMIT ' + this.queryLimit;
         }
 
-        this.queryUsed = queryString;
+        // this.queryUsed = queryString;
 
         System.debug('This is the generated query string' + queryString);
+
+        CS_ArchivedRecordsDeleteBatch__c executionTracking = [SELECT CurrentBatchId__c, RelaunchBatch__c, ExecutionTimestamp__c, ErrorMessage__c, 
+                                                              QueryUsed__c, NumberOfRecordsDeleted__c, NumberOfDeleteErrors__c 
+                                                              FROM CS_ArchivedRecordsDeleteBatch__c LIMIT 1];
+        executionTracking.CurrentBatchId__c = bc.getJobId();
+        executionTracking.RelaunchBatch__c = this.relaunchBatch;
+        executionTracking.ExecutionTimestamp__c = System.now();
+        executionTracking.QueryUsed__c = queryString.abbreviate(255);
+        executionTracking.NumberOfRecordsDeleted__c = 0;
+        executionTracking.NumberOfDeleteErrors__c = 0;
+        executionTracking.ErrorMessage__c = '';
+
+        Database.update(executionTracking);
 
         return Database.getQueryLocator(queryString);
 
@@ -134,14 +147,16 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
     public void execute (Database.BatchableContext bc, List<SObject> scope) {
 
+        CS_ArchivedRecordsDeleteBatch__c executionTracking = [SELECT CurrentBatchId__c, RelaunchBatch__c, ExecutionTimestamp__c, ErrorMessage__c, 
+                                                              QueryUsed__c, NumberOfRecordsDeleted__c, NumberOfDeleteErrors__c 
+                                                              FROM CS_ArchivedRecordsDeleteBatch__c LIMIT 1];
+
         try {
+
+            String exceptionErr = '';
 
             List<Id> filteredRecordsToDelete = new List<Id>();
             Boolean needsDeletionWithSet = false;
-
-            if (this.executionTimeStamp == null) {
-                this.executionTimeStamp = System.now();
-            }
 
             List<Database.DeleteResult> deleteResults;
 
@@ -153,18 +168,35 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                 when 'OrderItem' {
                     deactivateRecords(scope);
                 }
-            }
+                // Custom logic for records that are not archived but need to be deleted
+                when 'BillingProfile__c' {
+                    
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Casi__r', 'Orders__r', 'Order_Products__r', 'Contracts__r'}));
+                    needsDeletionWithSet = true;
 
-            // Custom logic for records that are not archived but need to be deleted
-            if (this.OBJECTS_THAT_ARE_NOT_ARCHIVED.contains(this.currentObject)) {
-                for (SObject so : scope) {
-                            
-                    if (filterRecordForDeletedChildren(so, this.currentObject)) {
+                }
+                when 'CommunicationLog__c' {
+                    
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'IndividualEmailResults__r', 'PushTracking__r', 'SMSTracking__r'}));
+                    needsDeletionWithSet = true;
 
-                        filteredRecordsToDelete.add(so.Id);
-                        needsDeletionWithSet = true;
+                }
+                when 'Individual' {
+                    
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Contacts', 'Leads'}));
+                    needsDeletionWithSet = true;
 
-                    }
+                }
+                when 'Interaction__c' {
+                    
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Orders__r', 'Vendite__r', 'Activities_Custom__r'}));
+                    needsDeletionWithSet = true;
+
+                }
+                when 'ServicePoint__c' {
+                    
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Activities_Custom__r'}));
+                    needsDeletionWithSet = true;
 
                 }
             }
@@ -182,25 +214,36 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
                 for (Database.DeleteResult dr : deleteResults) {
 
-                    if (!dr.isSuccess()) {
-                        this.exceptionErr += JSON.serializePretty(dr.getErrors());
-
+                    if (!dr.isSuccess()) {                        
+                        executionTracking.NumberOfDeleteErrors__c++;
+                        
                         // Stop launch of next batch if there are errors in the delete
-                        this.relaunchBatch = false;
+                        executionTracking.RelaunchBatch__c = false;
+
+                        exceptionErr += JSON.serialize(dr.getErrors());
+
+                        // this.exceptionErr += JSON.serializePretty(dr.getErrors());                        
                     } else {
-                        this.numberOfDeletedRecords++;
+                        executionTracking.NumberOfRecordsDeleted__c++;
                     }
 
                 }
 
             }
 
+            executionTracking.ErrorMessage__c = exceptionErr.substring(0, 255);
+
+            Database.update(executionTracking);
+
         } catch (Exception e) {
 
             // Stop launch of next batch if there are errors in execute
-            this.relaunchBatch = false;
+            executionTracking.RelaunchBatch__c = false;
+            executionTracking.ErrorMessage__c = (e.getMessage() + '\n\n' + e.getStackTraceString()).substring(0, 255);
 
-            this.exceptionErr += e.getMessage() + '\n\n' + e.getStackTraceString();
+            Database.update(executionTracking);
+
+            // this.exceptionErr += e.getMessage() + '\n\n' + e.getStackTraceString();
 
         }        
         
@@ -208,12 +251,16 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
     public void finish (Database.BatchableContext bc) {
 
+        CS_ArchivedRecordsDeleteBatch__c executionTracking = [SELECT CurrentBatchId__c, RelaunchBatch__c, ExecutionTimestamp__c, ErrorMessage__c, 
+                                                              QueryUsed__c, NumberOfRecordsDeleted__c, NumberOfDeleteErrors__c 
+                                                              FROM CS_ArchivedRecordsDeleteBatch__c LIMIT 1];
+
         String nextObject = '';
 
         this.currentObjectIndex ++;
         System.debug('Index is at ' + this.currentObjectIndex);
         
-        if (this.relaunchBatch && this.currentObjectIndex < this.OBJECTS_TO_PROCESS.size()) {
+        if (executionTracking.RelaunchBatch__c && this.currentObjectIndex < this.OBJECTS_TO_PROCESS.size()) {
             nextObject = this.OBJECTS_TO_PROCESS.get(this.currentObjectIndex);
             System.debug('Next object is ' + nextObject);
             Database.executeBatch(new HDT_BA_ArchivedRecordsDelete(this.batchScope, this.currentObjectIndex, this.queryLimit), this.batchScope);
@@ -224,18 +271,25 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         mail.setSubject('Deleted ' + this.currentObject);
         mail.setToAddresses(new List<String>{UserInfo.getUserEmail()});
         mail.setOrgWideEmailAddressId([SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'].Id);
-    
-        if (String.isNotBlank(this.exceptionErr)) {
-            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + 
-                                  ', Records Deleted: ' + this.numberOfDeletedRecords + 
+
+        mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
+                              ', Records Deleted: ' + executionTracking.NumberOfDeleteErrors__c + 
+                              ', Records With Deleted Errors: ' + executionTracking.NumberOfDeleteErrors__c + 
+                              ', Next Object To Process: ' + nextObject + 
+                              '\n\nQuery used: ' + executionTracking.QueryUsed__c + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
+
+        if (String.isNotBlank(executionTracking.ErrorMessage__c)) {
+            mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
+                                  ', Records Deleted: ' + executionTracking.NumberOfDeleteErrors__c + 
+                                  ', Records With Deleted Errors: ' + executionTracking.NumberOfDeleteErrors__c + 
                                   ', Next Object To Process: ' + nextObject + 
-                                  '\n\nQuery used: ' + this.queryUsed + '\n\nthe execution resulted in the following errors: ' + this.exceptionErr);
+                                  '\n\nQuery used: ' + executionTracking.QueryUsed__c + '\n\nthe execution resulted in the following errors: ' + executionTracking.ErrorMessage__c);
         } else {
             // mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe following records of type ' + this.currentObject + ' have been deleted:\n' + JSON.serializePretty(this.recordsDeleted));
-            mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + 
-                                  ', Records Deleted: ' + this.numberOfDeletedRecords + 
+            mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
+                                  ', Records Deleted: ' + executionTracking.NumberOfDeleteErrors__c + 
                                   ', Next Object To Process: ' + nextObject + 
-                                  '\n\nQuery used: ' + this.queryUsed + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
+                                  '\n\nQuery used: ' + executionTracking.QueryUsed__c + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
         }
 
         Messaging.sendEmail(new Messaging.Email[] { mail });
@@ -297,55 +351,6 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         }
 
         return result;
-
-    }
-
-    // Check that all children were deleted 2 (Avoids a nested loop)
-    public Boolean filterRecordForDeletedChildren(SObject currentRecord, String objectApiName) {
-
-        Integer numberOfChildren = 0;
-
-        switch on this.currentObject {
-            // Custom logic for records that are not archived but need to be deleted
-            when 'BillingProfile__c' {
-
-                numberOfChildren += currentRecord.getSObjects('Cases__r') != null ? currentRecord.getSObjects('Cases__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Casi__r') != null ? currentRecord.getSObjects('Casi__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Orders__r') != null ? currentRecord.getSObjects('Orders__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Order_Products__r') != null ? currentRecord.getSObjects('Order_Products__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Contracts__r') != null ? currentRecord.getSObjects('Contracts__r').size() : 0;
-
-            }
-            when 'CommunicationLog__c' {
-
-                numberOfChildren += currentRecord.getSObjects('IndividualEmailResults__r') != null ? currentRecord.getSObjects('IndividualEmailResults__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('PushTracking__r') != null ? currentRecord.getSObjects('PushTracking__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('SMSTracking__r') != null ? currentRecord.getSObjects('SMSTracking__r').size() : 0;
-
-            }
-            when 'Individual' {
-
-                numberOfChildren += currentRecord.getSObjects('Contacts') != null ? currentRecord.getSObjects('Contacts').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Leads') != null ? currentRecord.getSObjects('Leads').size() : 0;
-
-            }
-            when 'Interaction__c' {
-
-                numberOfChildren += currentRecord.getSObjects('Cases__r') != null ? currentRecord.getSObjects('Cases__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Orders__r') != null ? currentRecord.getSObjects('Orders__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Vendite__r') != null ? currentRecord.getSObjects('Vendite__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Activities_Custom__r') != null ? currentRecord.getSObjects('Activities_Custom__r').size() : 0;
-
-            }
-            when 'ServicePoint__c' {
-
-                numberOfChildren += currentRecord.getSObjects('Cases__r') != null ? currentRecord.getSObjects('Cases__r').size() : 0;
-                numberOfChildren += currentRecord.getSObjects('Activities_Custom__r') != null ? currentRecord.getSObjects('Activities_Custom__r').size() : 0;
-
-            }
-        }
-
-        return numberOfChildren == 0;
 
     }
 }
