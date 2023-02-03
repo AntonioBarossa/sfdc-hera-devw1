@@ -1496,7 +1496,7 @@ public inherited sharing class HDT_QR_Order {
                 BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,
                 BillingProfile__r.DivergentSubject__c, BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c, BillingProfile__r.InvoicingPlace__c,
                 BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c, BillingProfile__r.InvoicingPostalCode__c,
-                BillingProfile__r.InvoicingCityCode__c,Account.PrimaryEmail__c
+                BillingProfile__r.InvoicingCityCode__c,Account.PrimaryEmail__c,Email__c
         FROM Order WHERE OrderNumber=:orderNumber WITH SECURITY_ENFORCED ];
     }
 }
