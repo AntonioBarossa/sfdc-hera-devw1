@@ -4277,6 +4277,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_LandRegistry</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_Lead</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -4306,6 +4310,10 @@
     </classAccesses>
     <classAccesses>
         <apexClass>HDT_UTL_ManageTari</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ManageTariTab</apexClass>
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
