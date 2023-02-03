@@ -93,19 +93,19 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                 queryString += ', SBQQ__Activated__c, SBQQ__Contracted__c ';
             }
             when 'BillingProfile__c' {
-                queryString += ', (SELECT Id FROM Cases__r), (SELECT Id FROM Casi__r), (SELECT Id FROM Orders__r), (SELECT Id FROM Order_Products__r), (SELECT Id FROM Contracts__r) ';
+                queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Casi__r LIMIT 1), (SELECT Id FROM Orders__r LIMIT 1), (SELECT Id FROM Order_Products__r LIMIT 1), (SELECT Id FROM Contracts__r LIMIT 1) ';
             }
             when 'CommunicationLog__c' {
-                queryString += ', (SELECT Id FROM IndividualEmailResults__r), (SELECT Id FROM PushTracking__r), (SELECT Id FROM SMSTracking__r) ';
+                queryString += ', (SELECT Id FROM IndividualEmailResults__r LIMIT 1), (SELECT Id FROM PushTracking__r LIMIT 1), (SELECT Id FROM SMSTracking__r LIMIT 1) ';
             }
             when 'Individual' {
-                queryString += ', (SELECT Id FROM Contacts), (SELECT Id FROM Leads) ';
+                queryString += ', (SELECT Id FROM Contacts LIMIT 1), (SELECT Id FROM Leads LIMIT 1) ';
             }
             when 'Interaction__c' {
-                queryString += ', (SELECT Id FROM Cases__r), (SELECT Id FROM Orders__r), (SELECT Id FROM Vendite__r), (SELECT Id FROM Activities_Custom__r) ';
+                queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Orders__r LIMIT 1), (SELECT Id FROM Vendite__r LIMIT 1), (SELECT Id FROM Activities_Custom__r LIMIT 1) ';
             }
             when 'ServicePoint__c' {
-                queryString += ', (SELECT Id FROM Cases__r), (SELECT Id FROM Activities_Custom__r) ';
+                queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Activities_Custom__r LIMIT 1) ';
             }
         }
 
@@ -231,7 +231,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
             }
 
-            executionTracking.ErrorMessage__c = exceptionErr.substring(0, 255);
+            executionTracking.ErrorMessage__c = exceptionErr.abbreviate(255);
 
             Database.update(executionTracking);
 
@@ -239,7 +239,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
             // Stop launch of next batch if there are errors in execute
             executionTracking.RelaunchBatch__c = false;
-            executionTracking.ErrorMessage__c = (e.getMessage() + '\n\n' + e.getStackTraceString()).substring(0, 255);
+            executionTracking.ErrorMessage__c = (e.getMessage() + '\n\n' + e.getStackTraceString()).abbreviate(255);
 
             Database.update(executionTracking);
 
@@ -271,12 +271,6 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
         mail.setSubject('Deleted ' + this.currentObject);
         mail.setToAddresses(new List<String>{UserInfo.getUserEmail()});
         mail.setOrgWideEmailAddressId([SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'].Id);
-
-        mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
-                              ', Records Deleted: ' + executionTracking.NumberOfDeleteErrors__c + 
-                              ', Records With Deleted Errors: ' + executionTracking.NumberOfDeleteErrors__c + 
-                              ', Next Object To Process: ' + nextObject + 
-                              '\n\nQuery used: ' + executionTracking.QueryUsed__c + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
 
         if (String.isNotBlank(executionTracking.ErrorMessage__c)) {
             mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
