@@ -900,6 +900,25 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            let errorMsg = (error.body.message !== undefined) ? error.body.message : error.message;
+            /* Per evitare di bloccare l'utente nella navigazione, viene permesso di tornare indietro
+            * e compilare correttamente i dati del precedente intestatario
+            */
+            if(errorMsg !== undefined && errorMsg.indexOf('Valorizzare i dati del precedente intestatario') > -1)
+            {
+                
+            this.currentSection = this.availableSteps[nextIndex];
+            this.choosenSection = this.availableSteps[nextIndex].name;
+            this.activeSections = [this.choosenSection];
+            this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
+            this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
+            this.sectionDataToSubmit = {};
+            if(this.currentSection?.name==="creditCheck"){
+                getRecordNotifyChange([{recordId: this.order.Id}]);
+            }
+            this.dispatchEvent(new CustomEvent('refreshorderchild'));
+            return;
+            }
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
