@@ -170,6 +170,16 @@ export default class HdtDocumentValidation extends LightningElement {
         if (event.target.name === 'complete') {
             if(this.showWaste && this.valueWaste){
                 this.handleWasteComplete();
+            }else if(this.showWaste && !this.valueWaste){
+                this.showSpinner = false;
+                this.disableButton = false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione!',
+                        message: 'Inserire lo stato di validazione documentale.',
+                        variant: 'error'
+                    })
+                );
             }else{
                 let count = 0;
                 let size = 0;
