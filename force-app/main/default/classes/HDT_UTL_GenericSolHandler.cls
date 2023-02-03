@@ -149,6 +149,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 BillingProfile__c = bp.Id,
                 PaymentMode__c=params.containsKey('paymentMode') ? (String) params.get('paymentMode'):'',
                 Note__c=params.containsKey('note') ? (String) params.get('note'):'',
+                PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '',
+                Email__c= String.isNotBlank(cont.Email) ? cont.Email : accContRel.Account.PrimaryEmail__c,
                 Step__c=1.0
         );
         //System.Label.statusInLavorazione
@@ -175,6 +177,12 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.Type='New';
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
+        if( parentOrder.Note__c == null && params.containsKey('note')){
+            childOrder.Note__c=(String) params.get('note');
+        }
+        if(parentOrder.PhoneNumber__c == null && params.containsKey('phoneNumber')){
+            childOrder.PhoneNumber__c=(String) params.get('phoneNumber');
+        }
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;
@@ -220,7 +228,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.BillingPostalCode__c=parentOrder.BillingProfile__r.InvoicingPostalCode__c;
             childOrder.BillingCityCode__c=parentOrder.BillingProfile__r.InvoicingCityCode__c;
 
-            childOrder.VAT__c=contractList[0].VAT__c;
+            childOrder.VAT__c='Iva 10% (Cod. 01)';
 
             /*
             childOrder.FacilitationExcise__c=
@@ -379,7 +387,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
             Account.BillingStreetNumberExtension__c, 
             //Account.BillingStreetToponym__c,  
             Account.BillingState,
-            Contact.Id, 
+            Account.PrimaryEmail__c,
+            Contact.Id,
+            Contact.Email,
             Roles
             FROM AccountContactRelation 
             WHERE AccountId = :accountId
