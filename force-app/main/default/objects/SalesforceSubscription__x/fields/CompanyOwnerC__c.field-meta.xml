@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SurfaceC__c</fullName>
-    <description>SurfaceC</description>
-    <externalDeveloperName>SurfaceC</externalDeveloperName>
+    <fullName>CompanyOwnerC__c</fullName>
+    <description>CompanyOwnerC</description>
+    <externalDeveloperName>CompanyOwnerC</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Superficie MQ</label>
-    <precision>18</precision>
+    <label>Company Owner</label>
+    <length>255</length>
     <required>false</required>
-    <scale>0</scale>
-    <type>Number</type>
+    <type>Text</type>
     <unique>false</unique>
 </CustomField>
