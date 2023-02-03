@@ -35,7 +35,7 @@ export default class HdtDocumentValidation extends LightningElement {
         { label: 'Documentazione incompleta di allegati', value: 'Documentazione incompleta di allegati' },
         { label: 'documentazione incompleta di più elementi', value: 'documentazione incompleta di più elementi' }
     ];
-    notIntegratedProcess = ['DOM_Coabitazioni','Dati catastali','DOM_Componenti residenti','Variazione Indirizzo di Fornitura'];
+    notIntegratedProcess = ['DOM_Coabitazioni','Dati catastali','DOM_Componenti residenti','Variazione Indirizzo di Fornitura','Domiciliato in nucleo residente'];
 
     columnsAccise = [
         { id: 1, name: 'PersonalData', label: 'Dati Anagrafici' },
@@ -93,7 +93,7 @@ export default class HdtDocumentValidation extends LightningElement {
     }
     async handleConfirmClick(recordInput) {
         const result = await LightningConfirm.open({
-            message: 'Premendo OK verrà inviata la pratica verso i sistemi a valle, assicurati che la documentazione sia completa',
+            message: 'Premendo OK verrà avanzato il processo verso la fase successiva, assicurati che la documentazione sia completa',
             variant: 'headerless',
             label: 'this is the aria-label value',
             // setting theme would have no effect
@@ -170,6 +170,16 @@ export default class HdtDocumentValidation extends LightningElement {
         if (event.target.name === 'complete') {
             if(this.showWaste && this.valueWaste){
                 this.handleWasteComplete();
+            }else if(this.showWaste && !this.valueWaste){
+                this.showSpinner = false;
+                this.disableButton = false;
+                this.dispatchEvent(
+                    new ShowToastEvent({
+                        title: 'Attenzione!',
+                        message: 'Inserire lo stato di validazione documentale.',
+                        variant: 'error'
+                    })
+                );
             }else{
                 let count = 0;
                 let size = 0;
