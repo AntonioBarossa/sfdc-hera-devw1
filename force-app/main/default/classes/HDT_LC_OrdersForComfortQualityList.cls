@@ -247,7 +247,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         Map<String,String> processActivityMap = new Map<String,String>{
             'HDT_RT_SwitchIn' => 'Switch In',
             'HDT_RT_CambioOfferta' => 'Cambio offerta',
-            'HDT_RT_VAS' => 'Segnalazioni VAS'
+            'HDT_RT_VAS' => 'Segnalazioni VAS',
+            'HDT_RT_Subentro' => 'Subentro',
+            'HDT_RT_ScontiBonus' => 'Aggiunta Bonus o Vas',
+            'HDT_RT_Attivazione' => 'Prima Attivazione',
+            'HDT_RT_Voltura' => 'Voltura',
+            'HDT_RT_VolturaConSwitch' => 'Voltura con Switch'
         };
 
         return processActivityMap.get(orderRecordType);
