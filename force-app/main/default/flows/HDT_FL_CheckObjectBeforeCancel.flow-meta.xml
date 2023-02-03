@@ -24,7 +24,7 @@
     <assignments>
         <name>Set_phase_From_Case</name>
         <label>Set phase From Case</label>
-        <locationX>754</locationX>
+        <locationX>798</locationX>
         <locationY>278</locationY>
         <assignmentItems>
             <assignToReference>phase</assignToReference>
@@ -56,8 +56,8 @@
     <assignments>
         <name>Set_Response</name>
         <label>Set Response</label>
-        <locationX>589</locationX>
-        <locationY>1526</locationY>
+        <locationX>50</locationX>
+        <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -73,6 +73,152 @@
             </value>
         </assignmentItems>
     </assignments>
+    <assignments>
+        <name>Set_Response_Fase_Finale</name>
+        <label>Set Response</label>
+        <locationX>325</locationX>
+        <locationY>2198</locationY>
+        <assignmentItems>
+            <assignToReference>stopAnnullamento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>La pratica è già in una fase finale</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_da_Activity</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Set_Response_Fase_Non_Annullabile</name>
+        <label>Set Response</label>
+        <locationX>853</locationX>
+        <locationY>2198</locationY>
+        <assignmentItems>
+            <assignToReference>stopAnnullamento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Non si può annullare la pratica fintanto che si trova nella fase attuale.</stringValue>
+            </value>
+        </assignmentItems>
+    </assignments>
+    <assignments>
+        <name>Set_Response_InCorso</name>
+        <label>Set Response</label>
+        <locationX>589</locationX>
+        <locationY>2198</locationY>
+        <assignmentItems>
+            <assignToReference>stopAnnullamento</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>errorMessage</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>La pratica è in attesa dell&apos;esito di un processo di Annullamento/Ripensamento e pertanto non è annullabile.</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Gestione_da_Activity</targetReference>
+        </connector>
+    </assignments>
+    <decisions>
+        <name>Check_Final_Phase</name>
+        <label>Check Final Phase</label>
+        <locationX>721</locationX>
+        <locationY>2078</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Fase_Finale</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullato</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ripensato</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Voltura Rifiutata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>KO Definitivo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Response_Fase_Finale</targetReference>
+            </connector>
+            <label>Fase Finale</label>
+        </rules>
+        <rules>
+            <name>Processo_Annullamento_in_corso</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Annullamento</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Ripensamento</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Response_InCorso</targetReference>
+            </connector>
+            <label>Processo Annullamento in corso</label>
+        </rules>
+        <rules>
+            <name>Fase_Non_Annullabile</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Errore invio a DL/SII</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Set_Response_Fase_Non_Annullabile</targetReference>
+            </connector>
+            <label>Fase Non Annullabile</label>
+        </rules>
+    </decisions>
     <decisions>
         <name>Check_Object_Type</name>
         <label>Tipo Oggetto</label>
@@ -113,8 +259,11 @@
     <decisions>
         <name>Check_Rule</name>
         <label>Esiste Regola</label>
-        <locationX>721</locationX>
-        <locationY>1406</locationY>
+        <locationX>182</locationX>
+        <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>Check_Final_Phase</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>ok</defaultConnectorLabel>
         <rules>
             <name>fase_scarto_sap</name>
@@ -135,8 +284,11 @@
     <decisions>
         <name>Check_SAP_Phase</name>
         <label>Check SAP Phase</label>
-        <locationX>754</locationX>
+        <locationX>798</locationX>
         <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Check_Final_Phase</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>no check</defaultConnectorLabel>
         <rules>
             <name>do_check</name>
@@ -162,12 +314,73 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_SAP_Phase_Order</name>
+        <label>Check SAP Phase</label>
+        <locationX>336</locationX>
+        <locationY>1190</locationY>
+        <defaultConnector>
+            <targetReference>Check_Final_Phase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>no check</defaultConnectorLabel>
+        <rules>
+            <name>do_check_order</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>order.ManagedSapDiscard__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>order.ManagedSapDiscard__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Check_Phase</targetReference>
+            </connector>
+            <label>do check</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Gestione_da_Activity</name>
+        <label>Gestione da Activity</label>
+        <locationX>721</locationX>
+        <locationY>2534</locationY>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>activityId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activityId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Chiusura_Activity</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Stop_Cancel</name>
         <label>Stop Cancel</label>
         <locationX>182</locationX>
         <locationY>638</locationY>
         <defaultConnector>
-            <targetReference>Check_Phase</targetReference>
+            <targetReference>Check_SAP_Phase_Order</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -192,7 +405,7 @@
         <locationX>336</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Check_Phase</targetReference>
+            <targetReference>Check_SAP_Phase_Order</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>child</defaultConnectorLabel>
         <rules>
@@ -235,8 +448,8 @@
     <recordLookups>
         <name>Check_Phase</name>
         <label>Check Phase</label>
-        <locationX>721</locationX>
-        <locationY>1286</locationY>
+        <locationX>182</locationX>
+        <locationY>1310</locationY>
         <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Check_Rule</targetReference>
@@ -313,6 +526,63 @@
             <field>Id</field>
         </outputAssignments>
     </recordLookups>
+    <recordUpdates>
+        <name>Chiusura_Activity</name>
+        <label>Chiusura Activity</label>
+        <locationX>589</locationX>
+        <locationY>2654</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>ActivityEndTime__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDateTime</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosedByUsername__c</field>
+            <value>
+                <elementReference>$User.Username</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosingCreatorGroup__c</field>
+            <value>
+                <elementReference>$User.CreatorGroup__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>ClosingUserChannel__c</field>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>EndDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>UserCompany__c</field>
+            <value>
+                <elementReference>$User.UserCompany__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Chiusa</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+    </recordUpdates>
     <start>
         <locationX>595</locationX>
         <locationY>0</locationY>
@@ -321,6 +591,16 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>activityId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
     <variables>
         <name>Case</name>
         <dataType>SObject</dataType>

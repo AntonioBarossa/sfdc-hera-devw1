@@ -2212,26 +2212,12 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Si_SecondScreen</name>
-            <conditionLogic>((1 AND 2) OR 3) AND 4</conditionLogic>
+            <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getPreSecondForm.RequestSource__c</leftValueReference>
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>D&apos;ufficio</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getPreSecondForm.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica dati contrattuali</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getPreSecondForm.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica post accertamento</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
