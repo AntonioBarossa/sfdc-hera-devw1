@@ -5,7 +5,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         Sale__c sale = new Sale__c();
         try{
             sale = new Sale__c(
-                Name = saleName+' '+ Date.today(),
+                Name = saleName+' '+ Date.today().format(),
                 CurrentStep__c = 4.0,
                 SalesContactRole__c = 'Titolare',
                 SalesContact__c = getTitolare(accountId)?.Contact?.Id,//contactId,
@@ -173,7 +173,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
         childOrder.Type='New';
-        childOrder.Step__c=1.0;
+        childOrder.Step__c=3.0;
+        childOrder.RealEstateUnit__c=1.0;
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;
@@ -188,6 +189,44 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.ImplantType__c = contractList[0].ServicePoint__r.ImplantType__c;
             childOrder.Market__c = contractList[0].ServicePoint__r.MarketOrigin__c;
             childOrder.SupplyPostalCode__c = contractList[0].ServicePoint__r.SupplyPostalCode__c;
+            //new stuff
+            childOrder.PayPurification__c=contractList[0].ServicePoint__r.PayPurification__c;
+            childOrder.PaySewer__c=contractList[0].ServicePoint__r.PaySewer__c;
+            childOrder.SupplyCity__c=contractList[0].ServicePoint__r.SupplyCity__c;
+            childOrder.RateCategory__c=contractList[0].ServicePoint__r.RateCategory__c;
+            childOrder.WithdrawalClass__c=contractList[0].ServicePoint__r.WithdrawalClass__c;
+            childOrder.Market__c=contractList[0].Market__c;
+            childOrder.SupplyType__c=contractList[0].ServicePoint__r.SupplyType__c;
+            childOrder.CustomerCategory__c=parentOrder.Account.Category__c;
+            childOrder.MeterSN__c=contractList[0].ServicePoint__r.MeterSN__c;
+            childOrder.Resident__c=contractList[0].ServicePoint__r.Resident__c;
+            childOrder.SapContractCode__c=contractList[0].SAPContractCode__c;
+            childOrder.ATO__c=contractList[0].ServicePoint__r.ATO__c;
+            childOrder.Disconnectable__c=contractList[0].ServicePoint__r.Disconnectable__c;
+            childOrder.DisconnectibilityType__c=contractList[0].ServicePoint__r.DisconnectibilityType__c;
+            childOrder.MarketOrigin__c=contractList[0].ServicePoint__r.MarketOrigin__c;
+
+            childOrder.BillSendMode__c=parentOrder.BillingProfile__r.BillSendingMethod__c;
+            childOrder.InvoiceEmailAddress__c=parentOrder.BillingProfile__r.InvoiceEmailAddress__c;
+            childOrder.InvoiceCertifiedEmailAddress__c=parentOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c;
+            childOrder.SendCertifiedEmailConsentDate__c=parentOrder.BillingProfile__r.SendCertifiedEmailConsentDate__c;
+            childOrder.DivergentSubject__c=parentOrder.BillingProfile__r.DivergentSubject__c;
+            childOrder.BillingCity__c=parentOrder.BillingProfile__r.InvoicingCity__c;
+            childOrder.BillingCountry__c=parentOrder.BillingProfile__r.InvoicingCountry__c;
+            childOrder.BillingPlace__c=parentOrder.BillingProfile__r.InvoicingPlace__c;
+            childOrder.BillingProvince__c=parentOrder.BillingProfile__r.InvoicingProvince__c;
+            childOrder.BillingStreetName__c=parentOrder.BillingProfile__r.InvoicingStreetName__c;
+            childOrder.BillingStreetNumber__c=parentOrder.BillingProfile__r.InvoicingStreetNumber__c;
+            childOrder.BillingPostalCode__c=parentOrder.BillingProfile__r.InvoicingPostalCode__c;
+            childOrder.BillingCityCode__c=parentOrder.BillingProfile__r.InvoicingCityCode__c;
+
+            childOrder.VAT__c=contractList[0].VAT__c;
+
+            /*
+            childOrder.FacilitationExcise__c=
+            childOrder.VATfacilitationFlag__c=contractList[0].Exc
+             */
+            //end
             OrderItem oi=generateOrderItem(contractList[0],childOrder,params);
             HDT_UTL_DatabaseService.insertSObject(oi);
         }
@@ -301,7 +340,20 @@ public with sharing class HDT_UTL_GenericSolHandler {
                                         ServicePoint__r.ImplantType__c,
                                         ServicePoint__r.MarketOrigin__c,
                                         ServicePoint__r.DisconnectibilityPhone__c,
-                                        ServicePoint__r.SupplyPostalCode__c
+                                        ServicePoint__r.SupplyPostalCode__c,
+                                        ServicePoint__r.PayPurification__c,
+                                        ServicePoint__r.PaySewer__c,
+                                        ServicePoint__r.SupplyCity__c,
+                                        ServicePoint__r.RateCategory__c,
+                                        ServicePoint__r.WithdrawalClass__c,
+                                        Market__c,
+                                        ServicePoint__r.SupplyType__c,
+                                        ServicePoint__r.MeterSN__c,
+                                        SAPContractCode__c,
+                                        ServicePoint__r.ATO__c,
+                                        ServicePoint__r.Disconnectable__c,
+                                        ServicePoint__r.DisconnectibilityType__c,
+                                        VAT__c
                                     FROM Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
         return returnList;
     }

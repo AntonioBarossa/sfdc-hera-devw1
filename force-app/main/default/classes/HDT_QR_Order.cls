@@ -1492,7 +1492,11 @@ public inherited sharing class HDT_QR_Order {
 
     public Order getParentOrderVolturaSOL(String orderNumber){
         return [SELECT Id,IntegrationId__c,Contact__c,AccountId,RecordTypeId,Sale__c,ProcessType__c,EffectiveDate__c,ContractAccountCode__c,CustomerLastName__c,CustomerName__c,CustomerType__c,
-                CustomerVATNumber__c, CustomerFiscalCode__c,EffectiveDate,Status,BillingProfile__c,PaymentMode__c,Note__c
+                CustomerVATNumber__c, CustomerFiscalCode__c,EffectiveDate,Status,BillingProfile__c,PaymentMode__c,Note__c,Account.Category__c,
+                BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,
+                BillingProfile__r.DivergentSubject__c, BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c, BillingProfile__r.InvoicingPlace__c,
+                BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c, BillingProfile__r.InvoicingPostalCode__c,
+                BillingProfile__r.InvoicingCityCode__c
         FROM Order WHERE OrderNumber=:orderNumber WITH SECURITY_ENFORCED ];
     }
 }
