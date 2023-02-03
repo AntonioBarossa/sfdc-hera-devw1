@@ -1,8 +1,10 @@
 import { LightningElement, api } from 'lwc';
 import callSap from '@salesforce/apexContinuation/HDT_LC_AccountDataEnrichment.startRequest';
 import getTableConfig from '@salesforce/apex/HDT_LC_AccountDataEnrichment.getTableConfig';
+import { NavigationMixin } from 'lightning/navigation';
+import importBonusSociale from '@salesforce/label/c.UrlImportBonusSociale';
 
-export default class HdtAccountDataEnrichment extends LightningElement {
+export default class HdtAccountDataEnrichment extends NavigationMixin(LightningElement) {
     data = [];
     columns;
     tableTitle;
@@ -194,6 +196,14 @@ export default class HdtAccountDataEnrichment extends LightningElement {
 
     openKnowledgeArticle(){
         console.log('apertura articolo knowledge con importi bonus sociale');
+        this[NavigationMixin.Navigate](
+            {
+                type: 'standard__webPage',
+                attributes: {
+                    url: importBonusSociale
+                }
+            }
+        );
     }
 
 }
