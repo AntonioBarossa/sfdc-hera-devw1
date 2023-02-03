@@ -726,6 +726,12 @@
                 <stringValue>KO BP CA Risolto</stringValue>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Documentazione Validata</stringValue>
+            </value>
+        </inputAssignments>
         <object>Order</object>
     </recordUpdates>
     <recordUpdates>

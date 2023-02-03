@@ -3081,6 +3081,22 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Order_Error_Message</name>
+        <label>Order Error Message</label>
+        <locationX>3534</locationX>
+        <locationY>958</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>OrderMessage</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 18px;&quot;&gt;Processo di {!ProcessType}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 12px;&quot;&gt;{!Check_Order_Before_Cancel.errorMessage}&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Motivo_Annullamento_Screen_TARI</name>
         <label>Motivo Annullamento Screen</label>
         <locationX>1126</locationX>
