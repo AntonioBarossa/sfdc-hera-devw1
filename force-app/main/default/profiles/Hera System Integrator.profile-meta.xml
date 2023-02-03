@@ -316,6 +316,10 @@
     </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_ArchivedRecordsDeleteBatch__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
