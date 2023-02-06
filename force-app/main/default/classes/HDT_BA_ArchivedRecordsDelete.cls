@@ -92,21 +92,21 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
             when 'OrderItem' {
                 queryString += ', SBQQ__Activated__c, SBQQ__Contracted__c ';
             }
-            when 'BillingProfile__c' {
-                queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Casi__r LIMIT 1), (SELECT Id FROM Orders__r LIMIT 1), (SELECT Id FROM Order_Products__r LIMIT 1), (SELECT Id FROM Contracts__r LIMIT 1) ';
-            }
-            when 'CommunicationLog__c' {
-                queryString += ', (SELECT Id FROM IndividualEmailResults__r LIMIT 1), (SELECT Id FROM PushTracking__r LIMIT 1), (SELECT Id FROM SMSTracking__r LIMIT 1) ';
-            }
-            when 'Individual' {
-                queryString += ', (SELECT Id FROM Contacts LIMIT 1), (SELECT Id FROM Leads LIMIT 1) ';
-            }
-            when 'Interaction__c' {
-                queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Orders__r LIMIT 1), (SELECT Id FROM Vendite__r LIMIT 1), (SELECT Id FROM Activities_Custom__r LIMIT 1) ';
-            }
-            when 'ServicePoint__c' {
-                queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Activities_Custom__r LIMIT 1) ';
-            }
+            // when 'BillingProfile__c' {
+            //     queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Casi__r LIMIT 1), (SELECT Id FROM Orders__r LIMIT 1), (SELECT Id FROM Order_Products__r LIMIT 1), (SELECT Id FROM Contracts__r LIMIT 1) ';
+            // }
+            // when 'CommunicationLog__c' {
+            //     queryString += ', (SELECT Id FROM IndividualEmailResults__r LIMIT 1), (SELECT Id FROM PushTracking__r LIMIT 1), (SELECT Id FROM SMSTracking__r LIMIT 1) ';
+            // }
+            // when 'Individual' {
+            //     queryString += ', (SELECT Id FROM Contacts LIMIT 1), (SELECT Id FROM Leads LIMIT 1) ';
+            // }
+            // when 'Interaction__c' {
+            //     queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Orders__r LIMIT 1), (SELECT Id FROM Vendite__r LIMIT 1), (SELECT Id FROM Activities_Custom__r LIMIT 1) ';
+            // }
+            // when 'ServicePoint__c' {
+            //     queryString += ', (SELECT Id FROM Cases__r LIMIT 1), (SELECT Id FROM Activities_Custom__r LIMIT 1) ';
+            // }
         }
 
         queryString += ' FROM ' + this.currentObject;
@@ -153,7 +153,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         try {
 
-            String exceptionErr = '';
+            String exceptionErr = executionTracking.ErrorMessage__c;
 
             List<Id> filteredRecordsToDelete = new List<Id>();
             Boolean needsDeletionWithSet = false;
@@ -171,31 +171,31 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                 // Custom logic for records that are not archived but need to be deleted
                 when 'BillingProfile__c' {
                     
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Casi__r', 'Orders__r', 'Order_Products__r', 'Contracts__r'}));
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Case|BillingProfile__c', 'Case|TargetBillingProfile__c', 'Order|BillingProfile__c', 'OrderItem|BillingProfile__c', 'Contract|BillingProfile__c'}));
                     needsDeletionWithSet = true;
 
                 }
                 when 'CommunicationLog__c' {
                     
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'IndividualEmailResults__r', 'PushTracking__r', 'SMSTracking__r'}));
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'et4ae5__IndividualEmailResult__c|IdLog__c', 'PushTracking__c|IdLog__c', 'SMSTracking__c|IdLog__c'}));
                     needsDeletionWithSet = true;
 
                 }
                 when 'Individual' {
                     
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Contacts', 'Leads'}));
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Contact|IndividualId', 'Lead|IndividualId'}));
                     needsDeletionWithSet = true;
 
                 }
                 when 'Interaction__c' {
                     
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Orders__r', 'Vendite__r', 'Activities_Custom__r'}));
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Case|Interaction__c', 'Order|Interaction__c', 'Sale__c|Interaction__c', 'wrts_prcgvr__Activity__c|Interaction__c'}));
                     needsDeletionWithSet = true;
 
                 }
                 when 'ServicePoint__c' {
                     
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Cases__r', 'Activities_Custom__r'}));
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Case|ServicePoint__c', 'wrts_prcgvr__Activity__c|ServicePoint__c'}));
                     needsDeletionWithSet = true;
 
                 }
@@ -218,7 +218,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                         executionTracking.NumberOfDeleteErrors__c++;
                         
                         // Stop launch of next batch if there are errors in the delete
-                        executionTracking.RelaunchBatch__c = false;
+                        // executionTracking.RelaunchBatch__c = false;
 
                         exceptionErr += JSON.serialize(dr.getErrors());
 
@@ -231,15 +231,19 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
             }
 
-            executionTracking.ErrorMessage__c = exceptionErr.abbreviate(255);
+            executionTracking.ErrorMessage__c = exceptionErr?.abbreviate(255);
+
+            System.debug('executionTracking.NumberOfRecordsDeleted__c before execute update: ' + executionTracking.NumberOfRecordsDeleted__c);
+            System.debug('executionTracking.NumberOfDeleteErrors__c before execute update: ' + executionTracking.NumberOfDeleteErrors__c);
+            System.debug('executionTracking.ErrorMessage__c before execute update: ' + executionTracking.ErrorMessage__c);
 
             Database.update(executionTracking);
 
         } catch (Exception e) {
 
             // Stop launch of next batch if there are errors in execute
-            executionTracking.RelaunchBatch__c = false;
-            executionTracking.ErrorMessage__c = (e.getMessage() + '\n\n' + e.getStackTraceString()).abbreviate(255);
+            // executionTracking.RelaunchBatch__c = false;
+            executionTracking.ErrorMessage__c = (e.getMessage() + '\n' + e.getStackTraceString()).abbreviate(255);
 
             Database.update(executionTracking);
 
@@ -274,14 +278,14 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         if (String.isNotBlank(executionTracking.ErrorMessage__c)) {
             mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
-                                  ', Records Deleted: ' + executionTracking.NumberOfDeleteErrors__c + 
+                                  ', Records Deleted: ' + executionTracking.NumberOfRecordsDeleted__c + 
                                   ', Records With Deleted Errors: ' + executionTracking.NumberOfDeleteErrors__c + 
                                   ', Next Object To Process: ' + nextObject + 
                                   '\n\nQuery used: ' + executionTracking.QueryUsed__c + '\n\nthe execution resulted in the following errors: ' + executionTracking.ErrorMessage__c);
         } else {
             // mail.setPlainTextBody('Execution Timestamp: ' + this.executionTimeStamp + '\n\nQuery used: ' + this.queryUsed + '\n\nThe following records of type ' + this.currentObject + ' have been deleted:\n' + JSON.serializePretty(this.recordsDeleted));
             mail.setPlainTextBody('Execution Timestamp: ' + executionTracking.ExecutionTimestamp__c + 
-                                  ', Records Deleted: ' + executionTracking.NumberOfDeleteErrors__c + 
+                                  ', Records Deleted: ' + executionTracking.NumberOfRecordsDeleted__c + 
                                   ', Next Object To Process: ' + nextObject + 
                                   '\n\nQuery used: ' + executionTracking.QueryUsed__c + '\n\nThe records of type ' + this.currentObject + ' have been deleted.');
         }
@@ -321,25 +325,30 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
     }
 
     // Check that all children were deleted
-    public List<Id> filterScopeForDeletedChildren(List<SObject> scope, List<String> childrenRelationships) {
+    public Set<Id> filterScopeForDeletedChildren(List<SObject> scope, List<String> parentRelationships) {
 
-        List<Id> result = new List<Id>();
+        Set<Id> result = new Set<Id>();
 
         for (SObject so : scope) {
+            result.add((Id) so.get('Id'));
+        }
 
-            Boolean canBeDeleted = true;
-            
-            for (String rel : childrenRelationships) {
+        for (String parent : parentRelationships) {
 
-                if (so.getSObjects(rel) != null && !so.getSObjects(rel).isEmpty()) {
-                    canBeDeleted = false;
-                    break;
-                }
+            String targetObject = parent.split('|').get(0);
+            String targetField = parent.split('|').get(1);
 
-            }
+            String queryString = 'SELECT ' + targetField + 
+                                 ' FROM ' + targetObject + 
+                                 ' WHERE ' + targetField + 
+                                 ' IN ' + result + 
+                                 ' GROUP BY ' + targetField + 
+                                 ' LIMIT ' + this.batchScope;
 
-            if (canBeDeleted) {
-                result.add(so.Id);
+            for (AggregateResult so : Database.query(queryString)) {
+
+                result.remove((Id) so.get(targetField));
+
             }
 
         }
