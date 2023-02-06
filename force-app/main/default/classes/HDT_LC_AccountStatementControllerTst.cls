@@ -12,7 +12,10 @@ public class HDT_LC_AccountStatementControllerTst {
 
     @testSetup
     static void setup() {
-        HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+        accList[0].VATNumber__c = '46653050669';
+        insert accList;
+
     }
     
     @isTest
