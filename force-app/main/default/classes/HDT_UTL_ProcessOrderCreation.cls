@@ -129,7 +129,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             if(String.isNotEmpty(convertionError)){
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
+                processObj.requestItem.StatusDescription__c = convertionError.abbreviate(250);
                 itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
@@ -313,7 +313,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             errorFieldCheck = checkRequiredSalesField(processObj.sale);
             if(String.isNotEmpty(errorFieldCheck)){
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = errorFieldCheck;
+                processObj.requestItem.StatusDescription__c = errorFieldCheck.abbreviate(250);
                 continue;
             }
 
@@ -336,7 +336,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             if(saveSaleResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 //system.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveSaleResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveSaleResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 continue;
             }
 
@@ -360,7 +360,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             if(saveOpportunityResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 //system.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveOpportunityResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveOpportunityResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 continue;
             }
 
@@ -541,7 +541,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             if(saveChildOrderResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 //system.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveChildOrderResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveChildOrderResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 continue;
             }
 
@@ -572,7 +572,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             if(saveOrderItemResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 //system.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveOrderItemResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveOrderItemResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
