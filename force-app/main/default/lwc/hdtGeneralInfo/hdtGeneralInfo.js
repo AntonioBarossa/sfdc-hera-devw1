@@ -727,7 +727,7 @@ export default class HdtGeneralInfo extends LightningElement {
     renderedCallback() {
         let Channel = this.template.querySelector('[data-name="Channel__c"]').value;
         let channelCheck = '';
-        /*if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
+        if (this.saleRecord.CreatedBy.LoginChannel__c == 'Sportello') {
             this.channelValue = 'Sportello';
             channelCheck = 'Sportello';
             this.ChannelSelection = 'Sportello';
@@ -755,7 +755,7 @@ export default class HdtGeneralInfo extends LightningElement {
                 //this.dispatchEvent(toastErrorMessage);
             });
         }
-        else */if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
+        else if (this.saleRecord.CreatedBy.LoginChannel__c == 'Telefono Outbound') {
             this.channelValue = 'Telefono';
             this.ChannelSelection = 'Telefono';
             channelCheck = 'Telefono';
