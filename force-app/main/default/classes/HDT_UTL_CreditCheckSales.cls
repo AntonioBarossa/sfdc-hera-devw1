@@ -130,7 +130,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
 
             } catch(Exception ex){
                 processObject.requestItem.Status__c = 'Errore';
-                processObject.requestItem.StatusDescription__c = ex.getMessage() + ' linea: ' + String.valueOf(ex.getLineNumber());
+                processObject.requestItem.StatusDescription__c = (ex.getMessage() + ' linea: ' + String.valueOf(ex.getLineNumber())).abbreviate(250);
             }
 
             itemsToUpdate.add(processObject.requestItem);

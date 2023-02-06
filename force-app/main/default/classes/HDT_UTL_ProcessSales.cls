@@ -318,7 +318,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             if(String.isNotEmpty(convertionError)){
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = convertionError;
+                processObj.requestItem.StatusDescription__c = convertionError.abbreviate(250);
                 continue;
             }
 
@@ -326,7 +326,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 convertionError = checkRequiredServicePointField(processObj.servicePoint);
                 if(String.isNotEmpty(convertionError)){
                     processObj.requestItem.Status__c = 'Errore';
-                    processObj.requestItem.StatusDescription__c = convertionError;
+                    processObj.requestItem.StatusDescription__c = convertionError.abbreviate(250);
                     continue;
                 }
             }
@@ -363,7 +363,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
             if(String.isNotEmpty(requiredAccountFields) || String.isNotEmpty(requiredReferenteFields)){
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = String.isNotBlank(requiredAccountFields)?requiredAccountFields:requiredReferenteFields;
+                processObj.requestItem.StatusDescription__c = (String.isNotBlank(requiredAccountFields)?requiredAccountFields:requiredReferenteFields).abbreviate(250);
                 continue;
             }
             if(processObj.createReferente){
@@ -379,7 +379,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 convertionError = checkRequiredBillingProfileField(processObj.billingProfile, processObj.account.Category__c);
                 if(String.isNotEmpty(convertionError)){
                     processObj.requestItem.Status__c = 'Errore';
-                    processObj.requestItem.StatusDescription__c = convertionError;
+                    processObj.requestItem.StatusDescription__c = convertionError.abbreviate(250);
                     continue;
                 }
             }
@@ -423,7 +423,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c after save');
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveAccountResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveAccountResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 continue;
             }
 
@@ -477,7 +477,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             if(saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c error');
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveAccountResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveAccountResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 continue;
             }
 
@@ -581,14 +581,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             if(saveBillProfResponse != null && saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveBillProfResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveBillProfResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
             if(saveServPointResponse != null && saveServPointResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = saveServPointResponse.errorItemMap.get(processObj.requestItem.Id);
+                processObj.requestItem.StatusDescription__c = (saveServPointResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
