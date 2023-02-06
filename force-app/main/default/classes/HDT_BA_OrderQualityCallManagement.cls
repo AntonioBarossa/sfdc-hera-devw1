@@ -75,7 +75,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             this.getChildOrderInfo(pOrdersId,orderWithActivity); // creare le informazioni, per vedere se un ordine è da gestire (solo relativamente agli stati) e con quale data.
             List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
             for (Order o : orders){
-                if (!this.mapOrderToManage.containsKey(o.ParentOrder__c) || !this.mapOrderToManage.get(o.ParentOrder__c)){
+                if (this.mapOrderToManage.containsKey(o.ParentOrder__c) && !this.mapOrderToManage.get(o.ParentOrder__c)){
                     this.actMap.remove(o.ParentOrder__c);
                     continue;
                 }
