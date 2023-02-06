@@ -20,9 +20,15 @@ public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
     @TestSetup
     static void setup(){
 
+        Test.startTest();
+
         // Process Click setup
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
+
+        // Create Tracking Custom Setting
+        CS_ArchivedRecordsDeleteBatch__c executionTracking = new CS_ArchivedRecordsDeleteBatch__c(RelaunchBatch__c = true);
+        insert executionTracking;
         
         // Create Accounts
         List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(numberOfRecords, true, 'MMS', 'G1 - MMS Persona fisica', 'Famiglie');
@@ -210,6 +216,8 @@ public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
         update orders;
         update orderItems;
 
+        Test.StopTest();
+
     }
 
     @IsTest
@@ -226,8 +234,8 @@ public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
 
         // !Can't assert due to too many queries exception
 
-        // Interaction__c testInteraction = [SELECT Id, IsDeleted FROM Interaction__c WHERE IsDeleted = true LIMIT 1 ALL ROWS];
-        // System.assertEquals(true, testInteraction.IsDeleted, 'The Interaction__c was not deleted as expected');
+        Interaction__c testInteraction = [SELECT Id, IsDeleted FROM Interaction__c WHERE IsDeleted = true LIMIT 1 ALL ROWS];
+        System.assertEquals(true, testInteraction.IsDeleted, 'The Interaction__c was not deleted as expected');
 
     }
 
@@ -248,6 +256,19 @@ public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
         Account testAccount = [SELECT Id, IsDeleted FROM Account WHERE IsDeleted = false LIMIT 1 ALL ROWS];
         System.assertEquals(false, testAccount.IsDeleted, 'The Account was deleted but an exception was expected');
 
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void testOtherConstructors(){
+        
+        Test.startTest();
+        System.runAs(testAdmin){
+            
+            HDT_BA_ArchivedRecordsDelete bs = new HDT_BA_ArchivedRecordsDelete(batchSize, 0, numberOfRecords, true);
+
+        }
         Test.stopTest();
         
     }
