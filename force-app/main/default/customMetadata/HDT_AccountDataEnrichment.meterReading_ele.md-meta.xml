@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Meter reading Ele</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_DataEnrichmentView</value>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;POD&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;pod&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Data inizio&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;dataInizio&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Data fine&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;dataFine&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Commodity&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;commodity&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Modalità&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;modalita&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Codice flusso&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;codFlusso&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Codice flusso decod&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;codFlussoDecod&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Stato misura&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;statoMisura&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Stato misura decod&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;statoMisuraDecod&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Data misura&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;dataMisura&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Tipo rettifica&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;tipoRettifica&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Motivazione&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;motivazione&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Trattamento&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;trattamento&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Forfait&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;forfait&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Gruppo mis&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;gruppoMis&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Raccolta&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;raccolta&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Tipo dato&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;tipoDato&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Motivazione stima&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;motivazioneStima&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Validato&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;validato&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Potenza max&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;potMax&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Motivazione int&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;motivazioneInt&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Tipologia misuratore&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;tipologiaMisuratore&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Fascia&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;fascia&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;EA&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;ea&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;ER&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;er&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;POT&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;pot&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;ERC&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;erc&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;ERI&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;eri&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;EA CONS&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;eaCons&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;POT CONS&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;potCons&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;ER CONS&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;erCons&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Tipologia MIS INST&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;tipologiaMisInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Data misura inst&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;dataMisuraInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;DAta regime 2G&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;dataRegime2g&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Cifre att inst&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;cifreAttInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Cifre rea inst&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;cifreReaInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;Cifre pot inst&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;cifrePotInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;EA INST&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;eaInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;ER INST&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;erInst&quot;
+    },
+    {
+      &quot;sortable&quot;: true,
+      &quot;label&quot;: &quot;POT INST&quot;,
+      &quot;initialWidth&quot;: 150,
+      &quot;fieldType&quot;: &quot;text&quot;,
+      &quot;fieldName&quot;: &quot;potInst&quot;
+    }
+  ]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">callout:meterReading_ele</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

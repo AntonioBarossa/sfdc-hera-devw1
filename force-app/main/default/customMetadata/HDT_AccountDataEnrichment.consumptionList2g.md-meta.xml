@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Elenco Consumi 2G</label>
+    <protected>false</protected>
+    <values>
+        <field>ApexClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>Authorization__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ColumnData__c</field>
+        <value xsi:type="xsd:string">[
+  {
+    &quot;tableTitle&quot;: &quot;Elenco Consumi&quot;,
+    &quot;tableName&quot;: &quot;consumptionList2g&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;Id Brim&quot;,
+        &quot;fieldName&quot;: &quot;idBrim&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Contratto&quot;,
+        &quot;fieldName&quot;: &quot;contract&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data inizio&quot;,
+        &quot;fieldName&quot;: &quot;consDateStart&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data fine&quot;,
+        &quot;fieldName&quot;: &quot;consDateEnd&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;POD&quot;,
+        &quot;fieldName&quot;: &quot;pod&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Data scanning&quot;,
+        &quot;fieldName&quot;: &quot;scanningDate&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Tipo scanning&quot;,
+        &quot;fieldName&quot;: &quot;scanningType&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Band Discount&quot;,
+        &quot;fieldName&quot;: &quot;bandDiscount&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Giorno speciale&quot;,
+        &quot;fieldName&quot;: &quot;specialDay&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Costo giornaliero&quot;,
+        &quot;fieldName&quot;: &quot;dailyCost&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;KWH&quot;,
+        &quot;fieldName&quot;: &quot;dailyKwh&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;KwhNet&quot;,
+        &quot;fieldName&quot;: &quot;dailyKwhNet&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Tot. perdite del giorno €&quot;,
+        &quot;fieldName&quot;: &quot;dailyLossCost&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Tot. perdite del giorno kWh&quot;,
+        &quot;fieldName&quot;: &quot;dailyLossKwh&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Tot. sconto giorn. kWh&quot;,
+        &quot;fieldName&quot;: &quot;dailyDiscountKwh&quot;,
+        &quot;initialWidth&quot;: 140
+      },
+      {
+        &quot;label&quot;: &quot;Tot. sconto giorn. perdite kWh&quot;,
+        &quot;fieldName&quot;: &quot;dailyLossDiscountKwh&quot;,
+        &quot;initialWidth&quot;: 140
+      }
+    ]
+  },
+  {
+    &quot;tableTitle&quot;: &quot;Costo Consumi&quot;,
+    &quot;tableName&quot;: &quot;details&quot;,
+    &quot;iconName&quot;: &quot;standard:record_update&quot;,
+    &quot;columns&quot;: [
+      {
+        &quot;label&quot;: &quot;ORA&quot;,
+        &quot;fieldName&quot;: &quot;hour&quot;
+      },
+      {
+        &quot;label&quot;: &quot;hourlyCost&quot;,
+        &quot;fieldName&quot;: &quot;hourlyCost&quot;
+      },
+      {
+        &quot;label&quot;: &quot;hourlyKwh&quot;,
+        &quot;fieldName&quot;: &quot;hourlyKwh&quot;
+      }
+    ]
+  }
+]</value>
+    </values>
+    <values>
+        <field>Credential__c</field>
+        <value xsi:type="xsd:string">Callout:consumptionList2g</value>
+    </values>
+    <values>
+        <field>UseMock__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+</CustomMetadata>

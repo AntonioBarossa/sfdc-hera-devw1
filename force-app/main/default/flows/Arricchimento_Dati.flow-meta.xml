@@ -12,6 +12,9 @@
         <label>myDecision</label>
         <locationX>50</locationX>
         <locationY>0</locationY>
+        <defaultConnector>
+            <targetReference>myDecision4</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_1</name>
@@ -115,6 +118,120 @@
             <label>Modifiche Anagrafiche</label>
         </rules>
     </decisions>
+    <decisions>
+        <processMetadataValues>
+            <name>index</name>
+            <value>
+                <numberValue>1.0</numberValue>
+            </value>
+        </processMetadataValues>
+        <name>myDecision4</name>
+        <label>myDecision4</label>
+        <locationX>50</locationX>
+        <locationY>0</locationY>
+        <defaultConnectorLabel>default</defaultConnectorLabel>
+        <rules>
+            <name>myRule_5</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Piano Rateizzazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Web</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>APP</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>myRule_5_A1</targetReference>
+            </connector>
+            <label>Rateizzazioni</label>
+        </rules>
+    </decisions>
     <description>Arricchimento Dati Case SOL</description>
     <formulas>
         <processMetadataValues>
@@ -123,7 +240,7 @@
                 <stringValue>IF(ISBLANK([Case].Account.CustomerCode__c) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A2_9045878119</name>
+        <name>formula_2_myRule_1_A2_0058404222</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Account.CustomerCode__c}) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</expression>
     </formulas>
@@ -134,11 +251,22 @@
                 <stringValue>IF(ISBLANK([Case].Account.CustomerCode__c) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_A1_1519927389</name>
+        <name>formula_3_myRule_1_A1_6633120453</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Account.CustomerCode__c}) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</expression>
     </formulas>
-    <interviewLabel>Arricchimento_Dati-7_InterviewLabel</interviewLabel>
+    <formulas>
+        <processMetadataValues>
+            <name>originalFormula</name>
+            <value>
+                <stringValue>[Case].CreatedDate + 19</stringValue>
+            </value>
+        </processMetadataValues>
+        <name>formula_6_myRule_5_A1_0458546066</name>
+        <dataType>Date</dataType>
+        <expression>{!myVariable_current.CreatedDate} + 19</expression>
+    </formulas>
+    <interviewLabel>Arricchimento_Dati-8_InterviewLabel</interviewLabel>
     <label>Arricchimento Dati</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -702,7 +830,7 @@
             </processMetadataValues>
             <field>TecnicalPhase__c</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_1519927389</elementReference>
+                <elementReference>formula_3_myRule_1_A1_6633120453</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -884,7 +1012,7 @@
             </processMetadataValues>
             <field>TecnicalPhase__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A2_9045878119</elementReference>
+                <elementReference>formula_2_myRule_1_A2_0058404222</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1352,6 +1480,87 @@
             <field>InvoicingStreetNumberExtension__c</field>
             <value>
                 <elementReference>myVariable_current.BillingProfile__r.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <processMetadataValues>
+            <name>evaluationType</name>
+            <value>
+                <stringValue>always</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>extraTypeInfo</name>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>isChildRelationship</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>reference</name>
+            <value>
+                <stringValue>[Case]</stringValue>
+            </value>
+        </processMetadataValues>
+        <processMetadataValues>
+            <name>referenceTargetField</name>
+        </processMetadataValues>
+        <name>myRule_5_A1</name>
+        <label>Aggiorna Data Scadenza</label>
+        <locationX>500</locationX>
+        <locationY>200</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <processMetadataValues>
+                <name>implicit</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </processMetadataValues>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>myVariable_current.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <processMetadataValues>
+                <name>dataType</name>
+                <value>
+                    <stringValue>Date</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>isRequired</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideLabel</name>
+                <value>
+                    <stringValue>Data Scadenza</stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>leftHandSideReferenceTo</name>
+                <value>
+                    <stringValue></stringValue>
+                </value>
+            </processMetadataValues>
+            <processMetadataValues>
+                <name>rightHandSideType</name>
+                <value>
+                    <stringValue>Formula</stringValue>
+                </value>
+            </processMetadataValues>
+            <field>ExpirationDate__c</field>
+            <value>
+                <elementReference>formula_6_myRule_5_A1_0458546066</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>

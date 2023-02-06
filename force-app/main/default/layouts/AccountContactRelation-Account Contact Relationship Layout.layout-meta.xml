@@ -79,6 +79,10 @@
                 <behavior>Edit</behavior>
                 <field>IsManagerSOL__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>RegistrationType__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
