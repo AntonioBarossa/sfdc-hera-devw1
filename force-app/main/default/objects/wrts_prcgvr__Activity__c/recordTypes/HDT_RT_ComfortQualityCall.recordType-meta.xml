@@ -58,7 +58,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -508,7 +508,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -653,7 +653,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1103,7 +1103,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
