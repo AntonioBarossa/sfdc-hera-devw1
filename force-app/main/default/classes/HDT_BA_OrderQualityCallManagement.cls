@@ -199,6 +199,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         //La query è necessaria perchè potrebbe crearsi la situazione in cui i figli di un ordine sono separati da un esecuzione di un batch ed un altro.
         //Infatti elimino quelli già creati nelle precedenti esecuzioni
         pOrdersId.removeAll(this.mapOrderToManage.keySet());
+        if (pOrdersId.isEmpty()){
+            return;
+        }
         for (Order o : HDT_QR_Order.getChildOrdersFromParentId(pOrdersId)){
             if (this.mapOrderToManage.containsKey(o.ParentOrder__c) && !this.mapOrderToManage.get(o.ParentOrder__c) 
             ||(!this.childsId.contains(o.Id) && !this.parentsId.contains(o.ParentOrder__c))){
