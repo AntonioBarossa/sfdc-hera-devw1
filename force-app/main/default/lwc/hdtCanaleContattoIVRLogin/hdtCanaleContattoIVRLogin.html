@@ -12,9 +12,8 @@
                         <h2 class="slds-align_absolute-center slds-card__header-title loginTitle" slot="title">
                             Autenticazione
                         </h2>
-                        <lightning-input class="slds-align_absolute-center slds-box_small" placeholder="Username" type="text"     name="username" data-id="usernameField" variant="label-hidden"></lightning-input>
-                        <lightning-input class="slds-align_absolute-center slds-box_small" type="password" placeholder="Password"
-                            name="password" data-id="passwordField" variant="label-hidden"></lightning-input>
+                        <lightning-input class="slds-align_absolute-center slds-box_small" required onchange={handleInputChange} placeholder="Username" type="text" name="username" data-id="usernameField" variant="label-hidden"></lightning-input>
+                        <lightning-input class="slds-align_absolute-center slds-box_small" required onchange={handleInputChange} type="password" placeholder="Password" name="password" data-id="passwordField" variant="label-hidden"></lightning-input>
                         <lightning-input type="checkbox" class="slds-box--small" label="Visualizza password" name="showPassword" onchange={toggleShowPassword}></lightning-input>
 
                         <div class="slds-box_small slds-float_right slds-m-right_medium slds-m-bottom_large slds-m-top_medium slds-text-link tooltip" onclick={toggleTooltip}>Dove trovo le credenziali?
@@ -23,7 +22,7 @@
                             </template>
                         </div>
                     </div>
-                    <lightning-button class="slds-p-top--medium loginButton slds-box--small slds-p-bottom--large" type="button" label="ACCEDI" onclick={handleLogin} style="display: grid;width: 100%;">
+                    <lightning-button name="accessButton" disabled={buttonDisabled} class="slds-p-top--medium loginButton slds-box--small slds-p-bottom--large" type="button" label="ACCEDI" onclick={handleLogin} style="display: grid;width: 100%;">
                     </lightning-button>
                 </div>
     
@@ -47,6 +46,11 @@
                         </lightning-datatable>
                     </div>
                 </template>
+
+                <div if:true={spinner} >
+                    <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+                </div>
+
         </lightning-card>
     </div>
 </template>
