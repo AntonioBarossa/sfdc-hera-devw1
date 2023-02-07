@@ -233,7 +233,13 @@ export default class hdtBillingProfileForm extends LightningElement {
                 }
             }
 
-            
+            this.fields.push({
+                fieldName: 'PaymentConditions__c',
+                visibility: true,
+                disabled: false,
+                value: '',
+                required: false
+            });
             
         }).catch(error => {
             this.loading = false;

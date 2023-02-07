@@ -796,6 +796,16 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
+                            <value>Case.HDT_CaseDocumentValidation</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>In attesa validazione</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
                             <value>CustomButton.Case.HDT_DynamicCancellation</value>
                             <visibilityRule>
                                 <booleanFilter>1 AND 2</booleanFilter>
