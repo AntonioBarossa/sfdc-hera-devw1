@@ -17,6 +17,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     Map<String,Account> definitiveAccountCodeMap=new Map<String,Account>();
     Map<String,BillingProfile__c> codeBillingProfMap=new Map<String,BillingProfile__c>();
     List<Case> caseToShift=new List<Case>();
+
     public override void checks(){
         mapFieldsObject();
         contractIndex = mapHeaderForWrapper.get('CODICECONTRATTO');
