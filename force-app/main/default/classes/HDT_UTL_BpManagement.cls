@@ -112,12 +112,6 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         }
     }
 
-    public static MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
-        itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
-        return itemError;
-    }
-
     private Case generateCase(List<String> csvValues){
         String caseDescription='';
         Case processCase=new Case(
@@ -126,11 +120,17 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 RecordTypeId=Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_UnificazioneSeparazioneCABolletta').getRecordTypeId(),
                 Type='Unificazione/Separazione BP-CA-Bolletta',
                 Cluster__c='Fatturazione',
-                AccountId= sapCodeContractMap.get(csvValues[contractIndex]).AccountId,
                 Contract__c=sapCodeContractMap.get(csvValues[contractIndex]).Id,
                 BillingProfile__c=sapCodeContractMap.get(csvValues[contractIndex]).BillingProfile__c,
                 ServicePoint__c=sapCodeContractMap.get(csvValues[contractIndex]).ServicePoint__c
         );
+        if(String.isNotBlank(csvValues[masterAccountIndex]) && definitiveAccountCodeMap.containsKey(csvValues[masterAccountIndex]) ){
+            processCase.AccountId=definitiveAccountCodeMap.get(csvValues[masterAccountIndex]).Id;
+            processCase.Account=definitiveAccountCodeMap.get(csvValues[masterAccountIndex]);
+        }else{
+            processCase.AccountId=sapCodeContractMap.get(csvValues[contractIndex]).AccountId;
+            processCase.Account=sapCodeContractMap.get(csvValues[contractIndex]).Account;
+        }
         caseDescription+='Account da unificare:\n'+csvValues[accountToMergeIndex]+'\n';
         caseDescription+='Account master:\n'+csvValues[masterAccountIndex]+'\n';
         caseDescription+='CA da unificare:\n'+csvValues[caToMergeIndex];
@@ -202,10 +202,10 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 InvoicingCity__c=csvValues[cityIndex],
                 InvoicingPlace__c=csvValues[placeIndex],
                 InvoicingProvince__c=csvValues[provinceIndex],
-                InvoicingPostalCode__c=csvValues[postalCodeIndex]
+                InvoicingPostalCode__c=csvValues[postalCodeIndex],
+                Account__c=processCase.AccountId
         );
-        bpToCreate.recalculateFormulas();
-        String checkResponse=checkRequiredBillingProfileField(bpToCreate,'Famiglia');
+        String checkResponse=checkRequiredBillingProfileField(bpToCreate,processCase.Account.Category__c);
         if(String.isNotBlank(checkResponse)){
             throw new IllegalArgumentException(checkResponse);
         }
@@ -214,8 +214,9 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     }
 
     public String checkRequiredBillingProfileField(BillingProfile__c bp, String categoriaCliente){
+        bp.recalculateFormulas();
         Boolean contoContrattualeBool = String.isEmpty(bp.ContractAccountCode__c);
-        Boolean modPagamentoBool = String.isEmpty(bp.PaymentMethod__c);
+        //Boolean modPagamentoBool = String.isEmpty(bp.PaymentMethod__c);
         String modPagamentoStr = bp.PaymentMethod__c;
         Boolean modInvioBool = String.isEmpty(bp.BillSendingMethod__c);
         String modInvioStr = bp.BillSendingMethod__c;
