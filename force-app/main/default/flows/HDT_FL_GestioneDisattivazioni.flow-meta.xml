@@ -892,6 +892,71 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignBillingAddress</name>
+        <label>assignBillingAddress</label>
+        <locationX>1106</locationX>
+        <locationY>3590</locationY>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAfterSecondForm</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignCommodity</name>
         <label>AssignCommodity</label>
         <locationX>2365</locationX>
@@ -935,7 +1000,7 @@
         <name>AssignDatiSoggetto</name>
         <label>AssignDatiSoggetto</label>
         <locationX>1546</locationX>
-        <locationY>3470</locationY>
+        <locationY>3350</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_0.FirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -979,7 +1044,7 @@
         <name>assignParams</name>
         <label>assignParams</label>
         <locationX>2167</locationX>
-        <locationY>4274</locationY>
+        <locationY>4574</locationY>
         <assignmentItems>
             <assignToReference>paramsRequiredAttachments.city</assignToReference>
             <operator>Assign</operator>
@@ -1016,7 +1081,7 @@
         <name>assignPhase_0</name>
         <label>assignPhase</label>
         <locationX>2250</locationX>
-        <locationY>5474</locationY>
+        <locationY>5774</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1032,7 +1097,7 @@
         <name>assignPhase_0_0</name>
         <label>assignPhase</label>
         <locationX>2778</locationX>
-        <locationY>5114</locationY>
+        <locationY>5414</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1048,7 +1113,7 @@
         <name>assignPhase_0_0_0</name>
         <label>assignPhase</label>
         <locationX>2514</locationX>
-        <locationY>5474</locationY>
+        <locationY>5774</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1064,7 +1129,7 @@
         <name>assignPhase_0_0_0_0</name>
         <label>assignPhase</label>
         <locationX>3042</locationX>
-        <locationY>5114</locationY>
+        <locationY>5414</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1119,7 +1184,7 @@
         <name>assignStatus</name>
         <label>assignStatus</label>
         <locationX>2613</locationX>
-        <locationY>4874</locationY>
+        <locationY>5174</locationY>
         <assignmentItems>
             <assignToReference>getTariCase_1.Status</assignToReference>
             <operator>Assign</operator>
@@ -1256,7 +1321,7 @@
         <name>annullamentoFromDocumentale</name>
         <label>annullamentoFromDocumentale</label>
         <locationX>2184</locationX>
-        <locationY>5234</locationY>
+        <locationY>5534</locationY>
         <defaultConnector>
             <targetReference>checkOutputDocumentale</targetReference>
         </defaultConnector>
@@ -1307,7 +1372,7 @@
         <name>checkOutputDocumentale</name>
         <label>checkOutputDocumentale</label>
         <locationX>2382</locationX>
-        <locationY>5354</locationY>
+        <locationY>5654</locationY>
         <defaultConnector>
             <targetReference>assignPhase_0_0_0</targetReference>
         </defaultConnector>
@@ -1780,10 +1845,10 @@
         <name>Qualit_DelSottoscrittore</name>
         <label>QualitàDelSottoscrittore</label>
         <locationX>1678</locationX>
-        <locationY>3350</locationY>
+        <locationY>3230</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>SecondTariForm</targetReference>
+            <targetReference>getPreSecondForm</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>altre qualità</defaultConnectorLabel>
         <rules>
@@ -1831,7 +1896,7 @@
         <name>Riapertura_1</name>
         <label>Riapertura?</label>
         <locationX>1733</locationX>
-        <locationY>3110</locationY>
+        <locationY>2990</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Qualit_DelSottoscrittore</targetReference>
@@ -1968,7 +2033,7 @@
         <name>Scelta_pulsantiera_0</name>
         <label>Scelta pulsantiera</label>
         <locationX>1240</locationX>
-        <locationY>2630</locationY>
+        <locationY>2390</locationY>
         <defaultConnector>
             <targetReference>getTariCase_0</targetReference>
         </defaultConnector>
@@ -2006,7 +2071,7 @@
         <name>Scelta_pulsantiera_0_0</name>
         <label>Scelta pulsantiera</label>
         <locationX>1106</locationX>
-        <locationY>3470</locationY>
+        <locationY>3830</locationY>
         <defaultConnector>
             <targetReference>getPreAttachments</targetReference>
         </defaultConnector>
@@ -2044,7 +2109,7 @@
         <name>Scelta_pulsantiera_0_0_0</name>
         <label>Scelta pulsantiera</label>
         <locationX>2167</locationX>
-        <locationY>4634</locationY>
+        <locationY>4934</locationY>
         <defaultConnector>
             <targetReference>getTariCase_1</targetReference>
         </defaultConnector>
@@ -2070,7 +2135,7 @@
         <name>showSecondScreen</name>
         <label>showSecondScreen?</label>
         <locationX>2167</locationX>
-        <locationY>2990</locationY>
+        <locationY>2750</locationY>
         <defaultConnector>
             <targetReference>getPreAttachments</targetReference>
         </defaultConnector>
@@ -2093,7 +2158,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Riapertura_1</targetReference>
+                <targetReference>modalita_invio_bolletta</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -2118,7 +2183,7 @@
         <name>Valori_popolati</name>
         <label>Valori popolati?</label>
         <locationX>1392</locationX>
-        <locationY>3230</locationY>
+        <locationY>3110</locationY>
         <defaultConnector>
             <targetReference>Qualit_DelSottoscrittore</targetReference>
         </defaultConnector>
@@ -2162,7 +2227,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>SecondTariForm</targetReference>
+                <targetReference>getPreSecondForm</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -2203,7 +2268,7 @@
         <name>WhichProcess</name>
         <label>WhichProcess</label>
         <locationX>2613</locationX>
-        <locationY>4994</locationY>
+        <locationY>5294</locationY>
         <defaultConnector>
             <targetReference>assignPhase_0_0_0_0</targetReference>
         </defaultConnector>
@@ -2617,13 +2682,13 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
-        <name>getFixFields</name>
-        <label>getFixFields</label>
-        <locationX>1240</locationX>
-        <locationY>2390</locationY>
+        <name>getPostSecondForm</name>
+        <label>getPostSecondForm</label>
+        <locationX>1106</locationX>
+        <locationY>3470</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>updateFixFields</targetReference>
+            <targetReference>assignBillingAddress</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2641,10 +2706,31 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>getPreAttachments</name>
         <label>getPreAttachments</label>
         <locationX>2167</locationX>
-        <locationY>4154</locationY>
+        <locationY>4454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignParams</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPreSecondForm</name>
+        <label>getPreSecondForm</label>
+        <locationX>1106</locationX>
+        <locationY>3230</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>SecondTariForm</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2732,7 +2818,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>getTariCase_0</name>
         <label>getTariCase_0</label>
         <locationX>2167</locationX>
-        <locationY>2750</locationY>
+        <locationY>2510</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>checkTariManaged</targetReference>
@@ -2753,7 +2839,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>getTariCase_1</name>
         <label>getTariCase_1</label>
         <locationX>2613</locationX>
-        <locationY>4754</locationY>
+        <locationY>5054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignStatus</targetReference>
@@ -2853,44 +2939,30 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>updateAfterSecondForm</name>
+        <label>updateAfterSecondForm</label>
+        <locationX>1106</locationX>
+        <locationY>3710</locationY>
+        <connector>
+            <targetReference>Scelta_pulsantiera_0_0</targetReference>
+        </connector>
+        <inputReference>getPostSecondForm</inputReference>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateCaseTari_1</name>
         <label>updateCaseTari_1</label>
         <locationX>2613</locationX>
-        <locationY>5882</locationY>
+        <locationY>6182</locationY>
         <inputReference>getTariCase_1</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>updateFixFields</name>
-        <label>updateFixFields</label>
-        <locationX>1240</locationX>
-        <locationY>2510</locationY>
-        <connector>
-            <targetReference>Scelta_pulsantiera_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>InputCase</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>TerminationDate__c</field>
-            <value>
-                <elementReference>getFixFields.EffectiveDate__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>UpdateGetTariCase_0</name>
         <label>UpdateGetTariCase_0</label>
         <locationX>1546</locationX>
-        <locationY>3590</locationY>
+        <locationY>3470</locationY>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>SecondTariForm</targetReference>
+            <targetReference>getPreSecondForm</targetReference>
         </connector>
         <inputReference>getTariCase_0</inputReference>
     </recordUpdates>
@@ -2898,7 +2970,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>updatePostAttachments</name>
         <label>updatePostAttachments</label>
         <locationX>2167</locationX>
-        <locationY>4514</locationY>
+        <locationY>4814</locationY>
         <connector>
             <targetReference>Scelta_pulsantiera_0_0_0</targetReference>
         </connector>
@@ -3439,7 +3511,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>getFixFields</targetReference>
+            <targetReference>Scelta_pulsantiera_0</targetReference>
         </connector>
         <fields>
             <name>ScreenHeader_0</name>
@@ -3610,10 +3682,55 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>modalita_invio_bolletta</name>
+        <label>modalita invio bolletta</label>
+        <locationX>1733</locationX>
+        <locationY>2870</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Riapertura_1</targetReference>
+        </connector>
+        <fields>
+            <name>headerBillDelivery</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti per l&apos;invio dell&apos;ultima bolletta&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>hdtBillDeliveryChooser</name>
+            <extensionName>c:hdtBillDeliveryChooser</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>accountId</name>
+                <value>
+                    <elementReference>getTariCase_0.AccountId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>caseId</name>
+                <value>
+                    <elementReference>getTariCase_0.Id</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
         <locationX>2184</locationX>
-        <locationY>5114</locationY>
+        <locationY>5414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3682,7 +3799,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>ScreenReminderAllegati</name>
         <label>ScreenAllegati</label>
         <locationX>2167</locationX>
-        <locationY>4394</locationY>
+        <locationY>4694</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3943,7 +4060,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Scelta_pulsantiera_0_0</targetReference>
+            <targetReference>getPostSecondForm</targetReference>
         </connector>
         <fields>
             <name>ScreenHeader_0_0</name>
@@ -3957,7 +4074,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <inputParameters>
                 <name>cancelButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4017,7 +4134,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <inputParameters>
                 <name>saveButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -4041,7 +4158,106 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <inputParameters>
                 <name>draftButton</name>
                 <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>ScreenHeader_0_1</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(68, 68, 68);&quot;&gt;Indirizzo residenza/sede legale/recapito&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>cbIndirizzi</name>
+            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelCase</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>hideNavigationButtons</name>
+                <value>
                     <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theCase</name>
+                <value>
+                    <elementReference>getPreSecondForm</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -4063,7 +4279,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
         <locationX>2167</locationX>
-        <locationY>2870</locationY>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>showSecondScreen</targetReference>
         </connector>
