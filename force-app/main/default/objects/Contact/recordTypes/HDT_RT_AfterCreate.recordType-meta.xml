@@ -2336,6 +2336,29 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>SourceAgency__c</picklist>
+        <values>
+            <fullName>Covisian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè Bologna Srl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè Srl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Linetech</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>SourceDetail__c</picklist>
         <values>
             <fullName>ADSALSA</fullName>
