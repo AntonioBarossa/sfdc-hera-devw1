@@ -454,8 +454,28 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Boolean createActivity = False;
+        /* TK 916750C - Aggiunta canali per cui si deve creare activity */
         switch on origin {
-            when 'Sportello', 'Telefono Inbound' {
+            when 'Sportello',
+                'Telefono Inbound',
+                'Assistente web',
+                'Back office',
+                'Camper',
+                'Chat',
+                'Consip',
+                'Helpdesk',
+                'PA',
+                'Protocollo',
+                'ServiziSociali',
+                'Staff',
+                'Supporto agenzie',
+                'Supporto GDA',
+                'Telefono Outbound',
+                'Teleselling',
+                'Vendita Business',
+                'Vendita Condomini',
+                'Vendita MM',
+                'Vendita TopBusiness' {
                 createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
             }
             when else {
