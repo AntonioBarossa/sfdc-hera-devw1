@@ -114,6 +114,27 @@ public inherited sharing class HDT_QR_BillingProfile {
         return null;
     }
 
+    public List<BillingProfile__c> getRecordByContractAccount(Set<String> contractAccounts) {
+
+        return [
+                SELECT
+                        Id,
+                        InvoicingPlace__c,
+                        InvoicingPostalCode__c,
+                        InvoicingCity__c,
+                        InvoicingStreetNumber__c,
+                        InvoicingCountry__c,
+                        //InvoicingStreetToponym__c,
+                        InvoicingStreetName__c,
+                        InvoicingStreetNumberExtension__c,
+                        InvoicingProvince__c,
+                        BankAccountSignatoryLastName__c,
+                        ContractAccountCode__c
+                FROM BillingProfile__c
+                WHERE ContractAccountCode__c IN :contractAccounts
+                WITH SECURITY_ENFORCED
+        ];
+    }
     // FINE SVILUPPI EVERIS
 
 }

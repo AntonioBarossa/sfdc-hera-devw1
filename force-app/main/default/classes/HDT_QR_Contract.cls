@@ -294,4 +294,8 @@ public inherited sharing class HDT_QR_Contract {
                 WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED];
     }
 
+    public List<Contract> getContractBySapCodeBpManagementBulk(Set<String> sapCodes){
+        return [SELECT Id,BillingProfile__c,AccountId,Account.Category__c,ServicePoint__c,SAPContractCode__c FROM Contract WHERE SAPContractCode__c IN: sapCodes WITH SECURITY_ENFORCED ];
+    }
+
 }
