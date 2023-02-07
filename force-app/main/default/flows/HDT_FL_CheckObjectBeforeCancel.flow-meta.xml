@@ -112,7 +112,7 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Non si può annullare la pratica fintanto che si trova nella fase attuale.</stringValue>
+                <stringValue>Non è possibile procedere con l&apos;annullamento su questa pratica.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -212,12 +212,19 @@
         </rules>
         <rules>
             <name>Fase_Non_Annullabile</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>phase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Errore invio a DL/SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>StopDelete</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -431,6 +438,38 @@
             <label>Parent Order</label>
         </rules>
     </decisions>
+    <formulas>
+        <name>StopDelete</name>
+        <dataType>Boolean</dataType>
+        <expression>IF(NOT(ISBLANK({!Case.Id})),
+OR(
+	{!Case.NotCancellable__c},
+	ISPICKVAL({!Case.Status}, &apos;Closed&apos;),
+    ISPICKVAL({!Case.Status}, &apos;Chiuso&apos;),
+	AND(
+		{!Case.FlyingRequest__c},
+		NOT({!$Permission.HDT_CP_AnnullamentoPraticheInVolo})
+	)
+),IF(NOT(ISBLANK({!order.Id})),
+OR(
+	{!order.NotCancellable__c},
+	ISPICKVAL({!order.Status}, &apos;Chiuso&apos;),
+    ISPICKVAL({!order.Status}, &apos;Activated&apos;),
+	ISPICKVAL({!order.Status}, &apos;Annullato&apos;),
+	AND(
+		{!order.FlyingRequest__c},
+		NOT({!$Permission.HDT_CP_AnnullamentoPraticheInVolo})
+	),
+	AND(
+		{!order.isTransition__c},
+		OR(
+		ISPICKVAL({!order.Phase__c}, &apos;Esportazione VS Siebel&apos;),
+		ISPICKVAL({!order.Phase__c}, &apos;Caricamento Siebel OK&apos;),
+		ISPICKVAL({!order.Phase__c}, &apos;In Corso Caricamento Siebel&apos;)
+		)
+	)
+),false))</expression>
+    </formulas>
     <interviewLabel>HDT_FL_CheckObjectBeforeCancel {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_CheckObjectBeforeCancel</label>
     <processMetadataValues>
