@@ -196,10 +196,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fatturazione PA</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Invio tramite PEC</fullName>
             <default>false</default>
         </values>
