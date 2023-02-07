@@ -81,7 +81,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -643,7 +643,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -768,7 +768,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1330,7 +1330,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2470,6 +2470,57 @@
         </values>
         <values>
             <fullName>Richiesto parere ad altra struttura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Supporto Esercizio Sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assistenza Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC cliente da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Commissioni Agenzie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto emissione SD_massiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto TL Front</fullName>
             <default>false</default>
         </values>
     </picklistValues>

@@ -59,7 +59,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -509,7 +509,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -634,7 +634,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1084,7 +1084,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2125,6 +2125,33 @@
         </values>
         <values>
             <fullName>Richiesto parere ad altra struttura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Approvazione Offerte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Iva e Accise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
     </picklistValues>

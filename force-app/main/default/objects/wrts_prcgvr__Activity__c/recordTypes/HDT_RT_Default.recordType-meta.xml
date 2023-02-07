@@ -59,7 +59,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -513,7 +513,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -638,7 +638,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1092,7 +1092,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2213,6 +2213,281 @@
         </values>
         <values>
             <fullName>Richiesto parere ad altra struttura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Accettazione Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Acconto scaduto non pagato da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approvazione Offerte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attesa Preventivo DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Back Office - Catalogo Prodotti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Caricamento Manuale Siebel</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Check preliminari KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazioni con DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferma Preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Confermare Cambio Decorrenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti%2FBonus Commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Creare Istruttoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 affidi ADR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Credit Management %E2%80%93 sospensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Del%2E 40 gestione doc%2Einvio a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Documentale%2FCopia Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Manuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore Comunicazione e-BDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Da Gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO da SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito KO pre-MDM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito Lavori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Esito OK Riduzione Potenza</fullName>
+            <default>false</default>
+        </values>   
+        <values>
+            <fullName>Gestione Iva e Accise</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione M01%2FM02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Manuale SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Sblocco al Calcolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Switch in Ripristinatorio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione dati discordanti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Order Management MUI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Misure Energy</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione richiesta social</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Comunicazione Disconoscimento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Legge 80</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Lettera di Legittimità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviare Preventivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>KO gestito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavorazione Reclamo Post Survey</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Contratti PreAttivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica gestita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rapporti con i distributori e SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reporting</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Inviata - Attesa Rettifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta Motivata Con Allegato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Commissioni Agenzie</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Agenzia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto Contact Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto TL Front</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto emissione SD_massiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica comportamento Banca%2C Istituti Finanziari e Carte di Credito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica rimborsi Clienti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Credito Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Morosità Business</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sblocco Processo verso SII/DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche documentale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche layout bollette</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche pagamenti</fullName>
             <default>false</default>
         </values>
     </picklistValues>

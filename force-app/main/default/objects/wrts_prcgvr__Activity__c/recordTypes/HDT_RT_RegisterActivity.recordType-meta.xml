@@ -59,7 +59,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -509,7 +509,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -634,7 +634,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1084,7 +1084,7 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2205,6 +2205,81 @@
         </values>
         <values>
             <fullName>Richiesto parere ad altra struttura</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Protocollo - Attivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Da tipizzare</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Reclami Post Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Disattivazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Modifiche Anagrafiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Pagamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Preventivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - VAS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Variazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Verifiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Protocollo - Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vendita - Contratti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
