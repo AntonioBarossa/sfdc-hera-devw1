@@ -1,0 +1,35 @@
+<template>
+
+    <lightning-card>
+        <lightning-record-edit-form 
+            record-id={recordId}
+            record-type-id={recordTypeId}
+            object-api-name="Case">
+            <lightning-input-field field-name="BillSendingMethod__c" required="true" onchange={onChange}></lightning-input-field>
+            <template if:false={modInvio}>
+                <lightning-input-field field-name="AlternativeEmail__c" required="true"></lightning-input-field>
+            </template>
+        </lightning-record-edit-form>
+        <template if:true={modInvio}>
+            <c-hdt-target-object-address-fields accountid={accountId}></c-hdt-target-object-address-fields>
+        </template>
+        <div class="slds-card__footer actionButtonBar slds-grid slds-grid_align-spread">
+            <div class="actionsLeft">
+
+            </div>
+            <div class="actionsRight">
+                <lightning-button
+                        class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                        variant="brand" type="button" label="Conferma" onclick={handleConfirm}>
+                    </lightning-button>
+                <!-- <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
+                        variant="neutral" type="button" label="Salva in Bozza" onclick={handleConfirmDraft}>
+                    </lightning-button> -->
+                <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-float--right"
+                        variant="brand" type="button" label="Annulla" onclick={handleAnnull}>
+                    </lightning-button>
+            </div>
+        </div>
+    </lightning-card>
+
+</template>

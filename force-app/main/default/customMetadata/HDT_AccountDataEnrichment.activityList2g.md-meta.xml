@@ -54,12 +54,12 @@
             &quot;initialWidth&quot;: 140
           },
           {
-            &quot;label&quot;: &quot;outcome&quot;,
+            &quot;label&quot;: &quot;Esito&quot;,
             &quot;fieldName&quot;: &quot;outcome&quot;,
             &quot;initialWidth&quot;: 140
           },
           {
-            &quot;label&quot;: &quot;outcome Descr&quot;,
+            &quot;label&quot;: &quot;Descrizione&quot;,
             &quot;fieldName&quot;: &quot;outcomeDescr&quot;,
             &quot;initialWidth&quot;: 140
           }

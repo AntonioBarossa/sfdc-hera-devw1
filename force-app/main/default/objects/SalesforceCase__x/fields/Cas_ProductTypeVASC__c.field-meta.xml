@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Tipologia Pordotto VAS</label>
+    <label>Tipologia Prodotto VAS</label>
     <length>255</length>
     <required>false</required>
     <type>Text</type>

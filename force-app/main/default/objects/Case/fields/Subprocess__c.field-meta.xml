@@ -44,11 +44,6 @@
                 <label>Adesione Fondo Fughe</label>
             </value>
             <value>
-                <fullName>Agevolazione</fullName>
-                <default>false</default>
-                <label>Agevolazione</label>
-            </value>
-            <value>
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
                 <label>Aggiunta Attacco</label>

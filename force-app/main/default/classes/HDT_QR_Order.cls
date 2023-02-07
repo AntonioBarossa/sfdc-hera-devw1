@@ -4,6 +4,7 @@
 * @description HDT_QR_Order – Contains queries for Order
 * @history Keltin Mesonjesi – 05/01/2020 – Created class
 */
+
 public inherited sharing class HDT_QR_Order {
     
     /**
@@ -41,7 +42,7 @@ public inherited sharing class HDT_QR_Order {
         Map<Id, Order> mapIdOrder=new  Map<Id, Order>([
             SELECT
             Name, AccountId,SAPImplantCode__c,SalesCompany__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,
-            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c,  
+            Status, ContractSigned__c, SignedDate__c, SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c, Surface__c, Commodity__c,
             CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
             WHERE Id IN :orderId
@@ -111,12 +112,14 @@ public inherited sharing class HDT_QR_Order {
             Account.LastName__c,
             Account.BillingPlace__c,
             Account.CompanyOwner__c,
+            Account.OwnerId,
             Account.RecordTypeName__c,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
             Sale__r.CreatedDate,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
+            Sale__r.Account__r.OwnerId,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -1081,6 +1084,7 @@ public inherited sharing class HDT_QR_Order {
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
+        SalesCompany__c,
         CausalCode__c,
         QuotationNumber__c
         FROM Order 
@@ -1182,6 +1186,7 @@ public inherited sharing class HDT_QR_Order {
         RecordTypeId,
         ParentOrder__c,
         ImplantType__c,
+        SalesCompany__c,
         CausalCode__c,QuotationNumber__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
@@ -1407,7 +1412,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public List<Order> getAllOrdersForComfort(String id){
-        return [SELECT Id, Phase__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
+        return [SELECT Id, Phase__c, WorkedQualityCall__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
     }
 
 
@@ -1479,5 +1484,9 @@ public inherited sharing class HDT_QR_Order {
             }
         }
         return parToChildOrderMap;
+    }
+
+    public static List<Order> getChildOrdersFromParentId(Set<String> parentsId){
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c,QualityCallStatus__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
     }
 }

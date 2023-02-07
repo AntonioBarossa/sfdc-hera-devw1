@@ -25,7 +25,7 @@ public class HDT_BA_OrderEstimateExpirationTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             Id recordtypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
             HDT_UTL_DataFactoryTst.newPhaseTransition('Preventivo scaduto','Attesa conferma preventivo cliente',recordTypeId,'HDT_RT_ConnessioneConAttivazione');
-        
+             HDT_UTL_DataFactoryTst.newPhaseTransition('Preventivo scaduto','Ammissibilità OK',recordTypeId,'HDT_RT_ConnessioneConAttivazione');       
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
@@ -35,14 +35,15 @@ public class HDT_BA_OrderEstimateExpirationTst {
             }
             insert contacts;
             
-            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,false,accId,'Preventivo Accettato');
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(2,false,accId,'Preventivo Accettato');
             for(Order o : orders){
                 o.Contact__c=contacts[0].id;
                 o.Phase__c='Attesa conferma preventivo cliente';
                 o.ValidityDateEstimate__c = system.today() - 1;
                 o.RecordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
-
             }
+            orders[1].Phase__c = 'Ammissibilità OK';
+            orders[1].QuotationType__c = 'Predeterminabile';
             insert orders;
         }
     }
@@ -77,7 +78,8 @@ public class HDT_BA_OrderEstimateExpirationTst {
 
         List<Order> orderExpired = [SELECT Id, Phase__c, Status FROM Order];
         System.assertNotEquals(null, jobId, 'Job non eseguito correttamente');
-        System.assertEquals('Preventivo scaduto', orderExpired[0].Phase__c, 'Fase non calcolata correttamente');
+        System.assertEquals('Preventivo scaduto', orderExpired[0].Phase__c, 'Fase 1 non calcolata correttamente');
+        System.assertEquals('Preventivo scaduto', orderExpired[1].Phase__c, 'Fase 2 non calcolata correttamente');
         System.assertEquals('Annullato', orderExpired[0].Status, 'Status non calcolato correttamente');
     }
 }

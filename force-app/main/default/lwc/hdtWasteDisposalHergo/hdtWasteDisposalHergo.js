@@ -98,6 +98,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         console.log(this._withdrawConfiguration);
 
         if(!this._withdrawConfiguration){
+            this.cubatureLimit=null;
             //if(event.target.fieldName == 'ClientTypology__c' || event.target.fieldName == 'TypeOperation__c'){
                 this.showMessage('Attenzione','Non è stata trovata una corrispondenza tra la combinazione Comune / Tipo Intervento e la tabella di Configurazione Ritiri Gratuiti. Aprire segnalazione per notificare la problematica.','error');
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
@@ -150,7 +151,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
     handleClose(event){
         console.log('###Close Event >>> ' + JSON.stringify(event.detail));
         this.template.querySelector("[data-id='MaterialDescription__c']").value = event.detail.label;  
-        if(this.cubatureLimit!==null){
+        if(!(this.cubatureLimit==null)){
             const checkPayment = this.template.querySelector("[data-id='WithdrawalFee__c']");
             checkPayment.value = event.detail.needPayment;
         }   

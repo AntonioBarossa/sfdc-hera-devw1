@@ -13,19 +13,9 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
-                <fullName>Annullato per decorrenza dei termini</fullName>
-                <default>false</default>
-                <label>Annullato per decorrenza dei termini</label>
-            </value>
-            <value>
                 <fullName>Accettato Motore VAS</fullName>
                 <default>false</default>
                 <label>Accettato Motore VAS</label>
-            </value>
-            <value>
-                <fullName>Inviato resoconto</fullName>
-                <default>false</default>
-                <label>Inviato resoconto</label>
             </value>
             <value>
                 <fullName>Accettazione Voltura Tecnica</fullName>
@@ -153,6 +143,11 @@
                 <label>Annullato</label>
             </value>
             <value>
+                <fullName>Annullato per decorrenza dei termini</fullName>
+                <default>false</default>
+                <label>Annullato per decorrenza dei termini</label>
+            </value>
+            <value>
                 <fullName>Annullato SII</fullName>
                 <default>false</default>
                 <label>Annullato SII</label>
@@ -266,6 +261,11 @@
                 <fullName>Completata</fullName>
                 <default>false</default>
                 <label>Completata</label>
+            </value>
+            <value>
+                <fullName>Comunicazionee EngageOne KO</fullName>
+                <default>false</default>
+                <label>Comunicazionee EngageOne KO</label>
             </value>
             <value>
                 <fullName>Comunicazione EngageOne KO</fullName>
@@ -543,9 +543,19 @@
                 <label>In attesa Data Decorrenza</label>
             </value>
             <value>
+                <fullName>In attesa di Verifica</fullName>
+                <default>false</default>
+                <label>In attesa di Verifica</label>
+            </value>
+            <value>
                 <fullName>In attesa Documentazione</fullName>
                 <default>false</default>
                 <label>In attesa Documentazione</label>
+            </value>
+            <value>
+                <fullName>In attesa esito EngageOne</fullName>
+                <default>false</default>
+                <label>In attesa esito EngageOne</label>
             </value>
             <value>
                 <fullName>In attesa lancio EngageOne</fullName>
@@ -648,6 +658,11 @@
                 <fullName>Inviato al SII</fullName>
                 <default>false</default>
                 <label>Inviato al SII</label>
+            </value>
+            <value>
+                <fullName>Inviato resoconto</fullName>
+                <default>false</default>
+                <label>Inviato resoconto</label>
             </value>
             <value>
                 <fullName>IR010</fullName>
@@ -1005,9 +1020,19 @@
                 <label>Validazione KO da DL</label>
             </value>
             <value>
+                <fullName>Validazione KO da Gestore</fullName>
+                <default>false</default>
+                <label>Validazione KO da Gestore</label>
+            </value>
+            <value>
                 <fullName>Validazione OK da DL</fullName>
                 <default>false</default>
                 <label>Validazione OK da DL</label>
+            </value>
+            <value>
+                <fullName>Validazione OK da Gestore</fullName>
+                <default>false</default>
+                <label>Validazione OK da Gestore</label>
             </value>
             <value>
                 <fullName>Validazione OK DL simulata</fullName>
@@ -1023,21 +1048,6 @@
                 <fullName>Verifica in laboratorio</fullName>
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
-            </value>
-            <value>
-                <fullName>In attesa di Verifica</fullName>
-                <default>false</default>
-                <label>In attesa di Verifica</label>
-            </value>
-            <value>
-                <fullName>Comunicazionee EngageOne KO</fullName>
-                <default>false</default>
-                <label>Comunicazionee EngageOne KO</label>
-            </value>
-            <value>
-                <fullName>In attesa esito EngageOne</fullName>
-                <default>false</default>
-                <label>In attesa esito EngageOne</label>
             </value>
         </valueSetDefinition>
     </valueSet>

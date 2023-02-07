@@ -54,6 +54,14 @@
     </entryCriteria>
     <finalApprovalActions>
         <action>
+            <name>Aggiorna_Data_Sospensione</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
+            <name>Aggiorna_giorni_sospensione</name>
+            <type>FieldUpdate</type>
+        </action>
+        <action>
             <name>Passa_a_Pratica_In_Attesa</name>
             <type>FieldUpdate</type>
         </action>

@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Documento di Identitià</label>
+    <label>Documento di Identità</label>
     <type>Checkbox</type>
 </CustomField>

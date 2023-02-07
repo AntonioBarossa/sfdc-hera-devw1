@@ -16,7 +16,7 @@
     </values>
     <values>
         <field>ServiceRequestType__c</field>
-        <value xsi:type="xsd:string">Aggiunta Attacco con Att - ACQ</value>
+        <value xsi:type="xsd:string">Aggiunta Attacco con Attivazione - ACQ</value>
     </values>
     <values>
         <field>Type__c</field>

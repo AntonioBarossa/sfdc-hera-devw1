@@ -84,6 +84,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     handleFieldChange(event) {
         console.log("### handleFieldChange", event.target.name, event.target.fieldName);
         const source = event.target.name ? event.target.name : event.target.fieldName;
+        this.disableSalva = false;
         if(this.formLoaded == FORM_LOAD_DONE){
             if(source == "CodeMissingRegistryData__c") {
                 if(event.detail.value == "") this._required = this.required == false ? false : true;
@@ -129,7 +130,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
                     this.dispatchEvent(evt);
                     this.disableSalva=true;
                 }
-                else this.disableSalva=false;
+                //else this.disableSalva=false;
             }
             if(source == "UrbanSection__c") {
                 const curLength = event.target.value.length;
@@ -138,7 +139,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
                     this.dispatchEvent(evt);
                     this.disableSalva=true;
                 } 
-                else this.disableSalva=false;
+                //else this.disableSalva=false;
             }
             if(source == "LegalCity__c") {
                 this.legalCityValue = event.target.value;
@@ -146,23 +147,43 @@ export default class HdtLandRegistryEdit extends LightningElement {
             if(source == "RegistryCategory__c") {
                 this.cadastralCategoryValue = event.target.value;
             }
+            if(source == "RegistrySurface__c"){
+                let val = event.target.value;
+                if(val == 0){
+                    let msg = "valori maggiori o uguali a 1";
+                    const evt = new ShowToastEvent({ variant: 'error', title: 'Attenzione!', message: msg });
+                    this.dispatchEvent(evt);
+                    this.disableSalva=true;
+                }
+            }
             //controllo se abilitare o meno il salva in base ai campi required
-            this.disableSalva = false;
+            //this.disableSalva = false;
             if(this._required){
-                let inputList = this.template.querySelectorAll('lightning-input-field:not(.slds-hide)');
-                inputList.forEach(input => {
-                    if(input.fieldName != "CodeMissingRegistryData__c" && ( input.value == null || input.value == "")) this.disableSalva = true;
-                });
-                inputList = this.template.querySelectorAll('lightning-combobox');
-                inputList.forEach(input => {
-                    if(input.value == null || input.value == "") this.disableSalva = true
-                });
+                this.checkRequiredFields();
             }
         }
     }
 
+    @api checkRequiredFields(){
+        let inputList = this.template.querySelectorAll('lightning-input-field:not(.slds-hide)');
+        inputList.forEach(input => {
+            if(input.fieldName != "CodeMissingRegistryData__c" && 
+            (input.value == null || (input.value == "" && typeof(input.value)!= "number"))  &&
+            input.required){
+                this.disableSalva = true;
+            }
+        });
+        inputList = this.template.querySelectorAll('lightning-combobox');
+        inputList.forEach(input => {
+            if(input.value == null || input.value == "") {
+                this.disableSalva = true;
+            }
+        });
+    }
+
     handleModificaClick(){
         this.modify = true;
+        this.disableSalva = false;
     }
 
     handleEliminaClick(){

@@ -75,18 +75,40 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
 		System.debug(LoggingLevel.DEBUG, debugString);
         
         String body='';
-        /*
-            @Author: Davide Viola - 19/10/2021
-            Description: PMD -> Commentata variabile non utilizzata.
-        */
-        //HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
-        
         try{
             body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
             if (context == 'EC' || context == 'GC') {
                 HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
             }
             HDT_SRV_DocumentalManagement.executeCalloutRequestFuture(body, context,formParams);
+
+        } catch (Exception ex) {
+            System.debug(LoggingLevel.DEBUG, 'exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());
+        }
+    }
+
+    /*
+    Il metodo gestisce in Sync sia la request che la response.
+    NB: Da utilizzare solo per le stampe semplici e non con dimensioni grandi ad esempio il sollecito della documentazione
+    
+    recordId: id record di cui si vuole [GESTIRE] la documentazione.
+    context: utilizzato per determinare contesto documentale
+    formParams: (serializzato) mappa di parametri utilizzata in vari punti.
+    */
+
+    public static void sendDocumentSync(String recordId, String context, String formParams){
+        
+		//DEBUG
+		String debugString = 'HDT_SRV_DocumentalManagementFacade - sendDocument';
+		System.debug(LoggingLevel.DEBUG, debugString);
+        
+        String body='';
+        try{
+            body = HDT_SRV_DocumentalManagement.generateRequest(recordId, context, formParams);
+            if (context == 'EC' || context == 'GC') {
+                HDT_SRV_DocumentalManagement.logEmailForAccountStatement(recordId, formParams);
+            }
+            HDT_SRV_DocumentalManagement.executeCalloutRequestSync(body, context,formParams);
 
         } catch (Exception ex) {
             System.debug(LoggingLevel.DEBUG, 'exception at line ' + ex.getLineNumber() + ' ' + ex.getMessage());

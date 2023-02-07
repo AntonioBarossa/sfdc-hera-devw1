@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Data list-unsubscribe </label>
+    <label>Data list-unsubscribe</label>
     <required>false</required>
     <type>DateTime</type>
 </CustomField>

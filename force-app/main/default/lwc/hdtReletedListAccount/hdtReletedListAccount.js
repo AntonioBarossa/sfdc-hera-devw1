@@ -217,6 +217,11 @@ export default class HdtReletedListAccount  extends NavigationMixin(LightningEle
         
     }
 
+    handleRefreshClick(event)
+    {
+        event.preventDefault();
+        this.getAllContact();
+    }
     
     handleCalculation(){
         

@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>Cliente</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
+    <relationshipLabel>Comunicazioni Migrate da Siebel a SFDC</relationshipLabel>
+    <relationshipName>ComunicazioniMigrateDaSiebelASFDC</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>

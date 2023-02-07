@@ -3,8 +3,18 @@
     <label>Preventivi - Variazione Portata</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+ {
+        &quot;FieldName&quot;: &quot;AlternativeEmail__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }
+]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
@@ -21,7 +31,12 @@
 {&quot;FieldName&quot;:&quot;ServicePointType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;ConnectionType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;UseTypeEnergy__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;Resident__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;Disconnectable__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;DisconnectibilityType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;RemoteManagementSystem__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;SalesCompany__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
+{&quot;FieldName&quot;:&quot;DisconnectibilityType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;RemoteManagementSystem__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
+{&quot;FieldName&quot;:&quot;SalesCompany__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ValidateClass__c</field>

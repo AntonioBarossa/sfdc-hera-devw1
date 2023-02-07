@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>ContractC</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceContract__x</referenceTo>
+    <relationshipLabel>Assets Salesforce</relationshipLabel>
+    <relationshipName>AssetsSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>

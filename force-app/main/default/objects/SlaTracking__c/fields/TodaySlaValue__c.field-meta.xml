@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TodaySlaValue__c</fullName>
+    <externalId>false</externalId>
+    <formula>IF(ISPICKVAL(SlaAdministration__r.RangeType__c, &apos;Giorni Solari&apos;),
+				(EndDateSolarDays__c - DATEVALUE(StartDateTime__c)) - (EndDateSolarDays__c - DATEVALUE(NOW())),
+				(EndDateWorkingDays__c - DATEVALUE(StartDateTime__c)) - (EndDateWorkingDays__c - DATEVALUE(NOW()))
+		 )</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>SLA corrente</label>
+    <precision>18</precision>
+    <required>false</required>
+    <scale>0</scale>
+    <trackTrending>false</trackTrending>
+    <type>Number</type>
+    <unique>false</unique>
+</CustomField>

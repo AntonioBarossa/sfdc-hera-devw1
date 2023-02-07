@@ -26,6 +26,7 @@ public with sharing class HDT_QR_BpCaCreate
             Account.BillingPostalCode,
             Account.BillingState,
             Account.BillingStreet,
+            Account.BillingStreetName__c,
             Account.IsVatGroupJoined__c,
             Account.VATGroup__c,
             Account.VATGroupStartDate__c,
@@ -77,7 +78,8 @@ public with sharing class HDT_QR_BpCaCreate
             BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c,
             BillingProfile__r.DivergentSubject__r.MailingPostalCode,
             BillingProfile__r.DivergentSubject__r.MailingState,
-            BillingProfile__r.DivergentSubject__r.MailingStreetName__c
+            BillingProfile__r.DivergentSubject__r.MailingStreetName__c,
+            BillingProfile__r.IbanCountry__c
             FROM Order
             WHERE Id = :orderId]
             );

@@ -248,6 +248,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = errDescr + '\n' + description;
             }
             else{
+                if('STATO_INTD'.equalsIgnoreCase(activity)){
+                    currentCase.distributorflowcode__c = 'KO';
+                }
                 HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
             }
             //Gestione Esito Appuntamento;
@@ -518,11 +521,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     contractAmb.Status = contractStatus;
                     spAmb.SapContractStatus__c = contractStatus;
                 }
-                DateTime endDateTimeContractAmb = DateTime.valueOf(reqWrp.requestMap.get('DATA_EVENTO'));
-                Date endDateContractAmb = date.newinstance(endDateTimeContractAmb.year(), endDateTimeContractAmb.month(), endDateTimeContractAmb.day()); 
-                if( endDateContractAmb != null && 'Cessazione'.equalsIgnoreCase(recordCase.Type) ){
-                    contractAmb.Id = recordCase.Contract__c;
-                    contractAmb.EndDate = endDateContractAmb; 
+                if( contractAmb.Id != null &&
+                    'Cessazione'.equalsIgnoreCase(recordCase.Type) &&
+                    recordCase.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_DisattivazioniTari').getRecordTypeId()){
+                        contractAmb.Id = recordCase.Contract__c;
+                        contractAmb.EndDate = recordCase.EffectiveDate__c;
+                        HDT_UTL_SubscriptionProcess.closeSubscriptionsToday(contractAmb.Id);
                 }
                 if(contractAmb.Id != null){
                     HDT_UTL_DatabaseService.updateSObject(contractAmb);
@@ -606,6 +610,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if (String.isNotBlank(codErrAeeg)){
             currentCase.DiscardCodeHeroku__c = codErrAeeg;
         }
+        HDT_UTL_UTils.setFieldsSize(currentCase);
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         handleAfterNotify(currentCase,storno,activity,reqWrp.requestMap.get('ANNOTAZIONI_ANN'));

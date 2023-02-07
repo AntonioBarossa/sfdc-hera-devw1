@@ -296,6 +296,10 @@
     </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_ArchivedRecordsDeleteBatch__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
@@ -657,6 +661,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.Comune__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MatriceRemiCode__c.EndDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MatriceRemiCode__c.Province__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MatriceRemiCode__c.StartDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MatriceRemiCode__c.isActive__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1136,6 +1160,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.ManagedSapDiscard__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.MethodSignedAccepted__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1567,6 +1596,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.RetroactiveDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.RefundStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -6046,11 +6080,6 @@
 	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
-		<field>Case.ConnId__c</field>
-		<readable>true</readable>
-	</fieldPermissions>
-	<fieldPermissions>
-		<editable>true</editable>
 		<field>Case.CorrectAddressToVerify__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -8441,6 +8470,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Case.NotResidentDomesticHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9492,6 +9526,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Contact.Jigsaw</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Contact.KeyIBMUnica__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28708,6 +28747,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.SAPContractAccountCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.SAPContractCode__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -33290,6 +33334,11 @@
         <field>wrts_prcgvr__Activity__c.DateTimeRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DiscardCancellation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.DiscardCategory__c</field>
@@ -33763,6 +33812,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.ShowcompletedActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.ShowEdit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -34660,12 +34714,12 @@
         <field>ContentVersion.FileNameMigration__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ContentVersion.JobNameMigration__c</field>
         <readable>true</readable>
     </fieldPermissions>
-<fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>ContentVersion.URL__c</field>
         <readable>true</readable>
@@ -34853,6 +34907,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SlaTracking__c.Status__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.EndDateWorkingDays__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.EndDateSolarDays__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.Range__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SlaTracking__c.TodaySlaValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
@@ -35290,24 +35364,24 @@
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
+        <layout>Order-Attivazioni Ambiente</layout>
         <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
+        <layout>Order-Attivazioni Ambiente</layout>
         <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazione Ambiente</layout>
-        <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_CambioTariffa</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Order-Attivazioni Ambiente</layout>
+        <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Order-Dossier</layout>
@@ -35607,6 +35681,120 @@
         <layout>Reading__c-HDT_LetturaAcqua</layout>
         <recordType>Reading__c.HDT_RT_LetturaAcqua</recordType>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceAsset__x-Asset Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceCase__x-Caso Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceCommTracking__x-Comunicazione Migrata da Siebel a SFDC Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContactPointEmail__x-Email punto di contatto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContactPointPhone__x-Telefono punto di contatto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContactRelation__x-Relazione referenti-account Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContact__x-Contatto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContentVersion__x-Content Version Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceContract__x-Contratto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceCustomer__x-Cliente Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocActivity__x-Attività Documentale Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocSelected__x-Documento Selezionato Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocSendTracking__x-Comunicazione Documentale Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceDocumentLink__x-Documento Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceEmailResult__x-Individual Email Result Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceIndEmailResult__x-Notifica SOL Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceLandRegistry__x-Dato Catastale Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceOrderItem__x-Ordine prodotto Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceOrder__x-Ordine Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforcePushTracking__x-Push Tracking Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceReading__x-Lettura Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceSMSTracking__x-SMS Tracking Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceStandardActivity__x-Task Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceSubscription__x-Subscription Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceSurvey__x-Survey Response Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SalesforceWrtsActivity__x-Attivita Salesforce Layout</layout>
+    </layoutAssignments>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>CadastralCategories__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+        <allowCreate>false</allowCreate>
+        <allowDelete>false</allowDelete>
+        <allowEdit>false</allowEdit>
+        <allowRead>true</allowRead>
+        <modifyAllRecords>false</modifyAllRecords>
+        <object>TermsAdministration__c</object>
+        <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+            <allowCreate>false</allowCreate>
+            <allowDelete>false</allowDelete>
+            <allowEdit>false</allowEdit>
+            <allowRead>true</allowRead>
+            <modifyAllRecords>false</modifyAllRecords>
+            <object>TermTable__c</object>
+            <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
+    <objectPermissions>
+            <allowCreate>false</allowCreate>
+            <allowDelete>false</allowDelete>
+            <allowEdit>false</allowEdit>
+            <allowRead>true</allowRead>
+            <modifyAllRecords>false</modifyAllRecords>
+            <object>TariAppointment__c</object>
+            <viewAllRecords>false</viewAllRecords>
+    </objectPermissions>
     <objectPermissions>
         <allowCreate>true</allowCreate>
         <allowDelete>true</allowDelete>

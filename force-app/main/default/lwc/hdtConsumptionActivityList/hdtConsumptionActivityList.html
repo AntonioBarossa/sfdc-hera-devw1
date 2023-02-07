@@ -16,6 +16,7 @@
         <c-hdt-custom-illustration
             message={errorMessage}
             style-class="slds-text-heading_medium"
+            size="slds-illustration_small"
         ></c-hdt-custom-illustration>
     </div>
 
@@ -68,22 +69,32 @@
                 </div>
                 <div class="slds-card__body slds-card__body_inner">
 
-                    <div if:true={spinner} >
-                        <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
-                    </div>
+                    <template if:true={showMainTable} >
+                        <div class="slds-scrollable_y slds-m-left_small slds-m-right_small slds-border_bottom slds-border_top slds-border_left slds-border_right" style="max-height: 500px; min-height: 10px;"><!--style="height: 40vh;"-->
+                            <lightning-datatable
+                                    key-field="id"
+                                    data={contractDataToView}
+                                    columns={contractColumns}
+                                    sorted-direction={sortDirection}
+                                    sorted-by={sortedBy}
+                                    onsort={onHandleSort}
+                                    onrowaction={handleRowAction}
+                                    hide-checkbox-column
+                            ></lightning-datatable>
+                        </div>
+                    </template>
 
-                    <div class="slds-scrollable_y slds-m-left_small slds-m-right_small slds-border_bottom slds-border_top slds-border_left slds-border_right" style="height: 20vh;">
-                        <lightning-datatable
-                                key-field="id"
-                                data={contractDataToView}
-                                columns={contractColumns}
-                                sorted-direction={sortDirection}
-                                sorted-by={sortedBy}
-                                onsort={onHandleSort}
-                                onrowaction={handleRowAction}
-                                hide-checkbox-column
-                        ></lightning-datatable>
-                    </div>
+                    <template if:false={showMainTable} >
+                        <div class="slds-text-align_center">
+                            <lightning-card>
+                                <c-hdt-custom-illustration
+                                    message="Dati  non presenti"
+                                    style-class="slds-text-heading_medium"
+                                    size="slds-illustration_small"
+                                ></c-hdt-custom-illustration>
+                            </lightning-card>
+                        </div>
+                    </template>
 
                 </div>
 
@@ -94,7 +105,7 @@
                 <lightning-card title={detailTitle} icon-name={detailIcon} >
         
                     <template if:true={showDetailTable} >
-                        <div class="slds-scrollable_y slds-m-left_small slds-m-right_small slds-border_bottom slds-border_top slds-border_left slds-border_right" style="height: 20vh;">
+                        <div class="slds-scrollable slds-m-left_small slds-m-right_small slds-border_bottom slds-border_top slds-border_left slds-border_right" style="height: 20vh;">
                             <lightning-datatable
                                 key-field="id"
                                 data={detailsDataToView}
@@ -114,6 +125,7 @@
                                 <c-hdt-custom-illustration
                                     message="Dati  non presenti"
                                     style-class="slds-text-heading_medium"
+                                    size="slds-illustration_small"
                                 ></c-hdt-custom-illustration>
                             </lightning-card>
                         </div>
@@ -122,7 +134,9 @@
                 </lightning-card>
             </div>
         </div>
-
+        <div if:true={spinner} >
+            <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
+        </div>
     </template>
 
 </template>

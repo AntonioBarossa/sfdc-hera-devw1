@@ -4,7 +4,7 @@
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
         <locationX>501</locationX>
-        <locationY>1574</locationY>
+        <locationY>1814</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -41,7 +41,7 @@
         <name>redirectToRecord</name>
         <label>redirectToRecord</label>
         <locationX>182</locationX>
-        <locationY>2750</locationY>
+        <locationY>2990</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -58,7 +58,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>2294</locationY>
+        <locationY>2534</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -74,7 +74,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>182</locationX>
-        <locationY>2510</locationY>
+        <locationY>2750</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -111,7 +111,7 @@
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
         <locationX>501</locationX>
-        <locationY>1694</locationY>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
@@ -148,7 +148,7 @@
         <name>AssignNewAddress</name>
         <label>AssignNewAddress</label>
         <locationX>589</locationX>
-        <locationY>1118</locationY>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>getPostClassification.SupplyCity__c</assignToReference>
             <operator>Assign</operator>
@@ -213,7 +213,7 @@
         <name>assignProcessType_0</name>
         <label>assignProcessType</label>
         <locationX>646</locationX>
-        <locationY>278</locationY>
+        <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>processTypeMetadato</assignToReference>
             <operator>Assign</operator>
@@ -229,7 +229,7 @@
         <name>alternativeAddress</name>
         <label>alternativeAddress</label>
         <locationX>501</locationX>
-        <locationY>998</locationY>
+        <locationY>1238</locationY>
         <defaultConnector>
             <targetReference>AssignNewAddress</targetReference>
         </defaultConnector>
@@ -254,7 +254,7 @@
         <name>Ambiente</name>
         <label>Ambiente?</label>
         <locationX>501</locationX>
-        <locationY>1814</locationY>
+        <locationY>2054</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>redirectToRecord</targetReference>
@@ -280,7 +280,7 @@
         <name>Annullamento_postAddress</name>
         <label>Annullamento</label>
         <locationX>187</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>alternativeAddress</targetReference>
         </defaultConnector>
@@ -326,7 +326,7 @@
         <name>Rettifica_Doppia_Fatturazione</name>
         <label>Rettifica Doppia Fatturazione?</label>
         <locationX>182</locationX>
-        <locationY>2174</locationY>
+        <locationY>2414</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -351,7 +351,7 @@
         <name>SalvaOConferma</name>
         <label>Salva in Bozza o Conferma?</label>
         <locationX>646</locationX>
-        <locationY>518</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>redirectToRecord</targetReference>
@@ -406,7 +406,7 @@
         <name>tariManaged</name>
         <label>tariManaged</label>
         <locationX>336</locationX>
-        <locationY>2054</locationY>
+        <locationY>2294</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
         </defaultConnector>
@@ -427,6 +427,7 @@
             <label>Yes</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>SupplyCityFormula</name>
         <dataType>String</dataType>
@@ -457,7 +458,7 @@
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
         <locationX>501</locationX>
-        <locationY>1454</locationY>
+        <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Calculate_Expiration_Date</targetReference>
@@ -475,10 +476,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getFakeAccount</name>
+        <label>getFakeAccount</label>
+        <locationX>646</locationX>
+        <locationY>278</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>updateAccount</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>LastName__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>BP MODELLO</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Account</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getPostClassification</name>
         <label>getPostClassification</label>
         <locationX>187</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>selezioneIndirizzo</targetReference>
@@ -499,17 +521,41 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>2630</locationY>
+        <locationY>2870</locationY>
         <connector>
             <targetReference>redirectToRecord</targetReference>
         </connector>
         <inputReference>Get_Input_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>updateAccount</name>
+        <label>updateAccount</label>
+        <locationX>646</locationX>
+        <locationY>398</locationY>
+        <connector>
+            <targetReference>assignProcessType_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AccountId</field>
+            <value>
+                <elementReference>getFakeAccount.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>updateAfterAddress</name>
         <label>updateAfterAddress</label>
         <locationX>589</locationX>
-        <locationY>1238</locationY>
+        <locationY>1478</locationY>
         <connector>
             <targetReference>Get_Input_Case_Aggiornato</targetReference>
         </connector>
@@ -524,7 +570,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>assignProcessType_0</targetReference>
+            <targetReference>getFakeAccount</targetReference>
         </connector>
         <fields>
             <name>AdviceText</name>
@@ -532,13 +578,13 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Prima_Classificazione</name>
         <label>Prima Classificazione</label>
         <locationX>646</locationX>
-        <locationY>398</locationY>
+        <locationY>638</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -649,7 +695,7 @@
         <name>selezioneIndirizzo</name>
         <label>selezioneIndirizzo</label>
         <locationX>187</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -691,6 +737,12 @@
                 <name>theCase</name>
                 <value>
                     <elementReference>getPostClassification</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>hideButtonAccountLogic</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -806,7 +858,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>646</locationX>
-        <locationY>3374</locationY>
+        <locationY>3614</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -831,7 +883,7 @@
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
         <locationX>336</locationX>
-        <locationY>1934</locationY>
+        <locationY>2174</locationY>
         <connector>
             <targetReference>tariManaged</targetReference>
         </connector>
@@ -884,5 +936,15 @@
         <isCollection>false</isCollection>
         <isInput>false</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
     </variables>
 </Flow>

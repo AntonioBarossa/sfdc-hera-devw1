@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 20-10-2022
+ * @last modified on  : 18-01-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -18,11 +18,22 @@ public with sharing class HDT_UTL_PhaseTransSobjectCreationTst {
     }
 
     @isTest
-    public static void testPhaseTransSobjectCreation(){
-        List<Order> ord            = [SELECT Id,Phase__c,PhaseStory__c,OrderReference__c FROM Order WHERE Phase__c = 'Annullato'];
+    public static void testPhaseTransSobjectCreation1(){
+        List<Order> ord            = [SELECT Id,AccountId,Phase__c,PhaseStory__c,OrderReference__c FROM Order];
         Map<String,Object> argsMap = new Map<String,Object>{'parameter' => new Map<String, Object>{'records'=> ord }};
         argsMap.put('method', 'FacilityApproval');
+        Test.startTest();
+        Object result = myObjectToTest.execute(argsMap);
+        HDT_UTL_PhaseTransSobjectCreation.insertBulkSobjects();
+        Test.stopTest();
+        System.assertEquals(null, result=null, 'The result should  be null!');
+    }
 
+    @isTest
+    public static void testPhaseTransSobjectCreation2(){
+        List<Order> ord            = [SELECT Id,AccountId,Phase__c,PhaseStory__c,OrderReference__c FROM Order];
+        Map<String,Object> argsMap = new Map<String,Object>{'parameter' => new Map<String, Object>{'records'=> ord }};
+        argsMap.put('method', 'DL116_20');
         Test.startTest();
         Object result = myObjectToTest.execute(argsMap);
         HDT_UTL_PhaseTransSobjectCreation.insertBulkSobjects();

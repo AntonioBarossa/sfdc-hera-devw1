@@ -192,7 +192,8 @@ public inherited sharing class HDT_QR_OrderItem {
             Product2.IntegratedSAP__c,
             Product2.ApprovalType__c,
             Surface__c,
-            MonthsOccupYear__c
+            MonthsOccupYear__c,
+            Quantity
             FROM 
             OrderItem 
             WHERE OrderId = :orderId

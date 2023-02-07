@@ -7,7 +7,7 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Numero Partner Esterno </label>
+    <label>Numero Partner Esterno</label>
     <length>20</length>
     <required>false</required>
     <type>Text</type>

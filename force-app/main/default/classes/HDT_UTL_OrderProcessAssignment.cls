@@ -170,6 +170,23 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         return false;
     }
 
+    private static Boolean isRemoveSubscriptions(Order ord){
+        if(String.isNotBlank(ord.ServicePoint__r.CommoditySector__c) && 'Ambiente'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c)){
+            List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+            if(!items.isEmpty()){
+                for(OrderItem oi : items){
+                    //product Family è sempre valorizzato
+                    if(oi.Quantity != null && oi.Quantity <= 0){
+                        return true;
+                    }
+                }
+                return false;
+            }
+            return false; 
+        }
+        return false;
+    }
+
 
     /**
      * @description getAvailableProcesses
@@ -196,6 +213,7 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isAmendmentAllowed = checkAmendmentOrder(ord);
         Boolean isPowerChange = isAttivazioneConModifica(ord);
 		String commodity = ord.ServicePoint__r.CommoditySector__c;
+        Boolean isRemoveSubscriptions = isRemoveSubscriptions(ord);
         
         for (ProcessMatrix__c process : allProcesses){
             /* 
@@ -256,7 +274,10 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 {
                     process.CasualCode__c = 'RI6';
                 }
-                availableProcesses.add(process);
+               //escludo il processo di modifica tariffa se si sta eseguendo una rimozione sconto
+                if(!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)){
+                    availableProcesses.add(process);
+                }
             }
         }
 
@@ -405,7 +426,6 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         Boolean isMms = sal.Account__r.customerMarking__c.containsIgnoreCase('MMS');
         Boolean checkEnergy = false;
         Boolean checkNonEnergy = true;
-        System.debug('*****MAVUOIANNA:'+ transitionlist);
         if(sal.isTransition__c){
                 //Map<String,
             // String sub = 'Subentro';
@@ -470,75 +490,108 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                 } 
             }
             List<ServicePoint__c> spList = srQr.getRecordByIdList(spListId,'id,CommoditySector__c,SupplyCity__c,distributor__r.code__c');
-            Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
-            Map<String,String> mapRemi = new Map<String,String>();
-            Set<String> comuniToUdb = new set<String>(); 
-            List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiConfiguration();
-            for(MatriceRemiCode__c m : remiList){
-                if(mapRemi.get(m.Comune__c.toUpperCase()) == null){
-                    mapRemi.put(m.Comune__c.toUpperCase(),m.RemiCode__c);
-                }
-            }
-
-            for(ServicePoint__c sr :spList){
-               /* String remi = '';
-                if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
-                    remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
-                    sr.RemiCode__c = remi;
-                }
-                else{
-                    res += '_Remi';
-                }*/
-                comuniToUdb.add(sr.SupplyCity__c);
-                /*if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
-                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
-                   // sr.RemiCode__c = wrp.remiCode;
-                    sr.VATNumberUdb__c = wrp.vatUbd;
-                    system.debug(wrp);
-                    system.debug('SP to Update '+sr.VATNumberUdb__c);
-                }
-                else{
-                    sr.VATNumberUdb__c = '02060500390';
-                   // res += '_Remi';
-                }*/
-            }
-            List<MatriceRemiCode__c> partitaUdbList = HDT_QR_MatriceRemiCode.getAllPartitaUdbConfiguration(comuniToUdb);
-            
-            for(MatriceRemiCode__c m : partitaUdbList){
-                //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
-                HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
-                mapRemiCode.put(m.RemiCode__c.toUpperCase() + '_' + m.Comune__c.toUpperCase() + '_' + m.SalesCompany__c, wrp);
+            Set<String> comuni = new set<String>(); 
+            for(ServicePoint__c sp : spList){
+                comuni.add(sp.SupplyCity__c.toUpperCase());
             }
 
             Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+            Set<String> companies = new Set<String>();
+            //String company = serviceSocieta.get(sr.id); //-> passare al nostro metodo
+            
             for(ServicePoint__c sr :spList){
-                String remi = '';
-                if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
-                    remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
-                    sr.RemiCode__c = remi;
-                }
-                else{
-                    res += '_Remi';
-                }
-                if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
-                    HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
-                   // sr.RemiCode__c = wrp.remiCode;
-                    sr.VATNumberUdb__c = wrp.vatUbd;
-                    system.debug(wrp);
-                    system.debug('SP to Update '+sr.VATNumberUdb__c);
-                }
-                else{
-                    sr.VATNumberUdb__c = '02060500390';
-                   // res += '_Remi';
+                companies.add(serviceSocieta.get(sr.id).toUpperCase());
+            }
+
+            // chiamare metodo per calcolo remicode/vatNumber
+            Map<String, MatriceRemiCode__c> remiCodeMap = HDT_UTL_OrderProcess.calculateRemiCodeVatNumberServicePoint(comuni, companies);
+
+            system.debug('remiCodeMap --> '+remiCodeMap);
+            if(!remiCodeMap.isEmpty()){
+                for(ServicePoint__c sr :spList){
+                    if(String.isNotBlank(remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c)){
+                        sr.RemiCode__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c;
+                    }
+                    else{
+                        res += '_Remi';            
+                    }
+                    if(String.isNotBlank(sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c)){
+                        sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c;                    
+                    }
+                    else{
+                        sr.VATNumberUdb__c = '02060500390';        
+                    }
                 }
             }
-           // if(res != '_Remi' && res !='Subentro_Remi'){
-                servicePointSrv.updateRecordRemiCode(spList);
-           // }
+
+            HDT_UTL_DatabaseService.updateSObject(spList);
         }
+        //     Map<String,HDT_WRP_RemiUbd> mapRemiCode = new Map<String,HDT_WRP_RemiUbd>();
+        //     Map<String,String> mapRemi = new Map<String,String>();
+        //     Set<String> comuniToUdb = new set<String>(); 
+        //     List<MatriceRemiCode__c> remiList = HDT_QR_MatriceRemiCode.getAllRemiConfiguration();
+        //     for(MatriceRemiCode__c m : remiList){
+        //         if(mapRemi.get(m.Comune__c.toUpperCase()) == null){
+        //             mapRemi.put(m.Comune__c.toUpperCase(),m.RemiCode__c);
+        //         }
+        //     }
 
+        //     for(ServicePoint__c sr :spList){
+        //        /* String remi = '';
+        //         if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
+        //             remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
+        //             sr.RemiCode__c = remi;
+        //         }
+        //         else{
+        //             res += '_Remi';
+        //         }*/
+        //         comuniToUdb.add(sr.SupplyCity__c);
+        //         /*if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
+        //             HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
+        //            // sr.RemiCode__c = wrp.remiCode;
+        //             sr.VATNumberUdb__c = wrp.vatUbd;
+        //             system.debug(wrp);
+        //             system.debug('SP to Update '+sr.VATNumberUdb__c);
+        //         }
+        //         else{
+        //             sr.VATNumberUdb__c = '02060500390';
+        //            // res += '_Remi';
+        //         }*/
+        //     }
+        //     List<MatriceRemiCode__c> partitaUdbList = HDT_QR_MatriceRemiCode.getAllPartitaUdbConfiguration(comuniToUdb);
+            
+        //     for(MatriceRemiCode__c m : partitaUdbList){
+        //         //mapRemiCode.put(m.Comune__c + '_' + m.SalesCompany__c, m.RemiCode__c);
+        //         HDT_WRP_RemiUbd wrp = new HDT_WRP_RemiUbd(m.RemiCode__c, m.VATNumberUdb__c);
+        //         mapRemiCode.put(m.RemiCode__c.toUpperCase() + '_' + m.Comune__c.toUpperCase() + '_' + m.SalesCompany__c, wrp);
+        //     }
 
-        System.debug('*****VUOIANNA2:' + res);
+        //     Map<String,String> serviceSocieta = HDT_UTL_Sales.getAgentNameAndCodeList(spList,sal.Account__r.customerMarking__c);
+        //     for(ServicePoint__c sr :spList){
+        //         String remi = '';
+        //         if(mapRemi.get(sr.SupplyCity__c.toUpperCase()) != null){
+        //             remi = mapRemi.get(sr.SupplyCity__c.toUpperCase());
+        //             sr.RemiCode__c = remi;
+        //         }
+        //         else{
+        //             res += '_Remi';
+        //         }
+        //         if(mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id)) != null){
+        //             HDT_WRP_RemiUbd wrp = mapRemiCode.get(remi + '_' + sr.SupplyCity__c.toUpperCase() + '_' + serviceSocieta.get(sr.id));
+        //            // sr.RemiCode__c = wrp.remiCode;
+        //             sr.VATNumberUdb__c = wrp.vatUbd;
+        //             system.debug(wrp);
+        //             system.debug('SP to Update '+sr.VATNumberUdb__c);
+        //         }
+        //         else{
+        //             sr.VATNumberUdb__c = '02060500390';
+        //            // res += '_Remi';
+        //         }
+        //     }
+        //    // if(res != '_Remi' && res !='Subentro_Remi'){
+        //         servicePointSrv.updateRecordRemiCode(spList);
+        //    // }
+        //}
         return res;
     }
 
@@ -615,5 +668,45 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         System.debug('toReturn :' + toReturn);
 
         return toReturn;
+    }
+
+    public static String getProcessDriver(Order ord)
+    {
+        Map<String, List<Map<String,String>>> result = new Map<String,List<Map<String,String>>>(); 
+        /* Column Header */
+        result.put('columnsObj',new List<Map<String,String>>{new Map<String,String>{'label' => 'Driver', 'fieldName' => 'driverLabel'}, new Map<String,String>{'label' => 'Valore', 'fieldName' => 'driverValue'}});
+        /* Stato Contratto SAP */
+        List<Map<String,String>> infoList = new List<Map<String,String>>();
+        infoList.add(addDriver('Stato Contratto SAP', 'sapContractStatus', ord.ServicePoint__r.SapContractStatus__c != null ? ord.ServicePoint__r.SapContractStatus__c : 'Nullo'));
+        /* STG */
+        infoList.add(addDriver('STG','isStg',ord.isSTG__c ? 'Si' : 'No'));
+        /* Mercato Provenienza */
+        infoList.add(addDriver('Mercato Provenienza','marketOrigin',ord.MarketOrigin__c));
+        /* Presenza Allaccio */
+        infoList.add(addDriver('Presenza Allaccio','plugPresence',ord.ServicePoint__r.PlugPresence__c == null ? 'N/A' : ord.ServicePoint__r.PlugPresence__c));
+        /* Stesso Account */
+        infoList.add(addDriver('Stesso Account','sameAccount',ord.AccountId == ord.ServicePoint__r.Account__c ? 'Si' : 'No'));
+        /* Reseller */
+        infoList.add(addDriver('Reseller','isReseller',ord.ServicePoint__r.isReseller__c ? 'Si' : 'No'));
+        /* Cambio Uso */
+        infoList.add(addDriver('Cambio Uso','isChangeUse', ord.SBQQ__Quote__r.AllowChangeUse__c ? 'Si' : 'No'));
+        /* Switch In Ripristinatorio */
+        infoList.add(addDriver('Switch Ripristinatorio','switchRipr',isSwitchInRipristinatorio(ord) ? 'Si' : 'No'));
+        /* Dati Discordanti */
+        infoList.add(addDriver('Dati Discordanti','datiDiscordanti','No'));
+        /* Presenza SwitchOut */
+        infoList.add(addDriver('Presenza Switchout','isWinback',ord.isWinback__c ? 'Si' : 'No'));
+        /* Modifica Potenza */
+        infoList.add(addDriver('Modifica Potenza','isPowerChange',isAttivazioneConModifica(ord) ? 'Si' : 'No'));
+        /* Servizio */
+        infoList.add(addDriver('Servizio','commodity',ord.ServicePoint__r.CommoditySector__c));
+        
+        result.put('infoObj', infoList);
+
+        return JSON.serialize(result);
+    }
+    private static Map<String,String> addDriver(String label, String name, String value)
+    {
+        return new Map<String,String>{'driverLabel' => label, 'driverName' => name, 'driverValue' => value};
     }
 }

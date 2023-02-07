@@ -9,7 +9,8 @@
     <isSortingDisabled>false</isSortingDisabled>
     <label>ID Ordine</label>
     <length>255</length>
-    <required>false</required>
-    <type>Text</type>
-    <unique>false</unique>
+    <referenceTo>SalesforceOrder__x</referenceTo>
+    <relationshipLabel>Push Tracking Salesforce</relationshipLabel>
+    <relationshipName>PushTrackingSalesforce</relationshipName>
+    <type>ExternalLookup</type>
 </CustomField>

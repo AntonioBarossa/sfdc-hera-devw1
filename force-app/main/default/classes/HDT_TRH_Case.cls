@@ -15,7 +15,9 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
     
     public override void beforeUpdate(){
         //Check Quotation Type && set technical phase
+        Boolean skipForSap = false;
         try{
+            skipForSap = HDT_UTL_Scarti.changeSapPhaseHandler(Trigger.newMap, Trigger.oldMap);
             HDT_UTL_CaseProcess.predefaultCaseValues(Trigger.new, Trigger.oldMap);
             for(Case caseNew : (List<Case>) Trigger.new){
                 if (String.isNotBlank(caseNew.CancellationNote__c) && caseNew.CancellationNote__c.length() > 255){
@@ -53,7 +55,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         Boolean skipForCancellation = HDT_UTL_CaseProcess.manageCancellationProcess(trigger.new,Trigger.oldMap);
         Boolean skipForExportSie = HDT_UTL_CaseProcess.checkSkipExportSie(trigger.new,Trigger.oldMap);
         //EVERIS: Gestione Scarti SAP
-        Boolean skipForGestioneScarti = HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
+        Boolean skipForGestioneScarti = skipForSap || HDT_UTL_Scarti.manageSapDiscard(Trigger.new, Trigger.oldMap);
 	    if(!skipForCancellation && !skipForGestioneScarti && !skipForExportSie){
         //Checks Phase Transition
             ((wrts_prcgvr.Interfaces_1_2.IPhaseManagerIntegration) wrts_prcgvr.VersionManager.newClassInstance('PhaseManagerIntegration'))

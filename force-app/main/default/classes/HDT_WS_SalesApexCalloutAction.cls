@@ -71,6 +71,8 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
             String commercialProduct = (String)obj.get('CommercialProduct__c');
             String commercialProductCode = (String)obj.get('CommercialProductCode__c');
             String commodity = (String)obj.get('CommodityFormula__c');
+            String supplyCity = (String)obj.get('SupplyCity__c');
+            String salesCompany = (String)obj.get('SalesCompany__c');
             if(String.isBlank(vasType) || !vasType.equalsIgnoreCase('VAS Fatturabili'))
             {
                 Map<String, wrts_prcgvr.MRR_1_0.Field> fieldsToAdd = new Map<String, wrts_prcgvr.MRR_1_0.Field>();
@@ -249,8 +251,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                         }
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');
-                                            ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
-                                            //ord.VATNumberUdb__c = fieldValueResponse.get('EXT_PIVA_DISTR');
+                                            if(fieldValueResponse.get('EXT_CABINA_REMI') != null){
+                                                ord.RemiCode__c = fieldValueResponse.get('EXT_CABINA_REMI');
+                                            }
+                                            if(ord.RemiCode__c != null){
+                                                ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVatNumberUdb(supplyCity, salesCompany, ord.RemiCode__c);
+                                            }
                                             if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                                 ord.PrecheckResultSII__c = 'OK';
                                             }

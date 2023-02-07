@@ -182,9 +182,18 @@
                 <label>Risoluzione NO Contatore</label>
             </value>
             <value>
+                <fullName>Cambio Offerta</fullName>
+                <default>false</default>
+                <label>Cambio Offerta</label>
+            </value>
+            <value>
+                <fullName>Prima Attivazione</fullName>
+                <default>false</default>
+                <label>Prima Attivazione</label>
+            </value>
+            <value>
                 <fullName>Subentro</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Subentro</label>
             </value>
         </valueSetDefinition>

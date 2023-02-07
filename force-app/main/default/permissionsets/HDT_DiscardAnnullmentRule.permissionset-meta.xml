@@ -11,4 +11,8 @@
         <object>DiscardAnnullmentRule__c</object>
         <viewAllRecords>false</viewAllRecords>
     </objectPermissions>
+    <tabSettings>
+        <tab>DiscardAnnullmentRule__c</tab>
+        <visibility>Available</visibility>
+    </tabSettings>
 </PermissionSet>

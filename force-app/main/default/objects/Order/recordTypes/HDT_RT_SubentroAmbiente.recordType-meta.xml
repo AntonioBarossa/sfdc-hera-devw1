@@ -1987,17 +1987,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>DeliveredDocumentation__c</picklist>
-        <values>
-            <fullName>N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Y</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Disconnectable__c</picklist>
         <values>
             <fullName>No</fullName>
@@ -2600,6 +2589,14 @@
         </values>
         <values>
             <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PAGOPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F24</fullName>
             <default>false</default>
         </values>
     </picklistValues>

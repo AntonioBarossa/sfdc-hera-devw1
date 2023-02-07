@@ -139,7 +139,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             for (Order currOrd:allOrders){
                 if (currOrd.Id!=ordToCheck[0].Id) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
-                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) )) {
+                    (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
                         break;
                     }
@@ -183,6 +183,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Skip_Callout__c = ordToCheck[0].Skip_Callout__c == null ? -1 : null,
+                CancellationReason__c = causal,
                 WorkedQualityCall__c = qualityMessage
             ));
         }
@@ -246,7 +247,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         Map<String,String> processActivityMap = new Map<String,String>{
             'HDT_RT_SwitchIn' => 'Switch In',
             'HDT_RT_CambioOfferta' => 'Cambio offerta',
-            'HDT_RT_VAS' => 'Segnalazioni VAS'
+            'HDT_RT_VAS' => 'Segnalazioni VAS',
+            'HDT_RT_Subentro' => 'Subentro',
+            'HDT_RT_ScontiBonus' => 'Aggiunta Bonus o Vas',
+            'HDT_RT_Attivazione' => 'Prima Attivazione',
+            'HDT_RT_Voltura' => 'Voltura',
+            'HDT_RT_VolturaConSwitch' => 'Voltura con Switch'
         };
 
         return processActivityMap.get(orderRecordType);

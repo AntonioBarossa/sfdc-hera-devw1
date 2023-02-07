@@ -124,14 +124,21 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             processObj.CasualCode__c = '';
             //processObj.CreatedById = '';
             processObj.ExistActivityDatiDiscordanti__c = false;
+            processObj.ExistActivityDatiDiscordantiNew__c = 'All';
             processObj.ExistActivitySwitchRipristinatorio__c = false;
+            processObj.ExistActivitySwitchRipristinatorioNew__c = 'All';
             processObj.IsAmendment__c = false;
             processObj.IsChangeUse__c = false;
+            processObj.IsChangeUseNew__c = 'All';
             processObj.isOwnAccount__c = 'No';
+            processObj.isOwnAccountNew__c = 'All';
             processObj.IsReseller__c = false;
+            processObj.IsResellerNew__c = 'All';
             processObj.IsSameAccount__c = false;
             processObj.isSTG__c = false;
+            processObj.isSTGNew__c = 'All';
             processObj.OngoingSwitchOut__c = false;
+            processObj.OngoingSwitchOutNew__c = 'All';
             //processObj.OwnerId = '';
             processObj.PlugPresence__c = true;
             processObj.PowerChange__c = true;
@@ -815,6 +822,42 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
         System.assertNotEquals(null, result, 'next did not work correctly');
     }
 
+    @isTest
+    static void getProcessDriverTst()
+    {
+        Order ord = [Select id,
+                        ServicePoint__c,
+                        VoltageLevel__c,
+                        MarketOrigin__c,
+                        PowerRequested__c,
+                        PowerCommitted__c,
+                        IsWinback__c,
+                        SAPImplantCode__c,
+                        ServicePoint__r.MeterStatus__c,
+                        ServicePoint__r.Account__c,
+                        ServicePoint__r.PlugPresence__c,
+                        ServicePoint__r.ServicePointCode__c,
+                        ServicePoint__r.RecordType.DeveloperName,
+                        SBQQ__Quote__r.AllowChangeUse__c,
+                        SBQQ__Quote__r.AmendmentAllowed__c, 
+                        ServicePoint__r.isReseller__c,
+                        CommodityFormula__c,
+                        ServicePoint__r.CommoditySector__c,
+                        SupplyCity__c,
+                     	AccountId,
+                     	Account.RecordType.DeveloperName,
+                        SupplyType__c,
+                        ServicePoint__r.SapContractStatus__c,
+                        isSTG__c
+                        From Order
+                        WHERE Name = 'testOrderName0'];
+        Test.startTest();
+            String resultOne = HDT_LC_ChildOrderProcessPrecheck.getProcessDriver(ord);
+            String resultTwo = HDT_LC_ChildOrderProcessPrecheck.getProcessDriver(null);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(resultOne), 'Driver Non Calcolati');
+        System.assertEquals(true, !String.isNotBlank(resultTwo), 'Errore non gestito correttamente');
 
+    }
     
 }

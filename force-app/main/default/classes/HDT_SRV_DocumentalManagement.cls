@@ -296,6 +296,14 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		return documentalResponse;
 	}
 
+	public static HDT_WRP_DocumentalResponse executeCalloutRequestSync(String body,String context,String formParamsInput){
+		formParams = formParamsInput;
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		manageResponse(documentalResponse, context);
+		return documentalResponse;
+	}
+
 	public static HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse executeGetAttachmentCalloutRequest(String body){
 		HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse postelResponse = new HDT_WRP_DocumentalResponse.HDT_WRP_PostelResponse();
 		postelResponse = HDT_WS_DocumentalIntegration.submitGetAttachmentRequest(body);
@@ -414,9 +422,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
 				}else if(status.equalsIgnoreCase('declined')){
+					String dNote = String.isNotBlank(requestBody.declinedReason) && requestBody.declinedReason.length() > 255 ? requestBody.declinedReason.substring(0,255) : requestBody.declinedReason;
 					List<Order> ordList = new List<Order>();
 					record.put('DocumentalPhase__c','Plico rifiutato');
-					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'));
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'),dNote);
+					record.put('CancellationNote__c',dNote);
 					ordList.add((Order)record);
 					HDT_UTL_DatabaseService.updateSObject(ordList);
 					return;
@@ -636,16 +646,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
 					//orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
-					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
+					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,CILegalRepresentative__c,CIAccoutn__c,DocumentPackage__c,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
 						Order ordRefresh = orderMap.get(childOrder.Id);
 						singleOrder.Id = childOrder.Id;
-						singleOrder.CIAccoutn__c = 'Validato';
-						singleOrder.CILegalRepresentative__c = 'Validato';
+						singleOrder.CIAccoutn__c = String.isNotBlank(ordRefresh.CIAccoutn__c) && 'Richiesto'.equalsIgnoreCase(ordRefresh.CIAccoutn__c)?'Validato':ordRefresh.CIAccoutn__c;
+						singleOrder.CILegalRepresentative__c = String.isNotBlank(ordRefresh.CILegalRepresentative__c) && 'Richiesto'.equalsIgnoreCase(ordRefresh.CILegalRepresentative__c)?'Validato':ordRefresh.CILegalRepresentative__c;
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
-						singleOrder.DocumentPackage__c = 'Validato';
+						singleOrder.DocumentPackage__c = String.isNotBlank(ordRefresh.DocumentPackage__c) && 'Richiesto'.equalsIgnoreCase(ordRefresh.DocumentPackage__c)?'Validato':ordRefresh.DocumentPackage__c;
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 

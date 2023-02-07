@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>EstEnergy S.p.A.</label>
             </value>
+            <value>
+                <fullName>MMS</fullName>
+                <default>false</default>
+                <label>MMS</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
     <visibleLines>3</visibleLines>

@@ -36,20 +36,17 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
 
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
             for(wrts_prcgvr__Activity__ChangeEvent event : activityChangeEventList){
-                
-                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
-
+                //System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
                 EventBus.ChangeEventHeader header = event.ChangeEventHeader;
-
                 List<Id> eventIds = header.getRecordIds();
-                System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
+                //System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
 
                 Id changeId;
                 for(Id i : eventIds){
 
                     changeId = activityIdsMap.get(i);
 
-                    if(wrpObjMap.containsKey(changeId)){
+                    if(wrpObjMap.containsKey(changeId)){ 
                         wrpObj = wrpObjMap.get(changeId);
                     } else {
                         wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
@@ -57,10 +54,12 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
                         wrpObj.sObjType = String.valueOf(changeId.getSobjectType());
                         wrpObj.eventType = header.changeType;
                         wrpObj.fieldMap = new Map<String, Object>();
-                        wrpObj.activityEvent = activityMap.get(changeId);
+                        wrpObj.activityEvent = activityMap.get(i);
                         wrpObjMap.put(changeId, wrpObj);
                     }
                 }
+
+                
 
                 List<String> objFields = new List<String>();
                 objFields.add('ActivityStartTime__c');

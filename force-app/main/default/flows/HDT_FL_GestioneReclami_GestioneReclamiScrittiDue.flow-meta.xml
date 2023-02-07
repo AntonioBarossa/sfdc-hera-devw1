@@ -110,7 +110,7 @@
     <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>916</locationX>
+        <locationX>850</locationX>
         <locationY>3926</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -126,8 +126,8 @@
     <assignments>
         <name>Assegna_Process_Type_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1444</locationX>
-        <locationY>3806</locationY>
+        <locationX>1642</locationX>
+        <locationY>3926</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -142,7 +142,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1180</locationX>
+        <locationX>1114</locationX>
         <locationY>3806</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -158,7 +158,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1559</locationX>
+        <locationX>1642</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -174,7 +174,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>652</locationX>
+        <locationX>586</locationX>
         <locationY>3926</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -190,7 +190,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1295</locationX>
+        <locationX>1378</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -201,6 +201,22 @@
         </assignmentItems>
         <connector>
             <targetReference>Controllo_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assegna_Process_Type_RichInfoTari</name>
+        <label>Assegna Process Type</label>
+        <locationX>1378</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Richiesta Info Seconda Classificazione Tari</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -685,7 +701,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>1427</locationX>
+        <locationX>1510</locationX>
         <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -863,7 +879,7 @@
     <decisions>
         <name>checkRecordType</name>
         <label>checkRecordType</label>
-        <locationX>784</locationX>
+        <locationX>718</locationX>
         <locationY>3806</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type</targetReference>
@@ -888,7 +904,7 @@
     <decisions>
         <name>checkRecordType_0</name>
         <label>checkRecordType</label>
-        <locationX>1427</locationX>
+        <locationX>1510</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0_0_0</targetReference>
@@ -906,6 +922,31 @@
             </conditions>
             <connector>
                 <targetReference>Assegna_Process_Type_0_0_0_0_0</targetReference>
+            </connector>
+            <label>processTari</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkRecordType_richInfo</name>
+        <label>checkRecordType</label>
+        <locationX>1510</locationX>
+        <locationY>3806</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Process_Type_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>processTari_richInfo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.RecordType.DeveloperName</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type_RichInfoTari</targetReference>
             </connector>
             <label>processTari</label>
         </rules>
@@ -966,7 +1007,7 @@
         <locationX>1114</locationX>
         <locationY>3686</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Process_Type_0</targetReference>
+            <targetReference>checkRecordType_richInfo</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Richiesta info</defaultConnectorLabel>
         <rules>
@@ -1322,7 +1363,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1427</locationX>
+        <locationX>1510</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1582,7 +1623,7 @@
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>1427</locationX>
+        <locationX>1510</locationX>
         <locationY>614</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1978,7 +2019,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1301</locationX>
+        <locationX>1384</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1988,7 +2029,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1741</locationX>
+        <locationX>1906</locationX>
         <locationY>854</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

@@ -103,6 +103,7 @@ public with sharing class HDT_UTL_BpCaCreate
             HDT_WRP_BpCaVariation request = generateMainBodyRequest(infoOrder[0]);
             result = JSON.serialize(request);
         }
+        System.debug('Request JSON Body ' + result);
         return result;
     }
     /* This method creates the main JSONObject of the request */
@@ -126,7 +127,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.nome = tryParse(infoOrder.Account.FirstName__c);
         request.alias = tryParse(infoOrder.Account.LastName__c);
         request.partner = tryParse(infoOrder.Account.CustomerCode__c);
-        request.tipoAccount =  transcodeCustomerType(tryParse(infoOrder.Account.CustomerCode__c));
+        request.tipoAccount =  transcodeCustomerType(tryParse(infoOrder.Account.CustomerType__c));
         request.categoria = tryParse(infoOrder.Account.Category__c);
         request.cellulare = tryParse(infoOrder.Contact__r.MobilePhone);
         request.fax = tryParse(infoOrder.Contact__r.Fax);
@@ -147,7 +148,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo();
         request.comune =  tryParse(infoOrder.Account.BillingCity);
-        request.nazione =  tryParse(infoOrder.Account.BillingCountry.Substring(0,2));
+        request.nazione =  tryParse(infoOrder.Account.BillingCountry.Substring(0,2)).toUpperCase();
         request.toponimo =  '';
         request.frazione =  '';
         request.piano =  tryParse(infoOrder.Account.BuildingFloor__c);
@@ -155,7 +156,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.suffissoCivico =  tryParse(infoOrder.Account.BillingStreetNumberExtension__c);
         request.cap =  tryParse(infoOrder.Account.BillingPostalCode);
         request.provincia =  tryParse(infoOrder.Account.BillingState);
-        request.via =  tryParse(infoOrder.Account.BillingStreet);
+        request.via =  tryParse(infoOrder.Account.BillingStreetName__c);
         
         return request;
     }
@@ -201,7 +202,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.cognome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryLastName__c);
         request.nome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFirstName__c);
         request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.PaymentConditions__c);
-        request.metodoPagamento = tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
+        request.metodoPagamento = '';//tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
         request.metodoPagamentoAlternativo = '';//tryParse(infoOrder.BillingProfile__r.IbanABI__c);
 
         return request;
@@ -211,7 +212,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.InvoicingCity__c);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c.Substring(0,2));
+        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumberExtension__c);
@@ -247,7 +248,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCity);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry.Substring(0,2));
+        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c);
@@ -371,10 +372,10 @@ public with sharing class HDT_UTL_BpCaCreate
         if(inputOrder.CustomerCode__c == null)
         {
             orderToUpdate.CustomerCode__c = response.data.codiceBP;
-            orderToUpdate.ContractAccountCode__c = response.data.codiceBPAlternativo;
+            orderToUpdate.ContractAccountCode__c = response.data.codiceContatto;
             orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
             Account accountToUpdate = new Account(Id = inputOrder.AccountId, CustomerCode__c = response.data.codiceBP);
-            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceBPAlternativo);
+            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
             result.add(accountToUpdate);
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
@@ -382,9 +383,9 @@ public with sharing class HDT_UTL_BpCaCreate
         /* Otherwise only the Billing Profile needs to be updated */
         else
         {
-            orderToUpdate.ContractAccountCode__c = response.data.codiceBP;
+            orderToUpdate.ContractAccountCode__c = response.data.codiceContatto;
             orderToUpdate.Phase__c = inputOrder.ProcessType__c.equalsIgnoreCase('Voltura') ? 'Documentazione Validata' : 'Comunicazione verso Heroku';
-            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceBP);
+            BillingProfile__c billingProfileToUpdate = new BillingProfile__c(Id = inputOrder.BillingProfile__c, ContractAccountCode__c = response.data.codiceContatto);
             result.add(billingProfileToUpdate);
             result.add(orderToUpdate);
         }

@@ -142,9 +142,9 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         String saleId = (String) inputs.get('saleId');
         BillingProfile__c selectedBillingProfile = (BillingProfile__c) JSON.deserialize((String)inputs.get('selectedBillingProfile'), BillingProfile__c.class);
         String paymentMethod    = selectedBillingProfile.get('PaymentMethod__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
-        String paymentCondition = selectedBillingProfile.get('PaymentConditions__c') != null ? (String) selectedBillingProfile.get('PaymentMethod__c') : '';
+        String paymentCondition = selectedBillingProfile.get('PaymentConditions__c') != null ? (String) selectedBillingProfile.get('PaymentConditions__c') : '';
         String sendingBillMode  = selectedBillingProfile.get('BillSendingMethod__c') != null ? (String) selectedBillingProfile.get('BillSendingMethod__c') : '';
-        //String invoicingCity = selectedBillingProfile.get('InvoicingCity__c') != null ? (String) selectedBillingProfile.get('InvoicingCity__c') : '';
+        String invoicingCity    = selectedBillingProfile.get('InvoicingCity__c') != null ? (String) selectedBillingProfile.get('InvoicingCity__c') : '';
         Boolean isDueThirtyDays = '30 GG - IS02'.equalsIgnoreCase(paymentCondition);
         
         List<SBQQ__QuoteLine__c> quoteLineWater = new List<SBQQ__QuoteLine__c>();
@@ -182,6 +182,8 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected') 
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC];
+
+        List<City__c> cities = [SELECT PaymentMethod__c FROM City__c WHERE Name = :invoicingCity WITH SECURITY_ENFORCED ];
   
         for(SBQQ__QuoteLine__c quoteLine : quoteLines){
             if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua')){
@@ -198,16 +200,17 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                 // DA CAMBIARE--> Regola del BP su Ato1 e Ato9 che deve avere termini a 30 GG obbligatoriamente
                 String ato = quoteLine.ServicePoint__r.ATO__c != null ? quoteLine.ServicePoint__r.ATO__c : '';
                 Boolean isAtoOneAtoNine = ato.containsIgnoreCase('AATO 1 MARCHE NORD') || ato.containsIgnoreCase('ATO9');
-                if(isAtoOneAtoNine && !isDueThirtyDays)
+                if(isAtoOneAtoNine && isDueThirtyDays)
                 {
                     HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
                     singleApply.isDueThirtyDays = 'Si';
                     quoteLineToApply.add(singleApply);
-                    continue;
                 }
                 
-                quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
-                // DA CAMBIARE --> FINE
+            } else if( cities[0].PaymentMethod__c != null && quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente')){
+                if( paymentMethod.equalsIgnoreCase(cities[0].PaymentMethod__c) ){
+                    quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
+                }
             } else {
                 quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
             }

@@ -16,6 +16,7 @@ export default class HdtWasteOrderDocumentValidation extends LightningElement {
     @track closeButton = 'Chiudi';
     @track disableButton = false;
     @track showWaste = false;
+    @track showSpinner = false;
     @track noteValidation;
     @track valueWaste;
     @track type;
@@ -56,6 +57,7 @@ export default class HdtWasteOrderDocumentValidation extends LightningElement {
     }
 
     handleClick(event){
+        this.showSpinner = true;
         this.disableButton = !this.disableButton;
         if (event.target.name === 'complete') {
             // Create the recordInput object
@@ -77,6 +79,7 @@ export default class HdtWasteOrderDocumentValidation extends LightningElement {
         }
     }
     closeQuickAction() {
+        this.showSpinner = false;
         this.dispatchEvent(new CustomEvent('closeaction'));
     }
 
@@ -92,6 +95,7 @@ export default class HdtWasteOrderDocumentValidation extends LightningElement {
                     })
                 );
             }
+            this.showSpinner = false;
             this.dispatchEvent(new CustomEvent('complete'));
             //this.closeQuickAction();
         })

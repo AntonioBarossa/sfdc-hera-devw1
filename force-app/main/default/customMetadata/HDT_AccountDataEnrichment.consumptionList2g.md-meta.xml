@@ -79,22 +79,22 @@
         &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;dailyLossCost&quot;,
+        &quot;label&quot;: &quot;Tot. perdite del giorno €&quot;,
         &quot;fieldName&quot;: &quot;dailyLossCost&quot;,
         &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;dailyLossKwh&quot;,
+        &quot;label&quot;: &quot;Tot. perdite del giorno kWh&quot;,
         &quot;fieldName&quot;: &quot;dailyLossKwh&quot;,
         &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;dailyDiscountKwh&quot;,
+        &quot;label&quot;: &quot;Tot. sconto giorn. kWh&quot;,
         &quot;fieldName&quot;: &quot;dailyDiscountKwh&quot;,
         &quot;initialWidth&quot;: 140
       },
       {
-        &quot;label&quot;: &quot;dailyLossDiscountKwh&quot;,
+        &quot;label&quot;: &quot;Tot. sconto giorn. perdite kWh&quot;,
         &quot;fieldName&quot;: &quot;dailyLossDiscountKwh&quot;,
         &quot;initialWidth&quot;: 140
       }
@@ -107,18 +107,15 @@
     &quot;columns&quot;: [
       {
         &quot;label&quot;: &quot;ORA&quot;,
-        &quot;fieldName&quot;: &quot;hour&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;fieldName&quot;: &quot;hour&quot;
       },
       {
         &quot;label&quot;: &quot;hourlyCost&quot;,
-        &quot;fieldName&quot;: &quot;hourlyCost&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;fieldName&quot;: &quot;hourlyCost&quot;
       },
       {
         &quot;label&quot;: &quot;hourlyKwh&quot;,
-        &quot;fieldName&quot;: &quot;hourlyKwh&quot;,
-        &quot;initialWidth&quot;: 160
+        &quot;fieldName&quot;: &quot;hourlyKwh&quot;
       }
     ]
   }

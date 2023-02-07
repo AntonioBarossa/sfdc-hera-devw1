@@ -18,6 +18,8 @@
         console.log('@@@@'+JSON.stringify(event));
         if(event.getParam("status") === "FINISHED" || event.getParam("status") === "FINISHED_SCREEN") {
             console.log('Flow-Finished');
+            var flowfinal = component.find("flowData");
+            flowfinal.destroy();
             $A.get("e.force:closeQuickAction").fire();
         }
     }

@@ -16,7 +16,7 @@ public with sharing class HDT_LC_EscalationControllerTst {
         insert order;
 
         Case caseList = HDT_UTL_DataFactoryTst.createCase(1, false, account.Id, null, null, null, order.Id)[0];
-        caseList.Status = 'Bozza';
+        caseList.Status = 'New';
         insert caseList;
 
         Interaction__c interaction = new Interaction__c();

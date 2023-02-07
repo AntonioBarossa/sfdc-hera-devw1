@@ -263,7 +263,7 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
-                    <value>none</value>
+                    <value>required</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Range__c</fieldItem>
                 <identifier>RecordRange_cField</identifier>

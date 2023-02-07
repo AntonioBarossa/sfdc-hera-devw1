@@ -92,6 +92,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Voltura con Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio Offerta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cambio Offerta Ele</fullName>
             <default>false</default>
         </values>

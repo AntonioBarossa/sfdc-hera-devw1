@@ -161,6 +161,11 @@
                 <label>Annullato SII</label>
             </value>
             <value>
+                <fullName>Approvata</fullName>
+                <default>false</default>
+                <label>Approvata</label>
+            </value>
+            <value>
                 <fullName>Attesa conferma preventivo cliente</fullName>
                 <default>false</default>
                 <label>Attesa conferma preventivo cliente</label>

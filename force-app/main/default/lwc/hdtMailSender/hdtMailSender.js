@@ -1,4 +1,4 @@
-import { LightningElement, wire} from "lwc";
+import { LightningElement, wire, api} from "lwc";
 import {ShowToastEvent} from 'lightning/platformShowToastEvent';
 import { CloseActionScreenEvent } from 'lightning/actions';
 import { CurrentPageReference } from 'lightning/navigation';
@@ -9,6 +9,7 @@ import sendMailToApex from '@salesforce/apex/HDT_LC_MailSender.sendMail';
 
 export default class HdtMailSender extends NavigationMixin(LightningElement) {
     
+    @api recordIdFromAura;
     cardTitle;
     buttonLabel;
     reminderMode = false;
@@ -20,7 +21,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     render = false;
     spinner = true;
     mailStructure = {
-        caseId: '',
+        recordId: '',
         isReminder: false,
         orgWideAddId: '',
         bodyMail: '',
@@ -38,7 +39,13 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
     }
 
     connectedCallback(){
-        console.log('>>> CASE ID: ' + this.recordId);
+        console.log('>>> recordIdFromAura: ' + this.recordIdFromAura);
+        console.log('>>> recordId from LWC: ' + this.recordId);
+
+        if(this.recordId===undefined || this.recordId===''){
+            this.recordId = this.recordIdFromAura;
+        }
+
         this.getMetadata();
     }
 
@@ -51,7 +58,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 console.log('# SUCCESS #');
 
                 this.mailSender = result.mailData.sender;
-                this.mailStructure.caseId = this.recordId;
+                this.mailStructure.recordId = this.recordId;
                 this.mailStructure.orgWideAddId = result.mailData.orgWideEmailAddressId;
                 this.reminderMode = result.isReminder;
                 this.mailStructure.isReminder = result.isReminder;

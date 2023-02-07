@@ -154,4 +154,42 @@ public class HDT_UTL_UtilsTst{
 		datePhase = HDT_UTL_Utils.exctrPhaseTransDateFromStory(phaseStory, 'Documentazione Validata');
 		System.assert(datePhase != null, 'Calcolo exctrPhaseTransDateFromStory non valido');
 	}
+
+	@IsTest
+	static void testBeforeSapPhase(){
+		String response = '';
+		Test.startTest();
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', '');
+			System.assertEquals('', response, 'Calcolo non valido quando la story è vuota');
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@M||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||');
+			System.assertEquals('Ammissibilità OK', response, 'Calcolo non valido caso 1');
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||');
+			System.assertEquals('', response, 'Calcolo non valido caso 2');
+			response = HDT_UTL_Utils.beforeSapPhase('Errore Lavorazione SAP', 'Errore tecnico invio a SAP@@Bozza@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@M||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||');
+			System.assertEquals('', response, 'Calcolo non valido caso 3');
+		Test.stopTest();
+	}
+
+	@IsTest
+	static void testSetFieldsSize(){
+		Case cUno = new Case(
+			DiscardDescription__c  = 'Test per verificare il troncamento dei campi nel case durante la chiamata heroku. La funzionalità è interamente gestita nel trigger del case e nel caso in cui dovesse funzionare i campi DiscardDescription__c e CancellationNote__c, che hanno entrambi size 255, verranno troncati.',
+			CancellationNote__c = 'Test per verificare il troncamento dei campi nel case durante la chiamata heroku. La funzionalità è interamente gestita nel trigger del case e nel caso in cui dovesse funzionare i campi DiscardDescription__c e CancellationNote__c, che hanno entrambi size 255, verranno troncati.'
+		);
+		Case cDue = new Case();
+		Case cTre = new Case(
+			DiscardDescription__c  = 'Trunk non necessario',
+			CancellationNote__c = 'Trunk non necessario'
+		);
+		Test.startTest();
+			HDT_UTL_Utils.setFieldsSize(null);
+			HDT_UTL_Utils.setFieldsSize(cUno);
+			HDT_UTL_Utils.setFieldsSize(cDue);
+			HDT_UTL_Utils.setFieldsSize(cTre);
+		Test.stopTest();
+		System.assertEquals(255, cUno.CancellationNote__c.length(), 'Il campo CancellationNote__c non è stato troncato');
+		System.assertEquals(255, cUno.DiscardDescription__c.length(), 'Il campo DiscardDescription__c  non è stato troncato');
+		System.assertEquals('Trunk non necessario', cTre.CancellationNote__c, 'Il metodo ha modificato il campo CancellationNote__c');
+		System.assertEquals('Trunk non necessario', cTre.DiscardDescription__c , 'Il metodo ha modificato il campo DiscardDescription__c');
+	}
 }

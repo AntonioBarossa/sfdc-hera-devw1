@@ -274,16 +274,22 @@ public with sharing class HDT_UTL_ActivityCustomTst{
 					WHERE Case__r.Id != null];
 		tActivCust[0].Type__c = 'Lavorazione Reclamo Post Survey';
 		update tActivCust;
+		Id caseId =tActivCust[0].Case__c; 
 		System.runAs(tUser){
 
 			test.startTest();
-				insert new wrts_prcgvr__Activity__c(Type__c = 'Lavorazione Reclamo Post Survey', Case__c = tActivCust[0].Case__c,wrts_prcgvr__Status__c = 'Aperta');
+				insert new wrts_prcgvr__Activity__c(Type__c = 'Lavorazione Reclamo Post Survey', Case__c = caseId,wrts_prcgvr__Status__c = 'Aperta');
+				tActivCust = [SELECT id,ClosingNote__c, Name FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Type__c = 'Lavorazione Reclamo Post Survey'];
+				System.assertEquals(1, tActivCust.size(), 'Return after insert is wrong');
+				update new wrts_prcgvr__Activity__c( Id = tActivCust[0].Id ,wrts_prcgvr__Status__c = 'Chiusa', wrts_prcgvr__IsClosed__c = true);
+				String message = 'Annullata per apertura nuova attività';
+				tActivCust = [SELECT id,ClosingNote__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Annullata' AND Type__c = 'Lavorazione Reclamo Post Survey'];
+				System.assertEquals(message, tActivCust[0].ClosingNote__c, 'Return old activity is wrong');
+				insert new wrts_prcgvr__Activity__c(Type__c = 'Lavorazione Reclamo Post Survey', Case__c = caseId,wrts_prcgvr__Status__c = 'Aperta');
+				tActivCust = [SELECT id,ClosingNote__c, Name FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Aperta' AND Type__c = 'Lavorazione Reclamo Post Survey'];
+				System.assertEquals(0, tActivCust.size(), 'Return after close is wrong');
 			test.stopTest();
-			tActivCust = [SELECT id,ClosingNote__c, Name FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c != 'Annullata' AND Type__c = 'Lavorazione Reclamo Post Survey'];
-			System.assertEquals(1, tActivCust.size(), 'Return is wrong');
-			String message = 'Annullata per apertura attività più recente: ' + tActivCust[0].Name;
-			tActivCust = [SELECT id,ClosingNote__c FROM wrts_prcgvr__Activity__c WHERE wrts_prcgvr__Status__c = 'Annullata' AND Type__c = 'Lavorazione Reclamo Post Survey'];
-			System.assertEquals(message, tActivCust[0].ClosingNote__c, 'Return is wrong');
+			
 		}
 	}
 

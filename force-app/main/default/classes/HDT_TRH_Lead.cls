@@ -101,6 +101,10 @@ public inherited sharing class HDT_TRH_Lead extends HDT_TRH_TriggerHandler {
                     }
                 }
             } 
+            //Se la Società è MMS, viene impostato il RT "Principale" in modo da skippare il layout con messaggio di acquisizione obbligatoria della privacy, in quanto non prevista.
+            if(!String.isBlank(l.CompanyOwner__c) && 'MMS'.equalsIgnoreCase(l.CompanyOwner__c)){
+                l.RecordTypeId = Schema.SObjectType.Lead.getRecordTypeInfosByDeveloperName().get('HDT_RT_Main').getRecordTypeId();
+            }
         }
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
     }

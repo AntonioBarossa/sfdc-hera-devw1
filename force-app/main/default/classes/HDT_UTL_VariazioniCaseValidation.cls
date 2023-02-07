@@ -23,6 +23,7 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
             Integer unitDomRes = Integer.valueOf(getFieldValue(fields, 'ResidentDomesticHousingUnit__c'));
             Integer unitDomNonRes = Integer.valueOf(getFieldValue(fields, 'NotResidentDomesticHousingUnit__c'));
             Integer unitNonDom = Integer.valueOf(getFieldValue(fields, 'Unita_Abitative__c'));
+            Integer unitNonDomComm = Integer.valueOf(getFieldValue(fields, 'CommercialHousingUnit__c'));
             Integer numCompDomRes = Integer.valueOf(getFieldValue(fields, 'ResidentMembers__c'));
             if (unitDomRes > 0 && numCompDomRes <= 0){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
@@ -30,7 +31,7 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
             }else if (numCompDomRes < unitDomRes) {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Attenzione! Il numero dei Componenti Domestici Residenti deve essere maggiore o uguale al numero di Unità abitative domestico residente.'));
-            }else if (unitDomRes + unitDomNonRes + unitNonDom < 2) {
+            }else if (unitDomRes + unitDomNonRes + unitNonDom + unitNonDomComm < 2) {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Attenzione! La somma delle unità abitative deve essere maggiore o uguale a 2.'));
             }

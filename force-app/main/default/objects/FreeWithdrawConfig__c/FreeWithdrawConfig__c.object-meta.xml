@@ -160,7 +160,9 @@
         <type>Text</type>
     </nameField>
     <pluralLabel>Configurazion Ritiri Gratuiti</pluralLabel>
-    <searchLayouts></searchLayouts>
+    <searchLayouts>
+        <listViewButtons>Rapporto_Configurazione_Ritiri_Gratuiti</listViewButtons>
+    </searchLayouts>
     <sharingModel>ReadWrite</sharingModel>
     <visibility>Public</visibility>
 </CustomObject>

@@ -5,7 +5,7 @@
     <externalDeveloperName>Cas_CaseNumber</externalDeveloperName>
     <externalId>false</externalId>
     <isFilteringDisabled>false</isFilteringDisabled>
-    <isNameField>false</isNameField>
+    <isNameField>true</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
     <label>Cas_CaseNumber</label>
     <length>30</length>
