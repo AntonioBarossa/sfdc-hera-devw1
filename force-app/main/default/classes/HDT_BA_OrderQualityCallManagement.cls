@@ -159,7 +159,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             }
             
             if (!totalOrderToUp.isEmpty()){
-                List<Database.SaveResult> srList = Database.update(totalOrderToUp, false);
+                List<Database.SaveResult> srList = Database.update(new List<Order>(totalOrderToUp), false);
                 qCall.setLogRecord(srList, ordersToUpdate, logs, 'update order');
             }
 
