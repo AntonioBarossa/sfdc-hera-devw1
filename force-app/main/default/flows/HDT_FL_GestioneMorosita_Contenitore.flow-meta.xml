@@ -144,7 +144,7 @@
         <defaultConnectorLabel>NonInLavorazione</defaultConnectorLabel>
         <rules>
             <name>InLavorazione</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetParentRecord.Phase__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -152,7 +152,14 @@
                     <stringValue>In Lavorazione</stringValue>
                 </rightValue>
             </conditions>
-            <label>InLavorazione</label>
+            <conditions>
+                <leftValueReference>GetParentRecord.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Annullato</stringValue>
+                </rightValue>
+            </conditions>
+            <label>InLavorazione OR Annullato</label>
         </rules>
     </decisions>
     <decisions>

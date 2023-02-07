@@ -102,6 +102,17 @@ public inherited sharing class HDT_QR_AccountStatement {
         return siebelCustomerList;
     }
 
+    public static List<SalesforceCustomer__x> getSalesforceCustomer(String recId){
+        List<SalesforceCustomer__x> salesforceCustomerList = new List<SalesforceCustomer__x>();
+        salesforceCustomerList = [
+            SELECT Id, CustomerCodeC__c
+            FROM SalesforceCustomer__x
+            WHERE Id = :recId
+            WITH SECURITY_ENFORCED
+        ];
+        return salesforceCustomerList;
+    }
+
     public static List<HDT_ButtonDetails__mdt> getButtonMetadataList(List<HDT_ButtonDetails__mdt> mdtButtonList, String tabValue, String level){
         mdtButtonList = new List<HDT_ButtonDetails__mdt>();
         mdtButtonList = [
