@@ -113,9 +113,8 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                     needsActivity = true;
                 }
                 ordToUpd.Skip_Callout__c = newSkipCall;
-                
+                ordersToUpdate.add(ordToUpd);
                 if (orderWithActivity.contains(o.Id) || orderWithActivity.contains(o.ParentOrder__c)){
-                    ordersToUpdate.add(ordToUpd);
                     continue;
                 }
                 
@@ -129,8 +128,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                         wrts_prcgvr__Status__c = 'Aperta',
                         wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
                     ));
-                }              
-                ordersToUpdate.add(ordToUpd);
+                }
             }
             this.closeActivities(actToUpdate);
             if (!orderToCancel.isEmpty()){
