@@ -335,15 +335,17 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
 
         for (String parent : parentRelationships) {
 
-            String targetObject = parent.split('|').get(0);
-            String targetField = parent.split('|').get(1);
+            String targetObject = parent.split('\\|').get(0);
+            String targetField = parent.split('\\|').get(1);
 
             String queryString = 'SELECT ' + targetField + 
                                  ' FROM ' + targetObject + 
                                  ' WHERE ' + targetField + 
-                                 ' IN ' + result + 
+                                 ' IN :result ' + 
                                  ' GROUP BY ' + targetField + 
                                  ' LIMIT ' + this.batchScope;
+
+            System.debug('Parents query used ' + queryString);
 
             for (AggregateResult so : Database.query(queryString)) {
 
