@@ -89,7 +89,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
             if(String.isBlank(currentObj.csvSplitted[definitiveCAIndex])){
                 try{
                     createBillingProfile(currentObj.newCase,currentObj.csvSplitted);
-                }catch (Exception e){
+                }catch (IllegalArgumentException e){
                     itemsToSave.add(setErrorItem(currentObj.requestItem, e.getMessage()));
                     continue;
                 }
