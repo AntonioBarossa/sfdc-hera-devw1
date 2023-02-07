@@ -305,7 +305,7 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         for(MassiveLoaderRequestItem__c item : itemList){
             item.Status__c = 'Errore';
-            item.StatusDescription__c = message;
+            item.StatusDescription__c = message.abbreviate(250);
         }
         update itemList;
     }
