@@ -521,12 +521,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     contractAmb.Status = contractStatus;
                     spAmb.SapContractStatus__c = contractStatus;
                 }
-                Case qrContractAmb = hpsmQr.getCaseRecord(contractAmb.Id);
                 if( contractAmb.Id != null &&
                     'Cessazione'.equalsIgnoreCase(recordCase.Type) &&
                     recordCase.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_DisattivazioniTari').getRecordTypeId()){
                         contractAmb.Id = recordCase.Contract__c;
-                        contractAmb.EndDate = qrContractAmb.EffectiveDate__c;
+                        contractAmb.EndDate = recordCase.EffectiveDate__c;
                         HDT_UTL_SubscriptionProcess.closeSubscriptionsToday(contractAmb.Id);
                 }
                 if(contractAmb.Id != null){
