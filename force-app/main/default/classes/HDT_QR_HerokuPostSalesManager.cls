@@ -56,7 +56,7 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         return account;
     }
     public Contact getContact(String accountId){
-        AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id,Contact.CompanyOwner__c FROM AccountContactRelation WHERE AccountId =:accountId AND Roles = 'Titolare' WITH SECURITY_ENFORCED LIMIT 1];
+        AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id,Contact.CompanyOwner__c FROM AccountContactRelation WHERE AccountId =:accountId AND Roles INCLUDES ('Titolare','Legale rappresentante','Familiare') WITH SECURITY_ENFORCED LIMIT 1];
         Contact contact = rel.Contact;
         return contact;
     }
