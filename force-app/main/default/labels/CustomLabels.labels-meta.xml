@@ -974,6 +974,13 @@
         <value>HERA COMM</value>
     </labels>
     <labels>
+        <fullName>UrlImportBonusSociale</fullName>
+        <language>en_IE</language>
+        <protected>false</protected>
+        <shortDescription>UrlImportBonusSociale</shortDescription>
+        <value>https://heravendita.lightning.force.com/lightning/r/Knowledge__kav/ka02o000000cvf1AAA/view</value>
+    </labels>
+    <labels>
         <fullName>TRB_Enable</fullName>
         <language>it</language>
         <protected>false</protected>
