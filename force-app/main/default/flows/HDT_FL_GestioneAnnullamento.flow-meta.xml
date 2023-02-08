@@ -2914,6 +2914,12 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 <elementReference>GetOrder</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <name>processType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
+            </value>
+        </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
     <subflows>
