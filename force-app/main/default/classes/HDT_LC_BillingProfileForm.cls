@@ -166,19 +166,19 @@ public inherited sharing class HDT_LC_BillingProfileForm {
            'AAS Condominio' => 'Piccoli Condomini'
 
        };
-       Map<String, String> nullMarkingMap = new Map<String,String>
-       {
-        'Famglie' => 'Privati',
-        'Aziende Soho' => 'Small Business',
-        'Piccoli Condomini' => 'Piccoli Condomini'
-       };
        /* Se marcatura = 'D8 - Marcatura nulla' si va a guardare la categoria dell'account e si esegue il seguente mapping
        Famiglie --> Privati
        Aziende Soho --> Small Business
        Piccoli Condomini --> Piccoli Condomini
        Da estendere wave successive
        */
-       if('D8 - Marcatura nulla'.equalsIgnoreCase(acc.CustomerMarking__c))
+       Map<String, String> nullMarkingMap = new Map<String,String>
+       {
+        'Famiglie' => 'Privati',
+        'Aziende Soho' => 'Small Business',
+        'Piccoli Condomini' => 'Piccoli Condomini'
+       };
+      if('D8 - Marcatura nulla'.equalsIgnoreCase(acc.CustomerMarking__c))
        {
         billingProfile.AccountClass__c = nullMarkingMap.get(acc.Category__c);
        }
