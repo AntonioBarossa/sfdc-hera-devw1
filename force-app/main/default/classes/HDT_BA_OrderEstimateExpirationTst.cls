@@ -41,9 +41,11 @@ public class HDT_BA_OrderEstimateExpirationTst {
                 o.Phase__c='Attesa conferma preventivo cliente';
                 o.ValidityDateEstimate__c = system.today() - 1;
                 o.RecordTypeId = constants.ORDER_RECORDTYPEID_CONNESSIONECONATTIVAZIONE;
+                o.PhaseStory__c = 'Bozza@@Attesa';
             }
             orders[1].Phase__c = 'Ammissibilità OK';
             orders[1].QuotationType__c = 'Predeterminabile';
+            orders[1].PhaseStory__c = 'Bozza@@Attesa';
             insert orders;
         }
     }

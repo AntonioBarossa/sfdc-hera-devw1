@@ -75,6 +75,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         
         return [SELECT Id,
         Phase__c,
+        PhaseStory__c,
         Type,
         Cluster__c,
         QuotationType__c,
