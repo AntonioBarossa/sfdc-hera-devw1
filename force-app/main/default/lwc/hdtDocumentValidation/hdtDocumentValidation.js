@@ -35,7 +35,7 @@ export default class HdtDocumentValidation extends LightningElement {
         { label: 'Documentazione incompleta di allegati', value: 'Documentazione incompleta di allegati' },
         { label: 'documentazione incompleta di più elementi', value: 'documentazione incompleta di più elementi' }
     ];
-    notIntegratedProcess = ['DOM_Coabitazioni','Dati catastali','DOM_Componenti residenti','Variazione Indirizzo di Fornitura','Domiciliato in nucleo residente'];
+    notIntegratedProcess = ['DOM_Coabitazioni','Dati catastali','DOM_Componenti residenti','Variazione indirizzo di fornitura','Domiciliato in nucleo residente'];
 
     columnsAccise = [
         { id: 1, name: 'PersonalData', label: 'Dati Anagrafici' },
