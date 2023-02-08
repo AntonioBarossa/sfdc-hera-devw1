@@ -23,7 +23,11 @@ public class HDT_BA_PostSalesMasterBatchTst {
         String rtIdVolturaTecnica = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameVolturaTecnica).getRecordTypeId();
         String rtNameBloccoSollecitoInteressi = 'HDT_RT_AltriProcessiPagamenti';
         String rtIdBloccoSollecitoInteressi = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameBloccoSollecitoInteressi).getRecordTypeId();
-
+        String rtNamePrev = 'HDT_RT_PreventiviEle';
+        String rtIdPrev = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNamePrev).getRecordTypeId();
+        
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtIdPrev, rtNamePrev,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto','Attesa conferma preventivo cliente', rtIdPrev, rtNamePrev,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Ammissibilità OK', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Attesa conferma preventivo cliente', rtId, rtName,'A','','','');
@@ -65,7 +69,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[0].Phase__c = 'Attesa conferma preventivo cliente';
         caseList[0].QuotationValidityDate__c = Date.today()-5;
         caseList[0].Cluster__c = 'Verifiche';
-        caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
+        caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PreventiviEle').getRecordTypeId();
+        caseList[0].PhaseStory__c = 'Bozza@@Attesa';
         
         caseList[1].BillingProfile__c = billingProfileList[0].Id;
         caseList[1].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
@@ -116,6 +121,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[8].QuotationType__c = 'Predeterminabile';
         caseList[8].Cluster__c = 'Verifiche';
         caseList[8].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
+        caseList[8].PhaseStory__c = 'Bozza@@Attesa';
         
 
         update caseList;        
