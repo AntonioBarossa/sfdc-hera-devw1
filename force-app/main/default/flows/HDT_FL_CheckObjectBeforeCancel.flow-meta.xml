@@ -112,7 +112,7 @@
             <assignToReference>errorMessage</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Non è possibile procedere con l&apos;annullamento su questa pratica.</stringValue>
+                <stringValue>Non è possibile completare la richiesta su questa pratica.</stringValue>
             </value>
         </assignmentItems>
     </assignments>
@@ -195,14 +195,14 @@
                 <leftValueReference>phase</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Annullamento</stringValue>
+                    <stringValue>Annullamento -</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
                 <leftValueReference>phase</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Ripensamento</stringValue>
+                    <stringValue>Ripensamento -</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -452,20 +452,48 @@ OR(
 	)
 ),IF(NOT(ISBLANK({!order.Id})),
 OR(
-	{!order.NotCancellable__c},
+	AND(
+		{!processType}!=&quot;Ripensamento&quot;,
+		OR(
+			{!order.NotCancellable__c},
+			AND(
+				{!order.FlyingRequest__c},
+				NOT({!$Permission.HDT_CP_AnnullamentoPraticheInVolo})
+			)
+		)
+	),
 	ISPICKVAL({!order.Status}, &apos;Chiuso&apos;),
     ISPICKVAL({!order.Status}, &apos;Activated&apos;),
 	ISPICKVAL({!order.Status}, &apos;Annullato&apos;),
-	AND(
-		{!order.FlyingRequest__c},
-		NOT({!$Permission.HDT_CP_AnnullamentoPraticheInVolo})
-	),
 	AND(
 		{!order.isTransition__c},
 		OR(
 		ISPICKVAL({!order.Phase__c}, &apos;Esportazione VS Siebel&apos;),
 		ISPICKVAL({!order.Phase__c}, &apos;Caricamento Siebel OK&apos;),
 		ISPICKVAL({!order.Phase__c}, &apos;In Corso Caricamento Siebel&apos;)
+		)
+	),
+	AND(
+		{!processType}==&quot;Ripensamento&quot;,
+		OR(
+			AND(
+				{!order.VASType__c}!=&quot;VAS Servizio&quot;,
+				OR(
+					ISNULL({!order.MaxAfterthoughtDate__c}),
+					{!order.MaxAfterthoughtDate__c} &lt; TODAY(),
+					CONTAINS(TEXT({!order.Phase__c}), &quot;Ripensato&quot;)
+				)
+			),
+			AND(
+				{!order.VASType__c}==&quot;VAS Servizio&quot;,
+				OR(
+					{!order.SentToVasEngine__c},
+					AND(
+						NOT(ISPICKVAL({!order.Phase__c}, &apos;Documentazione da validare&apos;)),
+						NOT(ISPICKVAL({!order.Phase__c}, &apos;In attesa tempi di ripensamento&apos;))
+					)
+				)
+			)
 		)
 	)
 ),false))</expression>
@@ -688,6 +716,16 @@ OR(
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>processType</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
         <isOutput>false</isOutput>
         <value>
             <stringValue></stringValue>
