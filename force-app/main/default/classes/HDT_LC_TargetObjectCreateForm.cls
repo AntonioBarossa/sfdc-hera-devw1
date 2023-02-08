@@ -165,6 +165,11 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                     }
                 }
                 //}
+                Set<String> statusMeter = new Set<String>{'Bozza','Inattivo'};
+                Set<String> commoditySet = new Set<String>{'Acqua','Teleriscaldamento'};
+                if(statusMeter.contains(servicePo.MeterStatus__c) && commoditySet.contains(servicePo.CommoditySector__c) && String.isBlank(servicePo.Account__c)){
+                    servicePo.Account__c=sa.Account__c;
+                }
             }
         }
         serviceSp.createRecord(servicePo);
