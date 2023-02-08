@@ -8,6 +8,8 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     private Set<String>contractCodes=new Set<String>();
     private Set<String>definitiveAccountCodes=new Set<String>();
     private Set<String>definitivesCas=new Set<String>();
+    List<MassiveLoaderRequestItem__c> mlriEligible=new List<MassiveLoaderRequestItem__c>();
+    List<Case> caseToShift=new List<Case>();
     private Integer contractIndex;
     private Integer accountToMergeIndex;
     private Integer masterAccountIndex;
@@ -16,7 +18,6 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     Map<String,Contract> sapCodeContractMap=new Map<String,Contract>();
     Map<String,Account> definitiveAccountCodeMap=new Map<String,Account>();
     Map<String,BillingProfile__c> codeBillingProfMap=new Map<String,BillingProfile__c>();
-    List<Case> caseToShift=new List<Case>();
 
     public override void checks(){
         mapFieldsObject();
@@ -67,7 +68,6 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     public override void registryCreation(){
         for(HDT_WRP_ProcessObjects currentObj:processObjList){
             currentObj.newCase = generateCase(currentObj.csvSplitted);
-
             String fieldConversionError='';
             Integer count = 0;
             for (String tempField : currentObj.csvSplitted) {
@@ -95,21 +95,35 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 }
             }
             caseToShift.add(currentObj.newCase);
+            mlriEligible.add(currentObj.requestItem);
         }
         if(caseToShift.size()>0){
-            HDT_UTL_DatabaseService.insertSObject(caseToShift);
+            List<Database.SaveResult> insertListResp= Database.insert(caseToShift,false);
+            integer removedCount=0;
+            for(Database.SaveResult sr:insertListResp){
+                if(!sr.isSuccess()){
+                    Integer errorObjIndex=insertListResp.indexOf(sr);
+                    itemsToSave.add(setErrorItem(mlriEligible[errorObjIndex-removedCount], sr.getErrors().toString().abbreviate(255)));
+                    caseToShift.remove(errorObjIndex-removedCount);
+                    mlriEligible.remove(errorObjIndex-removedCount);
+                    removedCount+=1;
+                }
+            }
         }
     }
 
     public override void finalUpdate(){
+        if(caseToShift.size()>0){
+            for(Case shiftToInLavorazione:caseToShift){
+                shiftToInLavorazione.Phase__c='In Lavorazione';
+            }
+            HDT_WRP_SaveResponse saveResponse=databaseUpsert(caseToShift,mlriEligible,'Case');
+            if(saveResponse.reponseItemList.size() > 0){
+                itemsToSave.addAll(saveResponse.reponseItemList);
+            }
+        }
         if(itemsToSave.size() > 0){
             update itemsToSave;
-        }
-        if(caseToShift.size()>0){
-            for(Case moveToInLavorazione:caseToShift){
-                moveToInLavorazione.Phase__c='In Lavorazione';
-            }
-            HDT_UTL_DatabaseService.updateSObject(caseToShift);
         }
     }
 
@@ -132,8 +146,8 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
             processCase.AccountId=sapCodeContractMap.get(csvValues[contractIndex]).AccountId;
             processCase.Account=sapCodeContractMap.get(csvValues[contractIndex]).Account;
         }
-        caseDescription+='Account da unificare:\n'+csvValues[accountToMergeIndex]+'\n';
-        caseDescription+='Account master:\n'+csvValues[masterAccountIndex]+'\n';
+        caseDescription+='Account da unificare:\n'+csvValues[accountToMergeIndex]+'\n\n';
+        caseDescription+='Account master:\n'+csvValues[masterAccountIndex]+'\n\n';
         caseDescription+='CA da unificare:\n'+csvValues[caToMergeIndex];
         processCase.Description=caseDescription;
         if(String.isNotBlank(csvValues[definitiveCAIndex])){
