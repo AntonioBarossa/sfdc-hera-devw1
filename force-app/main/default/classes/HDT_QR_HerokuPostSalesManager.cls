@@ -56,9 +56,25 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
         return account;
     }
     public Contact getContact(String accountId){
-        AccountContactRelation rel = [SELECT ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id,Contact.CompanyOwner__c FROM AccountContactRelation WHERE AccountId =:accountId AND Roles INCLUDES ('Titolare','Legale rappresentante','Familiare') WITH SECURITY_ENFORCED LIMIT 1];
-        Contact contact = rel.Contact;
-        return contact;
+        List<AccountContactRelation> rel = [SELECT Roles,ContactId,Contact.Email, Contact.Phone, Contact.MobilePhone, Contact.Id,Contact.CompanyOwner__c FROM AccountContactRelation WHERE AccountId =:accountId AND Roles INCLUDES ('Titolare','Legale rappresentante','Familiare') AND Roles NOT IN ('Referente SOL-APP') WITH SECURITY_ENFORCED LIMIT 1];
+        Contact result = new Contact();
+        for(AccountContactRelation acr : rel)
+        {
+            if('Legale rappresentante'.containsIgnoreCase(acr.Roles))
+            {
+                result = acr.Contact;
+            }
+            else if('Titolare'.containsIgnoreCase(acr.Roles))
+            {
+                result = acr.Contact;
+                break;
+            }
+            else
+            {
+                result = acr.Contact;
+            }
+        }
+        return result;
     }
 
     public ServicePoint__c getServicePoint(String code){
