@@ -298,7 +298,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<OrderItem> orderItemToInsert = new List<OrderItem>();
         List<Sale__c> saleToInsert = new List<Sale__c>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert = new List<MassiveLoaderRequestItem__c>();
-        orderPreDefault = new HDT_UTL_CarMassPredefaultValues('Voltura');
+        orderPreDefault = new HDT_UTL_CarMassPredefaultValues();
 
         Id commOffId;
         Id priceBookId;
@@ -483,7 +483,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             processObj = setSaleServiceItem(processObj);
             saleServiceToInsert.add(processObj.saleServiceItem);
             ////system.debug(LoggingLevel.DEBUG, JSON.serializePretty(processObj));
-
         }
 
         HDT_UTL_DatabaseService.insertSObject(parentOrderToInsert);
@@ -524,12 +523,28 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     wrpChildOrder.childOrder.ProcessCode__c = processMatrixMap.get(wrpChildOrder.childOrder.ProcessType__c);
                 }
 
-                handleCustomFieldLogic(wrpChildOrder.childOrder,commodity); 
+                handleCustomFieldLogic(wrpChildOrder.childOrder, commodity); 
 
-                orderPreDefault.setStringLists(wrpChildOrder.childOrder);
-                orderPreDefault.setServicePoint(servicePointMap.get(processObj.nextDataObj.servPointId));
-                orderPreDefault.setContract(contractMap.get(processObj.nextDataObj.servPointId));
-                wrpChildOrder.childOrder = orderPreDefault.setDefaultOrderValues(wrpChildOrder.childOrder);
+                if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
+                    orderPreDefault.setMetadataLists(wrpChildOrder.childOrder);
+                }
+            }
+        }
+
+        orderPreDefault.getMetadataList();
+
+        for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
+            for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
+                if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
+                    orderPreDefault.setServicePoint(servicePointMap.get(processObj.nextDataObj.servPointId));
+                    orderPreDefault.setContract(contractMap.get(processObj.nextDataObj.servPointId));
+                    wrpChildOrder.childOrder = orderPreDefault.setDefaultOrderValues(wrpChildOrder.childOrder);
+                }
             }
         }
 
