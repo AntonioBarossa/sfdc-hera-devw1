@@ -126,7 +126,8 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                         Order__c = orderId,
                         Type__c = 'Quality Scaduta',
                         wrts_prcgvr__Status__c = 'Aperta',
-                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
+                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS',
+                        OpeningNote__c = 'Errore invio a DL/SII'.equalsIgnoreCase(o.Phase__c)? 'Attività creata perchè l\'ordine era in fase Errore invio a DL/SII' : ''
                     ));
                 }
             }
