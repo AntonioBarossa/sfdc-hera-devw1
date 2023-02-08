@@ -21,6 +21,8 @@ export default class HdtAdvancedMeterSearch extends LightningElement {
     rowToSend;
     columns = columns;
     originalData;
+    showSpinner = false;
+    disableConfirmButton = true;
 
     get serviceOptions() {
         return [
@@ -59,7 +61,7 @@ export default class HdtAdvancedMeterSearch extends LightningElement {
 
     //handler chiamata al WS per ricerca matricola in SAP
     handleSapSearch(){
-
+        this.originalData = null;
         if(!this.searchinputvalue || !this.servizio){
             this.dispatchEvent(new ShowToastEvent({
                 title: 'Errore!',
@@ -67,22 +69,39 @@ export default class HdtAdvancedMeterSearch extends LightningElement {
                 variant: 'error'
             }));
         }else{
-
+            this.showSpinner = true;
             searchMeterOnSap({matricola: this.searchinputvalue, servizio : this.servizio, comune : this.comune, silos : this.silos
             }).then(data => {
+                let resultMessage;
                 if (data.length > 0) {
                     console.log('searchMeterOnSap - success');
                     console.log(JSON.stringify(data));
                     this.originalData = JSON.parse(data);
+                    resultMessage = 'Ricerca completata con successo.';
                 }else{
                     console.log('searchMeterOnSap - success with empty data');
+                    resultMessage = 'Ricerca completata senza trovare record.';
                 }
+
+                this.showSpinner = false;
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Successo!',
+                    message: resultMessage,
+                    variant: 'success'
+                }));
             }).catch(error => {
                 let errorMsg = error;
                 if ('body' in error && 'message' in error.body) {
                     errorMsg = error.body.message
                 }
                 console.log('ERROR: ' + errorMsg);
+                
+                this.showSpinner = false;
+                this.dispatchEvent(new ShowToastEvent({
+                    title: 'Errore!',
+                    message: errorMsg,
+                    variant: 'error'
+                }));
             });
         }
     }
@@ -94,6 +113,7 @@ export default class HdtAdvancedMeterSearch extends LightningElement {
     }
 
     getSelectedRow(event){
+        this.disableConfirmButton = false;
         let selectedRows = event.detail.selectedRows;
         this.rowToSend = (selectedRows[0] !== undefined) ? selectedRows[0]: {};
         console.log('rowToSend*************************' + JSON.stringify(this.rowToSend));
