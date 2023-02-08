@@ -722,7 +722,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             if(String.isNotEmpty(convertionError)){
                 System.debug(LoggingLevel.DEBUG, '>>> error id ' + processObj.allRequestItems[count].Id + ' - ' + convertionError);
                 processObj.allRequestItems[count].Status__c = 'Errore';
-                processObj.allRequestItems[count].StatusDescription__c = convertionError;
+                processObj.allRequestItems[count].StatusDescription__c = convertionError.abbreviate(250);
                 errorIds.add(processObj.allRequestItems[count].Id);
                 break;
             }
@@ -826,7 +826,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
             if(String.isNotEmpty(convertionError)){
                 System.debug(LoggingLevel.DEBUG, '>>> error id ' + processObj.allRequestItems[count].Id + ' - ' + convertionError);
                 processObj.allRequestItems[count].Status__c = 'Errore';
-                processObj.allRequestItems[count].StatusDescription__c = convertionError;
+                processObj.allRequestItems[count].StatusDescription__c = convertionError.abbreviate(250);
                 errorIds.add(processObj.allRequestItems[count].Id);
                 break;
             }
@@ -932,7 +932,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
     private HDT_WRP_VasOrder.HDT_WRP_ProcessObjects setErrorObj(HDT_WRP_VasOrder.HDT_WRP_ProcessObjects processObject, String errorMessage){
         processObject.error = true;
         processObject.allRequestItems[0].Status__c = 'Errore';
-        processObject.allRequestItems[0].StatusDescription__c = errorMessage;
+        processObject.allRequestItems[0].StatusDescription__c = errorMessage.abbreviate(250);
         return processObject;
     }
 

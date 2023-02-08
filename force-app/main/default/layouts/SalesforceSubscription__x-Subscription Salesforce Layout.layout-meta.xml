@@ -342,6 +342,10 @@
                 <behavior>Edit</behavior>
                 <field>DurationVasC__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>CompanyOwnerC__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

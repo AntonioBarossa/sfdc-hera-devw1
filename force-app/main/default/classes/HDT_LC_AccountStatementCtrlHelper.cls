@@ -51,25 +51,30 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
             columnsObj.columnObj = new List<HDT_WRP_AccountStatement.HDT_WRP_SingleColumn>();
 
             // CR026 - Montors
-            //columnsObj.confObj = getConfObj(tabValue);
-            //columnsObj.confObj.recordCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].Name;
             
             Id recId = Id.valueOf(recordId);
             Boolean isExternal = false;
             String sObjName = recId.getSObjectType().getDescribe().getName();
+            String customerCode = '';
 
-            if(sObjName.equalsIgnoreCase('SiebelCustomer__x') ){
-                isExternal = true;
+            switch on sObjName {
+                when 'SiebelCustomer__x' {
+                    customerCode = HDT_QR_AccountStatement.getSiebelCustomer(recordId)[0].OU_NUM__c;
+                    isExternal = true;
+                }
+    
+                when 'SalesforceCustomer__x' {
+                    customerCode = HDT_QR_AccountStatement.getSalesforceCustomer(recordId)[0].CustomerCodeC__c;
+                    isExternal = true;
+                }
+                
+                when 'Account' {
+                    customerCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].CustomerCode__c;
+                }                       
             }
-
             columnsObj.confObj = getConfObj(tabValue, isExternal);
-
-            if(isExternal){
-                columnsObj.confObj.customerCode = HDT_QR_AccountStatement.getSiebelCustomer(recordId)[0].OU_NUM__c;
-            } else {
-                columnsObj.confObj.customerCode = HDT_QR_AccountStatement.getAccountData(recordId)[0].CustomerCode__c;
-            }
-
+            columnsObj.confObj.customerCode = customerCode;
+            
             // CR026 - Montors
 
             if(columnsObj.confObj.buttonList == null || columnsObj.confObj.buttonList.size()==0){
@@ -186,7 +191,7 @@ public inherited sharing class HDT_LC_AccountStatementCtrlHelper {
         Boolean isExternal = false;
         String sObjName = recId.getSObjectType().getDescribe().getName();
 
-        if(sObjName.equalsIgnoreCase('SiebelCustomer__x') ){
+        if(!sObjName.equalsIgnoreCase('Account') ){
             isExternal = true;
         }
 

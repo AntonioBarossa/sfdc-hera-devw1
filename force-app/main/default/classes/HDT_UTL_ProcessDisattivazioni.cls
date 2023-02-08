@@ -296,7 +296,7 @@ public inherited sharing class HDT_UTL_ProcessDisattivazioni extends HDT_UTL_Pro
     public override void manageCatchException(Integer batchSize, List<MassiveLoaderRequestItem__c> itemList, String message){
         for(MassiveLoaderRequestItem__c item : itemList){
             item.Status__c = 'Errore';
-            item.StatusDescription__c = message;
+            item.StatusDescription__c = message.abbreviate(250);
         }
         update itemList;
     }

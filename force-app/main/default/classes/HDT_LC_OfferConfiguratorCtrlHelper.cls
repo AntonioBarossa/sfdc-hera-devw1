@@ -624,7 +624,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
 
             //BRIM
 
-            obj.header.ore = String.valueOf(techOff.Hours__c);
+            //obj.header.ore = String.valueOf(techOff.Hours__c);
+            obj.header.ore = formatHours(techOff.Hours__c);
             obj.header.percentuale = String.valueOf(techOff.Discount__c);
             obj.header.parametroP0 = formatCurrency(String.valueOf(techOff.P0__c));
             obj.header.parametroK = formatCurrency(String.valueOf(techOff.K__c));
@@ -632,7 +633,7 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.parametroL = String.valueOf(techOff.Lambda__c);
             obj.header.identificativoProdotto = String.valueOf(techOff.ProductIdentifier__c);
             obj.header.coGg = String.valueOf(techOff.DailyContribution__c);
-            obj.header.coSt = String.valueOf(techOff.WeeklyContribution__c	);
+            obj.header.coSt = String.valueOf(techOff.WeeklyContribution__c);
 
             //obj.header.parametroP0 = (obj.header.parametroP0==null) ? null : obj.header.parametroP0.replace('.', ',');
             //obj.header.parametroK = (obj.header.parametroK==null) ? null : obj.header.parametroK.replace('.', ',');
@@ -716,6 +717,20 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             }
         }
         return false;
+    }
+
+    private static String formatHours(Decimal hours){
+
+        if(hours==null){
+            return null;
+        }
+    
+        String s = String.valueOf(hours);
+        if(s.length()<2){
+            return '0' + s;
+        } else {
+            return s;
+        }
     }
 
 }
