@@ -273,7 +273,7 @@ IF(ISNULL({!getCase.ResidentMembers__c}), 0, {!getCase.ResidentMembers__c})</exp
         <inputAssignments>
             <field>TerminationDate__c</field>
             <value>
-                <elementReference>getUpdatedCase.TerminationDate__c</elementReference>
+                <elementReference>getUpdatedCase.EffectiveDate__c</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
