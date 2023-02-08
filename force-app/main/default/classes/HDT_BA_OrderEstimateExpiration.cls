@@ -15,17 +15,21 @@ public class HDT_BA_OrderEstimateExpiration implements Database.Batchable<SObjec
     public void execute(Database.BatchableContext bc, List<Order> scope) {
  
         HDT_UTL_PostSalesCriteriaManager psCrit = new HDT_UTL_PostSalesCriteriaManager();
-        
+        List<Order> orderToUpdate = new List<Order>();
+
         for(Order ord : scope){
             if(ord.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') 
                 || (ord.Phase__c.equalsIgnoreCase('Ammissibilità OK') && psCrit.secondAdmissibility(ord.PhaseStory__c)))
             {
                 ord.Phase__c = 'Preventivo scaduto';
                 ord.Status = 'Annullato';
+                orderToUpdate.add(ord);
             }
         }
-        HDT_UTL_DatabaseService.updateSObject(scope);
-        
+        if(!orderToUpdate.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(scope);
+        }
     }
 
     public void finish(Database.BatchableContext bc){
