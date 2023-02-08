@@ -141,7 +141,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             billingProfile.IbanCountry__c = String.isNotBlank(billingProfile.Iban__c) ? billingProfile.Iban__c.substring(0,2) : '';
         }
 
-       Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c');
+       Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c, Category__c');
 
        Map<String,String> mapCustMarkToAccClass = new Map<String,String>{
            'D2 - Ditta individuale' => 'Small Business',
@@ -166,9 +166,27 @@ public inherited sharing class HDT_LC_BillingProfileForm {
            'AAS Condominio' => 'Piccoli Condomini'
 
        };
-
-       billingProfile.AccountClass__c = mapCustMarkToAccClass.get(acc.CustomerMarking__c);
-
+       /* Se marcatura = 'D8 - Marcatura nulla' si va a guardare la categoria dell'account e si esegue il seguente mapping
+       Famiglie --> Privati
+       Aziende Soho --> Small Business
+       Piccoli Condomini --> Piccoli Condomini
+       Da estendere wave successive
+       */
+       Map<String, String> nullMarkingMap = new Map<String,String>
+       {
+        'Famiglie' => 'Privati',
+        'Aziende Soho' => 'Small Business',
+        'Piccoli Condomini' => 'Piccoli Condomini'
+       };
+      if('D8 - Marcatura nulla'.equalsIgnoreCase(acc.CustomerMarking__c))
+       {
+        billingProfile.AccountClass__c = nullMarkingMap.get(acc.Category__c);
+       }
+       else
+       {
+        billingProfile.AccountClass__c = mapCustMarkToAccClass.get(acc.CustomerMarking__c);
+       }
+      
        /**@frpanico 2022-03-16
         * Gestione clona BillingProfile
         * Se il CA è valorizzato va sbiancato in quanto
