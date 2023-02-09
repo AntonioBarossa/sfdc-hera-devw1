@@ -16683,6 +16683,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Cohabitation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37065,7 +37070,7 @@
         <recordType>Case.HDT_RT_Disattivazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_DisattivazioniTari</layout>
+        <layout>Case-HDT_Disattivazioni_Tari</layout>
         <recordType>Case.HDT_RT_DisattivazioniTari</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -37073,8 +37078,16 @@
         <recordType>Case.HDT_RT_Domiciliazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_ErroreFatturazioneTari</layout>
+        <recordType>Case.HDT_RT_ErroreFatturazione_TARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_FatturazioneConsumi</layout>
         <recordType>Case.HDT_RT_FatturazioneConsumi</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_GenericheAttivazioniTari</layout>
+        <recordType>Case.HDT_RT_GenericheTari</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_GestioneBolletta</layout>
@@ -37315,6 +37328,14 @@
         <layout>Knowledge__kav-Knowledge Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>LandRegistry__c-Dati Catastali ambiente</layout>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>LandRegistry__c-Dati Catastali ambiente</layout>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Lead-Lead Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
@@ -37330,11 +37351,11 @@
         <layout>OpportunityLineItem-Opportunity Product Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazioni Ambiente</layout>
+        <layout>Order-Agevolazioni Ambiente</layout>
         <recordType>Order.HDT_RT_ModificaTariffaRimozione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazioni Ambiente</layout>
+        <layout>Order-Agevolazioni Ambiente</layout>
         <recordType>Order.HDT_RT_AgevolazioniAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
