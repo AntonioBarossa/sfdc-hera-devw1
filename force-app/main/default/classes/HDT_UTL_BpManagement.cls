@@ -1,4 +1,3 @@
-
 public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
 
     private Map<String, String> mapCaseFields;
@@ -15,15 +14,15 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     private Integer accountToMergeIndex;
     private Integer masterAccountIndex;
     private Integer caToMergeIndex;
-    private Integer definitiveCAIndex;
+    private Integer definitiveCaIndex;
     private Integer numeroContoIndex;
     private Integer ibanIndex;
     private Integer abiIndex;
     private Integer cabIndex;
     private Integer cinIndex;
     private Integer cinIbanIndex;
-    private Integer ForeignIbanIndex;
-    private Integer IbanNationIndex;
+    private Integer foreignIbanIndex;
+    private Integer ibanNationIndex;
     private Integer paymentMethodIndex;
     private Integer billSendMethodIndex;
     private Integer billEmailIndex;
@@ -34,7 +33,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     private Integer signatoryLastnameIndex;
     private Integer signatoryFiscalCodeIndex;
     private Integer xmlTypeIndex;
-    private Integer createCAIndex;
+    private Integer createCaIndex;
     private Integer subjectCodeIndex;
     private Integer divergentSubjectIndex;
     private Integer contractAccountCodeIndex;
@@ -68,8 +67,8 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
             if(String.isNotBlank(tempSplitedFields[masterAccountIndex])){
                 definitiveAccountCodes.add(tempSplitedFields[masterAccountIndex]);
             }
-            if(String.isNotBlank(tempSplitedFields[definitiveCAIndex])){
-                definitivesCas.add(tempSplitedFields[definitiveCAIndex]);
+            if(String.isNotBlank(tempSplitedFields[definitiveCaIndex])){
+                definitivesCas.add(tempSplitedFields[definitiveCaIndex]);
             }
             if(String.isNotBlank(tempSplitedFields[divergentSubjectIndex])){
                 divergentSubjectFiscalCodes.add(tempSplitedFields[divergentSubjectIndex]);
@@ -123,7 +122,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 continue;
             }
 
-            if(String.isBlank(currentObj.csvSplitted[definitiveCAIndex])){
+            if(String.isBlank(currentObj.csvSplitted[definitiveCaIndex])){
                 try{
                     createBillingProfile(currentObj.newCase,currentObj.csvSplitted);
                 }catch (Exception e){
@@ -169,15 +168,15 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         accountToMergeIndex = mapHeaderForWrapper.get('LISTAACCOUNTDAUNIFICARE');
         masterAccountIndex=mapHeaderForWrapper.get('ACCOUNTDEFINITIVO');
         caToMergeIndex=mapHeaderForWrapper.get('LISTACADAUNIFICARE');
-        definitiveCAIndex=mapHeaderForWrapper.get('CADEFINITIVO');
+        definitiveCaIndex =mapHeaderForWrapper.get('CADEFINITIVO');
         numeroContoIndex=mapHeaderForWrapper.get('NUMEROCONTO');
         ibanIndex=mapHeaderForWrapper.get('IBAN');
         abiIndex= mapHeaderForWrapper.get('ABI');
         cabIndex=mapHeaderForWrapper.get('CAB');
         cinIndex=mapHeaderForWrapper.get('CIN');
         cinIbanIndex=mapHeaderForWrapper.get('CINIBAN');
-        ForeignIbanIndex=mapHeaderForWrapper.get('IBANESTERO');
-        IbanNationIndex=mapHeaderForWrapper.get('NAZIONEIBAN');
+        foreignIbanIndex =mapHeaderForWrapper.get('IBANESTERO');
+        ibanNationIndex=mapHeaderForWrapper.get('NAZIONEIBAN');
         paymentMethodIndex=mapHeaderForWrapper.get('MODALITAPAGAMENTO');
         billSendMethodIndex=mapHeaderForWrapper.get('MODALITAINVIOBOLETTA');
         billEmailIndex=mapHeaderForWrapper.get('EMAILINVIOBOLLETTA');
@@ -188,7 +187,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         signatoryLastnameIndex= mapHeaderForWrapper.get('COGNOMESOTTOSCRITTORECC');
         signatoryFiscalCodeIndex=mapHeaderForWrapper.get('CFSOTTOSCRITTORECC');
         xmlTypeIndex=mapHeaderForWrapper.get('TIPOXML');
-        createCAIndex=mapHeaderForWrapper.get('CREARECA');
+        createCaIndex =mapHeaderForWrapper.get('CREARECA');
         subjectCodeIndex=mapHeaderForWrapper.get('CODICEDESTINATARIO');
         divergentSubjectIndex=mapHeaderForWrapper.get('DESTINATARIODIVERGENTE');
         contractAccountCodeIndex=mapHeaderForWrapper.get('CONTOCONTRATTUALE');
@@ -225,8 +224,8 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         caseDescription+='Account master:\n'+csvValues[masterAccountIndex]+'\n\n';
         caseDescription+='CA da unificare:\n'+csvValues[caToMergeIndex];
         processCase.Description=caseDescription;
-        if(String.isNotBlank(csvValues[definitiveCAIndex])){
-            processCase.TargetBillingProfile__c=codeBillingProfMap.get(csvValues[definitiveCAIndex]).Id;
+        if(String.isNotBlank(csvValues[definitiveCaIndex])){
+            processCase.TargetBillingProfile__c=codeBillingProfMap.get(csvValues[definitiveCaIndex]).Id;
         }
         return processCase;
     }
@@ -239,8 +238,8 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 IbanCAB__c=csvValues[cabIndex],
                 IbanCIN__c=csvValues[cinIndex],
                 IbanCIN_IBAN__c=csvValues[cinIbanIndex],
-                IbanIsForeign__c=csvValues[ForeignIbanIndex].equalsIgnoreCase('y'),
-                IbanCountry__c=csvValues[IbanNationIndex],
+                IbanIsForeign__c=csvValues[foreignIbanIndex].equalsIgnoreCase('y'),
+                IbanCountry__c=csvValues[ibanNationIndex],
                 PaymentMethod__c=csvValues[paymentMethodIndex],
                 BillSendingMethod__c=csvValues[billSendMethodIndex],
                 InvoiceEmailAddress__c=csvValues[billEmailIndex],
@@ -255,7 +254,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 DivergentSubject__c= (String.isNotBlank(csvValues[divergentSubjectIndex]) && fiscalCodeContactMap.containsKey(csvValues[divergentSubjectIndex]))  ?   fiscalCodeContactMap.get(csvValues[divergentSubjectIndex]).Id  : null,
                 ContractAccountCode__c=csvValues[contractAccountCodeIndex],
                 InvoicingCountry__c=csvValues[stateIndex],
-                CreateContractAccount__c=csvValues[createCAIndex].equalsIgnoreCase('y'),
+                CreateContractAccount__c=csvValues[createCaIndex].equalsIgnoreCase('y'),
                 InvoicingStreetName__c=csvValues[streetNameIndex],//text 200
                 InvoicingStreetNumber__c=csvValues[streetNumberIndex],//text 30
                 InvoicingStreetNumberExtension__c=csvValues[streetNumberExtensionIndex],
