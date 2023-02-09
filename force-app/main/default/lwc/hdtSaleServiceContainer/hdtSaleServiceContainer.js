@@ -179,8 +179,8 @@ export default class hdtSaleServiceContainer extends LightningElement {
             }else{
                 const toastErrorMessage = new ShowToastEvent({
                     title: 'Errore',
-                    message: 'Transitorio:  A causa dei seguenti Punti Di Fornitura:' + data + ' non è possibile procedere con la vendita.'
-                    + ' Per le vendite a transitorio non è possibile innescare i processi: "Connessione con Attivazione" (Presenza Allaccio NO), '
+                    message: 'Transitorio:  A causa dei seguenti Punti Di Fornitura: ' + data + ' non è possibile procedere con la vendita.\n'
+                    + ' Per le vendite a transitorio non è possibile innescare i processi: "Connessione con Attivazione" (Presenza Allaccio NO),\n '
                     + '"Temporanea - Nuova Attivazione" (Presenza Allaccio NO) e "Prima Attivazione con Modifica" (Potenza richiesta diversa da Potenza Contrattuale).',
                     variant: 'error',
                     mode: 'sticky'
