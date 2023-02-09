@@ -8,6 +8,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     private Set<String>contractCodes=new Set<String>();
     private Set<String>definitiveAccountCodes=new Set<String>();
     private Set<String>definitivesCas=new Set<String>();
+    private Set<String>divergentSubjectFiscalCodes=new Set<String>();
     List<MassiveLoaderRequestItem__c> mlriEligible=new List<MassiveLoaderRequestItem__c>();
     List<Case> caseToShift=new List<Case>();
     private Integer contractIndex;
@@ -15,17 +16,44 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     private Integer masterAccountIndex;
     private Integer caToMergeIndex;
     private Integer definitiveCAIndex;
+    private Integer numeroContoIndex;
+    private Integer ibanIndex;
+    private Integer abiIndex;
+    private Integer cabIndex;
+    private Integer cinIndex;
+    private Integer cinIbanIndex;
+    private Integer ForeignIbanIndex;
+    private Integer IbanNationIndex;
+    private Integer paymentMethodIndex;
+    private Integer billSendMethodIndex;
+    private Integer billEmailIndex;
+    private Integer pecEmailIndex;
+    private Integer eletronicInvoicingSendMethodIndex;
+    private Integer signatoryTypeIndex;
+    private Integer signatoryNameIndex;
+    private Integer signatoryLastnameIndex;
+    private Integer signatoryFiscalCodeIndex;
+    private Integer xmlTypeIndex;
+    private Integer createCAIndex;
+    private Integer subjectCodeIndex;
+    private Integer divergentSubjectIndex;
+    private Integer contractAccountCodeIndex;
+    private Integer streetNameIndex;
+    private Integer streetNumberIndex;
+    private Integer streetNumberExtensionIndex;
+    private Integer cityIndex;
+    private Integer placeIndex;
+    private Integer provinceIndex;
+    private Integer postalCodeIndex;
+    private Integer stateIndex;
     Map<String,Contract> sapCodeContractMap=new Map<String,Contract>();
     Map<String,Account> definitiveAccountCodeMap=new Map<String,Account>();
     Map<String,BillingProfile__c> codeBillingProfMap=new Map<String,BillingProfile__c>();
+    Map<String,Contact> fiscalCodeContactMap=new Map<String,Contact>();
 
     public override void checks(){
         mapFieldsObject();
-        contractIndex = mapHeaderForWrapper.get('CODICECONTRATTO');
-        accountToMergeIndex = mapHeaderForWrapper.get('LISTAACCOUNTDAUNIFICARE');
-        masterAccountIndex=mapHeaderForWrapper.get('ACCOUNTDEFINITIVO');
-        caToMergeIndex=mapHeaderForWrapper.get('LISTACADAUNIFICARE');
-        definitiveCAIndex=mapHeaderForWrapper.get('CADEFINITIVO');
+        populateIndexes();
         itemsToSave = new List<MassiveLoaderRequestItem__c>();
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
@@ -43,6 +71,9 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
             if(String.isNotBlank(tempSplitedFields[definitiveCAIndex])){
                 definitivesCas.add(tempSplitedFields[definitiveCAIndex]);
             }
+            if(String.isNotBlank(tempSplitedFields[divergentSubjectIndex])){
+                divergentSubjectFiscalCodes.add(tempSplitedFields[divergentSubjectIndex]);
+            }
             processObjList.add(new HDT_WRP_ProcessObjects(item,tempSplitedFields,tempSplitedFields[contractIndex]));
         }
     }
@@ -50,6 +81,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         HDT_QR_Account qrAccount= new HDT_QR_Account();
         HDT_QR_Contract qrContract= new HDT_QR_Contract();
         HDT_QR_BillingProfile qrBilling= new HDT_QR_BillingProfile();
+        HDT_QR_Contact qrContact=new HDT_QR_Contact();
         for(Contract tmpContract:qrContract.getContractBySapCodeBpManagementBulk(contractCodes)){
             sapCodeContractMap.put(tmpContract.SAPContractCode__c,tmpContract);
         }
@@ -61,6 +93,11 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         if(definitivesCas.size()>0){
             for(BillingProfile__c tempBp:qrBilling.getRecordByContractAccount(definitivesCas)){
                 codeBillingProfMap.put(tempBp.ContractAccountCode__c,tempBp);
+            }
+        }
+        if(divergentSubjectFiscalCodes.size()>0){
+            for(Contact cont:qrContact.getContactsByFiscalCodes(divergentSubjectFiscalCodes)){
+                fiscalCodeContactMap.put(cont.FiscalCode__c,cont);
             }
         }
 
@@ -89,7 +126,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
             if(String.isBlank(currentObj.csvSplitted[definitiveCAIndex])){
                 try{
                     createBillingProfile(currentObj.newCase,currentObj.csvSplitted);
-                }catch (IllegalArgumentException e){
+                }catch (Exception e){
                     itemsToSave.add(setErrorItem(currentObj.requestItem, e.getMessage()));
                     continue;
                 }
@@ -127,6 +164,44 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
         }
     }
 
+    private void populateIndexes(){
+        contractIndex = mapHeaderForWrapper.get('CODICECONTRATTO');
+        accountToMergeIndex = mapHeaderForWrapper.get('LISTAACCOUNTDAUNIFICARE');
+        masterAccountIndex=mapHeaderForWrapper.get('ACCOUNTDEFINITIVO');
+        caToMergeIndex=mapHeaderForWrapper.get('LISTACADAUNIFICARE');
+        definitiveCAIndex=mapHeaderForWrapper.get('CADEFINITIVO');
+        numeroContoIndex=mapHeaderForWrapper.get('NUMEROCONTO');
+        ibanIndex=mapHeaderForWrapper.get('IBAN');
+        abiIndex= mapHeaderForWrapper.get('ABI');
+        cabIndex=mapHeaderForWrapper.get('CAB');
+        cinIndex=mapHeaderForWrapper.get('CIN');
+        cinIbanIndex=mapHeaderForWrapper.get('CINIBAN');
+        ForeignIbanIndex=mapHeaderForWrapper.get('IBANESTERO');
+        IbanNationIndex=mapHeaderForWrapper.get('NAZIONEIBAN');
+        paymentMethodIndex=mapHeaderForWrapper.get('MODALITAPAGAMENTO');
+        billSendMethodIndex=mapHeaderForWrapper.get('MODALITAINVIOBOLETTA');
+        billEmailIndex=mapHeaderForWrapper.get('EMAILINVIOBOLLETTA');
+        pecEmailIndex= mapHeaderForWrapper.get('PECFATTURAZIONEELETTRONICA');
+        eletronicInvoicingSendMethodIndex=mapHeaderForWrapper.get('MODINVIOFATTURAZIONEELETTRONICA');
+        signatoryTypeIndex=mapHeaderForWrapper.get('TIPOSOTTOSCRITTORE');
+        signatoryNameIndex=mapHeaderForWrapper.get('NOMESOTTOSCRITTORECC');
+        signatoryLastnameIndex= mapHeaderForWrapper.get('COGNOMESOTTOSCRITTORECC');
+        signatoryFiscalCodeIndex=mapHeaderForWrapper.get('CFSOTTOSCRITTORECC');
+        xmlTypeIndex=mapHeaderForWrapper.get('TIPOXML');
+        createCAIndex=mapHeaderForWrapper.get('CREARECA');
+        subjectCodeIndex=mapHeaderForWrapper.get('CODICEDESTINATARIO');
+        divergentSubjectIndex=mapHeaderForWrapper.get('DESTINATARIODIVERGENTE');
+        contractAccountCodeIndex=mapHeaderForWrapper.get('CONTOCONTRATTUALE');
+        streetNameIndex=mapHeaderForWrapper.get('NOMEVIA');
+        streetNumberIndex=mapHeaderForWrapper.get('CIVICO');
+        streetNumberExtensionIndex=mapHeaderForWrapper.get('ESTENSIONECIVICO');
+        cityIndex= mapHeaderForWrapper.get('COMUNE');
+        placeIndex=mapHeaderForWrapper.get('LOCALITA');
+        provinceIndex=mapHeaderForWrapper.get('PROVINCIA');
+        postalCodeIndex=mapHeaderForWrapper.get('CAP');
+        stateIndex=mapHeaderForWrapper.get('STATO');
+    }
+
     private Case generateCase(List<String> csvValues){
         String caseDescription='';
         Case processCase=new Case(
@@ -157,36 +232,6 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     }
 
     public void createBillingProfile(Case processCase,List<String>csvValues){
-        Integer numeroContoIndex=mapHeaderForWrapper.get('NUMEROCONTO');
-        Integer ibanIndex=mapHeaderForWrapper.get('IBAN');
-        Integer abiIndex= mapHeaderForWrapper.get('ABI');
-        Integer cabIndex=mapHeaderForWrapper.get('CAB');
-        Integer cinIndex=mapHeaderForWrapper.get('CIN');
-        Integer cinIbanIndex=mapHeaderForWrapper.get('CINIBAN');
-        Integer ForeignIbanIndex=mapHeaderForWrapper.get('IBANESTERO');
-        Integer IbanNationIndex=mapHeaderForWrapper.get('NAZIONEIBAN');
-        Integer paymentMethodIndex=mapHeaderForWrapper.get('MODALITAPAGAMENTO');
-        Integer billSendMethodIndex=mapHeaderForWrapper.get('MODALITAINVIOBOLETTA');
-        Integer billEmailIndex=mapHeaderForWrapper.get('EMAILINVIOBOLLETTA');
-        Integer pecEmailIndex= mapHeaderForWrapper.get('PECFATTURAZIONEELETTRONICA');
-        Integer eletronicInvoicingSendMethodIndex=mapHeaderForWrapper.get('MODINVIOFATTURAZIONEELETTRONICA');
-        Integer signatoryTypeIndex=mapHeaderForWrapper.get('TIPOSOTTOSCRITTORE');
-        Integer signatoryNameIndex=mapHeaderForWrapper.get('NOMESOTTOSCRITTORECC');
-        Integer signatoryLastnameIndex= mapHeaderForWrapper.get('COGNOMESOTTOSCRITTORECC');
-        Integer signatoryFiscalCodeIndex=mapHeaderForWrapper.get('CFSOTTOSCRITTORECC');
-        Integer xmlTypeIndex=mapHeaderForWrapper.get('TIPOXML');
-        Integer createCAIndex=mapHeaderForWrapper.get('CREARECA');
-        Integer subjectCodeIndex=mapHeaderForWrapper.get('CODICEDESTINATARIO');
-        Integer divergentSubjectIndex=mapHeaderForWrapper.get('DESTINATARIODIVERGENTE');
-        Integer contractAccountCodeIndex=mapHeaderForWrapper.get('CONTOCONTRATTUALE');
-        Integer streetNameIndex=mapHeaderForWrapper.get('NOMEVIA');
-        Integer streetNumberIndex=mapHeaderForWrapper.get('CIVICO');
-        Integer streetNumberExtensionIndex=mapHeaderForWrapper.get('ESTENSIONECIVICO');
-        Integer cityIndex= mapHeaderForWrapper.get('COMUNE');
-        Integer placeIndex=mapHeaderForWrapper.get('LOCALITA');
-        Integer provinceIndex=mapHeaderForWrapper.get('PROVINCIA');
-        Integer postalCodeIndex=mapHeaderForWrapper.get('CAP');
-        Integer stateIndex=mapHeaderForWrapper.get('STATO');
         BillingProfile__c bpToCreate= new BillingProfile__c(
                 IbanCodeNumber__c=csvValues[numeroContoIndex],
                 IBAN__c=csvValues[ibanIndex],
@@ -207,12 +252,12 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 BankAccountSignatoryFiscalCode__c=csvValues[signatoryFiscalCodeIndex],
                 XMLType__c=csvValues[xmlTypeIndex],
                 SubjectCode__c=csvValues[subjectCodeIndex],
-                DivergentSubject__c=csvValues[divergentSubjectIndex],
+                DivergentSubject__c= (String.isNotBlank(csvValues[divergentSubjectIndex]) && fiscalCodeContactMap.containsKey(csvValues[divergentSubjectIndex]))  ?   fiscalCodeContactMap.get(csvValues[divergentSubjectIndex]).Id  : null,
                 ContractAccountCode__c=csvValues[contractAccountCodeIndex],
                 InvoicingCountry__c=csvValues[stateIndex],
                 CreateContractAccount__c=csvValues[createCAIndex].equalsIgnoreCase('y'),
-                InvoicingStreetName__c=csvValues[streetNameIndex],
-                InvoicingStreetNumber__c=csvValues[streetNumberIndex],
+                InvoicingStreetName__c=csvValues[streetNameIndex],//text 200
+                InvoicingStreetNumber__c=csvValues[streetNumberIndex],//text 30
                 InvoicingStreetNumberExtension__c=csvValues[streetNumberExtensionIndex],
                 InvoicingCity__c=csvValues[cityIndex],
                 InvoicingPlace__c=csvValues[placeIndex],
