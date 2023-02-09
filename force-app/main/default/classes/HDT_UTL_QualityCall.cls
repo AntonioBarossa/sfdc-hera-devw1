@@ -46,7 +46,7 @@ public with sharing class HDT_UTL_QualityCall {
             'comunicazione verso motore vas' => 'NO_CANCEL_NO_BILL',
             'annullato' => 'CLOSE_PHASE',
             'voltura rifiutata' => 'CLOSE_PHASE',
-            'accettazione voltura' => 'CLOSE_PHASE'
+            'accettazione voltura' => 'NO_CANCEL'
         };
         return phaseResult.containsKey(phase.toLowerCase()) ? phaseResult.get(phase.toLowerCase()) : 'CANCEL';
     }
