@@ -26,6 +26,16 @@
                 <label>Back office - Fuga idrica</label>
             </value>
             <value>
+                <fullName>Back office - Pagamenti e credito TARI</fullName>
+                <default>false</default>
+                <label>Back office - Pagamenti e credito TARI</label>
+            </value>
+            <value>
+                <fullName>Back office - Problematiche in fase di attivazione contrattuale</fullName>
+                <default>false</default>
+                <label>Back office - Problematiche in fase di attivazione contrattuale</label>
+            </value>
+            <value>
                 <fullName>Back office - Problematiche in fase di cessazione contrattuale</fullName>
                 <default>false</default>
                 <label>Back office - Problematiche in fase di cessazione contrattuale</label>
@@ -184,6 +194,11 @@
                 <fullName>Lettere Wave Doppi Pagamenti</fullName>
                 <default>false</default>
                 <label>Lettere Wave Doppi Pagamenti</label>
+            </value>
+            <value>
+                <fullName>Morosità - Lettere valide per Non energy</fullName>
+                <default>false</default>
+                <label>Morosità - Lettere valide per Non energy</label>
             </value>
             <value>
                 <fullName>Preventivi Lavori</fullName>
