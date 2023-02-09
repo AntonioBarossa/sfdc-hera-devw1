@@ -1198,6 +1198,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.Cohabitation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.ComPostiLetto__c</field>
         <readable>true</readable>
     </fieldPermissions>
