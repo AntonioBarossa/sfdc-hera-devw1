@@ -5973,6 +5973,11 @@
 		<field>Case.CohabitantsNumber__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.Cohabitation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>Case.ComplaintDetail__c</field>
