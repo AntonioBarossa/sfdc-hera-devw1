@@ -437,6 +437,12 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('AFNCOMP')!=null && !String.isBlank(mapRes.get('AFNCOMP'))){
             spNew.NumberOfFamilyMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNCOMP')));
         }
+         /**Edoardo Zanatta 2023-01-11
+         * Aggiunta gestione SAPContractAccountCode__c
+         */
+        if(mapRes.get('CA')!=null && !String.isBlank(mapRes.get('CA'))){
+            spNew.SAPContractAccountCode__c = mapRes.get('CA');
+        }
         Map<String, Account> accBpMap = new Map<String, Account>();
         if(mapRes.get('BP') != null){
             List<Account> accBp = accountQr.getAccountByCustomerCode(mapRes.get('BP'));

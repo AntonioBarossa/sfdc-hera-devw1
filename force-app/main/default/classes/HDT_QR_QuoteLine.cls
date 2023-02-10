@@ -573,6 +573,7 @@ public inherited sharing class HDT_QR_QuoteLine {
             SBQQ__Quote__r.ContractReference__r.Status,
             SBQQ__Quote__r.ContractReference__r.AccountId,
             SBQQ__Quote__r.ContractReference__r.BillingProfile__c,
+            SBQQ__Quote__r.ContractReference__r.CommoditySectorFormula__c,
             SBQQ__Quote__r.SBQQ__Account__c,
             SBQQ__RequiredBy__r.BillingProfile__c,
             ServicePoint__r.CommoditySector__c,

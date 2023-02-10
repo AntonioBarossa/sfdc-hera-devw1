@@ -643,6 +643,54 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
@@ -1328,6 +1376,54 @@
         </values>
         <values>
             <fullName>HCM_BACK_OUT_CON</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_LEGALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_INCASSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2465,11 +2561,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus mancante</fullName>
+            <fullName>Altro compenso mancante</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Business</fullName>
+            <fullName>Estraneità Debiti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2509,7 +2605,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Famiglie</fullName>
+            <fullName>Legge 80_Istanza EE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2537,6 +2633,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Problemi tecnici Sistemi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Report costi</fullName>
             <default>false</default>
         </values>
@@ -2557,7 +2657,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Ripresa formativa con Cliente da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa senza Cliente da gestire</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Scarti ribaltamento SF vs SBL %28temporaneo%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD_Extrabilling massiva</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2581,10 +2693,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>TCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>VAS</fullName>
             <default>false</default>
         </values>
@@ -2593,7 +2701,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Verifica colonnine</fullName>
+            <fullName>Verifica colonnine e Prodotti</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2647,15 +2755,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Caricamenti contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Reporting</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiesta Parere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ripresa formativa CC cliente da gestire</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2667,11 +2779,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazioni Migrazione dati</fullName>
+            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Anomalia processo%2Fsistema</fullName>
+            <fullName>Supporto emissione SD_massiva</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Supporto TL Front</fullName>
             <default>false</default>
         </values>
     </picklistValues>

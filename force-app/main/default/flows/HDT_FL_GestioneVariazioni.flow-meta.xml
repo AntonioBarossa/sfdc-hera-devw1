@@ -824,8 +824,8 @@
     <assignments>
         <name>Assegna_Campo_Note</name>
         <label>Assegna Campo Note</label>
-        <locationX>17496</locationX>
-        <locationY>2390</locationY>
+        <locationX>17650</locationX>
+        <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0_0.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -834,7 +834,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Calcola_Numero_Componenti_Domestico_Resident</targetReference>
+            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1662,7 +1662,7 @@
         <name>Calcola_Numero_Componenti_Domestico_Resident</name>
         <label>Calcola Numero Componenti Domestico Residente</label>
         <locationX>17496</locationX>
-        <locationY>2510</locationY>
+        <locationY>2390</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoModificaUnitaImmobiliari_0_0.ResidentMembers__c</assignToReference>
             <operator>Assign</operator>
@@ -1671,7 +1671,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Assegna_Campo_Note</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1913,6 +1913,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Annulla</label>
@@ -2934,7 +2935,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Annullata</label>
@@ -3796,7 +3796,7 @@
         <locationX>17650</locationX>
         <locationY>1934</locationY>
         <defaultConnector>
-            <targetReference>OutcomeFormModificaUnitaImmobiliari</targetReference>
+            <targetReference>Assegna_Campo_Note</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Promiscuo</defaultConnectorLabel>
         <rules>
@@ -4068,7 +4068,7 @@
         <locationX>17496</locationX>
         <locationY>2054</locationY>
         <defaultConnector>
-            <targetReference>Assegna_Campo_Note</targetReference>
+            <targetReference>Calcola_Numero_Componenti_Domestico_Resident</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Minore o Invariata</defaultConnectorLabel>
         <rules>
@@ -4211,9 +4211,10 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Valorizza_Campo_Note</name>
         <dataType>String</dataType>
         <expression>{!GetCaseAggiornatoModificaUnitaImmobiliari_0_0.Note__c} &amp; BR() 
-&amp; &quot;Coabitazione: &quot; &amp; {!Cohabitation} &amp; BR() 
+&amp; IF(!ISBLANK({!Cohabitation}),&quot;Coabitazione: &quot; &amp; {!Cohabitation} &amp; BR(), &quot;&quot;) 
 &amp; IF(!ISBLANK(TEXT({!Community_Beds})),&quot;Comunità Posti Letto: &quot; &amp; TEXT({!Community_Beds}) &amp; BR(), &quot;&quot;)  
-&amp; IF(!ISBLANK({!FormInserimentoAnagraficaComponenti.resultString}),{!FormInserimentoAnagraficaComponenti.resultString},&quot;&quot;)</expression>
+&amp; IF(!ISBLANK({!FormInserimentoAnagraficaComponenti.resultString}),{!FormInserimentoAnagraficaComponenti.resultString} &amp; BR(),&quot;&quot;)
+&amp; IF(!ISBLANK({!frequenzaAllineamentoGAA}),&quot;Frequenza: &quot; &amp; {!frequenzaAllineamentoGAA},&quot;&quot;)</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -5558,8 +5559,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <recordUpdates>
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
-        <locationX>17496</locationX>
-        <locationY>2630</locationY>
+        <locationX>17650</locationX>
+        <locationY>2726</locationY>
         <connector>
             <targetReference>OutcomeFormModificaUnitaImmobiliari</targetReference>
         </connector>
@@ -6937,6 +6938,50 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             </visibilityRule>
         </fields>
         <fields>
+            <name>Screen_Input_Fiscale_Fondo_Fughe_0_Section2</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>Screen_Input_Fiscale_Fondo_Fughe_0_Section2_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Frequency</name>
+                    <fieldText>&lt;p&gt;Frequenza: &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!frequenzaAllineamentoGAA}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Screen_Input_Fiscale_Fondo_Fughe_0_Section2_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>Screen_Input_Fiscale_Fondo_Fughe_0_Section2_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+        </fields>
+        <fields>
             <name>hdtRecordEditFormModificaUnitaImmobiliari</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -7046,7 +7091,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Assegna_Campo_Note</targetReference>
+            <targetReference>Calcola_Numero_Componenti_Domestico_Resident</targetReference>
         </connector>
         <fields>
             <name>HeaderScreenInserimentoAnagraficaComponenti</name>
@@ -8965,8 +9010,8 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <subflows>
         <name>Annulla_Prestazione_0_0_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>10170</locationX>
-        <locationY>1358</locationY>
+        <locationX>9202</locationX>
+        <locationY>1838</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

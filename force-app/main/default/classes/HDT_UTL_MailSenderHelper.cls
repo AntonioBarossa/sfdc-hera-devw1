@@ -289,8 +289,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
                 caseResult = updateReminderCase(currentRecordId, isCaseObj);
                 subjectString = 'Sollecito';
-                //mail.setInReplyTo('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
-                //mail.setReferences('<ONJvc000000000000000000000000000000000000000000000RLOZZ300FWBbGuOPTAKjJrhrqaQJkA@sfdc.net>');
+                //mail.setInReplyTo('<OZCJB000000000000000000000000000000000000000000000ROQDLZ0048utoRPnQK2LnoiL9jyV4A@sfdc.net>');
+                //mail.setReferences('<OZCJB000000000000000000000000000000000000000000000ROQDLZ0048utoRPnQK2LnoiL9jyV4A@sfdc.net>');
                 //mail.setBccAddresses(new List<String>{''});
             } else {
                 subjectString = comGestore;
@@ -302,9 +302,12 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                     return sendMailResult;
                 }
             }
-            
+
+            String messageId = Cases.generateThreadingMessageId(caseResult.caseId);
+            mail.setReferences(messageId);
             mail.setHtmlBody(mailStructure.bodyMail);
             mail.setToAddresses(new String[]{mailStructure.toAddress});
+            //mail.setCcAddresses(new String[]{'antonino.fugazzotto@2hy53hdpybee3yyzu1pnnhfr9jl2twp6abttuei499hjwqdemq.3n-8mj0uaa.cs128.case.sandbox.salesforce.com'});
             mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
             mail.setSubject(subjectString);
             mail.setWhatId(caseResult.caseId);

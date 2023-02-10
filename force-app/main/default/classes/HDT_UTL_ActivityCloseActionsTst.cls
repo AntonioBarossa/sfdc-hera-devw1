@@ -29,7 +29,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         caso.Phase__c = '';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Approved__c = 'si';
+        activity.ActivityOutcome__c = 'Positivo';
         insert activity;
         String activityType = 'Gestione Manuale SAP';
 
@@ -38,7 +38,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         System.assertEquals(action.phase, 'Completata', 'OK');
         activityType = '';
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        activity.Approved__c = 'no';
+        activity.ActivityOutcome__c = 'Negativo';
         update activity;
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         Test.stopTest();
@@ -53,7 +53,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         caso.Phase__c = '';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Approved__c = 'si';
+        activity.ActivityOutcome__c = 'Positivo';
         insert activity;
 
         Test.startTest();
@@ -71,7 +71,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         Order ordine = HDT_UTL_DataFactoryTst.createOrder(1, false, account.id, 'Bozza')[0];
         insert ordine;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Approved__c = 'si';
+        activity.ActivityOutcome__c = 'Positivo';
         insert activity;
 
         Test.startTest();
@@ -90,7 +90,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         caso.PhaseStory__c='';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Approved__c = 'si';
+        activity.ActivityOutcome__c = 'Positivo';
         insert activity;
         String activityType = 'Risposta Ricevuta';
 
@@ -98,7 +98,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         System.assertEquals(action.phase, 'Annullato', 'OK');
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        activity.Approved__c = 'no';
+        activity.ActivityOutcome__c = 'Negativo';
         update activity;
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         Test.stopTest();
@@ -112,14 +112,14 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         caso.Type = 'Ambiente annullo richiesta senza appuntamento';
         insert caso;
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Approved__c = 'si';
+        activity.ActivityOutcome__c = 'Positivo';
         insert activity;
         String activityType = 'Risposta Ricevuta';
 
         Test.startTest();
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         System.assertEquals(action.phase, 'Completata', 'OK');
-        activity.Approved__c = 'no';
+        activity.ActivityOutcome__c = 'Negativoo';
         update activity;
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         Test.stopTest();
@@ -132,15 +132,22 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
 
         Order ord = new Order(ProcessType__c='Modifica Tariffa', Phase__c='In attesa Approvazione');
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.Approved__c = 'no';
+        activity.ActivityOutcome__c = 'Negativo';
         String activityType = 'Approvazione Agevolazione';
+
+        Order ordElaborazioneManuale = new Order(ProcessType__c='Modifica Tariffa - Rimozione Agevolazione', Phase__c='In attesa Approvazione');
+        wrts_prcgvr__Activity__c activityElaborazioneManuale = new wrts_prcgvr__Activity__c();
+        activityElaborazioneManuale.ActivityOutcome__c = 'Positivo';
+        String activityTypeElaborazioneManuale = 'Elaborazione Manuale';
 
         Test.startTest();
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
         system.assertEquals(action.activityType, 'Contattare Cliente', 'OK');
-		activity.Approved__c = 'si';
+		activity.ActivityOutcome__c = 'Positivo';
         action= HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
         system.assertEquals(action.phase, 'Documentazione Validata', 'OK');
+        action = HDT_UTL_ActivityCloseActions.getOnCloseActions(ordElaborazioneManuale, activityElaborazioneManuale, activityTypeElaborazioneManuale);
+        system.assertEquals(action.phase, 'Completata', 'OK');
         Test.stopTest();
 
     }
@@ -161,65 +168,85 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
     @isTest
     static void tariLogicVarDisTst(){
         Id rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniTari').getRecordTypeId();
-        Case c = new Case();
+        Case c = new Case();    //case variazioni - integrato - ko heroku
         c.Phase__c = 'Comunicazione verso Heroku KO';
         c.Type = 'Modifica dati contrattuali';
         c.Subprocess__c = 'DOM_Componenti non residenti';
         c.RecordTypeId = rtId;
-        Case csap = new Case();
+        Case csap = new Case(); //case variazioni - integrato - ko sap
         csap.Phase__c = 'Esito KO da SAP';
         csap.Type = 'Modifica dati contrattuali';
         csap.Subprocess__c = 'DOM_Componenti non residenti';
         csap.RecordTypeId = rtId;
-        Case cni = new Case();
+        Case cni = new Case(); //case variazioni - non integrato - ko heroku
         cni.Phase__c = 'Comunicazione verso Heroku KO';
         cni.Type = 'Modifica dati contrattuali';
         cni.Subprocess__c = 'DOM_Componenti residenti';
         cni.RecordTypeId = rtId;
-        Case cs = new Case();
+        Case cs = new Case(); //case variazioni - superficie(no documentale) - ko heroku
         cs.Phase__c = 'Comunicazione verso Heroku KO';
         cs.Type = 'Modifica dati contrattuali';
         cs.Subprocess__c = 'Superficie';
         cs.ModuleFromContributor__c = true;
         cs.RequestSource__c = 'Da Contribuente';
         cs.RecordTypeId = rtId;
-		Case csf = new Case();
+		Case csf = new Case(); //case variazioni - superficie(documentale) - ko heroku
         csf.Phase__c = 'Comunicazione verso Heroku KO';
         csf.Type = 'Modifica dati contrattuali';
         csf.Subprocess__c = 'Superficie';
         csf.ModuleFromContributor__c = false;
         csf.RequestSource__c = 'Da Contribuente';
         csf.RecordTypeId = rtId;
-        wrts_prcgvr__Activity__c abo = new wrts_prcgvr__Activity__c();
+        wrts_prcgvr__Activity__c abo = new wrts_prcgvr__Activity__c(); //activity back office positiva
         abo.Type__c = 'Istruttoria Back Office';
         abo.ActivityOutcome__c = 'Positivo';
-        wrts_prcgvr__Activity__c abon = new wrts_prcgvr__Activity__c();
+        wrts_prcgvr__Activity__c abon = new wrts_prcgvr__Activity__c(); //activity back office negativa
         abon.Type__c = 'Istruttoria Back Office';
         abon.ActivityOutcome__c = 'Negativo';
-        wrts_prcgvr__Activity__c ap = new wrts_prcgvr__Activity__c();
+        wrts_prcgvr__Activity__c ap = new wrts_prcgvr__Activity__c(); //activity manuale positiva
         ap.ActivityOutcome__c = 'Positivo';
-        wrts_prcgvr__Activity__c an = new wrts_prcgvr__Activity__c();
+        wrts_prcgvr__Activity__c an = new wrts_prcgvr__Activity__c(); //activity manuale negativa
         an.ActivityOutcome__c = 'Negativo';
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action;
         Test.startTest();
             action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(c, ap);
        		system.assertEquals(action.phase, 'Da Inviare', 'OK');
             action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(c, an);
-        	system.assertEquals(action.phase, 'Annullato', 'OK');
+        	system.assertEquals(((Case) action.sobjToUpdate).Phase__c, 'Annullato', 'OK');
             action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(cni, ap);
         	system.assertEquals(action.phase, 'Completata', 'OK');
             action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(cni, an);
-        	system.assertEquals(action.phase, 'Annullato', 'OK');
+        	system.assertEquals(((Case) action.sobjToUpdate).Phase__c, 'Annullato', 'OK');
         	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(cs, abo);
         	system.assertEquals(action.phase, 'Da Inviare', 'OK');
         	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csf, abo);
         	system.assertEquals(action.phase, 'Gestione Documentale', 'OK');
         	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csf, abon);
-        	system.assertEquals(action.phase, 'Annullato', 'OK');
+        	system.assertEquals(((Case) action.sobjToUpdate).Phase__c, 'Annullato', 'OK');
         	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csap, ap);
-        	system.assertEquals(action.phase, 'Completata', 'OK');
+        	system.assertEquals(action.phase, 'Da Inviare', 'OK');
         	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csap, an);
-        	system.assertEquals(action.phase, 'Annullato', 'OK');
+        	system.assertEquals(((Case) action.sobjToUpdate).Phase__c, 'Annullato', 'OK');
+        Test.stopTest();
+    }
+
+    @isTest
+    static void posContenitoreLogicTst(){
+        Id rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PosizionamentoContenitore').getRecordTypeId();
+        Case c = new Case();    //case reclamo posizionamento contenitore
+        c.Phase__c = 'In Lavorazione';
+        c.Type = 'Posizionamento contenitore';
+        c.RecordTypeId = rtId;
+        wrts_prcgvr__Activity__c ap = new wrts_prcgvr__Activity__c(); //activity manuale positiva
+        ap.ActivityOutcome__c = 'Positivo';
+        wrts_prcgvr__Activity__c an = new wrts_prcgvr__Activity__c(); //activity manuale negativa
+        an.ActivityOutcome__c = 'Negativo';
+        HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action;
+        Test.startTest();
+            action = HDT_UTL_ActivityCloseActions.posContenitoreLogic(c, ap);
+            system.assertEquals(action.phase, 'Completata', 'OK');
+            action = HDT_UTL_ActivityCloseActions.posContenitoreLogic(c, an);
+            system.assertEquals(((Case) action.sobjToUpdate).Phase__c, 'Annullato', 'OK');
         Test.stopTest();
     }
 

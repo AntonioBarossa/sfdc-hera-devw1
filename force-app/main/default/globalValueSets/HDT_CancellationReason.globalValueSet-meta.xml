@@ -111,6 +111,11 @@
         <label>Domiciliazione già presente</label>
     </customValue>
     <customValue>
+        <fullName>Esito KO sopralluogo</fullName>
+        <default>false</default>
+        <label>Esito KO sopralluogo</label>
+    </customValue>
+    <customValue>
         <fullName>Firma falsa</fullName>
         <default>false</default>
         <label>Firma falsa</label>

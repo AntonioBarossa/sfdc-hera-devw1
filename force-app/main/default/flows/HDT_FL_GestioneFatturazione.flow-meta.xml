@@ -978,7 +978,7 @@
         </rules>
         <rules>
             <name>Sospeso</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>1 AND 2 AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -998,6 +998,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>UpdatedCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -3870,6 +3877,12 @@ IF(!ISBLANK({!Dettaglio_informazione}), BR() &amp; &quot;Dettaglio Informazione:
                 <name>nextLabel</name>
                 <value>
                     <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>contractService</name>
+                <value>
+                    <elementReference>Query_Case.Contract__r.CommoditySectorFormula__c</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

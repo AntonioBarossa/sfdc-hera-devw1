@@ -453,7 +453,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ordersNonEnergy.add(o);
                 }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
                     if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
-                    if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else{   ordersHeroku.add(o);    }
                 }
                 else{
                     ordersHeroku.add(o);
@@ -586,6 +587,11 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         || (oldOrder.Phase__c == 'In attesa validazione' && newOrder.Phase__c == 'Documentazione Validata')
                         || (oldOrder.Phase__c == 'Quality Call OK' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         || (oldOrder.Phase__c == 'Documentazione Validata' && newOrder.Phase__c == 'Esportazione VS Siebel')
+                        /**@frpanico nel caso di nessun documento da validare il passaggio e' Accettazione Voltura --> Documentazione Validata
+                         * Ma essendo a transitorio nei primi step del trigger la newPhase viene cambiata in Esportazione VS Siebel
+                         * Dunque si ha oldPhase Accettazione Voltura e newPhase Esportazione VS Siebel in cui e' necessario il ricalcolo
+                         */
+                        || (oldOrder.Phase__c == 'Accettazione Voltura' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         //@ealpi aggiunto in caso di sblocco OK credit check
                         ||(!'OK'.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))
                         ||(!'OK'.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c))
@@ -1227,7 +1233,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     activities = orderQr.getOpenActivitiesByOrderId(orderNew.Id);
                     for(wrts_prcgvr__Activity__c activity : activities)
                     {
-                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                        if (
+                            !(
+                                'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) 
+                                || 'Contattare il Cliente'.equalsIgnoreCase(activity.Type__c)
+                            )
+                        ){
                             activity.wrts_prcgvr__Status__c = 'Annullata';
                             activitiesToUpdate.add(activity);
                         }

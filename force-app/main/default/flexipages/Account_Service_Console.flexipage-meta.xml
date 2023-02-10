@@ -956,27 +956,31 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>parentFieldApiName</name>
-                    <value>Account.Id</value>
+                    <name>childLookupField</name>
+                    <value>BPCodeC__c</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListApiName</name>
-                    <value>AttivitaSalesforce__r</value>
+                    <name>childObjectApiName</name>
+                    <value>SalesforceWrtsActivity__x</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>relatedListComponentOverride</name>
-                    <value>ADVGRID</value>
+                    <name>fieldsToRetrieve</name>
+                    <value>Id,DisplayUrl</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>rowsToDisplay</name>
+                    <name>linesToDisplay</name>
                     <value>10</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
-                    <name>showActionBar</name>
-                    <value>true</value>
+                    <name>nameField</name>
+                    <value>GlobalMigrationKeyC__c</value>
                 </componentInstanceProperties>
-                <componentName>force:relatedListSingleContainer</componentName>
-                <identifier>force_relatedListSingleContainer25</identifier>
+                <componentInstanceProperties>
+                    <name>parentRecordTargetField</name>
+                    <value>CustomerCode__c</value>
+                </componentInstanceProperties>
+                <componentName>hdtCustomRelatedList</componentName>
+                <identifier>c_hdtCustomRelatedList</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!$Permission.CustomPermission.HDT_CP_Archive}</leftValue>

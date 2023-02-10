@@ -14,12 +14,12 @@
     </customPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SalesforceAsset__x.AccountId__c</field>
+        <field>SalesforceAsset__x.AccountIdOnline__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SalesforceAsset__x.AccountIdOnline__c</field>
+        <field>SalesforceAsset__x.AccountId__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -1180,6 +1180,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceCase__x.Cas_AccountFiscalCodeFormulaC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceCase__x.Cas_AccountIdStr__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2664,6 +2669,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SalesforceCase__x.Cas_PayPurificationC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceCase__x.Cas_PaySewerC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SalesforceCase__x.Cas_PayerDetailsC__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2780,11 +2795,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceCase__x.Cas_ProductTypeVASC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SalesforceCase__x.Cas_PurificationPayC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3045,11 +3055,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceCase__x.Cas_ServicePoint_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SalesforceCase__x.Cas_SewerPayC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -9480,6 +9485,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceSubscription__x.CategoryFamilyC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceSubscription__x.CompanyOwnerC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

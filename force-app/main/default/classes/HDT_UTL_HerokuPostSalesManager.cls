@@ -248,6 +248,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = errDescr + '\n' + description;
             }
             else{
+                if('STATO_INTD'.equalsIgnoreCase(activity)){
+                    currentCase.distributorflowcode__c = 'KO';
+                }
                 HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
             }
             //Gestione Esito Appuntamento;

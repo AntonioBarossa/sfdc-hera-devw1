@@ -25,6 +25,7 @@ public with sharing class HDT_UTL_SaleActions
             ServicePoint__r.CommoditySector__c,
             SBQQ__ProductFamily__c,
             SBQQ__RequiredBy__c,
+            SBQQ__ProductCode__c,
             SBQQ__Product__r.Service__c,
             SBQQ__Product__r.ApprovalType__c,
             SBQQ__Product__r.IntegratedSAP__c,
@@ -112,7 +113,8 @@ public with sharing class HDT_UTL_SaleActions
                  * The Key is generated based on the quoteLine name if the Billing Profile is populated on the quote line
                  * Otherwise it is based on the RequiredBy__c field of the quote line
                  */
-                String key = quoteLine.BillingProfile__c != null ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
+                Boolean isAnaconsNoEnergy = 'ACQ_DIARIO_CONSUMI'.equalsIgnoreCase(quoteline.SBQQ__ProductCode__c) || 'TLR_DIARIO_CONSUMI'.equalsIgnoreCase(quoteline.SBQQ__ProductCode__c) ? true : false;
+                String key = quoteLine.BillingProfile__c != null && !isAnaconsNoEnergy ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
                 if(!result.containsKey(key))
                 {
                     result.put(key, new List<SBQQ__QuoteLine__c>());
@@ -283,7 +285,8 @@ public with sharing class HDT_UTL_SaleActions
             }
             else
             {
-                key = quoteLine.BillingProfile__c != null ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
+                Boolean isAnaconsNoEnergy = 'ACQ_DIARIO_CONSUMI'.equalsIgnoreCase(quoteLine.SBQQ__ProductCode__c) || 'TLR_DIARIO_CONSUMI'.equalsIgnoreCase(quoteLine.SBQQ__ProductCode__c) ? true : false;
+                key = quoteLine.BillingProfile__c != null && !isAnaconsNoEnergy ? NON_TARI_KEY + quoteLine.Name : NON_TARI_KEY + quoteLine.SBQQ__RequiredBy__r.Name;
             }
             if(quoteLineGroupObj.get(key) == null)
             {

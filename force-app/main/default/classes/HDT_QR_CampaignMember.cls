@@ -633,6 +633,7 @@ public inherited sharing class HDT_QR_CampaignMember {
             ContactId,
             Contact.AccountId,
             CampaignId,
+            RelatedActivity__c,
             Status
             FROM CampaignMember 
             WHERE ContactId IN :contact

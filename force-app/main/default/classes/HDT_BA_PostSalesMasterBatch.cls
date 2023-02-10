@@ -94,7 +94,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             currentCase.Phase__c = 'In Lavorazione';
                             myCurrentCaseList.add(currentCase);
 
-                        }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) && currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') ){
+                        }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) 
+                            && (currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') || (currentCase.Phase__c.equalsIgnoreCase('Ammissibilità OK') && currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile')))){
 
                             currentCase.Phase__c = 'Preventivo scaduto';
                             if(String.isNotBlank(currentCase.QuotationType__c) && 'Analitico'.equalsIgnoreCase(currentCase.QuotationType__c)){
