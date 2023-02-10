@@ -4809,7 +4809,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SalesforceContract__x.Con_LegacyContractCodeC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_MarkForRenewalC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_MeterReadingUnitC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SalesforceContract__x.Con_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_OldContractMoMiC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_OriginalBailmentC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_PurchaseDatec__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4880,6 +4910,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceContract__x.Con_SubscriberTypeC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_TargetBailmentC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
