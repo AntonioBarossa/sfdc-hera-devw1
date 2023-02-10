@@ -26,9 +26,9 @@
         <label>NO DOM TEMPOR. &gt; 40kW-FIERA</label>
     </customValue>
     <customValue>
-        <fullName>Ospedali/case di cura</fullName>
+        <fullName>Ospedali/case di cura/</fullName>
         <default>false</default>
-        <label>Ospedali/case di cura</label>
+        <label>Ospedali/case di cura/</label>
     </customValue>
     <customValue>
         <fullName>Stralcio di allac. - Uso cant.</fullName>
