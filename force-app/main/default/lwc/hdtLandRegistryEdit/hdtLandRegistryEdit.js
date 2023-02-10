@@ -108,7 +108,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
                 let foundCity = this.cityTechnicalData.get(event.detail.value);
                 //const t1 = performance.now();
                 //console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
-                console.log('@@@@@@@@@@@@ test mappa '+JSON.stringify(foundCity));
+                //console.log('@@@@@@@@@@@@ test mappa '+JSON.stringify(foundCity));
                 this.registryCityValue = foundCity.CadastralCity__c;
                 this.legalCityValue = foundCity.CadastralCity__c;
                 this.registryCityCodeValue = foundCity.CityCode__c;
@@ -179,7 +179,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
         });
         inputList = this.template.querySelectorAll('lightning-combobox');
         inputList.forEach(input => {
-            if(input.value == null || input.value == "") {
+            if((input.value == null || input.value == "") &&
+            input.required) {
                 this.disableSalva = true;
             }
         });
