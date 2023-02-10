@@ -4839,7 +4839,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SalesforceContract__x.Con_PurchaseDatec__c</field>
+        <field>SalesforceContract__x.Con_PurchaseDateC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
