@@ -155,6 +155,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
         );
         //System.Label.statusInLavorazione
         HDT_UTL_DatabaseService.insertSObject(placeholderOrder);
+        wrts_prcgvr__Activity__c act=HDT_UTL_PostSalesManager.createActivityExternal('Gestione Manuale');
+        act.Order__c=placeholderOrder.Id;
+        HDT_UTL_DatabaseService.insertSObject(act);
     }
 
     public static void handleServiceRequestVoltura(Map<String,Object> params){
@@ -163,7 +166,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         createChildOrderVoltura(parentOrder,params);
     }
 
-    public static Order createChildOrderVoltura(Order parentOrder, Map<String,Object> params){
+    private static Order createChildOrderVoltura(Order parentOrder, Map<String,Object> params){
         String contractNumber = (String)params.get('contractNumber');
         List<Contract> contractList = getContractByNumber(contractNumber);
         Order childOrder=parentOrder.clone(false,true,false,false);
