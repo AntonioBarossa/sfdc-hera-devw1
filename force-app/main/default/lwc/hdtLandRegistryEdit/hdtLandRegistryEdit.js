@@ -56,7 +56,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     formLoaded;
 
     cadastralCategories = [];
-    cityTechnicalData = [];
+    cityTechnicalData = new Map();
     cadastralCategoryOptions = [];
     cityOptions = [];
     
@@ -104,7 +104,11 @@ export default class HdtLandRegistryEdit extends LightningElement {
                 }
             }
             if(source == "RegistryCity__c"){
-                let foundCity = this.cityTechnicalData.find(element => element.CadastralCity__c == event.detail.value);
+                //const t0 = performance.now();
+                let foundCity = this.cityTechnicalData.get(event.detail.value);
+                //const t1 = performance.now();
+                //console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
+                //console.log('@@@@@@@@@@@@ test mappa '+JSON.stringify(foundCity));
                 this.registryCityValue = foundCity.CadastralCity__c;
                 this.legalCityValue = foundCity.CadastralCity__c;
                 this.registryCityCodeValue = foundCity.CityCode__c;
@@ -175,7 +179,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
         });
         inputList = this.template.querySelectorAll('lightning-combobox');
         inputList.forEach(input => {
-            if(input.value == null || input.value == "") {
+            if((input.value == null || input.value == "") &&
+            input.required) {
                 this.disableSalva = true;
             }
         });
@@ -289,10 +294,14 @@ export default class HdtLandRegistryEdit extends LightningElement {
         getCadastralCategories({})
             .then(result => {
                 console.log('### result -> getCadastralCategories', JSON.stringify(result));
-                this.cadastralCategories = result;
-                for (var i = 0; i < result.length; i++) {
-                    this.cadastralCategoryOptions=[...this.cadastralCategoryOptions,{label: ''+result[i].Category__c+' - '+result[i].Description__c, value: result[i].Category__c} ];
-                }
+                this.cadastralCategoryOptions = result.map(
+                    currentElement => {
+                    return {
+                        label: ''+currentElement.Category__c+' - '+currentElement.Description__c, 
+                        value: currentElement.Category__c
+                    };
+                });
+
             })
             .catch(error => {
                 console.error("### call_getCadastralCategories Errore", error);
@@ -307,11 +316,17 @@ export default class HdtLandRegistryEdit extends LightningElement {
         this.showSpinner = true;
         getCities({ })
             .then(result => {
-                console.log('### result -> getCities', JSON.stringify(result));
-                this.cityTechnicalData = result;
-                for (var i = 0; i < result.length; i++) {
-                    this.cityOptions=[...this.cityOptions,{label: result[i].CadastralCity__c , value: result[i].CadastralCity__c} ];
+                //console.log('### result -> getCities', JSON.stringify(result));
+                //const t0 = performance.now();
+                //this.cityTechnicalData = result;
+                let cityOptions = [];
+                for(const currentElement of result){
+                    this.cityTechnicalData.set(currentElement.CadastralCity__c, currentElement);
+                    cityOptions.push({label: currentElement.CadastralCity__c , value: currentElement.CadastralCity__c});
                 }
+                this.cityOptions = cityOptions;
+                //const t1 = performance.now();
+                //console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
             })
             .catch(error => {
                 console.error("### call_getCities Errore", error);
