@@ -40,7 +40,7 @@ global inherited sharing class HDT_WS_BpCaCreate implements wrts_prcgvr.Interfac
             }
             request.setMethod('POST');
             request.setBody(bpCaCreateSrv.generateRequest((Order)inputSobj));
-            request.setTimeout(12000);
+            request.setTimeout(120000);
 
 
             response = http.send(request);
