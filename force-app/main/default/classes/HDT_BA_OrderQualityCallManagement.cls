@@ -26,27 +26,27 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         //Da verificare
         if (this.parentsId.isEmpty()){
             return Database.getQueryLocator([
-                SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
                 FROM ORDER 
                 WHERE Id IN: this.childsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
             ]);
         }
         if (this.childsId.isEmpty()){
             return Database.getQueryLocator([
-                SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
                 FROM ORDER 
                 WHERE ParentOrder__c IN :this.parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
             ]);
         }
         return Database.getQueryLocator([
-            SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+            SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
             FROM ORDER 
             WHERE (Id IN: this.childsId OR ParentOrder__c IN :this.parentsId) AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
         ]);    
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
-        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_UTL_QualityCall');
+        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_BA_QualityCall');
         try{
             Id rtId = (new  HDT_QR_RecordType()).getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c').Id;
             List<Order> ordersToUpdate = new List<Order>();
@@ -62,7 +62,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
 
             Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
             for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(allOrdersId)){
-                if(!orderToItemMap.containsKey(item.OrderId) != null){
+                if(!orderToItemMap.containsKey(item.OrderId)){
                     orderToItemMap.put(item.OrderId, new List<OrderItem>());
                 }
                 orderToItemMap.get(item.OrderId).add(item);
@@ -97,7 +97,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 String result = qCall.checkOrderPhase(o.Phase__c);
                 if ('CLOSE_PHASE'.equalsIgnoreCase(result)){
                     ordToUpd.Skip_Callout__c = newSkipCall;
-                    ordersToUpdate.add(ordToUpd);
+                    if (!'Activated'.equalsIgnoreCase(o.Status)){
+                        ordersToUpdate.add(ordToUpd);
+                    }
                     continue;
                 }
                 Boolean canDeleteOrder = !qCall.notCancellableOrder(o);
@@ -113,7 +115,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                     needsActivity = true;
                 }
                 ordToUpd.Skip_Callout__c = newSkipCall;
-                ordersToUpdate.add(ordToUpd);
+                if (!'Activated'.equalsIgnoreCase(o.Status)){
+                    ordersToUpdate.add(ordToUpd);
+                }
                 if (orderWithActivity.contains(o.Id) || orderWithActivity.contains(o.ParentOrder__c)){
                     continue;
                 }
@@ -148,7 +152,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
 
             if (!actToUpdate.isEmpty()){
                 List<Database.SaveResult> srList = Database.update(actToUpdate, false);
-                qCall.setLogRecord(srList, actToUpdate, logs, 'update activities');
+                qCall.setLogRecord(srList, actToUpdate, logs, 'update activities second batch');
             }
 
             Set<Order> totalOrderToUp = new Set<Order>();
@@ -161,16 +165,16 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             
             if (!totalOrderToUp.isEmpty()){
                 List<Database.SaveResult> srList = Database.update(new List<Order>(totalOrderToUp), false);
-                qCall.setLogRecord(srList, ordersToUpdate, logs, 'update order');
+                qCall.setLogRecord(srList, ordersToUpdate, logs, 'update order second batch');
             }
 
             if (!activitiesToInsert.isEmpty()){
                 List<Database.SaveResult> srList = Database.insert(activitiesToInsert.values(), false);
-                qCall.setLogRecord(srList, activitiesToInsert.values(), logs, 'insert activities');
+                qCall.setLogRecord(srList, activitiesToInsert.values(), logs, 'insert activities second batch');
             }
 
         }catch (Exception ex){
-            logs.addLog('HDT_BA_QualityCall', 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
+            logs.addLog('HDT_BA_OrderQualityCallManagement', 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
         }
         logs.saveMassiveRecords();
     }

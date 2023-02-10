@@ -2,7 +2,7 @@ public with sharing class HDT_UTL_QualityCall {
     public static final Integer DAYS_TO_WORK = Test.isRunningTest() ? -1 : 50;
     public static final String HANDLE_ACTIVITY = 'Attività gestita';
     public static final String HANDLE_DEADLINE = 'Scadenza gestita';
-    public static final Integer ORDER_BATCH_SIZE = 100;
+    public static final Integer ORDER_BATCH_SIZE = 50;
     public static final Date START_DATE = Date.today().addDays(-DAYS_TO_WORK);
     
 

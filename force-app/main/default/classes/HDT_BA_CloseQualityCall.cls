@@ -9,7 +9,7 @@ public with sharing class HDT_BA_CloseQualityCall implements Database.Batchable<
     public Database.QueryLocator start(Database.BatchableContext bc) {
         return Database.getQueryLocator([SELECT id,Order__c, Order__r.RecordType.DeveloperName, Order__r.ParentOrder__c,QualityCallStartDate__c
             FROM wrts_prcgvr__Activity__c
-            WHERE wrts_prcgvr__IsClosed__c = false AND Type__c = 'Quality Call' AND RecordType.Developername ='HDT_RT_ComfortQualityCall' AND Order__r.CreatedDate <= :HDT_UTL_QualityCall.START_DATE]
+            WHERE wrts_prcgvr__IsClosed__c = false AND Type__c = 'Quality Call' AND RecordType.Developername ='HDT_RT_ComfortQualityCall' AND ((Order__r.CreatedDate <= :HDT_UTL_QualityCall.START_DATE AND QualityCallStartDate__c = null) OR QualityCallStartDate__c <= :HDT_UTL_QualityCall.START_DATE)]
         );
     }
 
