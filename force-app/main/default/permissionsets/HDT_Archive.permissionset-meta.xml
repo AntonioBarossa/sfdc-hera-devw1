@@ -1184,6 +1184,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SalesforceCase__x.Cas_AccountIdStr__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SalesforceCase__x.Cas_AccountId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2664,6 +2669,16 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SalesforceCase__x.Cas_PayPurificationC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceCase__x.Cas_PaySewerC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SalesforceCase__x.Cas_PayerDetailsC__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -2780,11 +2795,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceCase__x.Cas_ProductTypeVASC__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SalesforceCase__x.Cas_PurificationPayC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -3045,11 +3055,6 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceCase__x.Cas_ServicePoint_name__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
-        <editable>false</editable>
-        <field>SalesforceCase__x.Cas_SewerPayC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4804,7 +4809,37 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>SalesforceContract__x.Con_LegacyContractCodeC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_MarkForRenewalC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_MeterReadingUnitC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>SalesforceContract__x.Con_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_OldContractMoMiC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_OriginalBailmentC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_PurchaseDatec__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4875,6 +4910,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SalesforceContract__x.Con_SubscriberTypeC__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>SalesforceContract__x.Con_TargetBailmentC__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
