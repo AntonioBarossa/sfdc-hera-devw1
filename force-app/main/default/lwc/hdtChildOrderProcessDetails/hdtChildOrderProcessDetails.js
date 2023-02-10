@@ -225,8 +225,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleOnLoad(event) {
-        this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
-        this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
+        if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
+            this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
+        }
+        if( this.template.querySelector("[data-id='CohabitantsNumber__c']") !== null ){
+            this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
+        }
     }
 
     handleCohabitantChange(event){

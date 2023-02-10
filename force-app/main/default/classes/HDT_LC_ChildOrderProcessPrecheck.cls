@@ -15,7 +15,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
-    private static List<List<String>> predefaultRatecategories = new List<List<String>>{
+    public static List<List<String>> predefaultRatecategories = new List<List<String>>{
         //new List<String>{'Disconnectable__c','Si','ACANTINC00','ACPUBNDIS0','ACANTIN000'}, //altrimenti N
         new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'Cohabitation__c','N','ACDOMRESP0','ACPROMISC0'},

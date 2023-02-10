@@ -25,6 +25,22 @@
         <value>Contratto non presente</value>
     </labels>
     <labels>
+        <fullName>ShowFirstScreen</fullName>
+        <categories>ShowFirstScreen</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>ShowFirstScreen</shortDescription>
+        <value>HDT_RT_VotiveModena;HDT_RT_AltreInformative;HDT_RT_AltriProcessiPagamenti;HDT_RT_ComunicazionePagamento;HDT_RT_Domiciliazione;HDT_RT_PianoRateizzazione;HDT_RT_Rimborso;HDT_RT_AlertDisassociazioneUtenteWeb;HDT_RT_AllineamentoAnagrafica;HDT_RT_GestionePrivacy;HDT_RT_VariazioneAmministratore;HDT_RT_VariazioneAnagraficaCliente;HDT_RT_PostSalesVas;Istruttoria;Aggiunta Attacco;Nuovo Impianto;Verifica Pareggio Fittizio Canone Rai;Contratto Non Richiesto;Dettaglio Bolletta;BP/CA - errata categoria;Split Payment;Modifica post accertamento;Modifica Contratto Preattivazione</value>
+    </labels>
+    <labels>
+        <fullName>EnableShowFirstScreen</fullName>
+        <categories>EnableShowFirstScreen</categories>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>EnableShowFirstScreen</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
         <fullName>CarMass_SalesForVasDataError</fullName>
         <categories>CarMass</categories>
         <language>it</language>
