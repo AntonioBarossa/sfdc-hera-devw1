@@ -86,9 +86,9 @@
                 <label>Back Office - Supporto/Comunicazioni Urgenti</label>
             </value>
             <value>
-                <fullName>Back Office - Vas e HVAC</fullName>
+                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
                 <default>false</default>
-                <label>Back Office - Vas e HVAC</label>
+                <label>Segnalazione HVAC e Fotovoltaico</label>
             </value>
             <value>
                 <fullName>Blocco Sollecito</fullName>
