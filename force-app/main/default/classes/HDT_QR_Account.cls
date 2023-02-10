@@ -195,4 +195,17 @@ public inherited sharing class HDT_QR_Account {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public List<Account> getAccountByCustomerCodeSet(Set<String> customerCodes){
+        return [
+                SELECT
+                        Id,
+                        Name,
+                        Category__c,
+                        CustomerCode__c
+                FROM Account
+                WHERE CustomerCode__c IN :customerCodes
+                WITH SECURITY_ENFORCED
+        ];
+    }
 }

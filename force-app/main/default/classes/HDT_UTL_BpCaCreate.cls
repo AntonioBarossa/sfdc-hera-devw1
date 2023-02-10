@@ -198,13 +198,13 @@ public with sharing class HDT_UTL_BpCaCreate
         request.contoCorrente = tryParse(infoOrder.BillingProfile__r.IbanCodeNumber__c);
         request.codiceFiscale = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFiscalCode__c);
         request.cin = tryParse(infoOrder.BillingProfile__r.IbanCIN__c);
-        request.iban = tryParse(infoOrder.BillingProfile__r.IbanCountry__c);
+        request.iban = tryParse(infoOrder.BillingProfile__r.IbanCIN_IBAN__c);
         request.cognome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryLastName__c);
         request.nome = tryParse(infoOrder.BillingProfile__r.BankAccountSignatoryFirstName__c);
         request.terminiPagamento = tryParse(infoOrder.BillingProfile__r.PaymentConditions__c);
         request.metodoPagamento = '';//tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
         request.metodoPagamentoAlternativo = '';//tryParse(infoOrder.BillingProfile__r.IbanABI__c);
-
+        request.banca.nazione = tryParse(infoOrder.BillingProfile__r.IbanCountry__c).toUpperCase();
         return request;
     }
     /* This method creates the body for the Address information of the Billing Profile JSONObject */

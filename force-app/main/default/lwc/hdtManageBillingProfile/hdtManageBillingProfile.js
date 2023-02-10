@@ -13,8 +13,9 @@ export default class hdtManageBillingProfile extends LightningElement {
     @api disabledInput;
 
     columns = [
-        {label: 'Metodo di pagamento', fieldName: 'PaymentMethod__c', type: 'text'},
         {label: 'Billing Profile Name', fieldName: 'Name', type: 'text'},
+        {label: 'Metodo di pagamento', fieldName: 'PaymentMethod__c', type: 'text'},
+        {label: 'Condizioni di pagamento', fieldName: 'PaymentConditions__c', type: 'text'},
         {label: 'Indirizzo di Fatturazione', fieldName: 'InvoicingAddressFormula__c', type: 'text'},
         {label: 'Modalita invio bolletta', fieldName: 'BillSendingMethod__c', type: 'text'},
         // {label: 'IBAN', fieldName: 'FormulaIBAN__c', type: 'text'},
