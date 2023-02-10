@@ -188,6 +188,10 @@ public with sharing class HDT_UTL_Utils {
             'Case' => new Map<String,Integer>{
                 'CancellationNote__c' => 255, 
                 'DiscardDescription__c' => 255
+            },
+            'Order' => new Map<String,Integer>{
+                'PrecheckReasonSII__c' => 255,
+                'DiscardReason__c' => 255
             }
         };
         String objectName = o?.getSObjectType().getDescribe().getName();
@@ -196,7 +200,7 @@ public with sharing class HDT_UTL_Utils {
 
     @SuppressWarnings('PMD.AvoidDebugStatements')
     private static void setFieldsSize(Map<String,Integer> mapFieldsSize, SObject o){
-        if (o == null || mapFieldsSize.isEmpty()){
+        if (o == null || mapFieldsSize == null || mapFieldsSize.isEmpty()){
             return;
         }
         try{
@@ -210,7 +214,7 @@ public with sharing class HDT_UTL_Utils {
                 Integer sizeField = mapFieldsSize.get(fieldToCheck);
                 String fieldValue = o.get(fieldToCheck) == null ? '' : (String)o.get(fieldToCheck);
                 if (String.isNotBlank(fieldValue) && fieldValue.length() > sizeField){
-                    o.put(fieldToCheck,fieldValue.substring(0,255));
+                    o.put(fieldToCheck,fieldValue.substring(0,sizeField));
                 }
             }
         }catch (Exception e){
