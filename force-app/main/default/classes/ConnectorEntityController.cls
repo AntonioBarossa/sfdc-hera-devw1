@@ -81,9 +81,8 @@ global with sharing class ConnectorEntityController {
 			result.put('accountId', activity.Account__c);
 			result.put('contactId', activity.Contact__c);
 			result.put('leadId', activity.Lead__c);
-			logs.insertSingleLog('ConnectorEntityController', 'createActivity', jsonMessage,JSON.serialize(activity), null, activity.Id, null, null);
 		} catch (Exception e) {
-
+			logs.insertSingleLog('ConnectorEntityController', 'createActivity', null,e.getMessage()+' '+e.getStackTraceString()+' Activity : ' + jsonMessage,JSON.serialize(activity), activity.Id, null, null);
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
 			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
@@ -130,9 +129,9 @@ global with sharing class ConnectorEntityController {
 			}
 
 			update activity;
-			logs.insertSingleLog('ConnectorEntityController', 'closeActivity', jsonMessage,JSON.serialize(activity), null, activity.Id, null, null);
 		} catch (Exception e) {
 			// WIP
+			logs.insertSingleLog('ConnectorEntityController', 'closeActivity', null, jsonMessage,e.getStackTraceString() + ' '+ e.getMessage() +' Activity: '+ JSON.serialize(activity), activity.Id, null, null);
 			Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
 			list <OrgWideEmailAddress> orgWideAddress = [SELECT Id, DisplayName, Address FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' WITH SECURITY_ENFORCED LIMIT 1];
 			mail.setOrgWideEmailAddressId(orgWideAddress[0].Id);
