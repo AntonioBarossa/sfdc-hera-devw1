@@ -78,7 +78,22 @@ public inherited sharing class HDT_QR_BillingProfile {
             IBAN__c,
             InvoiceEmailAddress__c,
             InvoicingCity__c,
-            IsThirtyDaysDue__c
+            IsThirtyDaysDue__c,
+            CompanyOwner__c,
+            IbanABI__c,
+            IbanCAB__c,
+            IbanCIN_IBAN__c,
+            IbanCIN__c,
+            IbanCodeNumber__c,
+            IbanCountry__c,
+            IbanIsForeign__c,
+            InvoicingStreetName__c,
+            InvoicingStreetNumber__c,
+            InvoicingStreetNumberExtension__c,
+            InvoicingPlace__c,
+            InvoicingProvince__c,
+            InvoicingPostalCode__c,
+            InvoicingCountry__c
             FROM BillingProfile__c
             WHERE Account__c = :accountId
             WITH SECURITY_ENFORCED
@@ -114,6 +129,27 @@ public inherited sharing class HDT_QR_BillingProfile {
         return null;
     }
 
+    public List<BillingProfile__c> getRecordByContractAccount(Set<String> contractAccounts) {
+
+        return [
+                SELECT
+                        Id,
+                        InvoicingPlace__c,
+                        InvoicingPostalCode__c,
+                        InvoicingCity__c,
+                        InvoicingStreetNumber__c,
+                        InvoicingCountry__c,
+                        //InvoicingStreetToponym__c,
+                        InvoicingStreetName__c,
+                        InvoicingStreetNumberExtension__c,
+                        InvoicingProvince__c,
+                        BankAccountSignatoryLastName__c,
+                        ContractAccountCode__c
+                FROM BillingProfile__c
+                WHERE ContractAccountCode__c IN :contractAccounts
+                WITH SECURITY_ENFORCED
+        ];
+    }
     // FINE SVILUPPI EVERIS
 
 }

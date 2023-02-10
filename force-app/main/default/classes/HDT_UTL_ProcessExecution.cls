@@ -361,7 +361,8 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         newCase.RecordTypeId = recordTypeId;
         newCase.Status = 'In Lavorazione';
         newCase.Phase__c = 'Bozza';
-        newCase.CompanyOwner__c = 'HERA COMM';
+        //Rimosso per W2 
+        //newCase.CompanyOwner__c = 'HERA COMM';
         return newCase;
     }
 
