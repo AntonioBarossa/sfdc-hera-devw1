@@ -8652,7 +8652,7 @@
             <targetReference>Show_Block_Screen</targetReference>
         </connector>
     </start>
-    <status>Draft</status>
+    <status>Active</status>
     <subflows>
         <name>Arricchimento_Autoletture</name>
         <label>Arricchimento Autoletture</label>
