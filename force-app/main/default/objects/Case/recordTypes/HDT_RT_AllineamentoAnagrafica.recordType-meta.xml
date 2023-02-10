@@ -8031,6 +8031,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito OK da SII</fullName>
             <default>false</default>
         </values>

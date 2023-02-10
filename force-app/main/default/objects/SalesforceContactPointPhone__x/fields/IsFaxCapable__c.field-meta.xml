@@ -8,6 +8,6 @@
     <isFilteringDisabled>false</isFilteringDisabled>
     <isNameField>false</isNameField>
     <isSortingDisabled>false</isSortingDisabled>
-    <label>Puà ricevere FAX</label>
+    <label>Può ricevere FAX</label>
     <type>Checkbox</type>
 </CustomField>

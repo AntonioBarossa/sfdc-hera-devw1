@@ -34,7 +34,7 @@
                                 </template>
 
                                 <template if:false={section.value.hasAddrComp}>
-                                    <lightning-record-edit-form record-id={section.value.recordId} object-api-name={section.value.objectApiName}>
+                                    <lightning-record-edit-form record-id={section.value.recordId} onload={handleOnLoad} object-api-name={section.value.objectApiName}>
                                         <div class="slds-grid slds-wrap slds-m-top_small">
                                             <!--<template for:each={section.value.data} for:item="field">-->
                                             <template iterator:field_obj={section.value.data}>
@@ -116,6 +116,9 @@
                                         </template>
                                     </div>
                                     <div class="slds-float_right">
+                                        <template if:true={hasCohabitantButton}>
+                                            <c-hdt-cohabitant-registry cohabitant-number={cohabitantNumber} oncohabitantchange={handleCohabitantChange}></c-hdt-cohabitant-registry>
+                                        </template>
                                         <template if:true={section.value.hasCalculateButton}>
                                             <c-hdt-calculate-estimated-cost record-id={section.value.recordId} oncalculatecost={getFieldsForEstimatedCost}></c-hdt-calculate-estimated-cost>
                                         </template>
