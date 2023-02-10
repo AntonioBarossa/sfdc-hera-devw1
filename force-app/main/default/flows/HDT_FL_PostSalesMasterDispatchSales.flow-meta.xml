@@ -5,7 +5,7 @@
         <name>Assegna_Case_Id_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
         <locationX>204</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>assign_accountId</name>
         <label>assign accountId</label>
         <locationX>1381</locationX>
-        <locationY>518</locationY>
+        <locationY>854</locationY>
         <assignmentItems>
             <assignToReference>AccountId</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>assign_Case_Id</name>
         <label>assign Case Id</label>
         <locationX>1381</locationX>
-        <locationY>278</locationY>
+        <locationY>614</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -53,7 +53,7 @@
         <name>Assign_Process_Type</name>
         <label>Assign Process Type</label>
         <locationX>1018</locationX>
-        <locationY>2006</locationY>
+        <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -69,7 +69,7 @@
         <name>Init_Case</name>
         <label>Init Case</label>
         <locationX>2602</locationX>
-        <locationY>1310</locationY>
+        <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>Case.RecordTypeId</assignToReference>
             <operator>Assign</operator>
@@ -155,7 +155,7 @@
         <name>Set_CaseId</name>
         <label>Set CaseId</label>
         <locationX>2624</locationX>
-        <locationY>2582</locationY>
+        <locationY>2918</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -171,7 +171,7 @@
         <name>set_ProcessType</name>
         <label>set ProcessType</label>
         <locationX>622</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -187,7 +187,7 @@
         <name>set_ProcessType_0</name>
         <label>set ProcessType</label>
         <locationX>1414</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -203,7 +203,7 @@
         <name>Set_ProcessType_And_Case</name>
         <label>Set ProcessType And Case</label>
         <locationX>2338</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
@@ -303,7 +303,7 @@
         <name>checkAnnull</name>
         <label>checkAnnull</label>
         <locationX>204</locationX>
-        <locationY>2030</locationY>
+        <locationY>2366</locationY>
         <defaultConnector>
             <targetReference>Update_Indirizzi_Fatturazione</targetReference>
         </defaultConnector>
@@ -328,7 +328,7 @@
         <name>Compatibile</name>
         <label>Compatibile?</label>
         <locationX>2624</locationX>
-        <locationY>2822</locationY>
+        <locationY>3158</locationY>
         <defaultConnector>
             <targetReference>Screen_Disattivazione</targetReference>
         </defaultConnector>
@@ -360,7 +360,7 @@
         <name>decisionUpdate</name>
         <label>decisionUpdate</label>
         <locationX>1975</locationX>
-        <locationY>3830</locationY>
+        <locationY>4166</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_in_lavorazione_0</targetReference>
         </defaultConnector>
@@ -392,7 +392,7 @@
         <name>EndFLowDecision</name>
         <label>EndFLow</label>
         <locationX>1018</locationX>
-        <locationY>1310</locationY>
+        <locationY>1646</locationY>
         <defaultConnector>
             <targetReference>Order_preattivazione</targetReference>
         </defaultConnector>
@@ -417,7 +417,7 @@
         <name>EndFLowDecision_0</name>
         <label>EndFLow</label>
         <locationX>1810</locationX>
-        <locationY>1310</locationY>
+        <locationY>1646</locationY>
         <defaultConnector>
             <targetReference>Get_Contract_Proroga</targetReference>
         </defaultConnector>
@@ -439,7 +439,7 @@
         <name>Next_Step</name>
         <label>Next Step?</label>
         <locationX>1645</locationX>
-        <locationY>3590</locationY>
+        <locationY>3926</locationY>
         <defaultConnector>
             <targetReference>getActivityToCheck</targetReference>
         </defaultConnector>
@@ -476,7 +476,7 @@
         <name>Next_Step_0</name>
         <label>Next Step?</label>
         <locationX>820</locationX>
-        <locationY>2798</locationY>
+        <locationY>3134</locationY>
         <defaultConnector>
             <targetReference>Set_Fase_Sospesa_0_0</targetReference>
         </defaultConnector>
@@ -513,7 +513,7 @@
         <name>Nuovo_Case</name>
         <label>Nuovo Case?</label>
         <locationX>2470</locationX>
-        <locationY>1862</locationY>
+        <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>Quale_Processo_0</targetReference>
         </defaultConnector>
@@ -538,7 +538,7 @@
         <name>Quale_Processo</name>
         <label>Quale Processo?</label>
         <locationX>2470</locationX>
-        <locationY>1526</locationY>
+        <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Disattivazione_VAS_Subflow</targetReference>
         </defaultConnector>
@@ -585,7 +585,7 @@
         <name>Quale_Processo_0</name>
         <label>Quale Processo?</label>
         <locationX>2624</locationX>
-        <locationY>1982</locationY>
+        <locationY>2318</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_VAS</targetReference>
         </defaultConnector>
@@ -610,7 +610,7 @@
         <name>Riprendi_Processo_PostSalesVAS</name>
         <label>Riprendi Processo</label>
         <locationX>2470</locationX>
-        <locationY>1070</locationY>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Get_PostSalesVAS_RT</targetReference>
         </defaultConnector>
@@ -635,7 +635,7 @@
         <name>RiprendiProcesso</name>
         <label>Riprendi Processo</label>
         <locationX>50</locationX>
-        <locationY>1070</locationY>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Get_RT_VotiveModena</targetReference>
         </defaultConnector>
@@ -660,7 +660,7 @@
         <name>RiprendiProcesso_0</name>
         <label>Riprendi Processo</label>
         <locationX>820</locationX>
-        <locationY>1070</locationY>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Screen_Selezione_Fornitura</targetReference>
         </defaultConnector>
@@ -685,7 +685,7 @@
         <name>RiprendiProcesso_0_0</name>
         <label>Riprendi Processo</label>
         <locationX>1612</locationX>
-        <locationY>1070</locationY>
+        <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Screen_Selezione_Fornitura_0</targetReference>
         </defaultConnector>
@@ -710,7 +710,7 @@
         <name>Ripristina_Fase</name>
         <label>Ripristina Fase?</label>
         <locationX>1645</locationX>
-        <locationY>158</locationY>
+        <locationY>494</locationY>
         <defaultConnector>
             <targetReference>Cerca_Contatto_Primario</targetReference>
         </defaultConnector>
@@ -735,7 +735,7 @@
         <name>Selected_Process_type</name>
         <label>Selected Process type</label>
         <locationX>820</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <defaultConnector>
             <targetReference>get_case_modifica_contr</targetReference>
         </defaultConnector>
@@ -764,10 +764,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Show_Block_Screen</name>
+        <label>Show Block Screen</label>
+        <locationX>1645</locationX>
+        <locationY>158</locationY>
+        <defaultConnector>
+            <targetReference>Ripristina_Fase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>N</defaultConnectorLabel>
+        <rules>
+            <name>Y</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>$Label.EnableShowFirstScreen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Y</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Block_Screen</targetReference>
+            </connector>
+            <label>Y</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
         <locationX>1645</locationX>
-        <locationY>950</locationY>
+        <locationY>1286</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
         </defaultConnector>
@@ -886,7 +911,7 @@
         <name>Which_Process_To_Go_Back</name>
         <label>Which Process To Go Back</label>
         <locationX>1381</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Switch_Subflow</targetReference>
         </defaultConnector>
@@ -1030,7 +1055,7 @@
         <name>Crea_Case_1_0</name>
         <label>Crea Case</label>
         <locationX>204</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0</targetReference>
         </connector>
@@ -1107,7 +1132,7 @@
         <name>Crea_Case_1_0_0</name>
         <label>Crea Case</label>
         <locationX>1150</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
             <targetReference>Order_Fill_Case</targetReference>
@@ -1196,7 +1221,7 @@
         <name>Crea_Case_1_0_0_0</name>
         <label>Crea Case</label>
         <locationX>1942</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
             <targetReference>Inserimento_Dati_Case_Proroga</targetReference>
@@ -1417,7 +1442,7 @@
         <name>Crea_Case_1_0_0_0_0</name>
         <label>Crea Case</label>
         <locationX>886</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignRecordIdToReference>CaseId</assignRecordIdToReference>
         <connector>
             <targetReference>Contratto_Preattivazione</targetReference>
@@ -1500,7 +1525,7 @@
         <name>Crea_Case_VAS</name>
         <label>Crea Case VAS</label>
         <locationX>2712</locationX>
-        <locationY>2102</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Set_CaseId</targetReference>
         </connector>
@@ -1513,7 +1538,7 @@
         <name>createActivity</name>
         <label>createActivity</label>
         <locationX>204</locationX>
-        <locationY>1790</locationY>
+        <locationY>2126</locationY>
         <connector>
             <targetReference>Screen_Fatturazione</targetReference>
         </connector>
@@ -1548,7 +1573,7 @@
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
         <locationX>1909</locationX>
-        <locationY>278</locationY>
+        <locationY>614</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Get_RT_Generiche</targetReference>
@@ -1590,7 +1615,7 @@
         <name>get_Case</name>
         <label>get Case</label>
         <locationX>204</locationX>
-        <locationY>1670</locationY>
+        <locationY>2006</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>createActivity</targetReference>
@@ -1611,7 +1636,7 @@
         <name>get_case_modifica_contr</name>
         <label>get case modifica contr</label>
         <locationX>952</locationX>
-        <locationY>2342</locationY>
+        <locationY>2678</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getAccount_Mod_Contr</targetReference>
@@ -1632,7 +1657,7 @@
         <name>Get_Contract_Proroga</name>
         <label>Get Contract Proroga</label>
         <locationX>1942</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_1_0_0_0</targetReference>
@@ -1653,7 +1678,7 @@
         <name>Get_PostSalesVAS_RT</name>
         <label>Get PostSalesVAS RT</label>
         <locationX>2602</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Init_Case</targetReference>
@@ -1681,7 +1706,7 @@
         <name>Get_RT_Generiche</name>
         <label>Get RT Generiche</label>
         <locationX>1909</locationX>
-        <locationY>398</locationY>
+        <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Switch_Subflow</targetReference>
@@ -1703,7 +1728,7 @@
         <name>Get_RT_VotiveModena</name>
         <label>Get RT Votive Modena</label>
         <locationX>204</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getActivityRecordtype</targetReference>
@@ -1724,7 +1749,7 @@
         <name>getAccount_Mod_Contr</name>
         <label>getAccount Mod Contr</label>
         <locationX>952</locationX>
-        <locationY>2462</locationY>
+        <locationY>2798</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Inserimento_Indirizzi</targetReference>
@@ -1745,7 +1770,7 @@
         <name>getActivityRecordtype</name>
         <label>getActivityRecordtype</label>
         <locationX>204</locationX>
-        <locationY>1310</locationY>
+        <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_1_0</targetReference>
@@ -1773,7 +1798,7 @@
         <name>getActivityToCheck</name>
         <label>getActivityToCheck</label>
         <locationX>1975</locationX>
-        <locationY>3710</locationY>
+        <locationY>4046</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>decisionUpdate</targetReference>
@@ -1794,7 +1819,7 @@
         <name>getCaseToRestore</name>
         <label>getCase To Restore</label>
         <locationX>1381</locationX>
-        <locationY>398</locationY>
+        <locationY>734</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assign_accountId</targetReference>
@@ -1815,7 +1840,7 @@
         <name>Order_preattivazione</name>
         <label>Order preattivazione</label>
         <locationX>1150</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Case_1_0_0</targetReference>
@@ -1836,7 +1861,7 @@
         <name>Annulla_Case_Incompatibile</name>
         <label>Annulla Case Incompatibile</label>
         <locationX>2492</locationX>
-        <locationY>2942</locationY>
+        <locationY>3278</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -1863,7 +1888,7 @@
         <name>Order_Fill_Case</name>
         <label>Order Fill Case</label>
         <locationX>1150</locationX>
-        <locationY>1670</locationY>
+        <locationY>2006</locationY>
         <connector>
             <targetReference>Contratto_Preattivazione</targetReference>
         </connector>
@@ -2091,7 +2116,7 @@
         <name>Set_Fase_Chiusa_0_0</name>
         <label>Set Fase in lavorazione</label>
         <locationX>1843</locationX>
-        <locationY>3950</locationY>
+        <locationY>4286</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -2118,7 +2143,7 @@
         <name>Set_Fase_in_lavorazione_0</name>
         <label>Set Fase in lavorazione</label>
         <locationX>2107</locationX>
-        <locationY>3950</locationY>
+        <locationY>4286</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -2145,7 +2170,7 @@
         <name>Set_Fase_Sospesa_0_0</name>
         <label>Set Fase Sospesa</label>
         <locationX>1040</locationX>
-        <locationY>2918</locationY>
+        <locationY>3254</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -2166,17 +2191,36 @@
         <name>Update_Indirizzi_Fatturazione</name>
         <label>Update Indirizzi Fatturazione</label>
         <locationX>336</locationX>
-        <locationY>2150</locationY>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>Inserimento_Dati_Votiva</targetReference>
         </connector>
         <inputReference>get_Case</inputReference>
     </recordUpdates>
     <screens>
+        <name>Block_Screen</name>
+        <label>Block Screen</label>
+        <locationX>1513</locationX>
+        <locationY>278</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Ripristina_Fase</targetReference>
+        </connector>
+        <fields>
+            <name>BlockScreenText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Premendo il tasto &lt;/span&gt;&lt;strong style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(75, 70, 240);&quot;&gt;Avanti &lt;/strong&gt;&lt;span style=&quot;font-size: 16px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;si procederà con l&apos;innesco del processo selezionato.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>ErrorScreen2</name>
         <label>ErrorScreen</label>
         <locationX>2976</locationX>
-        <locationY>2222</locationY>
+        <locationY>2558</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2192,7 +2236,7 @@
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
         <locationX>3240</locationX>
-        <locationY>1070</locationY>
+        <locationY>1406</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2208,7 +2252,7 @@
         <name>Inserimento_Dati_Case</name>
         <label>Inserimento Dati Case</label>
         <locationX>688</locationX>
-        <locationY>2342</locationY>
+        <locationY>2678</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2353,7 +2397,7 @@
         <name>Inserimento_Dati_Case_Proroga</name>
         <label>Inserimento Dati Case Proroga</label>
         <locationX>1612</locationX>
-        <locationY>1862</locationY>
+        <locationY>2198</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2465,7 +2509,7 @@
         <name>Inserimento_Dati_Votiva</name>
         <label>Inserimento Dati Votiva</label>
         <locationX>50</locationX>
-        <locationY>2582</locationY>
+        <locationY>2918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2565,7 +2609,7 @@
         <name>Inserimento_Indirizzi</name>
         <label>Inserimento Indirizzi</label>
         <locationX>952</locationX>
-        <locationY>2582</locationY>
+        <locationY>2918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2617,7 +2661,7 @@
         <name>Screen_Disattivazione</name>
         <label>Screen Disattivazione</label>
         <locationX>2470</locationX>
-        <locationY>3374</locationY>
+        <locationY>3710</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2730,7 +2774,7 @@
         <name>Screen_Fatturazione</name>
         <label>Screen Fatturazione</label>
         <locationX>204</locationX>
-        <locationY>1910</locationY>
+        <locationY>2246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2770,7 +2814,7 @@
         <name>Screen_Selezione_Fornitura</name>
         <label>Screen Selezione Fornitura</label>
         <locationX>1018</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2824,7 +2868,7 @@
         <name>Screen_Selezione_Fornitura_0</name>
         <label>Screen Selezione Fornitura</label>
         <locationX>1810</locationX>
-        <locationY>1190</locationY>
+        <locationY>1526</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2858,7 +2902,7 @@
         <locationX>1519</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Ripristina_Fase</targetReference>
+            <targetReference>Show_Block_Screen</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -2866,7 +2910,7 @@
         <name>Contratto_Preattivazione</name>
         <label>Contratto Preattivazione</label>
         <locationX>1018</locationX>
-        <locationY>1886</locationY>
+        <locationY>2222</locationY>
         <connector>
             <targetReference>Assign_Process_Type</targetReference>
         </connector>
@@ -2883,7 +2927,7 @@
         <name>Controlli_Compatibilita</name>
         <label>Controlli Compatibilità</label>
         <locationX>2624</locationX>
-        <locationY>2702</locationY>
+        <locationY>3038</locationY>
         <connector>
             <targetReference>Compatibile</targetReference>
         </connector>
@@ -2903,7 +2947,7 @@
         <name>Disattivazione_VAS_Subflow</name>
         <label>Disattivazione VAS Subflow</label>
         <locationX>2734</locationX>
-        <locationY>1646</locationY>
+        <locationY>1982</locationY>
         <connector>
             <targetReference>Nuovo_Case</targetReference>
         </connector>
@@ -2943,7 +2987,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>1315</locationX>
-        <locationY>3710</locationY>
+        <locationY>4046</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2974,7 +3018,7 @@
         <name>Gestione_Annullamento_Subflow_0</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>72</locationX>
-        <locationY>2150</locationY>
+        <locationY>2486</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3005,7 +3049,7 @@
         <name>HVAC_Subflow</name>
         <label>HVAC Subflow</label>
         <locationX>2206</locationX>
-        <locationY>1646</locationY>
+        <locationY>1982</locationY>
         <connector>
             <targetReference>Nuovo_Case</targetReference>
         </connector>
@@ -3039,7 +3083,7 @@
         <name>Inserire_Pod</name>
         <label>Inserire Pod</label>
         <locationX>886</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <connector>
             <targetReference>Crea_Case_1_0_0_0_0</targetReference>
         </connector>
@@ -3050,7 +3094,7 @@
         <name>Segnalazioni_VAS_Subflow</name>
         <label>Segnalazioni VAS Subflow</label>
         <locationX>2470</locationX>
-        <locationY>1646</locationY>
+        <locationY>1982</locationY>
         <connector>
             <targetReference>Nuovo_Case</targetReference>
         </connector>
