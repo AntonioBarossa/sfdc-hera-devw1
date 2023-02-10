@@ -503,6 +503,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Cohabitation__c</picklist>
+        <values>
+            <fullName>N</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Y</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
             <fullName>Attivazioni</fullName>

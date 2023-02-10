@@ -8,6 +8,10 @@
         <layoutColumns>
             <layoutItems>
                 <behavior>Edit</behavior>
+                <field>Cas_AccountIdStr__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
                 <field>Cas_EndBilledPeriodC__c</field>
             </layoutItems>
             <layoutItems>

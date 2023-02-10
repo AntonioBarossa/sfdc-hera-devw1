@@ -51,6 +51,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     loginChannel;
     closeAttachmentEvent;
     @track additionalAttachments;
+    hasCohabitantButton;
+    cohabitantNumber;
 
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
@@ -220,7 +222,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Gas') {
             this.showDelibera40 = true;
         }
-    } 
+    }
+
+    handleOnLoad(event) {
+        if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
+            this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
+        }
+        if( this.template.querySelector("[data-id='CohabitantsNumber__c']") !== null ){
+            this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
+        }
+    }
+
+    handleCohabitantChange(event){
+        let note = this.template.querySelector("[data-id='Note__c']") && this.template.querySelector("[data-id='Note__c']").value ? this.template.querySelector("[data-id='Note__c']").value : '';
+        note = this.removePreviousCohabitantRegistry(note);
+        this.template.querySelector("[data-id='Note__c']").value = note + event.detail;
+        this.sectionDataToSubmit['Note__c'] = note + event.detail;
+    }
+
+    removePreviousCohabitantRegistry(note){
+        return note.includes("AC:")? note.replace(/AC:([\s\S]*):AC/,"") : note + "\n";
+    }
 
     landSelected(event){
         this.landRedistrySelected=true;
@@ -1614,7 +1636,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 name: 'ivaAccise',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                hasIvaAcciseUploadButton: true,
+                hasIvaAcciseUploadButton: (this.typeVisibility('ele') || this.typeVisibility('gas')) ,
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' 
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
                                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' 
@@ -1887,7 +1909,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(this.order.AdditionalAttachments__c != ''){
             this.additionalAttachments = this.order.AdditionalAttachments__c;
         }
-        
+
         console.log('hdtChildOrderProcessDetails - connectedCallback - END');
     }
 
