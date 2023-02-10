@@ -108,18 +108,19 @@ global with sharing class ConnectorEntityController {
 		System.debug('#message JSON ' + jsonMessage);
 		System.debug('#attachdata JSON ' + json.serialize(attachdata));
 		System.debug('#attachdata ' + attachdata);
+		wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
+			wrts_prcgvr__Status__c = 'Chiusa',
+			ActivityEndTime__c = Datetime.now(),
+			CallEndTime__c = Datetime.now(),
+			WaitingTime__c = 0 // WIP
+		);
 		try {
 			Decimal callDuration = (Decimal) message.get('Duration');
 			callDuration = callDuration != null? callDuration/60:0;
-			wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c(
-				Id = (String) attachdata.get('sf_activity_id'),
-				wrts_prcgvr__Status__c = 'Chiusa',
-				ActivityEndTime__c = Datetime.now(),
-				CallEndTime__c = Datetime.now(),
-				CallDuration__c = callDuration,
-				RecordingLink__c = (String) attachdata.get('URLREC'),
-				WaitingTime__c = 0 // WIP
-			);
+			activity.Id = (String) attachdata.get('sf_activity_id');
+			activity.CallDuration__c = callDuration;
+			activity.RecordingLink__c = (String) attachdata.get('URLREC');
+
 
 			handleCrmChangeFlag(message, activity);
 
