@@ -518,7 +518,7 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
-                <field>Con_PurchaseDatec__c</field>
+                <field>Con_PurchaseDateC__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Edit</behavior>
