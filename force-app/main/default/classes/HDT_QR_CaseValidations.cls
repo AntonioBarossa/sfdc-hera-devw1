@@ -34,7 +34,8 @@ public inherited sharing class HDT_QR_CaseValidations {
         ContractAccountCode__c,
         RateCategory__c,
         BillingIsAddressVerified__c,
-        SalesCompany__c
+        SalesCompany__c,
+        BillingCountry__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

@@ -236,9 +236,11 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             ord.CausalCode__c = fieldValueResponse.get('COD_FLUSSO');
                                         }
                                         when 'Amm. Precheck KO SII' {
-                                            ord.PrecheckReasonSII__c = String.isBlank(fieldValueResponse.get('DES_ERR_AEEG')) ? 
-                                                                                        fieldValueResponse.get('TESTO_ERRR') : 
-                                                                                        fieldValueResponse.get('DES_ERR_AEEG');
+                                            String note = String.isNotBlank(fieldValueResponse.get('ANNOTAZIONI'))? fieldValueResponse.get('ANNOTAZIONI') : '';
+                                            String descr = String.isBlank(fieldValueResponse.get('DES_ERR_AEEG')) ? 
+                                                    fieldValueResponse.get('TESTO_ERRR') : 
+                                                    fieldValueResponse.get('DES_ERR_AEEG');
+                                            ord.PrecheckReasonSII__c = String.isBlank(descr) || note.containsIgnoreCase(descr)? note : String.isNotBlank(note)? descr + ' - ' + note : descr;
                                             ord.CausalCode__c = String.isBlank(fieldValueResponse.get('CODERR_AEEG')) ? 
                                                                                         fieldValueResponse.get('CODERR_ES') : 
                                                                                         fieldValueResponse.get('CODERR_AEEG');
@@ -248,6 +250,7 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                                             if(fieldValueResponse.get('CODERR_ES') == '003' || fieldValueResponse.get('CODERR_ES') == '103'){
                                                 ord.IsTechnicalTransfer__c = true;
                                             }
+                                            HDT_UTL_Utils.setFieldsSize(ord);
                                         }
                                         when 'Amm. Precheck OK SII' {
                                             ord.DistributorPracticeCode__c = fieldValueResponse.get('COD_PRAT_DISTR');

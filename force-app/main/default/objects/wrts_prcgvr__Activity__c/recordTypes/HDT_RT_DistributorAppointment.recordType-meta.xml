@@ -59,7 +59,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -557,7 +557,7 @@
             <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -694,7 +694,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1192,7 +1192,7 @@
             <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2209,6 +2209,25 @@
         <picklist>SuspensionReason__c</picklist>
         <values>
             <fullName>In attesa ricontatto cliente non trovato</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Type__c</picklist>
+        <values>
+            <fullName>Contattare il cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preavviso Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Presa Appuntamento</fullName>
+            <default>true</default>
+        </values>
+        <values>
+            <fullName>Richiesta Parere</fullName>
             <default>false</default>
         </values>
     </picklistValues>
