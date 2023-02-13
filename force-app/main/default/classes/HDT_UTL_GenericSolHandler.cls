@@ -162,7 +162,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
 
     public static void handleServiceRequestVoltura(Map<String,Object> params){
         HDT_QR_Order qrOrder = new HDT_QR_Order();
-        Order parentOrder = qrOrder.getParentOrderVolturaSOL((String)params.get('serviceRequest'));
+        Order parentOrder = qrOrder.getParentOrderVolturaSol((String)params.get('serviceRequest'));
         createChildOrderVoltura(parentOrder,params);
     }
 

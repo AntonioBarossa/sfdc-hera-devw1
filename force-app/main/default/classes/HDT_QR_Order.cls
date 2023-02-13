@@ -1490,7 +1490,7 @@ public inherited sharing class HDT_QR_Order {
         return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c,QualityCallStatus__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
     }
 
-    public Order getParentOrderVolturaSOL(String orderNumber){
+    public Order getParentOrderVolturaSol(String orderNumber){
         return [SELECT Id,IntegrationId__c,Contact__c,AccountId,RecordTypeId,Sale__c,ProcessType__c,EffectiveDate__c,ContractAccountCode__c,CustomerLastName__c,CustomerName__c,CustomerType__c,
                 CustomerVATNumber__c, CustomerFiscalCode__c,EffectiveDate,Status,BillingProfile__c,PaymentMode__c,Note__c,Account.Category__c,PhoneNumber__c,
                 BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,
