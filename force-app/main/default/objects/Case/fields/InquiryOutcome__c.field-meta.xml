@@ -1,40 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>SourceAgency__c</fullName>
+    <fullName>InquiryOutcome__c</fullName>
     <externalId>false</externalId>
-    <label>Agenzia Fonte</label>
+    <label>Esito Istruttoria</label>
     <required>false</required>
     <trackFeedHistory>false</trackFeedHistory>
     <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
     <type>Picklist</type>
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>true</sorted>
+            <sorted>false</sorted>
             <value>
-                <fullName>Covisian</fullName>
+                <fullName>Richiesta accolta</fullName>
                 <default>false</default>
-                <label>Covisian</label>
+                <label>Richiesta accolta</label>
             </value>
             <value>
-                <fullName>Koinè</fullName>
+                <fullName>Accolta fognatura</fullName>
                 <default>false</default>
-                <label>Koinè</label>
+                <label>Accolta fognatura</label>
             </value>
             <value>
-                <fullName>Koinè Bologna Srl</fullName>
+                <fullName>Accolta depurazione</fullName>
                 <default>false</default>
-                <label>Koinè Bologna Srl</label>
+                <label>Accolta depurazione</label>
             </value>
             <value>
-                <fullName>Koinè Srl</fullName>
+                <fullName>Non accolta</fullName>
                 <default>false</default>
-                <label>Koinè Srl</label>
-            </value>
-            <value>
-                <fullName>Linetech</fullName>
-                <default>false</default>
-                <label>Linetech</label>
+                <label>Non accolta</label>
             </value>
         </valueSetDefinition>
     </valueSet>
