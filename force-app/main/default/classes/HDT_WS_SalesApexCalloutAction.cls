@@ -112,6 +112,12 @@ global inherited sharing class HDT_WS_SalesApexCalloutAction implements wrts_prc
                         if(!find){
                             indexOfObjectToRemove.add(count);
                         }
+                    }else if (w.objectType == 'ServicePoint__c'){
+                        for( wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                            if( f.name.equalsIgnoreCase('POD') && (String.isBlank(f.value) || f.value == null)){
+                                f.name = 'POD_NON_USARE';
+                            }
+                        }
                     }
 
                     count++;
