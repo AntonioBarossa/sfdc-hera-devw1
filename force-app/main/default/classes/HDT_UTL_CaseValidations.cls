@@ -547,8 +547,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return result;
         }
 
-        if(currentCase.BillingIsAddressVerified__c == false){
-            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+        /*edzanatt 
+        *10/02/2023
+        *952483C modifica, fare saltare il controllo sul BillingIsAddressVerified__c se l'indirizzo è estero
+        */ 
+        if(currentCase.BillingCountry__c == 'ITALIA' || currentCase.BillingCountry__c == 'Italia'){
+            if(currentCase.BillingIsAddressVerified__c == false){
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+            }
         }
 
         if (marking != null) {
