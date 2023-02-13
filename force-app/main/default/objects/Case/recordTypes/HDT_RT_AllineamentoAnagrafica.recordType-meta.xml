@@ -8063,10 +8063,6 @@
             <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Errore tecnico invio a SAP</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
