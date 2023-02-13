@@ -8064,10 +8064,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Errore Lavorazione SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Errore tecnico invio a SAP</fullName>
             <default>false</default>
         </values>

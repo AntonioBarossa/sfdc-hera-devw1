@@ -2318,7 +2318,6 @@
             <fullName>Modifica Indirizzo Fornitura</fullName>
             <default>false</default>
         </values>
-        <picklist>Type__c</picklist>
         <values>
             <fullName>Accettazione Voltura</fullName>
             <default>false</default>
