@@ -499,6 +499,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 setActivityId.add(act.Id);
             }
         }
+        if (setActivityId.isEmpty()){
+            return;
+        }
         Map <Id, Account> mapAccountToId = new Map <Id, Account> ([SELECT Id, CompanyOwner__c FROM Account WHERE Id IN: setAccountId]);
         Map <Id, Order> mapOrderToId = new Map <Id, Order> ([SELECT Id, CompanyOwner__c FROM Order WHERE Id IN: setOrderId]);
         Map <Id, Case> mapCaseToId = new Map <Id, Case> ([SELECT Id, CompanyOwner__c FROM Case WHERE Id IN: setCaseId]);
