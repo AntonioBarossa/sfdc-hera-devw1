@@ -4327,7 +4327,7 @@
         </connector>
         <fields>
             <name>attualeIndirizzo</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;L&apos;indirizzo attuale è: {!getCase.ServicePoint__r.SupplyAddress__c}﻿&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;L&apos;attuale indirizzo di fornitura è: {!getCase.ServicePoint__r.SupplyAddress__c}﻿&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
