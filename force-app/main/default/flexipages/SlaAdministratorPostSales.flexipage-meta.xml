@@ -51,16 +51,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.IsActive__c</fieldItem>
-                <identifier>RecordIsActive_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.RecordTypeId</fieldItem>
                 <identifier>RecordRecordTypeIdField</identifier>
             </fieldInstance>

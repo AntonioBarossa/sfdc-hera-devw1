@@ -79,7 +79,8 @@ public with sharing class HDT_QR_BpCaCreate
             BillingProfile__r.DivergentSubject__r.MailingPostalCode,
             BillingProfile__r.DivergentSubject__r.MailingState,
             BillingProfile__r.DivergentSubject__r.MailingStreetName__c,
-            BillingProfile__r.IbanCountry__c
+            BillingProfile__r.IbanCountry__c,
+            BillingProfile__r.IbanCIN_IBAN__c
             FROM Order
             WHERE Id = :orderId]
             );
