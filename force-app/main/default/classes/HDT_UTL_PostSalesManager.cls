@@ -570,7 +570,8 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         
 
         if('Verifiche'.equalsIgnoreCase((String)inputRecord.get('Cluster__c')) && 
-            APPOINTMENT_METHOD.containsKey((String)inputRecord.get('Type'))){
+            APPOINTMENT_METHOD.containsKey((String)inputRecord.get('Type')) && 
+            'Ammissibiltà OK'.equalsIgnoreCase((String)inputRecord.get('Phase__c'))  ){
 
             Map<String, Object> inputMap = new Map<String,Object>();
             HDT_UTL_GestAppAutomaticCreationCase gestAppAutomaticCreationCase = new HDT_UTL_GestAppAutomaticCreationCase();

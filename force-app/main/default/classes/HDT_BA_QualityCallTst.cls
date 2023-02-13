@@ -183,7 +183,8 @@ public with sharing class HDT_BA_QualityCallTst {
             leads[0].IndividualId=inds[0].id;
             insert leads;
 
-            List<CampaignMember> campaignMember = HDT_UTL_DataFactoryTst.createCampaignMember( false, campaign[0].Id, leads, contacts);
+            List<CampaignMember> campaignMember = HDT_UTL_DataFactoryTst.createCampaignMember( false, campaign[0].Id, leads, new List<Contact>{contacts[0]});
+            campaignMember[0].NumberingValidityStartDate__c = System.today().addDays(-50);
             insert campaignMember;
 
             
@@ -291,10 +292,9 @@ public with sharing class HDT_BA_QualityCallTst {
 
             }
         }
-        insert acts;
         update ords;
         Test.startTest();
-        
+            insert acts;
             HDT_BA_QualityCall batch = new HDT_BA_QualityCall();
             Database.executeBatch(batch,200);
 
