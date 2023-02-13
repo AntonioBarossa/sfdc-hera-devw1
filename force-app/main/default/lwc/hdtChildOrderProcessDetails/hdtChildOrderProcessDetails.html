@@ -139,7 +139,7 @@
                                         <template if:true={section.value.hasVerificaRavv}>
                                            <c-hdt-active-repentant company-owner={order.Account.CompanyOwner__c} record-id={order.Id} hide-fields="true" city={order.ServicePoint__r.SupplyCity__c} sottotipo={order.ProcessType__c} onrequest_data={handleActiveRepentantStart} onend_algorithm={handleActiveRepentantFinish}></c-hdt-active-repentant>
                                         </template>
-                                        <lightning-button data-section-index={section.index} if:false={section.value.lastStep} value={section.value.name} onclick={handleNext} label="Avanti" variant="brand" class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
+                                        <lightning-button data-section-index={section.index} if:false={section.value.lastStep} value={section.value.name} onclick={handleNext} label="Avanti" variant="brand" disabled={disableNext} class="slds-m-left_x-small" icon-name="utility:right"></lightning-button>
                                     </div>
                                 </div>
                             </lightning-accordion-section>
