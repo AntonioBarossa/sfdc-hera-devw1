@@ -1,5 +1,10 @@
 public with sharing class HDT_UTL_LicenseAssignment {
-
+    /**
+     * Marco Ficorella - NTTDATA 13/02/2023
+     * Classe per l'assegnazione automatica delle licenze CRM e Service
+     * Da eseguire manualmente.
+     *  
+     **/
     public static void assignLicense(){
         //Recupero nome licenza CPQ
         PermissionSetLicense cpqLicId=[select id from PermissionSetLicense where MasterLabel ='Salesforce CPQ License' ];
@@ -77,7 +82,7 @@ public with sharing class HDT_UTL_LicenseAssignment {
 
         for(User usr:allUserList){
             
-            //controllo se l'utente ha la licenza CPQ ma non la licenza Service
+            //controllo se l'utente ha la licenza CPQ ma non la licenza Service e CRM
             if(userCpq.contains(usr.Id) && !userCrm.contains(usr.Id) && !userService.contains(usr.Id)){
                 //gli devo aggiungere la CRM
                 PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = psCRM.Id, AssigneeId = usr.Id);
