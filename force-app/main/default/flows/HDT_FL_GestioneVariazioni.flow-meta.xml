@@ -1473,6 +1473,13 @@
                 <elementReference>GetInputCase.Account.VATNumber__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.CustomerMarking__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetInputCase.Account.CustomerMarking__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_00_0_0_0_0_0_0_0</targetReference>
         </connector>

@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
+                <fullName>0</fullName>
+                <default>false</default>
+                <label>da RD</label>
+            </value>
+            <value>
                 <fullName>1</fullName>
                 <default>false</default>
                 <label>Immobile non accatastato</label>
@@ -19,6 +24,26 @@
                 <fullName>2</fullName>
                 <default>false</default>
                 <label>Immobile non accatastabile</label>
+            </value>
+            <value>
+                <fullName>3</fullName>
+                <default>false</default>
+                <label>Dati non forniti dal titolare</label>
+            </value>
+            <value>
+                <fullName>4</fullName>
+                <default>false</default>
+                <label>Forniture temporanee</label>
+            </value>
+            <value>
+                <fullName>5</fullName>
+                <default>false</default>
+                <label>Condominio</label>
+            </value>
+            <value>
+                <fullName>6</fullName>
+                <default>false</default>
+                <label>Non presenti in SIEBEL</label>
             </value>
         </valueSetDefinition>
     </valueSet>

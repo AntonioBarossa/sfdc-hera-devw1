@@ -217,7 +217,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
             }
             when 'KO' {
                 if(enableTurbobilling && !isAcqua){
-                    c.Phase__c = 'Esisto KO da SAP';
+                    c.Phase__c = 'Esito KO da SAP';
                 }else {
                     c.Phase__c = 'Check preliminari KO';
                 }
