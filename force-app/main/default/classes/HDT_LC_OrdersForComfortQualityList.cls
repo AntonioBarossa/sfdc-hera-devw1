@@ -114,7 +114,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             'Ammissibilità OK',
             //'Esito KO da SII',
             'KO rilavorato',
-            'KO definitivo'
+            'KO definitivo',
+            'Errore invio a DL/SII'
         };
 
         List<String> notCancelNonBillable = new List<String>{
@@ -174,7 +175,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                         Type__c = ordToCheck[0].isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO, 
                         Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
                         Note__c = 'Quality esitata negativamente',
-                        order__c=ordId
+                        order__c=ordId,
+                        OpeningNote__c = 'Errore invio a DL/SII'.equalsIgnoreCase(ordToCheck[0].Phase__c)? 'Attività creata perchè l\'ordine era in fase Errore invio a DL/SII' : ''
                     ));
                 }
             }

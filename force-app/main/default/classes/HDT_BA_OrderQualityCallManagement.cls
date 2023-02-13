@@ -26,32 +26,32 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         //Da verificare
         if (this.parentsId.isEmpty()){
             return Database.getQueryLocator([
-                SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
                 FROM ORDER 
                 WHERE Id IN: this.childsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
             ]);
         }
         if (this.childsId.isEmpty()){
             return Database.getQueryLocator([
-                SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
                 FROM ORDER 
                 WHERE ParentOrder__c IN :this.parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
             ]);
         }
         return Database.getQueryLocator([
-            SELECT Id,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+            SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
             FROM ORDER 
             WHERE (Id IN: this.childsId OR ParentOrder__c IN :this.parentsId) AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
         ]);    
     }
 
     public void execute(Database.BatchableContext bc, List<Order> orders){
-        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_UTL_QualityCall');
+        HDT_SRV_LogService logs = new HDT_SRV_LogService('HDT_BA_QualityCall');
         try{
             Id rtId = (new  HDT_QR_RecordType()).getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c').Id;
             List<Order> ordersToUpdate = new List<Order>();
             Map<Id,wrts_prcgvr__Activity__c> activitiesToInsert = new Map<Id,wrts_prcgvr__Activity__c>();
-            Set<String> orderToCancel = new Set<String>();
+            Map<String,Order> orderToCancel = new Map<String,Order>();
             Set<Id> orderWithActivity = new Set<Id>();
             Set<String> pOrdersId = new Set<String>();
             List<String> allOrdersId = new List<String>();
@@ -62,7 +62,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
 
             Map<String, List<OrderItem>> orderToItemMap = new Map<String, List<OrderItem>>();
             for(OrderItem item : HDT_QR_OrderItem.getItemFromOrderIdList(allOrdersId)){
-                if(!orderToItemMap.containsKey(item.OrderId) != null){
+                if(!orderToItemMap.containsKey(item.OrderId)){
                     orderToItemMap.put(item.OrderId, new List<OrderItem>());
                 }
                 orderToItemMap.get(item.OrderId).add(item);
@@ -75,8 +75,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             this.getChildOrderInfo(pOrdersId,orderWithActivity); // creare le informazioni, per vedere se un ordine è da gestire (solo relativamente agli stati) e con quale data.
             List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
             for (Order o : orders){
-                //Verificare se con il null funziona;
-                if (!this.mapOrderToManage.get(o.ParentOrder__c)){
+                if (this.mapOrderToManage.containsKey(o.ParentOrder__c) && !this.mapOrderToManage.get(o.ParentOrder__c)){
                     this.actMap.remove(o.ParentOrder__c);
                     continue;
                 }
@@ -98,7 +97,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 String result = qCall.checkOrderPhase(o.Phase__c);
                 if ('CLOSE_PHASE'.equalsIgnoreCase(result)){
                     ordToUpd.Skip_Callout__c = newSkipCall;
-                    ordersToUpdate.add(ordToUpd);
+                    if (!'Activated'.equalsIgnoreCase(o.Status)){
+                        ordersToUpdate.add(ordToUpd);
+                    }
                     continue;
                 }
                 Boolean canDeleteOrder = !qCall.notCancellableOrder(o);
@@ -108,16 +109,16 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                     && ((isMonitoringList.contains(o.AgencyCode__c) && o.IsVAS__c) || hasCancellableProduct)) {
                         ordToUpd.Phase__c = 'Annullato';
                         ordToUpd.Status = 'Annullato';         
-                        orderToCancel.add(ordToUpd.Id);     
+                        orderToCancel.put(ordToUpd.Id,ordToUpd);
+                        continue;     
                 }else if ((isMonitoringList.contains(o.AgencyCode__c) && o.IsVAS__c) || hasCancellableProduct){
                     needsActivity = true;
                 }
-                if (!orderToCancel.contains((String)ordToUpd.Id)){
-                    ordToUpd.Skip_Callout__c = newSkipCall;
-                }
-                
-                if (orderWithActivity.contains(o.Id) || orderWithActivity.contains(o.ParentOrder__c)){
+                ordToUpd.Skip_Callout__c = newSkipCall;
+                if (!'Activated'.equalsIgnoreCase(o.Status)){
                     ordersToUpdate.add(ordToUpd);
+                }
+                if (orderWithActivity.contains(o.Id) || orderWithActivity.contains(o.ParentOrder__c)){
                     continue;
                 }
                 
@@ -129,15 +130,15 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                         Order__c = orderId,
                         Type__c = 'Quality Scaduta',
                         wrts_prcgvr__Status__c = 'Aperta',
-                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS'
+                        wrts_prcgvr__Description__c = 'Non è stato possibile procedere all\'annullamento allo scadere dei 50 giorni di quality call, verificare la richiesta e procedere tramite ripensamento o tramite il case di post sales Disattivazione VAS',
+                        OpeningNote__c = 'Errore invio a DL/SII'.equalsIgnoreCase(o.Phase__c)? 'Attività creata perchè l\'ordine era in fase Errore invio a DL/SII' : ''
                     ));
-                }              
-                ordersToUpdate.add(ordToUpd);
+                }
             }
             this.closeActivities(actToUpdate);
             if (!orderToCancel.isEmpty()){
                 HDT_QR_Order qrOrder = new HDT_QR_Order();
-                for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel)){
+                for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel.keySet())){
                     if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)&& !'Quality Scaduta'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
                         actToUpdate.add(
                             new wrts_prcgvr__Activity__c(
@@ -151,21 +152,29 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
 
             if (!actToUpdate.isEmpty()){
                 List<Database.SaveResult> srList = Database.update(actToUpdate, false);
-                qCall.setLogRecord(srList, actToUpdate, logs, 'update activities');
+                qCall.setLogRecord(srList, actToUpdate, logs, 'update activities second batch');
+            }
+
+            Set<Order> totalOrderToUp = new Set<Order>();
+            if (!orderToCancel.isEmpty()){
+                totalOrderToUp.addAll(orderToCancel.values());
+            }
+            if (!ordersToUpdate.isEmpty()){
+                totalOrderToUp.addAll(ordersToUpdate);
             }
             
-            if (!ordersToUpdate.isEmpty()){
-                List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
-                qCall.setLogRecord(srList, ordersToUpdate, logs, 'update order');
+            if (!totalOrderToUp.isEmpty()){
+                List<Database.SaveResult> srList = Database.update(new List<Order>(totalOrderToUp), false);
+                qCall.setLogRecord(srList, ordersToUpdate, logs, 'update order second batch');
             }
 
             if (!activitiesToInsert.isEmpty()){
                 List<Database.SaveResult> srList = Database.insert(activitiesToInsert.values(), false);
-                qCall.setLogRecord(srList, activitiesToInsert.values(), logs, 'insert activities');
+                qCall.setLogRecord(srList, activitiesToInsert.values(), logs, 'insert activities second batch');
             }
 
         }catch (Exception ex){
-            logs.addLog('HDT_BA_QualityCall', 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
+            logs.addLog('HDT_BA_OrderQualityCallManagement', 'execute', orders != null ? JSON.serialize(orders) : null , null, ex.getStackTraceString() + ' Error Message: ' + ex.getMessage(), null, null, null);
         }
         logs.saveMassiveRecords();
     }
@@ -193,6 +202,9 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         //La query è necessaria perchè potrebbe crearsi la situazione in cui i figli di un ordine sono separati da un esecuzione di un batch ed un altro.
         //Infatti elimino quelli già creati nelle precedenti esecuzioni
         pOrdersId.removeAll(this.mapOrderToManage.keySet());
+        if (pOrdersId.isEmpty()){
+            return;
+        }
         for (Order o : HDT_QR_Order.getChildOrdersFromParentId(pOrdersId)){
             if (this.mapOrderToManage.containsKey(o.ParentOrder__c) && !this.mapOrderToManage.get(o.ParentOrder__c) 
             ||(!this.childsId.contains(o.Id) && !this.parentsId.contains(o.ParentOrder__c))){
@@ -208,19 +220,20 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 mapStartDate.remove(o.ParentOrder__c);
                 continue;
             }
-            Date startDate;
-            for (ComfortQualityCall__c cqc : docValidList) {
-                if (
-                    String.isNotBlank(o.PhaseStory__c) && o.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == o.RecordType.DeveloperName && cqc.Channel__c == o.Channel__c && cqc.CustomerType__c == o.CustomerCategory__c && cqc.QualitySignatureMethod__c == o.SignatureMethod__c
-                ) {
-                    startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(o.PhaseStory__c, 'Documentazione Validata');
-                    break;
+            Date startDate = this.actMap.get(o.ParentOrder__c).QualityCallStartDate__c;
+            if (startDate == null){
+                for (ComfortQualityCall__c cqc : docValidList) {
+                    if (
+                        String.isNotBlank(o.PhaseStory__c) && o.PhaseStory__c.containsIgnoreCase('Documentazione Validata') && cqc.Process__c == o.RecordType.DeveloperName && cqc.Channel__c == o.Channel__c && cqc.CustomerType__c == o.CustomerCategory__c && cqc.QualitySignatureMethod__c == o.SignatureMethod__c
+                    ) {
+                        startDate = HDT_UTL_Utils.exctrPhaseTransDateFromStory(o.PhaseStory__c, 'Documentazione Validata');
+                        break;
+                    }
+                }
+                if (startDate == null){
+                    startDate = o.WizardCompletedDate__c;
                 }
             }
-            if (startDate == null){
-                startDate = o.WizardCompletedDate__c;
-            }
-
             if (!mapStartDate.containsKey(o.ParentOrder__c) || mapStartDate.get(o.ParentOrder__c) < startDate){
                 mapStartDate.put(o.ParentOrder__c,startDate);
             }

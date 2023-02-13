@@ -267,11 +267,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     @AuraEnabled
     public static Boolean checkVasAndCommodity(Order ord, String recordTypeName){
         try {
-            Boolean response = HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(recordTypeName, ord); 
-            /* Commentato perchè è stata tolta la fase AttesaCC
+            Boolean response = HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(recordTypeName, ord);
+            List<SObject> myOrd = HDT_QR_GenericQuery.getGenericRecords('Id', 'Order', 'Id = \''+ord.Id+'\' AND CreditCheckInProgress__c = false AND IncomingCreditCheckResult__c = null AND OutgoingCreditCheckResult__c = null');
+            if (myOrd.isEmpty()){
+                return true;
+            }
+            
             if (response){
-                HDT_UTL_DatabaseService.updateSObject(new Order(Id = ord.Id, CreditCheckInProgress__c = true));
-            } */
+                myOrd[0].put('CreditCheckInProgress__c',true);
+                HDT_UTL_DatabaseService.updateSObject(myOrd);
+            }
             return !response;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
