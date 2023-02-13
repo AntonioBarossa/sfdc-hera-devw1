@@ -116,9 +116,9 @@
         <label>Back Office - Tari/TCP</label>
     </customValue>
     <customValue>
-        <fullName>Back Office - Vas e HVAC</fullName>
+        <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
         <default>false</default>
-        <label>Back Office - Vas e HVAC</label>
+        <label>Segnalazione HVAC e Fotovoltaico</label>
     </customValue>
     <customValue>
         <fullName>Blocco non effettuato</fullName>
