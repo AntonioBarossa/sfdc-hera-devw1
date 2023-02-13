@@ -2,10 +2,15 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
     
     public override void beforeInsert(){
 
-        HDT_ObjectRecordType__mdt accBus = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Business');
-        HDT_ObjectRecordType__mdt accRes = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Residenziale');
-        List<String> listDeniedRes = accRes.ValueToRemove__c.split(';');
-        List<String> listDeniedBus = accBus.ValueToRemove__c.split(';');
+        // HDT_ObjectRecordType__mdt accBus = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Business');
+        // HDT_ObjectRecordType__mdt accRes = HDT_ObjectRecordType__mdt.getInstance('Acc_CustomerMarking_HDT_RT_Residenziale');
+        // List<String> listDeniedRes = accRes.ValueToRemove__c.split(';');
+        // List<String> listDeniedBus = accBus.ValueToRemove__c.split(';');
+
+        List<HDT_ObjectRecordType__mdt> accBusList = [SELECT ValueToRemove__c FROM HDT_ObjectRecordType__mdt WHERE DeveloperName = 'Acc_CustomerMarking_HDT_RT_Business'];
+        List<HDT_ObjectRecordType__mdt> accResList = [SELECT ValueToRemove__c FROM HDT_ObjectRecordType__mdt WHERE DeveloperName = 'Acc_CustomerMarking_HDT_RT_Residenziale'];
+        List<String> listDeniedBus = accBusList.size() > 0 ? accBusList[0].ValueToRemove__c.split(';') : null;
+        List<String> listDeniedRes = accResList.size() > 0 ? accResList[0].ValueToRemove__c.split(';') : null;
 
         Id accRecordTypeResId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         Id accRecordTypeBusId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
