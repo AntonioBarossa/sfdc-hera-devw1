@@ -430,7 +430,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         List<PricebookEntry> pbOptionList = [SELECT Id, Pricebook2Id, Product2Id, UnitPrice
         FROM PricebookEntry
         WHERE Product2Id =:optionList[0].SBQQ__OptionalSKU__c
-        AND Pricebook2id =:pbList[0].Pricebook2Id
+        AND pricebook2Id =:pbList[0].Pricebook2Id
         WITH SECURITY_ENFORCED];
         Map<String,String> toReturn = new Map<String,String>();
         toReturn.put('productId', optionList[0].SBQQ__OptionalSKU__c);
