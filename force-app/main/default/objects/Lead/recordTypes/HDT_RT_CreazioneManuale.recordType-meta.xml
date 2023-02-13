@@ -2994,7 +2994,15 @@
     <picklistValues>
         <picklist>SourceAgency__c</picklist>
         <values>
-            <fullName>Koinè</fullName>
+            <fullName>Covisian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè Bologna Srl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè Srl</fullName>
             <default>false</default>
         </values>
         <values>
