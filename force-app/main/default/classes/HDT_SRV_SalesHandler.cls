@@ -356,8 +356,12 @@ public with sharing class HDT_SRV_SalesHandler {
                                     if(ord.RemiCode__c != null){
                                         ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVatNumberUdb(ordRetrieved.SupplyCity__c, ordRetrieved.SalesCompany__c, ord.RemiCode__c);
                                     }
-                                    if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
+                                    if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '' ) {
                                         ord.PrecheckResultSII__c = 'OK';
+                                    }
+                                    if ('Voltura con Switch'.equalsIgnoreCase(ordRetrieved.ProcessType__c) && 'Errore invio a DL/SII'.equalsIgnoreCase(ordRetrieved.Phase__c)){
+                                        ord.PrecheckResultSII__c = 'OK';
+                                        voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
                                     }
                                 }
                                 when 'Esito KO da SII' {
