@@ -409,6 +409,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
         if(isAnalisiConsumi){
             query+=' AND SBQQ__OptionalSKU__r.Name = \'Analisi Consumi\' WITH SECURITY_ENFORCED';
         }
+        if(!Schema.SObjectType.SBQQ__ProductOption__c.isAccessible()){
+            throw new QueryException('Product Option is not accessible');
+        }
         List<SBQQ__ProductOption__c> optionList = Database.query(query);
         /*
         List<SBQQ__ProductOption__c> optionList = [SELECT Id, SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name
