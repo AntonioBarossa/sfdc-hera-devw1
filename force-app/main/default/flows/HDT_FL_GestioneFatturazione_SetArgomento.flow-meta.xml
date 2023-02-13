@@ -117,6 +117,13 @@
                     <stringValue>TRATTENUTA PA</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>TipoDocumento</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>ARROTONDAMENTI IVA</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Set_Argument_to_Spese_Accessorie</targetReference>
             </connector>
@@ -160,6 +167,7 @@
             <label>Interessi</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>ConvertTipoDocumentoToUppercase</name>
         <dataType>String</dataType>
