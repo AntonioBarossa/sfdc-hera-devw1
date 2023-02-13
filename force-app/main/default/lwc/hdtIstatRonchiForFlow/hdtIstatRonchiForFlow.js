@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import HdtCodiceAteco from 'c/hdtCodiceAteco';
-import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixList';
+import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixListIstatRonchi';
 import saveIstatRonchiCase from '@salesforce/apex/HDT_LC_CodiceAteco.saveIstatRonchiCase';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
