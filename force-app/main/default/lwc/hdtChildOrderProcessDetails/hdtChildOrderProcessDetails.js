@@ -161,8 +161,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleOnLoad(event) {
-        if( this.currentSection.name === 'processVariables' || this.currentSection.name === 'dettaglioImpianto' || this.currentSection.name === 'variabiliDiProcesso' ) {
-            this.disableNext = false;
+        this.disableNext = false;
+        if( this.currentSection.name === 'processVariables' || this.currentSection.name === 'dettaglioImpianto' ) {
             if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
                 this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
             }
