@@ -552,6 +552,9 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         HDT_UTL_DatabaseService.updateSObject(servPoint);
     }
 
+    public static wrts_prcgvr__Activity__c createActivityExternal(String templateName){
+        return createActivity(templateName);
+    }
     //returns activity and has to be created inside the caller methdo because it has to be linked to an entity first
     private static wrts_prcgvr__Activity__c createActivity(String templateName){
         HDT_QR_PostSalesManager postsalesQr = new HDT_QR_PostSalesManager();
