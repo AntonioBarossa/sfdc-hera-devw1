@@ -35,6 +35,17 @@ public inherited sharing class HDT_QR_ServiceRequest {
         ];
     }
 
+    public static List<ServiceRequest__c> getCanceledServiceRequestsBySpId(String servicePointId){
+        
+        return [SELECT ID 
+            FROM ServiceRequest__c 
+            WHERE Status__c = 'Annullato' 
+            AND ServicePoint__c =: servicePointId
+            WITH SECURITY_ENFORCED
+        ];
+        
+    }
+
     public static List<ServiceRequest__c> getTransitoryServiceRequest(Set<Id> orderIds,Set<Id> orderReferenceIds, Set<Id> quoteIds){
 
         return quoteIds.isEmpty()?

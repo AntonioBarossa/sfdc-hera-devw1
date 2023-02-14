@@ -17,10 +17,14 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         selectedProcess = massiveLoaderProcessQr.getRecordByName(this.process);
         System.debug(LoggingLevel.DEBUG, '>>> Apex Class: ' + selectedProcess.ApexClass__c);
 
+        Datetime dt = Datetime.now();
+
         MassiveLoaderRequest__c processRequest = new MassiveLoaderRequest__c();
         processRequest.Id = varIdLoaderRequest;
         processRequest.Status__c = 'In Lavorazione';
         processRequest.Phase__c = 'File in elaborazione';
+        processRequest.StartDateTime__c = dt;
+        processRequest.Description__c = '[1] Lancio processo ------> ora inizio -> ' + String.valueOf(dt.format('HH:mm:ss')) + '\n ';
         HDT_UTL_DatabaseService.updateSObject(processRequest);
 
     }
@@ -69,8 +73,17 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
         switch on selectedProcess.ApexClass__c {
             when 'HDT_UTL_ProcessSales' {
                 System.debug(LoggingLevel.DEBUG, '>>> continue with HDT_BA_ProcessSales...');
-                HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, batchSize, process);
-                Database.executeBatch(processReq, batchSize);
+
+                Datetime dt = Datetime.now();
+
+                //MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
+                //oldReq.Id = idLoaderRequest;
+                MassiveLoaderRequest__c oldReq = [SELECT Id, Description__c FROM MassiveLoaderRequest__c WHERE Id = :idLoaderRequest LIMIT 1];
+                oldReq.Description__c = oldReq.Description__c + '\n[2] Creazione Anagrafica -> ora fine ---> ' + String.valueOf(dt.format('HH:mm:ss'));
+                update oldReq;
+
+                HDT_BA_ProcessSales processReq = new HDT_BA_ProcessSales(idLoaderRequest, 50, process);
+                Database.executeBatch(processReq, 50);
             }
             when 'HDT_UTL_ProcessSetOrderForVas' {
                 System.debug(LoggingLevel.DEBUG, '>>> continue with HDT_BA_SetRequestItemForVasOrders...');
@@ -82,6 +95,7 @@ public inherited sharing class HDT_BA_ProcessRequestItem implements Database.Bat
                 oldReq.Id = idLoaderRequest;
                 oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
                 oldReq.Phase__c = 'File processato';
+                oldReq.EndDateTime__c = Datetime.now();
                 update oldReq;
     
                 // Creazione file RequestItem in Errore 
