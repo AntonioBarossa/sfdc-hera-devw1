@@ -21,6 +21,7 @@ import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
 import CHANNEL_FIELD from '@salesforce/schema/Order.Channel__c';
+import DELIVERED_DOC from '@salesforce/schema/Order.DeliveredDocumentation__c';
 import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
 // TOOLBAR STUFF
 import { loadScript } from 'lightning/platformResourceLoader';
@@ -61,7 +62,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource,WasteCommodityType] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource,WasteCommodityType,DELIVERED_DOC] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -84,12 +85,13 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             this.channel = data.fields.Channel__c.value;
             this.commodityType = data.fields.WasteCommodityType__c.value 
             this.provenienza = data.fields.RequestSource__c.value;
+            var deliveredDoc = data.fields.DeliveredDocumentation__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
             console.log('### Signature method >>> ' + this.signatureMethod)
             console.log('### ParentOrder Channel >>> ' + this.channel);
             this.enableDocumental = this.signatureMethod !== 'Contratto già firmato';
-            if(this.commodityType && this.provenienza && this.commodityType === 'Ambiente' && this.provenienza != 'Da contribuente'){
+            if(this.commodityType && this.provenienza && this.commodityType === 'Ambiente' && (this.provenienza != 'Da contribuente' || deliveredDoc)){
                 this.enableDocumental = false;
             }
         }
