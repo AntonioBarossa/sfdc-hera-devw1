@@ -167,7 +167,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     public static MassiveLoaderRequestItem__c setErrorItem(MassiveLoaderRequestItem__c itemError, String message){
         itemError.Status__c = 'Errore';
-        itemError.StatusDescription__c = message;
+        itemError.StatusDescription__c = message.abbreviate(250);
         return itemError;
     }
 
@@ -361,7 +361,8 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         newCase.RecordTypeId = recordTypeId;
         newCase.Status = 'In Lavorazione';
         newCase.Phase__c = 'Bozza';
-        newCase.CompanyOwner__c = 'HERA COMM';
+        //Rimosso per W2 
+        //newCase.CompanyOwner__c = 'HERA COMM';
         return newCase;
     }
 
