@@ -28,10 +28,10 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      * @description Check if user has permissions to access the object
      * @return Boolean
      */
-    private boolean isSafeObject(){
+    private boolean isSafeObject(SObjectType myObj){
 
         //Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        SObjectType myObj = schemaMap.get(objName);
+        //SObjectType myObj = schemaMap.get(objName);
 
         Boolean isOperationAllowed = true;
 
@@ -96,13 +96,15 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      */
     public void checkSecurityAccess(){
 
-        if (!isSafeObject()) {
+        SObjectType mySObject = schemaMap.get(objName);
+
+        if (!isSafeObject(mySObject)) {
             throw new AuraHandledException('Non hai permessi per accedere al oggetto ' + objName);
         }
 
         List<String> fieldsList = fieldNames.split(',');
         List<String> fieldsWithoutAccess = new List<String>{};
-        Map<String, SObjectField> fieldsMap = myObj.getDescribe().fields.getMap();
+        Map<String, SObjectField> fieldsMap = mySObject.getDescribe().fields.getMap();
         
         for (String field : fieldsList) {
             if (!isSafeField(fieldsMap.get(field))) {
