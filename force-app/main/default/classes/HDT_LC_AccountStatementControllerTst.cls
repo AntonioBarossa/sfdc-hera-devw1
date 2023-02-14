@@ -12,7 +12,10 @@ public class HDT_LC_AccountStatementControllerTst {
 
     @testSetup
     static void setup() {
-        HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Aziende SME');
+        accList[0].VATNumber__c = '46653050669';
+        insert accList;
+
     }
     
     @isTest
@@ -35,7 +38,7 @@ public class HDT_LC_AccountStatementControllerTst {
         HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj secLevColumnsObj;
 
         Test.startTest();
-        secLevColumnsObj = HDT_LC_AccountStatementController.getSecondLevelColumns('EC');
+        secLevColumnsObj = HDT_LC_AccountStatementController.getSecondLevelColumns('EC', [SELECT Id FROM Account LIMIT 1].Id);
         
         System.debug('>>> columnObj ' + secLevColumnsObj.columnObj.size());
         System.debug('>>> buttonList ' + secLevColumnsObj.buttonList.size());
@@ -53,7 +56,7 @@ public class HDT_LC_AccountStatementControllerTst {
         HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj secLevColumnsObj;
 
         Test.startTest();
-        secLevColumnsObj = HDT_LC_AccountStatementController.getSecondLevelColumns(null);
+        secLevColumnsObj = HDT_LC_AccountStatementController.getSecondLevelColumns(null, null);
 
         System.assertEquals(false, secLevColumnsObj.success, 'success != false');
         System.assert(secLevColumnsObj.columnObj == null, 'columnObj != null');

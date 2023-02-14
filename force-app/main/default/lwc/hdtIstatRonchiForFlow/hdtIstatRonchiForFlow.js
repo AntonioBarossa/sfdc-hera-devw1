@@ -1,6 +1,6 @@
 import { LightningElement, track, api } from 'lwc';
 import HdtCodiceAteco from 'c/hdtCodiceAteco';
-import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixList';
+import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixListIstatRonchi';
 import saveIstatRonchiCase from '@salesforce/apex/HDT_LC_CodiceAteco.saveIstatRonchiCase';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
@@ -31,6 +31,18 @@ export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
 
     constructor(){
         super();
+    }
+    
+    createTable(data) {
+        let i, j, temporary, chunk = 4;
+        this.pages = [];
+        for (i = 0, j = data.length; i < j; i += chunk) {
+            temporary = data.slice(i, i + chunk);
+            this.pages.push(temporary);
+        }
+        this.totalPages = this.pages.length;
+        this.currentPage = 0;
+        this.reLoadTable();
     }
 
     getTableSelection(event){

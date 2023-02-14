@@ -38,6 +38,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
         List<Case> myCurrentCaseList = new List<Case>();
+        HDT_UTL_PostSalesCriteriaManager psCrit = new HDT_UTL_PostSalesCriteriaManager();
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
         List<Case> casesToCheck = new List<Case>();
 
@@ -95,7 +96,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             myCurrentCaseList.add(currentCase);
 
                         }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) 
-                            && (currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') || (currentCase.Phase__c.equalsIgnoreCase('Ammissibilità OK') && currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile')))){
+                            && (currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') 
+                            || (currentCase.Phase__c.equalsIgnoreCase('Ammissibilità OK') && currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile') && psCrit.secondAdmissibility(currentCase.PhaseStory__c)))){
 
                             currentCase.Phase__c = 'Preventivo scaduto';
                             if(String.isNotBlank(currentCase.QuotationType__c) && 'Analitico'.equalsIgnoreCase(currentCase.QuotationType__c)){

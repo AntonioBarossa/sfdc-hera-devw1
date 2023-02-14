@@ -16,8 +16,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     private static HDT_QR_AnagAlignment regionalAdditionalQr = new HDT_QR_AnagAlignment();
 
     public static List<List<String>> predefaultRatecategories = new List<List<String>>{
-        //new List<String>{'Disconnectable__c','Si','ACANTINC00','ACPUBNDIS0','ACANTIN000'}, //altrimenti N
-        new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
+        new List<String>{'Disconnectable__c','No','ACANTINC00', 'ACINTERNO0', 'ACPUBNDIS0', 'ACSUBDIST0', 'ACANTIN000', 'ACTANTINC0'}, //altrimenti Si
+        //new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'Cohabitation__c','N','ACDOMRESP0','ACPROMISC0'},
         new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
         new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
@@ -215,7 +215,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     //Inizio: Predefault secondo Processo
                     switch on processType {
                         when 'Prima Attivazione'{
-                            newOrder.SecurityDepositExcluded__c  = 'Y';
+                            //newOrder.SecurityDepositExcluded__c  = 'Y';
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                             if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
                                 newOrder.PayPurification__c = 'No - Esente';
@@ -341,11 +341,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
     @AuraEnabled
     public static Boolean checkVasAndCommodity(Order ord, String recordTypeName){
         try {
-            Boolean response = HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(recordTypeName, ord); 
-            /* Commentato perchè è stata tolta la fase AttesaCC
+            Boolean response = HDT_UTL_OrderProcess.checkRecordTypeForCreditCheck(recordTypeName, ord);
+            List<SObject> myOrd = HDT_QR_GenericQuery.getGenericRecords('Id', 'Order', 'Id = \''+ord.Id+'\' AND CreditCheckInProgress__c = false AND IncomingCreditCheckResult__c = null AND OutgoingCreditCheckResult__c = null');
+            if (myOrd.isEmpty()){
+                return true;
+            }
+            
             if (response){
-                HDT_UTL_DatabaseService.updateSObject(new Order(Id = ord.Id, CreditCheckInProgress__c = true));
-            } */
+                myOrd[0].put('CreditCheckInProgress__c',true);
+                HDT_UTL_DatabaseService.updateSObject(myOrd);
+            }
             return !response;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
