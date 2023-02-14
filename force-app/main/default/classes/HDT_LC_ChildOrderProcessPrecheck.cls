@@ -230,6 +230,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
                             newOrder.ResidentDomesticHousingUnit__c = 1;
+                            if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
+                                newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per Prima Attivazione e Connessione Con Attivazione
+                                newOrder.PaySewer__c = 'No - Esente';           //per gli altri i valori sono presi da Arricchimento come da BPP
+                            }
+                            else{
+                                newOrder.PayPurification__c = 'Si - Paga';
+                                newOrder.PaySewer__c = 'Si - Paga';
+                            }
                         }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
@@ -249,10 +257,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             }
                         }
                     }
-                    //Per ogni ratecategory
-                    //newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
-                    //newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
-                    // Fine: Predefault secondo RateCategory
                     
                 }
                 when 'Energia Elettrica' {
