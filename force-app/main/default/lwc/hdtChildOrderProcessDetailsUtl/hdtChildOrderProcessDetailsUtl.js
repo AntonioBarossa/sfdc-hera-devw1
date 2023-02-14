@@ -492,7 +492,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     ( this.rateCategoryVisibility(rateCategories.AFUNDA) && this.rateCategoryVisibility(rateCategories.AFUNDAreq) ) , true, '',''),
                 new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDI), false, false, '',''),
                 new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, false, '',''),
-                new fieldData('','CommercialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNAC), this.rateCategoryVisibility(rateCategories.AFUNACreq), false, '',''),
+                new fieldData('','CommercialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNAC), this.rateCategoryVisibility(rateCategories.AFUNACreq), this.rateCategoryVisibility(rateCategories.AFUNACdisable), '',''),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('gas') || this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
