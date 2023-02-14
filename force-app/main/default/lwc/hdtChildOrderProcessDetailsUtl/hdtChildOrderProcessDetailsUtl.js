@@ -402,7 +402,7 @@ import * as rateCategories from './hdtRateCategories.js';
                         }
                     }
                     ),
-                    new fieldData('Note','Note__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '','')
+                    new fieldData('Note','Note__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, true, '','')
                 ]
             },
             {
@@ -540,7 +540,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     }
                 }
                 ),
-                new fieldData('Note','Note__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo' || this.rateCategoryVisibility(rateCategories.AFNUM_COMP) ), false, false, '','')
+                new fieldData('Note','Note__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo' || this.rateCategoryVisibility(rateCategories.AFNUM_COMP) ), false, true, '','')
                ]
             },
             {
