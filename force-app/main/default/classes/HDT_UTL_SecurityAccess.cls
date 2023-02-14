@@ -10,6 +10,8 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     private String fieldNames;
     private String operation;
 
+    private static Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+
     /**
      * @description Initialize attributes on object creation
      * @param objNameParam ex.'ServicePoint__c'
@@ -28,7 +30,7 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      */
     private boolean isSafeObject(){
 
-        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        //Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
         SObjectType myObj = schemaMap.get(objName);
 
         Boolean isOperationAllowed = true;
@@ -59,28 +61,29 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      * @param fieldName ex.'Name'
      * @return Boolean
      */
-    private boolean isSafeField(String fieldName){
+    private boolean isSafeField(SObjectField myField){
 
-        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        SObjectType myObj = schemaMap.get(objName);
+        //Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        //SObjectType myObj = schemaMap.get(objName);
 
-        SObjectField myField = myObj.getDescribe().fields.getMap().get(fieldName);
+        //SObjectField myField = myObj.getDescribe().fields.getMap().get(fieldName);
 
         Boolean isOperationAllowed = true;
+        Schema.DescribeFieldResult fieldDescribe = myField.getDescribe();
 
         if(myField != null){
             switch on operation {
                 when  'read' {
-                    isOperationAllowed = myField.getDescribe().isAccessible();
+                    isOperationAllowed = fieldDescribe.isAccessible();
                 }
                 when 'create' {
-                    isOperationAllowed = myField.getDescribe().isCreateable();
+                    isOperationAllowed = fieldDescribe.isCreateable();
                 }
                 when 'update' {
-                    isOperationAllowed = myField.getDescribe().isUpdateable();
+                    isOperationAllowed = fieldDescribe.isUpdateable();
                 }
                 when else {
-                    isOperationAllowed = myField.getDescribe().isAccessible();
+                    isOperationAllowed = fieldDescribe.isAccessible();
                 }
             }
         }
@@ -99,9 +102,10 @@ public inherited sharing class HDT_UTL_SecurityAccess {
 
         List<String> fieldsList = fieldNames.split(',');
         List<String> fieldsWithoutAccess = new List<String>{};
+        Map<String, SObjectField> fieldsMap = myObj.getDescribe().fields.getMap();
         
         for (String field : fieldsList) {
-            if (!isSafeField(field)) {
+            if (!isSafeField(fieldsMap.get(field))) {
                 fieldsWithoutAccess.add(field);
             }
         } 
