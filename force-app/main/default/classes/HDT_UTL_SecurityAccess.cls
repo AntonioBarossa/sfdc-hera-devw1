@@ -69,9 +69,9 @@ public inherited sharing class HDT_UTL_SecurityAccess {
         //SObjectField myField = myObj.getDescribe().fields.getMap().get(fieldName);
 
         Boolean isOperationAllowed = true;
-        Schema.DescribeFieldResult fieldDescribe = myField.getDescribe();
 
         if(myField != null){
+            Schema.DescribeFieldResult fieldDescribe = myField.getDescribe();
             switch on operation {
                 when  'read' {
                     isOperationAllowed = fieldDescribe.isAccessible();
