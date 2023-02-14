@@ -145,7 +145,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 CustomerFiscalCode__c=acc.FiscalCode__c,
                 EffectiveDate = Date.today(),
                 Status = 'Draft',
-                Phase__c=System.Label.phaseBozza,
+                Phase__c='Bozza',
                 BillingProfile__c = bp.Id,
                 PaymentMode__c=params.containsKey('paymentMode') ? (String) params.get('paymentMode'):'',
                 Note__c=params.containsKey('note') ? (String) params.get('note'):'',
@@ -172,8 +172,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
         Order childOrder=parentOrder.clone(false,true,false,false);
         childOrder.ParentOrder__c=parentOrder.Id;
         childOrder.IntegrationId__c='';
-        childOrder.Phase__c=System.Label.phaseBozza;
-        childOrder.Status=System.Label.statusInLavorazione;
+        childOrder.Phase__c='Bozza';
+        childOrder.Status='In Lavorazione';
         childOrder.Subprocess__c='Standard';
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
