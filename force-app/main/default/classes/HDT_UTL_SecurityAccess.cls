@@ -10,7 +10,7 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     private String fieldNames;
     private String operation;
 
-    private static Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+    private static final Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 
     /**
      * @description Initialize attributes on object creation
