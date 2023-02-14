@@ -10,7 +10,7 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     private String fieldNames;
     private String operation;
 
-    private static final Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+    private static final Map <String, Schema.SObjectType> SCHEMA_MAP = Schema.getGlobalDescribe();
 
     /**
      * @description Initialize attributes on object creation
@@ -96,7 +96,7 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      */
     public void checkSecurityAccess(){
 
-        SObjectType mySObject = schemaMap.get(objName);
+        SObjectType mySObject = SCHEMA_MAP.get(objName);
 
         if (!isSafeObject(mySObject)) {
             throw new AuraHandledException('Non hai permessi per accedere al oggetto ' + objName);
