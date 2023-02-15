@@ -144,7 +144,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             [
                                 ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
                             ].forEach(el => {
-                                if(!el.fieldName?.startsWith("Residential"))    el.value = "";
+                                if(!(el.fieldName?.startsWith("Residential") || equalsIgnoreCase(el.fieldName, "SubscriberPlace__c")))    el.value = "";
                             })
                         }
                         /*You can do async operations before submitting
@@ -177,7 +177,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione", "HDT_RT_SubentroAmbiente"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
-                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), false, false,'','Disattiva'),
+                    new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, false,'','Disattiva'),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('integrazione Riduzione Agevolazione Esclusione','IntegrationExclusion__c', true, false, !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName),'',''),
                     new fieldData('Allegati obbligatori','MandatoryAttachments__c', this.typeVisibility('both'), false, true,'',''),
@@ -229,7 +229,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     ),
                     new fieldData('Comune di residenza','ResidentialCity__c',this.typeVisibility('both'),true, true, '', ''),
                     new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.typeVisibility('both'), true, true, '',''),
-                    new fieldData('Luogo di sottoscrizione','SubscriberPlace__c', this.typeVisibility('both'),true, false, 'true', this.order.Account.BillingPlace__c),
+                    new fieldData('Luogo di sottoscrizione','SubscriberPlace__c', this.typeVisibility('both'),true, false, 'true', ""),
                     new fieldData('Nome','CustomerName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
