@@ -30,6 +30,10 @@ public with sharing class HDT_UTL_LandRegistry {
             resultLR = curOriginRecord.clone(false, true, false, false);
             resultLR.RecordTypeId = rtIdPraticaTARI;
             resultLR.ServicePoint__c = null;
+            resultLR.CodeMissingRegistryData__c = 
+                new Set<String>{'1', '2'}.contains(resultLR.CodeMissingRegistryData__c) ? 
+                resultLR.CodeMissingRegistryData__c : null;
+                
             if(caseId != null) resultLR.Case__c = caseId;
             if(orderId != null) resultLR.Order__c = orderId;
             system.debug('pratica record: ' + JSON.serialize(resultLR));

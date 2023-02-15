@@ -213,13 +213,14 @@ export default class HdtLandRegistryEdit extends LightningElement {
         this.modify = true; // => presetto il form come modificabile, poi lo disabilito se ci sono le condizioni
         if(this._recordId){
             this.modify = false;
-            if(event.detail.records[this._recordId]){
+            const recordUi = event.detail.records[this._recordId];
+            if(recordUi){
                 this.disableElimina = false;
-                this.registryCityValue = event.detail.records[this._recordId].fields.RegistryCity__c?.value;
-                this.registryCityCodeValue = event.detail.records[this._recordId].fields.RegistryCityCode__c?.value;
-                this.legalCityValue = event.detail.records[this._recordId].fields.LegalCity__c?.value;
-                this.provinceValue = event.detail.records[this._recordId].fields.Province__c?.value;
-                this.cadastralCategoryValue = event.detail.records[this._recordId].fields.RegistryCategory__c?.value;
+                this.registryCityValue = recordUi.fields.RegistryCity__c?.value;
+                this.registryCityCodeValue = recordUi.fields.RegistryCityCode__c?.value;
+                this.legalCityValue = recordUi.fields.LegalCity__c?.value;
+                this.provinceValue = recordUi.fields.Province__c?.value;
+                this.cadastralCategoryValue = recordUi.fields.RegistryCategory__c?.value;
             }
         }
         else{
