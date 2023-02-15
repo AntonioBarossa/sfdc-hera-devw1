@@ -349,9 +349,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static void inheritUserFields(List<wrts_prcgvr__Activity__c> activites) {
         User user = [SELECT Id, CreatorGroup__c, LoginChannel__c, Station__c FROM User WHERE Id =: UserInfo.getUserId()];
         List<String> excludedActivityType = new List<String>{'chiamata outbound', 'chiamata inbound', 'sportello'};
+        String recordTypeAct = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_HCPoint').getRecordTypeId();
         for(wrts_prcgvr__Activity__c activity : activites) {
             activity.CreatorGroup__c = user.CreatorGroup__c;
-            if (!activity.IsMigrated__c && String.isNotBlank(activity.Type__c) && !excludedActivityType.contains(activity.Type__c.toLowerCase())){
+            if (!activity.IsMigrated__c && String.isNotBlank(activity.Type__c) && (!excludedActivityType.contains(activity.Type__c.toLowerCase()) || (activity.RecordTypeId == recordTypeAct && activity.Type__c == 'Sportello'))){
                 activity.Place__c	 = user.Station__c;
                 activity.LoginChannel__c = user.LoginChannel__c;
             }
