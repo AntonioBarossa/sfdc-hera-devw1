@@ -316,6 +316,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.ResidentialStreetNumberExtension__c = account.BillingStreetNumberExtension__c;
         orderToUpdate.ResidentialIsAddressVerified__c = account.BillingIsAddressVerified__c;
         orderToUpdate.ResidentialCity__c = account.BillingCity;
+        orderToUpdate.SubscriberPlace__c = account.BillingCity;
         orderToUpdate.ResidentialState__c = account.BillingState;
         orderToUpdate.ResidentialPostalCode__c = account.BillingPostalCode;
         orderToUpdate.ResidentialCountry__c = account.BillingCountry;
