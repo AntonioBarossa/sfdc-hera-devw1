@@ -57,9 +57,6 @@
         &quot;FieldName&quot;: &quot;MeterCode__c&quot;,
         &quot;Column&quot;: 1
     }, {
-        &quot;FieldName&quot;: &quot;Caliber__c&quot;,
-        &quot;Column&quot;: 2
-    }, {
         &quot;FieldName&quot;: &quot;Amount__c&quot;,
         &quot;Column&quot;: 2
     }, {
@@ -85,6 +82,12 @@
         <value xsi:type="xsd:string">[{
         &quot;label&quot;: &quot;Impianto&quot;,
         &quot;apiName&quot;: &quot;SAPImplantCode__c&quot;,
+        &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
+        &quot;column&quot;: 1,
+        &quot;value&quot;: &quot;&quot;
+    }, {
+        &quot;label&quot;: &quot;Calibro&quot;,
+        &quot;apiName&quot;: &quot;MeterClass__c&quot;,
         &quot;relatedObject&quot;: &quot;ServicePoint__r&quot;,
         &quot;column&quot;: 1,
         &quot;value&quot;: &quot;&quot;
