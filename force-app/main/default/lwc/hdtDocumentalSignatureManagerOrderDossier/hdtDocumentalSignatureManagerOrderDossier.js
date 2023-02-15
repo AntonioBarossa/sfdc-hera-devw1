@@ -303,7 +303,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                     this.isVisibleAmbiente = true;
                     if(provenienza!= null && provenienza != undefined && provenienza != '' && provenienza ==='Da contribuente'){
                         this.isVisbleDocumentazioneContribuente = true;
-                        if(docContribuente != null && docContribuente != undefined && docContribuente == true){
+                        if(docContribuente != null && docContribuente != undefined && docContribuente == false){
                             this.loadData = true;
                         }else{
                             this.loadData = false;
@@ -371,7 +371,7 @@ export default class hdtOrderDossierWizardSignature extends LightningElement {
                 this.isVisibleSignedDate = false;
             }
         }else if(fieldName === 'DeliveredDocumentation__c'){
-            if(fieldValue === 'Y'){
+            if(fieldValue === true){
                 this.loadData = false;
                 this.isVisibleSignedDate = false;
             }else{
