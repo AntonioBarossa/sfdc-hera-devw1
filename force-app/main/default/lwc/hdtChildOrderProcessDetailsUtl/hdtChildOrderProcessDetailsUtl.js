@@ -144,7 +144,7 @@ import * as rateCategories from './hdtRateCategories.js';
                             [
                                 ...this.template.querySelectorAll(`lightning-accordion-section[data-section-name='${sectionName}'] lightning-input-field`)
                             ].forEach(el => {
-                                if(!el.fieldName?.startsWith("Residential"))    el.value = "";
+                                if(!(el.fieldName?.startsWith("Residential") || equalsIgnoreCase(el.fieldName, "SubscriberPlace__c")))    el.value = "";
                             })
                         }
                         /*You can do async operations before submitting
