@@ -407,11 +407,11 @@
             <fullName>Elettronico</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>G1%2C6 Pareti def%2E</fullName>
             <default>false</default>
         </values>-->
@@ -482,12 +482,12 @@
         <!--<values>
             <fullName>G2</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>G2%2C5</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>G2%2C5 pareti def%2E</fullName>
             <default>false</default>
         </values>-->
