@@ -25,8 +25,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         new List<String>{'AgriculturalHousingUnit__c','1','ACAGRICO00'},
         new List<String>{'CommercialHousingUnit__c','1','ACARTCOMM0','ACAUGRUNC0'},
         new List<String>{'IndustrialHousingUnit__c','1','ACINDSTR00','ACAUGRUNI0'},
-        new List<String>{'ZootechnicalHousingUnit__c','1','ACAGRIZOO0','ACZOOTECN0'},
-        new List<String>{'SeasonUse__c','Nessuna stagionalita','ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITMINDAP0','AITMINDBP0','AITMNDOME0'}
+        new List<String>{'ZootechnicalHousingUnit__c','1','ACAGRIZOO0','ACZOOTECN0'}/* ,
+        new List<String>{'SeasonUse__c','Nessuna stagionalita','ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITMINDAP0','AITMINDBP0','AITMNDOME0'} */
     };
 
     @AuraEnabled
@@ -210,6 +210,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.PaySewer__c = updatedServicePoint[0].PaySewer__c;
                     newOrder.AggregateBilling__c = 'No';
                     newOrder.EffectiveDate__c = System.Today();
+                    newOrder.SeasonUse__c = 'Nessuna stagionalita';
                     //Fine: Predefault valido per tutti i processi
 
                     //Inizio: Predefault secondo Processo
