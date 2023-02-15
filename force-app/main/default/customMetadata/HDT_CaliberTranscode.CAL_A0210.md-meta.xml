@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>A0210</label>
+    <protected>false</protected>
+    <values>
+        <field>SapFieldValue__c</field>
+        <value xsi:type="xsd:string">A0210</value>
+    </values>
+    <values>
+        <field>SfdcFieldValue__c</field>
+        <value xsi:type="xsd:string">DN15 (1/2&quot;) 2,5x15 MID</value>
+    </values>
+</CustomMetadata>
