@@ -172,7 +172,25 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
                 }
             }
         }
-        serviceSp.createRecord(servicePo);
+        /**
+         * Per la Commodity Ambiente non è possibile cercare la fornitura per Codice Punto ma solo per Codice Contratto
+         * Vi sono delle casistiche in cui il SP è presente in SFDC ma non il contratto poichè "svecchiato"
+         * In queste casistiche la ricerca su SFDC non da risultati, ricercando e salvando il SP da SAP si rischia di creare dei duplicati
+         * che andranno in errore per la GlobalMigrationKey. Pertanto viene introdotta una query preventiva per o utilizzare il record esistente oppure
+         * inserire un nuovo record
+        **/
+        if('Ambiente'.equalsIgnoreCase(servicePo.CommoditySector__c) && String.isNotBlank(servicePo.SAPImplantCode__c)){
+            String implantCode = servicePo.SAPImplantCode__c;
+            List<ServicePoint__c> spList = servicePointQuery.getRecordByImplantCode(implantCode,'Id');
+            if(!spList.isEmpty()){
+                servicePo.Id = spList[0].Id;
+                serviceSp.updateRecord(servicePo);
+            }else {
+                serviceSp.createRecord(servicePo);
+            }
+        }else {
+            serviceSp.createRecord(servicePo);
+        }
     }
 
     @AuraEnabled
