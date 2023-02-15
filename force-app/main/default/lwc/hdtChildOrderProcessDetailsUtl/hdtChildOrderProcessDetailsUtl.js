@@ -229,7 +229,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     ),
                     new fieldData('Comune di residenza','ResidentialCity__c',this.typeVisibility('both'),true, true, '', ''),
                     new fieldData('Indirizzo di residenza','ResidentialStreetName__c' , this.typeVisibility('both'), true, true, '',''),
-                    new fieldData('Luogo di sottoscrizione','SubscriberPlace__c', this.typeVisibility('both'),true, false, 'true', this.order.Account.BillingPlace__c),
+                    new fieldData('Luogo di sottoscrizione','SubscriberPlace__c', this.typeVisibility('both'),true, false, 'true', ""),
                     new fieldData('Nome','CustomerName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Cognome','CustomerLastName__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Luogo di nascita','BirthPlace__c', this.typeVisibility('both'), true, false,'',''),
