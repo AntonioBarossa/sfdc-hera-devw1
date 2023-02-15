@@ -205,6 +205,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.metodoPagamento = '';//tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
         request.metodoPagamentoAlternativo = '';//tryParse(infoOrder.BillingProfile__r.IbanABI__c);
         request.banca.nazione = tryParse(infoOrder.BillingProfile__r.IbanCountry__c).toUpperCase();
+        request.banca.nazione = String.isBlank(request.banca.nazione)?'IT': request.banca.nazione;
         return request;
     }
     /* This method creates the body for the Address information of the Billing Profile JSONObject */
