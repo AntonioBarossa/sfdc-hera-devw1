@@ -6,7 +6,7 @@ public with sharing class HDT_BA_UpdateActivitiesStatus implements Database.Batc
         return [
             SELECT Id, wrts_prcgvr__Status__c 
             FROM wrts_prcgvr__Activity__c 
-            WHERE Type__c IN ('Chiamata inbound','Chiamata outbound', 'Sportello') AND wrts_prcgvr__Status__c IN ('Aperta','In corso') AND createdDate <=: todayDate
+            WHERE Type__c IN ('Chiamata inbound','Chiamata outbound', 'Sportello') AND wrts_prcgvr__Status__c IN ('Aperta','In corso','In Progress') AND createdDate <=: todayDate
             ];
     }
 
