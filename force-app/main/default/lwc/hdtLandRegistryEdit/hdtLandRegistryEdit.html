@@ -15,7 +15,7 @@
                                     onsuccess={handleFormSuccess}
                                     onerror={handleFormError}>
             
-            <lightning-input-field class="slds-hide" field-name="RegistryCategory__c"></lightning-input-field>         
+            <lightning-input-field class="slds-hide" data-name="RegistryCategory__c" field-name="RegistryCategory__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="LegalCity__c"></lightning-input-field>         
             <lightning-input-field class="slds-hide" field-name="RegistryCity__c"></lightning-input-field>
             
@@ -116,6 +116,13 @@
                             <lightning-layout-item>
                                 <div class="slds-m-horizontal_xxx-small slds-text-align_center">
                                     <lightning-button variant="brand-outline" icon-name="utility:edit" disabled={disableModifica} label="Modifica" title="Modifica" onclick={handleModificaClick}></lightning-button>
+                                </div>
+                            </lightning-layout-item>
+                        </template>
+                        <template if:true={modify}>
+                            <lightning-layout-item if:true={_recordId}>
+                                <div class="slds-m-horizontal_xxx-small slds-text-align_center">
+                                    <lightning-button variant="neutral" icon-name="utility:loop" disabled={_readonly} label="Ripristina" title="Ripristina" onclick={handleRestore}></lightning-button>
                                 </div>
                             </lightning-layout-item>
                         </template>

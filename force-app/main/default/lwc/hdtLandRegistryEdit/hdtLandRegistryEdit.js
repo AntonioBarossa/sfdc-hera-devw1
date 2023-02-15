@@ -189,6 +189,18 @@ export default class HdtLandRegistryEdit extends LightningElement {
     handleModificaClick(){
         this.modify = true;
         this.disableSalva = false;
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:true}}));
+    }
+
+    handleRestore(){
+        this.template.querySelectorAll('lightning-input-field:not(.slds-hide)')
+        .forEach(field => {
+            field.reset();
+        });
+        this.cadastralCategoryValue = this.template.querySelector('[data-name="RegistryCategory__c"]').value;
+        this.modify = false;
+        this.disableSalva = true;
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false}}));
     }
 
     handleEliminaClick(){
@@ -279,13 +291,16 @@ export default class HdtLandRegistryEdit extends LightningElement {
         const evt = new ShowToastEvent({ variant: 'success', title: 'Operazione eseguita correttamente!', message: 'Record salvato.' });
         this.dispatchEvent(evt);
         this.throwSuccessEvent();
+        this.template.querySelector('[data-name="RegistryCategory__c"]').value = this.cadastralCategoryValue;
         this.showSpinner = false;
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false}}));
     }
 
     handleFormError(event){
         console.error("### handleFormError", event.detail.detail);
         const evt = new ShowToastEvent({ variant: 'error', title: 'Operazione non eseguita!', message: 'Errore ' + event.detail.detail });
         this.dispatchEvent(evt);
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false}}));
         this.showSpinner = false;
     }
 

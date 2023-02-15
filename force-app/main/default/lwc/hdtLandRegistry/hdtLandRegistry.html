@@ -18,7 +18,7 @@
                             key-field="Id"
                             selected-rows={tableSelectedRows}
                             onrowselection={handleTableSelection}
-                            max-row-selection="1">
+                            max-row-selection={maxRowSelection}>
                         </lightning-datatable>
                     </template>
                     <template if:false={showTable}>
@@ -42,6 +42,7 @@
                                         readonly={_readonly}
                                         onformsuccess={handleEditSave}
                                         ondeletion={handleEditDeletion}
+                                        oneditdata={handleEdit}
                                         service-point-id={servicePointId}
                                         show-edit
                                         show-delete></c-hdt-land-registry-edit>

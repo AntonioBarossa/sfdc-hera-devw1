@@ -41,11 +41,18 @@ export default class HdtLandRegistry extends LightningElement {
     @track tableColumns = COLUMNS;
     @track _selectedLandRegistryId;
 
+    _tableSelectedRowsHidden;
+
     // showTable=false;
     showSpinner = false;
 
     _required;
     _readonly;
+
+    get maxRowSelection(){
+        return this._maxRowSelection? 1 : 0;
+    }
+    _maxRowSelection = true;
 
     connectedCallback(){
         //this.required=true;                                     //MOCKATO PER TEST (da togliere)
@@ -56,6 +63,18 @@ export default class HdtLandRegistry extends LightningElement {
         this._readonly = this.readonly;
         this._selectedLandRegistryId = this.preSelectedLandRegistryId;
         this.selectedLandRegistryId = this.preSelectedLandRegistryId;
+    }
+
+    handleEdit(event){
+        this._maxRowSelection = !event.detail.isEditing;
+        if(this._maxRowSelection){
+            this.tableSelectedRows= this._tableSelectedRowsHidden;
+
+        }else{
+            this._tableSelectedRowsHidden = [this.template.querySelector("lightning-datatable")?.getSelectedRows()?.[0]?.Id];
+            this.tableSelectedRows=[];
+        }
+        this._readonly = event.detail.isEditing && !this.readonly;
     }
 
     call_retrieveLandRegistryTable() {
