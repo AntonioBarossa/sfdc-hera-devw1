@@ -183,6 +183,8 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC];
 
+        Map<String,String> paymentForCitiesMap = getPaymentForCities(quoteLines);
+
         for(SBQQ__QuoteLine__c quoteLine : quoteLines){
             if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua')){
                 // Caso del cambio offerta la riga non è selezionabile
@@ -205,13 +207,12 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     quoteLineToApply.add(singleApply);
                 }
                 
-            } else if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente')){
-
-                List<City__c> cities = [SELECT PaymentMethod__c FROM City__c WHERE Name = :quoteLine.ServicePoint__r.SupplyCity__c WITH SECURITY_ENFORCED ];
-                if( cities[0].PaymentMethod__c != null &&  paymentMethod.equalsIgnoreCase(cities[0].PaymentMethod__c) ){
+            } else if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente'))
+            {
+                if( paymentForCitiesMap.get(quoteLine.ServicePoint__r.SupplyCity__c) == null || paymentMethod.equalsIgnoreCase(paymentForCitiesMap.get(quoteLine.ServicePoint__r.SupplyCity__c)) )
+                {
                     quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
                 }
-
             } else {
                 quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
             }
@@ -221,6 +222,22 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         return JSON.serialize(quoteLineToApply);
     }
 
+    public static Map<String,String> getPaymentForCities(List<SBQQ__QuoteLine__c> quoteLines){
+        List<String> cities = new List<String>();
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines){
+            if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente')){
+                cities.add(quoteLine.ServicePoint__r.SupplyCity__c);
+            }
+        }
+        List<City__c> paymentForCities = [SELECT Name, PaymentMethod__c FROM City__c WHERE Name IN :cities WITH SECURITY_ENFORCED ];
+        Map<String, String> paymentForCitiesMap = new Map<String, String>();
+        if( paymentForCities != null && !paymentForCities.isEmpty() ){
+            for( City__c city : paymentForCities ){
+                paymentForCitiesMap.put( city.Name, city.PaymentMethod__c );
+            }
+        }
+        return paymentForCitiesMap;
+    }
 
     class HDT_WRP_QuoteLineWrp
     {
