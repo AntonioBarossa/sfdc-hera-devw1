@@ -223,7 +223,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
         this.cadastralCategoryValue = this.template.querySelector('[data-name="RegistryCategory__c"]').value;
         this.modify = false;
         this.disableSalva = true;
-        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false}}));
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false, restoredId: this._recordId}}));
     }
 
     handleEliminaClick(){
@@ -242,6 +242,42 @@ export default class HdtLandRegistryEdit extends LightningElement {
             });
 
     }
+
+    @api
+    validateForm(){
+        const reg = new RegExp('^\\*?(.+)\\n?');
+        const valuation = [
+                ...this.template.querySelectorAll('lightning-input-field:not(.slds-hide)')
+            ].reduce(
+                (Fields, elem) => {
+                        if(elem.value !== false && elem.required && !(elem.value)){
+                            let fname = elem.outerText?.match(reg)?.[1];
+                            Fields.labels+=`, ${fname}`;
+                            Fields.apinames.push(elem.fieldName);
+                        }
+                        return Fields;
+                    }, {labels : "", apinames : []}
+                );
+        console.log("missing fields "+valuation.apinames);
+        const message = valuation.labels.slice(2);
+        if(message){
+            this.showMessage('Errore', 'Popolare i campi obbligatori: '+message, 'error');
+            return true;
+        }
+    }
+
+    showMessage(title,message,variant)
+    {
+        this.loading = false;
+        const toastErrorMessage = new ShowToastEvent({
+            title: title,
+            message: message,
+            variant: variant,
+        });
+        this.dispatchEvent(toastErrorMessage);
+    }
+
+    
 
     handleFormLoad(event){
         this.showSpinner = false;

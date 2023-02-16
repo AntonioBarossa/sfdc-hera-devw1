@@ -29,11 +29,31 @@ export default class HdtLandRegistry extends LightningElement {
     @api required;                      //inputOnly
     @api readonly;                      //inputOnly
     @api selectedLandRegistryId;        //outputOnly
+    @api sessionid;
     
     @api validate (){
         let isValid = this.tableData?.length != 0;
         let msg = isValid? null : 'Inserire almeno un dato catastale.';
-        return { isValid : isValid, errorMessage: msg };
+        if(!isValid)    return { isValid : isValid, errorMessage: msg };
+
+        const form = this.template.querySelector("c-hdt-land-registry-edit");
+        isValid &&= !form.validateForm();
+        console.log('isValid '+isValid);
+
+        //cache
+        if(this.sessionid){
+            if(!isValid){
+                window.sessionStorage.setItem(this.sessionid, this.selectedLandRegistryId);
+            }else{
+                window.sessionStorage.removeItem(this.sessionid);
+            }
+        }
+        //cache
+        
+        const validation = { isValid : isValid,
+                errorMessage: isValid? null : "Valorizzare i campi obbligatori" 
+        };
+        return validation;
     }
 
     @track tableData = [];
@@ -60,14 +80,19 @@ export default class HdtLandRegistry extends LightningElement {
         //this.servicePointId = 'a281X000000DqcVQAS';             //MOCKATO PER TEST (da togliere)
         console.log('### connectedCallback preSelectedLandRegistryId', this.preSelectedLandRegistryId);
         this.call_retrieveLandRegistryTable();
+        //cache
+        const overridePreselected = window.sessionStorage.getItem(this.sessionid);
+        window.sessionStorage.removeItem(this.sessionid);
+        //cache
         this._required = this.required;
         this._readonly = this.readonly;
-        this._selectedLandRegistryId = this.preSelectedLandRegistryId;
-        this.selectedLandRegistryId = this.preSelectedLandRegistryId;
+        this._selectedLandRegistryId = overridePreselected? overridePreselected :  this.preSelectedLandRegistryId;
+        this.selectedLandRegistryId = overridePreselected? overridePreselected :  this.preSelectedLandRegistryId;
     }
 
     handleEdit(event){
         this.isEditing = event.detail.isEditing;
+        //this._selectedLandRegistryId = event.detail.restoredId;
         this._readonly = event.detail.isEditing && !this.readonly;
     }
 
