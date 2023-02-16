@@ -86,11 +86,12 @@ export default class HdtLandRegistryEdit extends LightningElement {
     handleFieldChange(event) {
         console.log("### handleFieldChange", event.target.name, event.target.fieldName);
         const source = event.target.name ? event.target.name : event.target.fieldName;
-        this.disableSalva = false;
         if(this.formLoaded == FORM_LOAD_DONE){
+            this.disableSalva = false;
             if(source == "CodeMissingRegistryData__c") {
-                if(event.detail.value == "") this._required = this.required == false ? false : true;
-                else{
+                if(event.detail.value == ""){
+                    this._required = this.required == false ? false : true;
+                }else{
                     this._required = false;
                     let inputList = this.template.querySelectorAll('lightning-input-field');
                     inputList.forEach(input => {
@@ -211,7 +212,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
 
     handleModificaClick(){
         this.modify = true;
-        this.disableSalva = false;
+        this.disableSalva = true;
         this.dispatchEditEvt(true);
     }
 
