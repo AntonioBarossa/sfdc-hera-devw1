@@ -92,7 +92,10 @@ export default class HdtLandRegistry extends LightningElement {
 
     handleEdit(event){
         this.isEditing = event.detail.isEditing;
-        //this._selectedLandRegistryId = event.detail.restoredId;
+        if(event.detail.restoredId){
+            this.tableSelectedRows=[event.detail.restoredId];
+            this._selectedLandRegistryId = event.detail.restoredId;
+        }
         this._readonly = event.detail.isEditing && !this.readonly;
     }
 

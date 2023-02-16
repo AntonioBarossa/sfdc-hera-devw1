@@ -212,7 +212,11 @@ export default class HdtLandRegistryEdit extends LightningElement {
     handleModificaClick(){
         this.modify = true;
         this.disableSalva = false;
-        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:true}}));
+        this.dispatchEditEvt(true);
+    }
+
+    dispatchEditEvt(isEditing){
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:isEditing}}));
     }
 
     handleRestore(){
@@ -353,14 +357,14 @@ export default class HdtLandRegistryEdit extends LightningElement {
         this.throwSuccessEvent();
         this.template.querySelector('[data-name="RegistryCategory__c"]').value = this.cadastralCategoryValue;
         this.showSpinner = false;
-        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false}}));
+        this.dispatchEditEvt(false);
     }
 
     handleFormError(event){
         console.error("### handleFormError", event.detail.detail);
         const evt = new ShowToastEvent({ variant: 'error', title: 'Operazione non eseguita!', message: 'Errore ' + event.detail.detail });
         this.dispatchEvent(evt);
-        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false}}));
+        this.dispatchEditEvt(false);
         this.showSpinner = false;
     }
 
