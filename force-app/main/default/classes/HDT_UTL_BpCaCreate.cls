@@ -110,7 +110,7 @@ public with sharing class HDT_UTL_BpCaCreate
     private HDT_WRP_BpCaVariation generateMainBodyRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation request = new HDT_WRP_BpCaVariation();
-        request.numeroSr = infoOrder.Id;
+        request.numeroSR = infoOrder.ParentOrder__c;
         request.codiceCausale = '';
         request.dataCreazione = String.valueOf(System.today()).Substring(0,4)+ String.valueOf(System.today()).Substring(5,7) + String.valueOf(System.today()).Substring(8,10);
         request.cancellaBpAlternativo = '';
@@ -177,7 +177,8 @@ public with sharing class HDT_UTL_BpCaCreate
         request.idOggetto = '';
         request.contoContrattuale = tryParse(infoOrder.BillingProfile__r.ContractAccountCode__c);
         request.emailInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceEmailAddress__c);
-        request.creaNuovoCa = '';
+        //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
+        request.creaNuovoCA = infoOrder.BillingProfile__r.CreateContractAccount__c?'Y':'';
         request.pecInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(infoOrder.BillingProfile__r.BillSendingMethod__c);
         request.emailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
@@ -205,7 +206,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.metodoPagamento = '';//tryParse(infoOrder.BillingProfile__r.PaymentMethod__c);
         request.metodoPagamentoAlternativo = '';//tryParse(infoOrder.BillingProfile__r.IbanABI__c);
         request.banca.nazione = tryParse(infoOrder.BillingProfile__r.IbanCountry__c).toUpperCase();
-        request.banca.nazione = String.isBlank(request.banca.nazione)?'IT': request.banca.nazione;
+        request.banca.nazione = String.isNotBlank(request.contoCorrente) && String.isBlank(request.banca.nazione)?'IT': request.banca.nazione;
         return request;
     }
     /* This method creates the body for the Address information of the Billing Profile JSONObject */
