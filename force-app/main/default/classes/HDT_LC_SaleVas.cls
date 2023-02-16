@@ -209,8 +209,9 @@ public inherited sharing class HDT_LC_SaleVas {
             }
             //Disattivazione VAS - START
             when 'ASSETS_ACTIVATED'{
+                // @enricodursontt Aggiunta nella query la condizione IsMigrated__c = false per escludere gli asset migrati TK 953223C
                 Map<Id,Asset> recordMap = new Map<Id,Asset>([SELECT Name, SerialNumber, InstallDate, Contact.Name, Product2.Name,Contract__r.SAPContractCode__c
-                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND AccountId=:searchString WITH SECURITY_ENFORCED]);
+                    FROM Asset WHERE DigitalAssetStatus='Attivo' AND SBQQ__RootAsset__c=null AND IsMigrated__c = false AND AccountId=:searchString WITH SECURITY_ENFORCED]);
                 
                 //removing assets which already have a deactivation Case
                 List<Case> assetsCases = [SELECT AssetId FROM Case WHERE Status NOT IN ('Bozza', 'Closed') AND Type='Disattivazione VAS'

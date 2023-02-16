@@ -105,6 +105,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track recordTypeId;
     @track existsServicePoint = false;
     callWinBack = false;
+    managedMeterClass = ['5 x 20 - 4 mc', '6 x 20 - 4 mc', '7 x 20 - 4 mc', '10 x 30 - 10 mc', '11 x 30 - 10 mc', '20 x 40 - 16 mc', '3 x 15 - 2.5 mc', '4 x 15 - 2.5 mc', '5 x 15 - 2.5 mc', '30 x 50 - 30 mc', '31 x 50 - 30 mc', '32 x 50 - 30 mc', '7 x 25 - 6.3 mc', 'WV 100 - 100 mc', 'WV 50 - 25 mc', 'WV 65 - 50 mc', 'WV 80 - 63 mc', 'WV150 - 300 mc'];
     
     /**
      * Handle save button availability
@@ -1680,79 +1681,85 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
     async populateDistributor(){
 
-        this.loading = true;
-        let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
-        console.log('XXX populateDistributor I');
-        // Calcolo ATO per Idrico
-        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' ){
-            let ato = await getATO({comune : addressRecord['Comune']});
-            this.allSubmitedFields['ATO__c'] = ato;
-        }
+        //W2 blocco per classe contatore non gestita
+        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' &&  this.allSubmitedFields['MeterStatus__c'] === 'Bozza' && !this.managedMeterClass.includes(this.allSubmitedFields['MeterClass__c'])){
+            this.alert('Errore', 'La classe contatore selezionata non può essere utilizzata per Stato Apparecchiatura = Bozza e Servizio = Acqua.', 'error');
+        }else{
 
-        if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
-            console.log('XXX populateDistributor III');
-            if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
-            (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
-            (this.allSubmitedFields['CommoditySector__c'] == 'Gas' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
-            (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') ||
-            (this.allSubmitedFields['CommoditySector__c'] == 'Ambiente')){
-                console.log('XXX populateDistributor IIII');                    
-                if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
-                    console.log('XXX populateDistributor IIIII'); 
-                    let codicePunto = '';
-                    let servizio = this.allSubmitedFields['CommoditySector__c'];
-                    let radicePunto = '';
-                    if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != ''){
-                        codicePunto = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
-                        radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
+            this.loading = true;
+            let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
+            console.log('XXX populateDistributor I');
+            // Calcolo ATO per Idrico
+            if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' ){
+                let ato = await getATO({comune : addressRecord['Comune']});
+                this.allSubmitedFields['ATO__c'] = ato;
+            }
+    
+            if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
+                console.log('XXX populateDistributor III');
+                if((this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
+                (this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica' && this.allSubmitedFields['PlugPresence__c'] == 'No') ||
+                (this.allSubmitedFields['CommoditySector__c'] == 'Gas' && this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != '') ||
+                (this.allSubmitedFields['CommoditySector__c'] == 'Acqua') ||
+                (this.allSubmitedFields['CommoditySector__c'] == 'Ambiente')){
+                    console.log('XXX populateDistributor IIII');                    
+                    if(addressRecord['Comune'] != undefined && addressRecord['Comune'].trim() != ''){
+                        console.log('XXX populateDistributor IIIII'); 
+                        let codicePunto = '';
+                        let servizio = this.allSubmitedFields['CommoditySector__c'];
+                        let radicePunto = '';
+                        if(this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '') != ''){
+                            codicePunto = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
+                            radicePunto = servizio == 'Gas' ? codicePunto.substring(0, 4) : codicePunto.substring(0, 6);
+                        }
+                        if(this.allSubmitedFields['PlugPresence__c'] == 'No' && this.allSubmitedFields['CommoditySector__c'] != 'Acqua'){
+                            this.allSubmitedFields['ServicePointCode__c'] = 'PODPROVVISORIO';//POD FITTIZIO
+                        }
+                        let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
+                        let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
+                        console.log('XXX Calcolo distributor: '+radicePunto+'|'+servizio+'|'+comune+'|'+presenzaAllaccio);
+                        getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
+    
+                            this.retrievedDistributor = data;
+                            if (data.length > 1) {
+                                this.booleanFormDistributor = true;
+                                this.loading = false;
+                            }
+                            else {
+                                data.forEach(element => {
+                                    this.recordDistributorPointCode = element.Account__r.Id;
+                                    this.selectedDistributor = element;
+                                });
+                                this.isDistributor = true;
+                                this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
+    
+                                let distributorObject = {...this.servicePointRetrievedData};
+                                distributorObject['Distributor__c'] = this.recordDistributorPointCode;
+                                this.servicePointRetrievedData = {...distributorObject};
+    
+                                this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
+                                this.save();
+                            }
+                        }).catch(error => 
+                            {
+                                this.loading = false;
+                                this.alert('Errore', 'Distributore non calcolato. Verificare di aver inserito i dati correttamente e in caso contattare l\'amministratore di sistema', 'error');
+                            }
+                        );
                     }
-                    if(this.allSubmitedFields['PlugPresence__c'] == 'No' && this.allSubmitedFields['CommoditySector__c'] != 'Acqua'){
-                        this.allSubmitedFields['ServicePointCode__c'] = 'PODPROVVISORIO';//POD FITTIZIO
+                    else {
+                        this.loading = false;
+                        this.alert('Errore', 'E\' necessario inserire il Comune per poter procedere al salvataggio', 'error');
                     }
-                    let comune = servizio == 'Gas' || servizio == 'Acqua' || servizio == 'Ambiente' ? addressRecord['Comune'] : '';
-                    let presenzaAllaccio = this.allSubmitedFields['PlugPresence__c'] != undefined ? this.allSubmitedFields['PlugPresence__c'] : '';
-                    console.log('XXX Calcolo distributor: '+radicePunto+'|'+servizio+'|'+comune+'|'+presenzaAllaccio);
-                    getDistributorPointCode({code : radicePunto, commodity: servizio, comune : comune, presenzaAllaccio: presenzaAllaccio}).then(data => {
-
-                        this.retrievedDistributor = data;
-                        if (data.length > 1) {
-                            this.booleanFormDistributor = true;
-                            this.loading = false;
-                        }
-                        else {
-                            data.forEach(element => {
-                                this.recordDistributorPointCode = element.Account__r.Id;
-                                this.selectedDistributor = element;
-                            });
-                            this.isDistributor = true;
-                            this.allSubmitedFields['Distributor__c'] = this.recordDistributorPointCode;
-
-                            let distributorObject = {...this.servicePointRetrievedData};
-                            distributorObject['Distributor__c'] = this.recordDistributorPointCode;
-                            this.servicePointRetrievedData = {...distributorObject};
-
-                            this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
-                            this.save();
-                        }
-                    }).catch(error => 
-                        {
-                            this.loading = false;
-                            this.alert('Errore', 'Distributore non calcolato. Verificare di aver inserito i dati correttamente e in caso contattare l\'amministratore di sistema', 'error');
-                        }
-                    );
                 }
                 else {
                     this.loading = false;
-                    this.alert('Errore', 'E\' necessario inserire il Comune per poter procedere al salvataggio', 'error');
+                    this.alert('Errore', 'E\' necessario inserire il Codice Punto per poter procedere al salvataggio', 'error');
                 }
             }
-            else {
-                this.loading = false;
-                this.alert('Errore', 'E\' necessario inserire il Codice Punto per poter procedere al salvataggio', 'error');
+            else{
+                this.save();
             }
-        }
-        else{
-            this.save();
         }
     }
 

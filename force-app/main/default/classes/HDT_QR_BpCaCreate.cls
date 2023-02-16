@@ -9,6 +9,7 @@ public with sharing class HDT_QR_BpCaCreate
         SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(AccessType.READABLE,
             [SELECT Id,
+            ParentOrder__c,
             Account.FirstName__c,
             Account.LastName__c,
             Account.CustomerCode__c,
@@ -79,7 +80,9 @@ public with sharing class HDT_QR_BpCaCreate
             BillingProfile__r.DivergentSubject__r.MailingPostalCode,
             BillingProfile__r.DivergentSubject__r.MailingState,
             BillingProfile__r.DivergentSubject__r.MailingStreetName__c,
-            BillingProfile__r.IbanCountry__c
+            BillingProfile__r.IbanCountry__c,
+            BillingProfile__r.CreateContractAccount__c,
+            BillingProfile__r.IbanCIN_IBAN__c
             FROM Order
             WHERE Id = :orderId]
             );

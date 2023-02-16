@@ -591,8 +591,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return result;
         }
 
-        if(currentCase.BillingIsAddressVerified__c == false){
-            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+        /*edzanatt 
+        *10/02/2023
+        *952483C modifica, fare saltare il controllo sul BillingIsAddressVerified__c se l'indirizzo è estero
+        */ 
+        if(currentCase.BillingCountry__c == 'ITALIA' || currentCase.BillingCountry__c == 'Italia'){
+            if(currentCase.BillingIsAddressVerified__c == false){
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+            }
         }
 
         if (marking != null) {
@@ -1255,11 +1261,15 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     else{
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                     }
+                }else if (currentCase.Commodity__c == 'Acqua'){
+                    List<HDT_AfClassTranscode__mdt > managedCaliberList = [SELECT Id FROM HDT_AfClassTranscode__mdt  WHERE SfdcFieldValue__c =: currentCase.Caliber__c LIMIT 1];
+                    if(managedCaliberList.size() == 0){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il calibro selezionato non può essere utilizzato per il servizio Acqua.'));
+                    }
                 }else{
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                 }
-            }            
-            else {
+            }else {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
             }
         }

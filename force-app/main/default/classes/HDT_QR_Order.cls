@@ -1489,4 +1489,14 @@ public inherited sharing class HDT_QR_Order {
     public static List<Order> getChildOrdersFromParentId(Set<String> parentsId){
         return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c,QualityCallStatus__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
     }
+
+    public Order getParentOrderVolturaSol(String orderNumber){
+        return [SELECT Id,IntegrationId__c,Contact__c,AccountId,RecordTypeId,Sale__c,ProcessType__c,EffectiveDate__c,ContractAccountCode__c,CustomerLastName__c,CustomerName__c,CustomerType__c,
+                CustomerVATNumber__c, CustomerFiscalCode__c,EffectiveDate,Status,BillingProfile__c,PaymentMode__c,Note__c,Account.Category__c,PhoneNumber__c,
+                BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,
+                BillingProfile__r.DivergentSubject__c, BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c, BillingProfile__r.InvoicingPlace__c,
+                BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c, BillingProfile__r.InvoicingPostalCode__c,
+                BillingProfile__r.InvoicingCityCode__c,Account.PrimaryEmail__c,Email__c
+        FROM Order WHERE OrderNumber=:orderNumber WITH SECURITY_ENFORCED ];
+    }
 }

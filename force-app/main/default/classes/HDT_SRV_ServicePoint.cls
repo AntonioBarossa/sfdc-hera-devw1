@@ -97,13 +97,13 @@ public inherited sharing class HDT_SRV_ServicePoint {
         checkReadAccess('ServicePointCode__c,RecordType.DeveloperName');
         List<ServicePoint__c> existingServicePoint = servicePointQuery.getRecordById(servicePoint.Id, 'ServicePointCode__c,RecordType.DeveloperName');
 
-        if (servicePoint.ServicePointCode__c != null && existingServicePoint[0].ServicePointCode__c != servicePoint.ServicePointCode__c) {
-            throw new AuraHandledException('Codice POD/PDR e stato cambiato');
-        } else {
+        //if (servicePoint.ServicePointCode__c != null && existingServicePoint[0].ServicePointCode__c != servicePoint.ServicePointCode__c) {
+        //    throw new AuraHandledException('Codice POD/PDR e stato cambiato');
+        //} else {
             List<String> fields = helperMethods.getObjAttrList(servicePoint);
             checkUpdateAccess(String.join(fields, ','));
             HDT_UTL_DatabaseService.updateSObject(servicePoint);
-        }
+        //}
 
     }
 

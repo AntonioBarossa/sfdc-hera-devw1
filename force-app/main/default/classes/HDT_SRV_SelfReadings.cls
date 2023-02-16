@@ -341,12 +341,8 @@ public with sharing class HDT_SRV_SelfReadings {
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    
-                    if(currentReadingCase.Origin.equalsIgnoreCase('Web') 
-                        || currentReadingCase.Origin.equalsIgnoreCase('App') 
-                        || currentReadingCase.Origin.equalsIgnoreCase('Sportello')
-                        || currentReadingCase.Origin.equalsIgnoreCase('Telefono Inbound')
-                    ){
+                    Set<String> managedCaseOrigins = new Set<String>{'Web-MMS','Web-AAA','Web-EB','Web','App','Sportello','Telefono Inbound'};
+                    if(managedCaseOrigins.contains(currentReadingCase.Origin)){
                         readingCaseToUpdate.Status = 'Closed';
                         readingCaseToUpdate.Phase__c = 'Annullato';
                         updateFuture(JSON.serialize(readingCaseToUpdate));
@@ -484,8 +480,28 @@ public with sharing class HDT_SRV_SelfReadings {
         }
 
         Boolean createActivity = False;
+        /* TK 916750C - Aggiunta canali per cui si deve creare activity */
         switch on origin {
-            when 'Sportello', 'Telefono Inbound' {
+            when 'Sportello',
+                'Telefono Inbound',
+                'Assistente web',
+                'Back office',
+                'Camper',
+                'Chat',
+                'Consip',
+                'Helpdesk',
+                'PA',
+                'Protocollo',
+                'ServiziSociali',
+                'Staff',
+                'Supporto agenzie',
+                'Supporto GDA',
+                'Telefono Outbound',
+                'Teleselling',
+                'Vendita Business',
+                'Vendita Condomini',
+                'Vendita MM',
+                'Vendita TopBusiness' {
                 createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
             }
             when else {

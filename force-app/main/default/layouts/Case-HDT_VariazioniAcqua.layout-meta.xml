@@ -142,6 +142,10 @@
                 <behavior>Readonly</behavior>
                 <field>PurificationInfoOnTheInvoice__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>InquiryOutcome__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -216,6 +220,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>CommercialHousingUnit__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>Cohabitation__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>

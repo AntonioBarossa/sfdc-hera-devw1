@@ -38,26 +38,6 @@
                 <default>false</default>
                 <label>Segnalato fornitore</label>
             </value>
-            <value>
-                <fullName>Richiesta accolta</fullName>
-                <default>false</default>
-                <label>Richiesta accolta</label>
-            </value>
-            <value>
-                <fullName>Accolta fognatura</fullName>
-                <default>false</default>
-                <label>Accolta fognatura</label>
-            </value>
-            <value>
-                <fullName>Accolta depurazione</fullName>
-                <default>false</default>
-                <label>Accolta depurazione</label>
-            </value>
-            <value>
-                <fullName>Non Accolta</fullName>
-                <default>false</default>
-                <label>Non Accolta</label>
-            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
@@ -78,22 +58,6 @@
         <valueSettings>
             <controllingFieldValue>Segnalazioni VAS</controllingFieldValue>
             <valueName>Segnalato fornitore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Richiesta accolta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Accolta fognatura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Accolta depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Esenzione Modifica Fognatura Depurazione</controllingFieldValue>
-            <valueName>Non Accolta</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
