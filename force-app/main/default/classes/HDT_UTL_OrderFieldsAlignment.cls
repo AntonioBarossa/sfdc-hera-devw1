@@ -288,9 +288,15 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                 /**@frpanico 2022-04-05
                  * Valorizzazione codice Ateco
                  * Valido solo per W1
+                 * 
+                 **@fdefelice 2023-02-16
+                 * scritto così valorizza i codici a prescindere dalla wave/commodity
+                 * la valorizzazione deve tenere conto della commodity del service point 
+                 * (oppure può essere valorizzato in fase di wizard di processo)
+                 * commento per risoluzione ticket alm 3839
                  */
-                orderToUpdate.AtecoCode__c = 'K74878';
-                orderToUpdate.HerAteco__c = 'K74878';
+                //orderToUpdate.AtecoCode__c = 'K74878';
+                //orderToUpdate.HerAteco__c = 'K74878';
 
             } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                 orderToUpdate.CustomerName__c = account.FirstName__c;
