@@ -467,16 +467,17 @@ export default class HdtSelfReading extends LightningElement {
                     const oldReadingValue = register.oldReadingValue();
                     const newReadingValue = register.newReadingValue();
                     const selectedReadingValue = this.findSelectedReading(i);
+                    const tipoLettura = this.findTipoLettura(i);
 
                     console.log('lettura precedente a sistema: ' + oldReadingValue)
                     console.log('lettura comunicata dal cliente: ' + newReadingValue)
                     console.log('lettura selezionata da cruscotto letture: ' + selectedReadingValue);
-
+                    console.log('tipo lettura selezionata da cruscotto letture: ' + tipoLettura);
                     if (this.isRettificaConsumi === true && newReadingValue > 0 && oldReadingValue >= 0) {  // newReadingValue > 0 && oldReadingValue >= 0 per skippare i registri nascosti
                         if (selectedReadingValue > 0) {
                             if (newReadingValue > oldReadingValue && newReadingValue > selectedReadingValue) {
                                 numeroRegistriAlert++;
-                            } else if (newReadingValue > oldReadingValue && newReadingValue < selectedReadingValue) {
+                            } else if (newReadingValue > oldReadingValue && newReadingValue < selectedReadingValue && tipoLettura !== 'Lettura di cessazione stimata') {
                                 numeroRegistriStimati++;
                             }
                         } else {
@@ -617,6 +618,30 @@ export default class HdtSelfReading extends LightningElement {
         }
 
         return 0;
+    }
+    
+    findTipoLettura(index)
+    {
+        if(!this.selectedReadingsList) return '';
+        let fascia = '';
+        switch (this.commodity)
+        {
+            case 'Energia Elettrica':
+                fascia = 'Fascia ' + (index + 1);
+                break;
+            case 'Gas':
+                fascia = 'Monofascia';
+                break;
+        }
+        for(let i = 0; i < this.selectedReadingsList.length; ++i)
+        {
+            let selectedReading = this.selectedReadingsList[i];
+            console.log('fascia: ' + fascia + ' selectedReading: ' + JSON.stringify( selectedReading));           
+            if(selectedReading['tipoNumeratore'] === fascia)
+            {
+                return selectedReading['tipoLettura'];
+            }
+        }
     }
 
     handleNavigation(event){
