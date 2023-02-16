@@ -224,7 +224,9 @@ public with sharing class HDT_BA_QualityCallTst {
             'P5'
         };
         Set<String> qsActivity = new Set<String>{
-            'P3'
+            'C1',
+            'P3',
+			'P4'
         };
         Set<String> phaseOrder = new Set<String>{
             'C0-Annullato',

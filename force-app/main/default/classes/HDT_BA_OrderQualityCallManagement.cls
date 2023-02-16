@@ -51,7 +51,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             Id rtId = (new  HDT_QR_RecordType()).getRecordType('HDT_RT_AttivitaGestionali', 'wrts_prcgvr__Activity__c').Id;
             List<Order> ordersToUpdate = new List<Order>();
             Map<Id,wrts_prcgvr__Activity__c> activitiesToInsert = new Map<Id,wrts_prcgvr__Activity__c>();
-            Map<String,Order> orderToCancel = new Map<String,Order>();
+            Set<String> orderToCancel = new Set<String>();
             Set<Id> orderWithActivity = new Set<Id>();
             Set<String> pOrdersId = new Set<String>();
             List<String> allOrdersId = new List<String>();
@@ -80,7 +80,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                     continue;
                 }
                 Integer newSkipCall = o.Skip_Callout__c == null ? -1 : null; 
-                Order ordToUpd = new Order(Id = o.Id, QualityCallStatus__c = HDT_UTL_QualityCall.HANDLE_DEADLINE);
+                Order ordToUpd = new Order(Id = o.Id, QualityCallStatus__c = HDT_UTL_QualityCall.HANDLE_DEADLINE, Skip_Callout__c = newSkipCall);
                 
                 Boolean hasCancellableProduct = false;
                 if(orderToItemMap.get(o.Id) != null){
@@ -96,7 +96,6 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 }
                 String result = qCall.checkOrderPhase(o.Phase__c);
                 if ('CLOSE_PHASE'.equalsIgnoreCase(result)){
-                    ordToUpd.Skip_Callout__c = newSkipCall;
                     if (!'Activated'.equalsIgnoreCase(o.Status)){
                         ordersToUpdate.add(ordToUpd);
                     }
@@ -106,15 +105,15 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 Boolean needsActivity = false;
                 
                 if ('CANCEL'.equalsIgnoreCase(result) && canDeleteOrder 
-                    && ((isMonitoringList.contains(o.AgencyCode__c) && o.IsVAS__c) || hasCancellableProduct)) {
+                    && ((isMonitoringList.contains(o.AgencyCode__c) /* && o.IsVAS__c */) || hasCancellableProduct)) {
                         ordToUpd.Phase__c = 'Annullato';
                         ordToUpd.Status = 'Annullato';         
-                        orderToCancel.put(ordToUpd.Id,ordToUpd);
+                        orderToCancel.add(ordToUpd.Id);
+                        ordersToUpdate.add(ordToUpd);
                         continue;     
-                }else if ((isMonitoringList.contains(o.AgencyCode__c) && o.IsVAS__c) || hasCancellableProduct){
+                }else if ((isMonitoringList.contains(o.AgencyCode__c)/*  && o.IsVAS__c */) || hasCancellableProduct){
                     needsActivity = true;
                 }
-                ordToUpd.Skip_Callout__c = newSkipCall;
                 if (!'Activated'.equalsIgnoreCase(o.Status)){
                     ordersToUpdate.add(ordToUpd);
                 }
@@ -122,7 +121,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                     continue;
                 }
                 
-                if (needsActivity && ((!canDeleteOrder || (o.VASType__c != 'VAS Fatturabili' && ('NO_CANCEL_NO_BILL'.equals(result) || 'NO_CANCEL'.equals(result))) || (o.VASType__c == 'VAS Fatturabili' && ('NO_CANCEL'.equals(result) || 'NO_CANCEL_BILL'.equals(result)))))) {
+                if (needsActivity && ((!canDeleteOrder || (o.VASType__c != 'VAS Fatturabili' && ('NO_CANCEL_NO_BILL'.equals(result) || 'NO_CANCEL'.equals(result))) || ((o.VASType__c == 'VAS Fatturabili' || !o.IsVAS__c) && ('NO_CANCEL'.equals(result) || 'NO_CANCEL_BILL'.equals(result)))))) {
                     Id orderId = o.QualityCallUnique__c ? o.ParentOrder__c : o.Id;
                     activitiesToInsert.put(orderId, new wrts_prcgvr__Activity__c(
                         RecordTypeId = rtId,
@@ -138,7 +137,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
             this.closeActivities(actToUpdate);
             if (!orderToCancel.isEmpty()){
                 HDT_QR_Order qrOrder = new HDT_QR_Order();
-                for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel.keySet())){
+                for (wrts_prcgvr__Activity__c activity: qrOrder.getOpenActivitiesByListOrderId(orderToCancel)){
                     if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)&& !'Quality Scaduta'.equalsIgnoreCase(activity.Type__c) && !'Quality Call'.equalsIgnoreCase(activity.Type__c)){
                         actToUpdate.add(
                             new wrts_prcgvr__Activity__c(
@@ -155,16 +154,8 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 qCall.setLogRecord(srList, actToUpdate, logs, 'update activities second batch');
             }
 
-            Set<Order> totalOrderToUp = new Set<Order>();
-            if (!orderToCancel.isEmpty()){
-                totalOrderToUp.addAll(orderToCancel.values());
-            }
             if (!ordersToUpdate.isEmpty()){
-                totalOrderToUp.addAll(ordersToUpdate);
-            }
-            
-            if (!totalOrderToUp.isEmpty()){
-                List<Database.SaveResult> srList = Database.update(new List<Order>(totalOrderToUp), false);
+                List<Database.SaveResult> srList = Database.update(ordersToUpdate, false);
                 qCall.setLogRecord(srList, ordersToUpdate, logs, 'update order second batch');
             }
 
