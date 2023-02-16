@@ -177,7 +177,8 @@ public with sharing class HDT_UTL_BpCaCreate
         request.idOggetto = '';
         request.contoContrattuale = tryParse(infoOrder.BillingProfile__r.ContractAccountCode__c);
         request.emailInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceEmailAddress__c);
-        request.creaNuovoCA = infoOrder.BillingProfile__r.CreateContractAccount__c?'Y':'N';
+        //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
+        request.creaNuovoCA = infoOrder.BillingProfile__r.CreateContractAccount__c?'Y':'';
         request.pecInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(infoOrder.BillingProfile__r.BillSendingMethod__c);
         request.emailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
