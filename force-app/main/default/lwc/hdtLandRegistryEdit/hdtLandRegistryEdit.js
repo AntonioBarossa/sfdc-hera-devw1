@@ -22,6 +22,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
     set recordId(newValue){
         if(this._recordId != newValue){
+            this.showSpinner = true;
             this.formLoaded = FORM_LOAD_TO_DO;
             if(this._recordId == null) this.firstLoad = true;
             this._recordId = newValue;
@@ -243,6 +244,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
 
     handleFormLoad(event){
+        this.showSpinner = false;
         console.log("### handleFormLoad", JSON.stringify(event.detail.records));
         this.modify = true; // => presetto il form come modificabile, poi lo disabilito se ci sono le condizioni
         if(this._recordId){
@@ -349,7 +351,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             });
     }
 
-    call_getCities() {
+    /*call_getCities() {
         console.log('### call_getCities');
         this.showSpinner = true;
         getCities({ })
@@ -372,7 +374,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             .finally(() => {
                 this.showSpinner = false;
             });
-    }
+    }*/
     
     throwSuccessEvent(){
         const evt = new CustomEvent("formsuccess", { detail:  {rowId: this._recordId} });
