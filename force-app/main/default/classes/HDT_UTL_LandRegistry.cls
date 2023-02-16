@@ -25,6 +25,7 @@ public with sharing class HDT_UTL_LandRegistry {
 
         list<LandRegistry__c> lndRgTable = new list<LandRegistry__c>();
         list<LandRegistry__c> originData = qrClass.getTARILandRegistryByServicePointIds(new list<Id> {servicePointId});
+        Map<String, Id> cityData = getCities(originData);
         for(LandRegistry__c curOriginRecord : originData){
             LandRegistry__c resultLR;
             resultLR = curOriginRecord.clone(false, true, false, false);
@@ -33,7 +34,8 @@ public with sharing class HDT_UTL_LandRegistry {
             resultLR.CodeMissingRegistryData__c = 
                 new Set<String>{'1', '2'}.contains(resultLR.CodeMissingRegistryData__c) ? 
                 resultLR.CodeMissingRegistryData__c : null;
-                
+            resultLR.RegistryCityLookup__c = cityData.get(resultLR.RegistryCity__c.toLowerCase());
+            resultLR.LegalCityLookup__c = cityData.get(resultLR.LegalCity__c.toLowerCase());
             if(caseId != null) resultLR.Case__c = caseId;
             if(orderId != null) resultLR.Order__c = orderId;
             system.debug('pratica record: ' + JSON.serialize(resultLR));
@@ -45,6 +47,24 @@ public with sharing class HDT_UTL_LandRegistry {
         else if(orderId != null) praticaData = qrClass.getPraticaTARILandRegistryByOrderIds(new list<Id> {orderId});
         system.debug('praticaData2: ' + JSON.serialize(praticaData));
         return praticaData;
+    }
+
+    private static Map<String, Id> getCities(list<LandRegistry__c> originData){
+        Set<String> cityNames  = new Set<String>();
+        for(LandRegistry__c lr : originData){
+            if(STRING.isNotBlank(lr?.LegalCity__c))   cityNames.add(lr.LegalCity__c);
+            if(STRING.isNotBlank(lr?.RegistryCity__c))   cityNames.add(lr.LegalCity__c);
+        }
+        Map<String, Id> returnMap = new Map<String, Id>();
+
+        for(CityTechnicalData__c cityData :  [   SELECT Id, CadastralCity__c, CityCode__c, Province__c 
+                                                FROM CityTechnicalData__c 
+                                                WHERE Name IN :cityNames
+                                                WITH SECURITY_ENFORCED ]
+        ){
+            returnMap.put(cityData.CadastralCity__c.toLowerCase(), cityData.Id);
+        }
+        return returnMap;
     }
     
     @AuraEnabled
@@ -62,6 +82,20 @@ public with sharing class HDT_UTL_LandRegistry {
                                                     AND Province__c != null
                                                 WITH SECURITY_ENFORCED 
                                                 ORDER BY CadastralCity__c ASC];
+        return cities;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static list<CityTechnicalData__c> getCadastralRecord(Id cadastralRecordId) {        
+	    list<CityTechnicalData__c> cities = [   SELECT Id, CadastralCity__c, CityCode__c, Province__c 
+                                                FROM CityTechnicalData__c 
+                                                WHERE 
+                                                    Id=:cadastralRecordId
+                                                    AND CadastralCity__c != null 
+                                                    AND CityCode__c != null
+                                                    AND Province__c != null
+                                                WITH SECURITY_ENFORCED 
+        ];
         return cities;
     }
     

@@ -6,6 +6,7 @@ import { CloseActionScreenEvent } from 'lightning/actions';
 import LNDRGS_OBJ from '@salesforce/schema/LandRegistry__c';
 import getCadastralCategories from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralCategories';
 import getCities from '@salesforce/apex/HDT_UTL_LandRegistry.getCities';
+import getCadastralRecord from '@salesforce/apex/HDT_UTL_LandRegistry.getCadastralRecord';
 
 const RT_NAME = 'DatiCatastali - Pratica Ambiente';
 const FORM_LOAD_TO_DO = 'TO_DO';
@@ -74,7 +75,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
 
     connectedCallback(){
         this.call_getCadastralCategories();
-        this.call_getCities();
+        //this.call_getCities();
         this._required = this.required == false ? false : true;
         this._readonly = this.readonly;
         this._showEdit = this.showEdit;
@@ -97,22 +98,42 @@ export default class HdtLandRegistryEdit extends LightningElement {
                     inputList = this.template.querySelectorAll('lightning-combobox');
                     inputList.forEach(input => input.value = null);
                     this.registryCityValue = null;
-                    this.legalCityValue = null;
+                    //this.legalCityValue = null;
                     this.registryCityCodeValue = null;
                     this.provinceValue = null;
                     this.cadastralCategoryValue = null;
                 }
             }
-            if(source == "RegistryCity__c"){
+            if(source == "RegistryCityLookup__c" || source == "LegalCityLookup__c"){
                 //const t0 = performance.now();
-                let foundCity = this.cityTechnicalData.get(event.detail.value);
+                this.template.querySelector('[data-name="LegalCityLookup__c"]').value = event.target.value;
+                if(event.target.value){
+                    this.showSpinner = true;
+                    this.getCityRecord(event.target.value).then(result =>{
+                        let foundCity = result[0];
+                        if(source == "RegistryCityLookup__c"){
+                            this.registryCityValue = foundCity.CadastralCity__c;
+                            this.legalCityValue = foundCity.CadastralCity__c;
+                            this.registryCityCodeValue = foundCity.CityCode__c;
+                            this.provinceValue = foundCity.Province__c;
+                        }else{
+                            this.legalCityValue = foundCity.CadastralCity__c;
+                        }
+                        if(this._required){
+                            this.checkRequiredFields();
+                        }
+                    }).catch(error=>{
+                        console.log("error on getCity")
+                        console.log(error);
+                    }).finally(()=>{
+                        this.showSpinner = false;
+                    });
+                    return;
+                }
                 //const t1 = performance.now();
                 //console.log(`Call to doSomething took ${t1 - t0} milliseconds.`);
                 //console.log('@@@@@@@@@@@@ test mappa '+JSON.stringify(foundCity));
-                this.registryCityValue = foundCity.CadastralCity__c;
-                this.legalCityValue = foundCity.CadastralCity__c;
-                this.registryCityCodeValue = foundCity.CityCode__c;
-                this.provinceValue = foundCity.Province__c;
+                
             }
             if(["Sheet__c", "ParticleSheet__c", "Subaltern__c"].includes(source)) {
                 let val = event.target.value;
@@ -144,9 +165,6 @@ export default class HdtLandRegistryEdit extends LightningElement {
                     this.disableSalva=true;
                 } 
                 //else this.disableSalva=false;
-            }
-            if(source == "LegalCity__c") {
-                this.legalCityValue = event.target.value;
             }
             if(source == "RegistryCategory__c") {
                 this.cadastralCategoryValue = event.target.value;
@@ -184,6 +202,10 @@ export default class HdtLandRegistryEdit extends LightningElement {
                 this.disableSalva = true;
             }
         });
+    }
+
+    getCityRecord(lookupId){
+        return getCadastralRecord({cadastralRecordId : lookupId});
     }
 
     handleModificaClick(){
@@ -230,7 +252,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
                 this.disableElimina = false;
                 this.registryCityValue = recordUi.fields.RegistryCity__c?.value;
                 this.registryCityCodeValue = recordUi.fields.RegistryCityCode__c?.value;
-                this.legalCityValue = recordUi.fields.LegalCity__c?.value;
+                //this.legalCityValue = recordUi.fields.LegalCity__c?.value;
                 this.provinceValue = recordUi.fields.Province__c?.value;
                 this.cadastralCategoryValue = recordUi.fields.RegistryCategory__c?.value;
             }

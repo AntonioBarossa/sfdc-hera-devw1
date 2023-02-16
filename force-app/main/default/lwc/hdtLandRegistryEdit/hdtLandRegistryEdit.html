@@ -30,7 +30,8 @@
                 </lightning-layout-item>
                 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-combobox required={_required}
+                    <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} field-name="RegistryCityLookup__c" onchange={handleFieldChange}></lightning-input-field>
+                    <!--<lightning-combobox required={_required}
                                         disabled={disableForm}
                                         field-level-help="Digitare un comune per selezionarlo"
                                         name="RegistryCity__c"
@@ -38,7 +39,7 @@
                                         value={registryCityValue}
                                         options={cityOptions}
                                         onchange={handleFieldChange}>
-                    </lightning-combobox>
+                    </lightning-combobox>-->
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -46,7 +47,8 @@
                 </lightning-layout-item>
                 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-combobox required={_required}
+                    <lightning-input-field variant="label-stacked" required={_required} disabled={disableForm} data-name="LegalCityLookup__c" field-name="LegalCityLookup__c" onchange={handleFieldChange}></lightning-input-field>
+                    <!--<lightning-combobox required={_required}
                                         disabled={disableForm}
                                         field-level-help="Digitare un comune per selezionarlo"
                                         name="LegalCity__c"
@@ -54,7 +56,7 @@
                                         value={legalCityValue}
                                         options={cityOptions}
                                         onchange={handleFieldChange}>
-                    </lightning-combobox>
+                    </lightning-combobox>-->
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
