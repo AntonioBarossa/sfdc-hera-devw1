@@ -149,7 +149,7 @@ public with sharing class HDT_UTL_ServicePoint {
                     metStatus = 'Sospeso';
                 }
                 when 'H020' {
-                    metStatus = 'Chiuso';
+                    metStatus = 'Inattivo';
                 }
                 when 'H100' {
                     metStatus = 'Attivo';
