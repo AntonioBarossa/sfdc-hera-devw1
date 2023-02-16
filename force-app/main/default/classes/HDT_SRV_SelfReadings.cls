@@ -341,12 +341,8 @@ public with sharing class HDT_SRV_SelfReadings {
                 }
                 HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isClosingError(errorMessage, currentReadingCase.Origin)) {
-                    
-                    if(currentReadingCase.Origin.equalsIgnoreCase('Web') 
-                        || currentReadingCase.Origin.equalsIgnoreCase('App') 
-                        || currentReadingCase.Origin.equalsIgnoreCase('Sportello')
-                        || currentReadingCase.Origin.equalsIgnoreCase('Telefono Inbound')
-                    ){
+                    Set<String> managedCaseOrigins = new Set<String>{'Web-MMS','Web-AAA','Web-EB','Web','App','Sportello','Telefono Inbound'};
+                    if(managedCaseOrigins.contains(currentReadingCase.Origin)){
                         readingCaseToUpdate.Status = 'Closed';
                         readingCaseToUpdate.Phase__c = 'Annullato';
                         updateFuture(JSON.serialize(readingCaseToUpdate));
