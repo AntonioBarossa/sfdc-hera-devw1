@@ -543,6 +543,10 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                          * Dunque si ha oldPhase Accettazione Voltura e newPhase Esportazione VS Siebel in cui e' necessario il ricalcolo
                          */
                         || (oldOrder.Phase__c == 'Accettazione Voltura' && newOrder.Phase__c == 'Esportazione VS Siebel')
+                        /**@frpanico aggiunta casistica in cui gli ordini vengono aggiornati in Comunicazione verso Heroku e poi fa il 
+                         * Passaggio verso Esportazione VS Siebel e dunque e' necessario il ricalcolo
+                         */
+                        || (oldOrder.Phase__c == 'Comunicazione verso Heroku' && newOrder.Phase__c == 'Esportazione VS Siebel')
                         //@ealpi aggiunto in caso di sblocco OK credit check
                         ||(!'OK'.equalsIgnoreCase(oldOrder.OutgoingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.OutgoingCreditCheckResult__c))
                         ||(!'OK'.equalsIgnoreCase(oldOrder.IncomingCreditCheckResult__c) && 'OK'.equalsIgnoreCase(newOrder.IncomingCreditCheckResult__c))

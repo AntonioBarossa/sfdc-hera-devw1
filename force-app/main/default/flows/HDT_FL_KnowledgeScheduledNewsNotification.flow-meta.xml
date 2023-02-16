@@ -94,7 +94,7 @@
                 <targetReference>Prima_Versione_News</targetReference>
             </connector>
             <label>Schedulazione Pubblicata</label>
-            <offsetNumber>5</offsetNumber>
+            <offsetNumber>30</offsetNumber>
             <offsetUnit>Minutes</offsetUnit>
             <recordField>ToPublishDate__c</recordField>
             <timeSource>RecordField</timeSource>

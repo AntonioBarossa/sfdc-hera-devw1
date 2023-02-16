@@ -331,6 +331,21 @@
         <label>PiuControllo Active Special Casa Dual</label>
     </customValue>
     <customValue>
+        <fullName>PiuControllo Flat Extra Casa Dual</fullName>
+        <default>false</default>
+        <label>PiuControllo Flat Extra Casa Dual</label>
+    </customValue>
+	<customValue>
+        <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+        <default>false</default>
+        <label>PiuControllo Flat Extra Casa Luce</label>
+    </customValue>
+	<customValue>
+        <fullName>PiuControllo Flat Extra Casa Gas</fullName>
+        <default>false</default>
+        <label>PiuControllo Flat Extra Casa Gas</label>
+    </customValue>
+    <customValue>
         <fullName>PiuControllo Flat Special Casa Luce</fullName>
         <default>false</default>
         <label>PiuControllo Flat Special Casa Luce</label>
