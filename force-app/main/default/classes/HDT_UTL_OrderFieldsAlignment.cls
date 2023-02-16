@@ -295,8 +295,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                  * (oppure può essere valorizzato in fase di wizard di processo)
                  * commento per risoluzione ticket alm 3839
                  */
-                //orderToUpdate.AtecoCode__c = 'K74878';
-                //orderToUpdate.HerAteco__c = 'K74878';
+                if (orderOld.ServicePoint__c != null && !'Ambiente'.equalsIgnoreCase(orderOld.ServicePoint__r.CommoditySector__c) ) {
+                    orderToUpdate.AtecoCode__c = 'K74878';
+                    orderToUpdate.HerAteco__c = 'K74878';
+                }
 
             } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                 orderToUpdate.CustomerName__c = account.FirstName__c;
