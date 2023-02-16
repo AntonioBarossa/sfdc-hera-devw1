@@ -51,7 +51,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
         List<Case> caseToInsert = new List<Case>();
         List<MassiveLoaderRequestItem__c> requestItemForUpsert=new List<MassiveLoaderRequestItem__c>();
         for(HDT_WRP_ProcessObjects currentObj:processObjList){
-            currentObj.newCase=new Case(Phase__c=Label.consumoAnomaloIdricoDefaultPhase, Status=Label.consumoAnomaloIdricoDefaultStatus,RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO,Cluster__c=Label.consumoAnomaloIdricoDefaultCluster);
+            currentObj.newCase=new Case(Phase__c=Label.consumoAnomaloIdricoDefaultPhase, Status=Label.consumoAnomaloIdricoDefaultStatus,RecordTypeId=constant.CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO,Cluster__c=Label.consumoAnomaloIdricoDefaultCluster,Commodity__c='Acqua');
             String fieldConversionError='';
             Integer count = 0;
             for (String tempField : currentObj.csvSplitted) {
