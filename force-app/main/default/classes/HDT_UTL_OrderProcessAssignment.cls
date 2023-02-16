@@ -275,7 +275,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     process.CasualCode__c = 'RI6';
                 }
                //escludo il processo di modifica tariffa se si sta eseguendo una rimozione sconto
-                if(!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)){
+                if((!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_ModificaTariffaRimozione'))
+                 || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)
+                 || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_ModificaTariffaRimozione') && isRemoveSubscriptions)){
                     availableProcesses.add(process);
                 }
             }
