@@ -116,7 +116,6 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             caseToEnrich.InvoicingStreetNumber__c=dataSource.BillingProfile__r.InvoicingStreetNumber__c;
             caseToEnrich.InvoicingStreetNumberExtension__c=dataSource.BillingProfile__r.InvoicingStreetNumberExtension__c;
             caseToEnrich.DeliveryAddress__c=dataSource.BillingProfile__r.InvoicingAddressFormula__c;
-            System.debug('commodity case: '+caseToEnrich.Commodity__c);
             return caseToEnrich;
         }
         throw new CalloutException('Arricchimento dati fallito');
