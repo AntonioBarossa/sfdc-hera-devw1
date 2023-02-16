@@ -195,7 +195,7 @@ public with sharing class HDT_BA_ArchivedRecordsDelete implements Database.Batch
                 }
                 when 'ServicePoint__c' {
                     
-                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Case|ServicePoint__c', 'wrts_prcgvr__Activity__c|ServicePoint__c'}));
+                    filteredRecordsToDelete.addAll(filterScopeForDeletedChildren(scope, new List<String> {'Case|ServicePoint__c', 'Order|ServicePoint__c', 'wrts_prcgvr__Activity__c|ServicePoint__c'}));
                     needsDeletionWithSet = true;
 
                 }
