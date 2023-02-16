@@ -12,13 +12,22 @@
             
                 <div class="slds-size_1-of-1">
                     <template if:true={showTable}>
+                        
                         <lightning-datatable
+                            lwc:if={isEditing}
+                            data={tableDataFiltered}
+                            columns={tableColumns}
+                            key-field="Id"
+                            hide-checkbox-column>
+                        </lightning-datatable>
+                        <lightning-datatable
+                            lwc:else
                             data={tableData}
                             columns={tableColumns}
                             key-field="Id"
                             selected-rows={tableSelectedRows}
                             onrowselection={handleTableSelection}
-                            max-row-selection={maxRowSelection}>
+                            max-row-selection=1>
                         </lightning-datatable>
                     </template>
                     <template if:false={showTable}>
