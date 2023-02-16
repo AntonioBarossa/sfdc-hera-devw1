@@ -122,6 +122,17 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     public static BillingProfile__c createBillingProfile(BillingProfile__c billingProfile){
 
         if(billingProfile.PaymentMethod__c == 'RID' && !billingProfile.IbanIsForeign__c){
+            if(!String.isBlank(billingProfile.IBAN__c) && billingProfile.IBAN__c.length() == 27){
+                billingProfile.IbanCountry__c = billingProfile.IBAN__c.substring(0, 2);
+                billingProfile.IbanCIN_IBAN__c = billingProfile.IBAN__c.substring(2, 4);
+                billingProfile.IbanCIN__c = billingProfile.IBAN__c.substring(4, 5);
+                billingProfile.IbanABI__c = billingProfile.IBAN__c.substring(5, 10);
+                billingProfile.IbanCAB__c = billingProfile.IBAN__c.substring(10, 15);
+                billingProfile.IbanCodeNumber__c = billingProfile.IBAN__c.substring(15,27);
+            }else if (!String.isBlank(billingProfile.IBAN__c)){
+                throw new AuraHandledException('IBAN non valido');
+            }
+            
             String iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
 
             HDT_UTL_ValidateIban.HDT_UTL_FlowInputs ibanToValidate = new HDT_UTL_ValidateIban.HDT_UTL_FlowInputs();
@@ -139,6 +150,15 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         if(billingProfile.IbanIsForeign__c != null && billingProfile.IbanIsForeign__c)
         {
             billingProfile.IbanCountry__c = String.isNotBlank(billingProfile.Iban__c) ? billingProfile.Iban__c.substring(0,2) : '';
+        }
+        if(!'RID'.equalsIgnoreCase(billingProfile.PaymentMethod__c) && (!String.isBlank(billingProfile.IbanABI__c) || !String.isBlank(billingProfile.IbanCAB__c) || !String.isBlank(billingProfile.IbanCIN_IBAN__c) || !String.isBlank(billingProfile.IbanCodeNumber__c) || !String.isBlank(billingProfile.IBAN__c))){
+            billingProfile.IbanCountry__c = null;
+            billingProfile.IbanCIN_IBAN__c = null;
+            billingProfile.IbanCIN__c = null;
+            billingProfile.IbanABI__c = null;
+            billingProfile.IbanCAB__c = null;
+            billingProfile.IbanCodeNumber__c = null;
+            billingProfile.IBAN__c = null;
         }
 
        Account acc = accountQr.getRecordById(billingProfile.Account__c, 'CustomerMarking__c, Category__c');
