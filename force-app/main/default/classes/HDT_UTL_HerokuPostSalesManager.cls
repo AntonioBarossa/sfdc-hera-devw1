@@ -637,7 +637,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 && currentCase.CausalCode__c.equalsIgnoreCase('E02')){
             currentCase.Phase__c = 'Inviare preventivo';
             updateFuture(JSON.serialize(currentCase));
-        }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL')){
+        }else if(currentCase.Phase__c.equalsIgnoreCase('Validazione KO da DL') || currentCase.Phase__c.equalsIgnoreCase('Validazione KO da Gestore')){
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             if(currentCase.Type == 'Autolettura da cliente' && currentCase.Commodity__c == 'Acqua'){
