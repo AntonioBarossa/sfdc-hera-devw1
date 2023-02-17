@@ -8,6 +8,6 @@
     </values>
     <values>
         <field>SfdcFieldValue__c</field>
-        <value xsi:type="xsd:string">DN 150</value>
+        <value xsi:type="xsd:string">WV150 - 300 mc</value>
     </values>
 </CustomMetadata>
