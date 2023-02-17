@@ -467,6 +467,7 @@ export default class HdtSelfReading extends LightningElement {
                     const oldReadingValue = register.oldReadingValue();
                     const newReadingValue = register.newReadingValue();
                     const selectedReadingValue = this.findSelectedReading(i);
+                    /* TK 945331C - Aggiunto recupero tipo lettura. */
                     const tipoLettura = this.findTipoLettura(i);
 
                     console.log('lettura precedente a sistema: ' + oldReadingValue)
@@ -477,6 +478,7 @@ export default class HdtSelfReading extends LightningElement {
                         if (selectedReadingValue > 0) {
                             if (newReadingValue > oldReadingValue && newReadingValue > selectedReadingValue) {
                                 numeroRegistriAlert++;
+                            /* TK 945331C - Le letture "Lettura di cessazione stimata" (TL 95) non sono da intendersi come letture stimate */
                             } else if (newReadingValue > oldReadingValue && newReadingValue < selectedReadingValue && tipoLettura !== 'Lettura di cessazione stimata') {
                                 numeroRegistriStimati++;
                             }
