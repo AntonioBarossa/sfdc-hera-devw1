@@ -2062,6 +2062,13 @@
                     <elementReference>ProcessType</elementReference>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>$Label.EnableShowFirstScreen</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Y</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>First_Screen</targetReference>
             </connector>
