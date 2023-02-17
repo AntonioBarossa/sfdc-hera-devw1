@@ -145,7 +145,7 @@ public inherited sharing class HDT_LC_BillingProfileForm {
                 throw new AuraHandledException('IBAN non valido');
             }
 
-            billingProfile.IBAN__c = iban;
+            billingProfile.IBAN__c = iban.toUpperCase();
         }
         if(billingProfile.IbanIsForeign__c != null && billingProfile.IbanIsForeign__c)
         {
