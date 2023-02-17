@@ -428,6 +428,7 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
             spNew.SupplyStreet__c  = mapRes.get('VIA');
+            spNew.SupplyStreetName__c = mapRes.get('VIA');
         }
         if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
             spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
@@ -437,12 +438,14 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
             spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
+            spNew.SupplyStreetCode__c = mapRes.get('CODICEVIA');
         }
         if(mapRes.get('REGIONE')!=null && !String.isBlank(mapRes.get('REGIONE'))){
             spNew.SupplyProvince__c = mapRes.get('REGIONE');
         }
         if(mapRes.get('CODIFICALOCALITA')!=null && !String.isBlank(mapRes.get('CODIFICALOCALITA'))){
             spNew.SupplySAPCityCode__c = mapRes.get('CODIFICALOCALITA');
+            spNew.SupplyCityCode__c = mapRes.get('CODIFICALOCALITA');
         }
         if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
             spNew.SupplyCountry__c = mapRes.get('CODICEPAESE') == 'IT' ? 'Italia' : 'Estero';
