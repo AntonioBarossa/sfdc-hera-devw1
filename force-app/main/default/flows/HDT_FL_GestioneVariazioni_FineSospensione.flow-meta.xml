@@ -2,6 +2,7 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <description>Flow schedulato che avanza i Case di &quot;Dichiarazione di Intento&quot; nella fase &quot;In attesa risposta mail&quot; nella fase &quot;Elaborazione Manuale&quot;</description>
+    <environments>Default</environments>
     <interviewLabel>HDT_FL_GestioneVariazioni_FineSospensione {!$Flow.CurrentDateTime}</interviewLabel>
     <label>GestioneVariazioni - FineSospensione</label>
     <processMetadataValues>
@@ -30,8 +31,8 @@
         <locationY>276</locationY>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>SuspensionEndDate__c</field>
-            <operator>GreaterThanOrEqualTo</operator>
+            <field>ResidenceChangeDate__c</field>
+            <operator>EqualTo</operator>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
@@ -39,7 +40,7 @@
         <inputAssignments>
             <field>Phase__c</field>
             <value>
-                <stringValue>Elaborazione Manuale</stringValue>
+                <stringValue>In Attesa Allineamento Anagrafica</stringValue>
             </value>
         </inputAssignments>
         <inputReference>$Record</inputReference>
@@ -52,26 +53,33 @@
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
-            <field>Phase__c</field>
-            <operator>EqualTo</operator>
-            <value>
-                <stringValue>In attesa risposta Mail</stringValue>
-            </value>
-        </filters>
-        <filters>
             <field>Type</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>Dichiarazione di intento</stringValue>
+                <stringValue>Modifica Tariffa Residente/Non Residente</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>ResidenceChangeDate__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Phase__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>In attesa Data Decorrenza</stringValue>
             </value>
         </filters>
         <object>Case</object>
         <schedule>
-            <frequency>Weekly</frequency>
-            <startDate>2021-12-06</startDate>
-            <startTime>00:00:00.000Z</startTime>
+            <frequency>Daily</frequency>
+            <startDate>2023-02-16</startDate>
+            <startTime>01:00:00.000Z</startTime>
         </schedule>
         <triggerType>Scheduled</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>
