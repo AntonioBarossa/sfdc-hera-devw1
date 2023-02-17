@@ -275,7 +275,9 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
                     process.CasualCode__c = 'RI6';
                 }
                //escludo il processo di modifica tariffa se si sta eseguendo una rimozione sconto
-                if(!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)){
+                if((!process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_ModificaTariffaRimozione'))
+                 || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_AgevolazioniAmbiente') && !isRemoveSubscriptions)
+                 || (process.RecordTypeName__c.equalsIgnoreCase('HDT_RT_ModificaTariffaRimozione') && isRemoveSubscriptions)){
                     availableProcesses.add(process);
                 }
             }
@@ -509,17 +511,22 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
             system.debug('remiCodeMap --> '+remiCodeMap);
             if(!remiCodeMap.isEmpty()){
                 for(ServicePoint__c sr :spList){
-                    if(String.isNotBlank(remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c)){
-                        sr.RemiCode__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c;
+                    if(remiCodeMap.containsKey(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase())){
+                        if(String.isNotBlank(remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c)){
+                            sr.RemiCode__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).RemiCode__c;
+                        }
+                        else{
+                            res += '_Remi';            
+                        }
+                        if(String.isNotBlank(sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c)){
+                            sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c;                    
+                        }
+                        else{
+                            sr.VATNumberUdb__c = '02060500390';        
+                        }
                     }
                     else{
-                        res += '_Remi';            
-                    }
-                    if(String.isNotBlank(sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c)){
-                        sr.VATNumberUdb__c = remiCodeMap.get(sr.SupplyCity__c.toUpperCase() + '-' + serviceSocieta.get(sr.Id).toUpperCase()).VATNumberUdb__c;                    
-                    }
-                    else{
-                        sr.VATNumberUdb__c = '02060500390';        
+                        sr.VATNumberUdb__c = '02060500390';      
                     }
                 }
             }

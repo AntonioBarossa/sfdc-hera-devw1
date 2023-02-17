@@ -2314,10 +2314,10 @@
             <name>Coabitazione_SI</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Cohabitation</leftValueReference>
+                <leftValueReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Cohabitation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Si_Cohabitation</elementReference>
+                    <stringValue>Si</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2329,10 +2329,10 @@
             <name>Coabitazione_No</name>
             <conditionLogic>or</conditionLogic>
             <conditions>
-                <leftValueReference>Cohabitation</leftValueReference>
+                <leftValueReference>GetCaseAggiornatoModificaUnitaImmobiliari_0.Cohabitation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>No_Cohabitation</elementReference>
+                    <stringValue>No</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -4089,10 +4089,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Cohabitation</leftValueReference>
+                <leftValueReference>GetCaseAggiornatoModificaUnitaImmobiliari_0_0.Cohabitation__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Si_Cohabitation</elementReference>
+                    <stringValue>Si</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -4218,7 +4218,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Valorizza_Campo_Note</name>
         <dataType>String</dataType>
         <expression>{!GetCaseAggiornatoModificaUnitaImmobiliari_0_0.Note__c} &amp; BR() 
-&amp; IF(!ISBLANK({!Cohabitation}),&quot;Coabitazione: &quot; &amp; {!Cohabitation} &amp; BR(), &quot;&quot;) 
 &amp; IF(!ISBLANK(TEXT({!Community_Beds})),&quot;Comunità Posti Letto: &quot; &amp; TEXT({!Community_Beds}) &amp; BR(), &quot;&quot;)  
 &amp; IF(!ISBLANK({!FormInserimentoAnagraficaComponenti.resultString}),{!FormInserimentoAnagraficaComponenti.resultString} &amp; BR(),&quot;&quot;)
 &amp; IF(!ISBLANK({!frequenzaAllineamentoGAA}),&quot;Frequenza: &quot; &amp; {!frequenzaAllineamentoGAA},&quot;&quot;)</expression>
@@ -6869,14 +6868,16 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>Screen_Input_Fiscale_Fondo_Fughe_0_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Cohabitation</name>
-                    <choiceReferences>Si_Cohabitation</choiceReferences>
-                    <choiceReferences>No_Cohabitation</choiceReferences>
-                    <dataType>String</dataType>
-                    <defaultSelectedChoiceReference>No_Cohabitation</defaultSelectedChoiceReference>
-                    <fieldText>Coabitazione</fieldText>
-                    <fieldType>DropdownBox</fieldType>
+                    <name>Community_Beds</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Comunità Posti Letto</fieldText>
+                    <fieldType>InputField</fieldType>
                     <isRequired>false</isRequired>
+                    <scale>0</scale>
+                    <validationRule>
+                        <errorMessage>&lt;p&gt;Inserire un numero maggiore o uguale a 0&lt;/p&gt;</errorMessage>
+                        <formulaExpression>{!Community_Beds} &gt;= 0</formulaExpression>
+                    </validationRule>
                 </fields>
                 <inputParameters>
                     <name>width</name>
@@ -6889,18 +6890,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <fields>
                 <name>Screen_Input_Fiscale_Fondo_Fughe_0_Section1_Column2</name>
                 <fieldType>Region</fieldType>
-                <fields>
-                    <name>Community_Beds</name>
-                    <dataType>Number</dataType>
-                    <fieldText>Comunità Posti Letto</fieldText>
-                    <fieldType>InputField</fieldType>
-                    <isRequired>false</isRequired>
-                    <scale>0</scale>
-                    <validationRule>
-                        <errorMessage>&lt;p&gt;Inserire un numero maggiore o uguale a 0&lt;/p&gt;</errorMessage>
-                        <formulaExpression>{!Community_Beds} &gt;= 0</formulaExpression>
-                    </validationRule>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>

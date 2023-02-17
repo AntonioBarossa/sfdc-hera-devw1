@@ -53,6 +53,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track additionalAttachments;
     hasCohabitantButton;
     cohabitantNumber;
+    disableNext = true;
 
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
@@ -120,71 +121,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             DynamicOnChange.call(this, event);
         }
 
-        /*  # Le logiche degli eventi onchange dei singoli campi sono configurabili direttamente nel JSON del wizard
-
-        if(event.target.fieldName === 'VATfacilitationFlag__c' && event.target.value) {
-            this.template.querySelector("[data-id='VAT__c']").disabled = false;
-            this.template.querySelector("[data-id='VAT__c']").required = true;
-            Promise.resolve().then(() => {
-                const inputEle = this.template.querySelector("[data-id='VAT__c']");
-                inputEle.reportValidity();
-            });
-        } else if(event.target.fieldName === 'VATfacilitationFlag__c' && !event.target.value) {
-            this.template.querySelector("[data-id='VAT__c']").disabled = true;
-            this.template.querySelector("[data-id='VAT__c']").required = false;
-            Promise.resolve().then(() => {
-                const inputEle = this.template.querySelector("[data-id='VAT__c']");
-                inputEle.reportValidity();
-            });
-        }
-
-        if(event.target.fieldName === 'FacilitationExcise__c' && event.target.value) {
-            if(this.template.querySelector("[data-id='ExciseEle__c']") !== null) {
-                this.template.querySelector("[data-id='ExciseEle__c']").disabled = false;
-                this.template.querySelector("[data-id='ExciseEle__c']").required = true;
-                Promise.resolve().then(() => {
-                    const inputEle = this.template.querySelector("[data-id='ExciseEle__c']");
-                    inputEle.reportValidity();
-                });
-            }
-            if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null) {
-                this.template.querySelector("[data-id='ExciseGAS__c']").disabled = false;
-                this.template.querySelector("[data-id='ExciseGAS__c']").required = true;
-                Promise.resolve().then(() => {
-                    const inputEle = this.template.querySelector("[data-id='ExciseGAS__c']");
-                    inputEle.reportValidity();
-                });
-            }
-
-        } else if(event.target.fieldName === 'FacilitationExcise__c' && !event.target.value) {
-            if(this.template.querySelector("[data-id='ExciseEle__c']") !== null) {
-                this.template.querySelector("[data-id='ExciseEle__c']").disabled = true;
-                this.template.querySelector("[data-id='ExciseEle__c']").required = false;
-                Promise.resolve().then(() => {
-                    const inputEle = this.template.querySelector("[data-id='ExciseEle__c']");
-                    inputEle.reportValidity();
-                });
-            }
-            if(this.template.querySelector("[data-id='ExciseGAS__c']") !== null) {
-                this.template.querySelector("[data-id='ExciseGAS__c']").disabled = true;
-                this.template.querySelector("[data-id='ExciseGAS__c']").required = false;
-                Promise.resolve().then(() => {
-                    const inputEle = this.template.querySelector("[data-id='ExciseGAS__c']");
-                    inputEle.reportValidity();
-                });
-            }
-        }
-        if (this.currentSection.name === 'dateOrdine') {
-            if(event.target.fieldName === 'IsActivationDeferred__c') {
-                console.log("IsActivationDeferred__c");
-                this.pendingSteps.filter(section => section.name === 'dateOrdine')[0].data.filter(field => field.apiname === 'EffectiveDate__c')[0].typeVisibility = event.target.value;
-                if (event.target.value && this.sectionDataToSubmit.EffectiveDate__c === undefined) {
-                    this.sectionDataToSubmit['EffectiveDate__c'] = this.order.EffectiveDate__c;
-                } else {
-                    delete this.sectionDataToSubmit.EffectiveDate__c;
-                }
-            }
-        } */
         let draftData = this.sectionDataToSubmit;
         draftData.Id = this.currentSectionRecordId;
         if(this.lastStepNumber === this.currentSection.step) {
@@ -225,11 +161,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     handleOnLoad(event) {
-        if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
-            this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
-        }
-        if( this.template.querySelector("[data-id='CohabitantsNumber__c']") !== null ){
-            this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
+        this.disableNext = false;
+        if( this.currentSection.name === 'processVariables' || this.currentSection.name === 'dettaglioImpianto' ) {
+            if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
+                this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
+            }
+            if( this.template.querySelector("[data-id='CohabitantsNumber__c']") !== null ){
+                this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
+            }
         }
     }
 
@@ -463,7 +402,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             this.sectionDataToSubmit["Description"] = nextSectionStep;
             console.log('#Section ANalisi Consumi >>> ' + JSON.stringify(this.sectionDataToSubmit));
         }
-        //INSERITE NUOVE VARIABILI, IsRetroactive e IsReading solo in avanzamento di sezione.  
         updateProcessStep(
             {order: {Id: orderId, Step__c: nextSectionStep, 
             ...this.sectionDataToSubmit,
@@ -680,13 +618,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
                     }
-                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value) : 0;
+                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value) : 0;
                     let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
                     let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
                     let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
                     let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
                     let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
-                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit;
+                    let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']")? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
+                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
+                    console.log('sumUnit: ' + sumUnit + ' = ' + noResDom + ' + ' + resDom + ' + ' + noDom + ' + ' + indUnit + ' + ' + zooUnit + ' + ' + commUnit + ' + ' + agrUnit + ' = ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value + '(UnitaImmobiliari)' );
                     if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
@@ -718,13 +658,15 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.showMessage('Errore', 'Per indicare un numero di Unita Immobiliari diverso da 1 è necessario modificare il Tipo Impianto in Promiscuo', 'error');
                         return;
                     }
-                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit']").value) : 0;
+                    let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value) : 0;
                     let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
                     let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']")? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
                     let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']")? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
                     let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']")? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
                     let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']")? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
-                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit;
+                    let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']")? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
+                    let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
+                    console.log('sumUnit: ' + sumUnit + ' = ' + noResDom + ' + ' + resDom + ' + ' + noDom + ' + ' + indUnit + ' + ' + zooUnit + ' + ' + commUnit + ' + ' + agrUnit + ' = ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value + '(UnitaImmobiliari)' );
                     if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
@@ -1985,9 +1927,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleUpdateCodAtecoEvent(event){
         console.log('###Ateco Event >>> ' + JSON.stringify(event.detail));
         if(event.detail?.isRonchi){
-            this.template.querySelector("[data-id='AtecoCode__c']").value = safeStr(event.detail?.atecoCode);
-            this.template.querySelector("[data-id='RonchiCode__c']").value = safeStr(event.detail?.ronchiCode);
-            this.template.querySelector("[data-id='RonchiSubcat__c']").value = safeStr(event.detail?.ronchiSubcategory);
+            this.template.querySelector("[data-id='AtecoCode__c']").value = safeStr(event.detail?.atecoCode), this.sectionDataToSubmit["AtecoCode__c"]=safeStr(event.detail?.atecoCode);
+            this.template.querySelector("[data-id='RonchiCode__c']").value = safeStr(event.detail?.ronchiCode), this.sectionDataToSubmit["RonchiCode__c"]=safeStr(event.detail?.ronchiCode);
+            this.template.querySelector("[data-id='RonchiSubcat__c']").value = safeStr(event.detail?.ronchiSubcategory), this.sectionDataToSubmit["RonchiSubcat__c"]=safeStr(event.detail?.ronchiSubcategory);;
         }
         else{
             this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
@@ -2007,7 +1949,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('###Missed Due Event >>> ');
         this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
-        //this.missedDueDate = this.getFormattedDate(event.detail.missedDue);
         const MissingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
         MissingDueAmount.required = event.detail.missedDue? true : false;
         MissingDueAmount.disabled = event.detail.missedDue? false : true;

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_VR_DistributorManager</fullName>
+    <active>true</active>
+    <description>La regola da errore se l&apos;account che si sta tentando di modificare è di tipo Distributore e l&apos;utente non ha il permesso HDT_CP_DistributorManager</description>
+    <errorConditionFormula>AND(
+				NOT(ISNEW()),
+				RecordType.DeveloperName = &quot;HDT_RT_Distributore&quot;,
+				$Permission.HDT_CP_DistributorManager= false
+			)</errorConditionFormula>
+    <errorMessage>Non hai i permessi per modificare questo record. Contattare l&apos;amministratore di sistema.</errorMessage>
+</ValidationRule>

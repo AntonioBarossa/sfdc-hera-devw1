@@ -156,10 +156,9 @@
     <gender>Masculine</gender>
     <label>Dato Tecnico Comunale</label>
     <nameField>
-        <displayFormat>DTC - {000000}</displayFormat>
-        <label>Numero Dato Tecnico Comunale</label>
+        <label>Dato Tecnico Comunale</label>
         <trackHistory>false</trackHistory>
-        <type>AutoNumber</type>
+        <type>Text</type>
     </nameField>
     <pluralLabel>Dati Tecnici Comunali</pluralLabel>
     <searchLayouts>

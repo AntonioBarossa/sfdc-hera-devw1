@@ -2025,6 +2025,366 @@
         <type>Flexipage</type>
         <profile>Hera M2M Integration User</profile>
     </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera CASB User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera CASB User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_TARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera CASB User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera CASB User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Door2Door Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera M2M Integration User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Integrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Teleseller Partner User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>HeraCommunity Profile</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>HDT_Dati_Catastali_Tari_Page</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>LandRegistry__c</pageOrSobjectType>
+        <recordType>LandRegistry__c.HDT_RT_DatiCatastali_PraticaTARI</recordType>
+        <type>Flexipage</type>
+        <profile>Admin</profile>
+    </profileActionOverrides>
     <tabs>standard-home</tabs>
     <tabs>standard-Lead</tabs>
     <tabs>standard-Account</tabs>
