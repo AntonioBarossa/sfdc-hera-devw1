@@ -22,6 +22,7 @@
             <property name="required" type="Boolean" label="Required" description="If the fields has to be required" role="inputOnly"/>
             <property name="readonly" type="Boolean" label="Readonly" description="if the component has to be in readonly mode" role="inputOnly"/>
             <property name="selectedLandRegistryId" type="String" label="Selected Land Registry Id" description="Id of the child record selected" role="outputOnly"/>
+            <property name="sessionid" type="String" label="Session Flow Id" role="inputOnly"/>  
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
