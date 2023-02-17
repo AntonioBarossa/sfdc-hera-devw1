@@ -8823,6 +8823,14 @@
             <fullName>1101-Domestico</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>1102-Non domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>1110-Ente pubblico</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SignMode__c</picklist>
