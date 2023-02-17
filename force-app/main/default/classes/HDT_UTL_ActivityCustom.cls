@@ -378,6 +378,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             && activity.ActivityEndTime__c != null){
                 activity.EndDate__c = activity.ActivityEndTime__c.date();
             }
+            if(activity.ActivityStartTime__c == null){
+                activity.ActivityStartTime__c = DateTime.now();
+            }
         }
     }
 
