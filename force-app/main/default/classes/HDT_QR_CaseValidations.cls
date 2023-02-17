@@ -1,3 +1,10 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 17-02-2023
+ * @last modified by  : Giacinto Florio
+**/
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_QR_CaseValidations {
 
@@ -36,7 +43,8 @@ public inherited sharing class HDT_QR_CaseValidations {
         BillingIsAddressVerified__c,
         SalesCompany__c,
         BillingCountry__c,
-        Caliber__c
+        Caliber__c,
+        Channel__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
