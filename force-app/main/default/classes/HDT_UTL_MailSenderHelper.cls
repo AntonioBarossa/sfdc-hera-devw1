@@ -176,7 +176,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
         Case mailCase;
         Case caseToClone;
-
+        String sObjectName = recordId.getSObjectType().getDescribe().getName();
         try{
 
             mailCase = new Case();
@@ -185,7 +185,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 caseToClone = HDT_QR_MailSender.retrieveCaseForClone(recordId);
                 mailCase = caseToClone.clone(false, true, false, false);
                 mailCase.ParentId = recordId;
-            } else {
+            } else if('Order'.equalsIgnoreCase(sObjectName)){
                 Order orderDetail = HDT_QR_MailSender.retrieveCaseDetailsFromOrder(recordId);
                 mailCase.Order__c = recordId;
                 mailCase.AccountId = orderDetail.AccountId;
@@ -195,6 +195,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 //mailCase. = orderDetail.ServicePoint__c;
                 mailCase.ServicePointCode__c = orderDetail.ServicePointCode__c;
                 mailCase.BillingProfile__c = orderDetail.BillingProfile__c;
+            }else {
+                mailCase.AccountId = recordId;
             }
 
             mailCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Informative').getRecordTypeId();
