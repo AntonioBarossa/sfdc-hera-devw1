@@ -5,7 +5,7 @@
     <externalId>false</externalId>
     <label>Ricerca Comune amministrativo</label>
     <referenceTo>CityTechnicalData__c</referenceTo>
-    <relationshipLabel>Dati Catastali</relationshipLabel>
+    <relationshipLabel>Dati Catastali LegalCity</relationshipLabel>
     <relationshipName>Dati_Catastali_LegalCity</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
