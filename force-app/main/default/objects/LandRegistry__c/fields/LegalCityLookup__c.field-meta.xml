@@ -6,7 +6,7 @@
     <label>Ricerca Comune amministrativo</label>
     <referenceTo>CityTechnicalData__c</referenceTo>
     <relationshipLabel>Dati Catastali</relationshipLabel>
-    <relationshipName>Dati_Catastali</relationshipName>
+    <relationshipName>Dati_Catastali_LegalCity</relationshipName>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Lookup</type>
