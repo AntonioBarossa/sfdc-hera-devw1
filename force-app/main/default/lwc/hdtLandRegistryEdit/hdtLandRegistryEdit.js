@@ -227,7 +227,11 @@ export default class HdtLandRegistryEdit extends LightningElement {
         });
         this.cadastralCategoryValue = this.template.querySelector('[data-name="RegistryCategory__c"]').value;
         this.modify = false;
-        this.disableSalva = true;
+
+        Promise.resolve().then(()=>{
+            this.disableSalva = true;
+        })
+        
         this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false, restoredId: this._recordId}}));
     }
 
@@ -285,7 +289,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     
 
     handleFormLoad(event){
-        this.showSpinner = false;
+        this.showSpinner = true;
         console.log("### handleFormLoad", JSON.stringify(event.detail.records));
         this.modify = true; // => presetto il form come modificabile, poi lo disabilito se ci sono le condizioni
         if(this._recordId){
@@ -333,6 +337,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
                 else this._required = false;
             }
         });
+        this.showSpinner = false;
     }
 
     handleFormSubmit(event){
