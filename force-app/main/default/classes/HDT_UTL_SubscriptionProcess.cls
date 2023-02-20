@@ -20,7 +20,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 OR 
                     (
                     Order.RecordType.DeveloperName='HDT_RT_VAS' 
-                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null)
+                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.VasSubtype__c = 'Analisi Consumi')
                     ) 
                 ) 
             WITH Security_Enforced ]);
