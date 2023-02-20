@@ -15,7 +15,7 @@ public inherited sharing class HDT_UTL_GaaView extends HDT_SRV_AccountDataEnrich
         String implantType = '';
         
         try{
-            implantType = getImplatType(relatedToId);
+            implantType = getImplantType(relatedToId);
         } catch (Exception e){
             System.debug('--> error retrieving implantType: ' + e.getMessage() + '[' + String.valueOf(e.getLineNumber()) + ']');
             errorMessage = e.getMessage() + '[' + String.valueOf(e.getLineNumber()) + ']';
@@ -35,7 +35,7 @@ public inherited sharing class HDT_UTL_GaaView extends HDT_SRV_AccountDataEnrich
 
     }
 
-    public static String getImplatType(String recordId){
+    public static String getImplantType(String recordId){
         Id myId = Id.valueOf(recordId);
         String sObectType = String.valueOf(myId.getSobjectType());
         String implantType = '';
