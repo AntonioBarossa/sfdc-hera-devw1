@@ -318,7 +318,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: true,
-                            value: this.servicePointRetrievedData[element],
+                            value: this.isSap ? '' : this.servicePointRetrievedData[element],
                             disabled: false
                         }
                     )
@@ -536,7 +536,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                         {
                             fieldname: element,
                             required: true,
-                            value: this.servicePointRetrievedData[element],
+                            value: this.isSap ? '' : this.servicePointRetrievedData[element],
                             disabled: false
                         }
                     )
@@ -1352,6 +1352,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.loading = false;
             this.alert('Dati tabella', 'Per poter salvare popolare i seguenti campi : ' + concatPointErrorFields.slice(0, -2), 'error')
         }
+        if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua' &&
+            this.isSap === true &&
+            this.allSubmitedFields['ImplantType__c'] !== undefined && 
+            this.allSubmitedFields['ImplantType__c']  === '1100-ACQUA --- Non definito ---') {
+                this.isValid = false;
+                this.isValidFields = false;
+                this.loading = false;
+                this.alert('Dati tabella', 'Selezionare un Tipo Impianto differente.', 'error');
+        }
     }
 
     validFieldsCreateServicePoint() {
@@ -1478,6 +1487,15 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.isValidFields = false;
             this.loading = false;
             this.alert('Dati tabella', 'Per poter salvare popolare i seguenti campi : ' + concatPointErrorFields.slice(0, -2), 'error')
+        }
+        if (this.allSubmitedFields['CommoditySector__c'] == 'Acqua' &&
+            this.isSap === true &&
+            this.allSubmitedFields['ImplantType__c'] !== undefined && 
+            this.allSubmitedFields['ImplantType__c']  === '1100-ACQUA --- Non definito ---') {
+                this.isValid = false;
+                this.isValidFields = false;
+                this.loading = false;
+                this.alert('Dati tabella', 'Selezionare un Tipo Impianto differente.', 'error');
         }
     }
 

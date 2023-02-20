@@ -154,7 +154,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, Name,SBQQ__Product__r.Name, SBQQ__RequiredBy__c,SBQQ__RequiredBy__r.Name,
         SBQQ__RequiredBy__r.SBQQ__Product__c, SBQQ__RequiredBy__r.SBQQ__Product__r.Name,  SBQQ__ProductFamily__c,
         SBQQ__RequiredBy__r.BillingProfile__c, SBQQ__RequiredBy__r.BillingProfile__r.Name, SBQQ__Quote__r.ContractReference__r.Status,
-        ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c, SBQQ__Quote__r.SBQQ__Account__c, SBQQ__Quote__r.ContractReference__r.AccountId,
+        ServicePoint__c,ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, ServicePoint__r.ATO__c, ServicePoint__r.SupplyCity__c, SBQQ__Quote__r.SBQQ__Account__c, SBQQ__Quote__r.ContractReference__r.AccountId,
         SBQQ__Quote__r.ContractReference__c, SBQQ__Quote__r.AllowChangeUse__c, SBQQ__Quote__r.AmendmentAllowed__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__c,SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name
         FROM SBQQ__QuoteLine__c
         WHERE SBQQ__Quote__r.Sale__c = :saleId
@@ -183,8 +183,8 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate ASC];
 
-        List<City__c> cities = [SELECT PaymentMethod__c FROM City__c WHERE Name = :invoicingCity WITH SECURITY_ENFORCED ];
-  
+        Map<String,String> paymentForCitiesMap = getPaymentForCities(quoteLines);
+
         for(SBQQ__QuoteLine__c quoteLine : quoteLines){
             if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua')){
                 // Caso del cambio offerta la riga non è selezionabile
@@ -207,8 +207,10 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     quoteLineToApply.add(singleApply);
                 }
                 
-            } else if( cities[0].PaymentMethod__c != null && quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente')){
-                if( paymentMethod.equalsIgnoreCase(cities[0].PaymentMethod__c) ){
+            } else if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente'))
+            {
+                if( paymentForCitiesMap.get(quoteLine.ServicePoint__r.SupplyCity__c) == null || paymentMethod.equalsIgnoreCase(paymentForCitiesMap.get(quoteLine.ServicePoint__r.SupplyCity__c)) )
+                {
                     quoteLineToApply.add(new HDT_WRP_QuoteLineWrp(quoteLine));
                 }
             } else {
@@ -220,6 +222,22 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         return JSON.serialize(quoteLineToApply);
     }
 
+    public static Map<String,String> getPaymentForCities(List<SBQQ__QuoteLine__c> quoteLines){
+        List<String> cities = new List<String>();
+        for(SBQQ__QuoteLine__c quoteLine : quoteLines){
+            if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente')){
+                cities.add(quoteLine.ServicePoint__r.SupplyCity__c);
+            }
+        }
+        List<City__c> paymentForCities = [SELECT Name, PaymentMethod__c FROM City__c WHERE Name IN :cities WITH SECURITY_ENFORCED ];
+        Map<String, String> paymentForCitiesMap = new Map<String, String>();
+        if( paymentForCities != null && !paymentForCities.isEmpty() ){
+            for( City__c city : paymentForCities ){
+                paymentForCitiesMap.put( city.Name, city.PaymentMethod__c );
+            }
+        }
+        return paymentForCitiesMap;
+    }
 
     class HDT_WRP_QuoteLineWrp
     {
