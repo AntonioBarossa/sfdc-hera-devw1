@@ -230,7 +230,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         when 'Connessione con Attivazione'{
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
-                            newOrder.ResidentDomesticHousingUnit__c = 1;
+                            //newOrder.ResidentDomesticHousingUnit__c = 1;
                             if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
                                 newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per Prima Attivazione e Connessione Con Attivazione
                                 newOrder.PaySewer__c = 'No - Esente';           //per gli altri i valori sono presi da Arricchimento come da BPP

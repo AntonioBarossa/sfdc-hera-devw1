@@ -80,7 +80,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             try{
                 currentObj.newCase=caseEnrichment(currentObj.newCase,contractCodePodMap.get(currentObj.csvSplitted[contractIndex]));
             }catch (Exception e){
-                itemsToSave.add(setErrorItem(currentObj.requestItem, (e.getMessage() + ' | '+e.getStackTraceString()).abbreviate(255)));
+                itemsToSave.add(setErrorItem(currentObj.requestItem, e.getMessage().abbreviate(255)));
                 continue;
             }
             caseToInsert.add(currentObj.newCase);
@@ -118,7 +118,7 @@ public inherited sharing class HDT_UTL_ProcessConsumoAnomaloIdrico extends HDT_U
             caseToEnrich.DeliveryAddress__c=dataSource.BillingProfile__r.InvoicingAddressFormula__c;
             return caseToEnrich;
         }
-        throw new CalloutException('Arricchimento dati fallito');
+        throw new CalloutException('Arricchimento dati fallito: '+res.errorDetails);
     }
 
     private Map<String,Object> integrityChecks(List<String>csvSplitted){
