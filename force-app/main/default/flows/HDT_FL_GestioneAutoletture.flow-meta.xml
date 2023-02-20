@@ -1337,6 +1337,12 @@ TODO: Formula da adeguare in Wave 2.</description>
                     <elementReference>Get_Case.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
