@@ -130,7 +130,8 @@ export default class HdtAccountDataEnrichment extends NavigationMixin(LightningE
             this.showSpinner = false;
             
         }).catch(error => {
-            console.log('### error: ' + JSON.parse(error));
+            console.log('### error: ' + JSON.stringify(error));
+            //{"status":500,"body":{"message":">>>>>>>>> custom error"},"headers":{},"ok":false,"statusText":"Server Error","errorType":"fetchResponse"}
             this.showError = true;
             this.showErrorMessage = error.body.message;
             this.showSpinner = false;

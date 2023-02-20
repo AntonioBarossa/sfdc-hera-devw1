@@ -15,11 +15,18 @@ public inherited sharing class HDT_UTL_GaaView extends HDT_SRV_AccountDataEnrich
         String implantType = '';
         
         try{
-            implantType = getRelatedRecord(relatedToId);
+            implantType = getImplatType(relatedToId);
         } catch (Exception e){
             System.debug('--> error retrieving implantType: ' + e.getMessage() + '[' + String.valueOf(e.getLineNumber()) + ']');
+            errorMessage = e.getMessage() + '[' + String.valueOf(e.getLineNumber()) + ']';
+            success = false;
         }
         
+        if(String.isEmpty(implantType)){
+            errorMessage = 'L\'impianto non è indicato nel service point!';
+            success = false;
+        }
+
         body = '{"bp": "' + accList[0].CustomerCode__c + '",';
         body += '"impianto": "' + implantType + '"';
         body += '}';
@@ -28,18 +35,20 @@ public inherited sharing class HDT_UTL_GaaView extends HDT_SRV_AccountDataEnrich
 
     }
 
-    public static String getRelatedRecord(String recordId){
+    public static String getImplatType(String recordId){
         Id myId = Id.valueOf(recordId);
         String sObectType = String.valueOf(myId.getSobjectType());
-
+        String implantType = '';
+        List<sObject> sObjectList = new List<sObject>();
+        
         System.debug('--> sObectType ' + sObectType);
-
+        
         String fieldApiName = '';
         String queryString = '';
         
         switch on sObectType {
             when 'Contract' {
-                fieldApiName = '';
+                fieldApiName = 'ServicePoint__r.SAPImplantCode__c';
             }	
             when 'ServicePoint__c' {
                 fieldApiName = 'SAPImplantCode__c';
@@ -49,15 +58,20 @@ public inherited sharing class HDT_UTL_GaaView extends HDT_SRV_AccountDataEnrich
         queryString += 'SELECT Id, ' + fieldApiName + ' ';
         queryString += 'FROM ' + sObectType + ' ';
         queryString += 'WHERE Id = \'' + recordId + '\' LIMIT 1';
-
-        System.debug('--> sObectType ' + queryString);
-
-        List<sObject> sObjectList = new List<sObject>();
         sObjectList = HDT_QR_AccountDataEnrichment.getRecordsList(sObjectList, queryString, sObectType);
-        sObject obj = sObjectList[0];
 
-        return (String)obj.get(fieldApiName);
-
+        switch on sObectType {
+            when 'Contract' {
+                List<Contract> contractList = (List<Contract>)sObjectList;
+                implantType = contractList[0].ServicePoint__r.SAPImplantCode__c;
+            }	
+            when 'ServicePoint__c' {
+                List<ServicePoint__c> spList = (List<ServicePoint__c>)sObjectList;
+                implantType = spList[0].SAPImplantCode__c;
+            }
+        }
+        
+        return implantType;
     }
 
 }
