@@ -240,9 +240,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                                 newOrder.PaySewer__c = 'Si - Paga';
                             }
                         }
-                        when 'Cambio Offerta'{
-                            newOrder.ContractExpenses__c  = 'Nessun Addebito';
-                        }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                         }
