@@ -19,14 +19,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         new List<String>{'Disconnectable__c','No','ACANTINC00', 'ACINTERNO0', 'ACPUBNDIS0', 'ACSUBDIST0', 'ACANTIN000', 'ACTANTINC0'}, //altrimenti Si
         //new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'Cohabitation__c','N','ACDOMRESP0','ACPROMISC0'},
-        new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
+        //new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
         new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
         new List<String>{'RealEstateUnit__c','1','ACAGRICO00','ACAGRIZOO0','ACANTINC00','ACARTCOMM0','ACAUNOPOT0','ACDOMNR000','ACDOMRESP0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPUBNDIS0','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACZOOTECN0','APSCARPRO0','ACAUGRUNI0','ACAUGRUNC0','ACANTIN000','ACPISPUB00','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
         new List<String>{'AgriculturalHousingUnit__c','1','ACAGRICO00'},
         new List<String>{'CommercialHousingUnit__c','1','ACARTCOMM0','ACAUGRUNC0'},
         new List<String>{'IndustrialHousingUnit__c','1','ACINDSTR00','ACAUGRUNI0'},
-        new List<String>{'ZootechnicalHousingUnit__c','1','ACAGRIZOO0','ACZOOTECN0'},
-        new List<String>{'SeasonUse__c','Nessuna stagionalita','ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITMINDAP0','AITMINDBP0','AITMNDOME0'}
+        new List<String>{'ZootechnicalHousingUnit__c','1','ACAGRIZOO0','ACZOOTECN0'}/* ,
+        new List<String>{'SeasonUse__c','Nessuna stagionalita','ACAGRICO00','ACAUNOPOT0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACAUGRUNI0','ACPROMIBI0','ACTANTINC0','AITBAGRIC0','AITMINDAP0','AITMINDBP0','AITMNDOME0'} */
     };
 
     @AuraEnabled
@@ -210,6 +210,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     newOrder.PaySewer__c = updatedServicePoint[0].PaySewer__c;
                     newOrder.AggregateBilling__c = 'No';
                     newOrder.EffectiveDate__c = System.Today();
+                    newOrder.SeasonUse__c = 'Nessuna stagionalita';
                     //Fine: Predefault valido per tutti i processi
 
                     //Inizio: Predefault secondo Processo
@@ -230,6 +231,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
                             newOrder.ResidentDomesticHousingUnit__c = 1;
+                            if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
+                                newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per Prima Attivazione e Connessione Con Attivazione
+                                newOrder.PaySewer__c = 'No - Esente';           //per gli altri i valori sono presi da Arricchimento come da BPP
+                            }
+                            else{
+                                newOrder.PayPurification__c = 'Si - Paga';
+                                newOrder.PaySewer__c = 'Si - Paga';
+                            }
                         }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
@@ -249,10 +258,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             }
                         }
                     }
-                    //Per ogni ratecategory
-                    //newOrder.PayPurification__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
-                    //newOrder.PaySewer__c = 'Uso cantiere'.equalsIgnoreCase(order.ImplantType__c) || 'Uso irriguo'.equalsIgnoreCase(order.ImplantType__c) ? 'No - Esente' : 'Si - Paga';
-                    // Fine: Predefault secondo RateCategory
                     
                 }
                 when 'Energia Elettrica' {

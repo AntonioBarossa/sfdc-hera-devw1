@@ -123,21 +123,29 @@ public inherited sharing class HDT_LC_BillingProfileForm {
 
         if(billingProfile.PaymentMethod__c == 'RID' && !billingProfile.IbanIsForeign__c){
             if(!String.isBlank(billingProfile.IBAN__c) && billingProfile.IBAN__c.length() == 27){
-                billingProfile.IbanCountry__c = billingProfile.IBAN__c.substring(0, 2);
-                billingProfile.IbanCIN_IBAN__c = billingProfile.IBAN__c.substring(2, 4);
-                billingProfile.IbanCIN__c = billingProfile.IBAN__c.substring(4, 5);
-                billingProfile.IbanABI__c = billingProfile.IBAN__c.substring(5, 10);
-                billingProfile.IbanCAB__c = billingProfile.IBAN__c.substring(10, 15);
-                billingProfile.IbanCodeNumber__c = billingProfile.IBAN__c.substring(15,27);
+                billingProfile.IbanCountry__c = billingProfile.IBAN__c.substring(0, 2).toUpperCase();
+                billingProfile.IbanCIN_IBAN__c = billingProfile.IBAN__c.substring(2, 4).toUpperCase();
+                billingProfile.IbanCIN__c = billingProfile.IBAN__c.substring(4, 5).toUpperCase();
+                billingProfile.IbanABI__c = billingProfile.IBAN__c.substring(5, 10).toUpperCase();
+                billingProfile.IbanCAB__c = billingProfile.IBAN__c.substring(10, 15).toUpperCase();
+                billingProfile.IbanCodeNumber__c = billingProfile.IBAN__c.substring(15,27).toUpperCase();
             }else if (!String.isBlank(billingProfile.IBAN__c)){
                 throw new AuraHandledException('IBAN non valido');
+            }else{
+                billingProfile.IbanCountry__c = billingProfile.IbanCountry__c.toUpperCase();
+                billingProfile.IbanCIN_IBAN__c = billingProfile.IbanCIN_IBAN__c.toUpperCase();
+                billingProfile.IbanCIN__c = billingProfile.IbanCIN__c.toUpperCase();
+                billingProfile.IbanABI__c = billingProfile.IbanABI__c.toUpperCase();
+                billingProfile.IbanCAB__c = billingProfile.IbanCAB__c.toUpperCase();
+                billingProfile.IbanCodeNumber__c = billingProfile.IbanCodeNumber__c.toUpperCase();
             }
             
             String iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
 
             HDT_UTL_ValidateIban.HDT_UTL_FlowInputs ibanToValidate = new HDT_UTL_ValidateIban.HDT_UTL_FlowInputs();
             // ibanToValidate.iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
-            ibanToValidate.iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+            // ibanToValidate.iban = billingProfile.IbanCountry__c + billingProfile.IbanCIN_IBAN__c + billingProfile.IbanCIN__c + billingProfile.IbanABI__c + billingProfile.IbanCAB__c + billingProfile.IbanCodeNumber__c;
+            ibanToValidate.iban = iban;
 
             List<String> ibanValidationResult = HDT_UTL_ValidateIban.validateIban(new List<HDT_UTL_ValidateIban.HDT_UTL_FlowInputs>{ibanToValidate});
 
@@ -294,9 +302,9 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             if(bpAccountList.size() > 0){
                 for (BillingProfile__c bpAcc : bpAccountList) {
                     compareStringExistingBp = bpAcc.InvoicingStreetName__c + bpAcc.InvoicingStreetNumber__c + bpAcc.InvoicingStreetNumberExtension__c + bpAcc.InvoicingPlace__c + bpAcc.InvoicingCity__c + bpAcc.InvoicingProvince__c + bpAcc.InvoicingPostalCode__c + bpAcc.InvoicingCountry__c + bpAcc.PaymentConditions__c + bpAcc.PaymentMethod__c + bpAcc.BillSendingMethod__c + bpAcc.IBAN__c  + bpAcc.IbanABI__c + bpAcc.IbanCAB__c + bpAcc.IbanCIN_IBAN__c + bpAcc.IbanCIN__c + bpAcc.IbanCodeNumber__c + bpAcc.IbanIsForeign__c;
-                    if(compareStringNewBp.equalsIgnoreCase(compareStringExistingBp)){
+                    if(compareStringNewBp.equalsIgnoreCase(compareStringExistingBp) && !bp.CreateContractAccount__c){
                         errorCode = 'ERRBP-000004';
-                        errorMessage = 'Esiste già un Billing Profile con le stesse condizioni (Indirizzo, Iban, Modalità di pagamento, Modalità Invio Bolletta).';
+                        errorMessage = 'Esiste già un Billing Profile con le stesse condizioni (Indirizzo, Iban, Modalità di pagamento, Modalità Invio Bolletta), selezionare il flag "CA da creare" se si vuole comunque procedere con la creazione.';
                         break;
                     }
                 }

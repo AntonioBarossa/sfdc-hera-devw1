@@ -25,7 +25,7 @@ export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
             {label: 'Comune', fieldName: 'City__c', type: 'text'},
             {label: 'Codice Ronchi', fieldName: 'RonchiCode__c', type: 'text'},
             {label: 'Sottocategoria Ronchi', fieldName: 'RonchiSubcategory__c', type: 'text'},
-            {label: 'Descrizione Codice Ronchi', fieldName: 'RonchiCodeDescription__c', type: 'text'}
+            {label: 'Descrizione Codice Ronchi', fieldName: 'Type__c', type: 'text'}
         ]
     }
 
@@ -52,7 +52,7 @@ export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
         this.selectedIstatCode = selectedRows[0].IstatCode__c;
         this.ronchiCode = selectedRows[0].RonchiCode__c;
         this.ronchiSubcategory = selectedRows[0].RonchiSubcategory__c;
-        this.ronchiDescription = selectedRows[0].RonchiDescription__c;
+        this.ronchiDescription = selectedRows[0].Type__c;
         this.disabledSave = false;
     }
 

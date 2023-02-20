@@ -135,9 +135,10 @@ public with sharing class HDT_LC_EditScartiComplessi {
                 'HDT_RT_CambioUso','HDT_RT_ConnessioneConAttivazione','HDT_RT_TemporaneaNuovaAtt','HDT_RT_VAS','HDT_RT_Subentro'{
                 step = 5;
             }
-            /* when 'HDT_RT_Subentro'{
-                step = 5; //setStepCheckAccount(ord, ord.ServicePoint__r, 5);
-            } */
+            when 'HDT_RT_SubentroAmbiente', 'HDT_RT_AttivazioneAmbiente', 'HDT_RT_CambioTariffa', 
+                'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'{
+                step = 1;
+            }
             when 'HDT_RT_Voltura'{
                 step = 3;//setStepCheckAccount(ord, ord.ServicePoint__r, 3);
             }

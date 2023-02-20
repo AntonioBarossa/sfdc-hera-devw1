@@ -165,9 +165,9 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
 
     private void populateIndexes(){
         contractIndex = mapHeaderForWrapper.get('CODICECONTRATTO');
-        accountToMergeIndex = mapHeaderForWrapper.get('LISTAACCOUNTDAUNIFICARE');
+        accountToMergeIndex = mapHeaderForWrapper.get('LISTAACCOUNT');
         masterAccountIndex=mapHeaderForWrapper.get('ACCOUNTDEFINITIVO');
-        caToMergeIndex=mapHeaderForWrapper.get('LISTACADAUNIFICARE');
+        caToMergeIndex=mapHeaderForWrapper.get('LISTACA');
         definitiveCaIndex =mapHeaderForWrapper.get('CADEFINITIVO');
         numeroContoIndex=mapHeaderForWrapper.get('NUMEROCONTO');
         ibanIndex=mapHeaderForWrapper.get('IBAN');
