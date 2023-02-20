@@ -14379,6 +14379,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DiscardDocusignEnvelope__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DiscardReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
