@@ -663,6 +663,7 @@
             <label>Rifiuti Promiscui</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>CaseIdServizio</name>
         <dataType>String</dataType>
@@ -859,38 +860,6 @@
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
                 </fields>
-                <fields>
-                    <name>CB_Indirizzi</name>
-                    <extensionName>c:hdtGenericAddressChooserFlow</extensionName>
-                    <fieldType>ComponentInstance</fieldType>
-                    <inputParameters>
-                        <name>accountId</name>
-                        <value>
-                            <elementReference>theCase.AccountId</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>addressLabel</name>
-                        <value>
-                            <stringValue>Indirizzo</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>addressType</name>
-                        <value>
-                            <stringValue>Account</stringValue>
-                        </value>
-                    </inputParameters>
-                    <inputParameters>
-                        <name>recordId</name>
-                        <value>
-                            <elementReference>theCase.Id</elementReference>
-                        </value>
-                    </inputParameters>
-                    <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-                    <isRequired>true</isRequired>
-                    <storeOutputAutomatically>true</storeOutputAutomatically>
-                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
@@ -911,6 +880,7 @@
                 <isRequired>false</isRequired>
             </fields>
             <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
         </fields>
         <fields>
             <name>wizardLwc</name>
