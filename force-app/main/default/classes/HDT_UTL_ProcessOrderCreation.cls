@@ -86,7 +86,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, processObj.nextDataObj);
 
-            ////system.debug('>>> ' + JSON.serializePretty(processObj));
+            System.debug('>>> ' + JSON.serializePretty(processObj));
 
             String csvHeader;
             String convertionError;
@@ -182,14 +182,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             SELECT Id, ProductCode, Version__c,Name
             FROM Product2
             WHERE ProductCode IN :productCodeList AND ProductCode != null
-            AND Version__c IN :versionList AND Version__c != null
+            //AND Version__c IN :versionList AND Version__c != null
+            //AND (Version__c IN :versionList OR Version__c = null)
             AND Family = 'Offerta commerciale'
             WITH SECURITY_ENFORCED
         ];
 
         for(Product2 p : productRetrievedFromDb){
             productIdList.add(p.Id);
-            commOfferMap.put(p.ProductCode + '-' + p.Version__c, p);
+            commOfferMap.put(buildProductKey(p), p);
             additionalOrderItemMap.put(p.Id, new Map<String, SBQQ__ProductOption__c>());
         }
 
@@ -374,8 +375,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         //wrpOrderItem.OrderItem = fakeOrderItem;
 
                         if(wrpOrderItem.itemType.equalsIgnoreCase('offertaComm')){
-                            if(commOfferMap.containsKey(wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c)){
-                                wrpOrderItem.product = commOfferMap.get(wrpOrderItem.product.ProductCode + '-' + wrpOrderItem.product.Version__c);
+                            String productKey = buildProductKey(wrpOrderItem.product);
+                            if(commOfferMap.containsKey(productKey)){
+                                wrpOrderItem.product = commOfferMap.get(productKey);
                                 commOffId = wrpOrderItem.product.Id;
                                 wrpOrderItem.orderItem.PriceBookEntryId = priceBookEntryMap.get(commOffId).Id;
                                 wrpOrderItem.orderItem.UnitPrice = priceBookEntryMap.get(commOffId).UnitPrice;
@@ -408,9 +410,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
 
+                        if(processName.equalsIgnoreCase('VolturaNoEnergy')){
+                            continue;
+                        }
+
                         if(wrpOrderItem.itemType.equalsIgnoreCase('POD') || wrpOrderItem.itemType.equalsIgnoreCase('PDR') ||
                            wrpOrderItem.itemType.equalsIgnoreCase('bonus') || wrpOrderItem.itemType.equalsIgnoreCase('promo')
                         ){
+
                             Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
                             if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
                                 SBQQ__ProductOption__c prodOption = tempMap.get(wrpOrderItem.product.ProductCode);
@@ -627,7 +634,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             processObj.requestItem.Status__c = 'In Lavorazione';
         }
         if(sObjectToDelete.size() > 0){
-            HDT_UTL_DatabaseService.deleteSObject(sObjectToDelete);
+            //HDT_UTL_DatabaseService.deleteSObject(sObjectToDelete);
         }
         getLimitDetails('processEnd');
 
@@ -863,21 +870,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private HDT_WRP_ChildOrder handleBonus(HDT_WRP_ChildOrder wrpChildOrder,List<String> csvValues){
         HDT_WRP_OrderItem wrpOrderItem;
         String codiceBonus1 = csvValues[mapHeaderForWrapper.get('BONUS_PERC1')];
-        //String codiceBonus2 = csvValues[mapHeaderForWrapper.get('BONUS_PERC2')];
-        //String codiceBonus3 = csvValues[mapHeaderForWrapper.get('BONUS_PERC3')];
-        //String codiceBonus4 = csvValues[mapHeaderForWrapper.get('BONUS_PERC4')];
         String codiceBonusEurMese1 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE1')];
-        //String codiceBonusEurMese2 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE2')];
-        //String codiceBonusEurMese3 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE3')];
-        //String codiceBonusEurMese4 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE4')];
         String codiceBonusEurGiorno1 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO1')];
-        //String codiceBonusEurGiorno2 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO2')];
-        //String codiceBonusEurGiorno3 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO3')];
-        //String codiceBonusEurGiorno4 = csvValues[mapHeaderForWrapper.get('BONUS_EURGIORNO4')];
         String codiceBonusEurSmc1 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC1')];
-        //String codiceBonusEurSmc2 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC2')];
-        //String codiceBonusEurSmc3 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC3')];
-        //String codiceBonusEurSmc4 = csvValues[mapHeaderForWrapper.get('BONUS_EURSMC4')];
             
         Boolean enableBonusPerc = (String.isNotEmpty(codiceBonus1));
         Boolean enableBonusMese = (String.isNotEmpty(codiceBonusEurMese1));
@@ -964,9 +959,15 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private HDT_WRP_ProcessObjects buildWrapperOrderStructure(HDT_WRP_ProcessObjects processObject, List<String> csvValues, HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj){
 
         String codiceOfferta = csvValues[mapHeaderForWrapper.get('CodiceOfferta')];
-        String versione = csvValues[mapHeaderForWrapper.get('VersioneOfferta')];
-
-        if(String.isNotEmpty(codiceOfferta) && String.isNotEmpty(versione)){
+        String versione = '';
+        try{
+            versione = csvValues[mapHeaderForWrapper.get('VersioneOfferta')];
+        } catch(Exception e){
+            //no error manage needed
+        }
+            
+        //if(String.isNotEmpty(codiceOfferta) && String.isNotEmpty(versione)){
+        if(String.isNotEmpty(codiceOfferta)){
             HDT_WRP_ChildOrder wrpChildOrder = new HDT_WRP_ChildOrder();
             wrpChildOrder.orderType = 'Attivazione';
             wrpChildOrder.childOrder = new Order();
@@ -1017,8 +1018,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpOrderItem.product = new Product2();
             wrpOrderItem.product.ProductCode = itemType;
             wrpOrderItem.orderItem = new OrderItem();
-            wrpChildOrder.orderItemList.add(wrpOrderItem);
-            additionalProduct2.add(wrpOrderItem.product);
+
+            if(!processName.equalsIgnoreCase('VolturaNoEnergy')){
+                wrpChildOrder.orderItemList.add(wrpOrderItem);
+                additionalProduct2.add(wrpOrderItem.product);
+            }
 
             /*String codiceBonus = csvValues[mapHeaderForWrapper.get('CodiceBonus')];
             String codicePromo = csvValues[mapHeaderForWrapper.get('CodicePromo')];
@@ -1047,7 +1051,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 wrpChildOrder.orderItemList.add(wrpOrderItem);
                 additionalProduct2.add(wrpOrderItem.product);
             }*/
-            wrpChildOrder = handleBonus(wrpChildOrder,csvValues);
+
+            if(!processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura')){
+                wrpChildOrder = handleBonus(wrpChildOrder,csvValues);
+            }
 
             processObject.childOrderList.add(wrpChildOrder);
         }
@@ -1103,9 +1110,24 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         rtNameMap.put('MUC', 'HDT_RT_CambioOfferta');
         rtNameMap.put('TariffeSconti', 'HDT_RT_ScontiBonus');
 
+        if(processName.equalsIgnoreCase('VolturaNoEnergy')){
+            processName = 'Voltura';
+        }
+
         String devName = rtNameMap.get(processName);
         return Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(devName).getRecordTypeId();
 
+    }
+
+    private String buildProductKey(Product2 p){
+        if(processName.equalsIgnoreCase('VolturaNoEnergy')){
+            return p.ProductCode;
+        } else if(processName.equalsIgnoreCase('VolturaNoEnergy')){
+            return p.ProductCode;
+        } else {
+            return p.ProductCode + '-' + p.Version__c;
+        }
+        
     }
 
     private class HDT_WRP_ProcessObjects {
