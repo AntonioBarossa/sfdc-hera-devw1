@@ -487,7 +487,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                 }
                 ),
-                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
+                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
                 new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
                 new fieldData('','NotDomesticHousingUnit__c', 
                     this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) ), 
