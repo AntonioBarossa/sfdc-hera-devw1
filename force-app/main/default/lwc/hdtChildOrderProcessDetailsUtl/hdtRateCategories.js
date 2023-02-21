@@ -12,6 +12,7 @@
     // AFPAGA_FOG visibile for all
     export const AFUADNR =  { evaluationType: 'visible', rateCategories: ['ACDOMNR000','ACPROMISC0','ACPROMIBI0'] };
     export const AFUADRS =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0','ACPROMISC0','ACPROMIBI0'] };
+    export const AFUADRSdisable =  { evaluationType: 'visible', rateCategories: ['ACPROMISC0','ACPROMIBI0'] };
     export const AFUND =  { evaluationType: 'visible', rateCategories: ['ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACPUBDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','ACPROMIBI0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] };
     export const AFUNDA =  { evaluationType: 'visible', rateCategories: ['ACAGRICO00','ACPROMIBI0'] };
     export const AFUNDC =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0','ACPROMISC0','ACPROMIBI0'] };

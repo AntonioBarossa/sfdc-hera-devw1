@@ -824,7 +824,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
+                if( this.rateCategoryVisibility(rateCategories.AFNCOMPreq) && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
                     && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
                         || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
                     this.loading = false;
