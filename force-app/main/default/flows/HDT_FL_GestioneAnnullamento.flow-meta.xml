@@ -847,8 +847,8 @@
     <assignments>
         <name>Passa_Fase_In_Lavorazione_0</name>
         <label>Passa Fase In Lavorazione</label>
-        <locationX>1757</locationX>
-        <locationY>1603</locationY>
+        <locationX>1268</locationX>
+        <locationY>1771</locationY>
         <assignmentItems>
             <assignToReference>GetCaseScreen.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -884,6 +884,20 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Da contribuente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.CancellationReason__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Assenza del presupposto di applicazione del tributo</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetRecord.Channel__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetRecord.Owner:User.LoginChannel__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -1096,70 +1110,6 @@
                 <targetReference>Order_Error_Message</targetReference>
             </connector>
             <label>stop cancel order</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Ci_sono_Allegati</name>
-        <label>Ci sono Allegati?</label>
-        <locationX>1650</locationX>
-        <locationY>1863</locationY>
-        <defaultConnector>
-            <targetReference>Errore_Allegati_Obbligatori</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>NO</defaultConnectorLabel>
-        <rules>
-            <name>SI</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Query_Allegati</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>false</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Passa_Fase_In_Lavorazione_0</targetReference>
-            </connector>
-            <label>SI</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Controllo_Allegati_Obbligatori</name>
-        <label>Controllo Allegati Obbligatori</label>
-        <locationX>1384</locationX>
-        <locationY>1523</locationY>
-        <defaultConnector>
-            <targetReference>Passa_Fase_In_Lavorazione_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Non Obbligatori</defaultConnectorLabel>
-        <rules>
-            <name>Obbligatori</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetCaseScreen.Channel__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Protocollo</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetCaseScreen.RequestSource__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>D&apos;ufficio</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>GetCaseScreen.CancellationNote__c</leftValueReference>
-                <operator>IsNull</operator>
-                <rightValue>
-                    <booleanValue>true</booleanValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Query_Allegati</targetReference>
-            </connector>
-            <label>Obbligatori</label>
         </rules>
     </decisions>
     <decisions>
@@ -2002,8 +1952,8 @@
     <decisions>
         <name>Salva_In_Bozza_o_vai_Avanti</name>
         <label>Salva In Bozza o vai Avanti</label>
-        <locationX>1401</locationX>
-        <locationY>1259</locationY>
+        <locationX>1263</locationX>
+        <locationY>1361</locationY>
         <defaultConnector>
             <targetReference>GetCaseScreen</targetReference>
         </defaultConnector>
@@ -2228,11 +2178,11 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordLookups>
         <name>GetCaseScreen</name>
         <label>GetCaseScreen</label>
-        <locationX>1248</locationX>
-        <locationY>1520</locationY>
+        <locationX>1269</locationX>
+        <locationY>1585</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Controllo_Allegati_Obbligatori</targetReference>
+            <targetReference>Passa_Fase_In_Lavorazione_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2396,27 +2346,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <object>RecordType</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <recordLookups>
-        <name>Query_Allegati</name>
-        <label>Query Allegati</label>
-        <locationX>1519</locationX>
-        <locationY>1734</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>Ci_sono_Allegati</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>ParentId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetRecord.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>Attachment</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
@@ -2555,8 +2484,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordUpdates>
         <name>Update_Prevalorizzazione</name>
         <label>Update Prevalorizzazione</label>
-        <locationX>1133</locationX>
-        <locationY>1125</locationY>
+        <locationX>1048</locationX>
+        <locationY>1126</locationY>
         <connector>
             <targetReference>Motivo_Annullamento_Screen_TARI</targetReference>
         </connector>
@@ -2575,8 +2504,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <recordUpdates>
         <name>Update_Prevalorizzazione_0_0</name>
         <label>Update Prevalorizzazione</label>
-        <locationX>1827</locationX>
-        <locationY>1807</locationY>
+        <locationX>1703</locationX>
+        <locationY>1770</locationY>
         <inputReference>GetCaseScreen</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2604,26 +2533,6 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
-    </screens>
-    <screens>
-        <name>Errore_Allegati_Obbligatori</name>
-        <label>Errore Allegati Obbligatori</label>
-        <locationX>1132</locationX>
-        <locationY>1743</locationY>
-        <allowBack>false</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <connector>
-            <targetReference>Motivo_Annullamento_Screen_TARI</targetReference>
-        </connector>
-        <fields>
-            <name>Errore</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(253, 12, 3);&quot;&gt;Errore! &lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(253, 12, 3);&quot;&gt;Allegati Obbligatori!&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Inserisci Allegati</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
     </screens>
     <screens>
         <name>Loading_Spinner_Screen</name>
@@ -3097,8 +3006,8 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
     <screens>
         <name>Motivo_Annullamento_Screen_TARI</name>
         <label>Motivo Annullamento Screen</label>
-        <locationX>1126</locationX>
-        <locationY>1312</locationY>
+        <locationX>1049</locationX>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3198,65 +3107,51 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>addContentDocument</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>sessionid</name>
                 <value>
                     <elementReference>$Flow.InterviewGuid</elementReference>
                 </value>
             </inputParameters>
-            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
-            <isRequired>true</isRequired>
-            <storeOutputAutomatically>true</storeOutputAutomatically>
-        </fields>
-        <fields>
-            <name>bottoniScreen</name>
-            <extensionName>c:hdtFlowNavigationButton</extensionName>
-            <fieldType>ComponentInstance</fieldType>
             <inputParameters>
-                <name>isCancel</name>
+                <name>saveButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>isDraft</name>
+                <name>previousButton</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>nextLabel</name>
+                <name>labelSaveButton</name>
                 <value>
                     <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>sessionid</name>
+                <name>labelDraftButton</name>
                 <value>
-                    <elementReference>$Flow.InterviewGuid</elementReference>
+                    <stringValue>Salva In Bozza</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>nextVariant</name>
-                <value>
-                    <stringValue>Brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>standAlone</name>
+                <name>draftButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>recordId</name>
+                <name>cancelButton</name>
                 <value>
-                    <elementReference>InputCase</elementReference>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

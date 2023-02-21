@@ -377,6 +377,14 @@
             <fullName>RID</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>PAGOPA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>F24</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>NumberOfTARIMembers__c</picklist>

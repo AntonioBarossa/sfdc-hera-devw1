@@ -17,7 +17,7 @@
     <values>
         <field>Process_Type_to_Cancell__c</field>
         <value xsi:nil="true"/>
-    </values>
+    </values> 
     <values>
         <field>RecordType__c</field>
         <value xsi:nil="true"/>

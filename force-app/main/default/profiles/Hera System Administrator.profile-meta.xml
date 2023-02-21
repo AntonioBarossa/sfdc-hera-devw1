@@ -314,6 +314,10 @@
         <enabled>true</enabled>
         <name>HDT_WarningStatusList__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_IndemnitiesDays__mdt</name>
+    </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>CS_ArchivedRecordsDeleteBatch__c</name>
@@ -828,6 +832,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.NotDomesticHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AgriculturalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.IndustrialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.ZootechnicalHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -15854,6 +15878,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AlternativeEmail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PerformanceType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

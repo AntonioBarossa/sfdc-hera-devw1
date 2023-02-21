@@ -178,8 +178,10 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
          * In queste casistiche la ricerca su SFDC non da risultati, ricercando e salvando il SP da SAP si rischia di creare dei duplicati
          * che andranno in errore per la GlobalMigrationKey. Pertanto viene introdotta una query preventiva per o utilizzare il record esistente oppure
          * inserire un nuovo record
+         * 
+         * Esteso anche per tutte le commodity per coprire casistiche di duplicazione dei record
         **/
-        if('Ambiente'.equalsIgnoreCase(servicePo.CommoditySector__c) && String.isNotBlank(servicePo.SAPImplantCode__c)){
+        if(String.isNotBlank(servicePo.SAPImplantCode__c)){
             String implantCode = servicePo.SAPImplantCode__c;
             List<ServicePoint__c> spList = servicePointQuery.getRecordByImplantCode(implantCode,'Id');
             if(!spList.isEmpty()){

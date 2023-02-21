@@ -263,6 +263,8 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.ContractAccountCode__c = String.isBlank(orderToUpdate.ContractAccountCode__c) ? (servicePoint.Account__c == orderToUpdate.AccountId ? servicePoint.SAPContractAccountCode__c : null) : orderToUpdate.ContractAccountCode__c; 
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
         orderToUpdate.ATO__c = 'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) ? servicePoint.ATO__c : '';
+        List<String> ratecategoryResident = new List<String>{'ACDOMRESP0','TATUDRES01'};
+        orderToUpdate.Resident__c = ratecategoryResident.contains(orderToUpdate.RateCategory__c)?true:orderToUpdate.Resident__c;
     }
 
     private static void alignAccountFields(Order orderToUpdate, String accountId, Order orderOld){
@@ -295,8 +297,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                  * (oppure può essere valorizzato in fase di wizard di processo)
                  * commento per risoluzione ticket alm 3839
                  */
-                //orderToUpdate.AtecoCode__c = 'K74878';
-                //orderToUpdate.HerAteco__c = 'K74878';
+                if (orderOld.ServicePoint__c != null && !'Ambiente'.equalsIgnoreCase(orderOld.ServicePoint__r.CommoditySector__c) ) {
+                    orderToUpdate.AtecoCode__c = 'K74878';
+                    orderToUpdate.HerAteco__c = 'K74878';
+                }
 
             } else if(account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                 orderToUpdate.CustomerName__c = account.FirstName__c;
