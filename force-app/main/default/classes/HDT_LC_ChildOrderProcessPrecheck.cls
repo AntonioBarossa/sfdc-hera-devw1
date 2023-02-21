@@ -240,6 +240,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                                 newOrder.PaySewer__c = 'Si - Paga';
                             }
                         }
+                        when 'Aggiunta Attacco con Attivazione'{
+                            newOrder.PerformanceType__c = 'Aggiunta Attacco';
+                        }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';
                         }
