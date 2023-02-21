@@ -41,7 +41,7 @@
         <description>Calcolo delle date per case di indennizzo Relaclami Invo Acqua</description>
         <name>Calculate_Expiration_Date_Water</name>
         <label>Calculate Expiration Date Acqua</label>
-        <locationX>2426</locationX>
+        <locationX>2690</locationX>
         <locationY>758</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -79,7 +79,7 @@
     <assignments>
         <name>AddToCollection_0_0_0_0_0</name>
         <label>AddToCollection</label>
-        <locationX>1238</locationX>
+        <locationX>1370</locationX>
         <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>IndemnityCollection</assignToReference>
@@ -95,7 +95,7 @@
     <assignments>
         <name>AddToCollection_0_0_0_0_0_0</name>
         <label>AddToCollection</label>
-        <locationX>1502</locationX>
+        <locationX>1634</locationX>
         <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>IndemnityCollection</assignToReference>
@@ -118,7 +118,7 @@
     <assignments>
         <name>AssignCausalCode</name>
         <label>AssignCausalCode</label>
-        <locationX>1238</locationX>
+        <locationX>1370</locationX>
         <locationY>1646</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.CausalCode__c</assignToReference>
@@ -141,7 +141,7 @@
     <assignments>
         <name>AssignCausalCode_0</name>
         <label>AssignCausalCode</label>
-        <locationX>1502</locationX>
+        <locationX>1634</locationX>
         <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.CausalCode__c</assignToReference>
@@ -222,7 +222,7 @@
     <assignments>
         <name>AssignPhase</name>
         <label>AssignPhase</label>
-        <locationX>1458</locationX>
+        <locationX>1590</locationX>
         <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>UpdatePhase.Phase__c</assignToReference>
@@ -245,7 +245,7 @@
     <assignments>
         <name>AssignToCollection</name>
         <label>AssignToCollection</label>
-        <locationX>1458</locationX>
+        <locationX>1590</locationX>
         <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>UpdateCollection</assignToReference>
@@ -284,7 +284,7 @@
     <assignments>
         <name>AssignVariables_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1370</locationX>
+        <locationX>1634</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -307,7 +307,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1634</locationX>
+        <locationX>1898</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -330,7 +330,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1898</locationX>
+        <locationX>2162</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -353,7 +353,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>2162</locationX>
+        <locationX>2426</locationX>
         <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -376,7 +376,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>578</locationX>
+        <locationX>842</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -413,7 +413,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>842</locationX>
+        <locationX>1106</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -436,7 +436,7 @@
     <assignments>
         <name>AssignVariables_0_0_0_0_0_0_0_0_0</name>
         <label>AssignVariables</label>
-        <locationX>1106</locationX>
+        <locationX>1370</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
@@ -460,8 +460,32 @@
         <description>Assegnazione importo e tipologia indennizzo per case Acqua mancata risposta</description>
         <name>AssignVariables_Acqua_Invio</name>
         <label>AssignVariables</label>
-        <locationX>2426</locationX>
+        <locationX>2690</locationX>
         <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>AmountTypeFirst</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Invio</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <description>Assegnazione in caso di generazione di indennizzo tari BBP al capitolo 3.24.3</description>
+        <name>AssignVariables_TARI</name>
+        <label>AssignVariables</label>
+        <locationX>578</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>AmountTypeFirst</assignToReference>
             <operator>Assign</operator>
@@ -483,7 +507,7 @@
     <assignments>
         <name>AssignVariablesFirst</name>
         <label>AssignVariablesFirst</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>FirstIndemnityCase.AccountId</assignToReference>
@@ -667,7 +691,7 @@
     <assignments>
         <name>AssignVariablesSecond</name>
         <label>AssignVariablesSecond</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>SecondIndemnityCase.AccountId</assignToReference>
@@ -838,7 +862,7 @@
         <description>Assegnazione delle date specifiche estratte dal metodo UTL</description>
         <name>Input_Case_Date_Assignment</name>
         <label>Input Case Date Assignment</label>
-        <locationX>2426</locationX>
+        <locationX>2690</locationX>
         <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
@@ -882,7 +906,7 @@
     <decisions>
         <name>Doppio_Indennizzo</name>
         <label>Doppio Indennizzo?</label>
-        <locationX>776</locationX>
+        <locationX>1040</locationX>
         <locationY>758</locationY>
         <defaultConnector>
             <targetReference>Quale_importo_prendere</targetReference>
@@ -914,7 +938,7 @@
     <decisions>
         <name>HowManyCase</name>
         <label>HowManyCase?</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1526</locationY>
         <defaultConnector>
             <targetReference>GetSecondCausalCode</targetReference>
@@ -946,7 +970,7 @@
     <decisions>
         <name>Quale_importo_prendere</name>
         <label>Quale importo prendere?</label>
-        <locationX>974</locationX>
+        <locationX>1238</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>AssignVariables_0_0_0_0_0_0_0_0_0</targetReference>
@@ -971,7 +995,7 @@
     <decisions>
         <name>Switch_Casistica</name>
         <label>Switch Casistica</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>638</locationY>
         <defaultConnectorLabel>No Indennizzo</defaultConnectorLabel>
         <rules>
@@ -1048,14 +1072,78 @@
                     <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.Commodity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>AssignVariables</targetReference>
             </connector>
-            <label>1 - Inviata Ind. Confermato</label>
+            <label>1 - Inviata Ind. Confermato: NO TARI</label>
         </rules>
         <rules>
-            <name>X2_Ind_Conf_Diritto_Rett</name>
-            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6)</conditionLogic>
+            <name>X2_Inviata_Ind_Confermato_TARI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getInputCase.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityConfirmed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.Phase__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Risposta Inviata</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.CorrectionRight__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.FithLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Igiene ambientale</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignVariables_TARI</targetReference>
+            </connector>
+            <label>2 - Inviata Ind. Confermato: TARI</label>
+        </rules>
+        <rules>
+            <name>X3_Ind_Conf_Diritto_Rett</name>
+            <conditionLogic>1 AND 2 AND 3 AND 4 AND (5 OR 6) AND 7</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -1098,13 +1186,20 @@
                     <numberValue>0.0</numberValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>getInputCase.Commodity__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Doppio_Indennizzo</targetReference>
             </connector>
-            <label>2 - Inviata Ind. Conf Diritto Rett.</label>
+            <label>3 - Inviata Ind. Conf Diritto Rett.: NO TARI</label>
         </rules>
         <rules>
-            <name>X3_Attesa_Rettifica</name>
+            <name>X4_Attesa_Rettifica</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
@@ -1151,10 +1246,10 @@
             <connector>
                 <targetReference>AssignVariables_0_0_0</targetReference>
             </connector>
-            <label>3 - Attesa Rettifica assente</label>
+            <label>4 - Attesa Rettifica assente</label>
         </rules>
         <rules>
-            <name>X4_Attesa_Rettifica_Scaduta</name>
+            <name>X5_Attesa_Rettifica_Scaduta</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
@@ -1201,10 +1296,10 @@
             <connector>
                 <targetReference>AssignVariables_0_0_0_0</targetReference>
             </connector>
-            <label>4 - Attesa Rettifica Scaduta</label>
+            <label>5 - Attesa Rettifica Scaduta</label>
         </rules>
         <rules>
-            <name>X5_Doppia_Rettifica</name>
+            <name>X6_Doppia_Rettifica</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
@@ -1244,10 +1339,10 @@
             <connector>
                 <targetReference>AssignVariables_0_0_0_0_0</targetReference>
             </connector>
-            <label>5 - Doppia Rettifica Inviata</label>
+            <label>6 - Doppia Rettifica Inviata</label>
         </rules>
         <rules>
-            <name>X6_Doppia_Rettifica_Attesa</name>
+            <name>X7_Doppia_Rettifica_Attesa</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
@@ -1287,10 +1382,10 @@
             <connector>
                 <targetReference>AssignVariables_0_0_0_0_0_0</targetReference>
             </connector>
-            <label>6 - Doppia Rettifica Attesa</label>
+            <label>7 - Doppia Rettifica Attesa</label>
         </rules>
         <rules>
-            <name>X7_Richiesta_Info_Acqua</name>
+            <name>X8_Richiesta_Info_Acqua</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>getInputCase.FirstLevelComplaintClassification__c</leftValueReference>
@@ -1330,7 +1425,7 @@
             <connector>
                 <targetReference>Calculate_Expiration_Date_Water</targetReference>
             </connector>
-            <label>7 - Richiesta Info Acqua</label>
+            <label>8 - Richiesta Info Acqua</label>
         </rules>
     </decisions>
     <description>Flow per la gestione degli indennizzi</description>
@@ -1345,7 +1440,7 @@
     <loops>
         <name>UpdatePhase</name>
         <label>UpdatePhase</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>2342</locationY>
         <collectionReference>getCreatedIndemnities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -1378,7 +1473,7 @@
     <recordCreates>
         <name>CreateIndemnityRecords</name>
         <label>CreateIndemnityRecords</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>getCreatedIndemnities</targetReference>
@@ -1388,7 +1483,7 @@
     <recordLookups>
         <name>getCreatedIndemnities</name>
         <label>getCreatedIndemnities</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>2222</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1423,7 +1518,7 @@
     <recordLookups>
         <name>GetFirstCausalCode</name>
         <label>GetFirstCausalCode</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>1406</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1465,7 +1560,7 @@
     <recordLookups>
         <name>getIndemnityRecordType</name>
         <label>getIndemnityRecordType</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1486,7 +1581,7 @@
     <recordLookups>
         <name>getInputCase</name>
         <label>getInputCase</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1507,7 +1602,7 @@
     <recordLookups>
         <name>GetSecondCausalCode</name>
         <label>GetSecondCausalCode</label>
-        <locationX>1502</locationX>
+        <locationX>1634</locationX>
         <locationY>1646</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1549,12 +1644,12 @@
     <recordUpdates>
         <name>UpdatePhaseCollection</name>
         <label>UpdatePhaseCollection</label>
-        <locationX>1370</locationX>
+        <locationX>1502</locationX>
         <locationY>2798</locationY>
         <inputReference>UpdateCollection</inputReference>
     </recordUpdates>
     <start>
-        <locationX>1244</locationX>
+        <locationX>1376</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getInputCase</targetReference>

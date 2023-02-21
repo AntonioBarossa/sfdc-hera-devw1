@@ -357,7 +357,7 @@ import * as rateCategories from './hdtRateCategories.js';
                         checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                     }
                     ),
-                    new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
+                    new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
                     new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
                     new fieldData('','NotDomesticHousingUnit__c', 
                         this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) || this.rateCategoryVisibility(rateCategories.AFUNDI) ), 
@@ -446,6 +446,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('ele') || this.typeVisibility('gas') , false, false, '',''),
                 new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
                 new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
+                new fieldData('','AlternativeEmail__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',false,false,'',''),
                 new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), this.typeVisibility('acqua'), this.typeVisibility('acqua'), '','No'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
@@ -487,7 +488,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                 }
                 ),
-                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
+                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
                 new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
                 new fieldData('','NotDomesticHousingUnit__c', 
                     this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) ), 
@@ -502,6 +503,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') /* && this.rateCategoryVisibility(rateCategories.AQCNSANNOF) */, false, true, '',''),
                 new fieldData('Tipo Fornitura','SupplyType__c', this.typeVisibility('acqua'), true, true, '',''),
+                new fieldData('','PerformanceType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', true, this.order.ProcessType__c==='Aggiunta Attacco con Attivazione', '',''),
                 new fieldData('ATO','ATO__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','QuotationType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, true, '','Analitico'),
                 new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua'), false, true, '',''),

@@ -310,7 +310,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 	/*
 	 * Retrieve data from ServicePoint Object By ServiceCode
 	 */
-	@AuraEnabled(cacheable = true)
+	@AuraEnabled(cacheable = false)
 	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,String additionalFilter,
 	                                                                          Boolean isSuperUser, String datiCatastali) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();

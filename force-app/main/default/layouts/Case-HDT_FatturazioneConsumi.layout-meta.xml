@@ -355,6 +355,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.HDT_SendEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.HDT_SendThirdPartyEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -378,11 +383,6 @@
             <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.HDT_SendEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList/>
@@ -485,6 +485,15 @@
         <fields>UPDATEDBY_USER</fields>
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
+    <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
+        <fields>NAME</fields>
+        <fields>ReadingDate__c</fields>
+        <fields>ReadingValueMeter__c</fields>
+        <fields>ReadingSerialNumberMeter__c</fields>
+        <relatedList>Reading__c.CaseAcqua__c</relatedList>
+    </relatedLists>
     <relatedObjects>ContactId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
     <runAssignmentRulesDefault>false</runAssignmentRulesDefault>
@@ -495,7 +504,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1X0000025qnr</masterLabel>
+        <masterLabel>00h2o00000lovST</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
