@@ -4,7 +4,7 @@
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </div>
 
-    <!--<div if:true={showError} class="slds-text-align_center">
+    <div if:true={showError} class="slds-text-align_center">
         <lightning-card>
             <c-hdt-custom-illustration
                 message={showErrorMessage}
@@ -12,9 +12,9 @@
             ></c-hdt-custom-illustration>
 
         </lightning-card>
-    </div>-->
+    </div>
 
-    <!--<template if:false={showError} >-->
+    <template if:false={showError} >
         <lightning-card  icon-name={iconName} title={tableTitle}>
 
             <template if:true={showSocialBonusButton}>
@@ -59,6 +59,6 @@
             <c-hdt-social-bonus-ws-table record-id={recordId} type="bonusSocialeIdrico" ></c-hdt-social-bonus-ws-table>
         </template>
 
-    <!--</template>-->
+    </template>
 
 </template>
