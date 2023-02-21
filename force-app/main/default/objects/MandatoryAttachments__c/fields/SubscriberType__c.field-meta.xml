@@ -3,9 +3,11 @@
     <fullName>SubscriberType__c</fullName>
     <externalId>false</externalId>
     <label>Qualità del sottoscrittore</label>
-    <length>255</length>
     <required>false</required>
-    <trackTrending>false</trackTrending>
-    <type>Text</type>
-    <unique>false</unique>
+    <trackHistory>false</trackHistory>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetName>HDT_SubscriberType</valueSetName>
+    </valueSet>
 </CustomField>
