@@ -10,4 +10,5 @@
         <restricted>true</restricted>
         <valueSetName>HDT_SubscriberType</valueSetName>
     </valueSet>
+    <visibleLines>4</visibleLines>
 </CustomField>
