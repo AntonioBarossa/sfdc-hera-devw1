@@ -49,6 +49,10 @@ import * as rateCategories from './hdtRateCategories.js';
         return "";
     }
 
+    function getRateCategoriesConfiguration(){
+        return rateCategories;
+    }
+
     function checkHousingUnitRateCategory( housingUnit, rateCateg ){
         if( housingUnit > 1 && (rateCateg === 'ACDOMRESP0' || rateCateg === 'ACDOMNR000' || rateCateg === 'ACARTCOMM0') )
         {
@@ -1002,4 +1006,4 @@ import * as rateCategories from './hdtRateCategories.js';
         ];
     }
 
-    export {handleSections, equalsIgnoreCase, safeStr}
+    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration}
