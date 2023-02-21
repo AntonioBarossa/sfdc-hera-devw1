@@ -8,24 +8,7 @@
     <type>MultiselectPicklist</type>
     <valueSet>
         <restricted>true</restricted>
-        <valueSetDefinition>
-            <sorted>false</sorted>
-            <value>
-                <fullName>Amministratore</fullName>
-                <default>false</default>
-                <label>Amministratore</label>
-            </value>
-            <value>
-                <fullName>Legale Rappresentante</fullName>
-                <default>false</default>
-                <label>Legale Rappresentante</label>
-            </value>
-            <value>
-                <fullName>Soggetto Passivo</fullName>
-                <default>false</default>
-                <label>Soggetto Passivo</label>
-            </value>
-        </valueSetDefinition>
+        <valueSetName>HDT_SubscriberType</valueSetName>
     </valueSet>
     <visibleLines>4</visibleLines>
 </CustomField>
