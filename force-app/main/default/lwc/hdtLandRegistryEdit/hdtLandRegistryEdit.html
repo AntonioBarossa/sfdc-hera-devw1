@@ -22,7 +22,7 @@
             <lightning-layout multiple-rows>
 
                 <lightning-layout-item size="4" padding="around-medium">
-                    <lightning-input-field variant="label-stacked" disabled={disableForm} field-name="CodeMissingRegistryData__c" onchange={handleFieldChange}></lightning-input-field>
+                    <lightning-input-field variant="label-stacked" data-name="CodeMissingRegistryData__c" disabled={disableForm} field-name="CodeMissingRegistryData__c" onchange={handleFieldChange}></lightning-input-field>
                 </lightning-layout-item>
 
                 <lightning-layout-item size="4" padding="around-medium">
@@ -131,7 +131,7 @@
                         <template if:true={_showDelete}>
                             <lightning-layout-item>
                                 <div class="slds-m-horizontal_xxx-small slds-text-align_center">
-                                    <lightning-button variant="destructive" icon-name="utility:delete" disabled={_readonly} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
+                                    <lightning-button variant="destructive" icon-name="utility:delete" disabled={disableDelete} label="Elimina" title="Elimina" onclick={handleEliminaClick}></lightning-button>
                                 </div>
                             </lightning-layout-item>
                         </template>
