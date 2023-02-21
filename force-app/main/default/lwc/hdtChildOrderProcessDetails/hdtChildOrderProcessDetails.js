@@ -824,9 +824,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                if( this.rateCategoryVisibility(rateCategories.AFNCOMPreq) && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
-                    && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
-                        || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
+                if( this.rateCategoryVisibility({ evaluationType: 'required', rateCategories: ['ACDOMRESP0','ACPROMISC0','ACPROMIBI0'] }) && 
+                    this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null && 
+                    ( this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === '' || 
+                      this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null) ) 
+                {
                     this.loading = false;
                         const toastErrorMessage = new ShowToastEvent({
                             title: 'Errore',
