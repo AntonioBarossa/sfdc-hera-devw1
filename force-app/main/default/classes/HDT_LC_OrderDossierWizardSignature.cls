@@ -43,6 +43,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
     */
     @AuraEnabled
     public static void next(Order orderUpdates){
+        Id poId = null;
         List<Order> childOrders = orderQr.getChildOrdersByParentId(orderUpdates.Id);
         List<Order> ordersToUpdate = new List<Order>();
         Map<String,Object> objMap = orderUpdates.getPopulatedFieldsAsMap();
@@ -69,6 +70,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             }
             checkSignatureMethod(childOrderToUpdate, childOrder);
             try{
+                if (String.isNotBlank(childOrderToUpdate.SignatureMethod__c) && !childOrderToUpdate.SignatureMethod__c.equalsIgnoreCase(childOrder.SignatureMethod__c)){
+                    orderUpdates.Phase__c = 'In Lavorazione';
+                    poId = 'OTP Remoto'.equalsIgnoreCase(childOrder.SignatureMethod__c) ? orderUpdates.Id : null;
+                }
                 if ((String.isNotBlank(childOrderToUpdate.DocSendingMethod__c) && !childOrderToUpdate.DocSendingMethod__c.equalsIgnoreCase(childOrder.DocSendingMethod__c)) 
                 || (String.isNotBlank(childOrderToUpdate.SignatureMethod__c) && !childOrderToUpdate.SignatureMethod__c.equalsIgnoreCase(childOrder.SignatureMethod__c))){
                     changeSignatureOrdersToUpdate.put(childOrderToUpdate.Id,childOrderToUpdate);
@@ -95,10 +100,17 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         }
 
         updateQualityCall(ordersToUpdate, changeSignatureOrdersToUpdate, changeSignatureOldOrders);
+        DocumentSendTracking__c dst;
+        if (poId != null){
+            dst = HDT_QR_DocumentalConfiguration.getEnvelopeToCancel(poId,'Intesa','E-Mail');
+        }
 
         system.debug('childOrdersToUpdate before update: ' + ordersToUpdate);
         orderSrv.updateRecords(ordersToUpdate);
         system.debug('childOrdersToUpdate after update: ' + ordersToUpdate);
+        if (dst != null){
+            HDT_SRV_DocumentalManagementFacade.discardDocusignEnvelope(dst.Id);
+        }
     }
 
     private static void checkSignatureMethod(Order newOrder, Order oldOrder){
