@@ -154,7 +154,7 @@ public inherited sharing class HDT_QR_DocumentalConfiguration {
     }
 
     public static List<DocumentSendTracking__c> getEnvelopesToCancel(Set<Id> oIds, String docSyst, String sMode){
-        return [SELECT Id FROM DocumentSendTracking__c WHERE Order__c IN: oIds AND EnvelopeId__c != null AND DocumentalSystem__c = :docSyst AND SendMode__c = :sMode  WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC];
+        return [SELECT Id FROM DocumentSendTracking__c WHERE Order__c IN: oIds AND EnvelopeId__c != null AND DocumentalSystem__c = :docSyst AND SendMode__c = :sMode WITH SECURITY_ENFORCED ORDER BY CreatedDate DESC];
     }
 
 }
