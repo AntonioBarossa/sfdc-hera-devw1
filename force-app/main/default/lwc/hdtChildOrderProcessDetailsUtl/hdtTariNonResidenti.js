@@ -49,8 +49,95 @@ export const cities = [
         if (mq <= 120)  return 4;
         if (mq <= 140)  return 5;
         return 6;
-    })
+    }),
+    //COMUNI MMS
+    new comune("APECCHIO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
 
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        if (mq <= 250)  return 5;
+        return 6;
+    }),
+    new comune("GRADARA", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        if (mq <= 250)  return 5;
+        return 6;
+    }),
+    new comune("PESARO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        if (mq <= 250)  return 5;
+        return 6;
+    }),
+    new comune("TAVULLIA", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        if (mq <= 250)  return 5;
+        return 6;
+    }),
+    new comune("VALLEFOGLIA", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        if (mq <= 250)  return 5;
+        return 6;
+    }),
+    new comune("GABICCE MARE", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 27)   return 1;
+        if (mq <= 40)   return 2;
+        if (mq <= 50)  return 3;
+        if (mq <= 60)  return 4;
+        if (mq <= 70)  return 5;
+        return 6;
+    }),
+    new comune("MOMBAROCCIO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 70)   return 1;
+        if (mq <= 120)   return 2;
+        if (mq <= 150)  return 3;
+        if (mq <= 200)  return 4;
+        return 5;
+    }),
+    new comune("PEGLIO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 50)   return 1;
+        if (mq <= 150)   return 2;
+        if (mq <= 200)  return 3;
+        return 4;
+    }),
+    new comune("URBINO", false, (mq) => {
+        if(!mq && mq!==0)   return null;
+
+        if (mq <= 30)   return 1;
+        if (mq <= 55)   return 2;
+        if (mq <= 80)  return 3;
+        if (mq <= 105)  return 4;
+        if (mq <= 130)  return 5;
+        return 6;
+    })
 ]
 .reduce((result, elem)=>{
     result[elem.name] = elem;

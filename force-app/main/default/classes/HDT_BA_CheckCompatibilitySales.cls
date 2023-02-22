@@ -34,6 +34,13 @@ public inherited sharing class HDT_BA_CheckCompatibilitySales implements Databas
 
     public void finish(Database.BatchableContext bc){
         System.debug('HDT_BA_CheckCompatibilitySales finish');
+
+        Datetime dt = Datetime.now();
+
+        MassiveLoaderRequest__c oldReq = [SELECT Id, Description__c FROM MassiveLoaderRequest__c WHERE Id = :idLoaderRequest LIMIT 1];
+        oldReq.Description__c = oldReq.Description__c + '\n[5] Compatibilità --------> ora fine ---> ' + String.valueOf(dt.format('HH:mm:ss'));
+        update oldReq;
+
         HDT_BA_CreditCheckSales creditCheckSales = new HDT_BA_CreditCheckSales(idLoaderRequest, 1, process);
         Database.executebatch(creditCheckSales, 1);
     }

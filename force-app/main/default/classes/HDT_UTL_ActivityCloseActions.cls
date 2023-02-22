@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 25-11-2022
+ * @last modified on  : 21-02-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -211,6 +211,11 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }*/
         if('HDT_RT_VerificheAcqua'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName) && 'Inviare Resoconto Verifica'.equalsIgnoreCase(activityType)){
             return new HDT_WRP_UpdateSobj('Inviato resoconto');
+        }
+        if(caseType.equalsIgnoreCase('Annullamento Contratti') && ('HDT_RT_Annullamento'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_ANN006__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
         }
         return null;
     }

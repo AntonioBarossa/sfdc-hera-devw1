@@ -592,6 +592,11 @@
                 <label>HC_CVMBO_CORPMUI_PTA_SD singola_HC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_CSREG_Bonus Sociale Energy</label>
@@ -650,6 +655,16 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_Koinè</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Contratti_Preventivi_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</fullName>
@@ -780,6 +795,16 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Linetech</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Rettifica Consumi_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_Conservice</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_Conservice</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Richiesta domiciliazione_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Rich Parere_HC</fullName>
@@ -1200,6 +1225,16 @@
                 <fullName>HC_VENDITA_MM_Supporto_alla_Vendita</fullName>
                 <default>false</default>
                 <label>HC_VENDITA_MM_Supporto alla Vendita</label>
+            </value>
+            <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT</label>
+            </value>
+            <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT_AcAgency</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT_AcAgency</label>
             </value>
             <value>
                 <fullName>HC_VenditaMM</fullName>
