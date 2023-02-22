@@ -67,6 +67,18 @@ public with sharing class HDT_LC_AttachmentManager {
         this.macroTopic = macroTopic;
     }
 
+    private Boolean checkForLessStrictSearch(){
+        if(this.subscriberType != null) this.subscriberType = null;
+
+        else if(this.contactChannel != null)  this.contactChannel = null;
+
+        else if(this.city != null)  this.city = null;
+
+        else return true;//se arriva qui vuol dire che il loop deve finire
+
+        return false;
+    }
+
     
     @AuraEnabled
     public static String getAdditionalAttachment(Id recordId){
@@ -187,6 +199,23 @@ public with sharing class HDT_LC_AttachmentManager {
 
     private static String getMandatoryAttachment(HDT_LC_AttachmentManager paramsWrap){
 
+        List<MandatoryAttachments__c> tabellaAllegati = getMandatoryAttachmentRecords(paramsWrap);
+        while(tabellaAllegati.isEmpty()){
+            tabellaAllegati = getMandatoryAttachmentRecords(paramsWrap);
+            if(paramsWrap.checkForLessStrictSearch())   break;
+        }
+        return tabellaAllegati.isEmpty()? '' : tabellaAllegati[0]?.MandatoryAttachments__c ;
+    }
+
+    private static List<MandatoryAttachments__c> getMandatoryAttachmentRecords(HDT_LC_AttachmentManager paramsWrap){
+        String stringQuery = getMandatoryAttachmentQueryString(paramsWrap);
+        system.debug('@@@@: '+stringQuery);
+        List<MandatoryAttachments__c> tabellaAllegati = Database.query(stringQuery);
+        return tabellaAllegati;
+    }
+
+
+    private static String getMandatoryAttachmentQueryString(HDT_LC_AttachmentManager paramsWrap){
         String stringQuery = 'SELECT Id, MandatoryAttachments__c FROM  MandatoryAttachments__c ';
         String conditionString = '';
         if(paramsWrap.accountType != null)
@@ -194,9 +223,9 @@ public with sharing class HDT_LC_AttachmentManager {
         if(paramsWrap.contactChannel != null)
             conditionString += 'Channel__c = \''+paramsWrap.contactChannel+'\' AND ';
         if(paramsWrap.city != null){
-            conditionString += '(City__c = \''+paramsWrap.city+'\' OR City__c = \'*\') AND ';
+            conditionString += '(City__c = \''+paramsWrap.city+'\' AND ';
         }else{
-            conditionString += 'City__c = null AND ';
+            conditionString += ' City__c = \'*\' AND ';
         }
         if(paramsWrap.cluster != null)
             conditionString += 'Cluster__c = \''+paramsWrap.cluster+'\' AND ';
@@ -218,13 +247,9 @@ public with sharing class HDT_LC_AttachmentManager {
 
         conditionString = conditionString.removeEnd('AND ');
         stringQuery = stringQuery+'WHERE '+conditionString+'WITH SECURITY_ENFORCED ';
-        stringQuery += 'ORDER BY City__c, SubProcessType__c DESC NULLS LAST';
+        stringQuery += 'ORDER BY City__c DESC, SubProcessType__c DESC NULLS LAST';
 
-        system.debug('@@@@: '+stringQuery);
-        List<MandatoryAttachments__c> tabellaAllegati = Database.query(stringQuery);
-        //system.debug('@@@@: '+tabellaAllegati);
-        return tabellaAllegati[0]?.MandatoryAttachments__c;
-
+        return stringQuery;
     }
 
     @AuraEnabled
