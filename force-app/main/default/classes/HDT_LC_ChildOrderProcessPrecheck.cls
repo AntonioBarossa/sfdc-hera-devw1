@@ -232,7 +232,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
                             if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
-                                newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per Prima Attivazione e Connessione Con Attivazione
+                                newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per RT Prima Attivazione e Connessione Con Attivazione
                                 newOrder.PaySewer__c = 'No - Esente';           //per gli altri i valori sono presi da Arricchimento come da BPP
                             }
                             else{
@@ -242,6 +242,14 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         }
                         when 'Aggiunta Attacco con Attivazione'{
                             newOrder.PerformanceType__c = 'Aggiunta Attacco';
+                            if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
+                                newOrder.PayPurification__c = 'No - Esente';
+                                newOrder.PaySewer__c = 'No - Esente';
+                            }
+                            else{
+                                newOrder.PayPurification__c = 'Si - Paga';
+                                newOrder.PaySewer__c = 'Si - Paga';
+                            }
                         }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';

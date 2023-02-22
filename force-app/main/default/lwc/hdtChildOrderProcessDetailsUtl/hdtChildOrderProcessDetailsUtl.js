@@ -49,6 +49,10 @@ import * as rateCategories from './hdtRateCategories.js';
         return "";
     }
 
+    function getRateCategoriesConfiguration(){
+        return rateCategories;
+    }
+
     function checkHousingUnitRateCategory( housingUnit, rateCateg ){
         if( housingUnit > 1 && (rateCateg === 'ACDOMRESP0' || rateCateg === 'ACDOMNR000' || rateCateg === 'ACARTCOMM0') )
         {
@@ -338,8 +342,8 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'), this.typeVisibility('acqua'), this.typeVisibility('gas') || this.typeVisibility('ele'),'',''),
                     new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','PayPurification__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','PaySewer__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','PayPurification__c',this.typeVisibility('both'),false,false,'',''),
+                    new fieldData('','PaySewer__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
                     new fieldData('','BonusDeliveryMode__c', this.typeVisibility('acqua'), false, false, '',''),
                     new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
@@ -479,8 +483,8 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','NumerousComunity__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, true, '',''),
                 new fieldData('','ComPostiLetto__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '',''),
                 new fieldData('','DomesticResidentNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNCOMP), this.rateCategoryVisibility(rateCategories.AFNCOMPreq), false, '',''),
-                new fieldData('','PayPurification__c', this.typeVisibility('acqua'), false, true, '',''),
-                new fieldData('','PaySewer__c', this.typeVisibility('acqua'), false, true, '',''),
+                new fieldData('','PayPurification__c', this.typeVisibility('acqua'), false, false, '',''),
+                new fieldData('','PaySewer__c', this.typeVisibility('acqua'), false, false, '',''),
                 new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','BonusDeliveryMode__c', this.typeVisibility('acqua'), false, false, '',''),
                 new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
@@ -1002,4 +1006,4 @@ import * as rateCategories from './hdtRateCategories.js';
         ];
     }
 
-    export {handleSections, equalsIgnoreCase, safeStr}
+    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration}
