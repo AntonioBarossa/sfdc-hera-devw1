@@ -14,7 +14,8 @@ public inherited sharing class HDT_QR_LandRegistry {
 	        FROM LandRegistry__c 
 	        WHERE Order__c IN :listId
 	        AND RecordTypeId = :rtIdTARI
-            WITH SECURITY_ENFORCED];
+            WITH SECURITY_ENFORCED
+            ORDER BY Name DESC];
         return ldRegistry;
     }
     public list<LandRegistry__c> getPraticaTARILandRegistryByCaseIds(list<Id> listId) {
@@ -26,7 +27,8 @@ public inherited sharing class HDT_QR_LandRegistry {
 	        FROM LandRegistry__c 
 	        WHERE Case__c IN :listId
 	        AND RecordTypeId = :rtIdTARI
-            WITH SECURITY_ENFORCED];
+            WITH SECURITY_ENFORCED
+            ORDER BY Name DESC];
         return ldRegistry;
     }
     public list<LandRegistry__c> getTARILandRegistryByServicePointIds(list<Id> listId) {
@@ -38,7 +40,8 @@ public inherited sharing class HDT_QR_LandRegistry {
 	        FROM LandRegistry__c 
 	        WHERE ServicePoint__c IN :listId
 	        AND RecordTypeId = :rtIdTARI
-            WITH SECURITY_ENFORCED];
+            WITH SECURITY_ENFORCED
+            ORDER BY Name DESC];
         return ldRegistry;
     }
 }

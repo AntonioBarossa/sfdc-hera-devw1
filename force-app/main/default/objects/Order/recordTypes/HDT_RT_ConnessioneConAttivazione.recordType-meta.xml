@@ -130,6 +130,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>PerformanceType__c</picklist>
+        <values>
+            <fullName>Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Allacciamento</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>BonusDeliveryMode__c</picklist>
         <values>
             <fullName>Bonus in continuita</fullName>
