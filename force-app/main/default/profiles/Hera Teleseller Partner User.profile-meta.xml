@@ -2335,6 +2335,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>AccountContactRelation.RegistrationType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>AccountContactRelation.IsMigrated__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30239,6 +30244,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CallingNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QualityCallStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

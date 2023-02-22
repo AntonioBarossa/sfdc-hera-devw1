@@ -349,9 +349,10 @@ public inherited sharing class HDT_UTL_ActivityCustom {
     public static void inheritUserFields(List<wrts_prcgvr__Activity__c> activites) {
         User user = [SELECT Id, CreatorGroup__c, LoginChannel__c, Station__c FROM User WHERE Id =: UserInfo.getUserId()];
         List<String> excludedActivityType = new List<String>{'chiamata outbound', 'chiamata inbound', 'sportello'};
+        String recordTypeAct = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_HCPoint').getRecordTypeId();
         for(wrts_prcgvr__Activity__c activity : activites) {
             activity.CreatorGroup__c = user.CreatorGroup__c;
-            if (!activity.IsMigrated__c && String.isNotBlank(activity.Type__c) && !excludedActivityType.contains(activity.Type__c.toLowerCase())){
+            if (!activity.IsMigrated__c && String.isNotBlank(activity.Type__c) && (!excludedActivityType.contains(activity.Type__c.toLowerCase()) || (activity.RecordTypeId == recordTypeAct && activity.Type__c == 'Sportello'))){
                 activity.Place__c	 = user.Station__c;
                 activity.LoginChannel__c = user.LoginChannel__c;
             }
@@ -376,6 +377,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
             if (String.isNotBlank(activity.wrts_prcgvr__Status__c) && closedStatus.contains(activity.wrts_prcgvr__Status__c.toUpperCase())
             && activity.ActivityEndTime__c != null){
                 activity.EndDate__c = activity.ActivityEndTime__c.date();
+            }
+            if(activity.ActivityStartTime__c == null){
+                activity.ActivityStartTime__c = DateTime.now();
             }
         }
     }
@@ -498,6 +502,9 @@ public inherited sharing class HDT_UTL_ActivityCustom {
                 if(act.Case__c!=null)setCaseId.add(act.Case__c);
                 setActivityId.add(act.Id);
             }
+        }
+        if (setActivityId.isEmpty()){
+            return;
         }
         Map <Id, Account> mapAccountToId = new Map <Id, Account> ([SELECT Id, CompanyOwner__c FROM Account WHERE Id IN: setAccountId]);
         Map <Id, Order> mapOrderToId = new Map <Id, Order> ([SELECT Id, CompanyOwner__c FROM Order WHERE Id IN: setOrderId]);
