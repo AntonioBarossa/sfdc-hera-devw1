@@ -15,7 +15,6 @@ public with sharing class HDT_BA_DiscardDocusignEnvelope implements Database.Bat
             o.DiscardDocusignEnvelope__c = false;
             orderToCheck.add(o.Id);
         }
-        System.debug(LoggingLevel.DEBUG, '@@@@@Order ' + JSON.serializePretty(orders));
         HDT_UTL_DatabaseService.updateSObject(orders);
         System.enqueueJob(new HDT_QBL_DiscardDocusignEnvManagement(orderToCheck));
     }

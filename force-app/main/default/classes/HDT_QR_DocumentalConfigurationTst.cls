@@ -2,6 +2,13 @@
 public with sharing class HDT_QR_DocumentalConfigurationTst {
 
     @IsTest
+    public static void executeGetDocument(){
+        Test.startTest();
+            System.assertEquals(0, HDT_QR_DocumentalConfiguration.getDocument().size(),'executeGetDocument doesn\'t work');
+        Test.stopTest();
+    }
+
+    @IsTest
     public static void executeGetRecordFromServiceItems(){
         Test.startTest();
             System.assertEquals(0, HDT_QR_DocumentalConfiguration.getRecordFromServiceItems('Order', new Set<String>()).size(),'getRecordFromServiceItems doesn\'t work');
@@ -27,7 +34,7 @@ public with sharing class HDT_QR_DocumentalConfigurationTst {
     @IsTest
     public static void executeGetSignModeSettings(){
         Test.startTest();
-            System.assertEquals(8, HDT_QR_DocumentalConfiguration.getSignModeSettings('','').size(),'getSignModeSettings doesn\'t work');
+            System.assertEquals(3, HDT_QR_DocumentalConfiguration.getSignModeSettings('Domiciliazione','Sportello').size(),'getSignModeSettings doesn\'t work');
         Test.stopTest();
     }
 

@@ -109,7 +109,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         orderSrv.updateRecords(ordersToUpdate);
         system.debug('childOrdersToUpdate after update: ' + ordersToUpdate);
         if (dst != null){
-            HDT_SRV_DocumentalManagementFacade.discardDocusignEnvelope(dst.Id);
+            System.enqueueJob(new HDT_QBL_DiscardDocusignEnvManagement(dst));
         }
     }
 
