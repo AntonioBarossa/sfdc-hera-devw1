@@ -74,6 +74,46 @@
         </value>
     </choices>
     <choices>
+        <name>ARGOS</name>
+        <choiceText>ARGOS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ARGOS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>AUDAX_ENERGIA_SRL</name>
+        <choiceText>AUDAX ENERGIA SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AUDAX ENERGIA SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>AXO</name>
+        <choiceText>&lt;span style=&quot;font-family: Verdana, sans-serif; font-size: 10pt;&quot;&gt;AXO&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>AXO</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>BLUENERGY</name>
+        <choiceText>BLUENERGY</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>BLUENERGY</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>CENTRO_VENETA_ENERGIA</name>
+        <choiceText>CENTRO VENETA ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>CENTRO VENETA ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>Choice_No</name>
         <choiceText>No</choiceText>
         <dataType>String</dataType>
@@ -114,6 +154,14 @@
         </value>
     </choices>
     <choices>
+        <name>DOLOMITI_SPA</name>
+        <choiceText>DOLOMITI SPA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>DOLOMITI SPA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>DOMESTIKA_ENERGIA</name>
         <choiceText>DOMESTIKA ENERGIA</choiceText>
         <dataType>String</dataType>
@@ -146,6 +194,14 @@
         </value>
     </choices>
     <choices>
+        <name>E_DI_ENERGIA</name>
+        <choiceText>E&apos;-DI ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>E&apos;-DI ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>EDISON_ENERGIA_SPA</name>
         <choiceText>EDISON ENERGIA SPA</choiceText>
         <dataType>String</dataType>
@@ -159,6 +215,14 @@
         <dataType>String</dataType>
         <value>
             <stringValue>EDISON PER VOI </stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENEGAN</name>
+        <choiceText>ENEGAN</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENEGAN</stringValue>
         </value>
     </choices>
     <choices>
@@ -191,6 +255,22 @@
         <dataType>String</dataType>
         <value>
             <stringValue>ENIT GAS E LUCE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ENJOY_ENERGY_SRL</name>
+        <choiceText>ENJOY ENERGY SRL</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ENJOY ENERGY SRL</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>EON</name>
+        <choiceText>EON</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>EON</stringValue>
         </value>
     </choices>
     <choices>
@@ -250,11 +330,75 @@
         </value>
     </choices>
     <choices>
+        <name>IN_ENERGIE</name>
+        <choiceText>IN ENERGIE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>IN ENERGIE</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>IREN_MERCATO</name>
         <choiceText>IREN MERCATO</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>IREN MERCATO</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>ITALIA_GAS_E_LUCE</name>
+        <choiceText>ITALIA GAS E LUCE</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>ITALIA GAS E LUCE</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>MET_GROUP</name>
+        <choiceText>&lt;span style=&quot;font-family: Verdana, sans-serif; font-size: 10pt;&quot;&gt;MET GROUP&lt;/span&gt;</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MET GROUP</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>MINERVA_ENERGIA</name>
+        <choiceText>MINERVA ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>MINERVA ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>NEN</name>
+        <choiceText>NEN</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>NEN</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>OPTIMA</name>
+        <choiceText>OPTIMA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>OPTIMA</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PASSUELLO_LUCE_E_GAS</name>
+        <choiceText>PASSUELLO LUCE E GAS</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PASSUELLO LUCE E GAS</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>PEF_POWER</name>
+        <choiceText>PEF POWER</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>PEF POWER</stringValue>
         </value>
     </choices>
     <choices>
@@ -386,6 +530,14 @@
         </value>
     </choices>
     <choices>
+        <name>SINECOM</name>
+        <choiceText>SINECOM</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>SINECOM</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>SORGENIA_SPA</name>
         <choiceText>SORGENIA SPA</choiceText>
         <dataType>String</dataType>
@@ -393,6 +545,23 @@
             <stringValue>SORGENIA SPA</stringValue>
         </value>
     </choices>
+    <choices>
+        <name>WEKIWI</name>
+        <choiceText>WEKIWI</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WEKIWI</stringValue>
+        </value>
+    </choices>
+    <choices>
+        <name>WIND3</name>
+        <choiceText>WIND3</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>WIND3</stringValue>
+        </value>
+    </choices>
+    <environments>Default</environments>
     <interviewLabel>HDT FL Script - Survey Abbandono {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT FL Script - Survey Abbandono</label>
     <processMetadataValues>
@@ -900,6 +1069,27 @@
             <choiceReferences>A_S_M_VOGHERA</choiceReferences>
             <choiceReferences>GREEN_NETWORK_SPA</choiceReferences>
             <choiceReferences>DOMESTIKA_ENERGIA</choiceReferences>
+            <choiceReferences>AXO</choiceReferences>
+            <choiceReferences>MET_GROUP</choiceReferences>
+            <choiceReferences>ARGOS</choiceReferences>
+            <choiceReferences>BLUENERGY</choiceReferences>
+            <choiceReferences>MINERVA_ENERGIA</choiceReferences>
+            <choiceReferences>CENTRO_VENETA_ENERGIA</choiceReferences>
+            <choiceReferences>PEF_POWER</choiceReferences>
+            <choiceReferences>WIND3</choiceReferences>
+            <choiceReferences>WEKIWI</choiceReferences>
+            <choiceReferences>DOLOMITI_SPA</choiceReferences>
+            <choiceReferences>OPTIMA</choiceReferences>
+            <choiceReferences>NEN</choiceReferences>
+            <choiceReferences>ITALIA_GAS_E_LUCE</choiceReferences>
+            <choiceReferences>PASSUELLO_LUCE_E_GAS</choiceReferences>
+            <choiceReferences>AUDAX_ENERGIA_SRL</choiceReferences>
+            <choiceReferences>ENEGAN</choiceReferences>
+            <choiceReferences>IN_ENERGIE</choiceReferences>
+            <choiceReferences>ENJOY_ENERGY_SRL</choiceReferences>
+            <choiceReferences>E_DI_ENERGIA</choiceReferences>
+            <choiceReferences>SINECOM</choiceReferences>
+            <choiceReferences>EON</choiceReferences>
             <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Energia Elettrica</fieldText>
@@ -946,6 +1136,27 @@
             <choiceReferences>AEG_ENERGIA_GAS</choiceReferences>
             <choiceReferences>ACAM_Gas</choiceReferences>
             <choiceReferences>ESTRA_ENERGIE_SRL</choiceReferences>
+            <choiceReferences>AXO</choiceReferences>
+            <choiceReferences>MET_GROUP</choiceReferences>
+            <choiceReferences>ARGOS</choiceReferences>
+            <choiceReferences>BLUENERGY</choiceReferences>
+            <choiceReferences>MINERVA_ENERGIA</choiceReferences>
+            <choiceReferences>CENTRO_VENETA_ENERGIA</choiceReferences>
+            <choiceReferences>PEF_POWER</choiceReferences>
+            <choiceReferences>WIND3</choiceReferences>
+            <choiceReferences>WEKIWI</choiceReferences>
+            <choiceReferences>DOLOMITI_SPA</choiceReferences>
+            <choiceReferences>OPTIMA</choiceReferences>
+            <choiceReferences>NEN</choiceReferences>
+            <choiceReferences>ITALIA_GAS_E_LUCE</choiceReferences>
+            <choiceReferences>PASSUELLO_LUCE_E_GAS</choiceReferences>
+            <choiceReferences>AUDAX_ENERGIA_SRL</choiceReferences>
+            <choiceReferences>ENEGAN</choiceReferences>
+            <choiceReferences>IN_ENERGIE</choiceReferences>
+            <choiceReferences>ENJOY_ENERGY_SRL</choiceReferences>
+            <choiceReferences>E_DI_ENERGIA</choiceReferences>
+            <choiceReferences>SINECOM</choiceReferences>
+            <choiceReferences>EON</choiceReferences>
             <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Gas</fieldText>
