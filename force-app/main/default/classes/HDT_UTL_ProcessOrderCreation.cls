@@ -547,7 +547,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
-                if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
+                if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura') ||
+                   wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('VolturaNoEnergy')){
                     orderPreDefault.setServicePoint(servicePointMap.get(processObj.nextDataObj.servPointId));
                     orderPreDefault.setContract(contractMap.get(processObj.nextDataObj.servPointId));
                     wrpChildOrder.childOrder = orderPreDefault.setDefaultOrderValues(wrpChildOrder.childOrder);

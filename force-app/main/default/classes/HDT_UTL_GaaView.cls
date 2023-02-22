@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_GaaView extends HDT_SRV_AccountDataEnrich
             success = false;
         }
 
-        body = '{"bp": "' + accList[0].CustomerCode__c + '",';
+        body = '{"codeBp": "' + accList[0].CustomerCode__c + '",';
         body += '"impianto": "' + implantType + '"';
         body += '}';
 
