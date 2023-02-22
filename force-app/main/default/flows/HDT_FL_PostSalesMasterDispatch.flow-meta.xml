@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Gestione_Documenti_Informative</name>
         <label>Gestione Documenti Informative</label>
-        <locationX>9488</locationX>
+        <locationX>9664</locationX>
         <locationY>2462</locationY>
         <actionName>HDT_SRV_DocumentSelectedManager</actionName>
         <actionType>apex</actionType>
@@ -46,8 +46,8 @@
     <actionCalls>
         <name>getIsCommunityValue</name>
         <label>Valorizzazione variabile isCommunity</label>
-        <locationX>8605</locationX>
-        <locationY>5198</locationY>
+        <locationX>8693</locationX>
+        <locationY>5534</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -65,8 +65,8 @@
     <actionCalls>
         <name>getIsCommunityValue_0</name>
         <label>Valorizzazione variabile isCommunity</label>
-        <locationX>7772</locationX>
-        <locationY>4718</locationY>
+        <locationX>7860</locationX>
+        <locationY>5054</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -84,8 +84,8 @@
     <actionCalls>
         <name>getuuid</name>
         <label>getuuid</label>
-        <locationX>8396</locationX>
-        <locationY>5438</locationY>
+        <locationX>8484</locationX>
+        <locationY>5774</locationY>
         <actionName>HDT_LC_CtToolbar</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -100,7 +100,7 @@
     <actionCalls>
         <name>ManageDocument</name>
         <label>ManageDocument</label>
-        <locationX>9884</locationX>
+        <locationX>10060</locationX>
         <locationY>2342</locationY>
         <actionName>HDT_SRV_DocumentSelectedManager</actionName>
         <actionType>apex</actionType>
@@ -137,7 +137,7 @@
     <actionCalls>
         <name>ManageDocumentsFatturazione_0</name>
         <label>ManageDocumentsFatturazione</label>
-        <locationX>4362</locationX>
+        <locationX>4494</locationX>
         <locationY>2702</locationY>
         <actionName>HDT_SRV_DocumentSelectedManager</actionName>
         <actionType>apex</actionType>
@@ -175,7 +175,7 @@
     <assignments>
         <name>Assegna_Case_Id_0</name>
         <label>Assegna Case Id</label>
-        <locationX>10456</locationX>
+        <locationX>10632</locationX>
         <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -191,7 +191,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>9884</locationX>
+        <locationX>10060</locationX>
         <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -207,7 +207,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>10192</locationX>
+        <locationX>10368</locationX>
         <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -252,7 +252,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>7860</locationX>
+        <locationX>8036</locationX>
         <locationY>2102</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -268,7 +268,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12326</locationX>
+        <locationX>12502</locationX>
         <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -355,7 +355,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>11666</locationX>
+        <locationX>11842</locationX>
         <locationY>2894</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -371,7 +371,7 @@
     <assignments>
         <name>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>11974</locationX>
+        <locationX>12150</locationX>
         <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -400,7 +400,7 @@
     <assignments>
         <name>Assegna_Case_Id_Annullamento_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>10984</locationX>
+        <locationX>11160</locationX>
         <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -416,7 +416,7 @@
     <assignments>
         <name>Assegna_Case_Id_Annullamento_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>10720</locationX>
+        <locationX>10896</locationX>
         <locationY>2462</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -429,7 +429,7 @@
     <assignments>
         <name>Assegna_Case_Id_Annullamento_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>11248</locationX>
+        <locationX>11424</locationX>
         <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -445,7 +445,7 @@
     <assignments>
         <name>Assegna_Case_Id_Contratto_Non_Attivo</name>
         <label>Assegna Case Id</label>
-        <locationX>8256</locationX>
+        <locationX>8432</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -461,7 +461,7 @@
     <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>8916</locationX>
+        <locationX>9092</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -477,7 +477,7 @@
     <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>8520</locationX>
+        <locationX>8696</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -490,7 +490,7 @@
     <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>4032</locationX>
+        <locationX>4065</locationX>
         <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -506,7 +506,7 @@
     <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>4890</locationX>
+        <locationX>5066</locationX>
         <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -522,7 +522,7 @@
     <assignments>
         <name>Assegna_Case_Id_Fatturazione_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>4626</locationX>
+        <locationX>4802</locationX>
         <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -535,7 +535,7 @@
     <assignments>
         <name>Assegna_Case_Id_GenAtt</name>
         <label>Assegna Case Id</label>
-        <locationX>13998</locationX>
+        <locationX>14174</locationX>
         <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -548,7 +548,7 @@
     <assignments>
         <name>Assegna_Case_Id_GenAtt_0</name>
         <label>Assegna Case Id</label>
-        <locationX>14394</locationX>
+        <locationX>14570</locationX>
         <locationY>2558</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -564,7 +564,7 @@
     <assignments>
         <name>Assegna_Case_Id_Informative</name>
         <label>Assegna Case Id Informative</label>
-        <locationX>9488</locationX>
+        <locationX>9664</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -580,7 +580,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>7332</locationX>
+        <locationX>7508</locationX>
         <locationY>2894</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -596,7 +596,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>6936</locationX>
+        <locationX>7112</locationX>
         <locationY>2894</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -609,7 +609,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_Account_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>5418</locationX>
+        <locationX>5594</locationX>
         <locationY>3134</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -625,7 +625,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_Account_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>5154</locationX>
+        <locationX>5330</locationX>
         <locationY>3134</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -638,7 +638,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_Account_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>6210</locationX>
+        <locationX>6386</locationX>
         <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -654,7 +654,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_Lead_0</name>
         <label>Assegna Case Id</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>3254</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -670,7 +670,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_Lead_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>5682</locationX>
+        <locationX>5858</locationX>
         <locationY>3134</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -683,7 +683,7 @@
     <assignments>
         <name>Assegna_Case_Id_Modifiche_Anagrafiche_Lead_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>6474</locationX>
+        <locationX>6650</locationX>
         <locationY>3134</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -728,7 +728,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12942</locationX>
+        <locationX>13118</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -744,7 +744,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>12678</locationX>
+        <locationX>12854</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -757,7 +757,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>13470</locationX>
+        <locationX>13646</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -773,7 +773,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>13206</locationX>
+        <locationX>13382</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -786,7 +786,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>14702</locationX>
+        <locationX>14878</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -802,7 +802,7 @@
     <assignments>
         <name>Assegna_Case_Id_Notifiche_0_0_0_0_0_0_0</name>
         <label>Assegna Case Id</label>
-        <locationX>14966</locationX>
+        <locationX>15142</locationX>
         <locationY>2342</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
@@ -818,8 +818,8 @@
     <assignments>
         <name>Assegna_variabili_fatturazione_0</name>
         <label>Assegna variabili fatturazione</label>
-        <locationX>4230</locationX>
-        <locationY>3158</locationY>
+        <locationX>4296</locationX>
+        <locationY>3494</locationY>
         <assignmentItems>
             <assignToReference>CaseFatturazione_0.Contract__c</assignToReference>
             <operator>Assign</operator>
@@ -864,7 +864,7 @@
     <assignments>
         <name>assignCommodity</name>
         <label>assignCommodity</label>
-        <locationX>7002</locationX>
+        <locationX>7178</locationX>
         <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>Commodity</assignToReference>
@@ -880,7 +880,7 @@
     <assignments>
         <name>assignCommodity_0</name>
         <label>assignCommodity</label>
-        <locationX>7266</locationX>
+        <locationX>7442</locationX>
         <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>Commodity</assignToReference>
@@ -896,7 +896,7 @@
     <assignments>
         <name>assignRecordTypeAmbiente</name>
         <label>assignRecordTypeAmbiente</label>
-        <locationX>6738</locationX>
+        <locationX>6914</locationX>
         <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeName</assignToReference>
@@ -912,7 +912,7 @@
     <assignments>
         <name>AssignRecordTypeIdAcqua</name>
         <label>AssignRecordTypeIdAcqua</label>
-        <locationX>12040</locationX>
+        <locationX>12216</locationX>
         <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -928,7 +928,7 @@
     <assignments>
         <name>AssignRecordTypeIdEle</name>
         <label>AssignRecordTypeIdEle</label>
-        <locationX>12304</locationX>
+        <locationX>12480</locationX>
         <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -944,7 +944,7 @@
     <assignments>
         <name>AssignRecordTypeIdGas</name>
         <label>AssignRecordTypeIdGas</label>
-        <locationX>11512</locationX>
+        <locationX>11688</locationX>
         <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -960,7 +960,7 @@
     <assignments>
         <name>AssignRecordTypeIdTari_Var</name>
         <label>AssignRecordTypeIdTari</label>
-        <locationX>11776</locationX>
+        <locationX>11952</locationX>
         <locationY>2438</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeCalculated</assignToReference>
@@ -976,7 +976,7 @@
     <assignments>
         <name>Chiusura_Case_Padre_Autoletture</name>
         <label>Chiusura Case Padre</label>
-        <locationX>8784</locationX>
+        <locationX>8960</locationX>
         <locationY>2702</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Padre_Autoletture.Phase__c</assignToReference>
@@ -999,8 +999,8 @@
     <assignments>
         <name>Chiusura_Case_Padre_RettificaConsumi</name>
         <label>Chiusura Case Padre</label>
-        <locationX>4263</locationX>
-        <locationY>3830</locationY>
+        <locationX>4367</locationX>
+        <locationY>4166</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Padre_RettificaConsumi.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1102,7 +1102,7 @@
     <assignments>
         <name>Set_RT_Mod_Anagrafica</name>
         <label>Set RT Mod. Anagrafica</label>
-        <locationX>6078</locationX>
+        <locationX>6254</locationX>
         <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeModificaAnagrafica</assignToReference>
@@ -1118,7 +1118,7 @@
     <assignments>
         <name>Set_RT_Votiva_Modena</name>
         <label>Set RT Votiva Modena</label>
-        <locationX>5814</locationX>
+        <locationX>5990</locationX>
         <locationY>2318</locationY>
         <assignmentItems>
             <assignToReference>RecordTypeModificaAnagrafica</assignToReference>
@@ -1134,7 +1134,7 @@
     <assignments>
         <name>Set_Target_Legale</name>
         <label>Target = Legale Rappresentante</label>
-        <locationX>7640</locationX>
+        <locationX>7728</locationX>
         <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>TargetContact</assignToReference>
@@ -1150,7 +1150,7 @@
     <assignments>
         <name>Set_Target_Titolare</name>
         <label>Target = Titolare</label>
-        <locationX>7904</locationX>
+        <locationX>7992</locationX>
         <locationY>1526</locationY>
         <assignmentItems>
             <assignToReference>TargetContact</assignToReference>
@@ -1166,8 +1166,8 @@
     <assignments>
         <name>Valorizzazione_Status_Campaign_Member</name>
         <label>Valorizzazione Status Campaign Member</label>
-        <locationX>8605</locationX>
-        <locationY>6566</locationY>
+        <locationX>8693</locationX>
+        <locationY>6902</locationY>
         <assignmentItems>
             <assignToReference>CampaignMember_Record.Status</assignToReference>
             <operator>Assign</operator>
@@ -1236,7 +1236,7 @@
     <decisions>
         <name>Ambiente</name>
         <label>Ambiente?</label>
-        <locationX>7134</locationX>
+        <locationX>7310</locationX>
         <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Reclami</targetReference>
@@ -1298,7 +1298,7 @@
     <decisions>
         <name>Arricchimento_0</name>
         <label>Arricchimento?</label>
-        <locationX>11050</locationX>
+        <locationX>11226</locationX>
         <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Annullamento_0</targetReference>
@@ -1348,7 +1348,7 @@
     <decisions>
         <name>Arricchimento_Var</name>
         <label>Arricchimento?</label>
-        <locationX>12326</locationX>
+        <locationX>12502</locationX>
         <locationY>3134</locationY>
         <defaultConnector>
             <targetReference>Arricchimento_Dati_0_0_0</targetReference>
@@ -1373,7 +1373,7 @@
     <decisions>
         <name>ArricchimentoDatiReclami</name>
         <label>ArricchimentoDati?</label>
-        <locationX>7332</locationX>
+        <locationX>7508</locationX>
         <locationY>3014</locationY>
         <defaultConnector>
             <targetReference>Arricchimento_Dati_0_0_0_0_0</targetReference>
@@ -1437,8 +1437,8 @@
     <decisions>
         <name>Campaign_Member_presente</name>
         <label>Campaign Member presente?</label>
-        <locationX>7772</locationX>
-        <locationY>4838</locationY>
+        <locationX>7860</locationX>
+        <locationY>5174</locationY>
         <defaultConnector>
             <targetReference>Record_Case</targetReference>
         </defaultConnector>
@@ -1480,8 +1480,8 @@
     <decisions>
         <name>Case_Annullato</name>
         <label>Case Annullato?</label>
-        <locationX>8137</locationX>
-        <locationY>5078</locationY>
+        <locationX>8225</locationX>
+        <locationY>5414</locationY>
         <defaultConnector>
             <targetReference>getIsCommunityValue</targetReference>
         </defaultConnector>
@@ -1509,7 +1509,7 @@
     <decisions>
         <name>CaseLastTwoMinutes_Presente</name>
         <label>CaseLastTwoMinutes Presente?</label>
-        <locationX>9356</locationX>
+        <locationX>9532</locationX>
         <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Informative</targetReference>
@@ -1531,7 +1531,7 @@
     <decisions>
         <name>CaseLastTwoMinutes_Presente_0</name>
         <label>CaseLastTwoMinutes Presente?</label>
-        <locationX>7618</locationX>
+        <locationX>7706</locationX>
         <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante</targetReference>
@@ -1553,8 +1553,8 @@
     <decisions>
         <name>Check_Arricchimento_Dati_Fatturazione</name>
         <label>Arricchimento Dati Fatturazione?</label>
-        <locationX>4395</locationX>
-        <locationY>4166</locationY>
+        <locationX>4499</locationX>
+        <locationY>4502</locationY>
         <defaultConnector>
             <targetReference>Arricchimento_Dati_Fatturazione</targetReference>
         </defaultConnector>
@@ -1585,7 +1585,7 @@
     <decisions>
         <name>Check_Arricchimento_Dati_Mod_Anagrafica_0</name>
         <label>Arricchimento Dati Mod. Anagrafica?</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>2654</locationY>
         <defaultConnector>
             <targetReference>Check_Contesto_Case_0</targetReference>
@@ -1610,7 +1610,7 @@
     <decisions>
         <name>Check_Contesto_Case</name>
         <label>Contesto Case?</label>
-        <locationX>5550</locationX>
+        <locationX>5726</locationX>
         <locationY>2774</locationY>
         <defaultConnector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -1635,7 +1635,7 @@
     <decisions>
         <name>Check_Contesto_Case_0</name>
         <label>Contesto Case?</label>
-        <locationX>6342</locationX>
+        <locationX>6518</locationX>
         <locationY>2774</locationY>
         <defaultConnector>
             <targetReference>Get_Lead_0</targetReference>
@@ -1660,7 +1660,7 @@
     <decisions>
         <name>Check_Legale_Rappresentante_o_Titolare</name>
         <label>Legale Rappresentante o Titolare?</label>
-        <locationX>7772</locationX>
+        <locationX>7860</locationX>
         <locationY>1406</locationY>
         <defaultConnector>
             <targetReference>Set_Target_Titolare</targetReference>
@@ -1685,7 +1685,7 @@
     <decisions>
         <name>Check_Parent_Case</name>
         <label>Parent Case?</label>
-        <locationX>5550</locationX>
+        <locationX>5726</locationX>
         <locationY>3566</locationY>
         <defaultConnector>
             <targetReference>Arricchimento_Dati_Mod_Anagrafica_0</targetReference>
@@ -1711,7 +1711,7 @@
         <description>Per l&apos;allineamento anagrafica, eseguiamo la selezione fornitura solo se innescato da contesto Account. Se invece è innescato da contesto Case, la fornitura da usare va presa dal parent Case.</description>
         <name>Check_Processo_ModAnagrafica</name>
         <label>Processo?</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
@@ -1758,7 +1758,7 @@
     <decisions>
         <name>Check_Votiva_Modena_ModAnag</name>
         <label>Votiva Modena?</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>Set_RT_Mod_Anagrafica</targetReference>
@@ -1848,7 +1848,7 @@
     <decisions>
         <name>CommodityDecision_0_0</name>
         <label>Commodity?</label>
-        <locationX>11908</locationX>
+        <locationX>12084</locationX>
         <locationY>2198</locationY>
         <defaultConnector>
             <targetReference>GetEleRecordType</targetReference>
@@ -1910,7 +1910,7 @@
     <decisions>
         <name>Con_Senza_SelezioneFornitura</name>
         <label>Con/Senza SelezioneFornitura</label>
-        <locationX>10104</locationX>
+        <locationX>10280</locationX>
         <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>Selezione_Fornitura_Autolettura_0</targetReference>
@@ -1935,8 +1935,8 @@
     <decisions>
         <name>Confermato</name>
         <label>Confermato?</label>
-        <locationX>8154</locationX>
-        <locationY>5798</locationY>
+        <locationX>8242</locationX>
+        <locationY>6134</locationY>
         <defaultConnectorLabel>Salva in Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla</name>
@@ -1986,7 +1986,7 @@
     <decisions>
         <name>Lead_o_Interaction</name>
         <label>Lead o Interaction?</label>
-        <locationX>7772</locationX>
+        <locationX>7860</locationX>
         <locationY>494</locationY>
         <defaultConnector>
             <targetReference>Cerca_Legale_Rappresentante</targetReference>
@@ -2032,7 +2032,7 @@
     <decisions>
         <name>Need_First_Screen</name>
         <label>Need First Screen?</label>
-        <locationX>7772</locationX>
+        <locationX>7860</locationX>
         <locationY>158</locationY>
         <defaultConnector>
             <targetReference>Lead_o_Interaction</targetReference>
@@ -2196,7 +2196,7 @@
     <decisions>
         <name>Parent_Id_nullo</name>
         <label>Parent Id nullo?</label>
-        <locationX>4230</locationX>
+        <locationX>4296</locationX>
         <locationY>2582</locationY>
         <defaultConnector>
             <targetReference>ManageDocumentsFatturazione_0</targetReference>
@@ -2356,7 +2356,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>7134</locationX>
+        <locationX>7310</locationX>
         <locationY>2654</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Reclamo</targetReference>
@@ -2388,7 +2388,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>8586</locationX>
+        <locationX>8762</locationX>
         <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Autolettura</targetReference>
@@ -2442,7 +2442,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>6342</locationX>
+        <locationX>6518</locationX>
         <locationY>3470</locationY>
         <defaultConnector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
@@ -2471,7 +2471,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>10324</locationX>
+        <locationX>10500</locationX>
         <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Canone_Rai_0_0_0_0</targetReference>
@@ -2503,7 +2503,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>10852</locationX>
+        <locationX>11028</locationX>
         <locationY>2222</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Annullamento_0_0</targetReference>
@@ -2535,7 +2535,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>14196</locationX>
+        <locationX>14372</locationX>
         <locationY>2318</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_0</targetReference>
@@ -2567,7 +2567,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>12150</locationX>
+        <locationX>12326</locationX>
         <locationY>2774</locationY>
         <defaultConnector>
             <targetReference>CreaCaseVariazioni_0</targetReference>
@@ -2599,7 +2599,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>12810</locationX>
+        <locationX>12986</locationX>
         <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Notifiche_0</targetReference>
@@ -2631,7 +2631,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>13338</locationX>
+        <locationX>13514</locationX>
         <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Voltura_0</targetReference>
@@ -2663,7 +2663,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>14834</locationX>
+        <locationX>15010</locationX>
         <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Consumo_Anomalo_Idrico_0</targetReference>
@@ -2695,7 +2695,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>4758</locationX>
+        <locationX>4934</locationX>
         <locationY>2342</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Fatturazione_ConFornitura_0</targetReference>
@@ -2727,7 +2727,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>5286</locationX>
+        <locationX>5462</locationX>
         <locationY>2894</locationY>
         <defaultConnector>
             <targetReference>Crea_Case_Modifiche_Anagrafiche_Account_0</targetReference>
@@ -2759,7 +2759,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>5814</locationX>
+        <locationX>5990</locationX>
         <locationY>2894</locationY>
         <defaultConnector>
             <targetReference>Get_Lead</targetReference>
@@ -2849,7 +2849,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>4032</locationX>
+        <locationX>4065</locationX>
         <locationY>2462</locationY>
         <defaultConnector>
             <targetReference>Parent_Id_nullo</targetReference>
@@ -2878,7 +2878,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>11666</locationX>
+        <locationX>11842</locationX>
         <locationY>3134</locationY>
         <defaultConnector>
             <targetReference>Gestione_Variazioni_Subflow</targetReference>
@@ -2907,7 +2907,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>9884</locationX>
+        <locationX>10060</locationX>
         <locationY>2582</locationY>
         <defaultConnector>
             <targetReference>Gestione_Canone_Rai_Subflow</targetReference>
@@ -2936,7 +2936,7 @@
     <decisions>
         <name>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Processo Compatibile?</label>
-        <locationX>7860</locationX>
+        <locationX>8036</locationX>
         <locationY>2342</locationY>
         <defaultConnector>
             <targetReference>Votive_Modena_SubFlow</targetReference>
@@ -2965,7 +2965,7 @@
     <decisions>
         <name>Processo_Fatturazione</name>
         <label>Processo?</label>
-        <locationX>4395</locationX>
+        <locationX>4499</locationX>
         <locationY>1982</locationY>
         <defaultConnector>
             <targetReference>Selezione_Fornitura_Fatturazione_0_0</targetReference>
@@ -3004,7 +3004,7 @@
     <decisions>
         <name>Selezione_Fornitura_00</name>
         <label>Selezione Fornitura?</label>
-        <locationX>11908</locationX>
+        <locationX>12084</locationX>
         <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Selezione_Fornitura_Notifiche_0_0</targetReference>
@@ -3050,7 +3050,7 @@
     <decisions>
         <name>Selezione_Fornitura_000</name>
         <label>Selezione Fornitura?</label>
-        <locationX>14196</locationX>
+        <locationX>14372</locationX>
         <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
@@ -3075,7 +3075,7 @@
     <decisions>
         <name>Selezione_Fornitura_000_0</name>
         <label>Selezione Fornitura?</label>
-        <locationX>14394</locationX>
+        <locationX>14570</locationX>
         <locationY>2678</locationY>
         <defaultConnector>
             <targetReference>Cambio_Uso_Fittizio</targetReference>
@@ -3100,7 +3100,7 @@
     <decisions>
         <name>Selezione_Fornitura_00_0</name>
         <label>Selezione Fornitura?</label>
-        <locationX>11908</locationX>
+        <locationX>12084</locationX>
         <locationY>2654</locationY>
         <defaultConnector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -3171,7 +3171,7 @@
     <decisions>
         <name>SelezioneFornituraReclami</name>
         <label>SelezioneFornitura?</label>
-        <locationX>7134</locationX>
+        <locationX>7310</locationX>
         <locationY>1862</locationY>
         <defaultConnector>
             <targetReference>Selezione_Fornitura_Fatturazione_0</targetReference>
@@ -3203,8 +3203,8 @@
     <decisions>
         <name>Sono_in_chiamata</name>
         <label>Sono in chiamata?</label>
-        <locationX>8396</locationX>
-        <locationY>5558</locationY>
+        <locationX>8484</locationX>
+        <locationY>5894</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -3228,8 +3228,8 @@
     <decisions>
         <name>Sono_in_Community</name>
         <label>Sono in Community?</label>
-        <locationX>8605</locationX>
-        <locationY>5318</locationY>
+        <locationX>8693</locationX>
+        <locationY>5654</locationY>
         <defaultConnector>
             <targetReference>CampaignMember_Record</targetReference>
         </defaultConnector>
@@ -3253,7 +3253,7 @@
     <decisions>
         <name>Switch_Subflow</name>
         <label>Switch Subflow</label>
-        <locationX>7772</locationX>
+        <locationX>7860</locationX>
         <locationY>1742</locationY>
         <defaultConnector>
             <targetReference>ErrorScreen_0</targetReference>
@@ -3737,7 +3737,7 @@
     <decisions>
         <name>Tipo_Case_Padre_Consumo_Anomalo_Idrico</name>
         <label>Tipo Case Padre = &quot;Consumo Anomalo Idrico&quot;?</label>
-        <locationX>8916</locationX>
+        <locationX>9092</locationX>
         <locationY>2582</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_Arricchimento_Dati</targetReference>
@@ -3762,8 +3762,8 @@
     <decisions>
         <name>Tipo_Case_Padre_Consumo_Anomalo_Idrico_0</name>
         <label>Tipo Case Padre = &quot;Consumo Anomalo Idrico&quot;?</label>
-        <locationX>4395</locationX>
-        <locationY>3710</locationY>
+        <locationX>4499</locationX>
+        <locationY>4046</locationY>
         <defaultConnector>
             <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </defaultConnector>
@@ -3784,7 +3784,31 @@
             <label>SI</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
+    <decisions>
+        <name>With_ServicePoint</name>
+        <label>With ServicePoint</label>
+        <locationX>4494</locationX>
+        <locationY>2942</locationY>
+        <defaultConnector>
+            <targetReference>CaseFatturazione_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>ServicePoint Not Found</defaultConnectorLabel>
+        <rules>
+            <name>ServicePoint_Found</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ServicePointId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Arricchimento_Dati_Fatturazione_1</targetReference>
+            </connector>
+            <label>ServicePoint Found</label>
+        </rules>
+    </decisions>
     <formulas>
         <name>LastMinute</name>
         <dataType>DateTime</dataType>
@@ -3833,7 +3857,7 @@
     <recordCreates>
         <name>Crea_Case</name>
         <label>Crea Case</label>
-        <locationX>13998</locationX>
+        <locationX>14174</locationX>
         <locationY>2438</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_GenAtt</targetReference>
@@ -3958,7 +3982,7 @@
     <recordCreates>
         <name>Crea_Case_0</name>
         <label>Crea Case</label>
-        <locationX>14394</locationX>
+        <locationX>14570</locationX>
         <locationY>2438</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_GenAtt_0</targetReference>
@@ -4071,7 +4095,7 @@
     <recordCreates>
         <name>Crea_Case_Annullamento_0_0</name>
         <label>Crea Case Annullamento</label>
-        <locationX>10984</locationX>
+        <locationX>11160</locationX>
         <locationY>2342</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Annullamento_0_0</targetReference>
@@ -4172,7 +4196,7 @@
     <recordCreates>
         <name>Crea_Case_Annullamento_0_0_0</name>
         <label>Crea Case Annullamento</label>
-        <locationX>10720</locationX>
+        <locationX>10896</locationX>
         <locationY>2342</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Annullamento_0_0_0</targetReference>
@@ -4285,7 +4309,7 @@
     <recordCreates>
         <name>Crea_Case_Annullamento_0_0_0_0</name>
         <label>Crea Case Annullamento</label>
-        <locationX>11248</locationX>
+        <locationX>11424</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Annullamento_0_0_0_0</targetReference>
@@ -4374,7 +4398,7 @@
     <recordCreates>
         <name>Crea_Case_Autoelettrica</name>
         <label>Crea Case Autoelettrica</label>
-        <locationX>13734</locationX>
+        <locationX>13910</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>Get_Case_Autoelettrica</targetReference>
@@ -4487,7 +4511,7 @@
     <recordCreates>
         <name>Crea_Case_Autolettura</name>
         <label>Crea Case Autolettura</label>
-        <locationX>8916</locationX>
+        <locationX>9092</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Fatturazione_0_0</targetReference>
@@ -4576,7 +4600,7 @@
     <recordCreates>
         <name>Crea_Case_Autolettura_0</name>
         <label>Crea Case Autolettura</label>
-        <locationX>8520</locationX>
+        <locationX>8696</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Fatturazione_0_0_0_0_0</targetReference>
@@ -4677,7 +4701,7 @@
     <recordCreates>
         <name>Crea_Case_Autolettura_Contratto_Non_Attivo</name>
         <label>Crea Case Autolettura</label>
-        <locationX>8256</locationX>
+        <locationX>8432</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Contratto_Non_Attivo</targetReference>
@@ -4784,7 +4808,7 @@
     <recordCreates>
         <name>Crea_Case_Canone_Rai_0_0</name>
         <label>Crea Case Canone Rai</label>
-        <locationX>9884</locationX>
+        <locationX>10060</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0</targetReference>
@@ -4873,7 +4897,7 @@
     <recordCreates>
         <name>Crea_Case_Canone_Rai_0_0_0_0</name>
         <label>Crea Case Canone Rai</label>
-        <locationX>10456</locationX>
+        <locationX>10632</locationX>
         <locationY>2342</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0</targetReference>
@@ -4980,7 +5004,7 @@
     <recordCreates>
         <name>Crea_Case_Canone_Rai_0_0_0_0_0</name>
         <label>Crea Case Canone Rai</label>
-        <locationX>10192</locationX>
+        <locationX>10368</locationX>
         <locationY>2342</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0</targetReference>
@@ -5099,7 +5123,7 @@
     <recordCreates>
         <name>Crea_Case_Consumo_Anomalo_Idrico</name>
         <label>Crea Case Consumo Anomalo Idrico</label>
-        <locationX>14702</locationX>
+        <locationX>14878</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0_0_0</targetReference>
@@ -5224,7 +5248,7 @@
     <recordCreates>
         <name>Crea_Case_Consumo_Anomalo_Idrico_0</name>
         <label>Crea Case Consumo Anomalo Idrico</label>
-        <locationX>14966</locationX>
+        <locationX>15142</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0_0_0_0</targetReference>
@@ -5581,7 +5605,7 @@
     <recordCreates>
         <name>Crea_Case_Fatturazione_ConFornitura_0</name>
         <label>Crea Case Fatturazione</label>
-        <locationX>4890</locationX>
+        <locationX>5066</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Fatturazione_0_0_0_0_0_0_0_0</targetReference>
@@ -5676,7 +5700,7 @@
     <recordCreates>
         <name>Crea_Case_Fatturazione_ConFornitura_0_0</name>
         <label>Crea Case Fatturazione</label>
-        <locationX>4626</locationX>
+        <locationX>4802</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Fatturazione_0_0_0_0_0_0_0_0_0</targetReference>
@@ -5783,7 +5807,7 @@
     <recordCreates>
         <name>Crea_Case_Fatturazione_NoFornitura_0</name>
         <label>Crea Case Fatturazione</label>
-        <locationX>4032</locationX>
+        <locationX>4065</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Fatturazione_0_0_0_0_0_0</targetReference>
@@ -5854,7 +5878,7 @@
     <recordCreates>
         <name>Crea_Case_Informative</name>
         <label>Crea Case Informative</label>
-        <locationX>9488</locationX>
+        <locationX>9664</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Informative</targetReference>
@@ -5913,7 +5937,7 @@
     <recordCreates>
         <name>Crea_Case_Modifiche_Anagrafiche_Account_0</name>
         <label>Crea Case ModAn</label>
-        <locationX>5418</locationX>
+        <locationX>5594</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Account_0_0</targetReference>
@@ -6014,7 +6038,7 @@
     <recordCreates>
         <name>Crea_Case_Modifiche_Anagrafiche_Account_0_0</name>
         <label>Crea Case ModAn</label>
-        <locationX>5154</locationX>
+        <locationX>5330</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Account_0_0_0</targetReference>
@@ -6127,7 +6151,7 @@
     <recordCreates>
         <name>Crea_Case_Modifiche_Anagrafiche_Account_0_0_0</name>
         <label>Crea Case ModAn</label>
-        <locationX>6210</locationX>
+        <locationX>6386</locationX>
         <locationY>2894</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Account_0_0_0_0</targetReference>
@@ -6222,7 +6246,7 @@
     <recordCreates>
         <name>Crea_Case_Modifiche_Anagrafiche_Lead_0</name>
         <label>Crea Case ModAn</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>3134</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Lead_0</targetReference>
@@ -6293,7 +6317,7 @@
     <recordCreates>
         <name>Crea_Case_Modifiche_Anagrafiche_Lead_0_0</name>
         <label>Crea Case ModAn</label>
-        <locationX>5682</locationX>
+        <locationX>5858</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Lead_0_0</targetReference>
@@ -6376,7 +6400,7 @@
     <recordCreates>
         <name>Crea_Case_Modifiche_Anagrafiche_Lead_0_0_0</name>
         <label>Crea Case ModAn</label>
-        <locationX>6474</locationX>
+        <locationX>6650</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_Lead_0_0_0</targetReference>
@@ -6667,7 +6691,7 @@
     <recordCreates>
         <name>Crea_Case_Notifiche_0</name>
         <label>Crea Case Notifiche</label>
-        <locationX>12942</locationX>
+        <locationX>13118</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0</targetReference>
@@ -6768,7 +6792,7 @@
     <recordCreates>
         <name>Crea_Case_Notifiche_0_0</name>
         <label>Crea Case Notifiche</label>
-        <locationX>12678</locationX>
+        <locationX>12854</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0</targetReference>
@@ -7387,7 +7411,7 @@
     <recordCreates>
         <name>Crea_Case_Reclamo</name>
         <label>Crea Case Reclamo</label>
-        <locationX>7332</locationX>
+        <locationX>7508</locationX>
         <locationY>2774</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_0_0</targetReference>
@@ -7494,7 +7518,7 @@
     <recordCreates>
         <name>Crea_Case_Reclamo_0</name>
         <label>Crea Case Reclamo</label>
-        <locationX>6936</locationX>
+        <locationX>7112</locationX>
         <locationY>2774</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Modifiche_Anagrafiche_0_0_0</targetReference>
@@ -7851,7 +7875,7 @@
     <recordCreates>
         <name>Crea_Case_Voltura_0</name>
         <label>Crea Case Voltura</label>
-        <locationX>13470</locationX>
+        <locationX>13646</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0</targetReference>
@@ -7964,7 +7988,7 @@
     <recordCreates>
         <name>Crea_Case_Voltura_0_0</name>
         <label>Crea Case Voltura</label>
-        <locationX>13206</locationX>
+        <locationX>13382</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_Notifiche_0_0_0_0_0</targetReference>
@@ -8089,7 +8113,7 @@
     <recordCreates>
         <name>Crea_Case_Votive</name>
         <label>Crea Case Votive</label>
-        <locationX>7860</locationX>
+        <locationX>8036</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0</targetReference>
@@ -8309,7 +8333,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>12326</locationX>
+        <locationX>12502</locationX>
         <locationY>2894</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0</targetReference>
@@ -8422,7 +8446,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>11666</locationX>
+        <locationX>11842</locationX>
         <locationY>2774</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -8517,7 +8541,7 @@
     <recordCreates>
         <name>CreaCaseVariazioni_0_0_0_0</name>
         <label>CreaCaseVariazioni</label>
-        <locationX>11974</locationX>
+        <locationX>12150</locationX>
         <locationY>2894</locationY>
         <connector>
             <targetReference>Assegna_Case_Id_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -8642,8 +8666,8 @@
     <recordLookups>
         <name>CampaignMember_Record</name>
         <label>Record Campaign Member</label>
-        <locationX>8605</locationX>
-        <locationY>6446</locationY>
+        <locationX>8693</locationX>
+        <locationY>6782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Valorizzazione_Status_Campaign_Member</targetReference>
@@ -8663,8 +8687,8 @@
     <recordLookups>
         <name>CaseFatturazione_0</name>
         <label>CaseFatturazione</label>
-        <locationX>4230</locationX>
-        <locationY>3038</locationY>
+        <locationX>4296</locationX>
+        <locationY>3374</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_variabili_fatturazione_0</targetReference>
@@ -8684,7 +8708,7 @@
     <recordLookups>
         <name>Cerca_Contatto_Primario</name>
         <label>Cerca Contatto Primario</label>
-        <locationX>7772</locationX>
+        <locationX>7860</locationX>
         <locationY>1286</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8726,7 +8750,7 @@
     <recordLookups>
         <name>Cerca_Legale_Rappresentante</name>
         <label>Cerca Legale Rappresentante</label>
-        <locationX>7772</locationX>
+        <locationX>7860</locationX>
         <locationY>1166</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8768,7 +8792,7 @@
     <recordLookups>
         <name>Get_Case_Autoelettrica</name>
         <label>Get Case Autoelettrica</label>
-        <locationX>13734</locationX>
+        <locationX>13910</locationX>
         <locationY>2102</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8789,7 +8813,7 @@
     <recordLookups>
         <name>Get_Case_Padre_Autoletture</name>
         <label>Get Case Padre</label>
-        <locationX>8916</locationX>
+        <locationX>9092</locationX>
         <locationY>2462</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8831,8 +8855,8 @@
     <recordLookups>
         <name>Get_Case_Padre_RettificaConsumi</name>
         <label>Get Case Padre</label>
-        <locationX>4395</locationX>
-        <locationY>3590</locationY>
+        <locationX>4499</locationX>
+        <locationY>3926</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Tipo_Case_Padre_Consumo_Anomalo_Idrico_0</targetReference>
@@ -8852,7 +8876,7 @@
     <recordLookups>
         <name>Get_Contract_Fatturazione</name>
         <label>Get Contract</label>
-        <locationX>4758</locationX>
+        <locationX>4934</locationX>
         <locationY>2222</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8873,7 +8897,7 @@
     <recordLookups>
         <name>Get_Lead</name>
         <label>Get Lead</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>3014</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8894,7 +8918,7 @@
     <recordLookups>
         <name>Get_Lead_0</name>
         <label>Get Lead</label>
-        <locationX>6474</locationX>
+        <locationX>6650</locationX>
         <locationY>2894</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8915,7 +8939,7 @@
     <recordLookups>
         <name>Get_Parent_Case_RCU</name>
         <label>Get Parent Case</label>
-        <locationX>5418</locationX>
+        <locationX>5594</locationX>
         <locationY>3686</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8957,7 +8981,7 @@
     <recordLookups>
         <name>Get_RT_Annullamento</name>
         <label>Get RT Annullamento</label>
-        <locationX>10852</locationX>
+        <locationX>11028</locationX>
         <locationY>2102</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8978,7 +9002,7 @@
     <recordLookups>
         <name>Get_RT_Annullamento_0</name>
         <label>Get RT Annullamento</label>
-        <locationX>11248</locationX>
+        <locationX>11424</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -8999,7 +9023,7 @@
     <recordLookups>
         <name>Get_RT_Autolettura</name>
         <label>Get RT Autolettura</label>
-        <locationX>8586</locationX>
+        <locationX>8762</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9020,7 +9044,7 @@
     <recordLookups>
         <name>Get_RT_Canone_Rai_0</name>
         <label>Get RT Canone Rai</label>
-        <locationX>10104</locationX>
+        <locationX>10280</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9041,7 +9065,7 @@
     <recordLookups>
         <name>Get_RT_Consumo_Anomalo_Idrico</name>
         <label>Get RT Consumo Anomalo Idrico</label>
-        <locationX>14834</locationX>
+        <locationX>15010</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9125,7 +9149,7 @@
     <recordLookups>
         <name>Get_RT_Fatturazione_0</name>
         <label>Get RT Fatturazione</label>
-        <locationX>4395</locationX>
+        <locationX>4499</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9188,7 +9212,7 @@
     <recordLookups>
         <name>Get_RT_Generiche_Attivazioni</name>
         <label>Get RT Generiche Attivazioni</label>
-        <locationX>14196</locationX>
+        <locationX>14372</locationX>
         <locationY>2198</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9209,7 +9233,7 @@
     <recordLookups>
         <name>Get_RT_Informative</name>
         <label>Get RT Informative</label>
-        <locationX>9488</locationX>
+        <locationX>9664</locationX>
         <locationY>2102</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9230,7 +9254,7 @@
     <recordLookups>
         <name>Get_RT_Modifiche_Anagrafiche</name>
         <label>Get RT Modifiche Anagrafiche</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>2534</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9272,7 +9296,7 @@
     <recordLookups>
         <name>Get_RT_Notifiche</name>
         <label>Get RT Annullamento</label>
-        <locationX>12810</locationX>
+        <locationX>12986</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9314,7 +9338,7 @@
     <recordLookups>
         <name>Get_RT_PostSalesVas</name>
         <label>Get RT_PostSalesVas</label>
-        <locationX>13734</locationX>
+        <locationX>13910</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9335,7 +9359,7 @@
     <recordLookups>
         <name>Get_RT_Reclami</name>
         <label>Get RT Reclami</label>
-        <locationX>7134</locationX>
+        <locationX>7310</locationX>
         <locationY>2534</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9356,7 +9380,7 @@
     <recordLookups>
         <name>Get_RT_Voltura</name>
         <label>Get RT Voltura</label>
-        <locationX>13338</locationX>
+        <locationX>13514</locationX>
         <locationY>1982</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9377,7 +9401,7 @@
     <recordLookups>
         <name>Get_RT_VotiveModena</name>
         <label>Get RT Votive Modena</label>
-        <locationX>7860</locationX>
+        <locationX>8036</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9398,7 +9422,7 @@
     <recordLookups>
         <name>GetAcquaRecordType</name>
         <label>GetAcquaRecordType</label>
-        <locationX>12040</locationX>
+        <locationX>12216</locationX>
         <locationY>2318</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9419,7 +9443,7 @@
     <recordLookups>
         <name>GetCaseLastMinute</name>
         <label>GetCaseLastMinute</label>
-        <locationX>9356</locationX>
+        <locationX>9532</locationX>
         <locationY>1862</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9468,7 +9492,7 @@
     <recordLookups>
         <name>GetCaseLastMinute_0</name>
         <label>GetCaseLastMinute</label>
-        <locationX>7618</locationX>
+        <locationX>7706</locationX>
         <locationY>614</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9510,11 +9534,11 @@
     <recordLookups>
         <name>GetContractFatturazione_0</name>
         <label>GetContractFatturazione</label>
-        <locationX>4362</locationX>
+        <locationX>4494</locationX>
         <locationY>2822</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>CaseFatturazione_0</targetReference>
+            <targetReference>With_ServicePoint</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -9572,7 +9596,7 @@
     <recordLookups>
         <name>GetEleRecordType</name>
         <label>GetEleRecordType</label>
-        <locationX>12304</locationX>
+        <locationX>12480</locationX>
         <locationY>2318</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9593,7 +9617,7 @@
     <recordLookups>
         <name>GetGasRecordType</name>
         <label>GetGasRecordType</label>
-        <locationX>11512</locationX>
+        <locationX>11688</locationX>
         <locationY>2318</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9614,7 +9638,7 @@
     <recordLookups>
         <name>GetTariRecordType_Var</name>
         <label>GetTariRecordType</label>
-        <locationX>11776</locationX>
+        <locationX>11952</locationX>
         <locationY>2318</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -9635,8 +9659,8 @@
     <recordLookups>
         <name>Record_Case</name>
         <label>Record Case</label>
-        <locationX>8137</locationX>
-        <locationY>4958</locationY>
+        <locationX>8225</locationX>
+        <locationY>5294</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Case_Annullato</targetReference>
@@ -9656,8 +9680,8 @@
     <recordUpdates>
         <name>Aggiorna_Case_Fatturazione_0</name>
         <label>Aggiorna Case Fatturazione</label>
-        <locationX>4230</locationX>
-        <locationY>3278</locationY>
+        <locationX>4296</locationX>
+        <locationY>3614</locationY>
         <connector>
             <targetReference>Get_Case_Padre_RettificaConsumi</targetReference>
         </connector>
@@ -9666,7 +9690,7 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Padre_Autoletture</name>
         <label>Aggiornamento Case Padre</label>
-        <locationX>8784</locationX>
+        <locationX>8960</locationX>
         <locationY>2822</locationY>
         <connector>
             <targetReference>Copy_1_of_Arricchimento_Dati</targetReference>
@@ -9676,8 +9700,8 @@
     <recordUpdates>
         <name>Aggiornamento_Case_Padre_Autoletture_0</name>
         <label>Aggiornamento Case Padre</label>
-        <locationX>4263</locationX>
-        <locationY>3950</locationY>
+        <locationX>4367</locationX>
+        <locationY>4286</locationY>
         <connector>
             <targetReference>Check_Arricchimento_Dati_Fatturazione</targetReference>
         </connector>
@@ -9686,14 +9710,14 @@
     <recordUpdates>
         <name>Aggiornamento_record_Campaign_Member</name>
         <label>Aggiornamento record Campaign Member</label>
-        <locationX>8605</locationX>
-        <locationY>6686</locationY>
+        <locationX>8693</locationX>
+        <locationY>7022</locationY>
         <inputReference>CampaignMember_Record</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>assignFieldsReclami</name>
         <label>assignFields</label>
-        <locationX>7200</locationX>
+        <locationX>7376</locationX>
         <locationY>3134</locationY>
         <connector>
             <targetReference>Gestione_Reclami_Subflow</targetReference>
@@ -9717,7 +9741,7 @@
     <recordUpdates>
         <name>Set_Contratto_e_fornitura</name>
         <label>Set Contratto e fornitura</label>
-        <locationX>5418</locationX>
+        <locationX>5594</locationX>
         <locationY>3806</locationY>
         <connector>
             <targetReference>Arricchimento_Dati_Mod_Anagrafica_0_0</targetReference>
@@ -9747,7 +9771,7 @@
     <recordUpdates>
         <name>Update_Case</name>
         <label>Update Case</label>
-        <locationX>8256</locationX>
+        <locationX>8432</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Screen_Contratto_non_attivo</targetReference>
@@ -9777,7 +9801,7 @@
     <screens>
         <name>ErrorScreen_0</name>
         <label>ErrorScreen_0</label>
-        <locationX>15230</locationX>
+        <locationX>15406</locationX>
         <locationY>1862</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -9793,7 +9817,7 @@
     <screens>
         <name>First_Screen</name>
         <label>First_Screen</label>
-        <locationX>7640</locationX>
+        <locationX>7728</locationX>
         <locationY>278</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -9806,14 +9830,13 @@
             <fieldText>&lt;p&gt;Premendo il tasto Avanti si procederà con l&apos;innesco del processo di {!ProcessType}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>Screen_Contratto_non_attivo</name>
         <label>Screen Contratto non attivo</label>
-        <locationX>8256</locationX>
+        <locationX>8432</locationX>
         <locationY>2582</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -9855,8 +9878,8 @@
     <screens>
         <name>ScreenEsitoCampaignMember</name>
         <label>ScreenEsitoCampaignMember</label>
-        <locationX>8154</locationX>
-        <locationY>5678</locationY>
+        <locationX>8242</locationX>
+        <locationY>6014</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -9918,7 +9941,7 @@
     <screens>
         <name>SubprocessChoiceScreen</name>
         <label>Selezione Sottoprocesso</label>
-        <locationX>5682</locationX>
+        <locationX>5858</locationX>
         <locationY>1982</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
@@ -9947,7 +9970,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>7646</locationX>
+        <locationX>7734</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Need_First_Screen</targetReference>
@@ -10016,7 +10039,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>12414</locationX>
+        <locationX>12590</locationX>
         <locationY>3254</locationY>
         <connector>
             <targetReference>Gestione_Variazioni_Subflow</targetReference>
@@ -10074,7 +10097,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>7464</locationX>
+        <locationX>7640</locationX>
         <locationY>3134</locationY>
         <connector>
             <targetReference>Gestione_Reclami_Subflow</targetReference>
@@ -10103,7 +10126,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>10984</locationX>
+        <locationX>11160</locationX>
         <locationY>2582</locationY>
         <connector>
             <targetReference>Gestione_Annullamento_Subflow</targetReference>
@@ -10132,7 +10155,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_0_0_0_0_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>10456</locationX>
+        <locationX>10632</locationX>
         <locationY>2582</locationY>
         <connector>
             <targetReference>Gestione_Canone_Rai_Subflow</targetReference>
@@ -10190,8 +10213,8 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Fatturazione</name>
         <label>Arricchimento Dati</label>
-        <locationX>4483</locationX>
-        <locationY>4286</locationY>
+        <locationX>4587</locationX>
+        <locationY>4622</locationY>
         <connector>
             <targetReference>Gestione_Fatturazione_Subflow</targetReference>
         </connector>
@@ -10216,9 +10239,37 @@
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>Arricchimento_Dati_Fatturazione_1</name>
+        <label>Arricchimento Dati Fatturazione</label>
+        <locationX>4362</locationX>
+        <locationY>3062</locationY>
+        <connector>
+            <targetReference>CaseFatturazione_0</targetReference>
+        </connector>
+        <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
+        <inputAssignments>
+            <name>ContractId</name>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>InputCase</name>
+            <value>
+                <elementReference>CaseId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>ServicePointId</name>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </inputAssignments>
+    </subflows>
+    <subflows>
         <name>Arricchimento_Dati_Mod_Anagrafica_0</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
-        <locationX>5682</locationX>
+        <locationX>5858</locationX>
         <locationY>3686</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
@@ -10246,7 +10297,7 @@
     <subflows>
         <name>Arricchimento_Dati_Mod_Anagrafica_0_0</name>
         <label>Arricchimento Dati Mod. Anagrafica</label>
-        <locationX>5418</locationX>
+        <locationX>5594</locationX>
         <locationY>3926</locationY>
         <connector>
             <targetReference>Gestione_Modifiche_Anagrafiche</targetReference>
@@ -10275,7 +10326,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche</name>
         <label>Arricchimento Dati</label>
-        <locationX>12942</locationX>
+        <locationX>13118</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Gestione_Notifiche</targetReference>
@@ -10304,7 +10355,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>13470</locationX>
+        <locationX>13646</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Gestione_Voltura_Tecnica_SubFlow</targetReference>
@@ -10333,7 +10384,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>14966</locationX>
+        <locationX>15142</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Flow_Gestione_Consumo_Anomalo_Idrico</targetReference>
@@ -10362,7 +10413,7 @@
         <description>Arricchimento Dati</description>
         <name>Arricchimento_Dati_Notifiche_0_0_0</name>
         <label>Arricchimento Dati</label>
-        <locationX>14262</locationX>
+        <locationX>14438</locationX>
         <locationY>2798</locationY>
         <connector>
             <targetReference>Cambio_Uso_Fittizio</targetReference>
@@ -10390,7 +10441,7 @@
     <subflows>
         <name>Cambio_Uso_Fittizio</name>
         <label>Cambio Uso Fittizio</label>
-        <locationX>14394</locationX>
+        <locationX>14570</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10446,7 +10497,7 @@
     <subflows>
         <name>Compatibilita_0_0</name>
         <label>Compatibilita</label>
-        <locationX>4032</locationX>
+        <locationX>4065</locationX>
         <locationY>2342</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -10466,7 +10517,7 @@
     <subflows>
         <name>Compatibilita_0_0_0</name>
         <label>Compatibilita</label>
-        <locationX>11666</locationX>
+        <locationX>11842</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -10486,7 +10537,7 @@
     <subflows>
         <name>Compatibilita_0_0_0_0_0</name>
         <label>Compatibilita</label>
-        <locationX>9884</locationX>
+        <locationX>10060</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -10506,7 +10557,7 @@
     <subflows>
         <name>Compatibilita_0_0_0_0_0_0</name>
         <label>Compatibilita</label>
-        <locationX>7860</locationX>
+        <locationX>8036</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0_0</targetReference>
@@ -10526,7 +10577,7 @@
     <subflows>
         <name>Compatibilita_0_0_0_0_0_0_0</name>
         <label>Compatibilita</label>
-        <locationX>6342</locationX>
+        <locationX>6518</locationX>
         <locationY>3350</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0</targetReference>
@@ -10547,7 +10598,7 @@
         <description>Arricchimento Dati</description>
         <name>Copy_1_of_Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>8916</locationX>
+        <locationX>9092</locationX>
         <locationY>3038</locationY>
         <connector>
             <targetReference>Gestione_Autoletture_Subflow</targetReference>
@@ -10575,7 +10626,7 @@
     <subflows>
         <name>Flow_Gestione_Consumo_Anomalo_Idrico</name>
         <label>Flow Gestione Consumo Anomalo Idrico</label>
-        <locationX>14966</locationX>
+        <locationX>15142</locationX>
         <locationY>2582</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10591,7 +10642,7 @@
     <subflows>
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
-        <locationX>10984</locationX>
+        <locationX>11160</locationX>
         <locationY>2702</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10613,7 +10664,7 @@
     <subflows>
         <name>Gestione_Autoletture_Subflow</name>
         <label>Gestione Autoletture Subflow</label>
-        <locationX>8916</locationX>
+        <locationX>9092</locationX>
         <locationY>3158</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10629,7 +10680,7 @@
     <subflows>
         <name>Gestione_Canone_Rai_Subflow</name>
         <label>Gestione Canone Rai Subflow</label>
-        <locationX>10104</locationX>
+        <locationX>10280</locationX>
         <locationY>3014</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10645,7 +10696,7 @@
     <subflows>
         <name>Gestione_Contratto_Non_Richiesto</name>
         <label>Gestione Contratto Non Richiesto</label>
-        <locationX>11248</locationX>
+        <locationX>11424</locationX>
         <locationY>2342</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10661,8 +10712,8 @@
     <subflows>
         <name>Gestione_Fatturazione_Subflow</name>
         <label>Gestione Fatturazione Subflow</label>
-        <locationX>4395</locationX>
-        <locationY>4502</locationY>
+        <locationX>4499</locationX>
+        <locationY>4838</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
@@ -10695,7 +10746,7 @@
     <subflows>
         <name>Gestione_Informative_SubFlow</name>
         <label>Gestione Informative SubFlow</label>
-        <locationX>9488</locationX>
+        <locationX>9664</locationX>
         <locationY>2582</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10717,7 +10768,7 @@
     <subflows>
         <name>Gestione_Modifiche_Anagrafiche</name>
         <label>Gestione Modifiche Anagrafiche</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>4238</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10756,7 +10807,7 @@
     <subflows>
         <name>Gestione_Notifiche</name>
         <label>Gestione Notifiche</label>
-        <locationX>12942</locationX>
+        <locationX>13118</locationX>
         <locationY>2582</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10775,7 +10826,6 @@
         <locationX>2954</locationX>
         <locationY>3470</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestionePreventivi</flowName>
@@ -10807,7 +10857,7 @@
     <subflows>
         <name>Gestione_Reclami_Subflow</name>
         <label>Gestione Reclami Subflow</label>
-        <locationX>7332</locationX>
+        <locationX>7508</locationX>
         <locationY>3350</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10829,7 +10879,7 @@
     <subflows>
         <name>Gestione_Variazioni_Subflow</name>
         <label>Gestione Variazioni Subflow</label>
-        <locationX>11908</locationX>
+        <locationX>12084</locationX>
         <locationY>3662</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -10874,7 +10924,7 @@
     <subflows>
         <name>Gestione_Voltura_Tecnica_SubFlow</name>
         <label>Gestione Voltura Tecnica SubFlow</label>
-        <locationX>13470</locationX>
+        <locationX>13646</locationX>
         <locationY>2582</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -11106,7 +11156,7 @@
     <subflows>
         <name>Selezione_Fornitura_0_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>14064</locationX>
+        <locationX>14240</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>Get_RT_Generiche_Attivazioni</targetReference>
@@ -11160,7 +11210,7 @@
     <subflows>
         <name>Selezione_Fornitura_Autolettura</name>
         <label>Selezione Fornitura</label>
-        <locationX>8586</locationX>
+        <locationX>8762</locationX>
         <locationY>1862</locationY>
         <connector>
             <targetReference>Get_RT_Autolettura</targetReference>
@@ -11214,7 +11264,7 @@
     <subflows>
         <name>Selezione_Fornitura_Autolettura_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>10324</locationX>
+        <locationX>10500</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Processo_Compatibile_0_0_0_0_0_0_0_0</targetReference>
@@ -11268,7 +11318,7 @@
     <subflows>
         <name>Selezione_Fornitura_Fatturazione_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>7222</locationX>
+        <locationX>7398</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>Ambiente</targetReference>
@@ -11322,7 +11372,7 @@
     <subflows>
         <name>Selezione_Fornitura_Fatturazione_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>4758</locationX>
+        <locationX>4934</locationX>
         <locationY>2102</locationY>
         <connector>
             <targetReference>Get_Contract_Fatturazione</targetReference>
@@ -11376,7 +11426,7 @@
     <subflows>
         <name>Selezione_Fornitura_ModAnagrafica</name>
         <label>Selezione Fornitura</label>
-        <locationX>5946</locationX>
+        <locationX>6122</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>Check_Votiva_Modena_ModAnag</targetReference>
@@ -11430,7 +11480,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche</name>
         <label>Selezione Fornitura</label>
-        <locationX>12810</locationX>
+        <locationX>12986</locationX>
         <locationY>1862</locationY>
         <connector>
             <targetReference>Get_RT_Notifiche</targetReference>
@@ -11484,7 +11534,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>10852</locationX>
+        <locationX>11028</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>Get_RT_Annullamento</targetReference>
@@ -11538,7 +11588,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>11996</locationX>
+        <locationX>12172</locationX>
         <locationY>1982</locationY>
         <connector>
             <targetReference>CommodityDecision_0_0</targetReference>
@@ -11592,7 +11642,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>13338</locationX>
+        <locationX>13514</locationX>
         <locationY>1862</locationY>
         <connector>
             <targetReference>Get_RT_Voltura</targetReference>
@@ -11646,7 +11696,7 @@
     <subflows>
         <name>Selezione_Fornitura_Notifiche_0_0_0_0</name>
         <label>Selezione Fornitura</label>
-        <locationX>14834</locationX>
+        <locationX>15010</locationX>
         <locationY>1862</locationY>
         <connector>
             <targetReference>Get_RT_Consumo_Anomalo_Idrico</targetReference>
@@ -11700,8 +11750,8 @@
     <subflows>
         <name>SubFlow_Annullamento</name>
         <label>SubFlow Annullamento</label>
-        <locationX>7934</locationX>
-        <locationY>5918</locationY>
+        <locationX>8022</locationX>
+        <locationY>6254</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -11736,7 +11786,7 @@
     <subflows>
         <name>Subflow_Segnalazioni_VAS</name>
         <label>Subflow Segnalazioni VAS</label>
-        <locationX>13734</locationX>
+        <locationX>13910</locationX>
         <locationY>2222</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
@@ -11794,7 +11844,7 @@
     <subflows>
         <name>Votive_Modena_SubFlow</name>
         <label>Votive Modena SubFlow</label>
-        <locationX>7992</locationX>
+        <locationX>8168</locationX>
         <locationY>2462</locationY>
         <connector>
             <targetReference>getIsCommunityValue_0</targetReference>
