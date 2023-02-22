@@ -79,9 +79,9 @@
                 <label>F24</label>
             </value>
             <value>
-                <fullName>PagaPA</fullName>
+                <fullName>PagoPA</fullName>
                 <default>false</default>
-                <label>PagaPA</label>
+                <label>PagoPA</label>
             </value>
             <value>
                 <fullName>Bonifico Tesoreria ente creditore</fullName>

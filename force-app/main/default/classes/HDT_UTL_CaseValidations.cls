@@ -396,8 +396,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             String commodity = getFieldValue(fields,'Commodity__c');
             if(!'Ambiente'.equalsIgnoreCase(commodity)){
                 String channelOfPayment = getFieldValue(fields,'ChannelOfPayment__c');
-                if(channelOfPayment == 'F24' || channelOfPayment == 'PagaPA' || channelOfPayment == 'Bonifico Tesoreria ente creditore'){
-                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valori di Pagamento: "F24", "PagaPA", "Bonifico Tesoreria ente creditore" non disponibili per il Servizio corrente'));
+                if(channelOfPayment == 'F24' || channelOfPayment == 'PagoPA' || channelOfPayment == 'Bonifico Tesoreria ente creditore'){
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valori di Pagamento: "F24", "PagoPA", "Bonifico Tesoreria ente creditore" non disponibili per il Servizio corrente'));
                 }
             }
             return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));  
@@ -608,8 +608,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         *952483C modifica, fare saltare il controllo sul BillingIsAddressVerified__c se l'indirizzo è estero
         */ 
         if(currentCase.BillingCountry__c == 'ITALIA' || currentCase.BillingCountry__c == 'Italia'){
-        if(currentCase.BillingIsAddressVerified__c == false){
-            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+            if(currentCase.BillingIsAddressVerified__c == false){
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
             }
         }
 
