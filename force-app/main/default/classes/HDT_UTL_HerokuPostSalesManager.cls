@@ -178,6 +178,10 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String currentPhase = '';
         String nextPhase = '';
         String quotationType = '';
+        // aggiunta campi per CR005
+        String numDocCalcolo ='';
+        String importoDocCalcolo = '';
+        // fine aggiunta campi per CR005
         String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
         // String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
         String codPresa = reqWrp.requestMap.get('COD_PRESA');
@@ -225,6 +229,21 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             nextPhase = reqWrp.requestMap.get('FASE');
             storno = reqWrp.requestMap.get('STORNO');
             activity = reqWrp.requestMap.get('ATTIVITA');
+            //recupero valori campi per CR005
+            numDocCalcolo = reqWrp.requestMap.get('MAN_BILL_NUM')!=null ? reqWrp.requestMap.get('MAN_BILL_NUM') : '';
+            importoDocCalcolo = reqWrp.requestMap.get('CALC_AMOUNT')!=null ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
+
+            if(!numDocCalcolo.equalsIgnoreCase('')){
+                currentCase.DocumentNumber__c =numDocCalcolo;
+            }
+            
+            if(!importoDocCalcolo.equalsIgnoreCase('')){
+                Decimal d = Decimal.valueOf(!String.isEmpty(importoDocCalcolo) ? importoDocCalcolo : '0');
+                d = d.setScale(2, RoundingMode.HALF_EVEN);
+                currentCase.DocumentAmount__c =d;
+            }
+            
+            //fine recupero valori campi per CR005
             String errDescr = reqWrp.requestMap.get('NOTE_ERR')!=null ? reqWrp.requestMap.get('NOTE_ERR') : '';
             String testoErr = reqWrp.requestMap.get('TESTO_ERRR')!=null ? reqWrp.requestMap.get('TESTO_ERRR') : '';
             String utenza = reqWrp.requestMap.get('UTENZA')!=null ? reqWrp.requestMap.get('UTENZA') : '';
