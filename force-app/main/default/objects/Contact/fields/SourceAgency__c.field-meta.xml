@@ -17,11 +17,6 @@
                 <label>Covisian</label>
             </value>
             <value>
-                <fullName>Koinè</fullName>
-                <default>false</default>
-                <label>Koinè</label>
-            </value>
-            <value>
                 <fullName>Koinè Bologna Srl</fullName>
                 <default>false</default>
                 <label>Koinè Bologna Srl</label>
