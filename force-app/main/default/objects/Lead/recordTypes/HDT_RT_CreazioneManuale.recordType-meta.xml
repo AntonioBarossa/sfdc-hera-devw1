@@ -1090,6 +1090,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>PiuControllo Flat Extra Casa Dual</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>PiuControllo Flat Extra Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>PiuControllo Flat Special Casa Luce</fullName>
             <default>false</default>
         </values>
@@ -3018,7 +3030,15 @@
     <picklistValues>
         <picklist>SourceAgency__c</picklist>
         <values>
-            <fullName>Koinè</fullName>
+            <fullName>Covisian</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè Bologna Srl</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Koinè Srl</fullName>
             <default>false</default>
         </values>
         <values>

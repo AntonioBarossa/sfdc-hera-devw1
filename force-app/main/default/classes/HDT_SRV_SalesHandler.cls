@@ -359,6 +359,10 @@ public with sharing class HDT_SRV_SalesHandler {
                                     if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                         ord.PrecheckResultSII__c = 'OK';
                                     }
+                                    if ('Voltura con Switch'.equalsIgnoreCase(ordRetrieved.ProcessType__c) && 'Errore invio a DL/SII'.equalsIgnoreCase(ordRetrieved.Phase__c)){
+                                        ord.PrecheckResultSII__c = 'OK';
+                                        voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
+                                    }
                                 }
                                 when 'Esito KO da SAP'{
                                     ord.DiscardReason__c = mapRequestFields.get('NOTE_ERR') != null?mapRequestFields.get('NOTE_ERR'):'';

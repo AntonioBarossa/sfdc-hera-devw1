@@ -1327,9 +1327,11 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         for (Sobject obj : newRecsMap.values()){
             String fieldName =  obj.getSObjectType() == Order.getSObjectType() ? 'ManagedSapDiscard__c' : 'distributorflowcode__c';
             SObject oldObj = oldRecsMap.get((Id)obj.get('Id'));
+            String oldFieldName =  oldObj.getSObjectType() == Order.getSObjectType() ? 'ManagedSapDiscard__c' : 'distributorflowcode__c';
             String newPhase = obj.get('Phase__c') == null ? '' : (String)obj.get('Phase__c');
             String oldPhase = oldObj.get('Phase__c') == null ? '' : (String)oldObj.get('Phase__c');
-            String checkScartoSap = obj.get(fieldName) == null ? '' : (String)obj.get(fieldName); 
+            String checkScartoSap = obj.get(fieldName) == null ? '' : (String)obj.get(fieldName);
+            String checkOldScartoSap = oldObj.get(oldFieldName) == null ? '' : (String)oldObj.get(oldFieldName);
             if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)
             && (String.isBlank(checkScartoSap))){
                 if ('Completata'.equalsIgnoreCase(newPhase)){
@@ -1348,7 +1350,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                 }
                 obj.put('PreviousPhase__c','');
             }
-            if(!newPhase.equalsIgnoreCase(oldPhase)){
+            if(!newPhase.equalsIgnoreCase(oldPhase) && checkScartoSap.equalsIgnoreCase(checkOldScartoSap)){
                 obj.put(fieldName,'');
             }
         }
