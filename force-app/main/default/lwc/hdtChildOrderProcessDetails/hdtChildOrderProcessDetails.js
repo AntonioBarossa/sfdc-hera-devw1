@@ -11,7 +11,7 @@ import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessD
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
 import checkPermissionSet from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkPermissionSet';
-import {handleSections, equalsIgnoreCase, safeStr} from 'c/hdtChildOrderProcessDetailsUtl';
+import {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration} from 'c/hdtChildOrderProcessDetailsUtl';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
     @api order;
@@ -54,6 +54,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     hasCohabitantButton;
     cohabitantNumber;
     disableNext = true;
+
+    rateCategories = getRateCategoriesConfiguration();
 
     get orderWithData(){
        console.log('#Order With Data >>> ' +JSON.stringify(this.sectionDataToSubmit));
@@ -824,9 +826,24 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                if( this.rateCategoryVisibility(rateCategories.AFNCOMPreq) && this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null 
-                    && (this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === ''
-                        || this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null)) {
+                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='PerformanceType__c']") !== null 
+                    && (this.template.querySelector("[data-id='PerformanceType__c']").value === ''
+                        || this.template.querySelector("[data-id='PerformanceType__c']").value === null)) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Tipo Prestazione',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if( this.rateCategoryVisibility(this.rateCategories.AFNCOMPreq) && 
+                this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null && 
+                ( this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === '' || 
+                  this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null) ) 
+                {
                     this.loading = false;
                         const toastErrorMessage = new ShowToastEvent({
                             title: 'Errore',
