@@ -223,7 +223,7 @@ public with sharing class HDT_LC_AttachmentManager {
         if(paramsWrap.contactChannel != null)
             conditionString += 'Channel__c = \''+paramsWrap.contactChannel+'\' AND ';
         if(paramsWrap.city != null){
-            conditionString += '(City__c = \''+paramsWrap.city+'\' AND ';
+            conditionString += 'City__c = \''+paramsWrap.city+'\' AND ';
         }else{
             conditionString += ' City__c = \'*\' AND ';
         }
