@@ -194,7 +194,7 @@ public with sharing class HDT_LC_AttachmentManager {
         if(paramsWrap.contactChannel != null)
             conditionString += 'Channel__c = \''+paramsWrap.contactChannel+'\' AND ';
         if(paramsWrap.city != null){
-            conditionString += '(City__c = \''+paramsWrap.city+'\' OR City__c = null) AND ';
+            conditionString += '(City__c = \''+paramsWrap.city+'\' OR City__c = \'*\') AND ';
         }else{
             conditionString += 'City__c = null AND ';
         }
@@ -212,7 +212,7 @@ public with sharing class HDT_LC_AttachmentManager {
         if(paramsWrap.productDescription != null)
             conditionString += 'ProductDescription__c = \''+paramsWrap.productDescription+'\' AND ';
         if(paramsWrap.subscriberType != null)
-            conditionString += 'SubscriberType__c = \''+paramsWrap.subscriberType+'\' AND ';
+            conditionString += 'SubscriberType__c INCLUDES (\''+paramsWrap.subscriberType+'\') AND ';
         if(paramsWrap.macroTopic != null)
             conditionString += 'MacroTopic__c = \''+paramsWrap.macroTopic+'\' AND ';
 
@@ -220,7 +220,7 @@ public with sharing class HDT_LC_AttachmentManager {
         stringQuery = stringQuery+'WHERE '+conditionString+'WITH SECURITY_ENFORCED ';
         stringQuery += 'ORDER BY City__c, SubProcessType__c DESC NULLS LAST';
 
-        //system.debug('@@@@: '+stringQuery);
+        system.debug('@@@@: '+stringQuery);
         List<MandatoryAttachments__c> tabellaAllegati = Database.query(stringQuery);
         //system.debug('@@@@: '+tabellaAllegati);
         return tabellaAllegati[0]?.MandatoryAttachments__c;
