@@ -327,7 +327,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
 
         if(sendMailResult.success){
-            Case caseUpdate = new Case(id=caseResult.caseId, Phase__c = 'In attesa risposta Mail');
+            Case caseUpdate = new Case(id=caseResult.caseId, Phase__c = 'In attesa risposta Mail',Status = 'In Lavorazione');
             HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         }
 
