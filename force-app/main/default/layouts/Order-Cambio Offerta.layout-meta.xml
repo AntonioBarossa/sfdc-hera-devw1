@@ -103,6 +103,10 @@
                 <behavior>Edit</behavior>
                 <field>SapContractCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContractExpenses__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -196,6 +200,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>MeterClass__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ReadingValueMeter__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
