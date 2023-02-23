@@ -20,7 +20,7 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
                     (servicePoint.SupplyStreet__c != null && servicePoint.SupplyStreet__c != '')){
                 servicePoint.SupplyStreetName__c = servicePoint.SupplyStreet__c;
             }
-            if(oldObjMap != null && !servicePoint.SupplyStreet__c.equalsIgnoreCase((String) oldObjMap.get(servicePoint.Id).get('SupplyStreet__c'))){
+            if(oldObjMap != null && !String.isBlank(servicePoint.SupplyStreet__c) && !servicePoint.SupplyStreet__c.equalsIgnoreCase((String) oldObjMap.get(servicePoint.Id).get('SupplyStreet__c'))){
                 servicePoint.SupplyStreetName__c = servicePoint.SupplyStreet__c;
                 servicePoint.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
                 servicePoint.SupplyStreetCode__c = servicePoint.SupplySAPStreetCode__c;
