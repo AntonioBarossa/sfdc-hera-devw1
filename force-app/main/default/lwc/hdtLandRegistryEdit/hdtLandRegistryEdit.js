@@ -35,6 +35,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     @api readonly;
     @api showEdit;
     @api showDelete;
+    @api registrySize
 
     get rtIdTari(){
         let rtId;
@@ -46,10 +47,14 @@ export default class HdtLandRegistryEdit extends LightningElement {
         return rtId;
     }
 
+    get disableDelete(){
+        return this.__readonly || (this.registrySize<2 && this._recordId);
+    }
+
     get disableModifica(){ return this.modify || !this._recordId || this._recordId == '' || this._readonly }
     get disableForm(){ return !this.modify || this._readonly };
     disableSalva = true;
-    disableElimina = true;
+    //disableElimina = true;
     modify = false;
 
     // showForm = false;
@@ -89,7 +94,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
         if(this.formLoaded == FORM_LOAD_DONE){
             this.disableSalva = false;
             if(source == "CodeMissingRegistryData__c") {
-                if(event.detail.value == ""){
+                if([ null, "" ].includes(event.detail.value)){
                     this._required = this.required == false ? false : true;
                 }else{
                     this._required = false;
@@ -120,9 +125,6 @@ export default class HdtLandRegistryEdit extends LightningElement {
                             this.provinceValue = foundCity.Province__c;
                         }else{
                             this.legalCityValue = foundCity.CadastralCity__c;
-                        }
-                        if(this._required){
-                            this.checkRequiredFields();
                         }
                     }).catch(error=>{
                         console.log("error on getCity")
@@ -182,29 +184,35 @@ export default class HdtLandRegistryEdit extends LightningElement {
             }
             //controllo se abilitare o meno il salva in base ai campi required
             //this.disableSalva = false;
+            /*
             if(this._required){
                 this.checkRequiredFields();
-            }
+            }*/
         }
     }
 
+    /*
     @api checkRequiredFields(){
         let inputList = this.template.querySelectorAll('lightning-input-field:not(.slds-hide)');
-        inputList.forEach(input => {
+        this.disableSalva = false;
+        for(let input of inputList){
             if(input.fieldName != "CodeMissingRegistryData__c" && 
             (input.value == null || (input.value == "" && typeof(input.value)!= "number"))  &&
             input.required){
                 this.disableSalva = true;
+                break;
             }
-        });
+        }
         inputList = this.template.querySelectorAll('lightning-combobox');
-        inputList.forEach(input => {
+        for(let input of inputList){
             if((input.value == null || input.value == "") &&
             input.required) {
                 this.disableSalva = true;
+                break;
             }
-        });
+        }
     }
+    */
 
     getCityRecord(lookupId){
         return getCadastralRecord({cadastralRecordId : lookupId});
@@ -217,7 +225,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
     }
 
     dispatchEditEvt(isEditing){
-        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:isEditing}}));
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:isEditing, context: 'edit'}}));
     }
 
     handleRestore(){
@@ -232,24 +240,28 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this.disableSalva = true;
         })
         
-        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false, restoredId: this._recordId}}));
+        this.dispatchEvent(new CustomEvent("editdata", {detail : {isEditing:false, restoredId: this._recordId, context: 'restore'}}));
     }
 
     handleEliminaClick(){
         this.showSpinner = true;
         let recordId = this._recordId;
         this._recordId = null;
-        deleteRecord(recordId)
-            .then(() => { 
-                this.throwDeletionEvent() 
-            })
-            .catch(error => {
-                console.error("### handleEliminaClick Errore", error);
-            })
-            .finally(() => {
-                this.showSpinner = false;
-            });
-
+        if(recordId){
+            deleteRecord(recordId)
+                .then(() => { 
+                    this.throwDeletionEvent();
+                })
+                .catch(error => {
+                    console.error("### handleEliminaClick Errore", error);
+                })
+                .finally(() => {
+                    this.showSpinner = false;
+                });
+        }else{
+            this.throwDeletionEvent();
+        }
+        this.disableSalva = true;
     }
 
     @api
@@ -296,7 +308,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
             this.modify = false;
             const recordUi = event.detail.records[this._recordId];
             if(recordUi){
-                this.disableElimina = false;
+                //this.disableElimina = false;
                 this.registryCityValue = recordUi.fields.RegistryCity__c?.value;
                 this.registryCityCodeValue = recordUi.fields.RegistryCityCode__c?.value;
                 //this.legalCityValue = recordUi.fields.LegalCity__c?.value;
@@ -306,7 +318,7 @@ export default class HdtLandRegistryEdit extends LightningElement {
         }
         else{
             this.formLoaded = FORM_LOAD_DONE;
-            this.disableElimina = true;
+            //this.disableElimina = true;
             this.registryCityValue = null;
             this.registryCityCodeValue = null;
             this.legalCityValue = null;
@@ -330,20 +342,22 @@ export default class HdtLandRegistryEdit extends LightningElement {
             }
         }
         if(!this._showEdit) this.modify = true;
-        let inputList = this.template.querySelectorAll('lightning-input-field');
-        inputList.forEach(input => { 
-            if( "CodeMissingRegistryData__c" == input.fieldName ){
-                if([ null, "" ].includes(input.value)) this._required = this.required == false ? false : true;
-                else this._required = false;
-            }
-        });
+        let codeMissingValue = this.template.querySelector('[data-name="CodeMissingRegistryData__c"]').value;
+        if([ null, "" ].includes(codeMissingValue)){
+            this._required = this.required == false ? false : true;
+        }else{
+            this._required = false;
+        }
         this.showSpinner = false;
     }
 
     handleFormSubmit(event){
+        event.preventDefault();
+        if(!this.template.querySelector('lightning-combobox').reportValidity()){
+            return;
+        }
         this.modify = false;
         console.log("### handleFormSubmit", JSON.stringify(event.detail.fields));
-        event.preventDefault();
         event.detail.fields.RegistryCity__c = this.registryCityValue;
         event.detail.fields.LegalCity__c = this.legalCityValue;
         event.detail.fields.RegistryCategory__c = this.cadastralCategoryValue;

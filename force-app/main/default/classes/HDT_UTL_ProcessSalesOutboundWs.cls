@@ -32,6 +32,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
         accountIdsList = new List<Id>();
         billProfIdsList = new List<Id>();
         servPointIdsList = new List<Id>();
+        Set<Id> servPointIdSet = new Set<Id>();
         accRelMap = new Map<Id, AccountContactRelation>();
 
         HDT_UTL_ProcessSales.HDT_WRP_NextDataObj obj;
@@ -54,12 +55,17 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                 }
 
                 if(String.isNotEmpty(obj.servPointId)){
-                    servPointIdsList.add(obj.servPointId);
+                    //servPointIdsList.add(obj.servPointId);
+                    servPointIdSet.add(obj.servPointId);
                 }
 
             }
 
-        }      
+        }
+
+        if(servPointIdSet.size()>0){
+            servPointIdsList.addAll(servPointIdSet);
+        }
 
     }
 
@@ -216,6 +222,7 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
         }
 
         update requestItemList;
+        //HDT_UTL_ProcessExecution.getLimitDetails('finalUpdate');
     }
 
     public static Account setAccountRecord(AccountContactRelation rel, Account a){

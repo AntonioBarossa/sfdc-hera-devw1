@@ -8,6 +8,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         for(SBQQ__Subscription__c sub : newSubs){
             itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
         }
+        /* Modificata query per includere nella query del recordtype HDT_RT_VAS la casistica dell'analisi consumi */
         Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>(
             [SELECT id, 
             Order.OrderReference__c, 
@@ -22,7 +23,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 OR 
                     (
                     Order.RecordType.DeveloperName='HDT_RT_VAS' 
-                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null)
+                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.VasSubtype__c = 'Analisi Consumi')
                     ) 
                 ) 
             WITH Security_Enforced ]);

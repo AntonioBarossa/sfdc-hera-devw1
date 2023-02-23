@@ -88,6 +88,10 @@
     <objectMapping>
         <inputObject>Lead</inputObject>
         <mappingFields>
+            <inputField>KeyIBMUnica__c</inputField>
+            <outputField>KeyIBMUnica__c</outputField>
+        </mappingFields>
+        <mappingFields>
             <inputField>FiscalCode__c</inputField>
             <outputField>FiscalCode__c</outputField>
         </mappingFields>
@@ -102,10 +106,6 @@
         <mappingFields>
             <inputField>DegreeOfStudies__c</inputField>
             <outputField>DegreeOfStudies__c</outputField>
-        </mappingFields>
-        <mappingFields>
-            <inputField>KeyIBMUnica__c</inputField>
-            <outputField>KeyIBMUnica__c</outputField>
         </mappingFields>
         <outputObject>Contact</outputObject>
     </objectMapping>

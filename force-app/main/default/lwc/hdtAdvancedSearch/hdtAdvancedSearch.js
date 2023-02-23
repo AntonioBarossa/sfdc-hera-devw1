@@ -515,6 +515,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                 this.confirmButtonDisabled = true;
             });
         }
+        this.apiSearchButtonStatus = true;
     }
 
     callApi(event, isFrom){
