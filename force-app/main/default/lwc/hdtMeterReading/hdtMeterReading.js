@@ -28,12 +28,13 @@ export default class HdtMeterReading extends LightningElement {
     queryTerm = '';
     spinner = true;
     error = false;
-    contractNumberAvailable = false;
+    showDetailTable = false;
     errorMessage = '';
     contractData = [];
     contractDataToView = [];
     sortDirection = 'desc';
     sortedBy;
+    showModality;
 
     connectedCallback() {
         this.configurationData();
@@ -41,13 +42,15 @@ export default class HdtMeterReading extends LightningElement {
     }
 
     configurationData(){
-        getConfigurationData({type: 'meterReading'}).then(result => {
+        getConfigurationData()
+        .then(result => {
 
             if(result.success){
                 //console.log('>>> ' + result.contractTable);
                 var obj = JSON.parse(result.contractTable);
                 this.contractColumns = contractColumns.concat(obj.data);
-                this.meterReadingColumns = JSON.parse(result.meterReadingTable);
+                //this.meterReadingColumns = JSON.parse(result.meterReadingTable);
+                this.showModality = result.trbEnable;
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
@@ -62,13 +65,16 @@ export default class HdtMeterReading extends LightningElement {
     }
 
     contractBackendCall(){
-        getContractRecords({accountId: this.recordid}).then(result => {
+        getContractRecords({accountId: this.recordid})
+        .then(result => {
 
             if(result.success){
                 this.contractData = result.contractList;
                 this.contractDataToView =  result.contractList;
                 this.contractNumber = this.contractData[0].contractNumber;
-                this.contractNumberAvailable = true;
+                this.contractService = this.contractData[0].service;
+                this.showDetailTable = true;
+                this.spinner = false;
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
@@ -85,9 +91,9 @@ export default class HdtMeterReading extends LightningElement {
     handleRowAction(event) {
         console.log('# handleRowAction #');
         if(this.contractNumber != event.detail.row.contractNumber) {
-            this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData();
-            this.contractNumber = event.detail.row.contractNumber;
+            this.template.querySelector('c-hdt-meter-reading-detail-table').loadingData(event.detail.row.contractNumber, event.detail.row.service);
         }
+        
     }
 
     handleSearch(event) {

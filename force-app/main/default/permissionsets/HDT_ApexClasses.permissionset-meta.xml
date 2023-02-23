@@ -969,6 +969,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_LC_ConsActivityListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_LC_ContactSelection</apexClass>
         <enabled>true</enabled>
     </classAccesses>
@@ -3876,6 +3880,10 @@
         <apexClass>HDT_UTL_ComplaintsTst</apexClass>
         <enabled>true</enabled>
     </classAccesses>
+    <classAccesses>
+        <apexClass>HDT_UTL_ConsActivityListController</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>  
     <classAccesses>
         <apexClass>HDT_UTL_Constants</apexClass>
         <enabled>true</enabled>

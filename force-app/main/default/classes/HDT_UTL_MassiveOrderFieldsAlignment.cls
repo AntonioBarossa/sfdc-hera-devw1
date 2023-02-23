@@ -96,7 +96,7 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
                        RequestPhase__c, PressureLevel__c, Distributor__r.Code__c, SupplyType__c, MeterClass__c, RecordType.DeveloperName, DisconnectibilityType__c, Disconnectable__c, ImplantType__c, ImplantTypeTemp__c,
                        SupplySAPCityCode__c, AnnualConsumption__c, MarketOrigin__c, PowerAvailable__c, Pressure__c, VoltageLevel__c, DisconnectibilityPhone__c, MaxRequiredPotential__c, UseTypeEnergy__c, UseCategory__c,
                        WithdrawalClass__c, MeterSN__c, Resident__c, RemiCode__c, VATNumberUdb__c, SupplyCity__c, SupplyStreet__c, SupplyStreetNumber__c, SupplyPlace__c, SupplyProvince__c, SupplyPostalCode__c, SupplyCountry__c,
-                       PowerContractual__c, ServicePointCode__c, SAPImplantCode__c, MeterStatus__c
+                       PowerContractual__c, ServicePointCode__c, SAPImplantCode__c, MeterStatus__c//, Ato__c, PayPurification__c, PaySewer__c
                 FROM ServicePoint__c
                 WHERE Id IN :idsList
                 WITH SECURITY_ENFORCED
@@ -297,9 +297,10 @@ public inherited sharing class HDT_UTL_MassiveOrderFieldsAlignment {
         orderToUpdate.AnnualConsumption__c = servicePoint.AnnualConsumption__c;
         orderToUpdate.isWinback__c = servicePoint.SwitchInWinback__c;
         orderToUpdate.SwitchOutDate__c = servicePoint.SwitchOutDate__c;
-        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        //orderToUpdate.Market__c = servicePoint.MarketOrigin__c == null ? 'Libero' : servicePoint.MarketOrigin__c;
-        orderToUpdate.Market__c =  'Libero';
+        orderToUpdate.MarketOrigin__c = servicePoint.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.MarketOrigin__c = (String.isBlank(orderToUpdate.MarketOrigin__c) && servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente') ? 'Regolamentato' : orderToUpdate.MarketOrigin__c;
+        orderToUpdate.Market__c =   servicePoint.RecordType.DeveloperName == 'HDT_RT_Acqua' || servicePoint.RecordType.DeveloperName == 'HDT_RT_Ambiente'?'Regolamentato':'Libero';
         orderToUpdate.PowerAvailable__c = servicePoint.PowerAvailable__c;
         orderToUpdate.VoltageLevel__c = servicePoint.VoltageLevel__c;
         orderToUpdate.DisconnectibilityPhone__c = servicePoint.DisconnectibilityPhone__c;
