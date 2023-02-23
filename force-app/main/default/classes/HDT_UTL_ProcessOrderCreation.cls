@@ -512,25 +512,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignSaleFields(wrpChildOrder.childOrder, processObj.sale);
                 wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignBillingProfileFields(wrpChildOrder.childOrder, billingProfileMap.get(processObj.nextDataObj.billProfId));
                 wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignServicePointFields(wrpChildOrder.childOrder, servicePointMap.get(processObj.nextDataObj.servPointId));
+                
                 if(contractMap.get(processObj.nextDataObj.servPointId) != null){
                     wrpChildOrder.childOrder = HDT_UTL_MassiveOrderFieldsAlignment.alignContractFields(wrpChildOrder.childOrder, contractMap.get(processObj.nextDataObj.servPointId));
                 }
-                commodity = servicePointMap.get(processObj.nextDataObj.servPointId).CommoditySector__c;
-                if(commodity.equalsIgnoreCase('Gas')){
-                    wrpChildOrder.childOrder.SalesCompany__c = 'Hera Comm Marche';
-                }else {
-                    wrpChildOrder.childOrder.SalesCompany__c = 'Hera Comm S.p.A.';
-                }
-                if(companyCodeMap.containsKey(wrpChildOrder.childOrder.SalesCompany__c + '_' +  commodity)){
-                    wrpChildOrder.childOrder.SalesCompanyCode__c = companyCodeMap.get(wrpChildOrder.childOrder.SalesCompany__c + '_' +  commodity);
-                }
-                //wrpChildOrder.childOrder.SalesCompany__c = processObj.sale.SalesCompany__c;
-                //wrpChildOrder.childOrder.Phase__c = 'Comunicazione verso Heroku';
-                if(processMatrixMap.containsKey(wrpChildOrder.childOrder.ProcessType__c)){
-                    wrpChildOrder.childOrder.ProcessCode__c = processMatrixMap.get(wrpChildOrder.childOrder.ProcessType__c);
-                }
 
-                handleCustomFieldLogic(wrpChildOrder.childOrder, commodity); 
+                commodity = servicePointMap.get(processObj.nextDataObj.servPointId).CommoditySector__c;
+                setSalesCompanyAndCode(wrpChildOrder.childOrder, commodity);
+                //handleCustomFieldLogic(wrpChildOrder.childOrder, commodity); 
 
                 if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
                     orderPreDefault.setMetadataLists(wrpChildOrder.childOrder);
@@ -547,8 +536,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
-                if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura') ||
-                   wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('VolturaNoEnergy')){
+                if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
                     orderPreDefault.setServicePoint(servicePointMap.get(processObj.nextDataObj.servPointId));
                     orderPreDefault.setContract(contractMap.get(processObj.nextDataObj.servPointId));
                     wrpChildOrder.childOrder = orderPreDefault.setDefaultOrderValues(wrpChildOrder.childOrder);
@@ -663,7 +651,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
     }
 
-    private void handleCustomFieldLogic(Order orderToUpdate,String commodity){
+    private void handleCustomFieldLogic(Order orderToUpdate, String commodity){
         HDT_SRV_Order orderSrv = new HDT_SRV_Order();
         String processType = orderToUpdate.ProcessType__c;
         Date effectiveDate = orderToUpdate.EffectiveDate__c;
@@ -696,6 +684,25 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             //no rate
         }else{
             calculateRateCategory(orderToUpdate);
+        }
+    }
+
+    private void setSalesCompanyAndCode(Order orderToUpdate, String commodity){
+        if(commodity.equalsIgnoreCase('Gas')){
+            orderToUpdate.SalesCompany__c = 'Hera Comm Marche';
+        } else if(commodity.equalsIgnoreCase('Acqua')){
+            orderToUpdate.SalesCompany__c = 'Marche Multiservizi S.p.A';
+        } else {
+            orderToUpdate.SalesCompany__c = 'Hera Comm S.p.A.';
+        }
+
+        if(companyCodeMap.containsKey(orderToUpdate.SalesCompany__c + '_' +  commodity)){
+            orderToUpdate.SalesCompanyCode__c = companyCodeMap.get(orderToUpdate.SalesCompany__c + '_' +  commodity);
+        }
+
+        //orderToUpdate.Phase__c = 'Comunicazione verso Heroku';
+        if(processMatrixMap.containsKey(orderToUpdate.ProcessType__c)){
+            orderToUpdate.ProcessCode__c = processMatrixMap.get(orderToUpdate.ProcessType__c);
         }
     }
 
@@ -978,6 +985,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
             wrpChildOrder.childOrder.ServicePoint__c = nextDataObj.servPointId;
             wrpChildOrder.childOrder.BillingProfile__c = nextDataObj.billProfId;
+            wrpChildOrder.childOrder.RateCategory__c = codiceOfferta;
             wrpChildOrder.orderItemList = new List<HDT_WRP_OrderItem>();
     
             HDT_WRP_OrderItem wrpOrderItem;
