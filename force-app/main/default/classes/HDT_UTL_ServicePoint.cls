@@ -435,6 +435,10 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('LOCALITA')!=null && !String.isBlank(mapRes.get('LOCALITA'))){
             spNew.SupplyCity__c  = mapRes.get('LOCALITA');
+            if(!String.isBlank(spNew.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(spNew.CommoditySector__c)){
+                List<TownATOTable__c> atoList = [Select id, ATO__c from TownATOTable__c where Town__c =: spNew.SupplyCity__c WITH SECURITY_ENFORCED];
+                spNew.ATO__c = (!atoList.isEmpty() && String.isNotBlank(atoList[0].ATO__c)) ? atoList[0].ATO__c : '';
+            }
         }
         if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
             spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
