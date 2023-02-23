@@ -3784,7 +3784,6 @@
             <label>SI</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>LastMinute</name>
         <dataType>DateTime</dataType>
@@ -9806,7 +9805,6 @@
             <fieldText>&lt;p&gt;Premendo il tasto Avanti si procederà con l&apos;innesco del processo di {!ProcessType}&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
-        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
@@ -10775,7 +10773,6 @@
         <locationX>2954</locationX>
         <locationY>3470</locationY>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>getIsCommunityValue_0</targetReference>
         </connector>
         <flowName>HDT_FL_GestionePreventivi</flowName>

@@ -19,7 +19,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
         new List<String>{'Disconnectable__c','No','ACANTINC00', 'ACINTERNO0', 'ACPUBNDIS0', 'ACSUBDIST0', 'ACANTIN000', 'ACTANTINC0'}, //altrimenti Si
         //new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'Cohabitation__c','N','ACDOMRESP0','ACPROMISC0'},
-        //new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
+        new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
+        new List<String>{'ResidentDomesticHousingUnit__c','1','ACDOMRESP0'},
         new List<String>{'NotDomesticHousingUnit__c','1','ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPUBNDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
         new List<String>{'RealEstateUnit__c','1','ACAGRICO00','ACAGRIZOO0','ACANTINC00','ACARTCOMM0','ACAUNOPOT0','ACDOMNR000','ACDOMRESP0','ACINDSTR00','ACINTERNO0','ACPOZZI000','ACPUBNDIS0','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACZOOTECN0','APSCARPRO0','ACAUGRUNI0','ACAUGRUNC0','ACANTIN000','ACPISPUB00','ACTANTINC0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'},
         new List<String>{'AgriculturalHousingUnit__c','1','ACAGRICO00'},
@@ -202,7 +203,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     List<ServicePoint__c> updatedServicePoint = servicePointQr.getRecordById( order.ServicePoint__c , 'Ato__c,PayPurification__c,PaySewer__c' );
                     newOrder.UseSubCategory__c = ammSubType?.SottotipologiaUso__c;
                     newOrder.IntendedUse__c = ammSubType?.IntendedUse__c;
-                    newOrder.ContractExpenses__c = 'Nessuno sconto';
+                    newOrder.ContractExpenses__c = 'Nessuno Sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
                     newOrder.ATO__c = updatedServicePoint[0].ATO__c;
                     newOrder.VAT__c = 'Iva 10% (Cod. 01)';
@@ -230,15 +231,31 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                         when 'Connessione con Attivazione'{
                             //vuoto perchè E1 non riuscirebbe a generare il plico
                             newOrder.QuotationType__c = '';
-                            //newOrder.ResidentDomesticHousingUnit__c = 1;
                             if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
-                                newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per Prima Attivazione e Connessione Con Attivazione
+                                newOrder.PayPurification__c = 'No - Esente';    //logica presente solo per RT Prima Attivazione e Connessione Con Attivazione
                                 newOrder.PaySewer__c = 'No - Esente';           //per gli altri i valori sono presi da Arricchimento come da BPP
                             }
                             else{
                                 newOrder.PayPurification__c = 'Si - Paga';
                                 newOrder.PaySewer__c = 'Si - Paga';
                             }
+                        }
+                        when 'Aggiunta Attacco con Attivazione'{
+                            newOrder.PerformanceType__c = 'Aggiunta Attacco';
+                            if( '1106-Cantiere'.equalsIgnoreCase(order.ImplantType__c) || '1108-Irriguo'.equalsIgnoreCase(order.ImplantType__c) ){
+                                newOrder.PayPurification__c = 'No - Esente';
+                                newOrder.PaySewer__c = 'No - Esente';
+                            }
+                            else{
+                                newOrder.PayPurification__c = 'Si - Paga';
+                                newOrder.PaySewer__c = 'Si - Paga';
+                            }
+                        }
+                        when 'Cambio Offerta'{
+                            newOrder.ContractExpenses__c = 'Nessun Addebito';
+                        }
+                        when 'Voltura'{
+                            newOrder.ContractExpenses__c = 'Mortis Causa'.equalsIgnoreCase(newOrder.VoltureType__c) ? 'Nessun Addebito' : 'Nessuno Sconto' ;
                         }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';

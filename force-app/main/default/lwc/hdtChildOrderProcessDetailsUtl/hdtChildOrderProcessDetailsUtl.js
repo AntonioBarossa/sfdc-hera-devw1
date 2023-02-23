@@ -49,6 +49,10 @@ import * as rateCategories from './hdtRateCategories.js';
         return "";
     }
 
+    function getRateCategoriesConfiguration(){
+        return rateCategories;
+    }
+
     function checkHousingUnitRateCategory( housingUnit, rateCateg ){
         if( housingUnit > 1 && (rateCateg === 'ACDOMRESP0' || rateCateg === 'ACDOMNR000' || rateCateg === 'ACARTCOMM0') )
         {
@@ -175,7 +179,8 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Codice ATECO','AtecoCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
                     new fieldData('Codice Ronchi','RonchiCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
-                    new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione", "HDT_RT_SubentroAmbiente"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
+                    new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
+                    new fieldData('Contratto', 'SapContractCode__c', this.order.RecordType.DeveloperName === 'HDT_RT_SubentroAmbiente', false, true,'',''),
                     new fieldData('Importo mancato dovuto','MissingDueAmount__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
                     new fieldData('Pagamento Unico Annuale TARI','AnnualTARIPayment__c', !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, false,'','Disattiva'),
                     new fieldData('Integrazione alla Dichiarazione (da Gestore)','OperatorDeclarationInfos__c', this.typeVisibility('both'), false, false,'',''),
@@ -357,8 +362,8 @@ import * as rateCategories from './hdtRateCategories.js';
                         checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                     }
                     ),
-                    new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
-                    new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, false, '',''),
+                    new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
+                    new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
                     new fieldData('','NotDomesticHousingUnit__c', 
                         this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) || this.rateCategoryVisibility(rateCategories.AFUNDI) ), 
                         ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
@@ -446,6 +451,8 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('ele') || this.typeVisibility('gas') , false, false, '',''),
                 new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
                 new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
+                new fieldData('','Email__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',true,false,'',''),
+                new fieldData('','AlternativeEmail__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',false,false,'',''),
                 new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), this.typeVisibility('acqua'), this.typeVisibility('acqua'), '','No'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
@@ -455,7 +462,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
                 new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
                 new fieldData('Muc', 'IsMuc__c', !this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,this.permissionFlag, '',''),
-                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), false, false, '',''),
+                new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), false, this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
                 new fieldData('Data Differita','DeferredDate__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro') , false, false, '',''),
                 new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'), true, this.typeVisibility('acqua'), '',''),
                 new fieldData('','SendRequestDate__c', this.typeVisibility('acqua'), false, this.typeVisibility('acqua'), '',''),
@@ -487,8 +494,8 @@ import * as rateCategories from './hdtRateCategories.js';
                     checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                 }
                 ),
-                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), false, '',''),
-                new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, false, '',''),
+                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
+                new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
                 new fieldData('','NotDomesticHousingUnit__c', 
                     this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) ), 
                     ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
@@ -502,6 +509,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') /* && this.rateCategoryVisibility(rateCategories.AQCNSANNOF) */, false, true, '',''),
                 new fieldData('Tipo Fornitura','SupplyType__c', this.typeVisibility('acqua'), true, true, '',''),
+                new fieldData('','PerformanceType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', true, this.order.ProcessType__c==='Aggiunta Attacco con Attivazione', '',''),
                 new fieldData('ATO','ATO__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','QuotationType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, true, '','Analitico'),
                 new fieldData('Conto contrattuale','ContractAccountCode__c', this.typeVisibility('acqua'), false, true, '',''),
@@ -1000,4 +1008,4 @@ import * as rateCategories from './hdtRateCategories.js';
         ];
     }
 
-    export {handleSections, equalsIgnoreCase, safeStr}
+    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration}

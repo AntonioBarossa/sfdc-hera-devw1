@@ -71,8 +71,14 @@ export default class HdtLandRegistry extends LightningElement {
 
     isEditing = false;
 
+    _showLandRegistryEdit = false;
+
     get tableDataFiltered(){
         return this.tableData.filter(el=>el.Id===this._selectedLandRegistryId);
+    }
+
+    get tableDataLength(){
+        return this.tableData?.length;
     }
 
     connectedCallback(){
@@ -113,6 +119,7 @@ export default class HdtLandRegistry extends LightningElement {
             })
             .finally(() => {
                 if(this.tableData.length > 0){
+                    this._showLandRegistryEdit = true;
                     if(!this._selectedLandRegistryId){
                         this.selectedLandRegistryId = this.tableData[0].Id;
                         this._selectedLandRegistryId = this.tableData[0].Id;
@@ -122,6 +129,7 @@ export default class HdtLandRegistry extends LightningElement {
                     this.throwSelectionEvent();
                 }
                 else{
+                    this._showLandRegistryEdit = false;
                     this.selectedLandRegistryId = null;
                     this._selectedLandRegistryId = null;
                 }
@@ -139,18 +147,24 @@ export default class HdtLandRegistry extends LightningElement {
         this.selectedLandRegistryId = null;
         this._selectedLandRegistryId = null;
         this.tableSelectedRows = [];
+        this._showLandRegistryEdit = true;
+        this.isEditing = true;
+        this._readonly = true;
     }
 
     handleEditSave(event){
         this.selectedLandRegistryId = event.detail.rowId;
         this._selectedLandRegistryId = event.detail.rowId;
         this.call_retrieveLandRegistryTable();
+        this._readonly = false;
     }
     
     handleEditDeletion(){
-        // this.selectedLandRegistryId = null;
-        // this._selectedLandRegistryId = null;
+        this.selectedLandRegistryId = null;
+        this._selectedLandRegistryId = null;
         this.call_retrieveLandRegistryTable();
+        this.isEditing = false;
+        this._readonly = false;
     }
 
     throwSelectionEvent(){

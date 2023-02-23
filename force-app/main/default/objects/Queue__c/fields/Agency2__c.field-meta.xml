@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>AcAgency</fullName>
+                <default>false</default>
+                <label>AcAgency</label>
+            </value>
+            <value>
                 <fullName>Comdata</fullName>
                 <default>false</default>
                 <label>Comdata</label>
@@ -75,6 +80,11 @@
                 <fullName>Marche service</fullName>
                 <default>false</default>
                 <label>Marche service</label>
+            </value>
+            <value>
+                <fullName>Network Contacts</fullName>
+                <default>false</default>
+                <label>Network Contacts</label>
             </value>
             <value>
                 <fullName>Service A</fullName>

@@ -201,6 +201,21 @@
                 <label>Prezzo Netto Special Dual</label>
             </value>
             <value>
+                <fullName>PiuControllo Flat Extra Casa Dual</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Dual</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Gas</label>
+            </value>
+            <value>
                 <fullName>Prezzo Netto Special Gas</fullName>
                 <default>false</default>
                 <label>Prezzo Netto Special Gas</label>

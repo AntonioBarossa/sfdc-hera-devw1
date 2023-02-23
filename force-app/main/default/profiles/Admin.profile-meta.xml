@@ -319,6 +319,10 @@
         <enabled>true</enabled>
         <name>HDT_WarningStatusList__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_IndemnitiesDays__mdt</name>
+    </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>CS_ArchivedRecordsDeleteBatch__c</name>
@@ -14815,6 +14819,21 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>MassiveLoaderRequest__c.Description__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>MassiveLoaderRequest__c.EndDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+        <fieldPermissions>
+        <editable>true</editable>
+        <field>MassiveLoaderRequest__c.StartDateTime__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>MassiveLoaderRequestItem__c.Data__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -16121,6 +16140,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.Email__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AlternativeEmail__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.PerformanceType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

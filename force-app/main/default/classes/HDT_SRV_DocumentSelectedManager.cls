@@ -106,7 +106,11 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
             caseRecord.DocumentAmount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.Amount__c = Double.valueOf(primolivello.get('importo'));
             caseRecord.BillNumber__c = numeroFattura != null? numeroFattura:numeroDocumento;
-            
+            /* TK 955489C - Solo per il processo di Errore di Fatturazione e' necessario scrivere i dati del documento selezionato al secondo livello EC*/
+            if(String.isNotBlank(inputs[0].processo) && 'Errore di Fatturazione'.equalsIgnoreCase(inputs[0].processo))
+            {
+                caseRecord.DocumentNumber__c = (String)secondoLivello.get('testoDettaglio') + ': ' + (String)secondoLivello.get('documento') + ' ' +  '€ ' + (String)secondoLivello.get('importo');
+            }
             System.debug(LoggingLevel.DEBUG, 'società ' + (String) primolivello.get('societa'));
             caseRecord.SalesCompany__c = (String) primolivello.get('societa');
             
@@ -549,6 +553,9 @@ public with sharing class HDT_SRV_DocumentSelectedManager {
 
         @InvocableVariable
         public String contesto;
+
+        @InvocableVariable
+        public String processo;
     }
     
 }

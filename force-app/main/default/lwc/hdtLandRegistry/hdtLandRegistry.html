@@ -44,7 +44,8 @@
                 
             </div>
             
-            <c-hdt-land-registry-edit record-id={_selectedLandRegistryId}
+            <c-hdt-land-registry-edit lwc:if={_showLandRegistryEdit}
+                                        record-id={_selectedLandRegistryId}
                                         case-id={caseId}
                                         order-id={orderId}
                                         required={_required}
@@ -53,6 +54,7 @@
                                         ondeletion={handleEditDeletion}
                                         oneditdata={handleEdit}
                                         service-point-id={servicePointId}
+                                        registry-size={tableDataLength}
                                         show-edit
                                         show-delete></c-hdt-land-registry-edit>
             

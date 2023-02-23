@@ -153,6 +153,8 @@ public with sharing class HDT_UTL_CalculateFiscalCode {
             } 
             else if(String.isBlank(lastNameCode) && vowelsLetters.size() ==0 && consonantsLetters.size()==1){
                 lastNameCode= consonantsLetters.get(0)+ 'X' + 'X';
+            }else if(String.isBlank(lastNameCode) && consonantsLetters.size() ==0 && vowelsLetters.size()>=3){
+                lastNameCode= vowelsLetters.get(0)+vowelsLetters.get(1)+vowelsLetters.get(2);
             }
         }
         return lastNameCode;   

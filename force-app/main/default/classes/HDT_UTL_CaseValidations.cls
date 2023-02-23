@@ -2,10 +2,10 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 09-07-2022
+ * @last modified on  : 22-02-2023
  * @last modified by  : Giacinto Florio
 **/
-@SuppressWarnings('PMD.CyclomaticComplexity')
+@SuppressWarnings('PMD.CyclomaticComplexity, PMD.EmptyStatementBlock, PMD.UnusedLocalVariable, PMD.NcssMethodCount, PMD.NcssTypeCount, PMD.IfStmtsMustUseBraces, PMD.IfElseStmtsMustUseBraces, PMD.ApexCRUDViolation, PMD.ExcessiveClassLength, PMD.ExcessiveParameterList, PMD.AvoidDeeplyNestedIfStmts') 
 public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseValidationInterface {
 
     HDT_QR_CaseValidations caseValidationQr = new HDT_QR_CaseValidations();
@@ -33,7 +33,8 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         } else if(caseType == 'Doppi Pagamenti/Incassi' || caseType == 'Piano Rateizzazione' || caseType == 'Richiesta Domiciliazione'
         || caseType == 'Variazione Domiciliazione' || caseType == 'Rimborso' || caseType == 'Attivazione Click&Pay' ||
-        caseType == 'Storno Rateizzazione' || caseType == 'Blocco Sollecito/Interessi' || caseType == 'Paperless'){
+        caseType == 'Storno Rateizzazione' || caseType == 'Blocco Sollecito/Interessi' || caseType == 'Paperless' || 
+        caseType == 'Comunicazione Pagamento'){
 
             result = validatePagamenti(fields, caseType, currentCase);
 
@@ -389,6 +390,17 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));
             }
+        }
+        else if(caseType == 'Comunicazione Pagamento') 
+        {
+            String commodity = getFieldValue(fields,'Commodity__c');
+            if(!'Ambiente'.equalsIgnoreCase(commodity)){
+                String channelOfPayment = getFieldValue(fields,'ChannelOfPayment__c');
+                if(channelOfPayment == 'F24' || channelOfPayment == 'PagoPA' || channelOfPayment == 'Bonifico Tesoreria ente creditore'){
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valori di Pagamento: "F24", "PagoPA", "Bonifico Tesoreria ente creditore" non disponibili per il Servizio corrente'));
+                }
+            }
+            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK','Success'));  
         }
         else
         {
