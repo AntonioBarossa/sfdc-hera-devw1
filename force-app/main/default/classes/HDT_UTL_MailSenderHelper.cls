@@ -262,6 +262,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         Boolean isCaseObj;
         HDT_WRP_MailSender.HDT_WRP_MailStructure mailStructure;
 
+        HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
+
         try{
             
             mailStructure = (HDT_WRP_MailSender.HDT_WRP_MailStructure)JSON.deserialize(mailStructureJson, HDT_WRP_MailSender.HDT_WRP_MailStructure.class);
@@ -269,8 +271,6 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             isCaseObj = currentId.getSobjectType() == Schema.Case.SObjectType;
 
             Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
-
-            HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult caseResult;
 
             if(mailStructure.isReminder){
 
@@ -316,6 +316,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 
             sendMailResult.success = true;
+
             sendMailResult.message = 'La mail è stata inviata correttamente.';
             sendMailResult.caseId = caseResult.caseId;
 
@@ -323,6 +324,11 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             System.debug(LoggingLevel.DEBUG, 'Send Email Error: ' + e.getMessage());
             sendMailResult.success = false;
             sendMailResult.message = e.getMessage() + ' linea [' + String.valueOf(e.getLineNumber()) + ']';
+        }
+
+        if(sendMailResult.success){
+            Case caseUpdate = new Case(id=caseResult.caseId, Phase__c = 'In attesa risposta Mail',Status = 'In Lavorazione');
+            HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         }
 
         return sendMailResult;

@@ -203,7 +203,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                     List<ServicePoint__c> updatedServicePoint = servicePointQr.getRecordById( order.ServicePoint__c , 'Ato__c,PayPurification__c,PaySewer__c' );
                     newOrder.UseSubCategory__c = ammSubType?.SottotipologiaUso__c;
                     newOrder.IntendedUse__c = ammSubType?.IntendedUse__c;
-                    newOrder.ContractExpenses__c = 'Nessuno sconto';
+                    newOrder.ContractExpenses__c = 'Nessuno Sconto';
                     newOrder.SecurityDepositExcluded__c = 'N';
                     newOrder.ATO__c = updatedServicePoint[0].ATO__c;
                     newOrder.VAT__c = 'Iva 10% (Cod. 01)';
@@ -250,6 +250,12 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                                 newOrder.PayPurification__c = 'Si - Paga';
                                 newOrder.PaySewer__c = 'Si - Paga';
                             }
+                        }
+                        when 'Cambio Offerta'{
+                            newOrder.ContractExpenses__c = 'Nessun Addebito';
+                        }
+                        when 'Voltura'{
+                            newOrder.ContractExpenses__c = 'Mortis Causa'.equalsIgnoreCase(newOrder.VoltureType__c) ? 'Nessun Addebito' : 'Nessuno Sconto' ;
                         }
                         when 'Subentro'{
                             newOrder.SeasonUse__c  = 'Nessuna stagionalita';

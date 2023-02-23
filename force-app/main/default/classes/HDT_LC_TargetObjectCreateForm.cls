@@ -246,15 +246,6 @@ public inherited sharing class HDT_LC_TargetObjectCreateForm {
     }
 
     @AuraEnabled
-    public static String getAto(String comune){
-        String toReturn = '';
-        List<TownATOTable__c> atoList = [Select id, ATO__c from TownATOTable__c where Town__c =:comune WITH SECURITY_ENFORCED];
-        toReturn = (!atoList.isEmpty() && String.isNotBlank(atoList[0].ATO__c)) ? atoList[0].ATO__c : toReturn;
-
-        return toReturn;
-    }
-
-    @AuraEnabled
     public static Boolean checkFieldCoerenceSpGas(Map<String, Object> inputFieldMap){
 
         Boolean hasCoerence = false;

@@ -11,7 +11,6 @@ import canHandleTari from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.canHan
 import createServicePoinString from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.createServicePoinString';
 import confirmServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.confirmServicePoint2';
 import getDistributorPointCode from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getDistributorPointCode';
-import getATO from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.getAto';
 import checkFieldCoerenceSpGas from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.checkFieldCoerenceSpGas';
 import checkCoerenceServicePoint from '@salesforce/apex/HDT_LC_TargetObjectCreateForm.checkCoerenceServicePoint';
 import getInstanceWrapAddressObject from '@salesforce/apex/HDT_UTL_ServicePoint.getInstanceWrapAddressObject';
@@ -1707,11 +1706,6 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.loading = true;
             let addressRecord = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
             console.log('XXX populateDistributor I');
-            // Calcolo ATO per Idrico
-            if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' ){
-                let ato = await getATO({comune : addressRecord['Comune']});
-                this.allSubmitedFields['ATO__c'] = ato;
-            }
     
             if(this.spCodeChanged || this.allSubmitedFields['Distributor__c'] == undefined || this.allSubmitedFields['Distributor__c'].trim() == ''){
                 console.log('XXX populateDistributor III');

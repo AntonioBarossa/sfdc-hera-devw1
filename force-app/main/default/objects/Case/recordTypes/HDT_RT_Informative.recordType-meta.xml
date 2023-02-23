@@ -8234,6 +8234,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>in attesa risposta Mail</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ripensamento - Revocato</fullName>
             <default>false</default>
         </values>
