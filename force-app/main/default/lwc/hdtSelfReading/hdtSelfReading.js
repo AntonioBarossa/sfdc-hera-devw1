@@ -767,7 +767,9 @@ export default class HdtSelfReading extends LightningElement {
                             parseInt(parts[0], 10));
 
         var dateIso = date.toISOString(); // Es: 2021-03-01T15:34:47.987Z
-        return dateIso.substr(0, dateIso.indexOf('T'));
+        var stringDate = parts[2] +'-'+parts[1] + '-' + parts[0];
+        return stringDate;
+        //return dateIso.substr(0, dateIso.indexOf('T'));
     }
 
     reverseDate(inputDate){
