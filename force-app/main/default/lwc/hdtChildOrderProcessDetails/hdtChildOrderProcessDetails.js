@@ -640,6 +640,22 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.showMessage('Errore', 'Popolare il campo Potenzialita Massima Richiesta', 'error');
                     return;
                 }
+                if( this.typeVisibility('acqua') &&
+                    this.template.querySelector("[data-id='PhoneNumber__c']") !== null && 
+                    (this.template.querySelector("[data-id='PhoneNumber__c']").value === '' ||
+                    this.template.querySelector("[data-id='PhoneNumber__c']").value === null) &&
+                    this.template.querySelector("[data-id='PhoneNumber__c']").required === true
+                    ) {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Recapito Telefonico',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
             }
             console.log('currentSectionName '+currentSectionName);
             if(currentSectionName === 'dettaglioImpianto'){
