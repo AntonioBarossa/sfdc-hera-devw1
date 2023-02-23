@@ -304,13 +304,6 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Test.startTest();
             Boolean isException = false;
             try{
-                HDT_LC_EditScartiComplessi.resubmissionPractice(FAKE_ID, FAKE_ID,'Attivazione');
-            }catch(Exception e){
-                isException = true;
-            }
-            System.assertEquals(true,isException,debugString + 'gestione exception non funzionante');
-            isException = false;
-            try{
                 HDT_LC_EditScartiComplessi.getInitData(FAKE_ID);
             }catch(Exception e){
                 isException = true;
@@ -341,7 +334,8 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Test.startTest();
             String response;
             System.runAs(u){
-                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id,'Attivazione');
+                o.ProcessType__c = 'Attivazione';
+                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o, actList[0].Id);
             }
             System.assertEquals(null,response,debugString + 'gestione errore upload order non funzionante');
         Test.stopTest();
@@ -381,7 +375,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
 
             String response;
             System.runAs(u){
-                response = HDT_LC_EditScartiComplessi.resubmissionPractice(actList[0].Order__c, actList[0].Id,'Attivazione');
+                response = HDT_LC_EditScartiComplessi.resubmissionPractice(new Order(Id = actList[0].Order__c,ProcessType__c = 'Attivazione'), actList[0].Id);
             }
             System.assertEquals(null,response,debugString + 'gestione errore chiusura activity non funzionante');
         Test.stopTest();
@@ -500,7 +494,8 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         update updOrder;
 
         Test.startTest();
-            String result = HDT_LC_EditScartiComplessi.resubmissionPractice(updOrder.Id, actList[0].Id,'Attivazione','Amm. Precheck KO SII');
+            updOrder.ProcessType__c = 'Attivazione';
+            String result = HDT_LC_EditScartiComplessi.resubmissionPractice(updOrder, actList[0].Id);
         Test.stopTest();
         System.assertEquals(null, result, 'Check Incorretto');
     }
