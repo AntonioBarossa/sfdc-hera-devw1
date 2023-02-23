@@ -33,6 +33,11 @@
                 <label>Allineamento portafoglio</label>
             </value>
             <value>
+                <fullName>Altro compenso mancante</fullName>
+                <default>false</default>
+                <label>Altro compenso mancante</label>
+            </value>
+            <value>
                 <fullName>Ambiente</fullName>
                 <default>false</default>
                 <label>Ambiente</label>
@@ -76,16 +81,6 @@
                 <fullName>Autolettura inferiore lettura migrazione</fullName>
                 <default>false</default>
                 <label>Autolettura inferiore lettura migrazione</label>
-            </value>
-            <value>
-                <fullName>Bonus mancante</fullName>
-                <default>false</default>
-                <label>Bonus mancante</label>
-            </value>
-            <value>
-                <fullName>Business</fullName>
-                <default>false</default>
-                <label>Business</label>
             </value>
             <value>
                 <fullName>C_Malfunzionamento processi</fullName>
@@ -263,6 +258,11 @@
                 <label>Errori TCP</label>
             </value>
             <value>
+                <fullName>Estraneità Debiti</fullName>
+                <default>false</default>
+                <label>Estraneità Debiti</label>
+            </value>
+            <value>
                 <fullName>Estremi rimborso con assegno FAD</fullName>
                 <default>false</default>
                 <label>Estremi rimborso con assegno FAD</label>
@@ -276,11 +276,6 @@
                 <fullName>Estremi rimborso con bonifico domiciliato postale</fullName>
                 <default>false</default>
                 <label>Estremi rimborso con bonifico domiciliato postale</label>
-            </value>
-            <value>
-                <fullName>Famiglie</fullName>
-                <default>false</default>
-                <label>Famiglie</label>
             </value>
             <value>
                 <fullName>Fatturazione</fullName>
@@ -371,6 +366,11 @@
                 <fullName>Knowledge - segnalazione articoli</fullName>
                 <default>false</default>
                 <label>Knowledge - segnalazione articoli</label>
+            </value>
+            <value>
+                <fullName>Legge 80_Istanza EE</fullName>
+                <default>false</default>
+                <label>Legge 80_Istanza EE</label>
             </value>
             <value>
                 <fullName>Mancata archiviazione documenti di fatturazione (PDF/XML)</fullName>
@@ -708,9 +708,9 @@
                 <label>Verifica Canvass</label>
             </value>
             <value>
-                <fullName>Verifica colonnine</fullName>
+                <fullName>Verifica colonnine e Prodotti</fullName>
                 <default>false</default>
-                <label>Verifica colonnine</label>
+                <label>Verifica colonnine e Prodotti</label>
             </value>
             <value>
                 <fullName>Verifica Documentazione</fullName>
@@ -922,13 +922,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Contact Center</controllingFieldValue>
-            <controllingFieldValue>Back Office - Contratti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Fatturazione</controllingFieldValue>
-            <controllingFieldValue>Back Office - Morosità</controllingFieldValue>
-            <controllingFieldValue>Back Office - Pagamenti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Preventivi</controllingFieldValue>
-            <controllingFieldValue>Back Office - Tari/TCP</controllingFieldValue>
-            <controllingFieldValue>Back Office - Vas e HVAC</controllingFieldValue>
             <valueName>Probabile Reclamo</valueName>
         </valueSettings>
         <valueSettings>
@@ -946,10 +939,6 @@
         <valueSettings>
             <controllingFieldValue>Supporto emissione SD_massiva</controllingFieldValue>
             <valueName>SD_Extrabilling massiva</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Supporto emissione SD_singola</controllingFieldValue>
-            <valueName>SD_Extrabilling puntuale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Esercizio Sistemi</controllingFieldValue>
@@ -996,28 +985,20 @@
             <valueName>Problemi catalogo prodotti</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Back Office - Contratti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Morosità</controllingFieldValue>
+            <controllingFieldValue>Cliente senza Fornitura</controllingFieldValue>
+            <controllingFieldValue>Sblocco Processo Post-Vendita</controllingFieldValue>
             <valueName>Clienti senza fornitura, urgenza attività</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Back Office - Contratti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Fatturazione</controllingFieldValue>
-            <controllingFieldValue>Back Office - Morosità</controllingFieldValue>
-            <controllingFieldValue>Back Office - Pagamenti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Preventivi</controllingFieldValue>
-            <controllingFieldValue>Back Office - Tari/TCP</controllingFieldValue>
-            <controllingFieldValue>Back Office - Vas e HVAC</controllingFieldValue>
+            <controllingFieldValue>Cliente senza Fornitura</controllingFieldValue>
+            <controllingFieldValue>Mancata messa a ruolo contratto</controllingFieldValue>
+            <controllingFieldValue>Sblocco Processo Post-Vendita</controllingFieldValue>
+            <controllingFieldValue>Pratica gestita erroneamente</controllingFieldValue>
             <valueName>Supporto analisi survey</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Back Office - Contratti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Fatturazione</controllingFieldValue>
-            <controllingFieldValue>Back Office - Morosità</controllingFieldValue>
-            <controllingFieldValue>Back Office - Pagamenti</controllingFieldValue>
-            <controllingFieldValue>Back Office - Preventivi</controllingFieldValue>
-            <controllingFieldValue>Back Office - Tari/TCP</controllingFieldValue>
-            <controllingFieldValue>Back Office - Vas e HVAC</controllingFieldValue>
+            <controllingFieldValue>Mancata messa a ruolo contratto</controllingFieldValue>
+            <controllingFieldValue>Pratica gestita erroneamente</controllingFieldValue>
             <valueName>Verifica gestione</valueName>
         </valueSettings>
         <valueSettings>
@@ -1114,8 +1095,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto TL Front</controllingFieldValue>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
             <valueName>VAS</valueName>
         </valueSettings>
         <valueSettings>
@@ -1144,6 +1123,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifiche Bonus Sociale</controllingFieldValue>
+            <valueName>mancata erogazione Bonus</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Bonus Sociale</controllingFieldValue>
             <valueName>Sportello Consumatore: Comunicazione cessazione Bonus fisico</valueName>
         </valueSettings>
         <valueSettings>
@@ -1159,6 +1142,14 @@
             <valueName>Sportello Consumatore: Contestazione mancata erogazione Bonus</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Verifiche Bonus Sociale</controllingFieldValue>
+            <valueName>Verifica importo Bonus erogato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Bonus Sociale</controllingFieldValue>
+            <valueName>Verifica importo Bonus stornato</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Verifiche Canone Rai</controllingFieldValue>
             <valueName>Addebito su fornitura diversa da domestica residente</valueName>
         </valueSettings>
@@ -1169,6 +1160,10 @@
         <valueSettings>
             <controllingFieldValue>Verifiche Canone Rai</controllingFieldValue>
             <valueName>Contestazione addebito con dichiarazione di non detenzione/esenzione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Canone Rai</controllingFieldValue>
+            <valueName>Mancata rateizzazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifiche Canone Rai</controllingFieldValue>
@@ -1191,66 +1186,12 @@
             <valueName>Social</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Allineamento portafoglio</valueName>
+            <controllingFieldValue>Legge 80_Istanza EE Estraneità Debiti</controllingFieldValue>
+            <valueName>Estraneità Debiti</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <valueName>Business</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <valueName>Consip</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Controllo dati contrattuali SAP vs SISTEMI 3° (RCU, etc)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <valueName>Famiglie</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Gestione attività di processo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Gestione Blocchi al Calcolo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <controllingFieldValue>Verifiche Morosità Business</controllingFieldValue>
-            <valueName>Reseller</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Ritorni evidenze MAI PARTITI</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <valueName>Scarti ribaltamento SF vs SBL (temporaneo)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Verifica Documentazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Verifiche contratti</controllingFieldValue>
-            <valueName>Verifiche SAP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <valueName>Incongruenze SAP</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Caricamenti contratti</controllingFieldValue>
-            <valueName>Switch Ripristinatorio</valueName>
+            <controllingFieldValue>Legge 80_Istanza EE Estraneità Debiti</controllingFieldValue>
+            <valueName>Legge 80_Istanza EE</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifiche Credito Business</controllingFieldValue>
@@ -1334,6 +1275,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifiche Morosità Business</controllingFieldValue>
+            <valueName>Reseller</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifiche Morosità Business</controllingFieldValue>
             <valueName>Riattivaz.fornitura</valueName>
         </valueSettings>
         <valueSettings>
@@ -1377,43 +1322,31 @@
             <valueName>Ritiro posizione affidata ad ADR- cliente assistito</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Credit Management – affidi legale</controllingFieldValue>
-            <valueName>Credito prescritto da chiudere a perdita</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Credit Management – affidi legale</controllingFieldValue>
-            <valueName>Verifica affidi legali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Credit Management – cessioni</controllingFieldValue>
-            <valueName>Verifica su crediti ceduti</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Credit Management – sospensioni</controllingFieldValue>
             <valueName>Verifica sospensione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione processi di Misura</controllingFieldValue>
+            <controllingFieldValue>Gestione Misure Energy</controllingFieldValue>
             <valueName>Misure EE</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione processi di Misura</controllingFieldValue>
+            <controllingFieldValue>Gestione Misure Energy</controllingFieldValue>
             <valueName>Misure GAS</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <controllingFieldValue>Order Management MUI</controllingFieldValue>
             <valueName>Default</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <controllingFieldValue>Order Management MUI</controllingFieldValue>
             <valueName>FUI</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <controllingFieldValue>Order Management MUI</controllingFieldValue>
             <valueName>Salvaguardia</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Gestione processi Ultima Istanza</controllingFieldValue>
+            <controllingFieldValue>Order Management MUI</controllingFieldValue>
             <valueName>Welcome Letter</valueName>
         </valueSettings>
         <valueSettings>
@@ -1426,7 +1359,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
-            <valueName>Bonus mancante</valueName>
+            <valueName>Altro compenso mancante</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
@@ -1454,7 +1387,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Segnalazioni Commissioni Agenzie</controllingFieldValue>
-            <valueName>Verifica colonnine</valueName>
+            <valueName>Verifica colonnine e Prodotti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Segnalazioni Contact Center</controllingFieldValue>

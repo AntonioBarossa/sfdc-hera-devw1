@@ -9,11 +9,14 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static Boolean skipError_ACR = true;//USATO PER INDURRE ERRORE MISSING PRIMARY CONTACT ON ACCOUNT
     private static Boolean isGas = true;
     private static Boolean isRegularOrder = true;
+	private static HDT_WS_PostSalesTstMock mock=new HDT_WS_PostSalesTstMock();
+
     
     
     
     //TEST SETUP
-    private static void mySetup(){
+    @TestSetup
+    static void mySetup(){
         
         //ACCOUNT
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(2, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -27,18 +30,19 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //ORDER
         List<Order> ordList;
-        if(isRegularOrder){
+        //if(isRegularOrder){
             ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, acc[0].Id, 'Bozza');
             
-        } else {
+        //} else {
             Order myOrder = HDT_UTL_DataFactoryTst.createOrder(1, false, acc[0].Id, 'Bozza')[0];
             myOrder.recordTypeId = constants.ORDER_RECORDTYPEID_SWITCHIN;
             myOrder.Contact__c = contactOne.Id;
             myOrder.ServicePoint__c = servPoint.Id;
-            ordList = new List<Order>{myOrder};
-            insert ordList;
+            // ordList = new List<Order>{myOrder};
+            // insert ordList;
+            insert myOrder;
             
-        }
+        //}
         
         if (skipError_ACR){
             AccountContactRelation acr = HDT_UTL_DataFactoryTst.createAccountContactRelation(true, acc[0].Id, contactTwo.Id);
@@ -65,7 +69,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void doPostTest() {
         
         //SETUP
-        mySetup();
+        //mySetup();
         Case myCase = [SELECT Id, Cluster__c , Type FROM Case];
         Contract myContract = [SELECT Id, SAPContractCode__c FROM Contract];
         
@@ -128,7 +132,10 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         
         //TESTING
+        Test.setMock(HttpCalloutMock.class, mock);
+        Test.startTest();
         HDT_WS_SelfReadings.doPost();
+        Test.stopTest();
         
         //ASSERTS
         System.assertEquals(201, RestContext.response.statusCode);
@@ -141,7 +148,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void doPostTest_ResponseKO() {
         
         //SETUP
-        mySetup();
+        //mySetup();
         Case myCase = [SELECT Id, Cluster__c , Type FROM Case];
         Contract myContract = [SELECT Id, SAPContractCode__c FROM Contract];
         
@@ -205,7 +212,12 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         
         //TESTING
+        //HDT_WS_SelfReadings.doPost();
+
+        Test.setMock(HttpCalloutMock.class, mock);
+        Test.startTest();
         HDT_WS_SelfReadings.doPost();
+        Test.stopTest();
         
         //ASSERTS
         System.assertEquals(201, RestContext.response.statusCode);
@@ -217,7 +229,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
     private static void doPostTest_NotGas() {
         
         //SETUP
-        mySetup();
+        //mySetup();
         Case myCase = [SELECT Id, Cluster__c , Type FROM Case];
         Contract myContract = [SELECT Id, SAPContractCode__c FROM Contract];
         
@@ -337,7 +349,12 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         
         //TESTING
+        //HDT_WS_SelfReadings.doPost();
+
+        Test.setMock(HttpCalloutMock.class, mock);
+        Test.startTest();
         HDT_WS_SelfReadings.doPost();
+        Test.stopTest();
         
         //ASSERTS
         System.assertEquals(201, RestContext.response.statusCode);
@@ -489,7 +506,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //SETUP
         isRegularOrder = false;
-        mySetup();
+        //mySetup();
         
         ServicePoint__c servPoint = [SELECT Id FROM ServicePoint__c];
         
@@ -500,8 +517,9 @@ public with sharing class HDT_WS_SelfReadingsTst {
         String rtName = constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
         
-        Order myOrder = [SELECT Id, AccountId, ServicePoint__c, RecordTypeId, Phase__c, Status FROM Order];
+        Order myOrder = [SELECT Id, AccountId, ServicePoint__c, RecordTypeId, RecordType.DeveloperName, Phase__c, Status FROM Order WHERE RecordTypeId =: constants.ORDER_RECORDTYPEID_SWITCHIN];
         myOrder.Phase__c = 'Da Inviare';
+        system.debug('myOrder.RecordType.DeveloperName --> '+myOrder.RecordType.DeveloperName);
         update myOrder;
         
         System.debug('utl_isProcessReadingTest Order: ' + myOrder);

@@ -245,6 +245,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Description = errDescr + '\n' + description;
             }
             else{
+                if('STATO_INTD'.equalsIgnoreCase(activity)){
+                    currentCase.distributorflowcode__c = 'KO';
+                }
                 HDT_UTL_Scarti.handleHerokuResponse(recordCase.Id, activity, nextPhase,mapActivityField);
             }
             //Gestione Esito Appuntamento;
@@ -549,6 +552,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if (String.isNotBlank(codErrAeeg)){
             currentCase.DiscardCodeHeroku__c = codErrAeeg;
         }
+        HDT_UTL_UTils.setFieldsSize(currentCase);
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         handleAfterNotify(currentCase,storno,activity,reqWrp.requestMap.get('ANNOTAZIONI_ANN'));

@@ -169,4 +169,27 @@ public class HDT_UTL_UtilsTst{
 			System.assertEquals('', response, 'Calcolo non valido caso 3');
 		Test.stopTest();
 	}
+
+	@IsTest
+	static void testSetFieldsSize(){
+		Case cUno = new Case(
+			DiscardDescription__c  = 'Test per verificare il troncamento dei campi nel case durante la chiamata heroku. La funzionalità è interamente gestita nel trigger del case e nel caso in cui dovesse funzionare i campi DiscardDescription__c e CancellationNote__c, che hanno entrambi size 255, verranno troncati.',
+			CancellationNote__c = 'Test per verificare il troncamento dei campi nel case durante la chiamata heroku. La funzionalità è interamente gestita nel trigger del case e nel caso in cui dovesse funzionare i campi DiscardDescription__c e CancellationNote__c, che hanno entrambi size 255, verranno troncati.'
+		);
+		Case cDue = new Case();
+		Case cTre = new Case(
+			DiscardDescription__c  = 'Trunk non necessario',
+			CancellationNote__c = 'Trunk non necessario'
+		);
+		Test.startTest();
+			HDT_UTL_Utils.setFieldsSize(null);
+			HDT_UTL_Utils.setFieldsSize(cUno);
+			HDT_UTL_Utils.setFieldsSize(cDue);
+			HDT_UTL_Utils.setFieldsSize(cTre);
+		Test.stopTest();
+		System.assertEquals(255, cUno.CancellationNote__c.length(), 'Il campo CancellationNote__c non è stato troncato');
+		System.assertEquals(255, cUno.DiscardDescription__c.length(), 'Il campo DiscardDescription__c  non è stato troncato');
+		System.assertEquals('Trunk non necessario', cTre.CancellationNote__c, 'Il metodo ha modificato il campo CancellationNote__c');
+		System.assertEquals('Trunk non necessario', cTre.DiscardDescription__c , 'Il metodo ha modificato il campo DiscardDescription__c');
+	}
 }

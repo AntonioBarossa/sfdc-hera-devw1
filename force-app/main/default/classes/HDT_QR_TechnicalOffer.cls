@@ -43,7 +43,7 @@ public inherited sharing class HDT_QR_TechnicalOffer {
                    UnitTerminationTime__c, RecessAdmitted__c, NumberOfTimeUnits__c, UnitOfTimeMeasurement__c, AdmittingProfileModification__c,
                    OfferToBeModified__c,Version__c, 
                    //BRIM
-                   Hours__c, Discount__c, P0__c, K__c, I0__c, Lambda__c, ProductIdentifier__c,
+                   Hours__c, Discount__c, P0__c, K__c, I0__c, Lambda__c, ProductIdentifier__c,DailyContribution__c, WeeklyContribution__c,
                 (
                     SELECT Id,RowId__c,Type__c,Operand__c, Definition__c, M__c, V__c,S__c, G__c,TechnicalOffer__c,PriceCodeValue__c,DiscountCodeValue__c, DiscountCode__c,StringValue__c,
                            FareType__c,FareTypeValue__c,InfoGroup__c,InfoGroupValue__c,NumericValue__c,Flag__c,PriceCode__c

@@ -547,8 +547,14 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
             return result;
         }
 
-        if(currentCase.BillingIsAddressVerified__c == false){
-            return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+        /*edzanatt 
+        *10/02/2023
+        *952483C modifica, fare saltare il controllo sul BillingIsAddressVerified__c se l'indirizzo è estero
+        */ 
+        if(currentCase.BillingCountry__c == 'ITALIA' || currentCase.BillingCountry__c == 'Italia'){
+            if(currentCase.BillingIsAddressVerified__c == false){
+                return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Verificare l\'indirizzo prima di procedere'));
+            }
         }
 
         if (marking != null) {
@@ -1348,9 +1354,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     changedChars++;
                 }
             }
+            /* TK 944066C -- Aumentato numero di caratteri modificabili da 2 a 6 */
             System.debug(LoggingLevel.DEBUG,'Numero caratteri modificati sul nuovo CF: ' + changedChars);
-            if (changedChars > 2) {
-                outcome = 'Per modifiche sostanziali (più di 2 caratteri) al Codice Fiscale è necessario innescare una Voltura.';
+            if (changedChars > 6) {
+                outcome = 'Per modifiche sostanziali (più di 6 caratteri) al Codice Fiscale è necessario innescare una Voltura.';
             }
         }
 

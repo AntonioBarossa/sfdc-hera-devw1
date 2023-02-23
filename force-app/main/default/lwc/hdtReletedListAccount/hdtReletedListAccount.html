@@ -23,8 +23,11 @@
                             </h2>
                         </div>
                         <div class="slds-no-flex">
-                            <lightning-button label="Nuovo" title="Nuovo" onclick={buttonNew}></lightning-button>
+                            <lightning-button class="slds-var-p-top_small" label="Nuovo" title="Nuovo" onclick={buttonNew}></lightning-button>
 
+                        </div>
+                        <div>
+                            <lightning-button-icon  class="slds-var-p-left_small" icon-name="utility:refresh" variant="neutral"  alternative-text="Ricarica..." title="refresh" onclick={handleRefreshClick}></lightning-button-icon>
                         </div>
                     </header>
                 </div>
@@ -231,7 +234,7 @@
                 <footer class="slds-modal__footer">
                     <lightning-button label="Annulla" title="Annulla" onclick={closeModal}>
                     </lightning-button>
-                    <lightning-button label="Salva" title="Salva" onclick={handleSave}></lightning-button>
+                    <lightning-button variant="brand" label="Salva" title="Salva" onclick={handleSave}></lightning-button>
 
                 </footer>
             </div>

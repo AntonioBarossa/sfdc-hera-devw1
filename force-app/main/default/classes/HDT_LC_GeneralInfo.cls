@@ -140,7 +140,10 @@ public inherited sharing class HDT_LC_GeneralInfo {
         Map<String,String> result = new Map<String,String>();
 
         List<User> user = HDT_QR_UserQueries.getRoleAndProfile(UserInfo.getUserId());
-
+        if(!user.isEmpty() && String.isNotBlank(user[0].LoginChannel__c))
+        {
+            result.put('loginchannel',user[0].LoginChannel__c);
+        }
         if (user[0].UserRole != null) {
             result.put('userRole', user[0].UserRole.DeveloperName);
             result.put('userProfile', user[0].Profile.Name);

@@ -23,9 +23,15 @@ public class HDT_BA_PostSalesMasterBatchTst {
         String rtIdVolturaTecnica = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameVolturaTecnica).getRecordTypeId();
         String rtNameBloccoSollecitoInteressi = 'HDT_RT_AltriProcessiPagamenti';
         String rtIdBloccoSollecitoInteressi = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameBloccoSollecitoInteressi).getRecordTypeId();
-
+        String rtNamePrev = 'HDT_RT_PreventiviEle';
+        String rtIdPrev = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNamePrev).getRecordTypeId();
+        
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtIdPrev, rtNamePrev,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto','Attesa conferma preventivo cliente', rtIdPrev, rtNamePrev,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Ammissibilità OK', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Attesa conferma preventivo cliente', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto', 'Ammissibilità OK', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Bozza', rtIdPianRat, rtNamePianoRat,'A','','','');
@@ -51,7 +57,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(8, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(9, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         
         Datetime oneDayAgo = Datetime.now().addDays(-5);
         Test.setCreatedDate(caseList[3].Id, oneDayAgo);
@@ -63,7 +69,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[0].Phase__c = 'Attesa conferma preventivo cliente';
         caseList[0].QuotationValidityDate__c = Date.today()-5;
         caseList[0].Cluster__c = 'Verifiche';
-        caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
+        caseList[0].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PreventiviEle').getRecordTypeId();
+        caseList[0].PhaseStory__c = 'Bozza@@Attesa';
         
         caseList[1].BillingProfile__c = billingProfileList[0].Id;
         caseList[1].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
@@ -108,6 +115,15 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[7].EffectiveDate__c = Date.today();
         caseList[7].Order__c = ordList[1].Id;
 
+        caseList[8].BillingProfile__c = billingProfileList[0].Id;
+        caseList[8].Phase__c = 'Ammissibilità OK';
+        caseList[8].QuotationValidityDate__c = Date.today()-5;
+        caseList[8].QuotationType__c = 'Predeterminabile';
+        caseList[8].Cluster__c = 'Verifiche';
+        caseList[8].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
+        caseList[8].PhaseStory__c = 'Bozza@@Attesa';
+        
+
         update caseList;        
 
         Knowledge__kav kArt = new Knowledge__kav();
@@ -142,6 +158,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         Case myCase6 = [SELECT Id, Phase__c, Type  FROM Case WHERE Type = 'Voltura Tecnica' AND Subject = 'Test no ricalcolo' LIMIT 1];
         Case myCase7 = [SELECT Id, Phase__c, SuspensionEndDate__c, Type  FROM Case WHERE Type = 'Blocco Sollecito/Interessi'LIMIT 1];
         Case myCase8 = [SELECT Id, Phase__c, Type, EffectiveDate__c  FROM Case WHERE Type = 'Voltura Tecnica' AND Subject = 'Test ricalcolo' LIMIT 1];
+        Case myCase9 = [SELECT Id, Phase__c FROM Case WHERE QuotationType__c = 'Predeterminabile' LIMIT 1];
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -199,6 +216,9 @@ public class HDT_BA_PostSalesMasterBatchTst {
         
         System.assertEquals(true, updatedCase8.EffectiveDate__c > myCase8.EffectiveDate__c , 'Data decorrenza non ricalcolata');
         System.assertEquals('In attesa Data Decorrenza', updatedCase8.Phase__c , 'Phase != In attesa Data Decorrenza');
+
+        Case updateCase9 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase9.Id LIMIT 1];
+        System.assertEquals('Preventivo scaduto', updateCase9.Phase__c, 'Preventivo non scaduto');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
         System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');

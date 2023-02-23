@@ -49,3 +49,9 @@ launch.json
 
 .sf/
 .sf/*
+
+package.json
+.eslintignore
+assets
+.vscode
+config

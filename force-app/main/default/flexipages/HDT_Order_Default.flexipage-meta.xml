@@ -487,7 +487,7 @@
                         <valueListItems>
                             <value>CustomButton.Order.HDT_Ripensamento</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4 AND 5 AND 6 AND 7 AND 8 AND 9</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.NotRethinkable__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -522,6 +522,16 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Activated</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Caricamento Siebel OK</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>In Corso caricamento Siebel</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

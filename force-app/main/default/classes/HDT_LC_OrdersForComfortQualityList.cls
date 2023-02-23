@@ -56,10 +56,11 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 }
             }
             causalQuality = 'Comfort Call OK';
-            orderUpdate.SignedDate__c = Date.today();
+            //orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
-            upList.add(orderUpdate);
+            //upList.add(orderUpdate);
             upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
+            upList.add(orderUpdate);
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
@@ -113,7 +114,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             'Ammissibilità OK',
             //'Esito KO da SII',
             'KO rilavorato',
-            'KO definitivo'
+            'KO definitivo',
+            'Errore invio a DL/SII'
         };
 
         List<String> notCancelNonBillable = new List<String>{
@@ -173,7 +175,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                         Type__c = ordToCheck[0].isTransition__c ? HDT_UTL_ActivityCustom.ANNULLAMENTO_SIEBEL : HDT_UTL_ActivityCustom.CONTRATTO_NON_RICHIESTO, 
                         Process__c = transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) != null ? transcodeProcessForActivity(ordToCheck[0].RecordType.DeveloperName) : ordToCheck[0].ProcessType__c,
                         Note__c = 'Quality esitata negativamente',
-                        order__c=ordId
+                        order__c=ordId,
+                        OpeningNote__c = 'Errore invio a DL/SII'.equalsIgnoreCase(ordToCheck[0].Phase__c)? 'Attività creata perchè l\'ordine era in fase Errore invio a DL/SII' : ''
                     ));
                 }
             }
@@ -183,6 +186,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             orderSrv.updateRecord(new Order(
                 Id = ordId,
                 Skip_Callout__c = ordToCheck[0].Skip_Callout__c == null ? -1 : null,
+                CancellationReason__c = causal,
                 WorkedQualityCall__c = qualityMessage
             ));
         }
@@ -246,7 +250,12 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         Map<String,String> processActivityMap = new Map<String,String>{
             'HDT_RT_SwitchIn' => 'Switch In',
             'HDT_RT_CambioOfferta' => 'Cambio offerta',
-            'HDT_RT_VAS' => 'Segnalazioni VAS'
+            'HDT_RT_VAS' => 'Segnalazioni VAS',
+            'HDT_RT_Subentro' => 'Subentro',
+            'HDT_RT_ScontiBonus' => 'Aggiunta Bonus o Vas',
+            'HDT_RT_Attivazione' => 'Prima Attivazione',
+            'HDT_RT_Voltura' => 'Voltura',
+            'HDT_RT_VolturaConSwitch' => 'Voltura con Switch'
         };
 
         return processActivityMap.get(orderRecordType);

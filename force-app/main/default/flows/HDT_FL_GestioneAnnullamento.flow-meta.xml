@@ -1286,6 +1286,13 @@
                     <stringValue>Errore invio a DL/SII</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>GetCase.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati Tecnici Ricevuti</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Assegna_Fase_Precedente</targetReference>
             </connector>
@@ -1387,6 +1394,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>Errore invio a DL/SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetOrderAggiornato_0.Phase__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Dati Tecnici Ricevuti</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2866,6 +2880,12 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_CheckObjectBeforeCancel</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>Case</name>
             <value>
                 <elementReference>GetRecord</elementReference>
@@ -2883,9 +2903,21 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         </connector>
         <flowName>HDT_FL_CheckObjectBeforeCancel</flowName>
         <inputAssignments>
+            <name>activityId</name>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <name>order</name>
             <value>
                 <elementReference>GetOrder</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>processType</name>
+            <value>
+                <elementReference>ProcessType</elementReference>
             </value>
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>

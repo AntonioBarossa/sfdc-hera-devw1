@@ -142,6 +142,9 @@ public with sharing class HDT_SRV_SalesHandler {
                         HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, nextPhase, mapActivityField);
                         Order ord = new Order(); 
                         ord.Id = ordRetrieved.Id;
+                        if('STATO_INTD'.equalsIgnoreCase(activityName)){
+                            ord.ManagedSapDiscard__c = 'KO';
+                        }
                         if(String.isNotBlank(csOutcome) && csOutcome.equalsIgnoreCase('Y'))
                         {
                             ord.Cs1Outcome__c = nextPhase;
@@ -347,10 +350,18 @@ public with sharing class HDT_SRV_SalesHandler {
                                 when 'Amm. Precheck OK SII' {
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
-                                    ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
-                                    //ord.VATNumberUdb__c = mapRequestFields.get('EXT_PIVA_DISTR');
+                                    if(mapRequestFields.get('EXT_CABINA_REMI') != null){
+                                        ord.RemiCode__c = mapRequestFields.get('EXT_CABINA_REMI');
+                                    }
+                                    if(ord.RemiCode__c != null){
+                                        ord.VATNumberUdb__c = HDT_UTL_OrderProcess.calculateVatNumberUdb(ordRetrieved.SupplyCity__c, ordRetrieved.SalesCompany__c, ord.RemiCode__c);
+                                    }
                                     if (ordRetrieved.PrecheckResultSII__c == null || ordRetrieved.PrecheckResultSII__c == '') {
                                         ord.PrecheckResultSII__c = 'OK';
+                                    }
+                                    if ('Voltura con Switch'.equalsIgnoreCase(ordRetrieved.ProcessType__c) && 'Errore invio a DL/SII'.equalsIgnoreCase(ordRetrieved.Phase__c)){
+                                        ord.PrecheckResultSII__c = 'OK';
+                                        voltureChangeSrv.handleAmmissibilityCheck(mapRequestFields, ordRetrieved);
                                     }
                                 }
                                 when 'Esito KO da SII' {
@@ -672,6 +683,12 @@ public with sharing class HDT_SRV_SalesHandler {
                             ordRetrieved = orderQr.getRecordByOrderNumber(mapRequestFields.get('RECORD_ID'))[0];
                         }
                         HDT_UTL_Scarti.handleHerokuResponse(ordRetrieved.Id, activityName, '', mapRequestFields);
+                        if('STATO_INTD'.equalsIgnoreCase(activityName)){
+                            Order ord = new Order();
+                            ord.Id = ordRetrieved.Id;
+                            ord.ManagedSapDiscard__c = 'KO';
+                            orderSrv.updateRecord(ord);
+                        }
                         responseField.fieldType = 'TEXT';
                     	responseField.name = 'ESITO';
                     	responseField.value = 'OK';

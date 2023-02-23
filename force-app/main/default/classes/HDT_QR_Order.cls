@@ -109,10 +109,12 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Account.OwnerId,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
+            Sale__r.Account__r.OwnerId,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -1043,7 +1045,8 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        SalesCompany__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1140,7 +1143,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        SalesCompany__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
@@ -1437,5 +1441,9 @@ public inherited sharing class HDT_QR_Order {
             }
         }
         return parToChildOrderMap;
+    }
+
+    public static List<Order> getChildOrdersFromParentId(Set<String> parentsId){
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c,QualityCallStatus__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
     }
 }

@@ -420,7 +420,7 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
-            <default>false</default>Contatto Quality Fallito
+            <default>false</default>
         </values>
         <values>
             <fullName>Annullo cambio offerta</fullName>
@@ -476,6 +476,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -641,6 +645,10 @@
         </values>
         <values>
             <fullName>UPGRADE OFFERTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>verifica winback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1969,10 +1977,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>ExciseGAS__c</picklist>
-        <values>
+        <!--<values>
             <fullName>Altro</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Imosta Autopr-Prod EE Industr %28Cod%2E G_I15%29</fullName>
             <default>false</default>

@@ -122,22 +122,24 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 }
 
                 if (triggerOrder != null) {
-                    anagAlignCase = createAnagAlignmentCase(triggerOrder);
-                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
-                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                    //anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
-                    anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
-                    anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
-                    if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
-                        anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    if(codicePrestazione != 'A10' && codicePrestazione != 'A40'){
+                        anagAlignCase = createAnagAlignmentCase(triggerOrder);
+                        anagAlignCase.CausalCode__c = causalCodeAnagAlignment(triggerOrder.CommodityFormula__c, context);
+                        anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                        //anagAlignCase.SalesCompanyCode__c = companyCodeTemp(triggerOrder.CommodityFormula__c);
+                        anagAlignCase.Excises__c = transcodeExcises(triggerOrder);
+                        anagAlignCase.RegionalAdditional__c = queryHandlerOrder.findRegionalAdditional(triggerOrder.ExciseGAS__c, triggerOrder.SupplyPlace__c, getRegion(triggerOrder.SupplyState__c));
+                        if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                            anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                        }
+                        for (String field : dataEnrichmentFields) {
+                            anagAlignCase.put(field, tempCase.get(field));
+                        }
+                        alignSalesCompany(anagAlignCase,triggerOrder);
+                        System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                        anagAlignCase.Phase__c = 'Da Inviare';
+                        HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                     }
-                    for (String field : dataEnrichmentFields) {
-                        anagAlignCase.put(field, tempCase.get(field));
-                    }
-                    alignSalesCompany(anagAlignCase,triggerOrder);
-                    System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
-                    anagAlignCase.Phase__c = 'Da Inviare';
-                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
             }
             when 'N02', 'U01' { // Casistica 2: non è possibile linkare a pratica di origine, creiamo solo il Case di Allineamento Anagrafica.
@@ -150,22 +152,25 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
 
-                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
-                updateAnagAlignmentCaseCustomerData(anagAlignCase);
-                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
-                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
-                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
-                }
-                for (String field : dataEnrichmentFields) {
-                    anagAlignCase.put(field, tempCase.get(field));
+                if(codicePrestazione == 'N02'){
+                    anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
+                    updateAnagAlignmentCaseCustomerData(anagAlignCase);
+                    anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
+                    anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
+                    if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
+                        anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
+                    }
+                    for (String field : dataEnrichmentFields) {
+                        anagAlignCase.put(field, tempCase.get(field));
+                    }
+
+                    System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
+                    anagAlignCase.Phase__c = 'Da Inviare';
+                    HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                 }
 
-                System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
-                anagAlignCase.Phase__c = 'Da Inviare';
-                HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
             }
-            when 'F01', 'F02' { // Casistica 3: creazione Case Allineamento Anagrafica + Case Ricostruzione Consumi
+            when 'F01', 'F02' { // Casistica 3: Case Ricostruzione Consumi
                 Case tempCase = new Case();
                 Set<String> dataEnrichmentFields = new Set<String>();
                 try {
@@ -174,23 +179,6 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                 } catch (Exception ex){
                     System.debug(LoggingLevel.DEBUG, 'Arricchimento dati fallito: line [' + ex.getLineNumber() + ']; ' + ex.getMessage());
                 }
-
-                anagAlignCase = createAnagAlignmentCaseFromServicePoint(codicePresa,herokuCode);
-                updateAnagAlignmentCaseCustomerData(anagAlignCase);
-                anagAlignCase.CausalCode__c = causalCodeAnagAlignment(anagAlignCase.CommodityFormula__c, context);
-                anagAlignCase.OperationCode__c = reasonAnagAlignment(anagAlignCase.CausalCode__c);
-                if(anagAlignCase.CausalCode__c != null && anagAlignCase.CausalCode__c.equalsIgnoreCase('VS2')){
-                    anagAlignCase.DistributorPracticeCode__c = codicePraticaDistributore;
-                }
-
-                for (String field : dataEnrichmentFields) {
-                    anagAlignCase.put(field, tempCase.get(field));
-                }
-
-
-                System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
-                anagAlignCase.Phase__c = 'Da Inviare';
-                HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
 
                 Case ricostruzioneConsumiCase = createCaseRicostruzioneConsumi(codicePresa, herokuCode);
                 for (String field : dataEnrichmentFields) {
