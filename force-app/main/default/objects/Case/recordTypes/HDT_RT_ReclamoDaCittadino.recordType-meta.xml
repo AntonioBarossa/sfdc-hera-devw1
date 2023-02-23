@@ -2040,26 +2040,6 @@
             <fullName>Ambiente</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Energia Elettrica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gas</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Multi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Teleriscaldamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VAS</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>CommunicationType__c</picklist>
