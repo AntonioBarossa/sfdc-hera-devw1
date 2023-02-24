@@ -49,13 +49,34 @@ public with sharing class HDT_LC_EditScartiComplessi {
     }
 
     @AuraEnabled
-    public static String resubmissionPractice(Order ord,String activityId){
+    public static String resubmissionPractice(Order ord,String activityId, Map<String,Object> lastStepData){
         /* Nel caso di KO precedente cliente (isTechnicalTransfer valorizzato a true) e fase Amm. Precheck KO SII
         * L' operatore non puo' premere direttamente risottometti pratica in quanto deve necessariamente
         * compilare i dati del precedente intestatario.
         * viene querato l'ordine (ad ogni step l'ordine viene aggiornato quindi si otterra' sempre l'istanza piu' recente)
         * e viene richiamato il metodo per il check della valorizzazione dei dati dell'intestatario
         */
+        Order ordToUpdate = new Order(Id = ord.Id);
+        if (lastStepData != null) {
+            HDT_QR_ContentDocumentLink contDocLinkQr = new HDT_QR_ContentDocumentLink();
+            for (String lastStepField : lastStepData.keySet()) {
+                if (lastStepField == 'EffectiveDate__c') {
+                    String dateString = String.valueOf(lastStepData.get(lastStepField));
+                    ordToUpdate.put(lastStepField, date.valueOf(dateString));
+                }
+                else {
+                    ordToUpdate.put(lastStepField, lastStepData.get(lastStepField));
+                }
+            }
+
+            if ((ordToUpdate.VATfacilitationFlag__c != null && ordToUpdate.VATfacilitationFlag__c) || (ordToUpdate.FacilitationExcise__c != null && ordToUpdate.FacilitationExcise__c)) {
+                List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(ord.Id, 'ivaAccise');
+
+                if (docsIvaAccise.isEmpty()) {
+                    throw new AuraHandledException('Caricare documento per iva e accise');
+                }
+            }
+        }
         HDT_QR_VoltureChangeManager qrVlt = new HDT_QR_VoltureChangeManager();
         List<Order> orderCheck =  qrVlt.getOrderInfosById(ord.Id);
         if(!orderCheck.isEmpty() && orderCheck[0].IsTechnicalTransfer__c && 'Amm. Precheck KO SII'.equalsIgnoreCase(ord.Phase__c))
@@ -87,15 +108,15 @@ public with sharing class HDT_LC_EditScartiComplessi {
         if ('Caricamento Siebel KO'.equalsIgnoreCase(ord.Phase__c)){
             fase = 'Esportazione VS Siebel';
         }
-        ord.Phase__c = fase;
-        ord.DiscardReason__c = null;
-        ord.HerokuPracticeCode__c = null;
-        ord.DistributorPracticeCode__c = null;
+        ordToUpdate.Phase__c = fase;
+        ordToUpdate.DiscardReason__c = null;
+        ordToUpdate.HerokuPracticeCode__c = null;
+        ordToUpdate.DistributorPracticeCode__c = null;
         System.Savepoint sp = Database.setSavePoint();
         try {
             if (!HDT_UTL_Scarti.updateCloseDiscardActivity(activityId)){
                 response = 'Impossibile chiudere l\'attività di scarto';
-            } else if (!HDT_UTL_DatabaseService.updateSObject(ord)){
+            } else if (!HDT_UTL_DatabaseService.updateSObject(ordToUpdate)){
                 response = 'Errore nell\'aggiornamento della fase dell\'ordine.';
                 Database.rollback(sp);
             }
