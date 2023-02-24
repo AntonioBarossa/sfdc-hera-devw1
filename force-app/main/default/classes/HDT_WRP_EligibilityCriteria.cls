@@ -26,6 +26,8 @@ public inherited sharing class HDT_WRP_EligibilityCriteria {
 		@AuraEnabled public String label;
 		@AuraEnabled public String value;
         @AuraEnabled public Boolean isEnabled;
+        //#### 24-02-2023 enhanced eligibleForAllCities
+        //@AuraEnabled public Boolean eligibleForAllCities;
 		@AuraEnabled public List<HDT_WRP_City> cityAvailable;
         @AuraEnabled public List<HDT_WRP_City> cityRemoved;
 	}

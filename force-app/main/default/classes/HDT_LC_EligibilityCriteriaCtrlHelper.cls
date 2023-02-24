@@ -69,6 +69,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
                     muni.AreaCode__c =  singleProv.value;
                     //singleProv.cityRemoved = new List<HDT_WRP_EligibilityCriteria.HDT_WRP_City>();
                     muni.JSONCode__c = JSON.serialize(singleProv);
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+                    //if(!singleProv.eligibleForAllCities){
+                    //    muni.JSONCode__c = JSON.serialize(singleProv);   
+                    //}
+                    //muni.EligibleForAllCities__c = singleProv.eligibleForAllCities;
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+
                     muniList.add(muni);
                 }
             }
@@ -258,6 +265,14 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
     public static Map<String, Set<String>> deserializeMethod(Map<String, Set<String>> existingMuniMap, List<EligibleMunicipality__c> muniList){
             HDT_WRP_EligibilityCriteria.HDT_WRP_Province singleProv;
             for(EligibleMunicipality__c muni : muniList){
+                
+                //#### 24-02-2023 enhanced eligibleForAllCities
+                //if(muni.EligibleForAllCities__c){
+                //    existingMuniMap.put(muni.AreaCode__c, null);
+                //    continue;
+                //}
+                //#### 24-02-2023 enhanced eligibleForAllCities
+
                 singleProv = new HDT_WRP_EligibilityCriteria.HDT_WRP_Province();
                 singleProv = (HDT_WRP_EligibilityCriteria.HDT_WRP_Province)JSON.deserialize(muni.JSONCode__c, HDT_WRP_EligibilityCriteria.HDT_WRP_Province.class);
 
@@ -298,6 +313,13 @@ public inherited sharing class HDT_LC_EligibilityCriteriaCtrlHelper {
             for(HDT_WRP_EligibilityCriteria.HDT_WRP_Province prov : cityZipCodeObj.regionList[0].provinceList){
 
                 if(existingMuniMap.containsKey(prov.value)){
+
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+                    //if(existingMuniMap.get(prov.value) == null){
+                    //    continue;
+                    //}
+                    //#### 24-02-2023 enhanced eligibleForAllCities
+
                     Set<String> avalilableCityCode = existingMuniMap.get(prov.value);
                     Set<Integer> itemsToRemove = new Set<Integer>();
 
