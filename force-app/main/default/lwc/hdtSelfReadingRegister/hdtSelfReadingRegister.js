@@ -9,6 +9,7 @@ export default class HdtSelfReadingRegister extends LightningElement {
     @api commodity;
     @api isRetroactive;
     @api isVolture;
+    @api isOfferChange;
     @api isProcessReading;
     @api isVisible;
     @api allowSmallerReading = false;
@@ -245,8 +246,12 @@ export default class HdtSelfReadingRegister extends LightningElement {
             if (!this.isProcessReading){
                 console.log('#RegisterObj >>> ' + JSON.stringify(this.registerObj));
                 this.registerObj.forEach(element => {
-                    if( ( object != null && (object.toLowerCase() === 'case'  || (object.toLowerCase() === 'order' && this.isVolture) )) && 
-                        element.disabled == false && (element.value == null || element.value == '' || element.value == undefined)){
+                    if( ( 
+                            object != null && 
+                            ( object.toLowerCase() === 'case'  || ( object.toLowerCase() === 'order' && (this.isVolture || this.isOfferChange )) )
+                        ) && 
+                        element.disabled == false && (element.value == null || element.value == '' || element.value == undefined) )
+                    {
                         this.advanceError = 'Impossibile procedere: Nuova Lettura deve essere valorizzata.';
                     } 
                 });
