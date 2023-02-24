@@ -31,6 +31,7 @@ export default class HdtSelfReading extends LightningElement {
     @api object;
     @api servicePointId;
     @api isVolture;
+    @api isOfferChange;
     @api isRetroactive;
     @api isProcessReading;
     @api availableActions = [];
