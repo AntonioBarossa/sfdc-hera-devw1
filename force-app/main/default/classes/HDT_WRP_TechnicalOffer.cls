@@ -129,6 +129,8 @@ public inherited sharing class HDT_WRP_TechnicalOffer {
         public String identificativoProdotto;
         public String coGg;
         public String coSt;
+        //--> in attesa chiave mulesoft
+        //public String ???;
 
         public List<HDT_WRP_Position> input;
     }

@@ -634,6 +634,8 @@ public inherited sharing class HDT_LC_OfferConfiguratorCtrlHelper {
             obj.header.identificativoProdotto = String.valueOf(techOff.ProductIdentifier__c);
             obj.header.coGg = String.valueOf(techOff.DailyContribution__c);
             obj.header.coSt = String.valueOf(techOff.WeeklyContribution__c);
+            //--> in attesa chiave mulesoft
+            ///obj.header.?? = String.valueOf(techOff.Index__c);
 
             //obj.header.parametroP0 = (obj.header.parametroP0==null) ? null : obj.header.parametroP0.replace('.', ',');
             //obj.header.parametroK = (obj.header.parametroK==null) ? null : obj.header.parametroK.replace('.', ',');
