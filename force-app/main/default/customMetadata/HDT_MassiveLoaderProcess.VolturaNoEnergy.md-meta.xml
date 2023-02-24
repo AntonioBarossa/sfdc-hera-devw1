@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Allineamento Anagrafica</label>
+    <label>Voltura No Energy</label>
     <protected>false</protected>
     <values>
         <field>ApexClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_RegistryAlignment</value>
+        <value xsi:type="xsd:string">HDT_UTL_ProcessSales</value>
     </values>
     <values>
         <field>BatchSize__c</field>
@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Priority__c</field>
-        <value xsi:type="xsd:double">205.0</value>
+        <value xsi:type="xsd:double">203.0</value>
     </values>
 </CustomMetadata>
