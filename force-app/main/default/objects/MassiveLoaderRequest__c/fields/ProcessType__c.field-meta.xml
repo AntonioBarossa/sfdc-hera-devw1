@@ -124,6 +124,11 @@
                 <default>false</default>
                 <label>Chiusura Order Case</label>
             </value>
+            <value>
+                <fullName>VolturaNoEnergy</fullName>
+                <default>false</default>
+                <label>Voltura No Energy</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
