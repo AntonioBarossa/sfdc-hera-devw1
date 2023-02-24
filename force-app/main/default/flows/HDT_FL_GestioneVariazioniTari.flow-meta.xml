@@ -2177,7 +2177,7 @@
         <defaultConnectorLabel>altri sottoprocessi</defaultConnectorLabel>
         <rules>
             <name>concatenazioneToDo_0_0</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6</conditionLogic>
             <conditions>
                 <leftValueReference>getPostAttachment.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2211,6 +2211,13 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>D&apos;ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPostAttachment.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2674,7 +2681,7 @@
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Yes_ActiveRepentant</name>
-            <conditionLogic>6 OR ( (1 OR 2 OR 3 OR 4) AND 7 ) OR ( 5 AND 8 )</conditionLogic>
+            <conditionLogic>9 AND (6 OR ( (1 OR 2 OR 3 OR 4) AND 7 ) OR ( 5 AND 8 ))</conditionLogic>
             <conditions>
                 <leftValueReference>getPostAttachment.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2729,6 +2736,13 @@
                 <operator>GreaterThan</operator>
                 <rightValue>
                     <elementReference>getPostAttachment.Surface__c</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPostAttachment.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <connector>
