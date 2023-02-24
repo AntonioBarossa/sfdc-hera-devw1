@@ -91,6 +91,10 @@
                 <behavior>Edit</behavior>
                 <field>SapContractCode__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ContractExpenses__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -172,6 +176,10 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>MeterClass__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ReadingValueMeter__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>
@@ -545,11 +553,6 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
-            <actionName>EscalationCmp</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>22</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.Validazione_Documenti</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -645,11 +648,6 @@
             <sortOrder>18</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>Order.Conferma_finale</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>21</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>19</sortOrder>
@@ -658,6 +656,16 @@
             <actionName>Order.HDT_SendCertifiedEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>20</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Order.Conferma_finale</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>21</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EscalationCmp</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>22</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
