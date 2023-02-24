@@ -1008,4 +1008,4 @@ import * as rateCategories from './hdtRateCategories.js';
         ];
     }
 
-    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration}
+    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration, getFormattedDate}

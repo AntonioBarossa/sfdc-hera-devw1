@@ -1,6 +1,8 @@
 import {api} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import HdtRecordEditFormFlow from 'c/hdtRecordEditFormFlow';
+import { getFormattedDate } from 'c/hdtChildOrderProcessDetailsUtl';
+
 
 export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow {
 
@@ -180,8 +182,10 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         this.dispatchEvent(toastErrorMessage);
     }
 
-    getDateSubtracted(today, numberToSubtract) {
-        let month = '' + (today.getMonth() + 1);
+    getDateSubtracted(dateToChange, numberToSubtract) {
+
+        dateToChange.setMonth(dateToChange.getMonth()-numberToSubtract);
+        /*let month = '' + (today.getMonth() + 1);
         let day = '' + today.getDate();
         let year = today.getFullYear();
 
@@ -190,8 +194,8 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         let monthUpdated = month - numberToSubtract;
 
         if (monthUpdated < 10) 
-            monthUpdated = '0' + monthUpdated;
+            monthUpdated = '0' + monthUpdated;*/
             
-        return [year, monthUpdated, day].join('-');
+        return getFormattedDate(today);
     }
 }
