@@ -547,6 +547,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         contractAmb.EndDate = recordCase.EffectiveDate__c;
                         HDT_UTL_SubscriptionProcess.closeSubscriptionsToday(contractAmb.Id);
                 }
+                if('Modifica dati contrattuali'.equalsIgnoreCase(recordCase.Type) && 'Superficie'.equalsIgnoreCase(recordCase.subProcess__c)
+                && recordCase.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniTari').getRecordTypeId()){
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    spAmb.AreaDeclaredTARI__c = recordCase.DeclaredArea__c;
+                }
                 if(contractAmb.Id != null){
                     HDT_UTL_DatabaseService.updateSObject(contractAmb);
                 }
