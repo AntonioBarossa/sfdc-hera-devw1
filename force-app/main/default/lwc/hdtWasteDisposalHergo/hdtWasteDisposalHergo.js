@@ -124,7 +124,7 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
             var dateSubtracted =  this.getDateSubtracted(new Date(),n);
             console.log('### DataUltimoRitiro-nMesi -> ' + dateSubtracted);
 
-            if(this.lastWithdrawDate > dateSubtracted){
+            if(this.lastWithdrawDate > dateSubtracted ){
                 this.showMessage('Attenzione', 'Ritiro a pagamento causa ultimo ritiro più recente di '+ n +' mesi','error', true);
                 //this.template.querySelector("[data-id='WithdrawalFee__c']").value = true;
                 this._recentWithdrawal = true;
@@ -196,6 +196,6 @@ export default class HdtRecordEditFormFlowAdvanced extends HdtRecordEditFormFlow
         if (monthUpdated < 10) 
             monthUpdated = '0' + monthUpdated;*/
             
-        return getFormattedDate(today);
+        return getFormattedDate(dateToChange);
     }
 }
