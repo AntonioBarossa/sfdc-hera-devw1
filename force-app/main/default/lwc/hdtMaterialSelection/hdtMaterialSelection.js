@@ -60,7 +60,7 @@ export default class HdtMaterialSelection extends LightningElement {
 
             if(doCloseLogic){
                 //this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error', true);
-                console.log("@@@@@@@@@@@ limite "+value);
+                //console.log("@@@@@@@@@@@ limite "+value);
                 this.showPaymentMessage(value);
                 this.isPaymentNeeded = true;
                 this.closeModal();
@@ -175,7 +175,7 @@ export default class HdtMaterialSelection extends LightningElement {
                     if(!this.isAlreadyWarned){
                         if(this.showModal){
                             //this.showMessage('Attenzione','Il ritiro è a pagamento per i metri cubi selezionati','error', true);
-                            console.log("@@@@@@@@@@@ limite "+this.cubatureLimit);
+                            //console.log("@@@@@@@@@@@ limite "+this.cubatureLimit);
                             this.showPaymentMessage(this.cubatureLimit);
                         }
                         this.isPaymentNeeded = true;
