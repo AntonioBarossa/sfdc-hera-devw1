@@ -184,6 +184,14 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_AfClassTranscode__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_CaliberTranscode__mdt </name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_Dependant_Picklist_VAS__mdt</name>
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
@@ -1599,6 +1607,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.InquiryOutcome__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CodeBlock__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -12134,6 +12147,26 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_DataEnrichmentTransocode__mdt.SfdcField__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_AfClassTranscode__mdt.SapFieldValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_AfClassTranscode__mdt.SfdcFieldValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CaliberTranscode__mdt.SapFieldValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CaliberTranscode__mdt.SfdcFieldValue__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
