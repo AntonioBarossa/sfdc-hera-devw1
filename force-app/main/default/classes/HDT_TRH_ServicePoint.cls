@@ -7,6 +7,7 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
     
     public override void beforeInsert(){
         this.manageSupplyStreet(Trigger.oldMap, trigger.new);
+        handleGlobalMigrationKey(Trigger.new);
     }
 
     public void manageSupplyStreet(Map<Id,SObject> oldObjMap, List<ServicePoint__c> servicePointList){
@@ -27,4 +28,14 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
         }
         
     }
+
+    private void handleGlobalMigrationKey(List<ServicePoint__c> servicePointList)
+    {
+	    for(ServicePoint__c servicePoint : servicePointList){
+		    if(String.isNotBlank(servicePoint.SAPImplantCode__c))
+            {
+			    servicePoint.GlobalMigrationKey__c = 'SP_'+servicePoint.SAPImplantCode__c;
+			}
+		}
+	}
 }

@@ -1472,6 +1472,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Aggiunta Bonus o Vas</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Alert</fullName>
             <default>false</default>
         </values>
@@ -1689,6 +1693,10 @@
         </values>
         <values>
             <fullName>Prescrizione Fatture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1917,6 +1925,10 @@
         </values>
         <values>
             <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Switch</fullName>
             <default>false</default>
         </values>
     </picklistValues>

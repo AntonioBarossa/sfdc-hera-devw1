@@ -10811,6 +10811,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>DocumentSendTracking__c.SignatureMethod__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSendTracking__c.Type__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -15557,6 +15562,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DiscardCodeHeroku__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.DiscardDocusignEnvelope__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
