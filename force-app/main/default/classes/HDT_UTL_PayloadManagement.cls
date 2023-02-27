@@ -383,7 +383,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             Boolean newCoTemp = false;
             Boolean oldCoTemp = false;
             Boolean tariTemp = false;
-            Boolen mmsTemp = false;
+            Boolean mmsTemp = false;
             
             for (Object singleRecord : primoLivelloList) {
                 primolivello = (Map<String, Object>) singleRecord;
