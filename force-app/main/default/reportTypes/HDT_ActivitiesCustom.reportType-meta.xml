@@ -1540,6 +1540,16 @@
             <field>Order__c.ServicePointCodeFormula__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.CreditCheckDescription__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Order__c.SignatureMethod__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
         <masterLabel>Order Parent</masterLabel>
     </sections>
     <sections>
@@ -1620,6 +1630,11 @@
         <columns>
             <checkedByDefault>false</checkedByDefault>
             <field>WorkingStatus__c</field>
+            <table>wrts_prcgvr__Activity__c</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>Societ_di_vendita__c</field>
             <table>wrts_prcgvr__Activity__c</table>
         </columns>
         <masterLabel>Attività (Custom)</masterLabel>
