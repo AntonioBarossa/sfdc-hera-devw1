@@ -3,7 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import updateProcessStep from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.updateProcessStep';
 import init from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.init';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
-import  voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
+import voltureEffectiveDateCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.voltureEffectiveDateCheck';
 import getDates from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getDates';
 import getQuoteTypeMtd from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.getQuoteTypeMtd';
 import isPreventivo from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.isPreventivo';
@@ -85,6 +85,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track isSavedReading;
     @track outputFieldObj = {};
     @track isVolture;
+    @track isOfferChange;
     @track isReading;
     @track resumeFromDraftReading = false;
     @track readingDisabled = false;
@@ -533,7 +534,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let currentRecordId = currentSection[0].recordId;
         let currentSectionIndex = this.availableSteps.findIndex(section => section.name === currentSectionName);
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
-        let nextSectionStep =  currentSectionName === 'processVariables'
+        let nextSectionStep =  currentSectionName === 'processVariables' || (currentSectionName === 'dettaglioImpianto' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta')
         ? (event.target.name === 'goReading' 
         ? this.availableSteps[currentSectionIndex + 1].step
         : this.availableSteps[currentSectionIndex + 2].step) 
@@ -1863,6 +1864,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) ){
             this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
             || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+            this.isOfferChange = this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua';
             console.log('IsVolture--> '+this.isVolture);
             console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
             console.log('Details Callback End');

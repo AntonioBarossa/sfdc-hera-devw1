@@ -30,21 +30,17 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
     public Contract getSapContractCode(String code,Boolean isSuperUser) {
-        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        String filter = 'Activated';
+        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, ServicePoint__c, SAPContractCode__c,Status');
+        String filter = 'Attivo';
         List<Contract> con= new List<Contract>();
         Contract c = new Contract();
         if(code==null){
             code = '';
         }
         if(isSuperUser==true){
-            // fixed because throws error: no viable alternative at character '\'
-            // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1';      
-            con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1');
+           con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, ServicePoint__c, SAPContractCode__c,Status,CreatedDate FROM Contract  WHERE ServicePoint__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' +' LIMIT 1');
         }else{
-            // fixed because throws error: no viable alternative at character '\'
-            // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + String.escapeSingleQuotes(filter) + '\'' + 'WITH SECURITY_ENFORCED';
-            con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + String.escapeSingleQuotes(filter) + '\'' + 'WITH SECURITY_ENFORCED');
+           con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, ServicePoint__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__c = ' + '\'' + String.escapeSingleQuotes(code) + '\'' + ' AND Status=' + '\'' + String.escapeSingleQuotes(filter) + '\'' + 'WITH SECURITY_ENFORCED');
         }
 
         if(con != null && con.size()> 0){
@@ -55,14 +51,11 @@ public inherited sharing class HDT_QR_Contract {
 	}
 
     public List<Contract> getSapContractCode(List<String> codes) {
-        contractSrv.checkReadAccess('Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
-        String filter = 'Activated';
-        //changed because throws error: no viable alternative at character '\'
-        // String query='SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED';
+        contractSrv.checkReadAccess('Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status');
+        String filter = 'Attivo';       
+        List<Contract> contractList = Database.query('SELECT Id, ServicePoint__c, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED');
 
-        List<Contract> con = Database.query('SELECT Id, ServicePoint__r.ServicePointCode__c, SAPContractCode__c,Status FROM Contract  WHERE ServicePoint__r.ServicePointCode__c IN:codes AND Status= \''+String.escapeSingleQuotes(filter)+'\''+ ' WITH SECURITY_ENFORCED');
-
-        return con;
+        return contractList;
 	}
 
     public List<Contract> getRecordById(String contractId){
