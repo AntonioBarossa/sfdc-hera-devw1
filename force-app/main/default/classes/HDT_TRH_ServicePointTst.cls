@@ -11,6 +11,7 @@ public with sharing class HDT_TRH_ServicePointTst {
         servPointList[0].CommoditySector__c = 'Energia Elettrica';
         servPointList[0].SupplyType__c = 'Domestico';
         servPointList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
+        servPointList[0].SAPImplantCode__c = 'TESTSAPIMPLANT';
 
         insert servPointList;
     }

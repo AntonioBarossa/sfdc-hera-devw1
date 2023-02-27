@@ -2415,6 +2415,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>PEC da DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Preavviso Cessazione</fullName>
             <default>false</default>
         </values>

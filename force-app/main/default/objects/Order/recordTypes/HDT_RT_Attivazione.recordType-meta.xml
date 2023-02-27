@@ -518,7 +518,7 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
-            <default>false</default>Contatto Quality Fallito
+            <default>false</default>
         </values>
         <values>
             <fullName>Annullo cambio offerta</fullName>
@@ -574,6 +574,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
         <values>
