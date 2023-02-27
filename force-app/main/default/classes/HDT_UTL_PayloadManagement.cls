@@ -377,9 +377,13 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             String hcm = 'HERA COMM MARCHE';
             String newCo = 'ESTENERGY SPA';
             String oldCo = 'HERA COMM NORDEST';
+            String tari = 'Marche Multiservizi TARI';
+            String mms = 'Marche Multiservizi S.p.A';
             Boolean societaTemp = false;
             Boolean newCoTemp = false;
             Boolean oldCoTemp = false;
+            Boolean tariTemp = false;
+            Boolena mmsTemp = false;
             
             for (Object singleRecord : primoLivelloList) {
                 primolivello = (Map<String, Object>) singleRecord;
@@ -400,6 +404,16 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 }else {
                     oldCoTemp = false;
                 }
+                if(societa.equalsIgnoreCase(tari)){
+                    tariTemp = true;
+                }else {
+                    tariTemp = false;
+                }
+                if(societa.equalsIgnoreCase(mms)){
+                    mmsTemp = true;
+                }else {
+                    mmsTemp = false;
+                }
             }
             if(societaTemp){
                 result = '2060';
@@ -407,7 +421,11 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 result = '7030';// 7030 (NewCo)
             } else if(oldCoTemp) { // Migrazione Ascopiave 2019
                 result = '7015'; // 7015 (OldCo)
-            } else {
+            } else if(tariTemp) { // TARI 6001
+                result = '6001'; // 6001 TARI
+            } else if(mmsTemp) { // MMS 8060
+                result = '8060'; // 8060 TARI
+            }else {
                 result = '1070';
             }
         } catch(Exception ex) {
