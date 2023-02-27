@@ -593,6 +593,8 @@ export default class HdtAdvancedSearch extends LightningElement {
             isBlacklist=data;
         
         if(isBlacklist == false){
+    
+        console.log('XXX getServicePoints: parameter:'+this.searchInputValue+';queryType:'+this.queryType+';additionalFilter:'+this.additionalfilter+';isSuperUser:'+this.isSuperUser+';datiCatastali:'+JSON.stringify(this.datiCatastali));
         getServicePoints({parameter: this.searchInputValue,queryType:this.queryType,additionalFilter:this.additionalfilter,isSuperUser:this.isSuperUser, datiCatastali: JSON.stringify(this.datiCatastali)}).then(data => {
             this.preloading = false;
             if (data.length > 0) {
