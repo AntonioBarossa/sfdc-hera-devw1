@@ -16653,7 +16653,12 @@
         <editable>true</editable>
         <field>Order.Cohabitation__c</field>
         <readable>true</readable>
-    </fieldPermissions>s
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ComPostiLetto__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.DomesticResidentNumber__c</field>
