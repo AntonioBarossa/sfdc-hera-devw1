@@ -294,14 +294,14 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             errorMessage = 'Per IBAN Estero non è possibile inserire un IBAN Italiano';
         }
 
-        String compareStringNewBp = bp.InvoicingStreetName__c + bp.InvoicingStreetNumber__c + bp.InvoicingStreetNumberExtension__c + bp.InvoicingPlace__c + bp.InvoicingCity__c + bp.InvoicingProvince__c + bp.InvoicingPostalCode__c + bp.InvoicingCountry__c + bp.PaymentConditions__c + bp.PaymentMethod__c + bp.BillSendingMethod__c + bp.IBAN__c  + bp.IbanABI__c + bp.IbanCAB__c + bp.IbanCIN_IBAN__c + bp.IbanCIN__c + bp.IbanCodeNumber__c + bp.IbanIsForeign__c;
+        String compareStringNewBp = bp.InvoicingStreetName__c + bp.InvoicingStreetNumber__c + bp.InvoicingStreetNumberExtension__c + bp.InvoicingPlace__c + bp.InvoicingCity__c + bp.InvoicingProvince__c + bp.InvoicingPostalCode__c + bp.InvoicingCountry__c + bp.PaymentMethod__c + bp.BillSendingMethod__c + bp.IBAN__c  + bp.IbanABI__c + bp.IbanCAB__c + bp.IbanCIN_IBAN__c + bp.IbanCIN__c + bp.IbanCodeNumber__c + bp.IbanIsForeign__c;
         
         if(!String.isBlank(bp.Account__c)){
             List<BillingProfile__c> bpAccountList = billingProfileQr.getRecordsByAccount(bp.Account__c);
             String compareStringExistingBp = '';
             if(bpAccountList.size() > 0){
                 for (BillingProfile__c bpAcc : bpAccountList) {
-                    compareStringExistingBp = bpAcc.InvoicingStreetName__c + bpAcc.InvoicingStreetNumber__c + bpAcc.InvoicingStreetNumberExtension__c + bpAcc.InvoicingPlace__c + bpAcc.InvoicingCity__c + bpAcc.InvoicingProvince__c + bpAcc.InvoicingPostalCode__c + bpAcc.InvoicingCountry__c + bpAcc.PaymentConditions__c + bpAcc.PaymentMethod__c + bpAcc.BillSendingMethod__c + bpAcc.IBAN__c  + bpAcc.IbanABI__c + bpAcc.IbanCAB__c + bpAcc.IbanCIN_IBAN__c + bpAcc.IbanCIN__c + bpAcc.IbanCodeNumber__c + bpAcc.IbanIsForeign__c;
+                    compareStringExistingBp = bpAcc.InvoicingStreetName__c + bpAcc.InvoicingStreetNumber__c + bpAcc.InvoicingStreetNumberExtension__c + bpAcc.InvoicingPlace__c + bpAcc.InvoicingCity__c + bpAcc.InvoicingProvince__c + bpAcc.InvoicingPostalCode__c + bpAcc.InvoicingCountry__c + bpAcc.PaymentMethod__c + bpAcc.BillSendingMethod__c + bpAcc.IBAN__c  + bpAcc.IbanABI__c + bpAcc.IbanCAB__c + bpAcc.IbanCIN_IBAN__c + bpAcc.IbanCIN__c + bpAcc.IbanCodeNumber__c + bpAcc.IbanIsForeign__c;
                     if(compareStringNewBp.equalsIgnoreCase(compareStringExistingBp) && !bp.CreateContractAccount__c){
                         errorCode = 'ERRBP-000004';
                         errorMessage = 'Esiste già un Billing Profile con le stesse condizioni (Indirizzo, Iban, Modalità di pagamento, Modalità Invio Bolletta), selezionare il flag "CA da creare" se si vuole comunque procedere con la creazione.';
