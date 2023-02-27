@@ -161,9 +161,13 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         AND 
         (
             (
-            SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
-            AND ( SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod  OR SBQQ__RequiredBy__r.PaymentMode__c = NULL)
-            AND ( SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode OR SBQQ__RequiredBy__r.SendingBillMode__c = NULL)
+                SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura')
+                AND ( SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod  OR SBQQ__RequiredBy__r.PaymentMode__c = NULL)
+                AND ( SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode OR SBQQ__RequiredBy__r.SendingBillMode__c = NULL)
+            )
+            OR
+            (
+                SBQQ__Product__r.Name IN ('Punto Fornitura Ambiente')
             )
             OR
             (
@@ -175,9 +179,9 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
                     )
                 )
-            AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
-            AND SBQQ__ProductFamily__c IN('VAS Fatturabili','VAS Prodotto','VAS Servizio')
-         )
+                AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
+                AND SBQQ__ProductFamily__c IN('VAS Fatturabili','VAS Prodotto','VAS Servizio')
+            )
         )
         AND SBQQ__Quote__r.SBQQ__Status__c NOT IN ('Cancelled','Rejected') 
         WITH SECURITY_ENFORCED

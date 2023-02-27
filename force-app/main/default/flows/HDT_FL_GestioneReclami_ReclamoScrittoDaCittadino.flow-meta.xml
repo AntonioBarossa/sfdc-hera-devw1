@@ -257,7 +257,7 @@
         <locationY>2054</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>redirectToRecord</targetReference>
+            <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>

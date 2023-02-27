@@ -49,3 +49,9 @@ launch.json
 
 # __tests__ folder
 force-app/main/default/lwc/*/__tests__/*
+
+package.json
+.eslintignore
+assets
+.vscode
+config

@@ -61,12 +61,14 @@ public with sharing class HDT_UTL_CaseProcess {
         }
         if(spIds!=null && !spIds.isEmpty()){
             HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
-            List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c');
+            List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c,Account__r.FirstName__c, Account__r.LastName__c');
             if(!spList.isEmpty()){
                 Map<Id, ServicePoint__c> spMap = new Map<Id, ServicePoint__c>(spList);
                 for(Case singleCaseToUpdate : caseList){
                     if(needUpdate.get(singleCaseToUpdate.ServicePoint__c) != null && needUpdate.get(singleCaseToUpdate.ServicePoint__c)){
                         singleCaseToUpdate.Commodity__c = spMap.get(singleCaseToUpdate.ServicePoint__c).CommoditySector__c;
+                        singleCaseToUpdate.FirstName__c = String.isBlank(singleCaseToUpdate.FirstName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.FirstName__c:singleCaseToUpdate.FirstName__c;
+                        singleCaseToUpdate.LastName__c = String.isBlank(singleCaseToUpdate.LastName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.LastName__c:singleCaseToUpdate.LastName__c;
                     }
                 }
             }

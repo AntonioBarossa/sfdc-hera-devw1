@@ -270,7 +270,7 @@ public with sharing class HDT_SRV_DocumentalManagementFacade {
 		System.debug(LoggingLevel.DEBUG, debugString);
         Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
         if (formParamsMap.containsKey('DiscardOldEnvelope') && (Boolean)formParamsMap.get('DiscardOldEnvelope')){
-            String queryString = 'SELECT Id,Case__c,Order__c FROM DocumentSendTracking__c WHERE (Case__c = \''+recordId+'\' OR Order__c = \''+recordId+'\')';
+            String queryString = 'SELECT Id,Case__c,Order__c FROM DocumentSendTracking__c WHERE (Case__c = \''+recordId+'\' OR Order__c = \''+recordId+'\') ORDER BY CreatedDate DESC';
             String objectName = 'DocumentSendTracking__c';
             List<SObject> documentSendTrackingList = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
             if (documentSendTrackingList != null && documentSendTrackingList.size() > 0){

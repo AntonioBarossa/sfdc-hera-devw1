@@ -61,17 +61,24 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             if (mapOrder!=null && !mapOrder.isEmpty() ) {
                 for (Contract tempContract :listContract) {
                     try{
-                        if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) &&mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
-                            tempContract.ServicePoint__c   = mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
-                            tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
-                            tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
-                            tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
-                            tempContract.ActivatedDate      = mapOrder.get(tempContract.SBQQ__Order__c).EffectiveDate__c ; //HRAWRM-638  17/09/2021
-                            tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
-                            tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                            tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                            tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c;  //08/09/2021 HRAWRM-251
-                            tempContract.ContractSalesCompany__c = mapOrder.get(tempContract.SBQQ__Order__c).SalesCompany__c;
+                        if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) && mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
+                            Order relatedOrder = mapOrder.get(tempContract.SBQQ__Order__c);
+
+                            tempContract.ServicePoint__c   = relatedOrder.ServicePoint__c;
+                            tempContract.BillingProfile__c = relatedOrder.BillingProfile__c;
+                            tempContract.Market__c         = relatedOrder.Market__c; 
+                            tempContract.VAT__c            = relatedOrder.VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
+                            tempContract.ActivatedDate      = relatedOrder.EffectiveDate__c ; //HRAWRM-638  17/09/2021
+                            tempContract.SapContractCode__c = relatedOrder.SapContractCode__c ; //HRAWRM-638  17/09/2021
+                            tempContract.Pricebook2Id = relatedOrder.SBQQ__Quote__r.SBQQ__PriceBook__c;
+                            tempContract.SBQQ__AmendmentPricebookId__c = relatedOrder.SBQQ__Quote__r.SBQQ__PriceBook__c;
+                            tempContract.CommercialProduct__c = relatedOrder.CommercialProduct__c;  //08/09/2021 HRAWRM-251
+                            tempContract.ContractSalesCompany__c = relatedOrder.SalesCompany__c;
+
+                            if('Ambiente' == relatedOrder?.Commodity__c && relatedOrder.EffectiveDate__c !=null){
+                                tempContract.StartDate = relatedOrder.EffectiveDate__c;
+                            }
+
                             /*@frpanico 14/02/2022
                             * Aggiunta scrittura della EndDate
                             * Nel caso di Temporanea - Nuova Attivazione
