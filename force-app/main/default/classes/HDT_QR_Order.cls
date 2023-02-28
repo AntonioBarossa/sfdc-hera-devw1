@@ -1088,6 +1088,8 @@ public inherited sharing class HDT_QR_Order {
         ImplantType__c,
         SalesCompany__c,
         CausalCode__c,
+        ContractReference__r.SAPContractCode__c,
+        RecordTypeId,
         QuotationNumber__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
@@ -1189,6 +1191,8 @@ public inherited sharing class HDT_QR_Order {
         ParentOrder__c,
         ImplantType__c,
         SalesCompany__c,
+        ContractReference__r.SAPContractCode__c,
+        RecordTypeId,
         CausalCode__c,QuotationNumber__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];

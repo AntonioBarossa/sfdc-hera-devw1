@@ -50,8 +50,15 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
     }
 
     public Boolean checkConditions(Contract c, Order ord){
+        return checkConditions(ord, c?.SapContractCode__c);
+    }
+
+    public Boolean checkConditions(Order ord, String newContractCode){
+        if(STRING.isBlank(newContractCode)){
+            return false;
+        }
         Boolean check = STRING.isNotBlank(ord?.ContractReference__r?.SAPContractCode__c) 
-                        && ord.ContractReference__r.SAPContractCode__c == c.SapContractCode__c
+                        && ord.ContractReference__r.SAPContractCode__c == newContractCode
                         && ord.RecordTypeId == CAMBIO_TARIFFA_RT_ID;
         return check;
     }
