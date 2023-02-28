@@ -13,6 +13,7 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
     static void setup(){
        
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione', 'Bozza', utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER);
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Sale__c> sale = HDT_UTL_DataFactoryTst.createSale(1, true, acc[0].Id, 'Bozza');
         List<Contact> cont = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);
@@ -81,6 +82,32 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
     }
 
     @isTest
+    static void testNextChangeOtpRemoto(){
+        Order ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE Name='testOrderName0' AND RecordTypeId = :utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER LIMIT 1];
+        List<Order> ordsChild = [SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE ParentOrder__c = :ordParent.Id];
+        Integer sizeChild = ordsChild.size();
+        for (Order o : ordsChild){
+            o.SignatureMethod__c = 'OTP Remoto';
+        }
+        ordParent.SignatureMethod__c = 'OTP Remoto';
+        ordsChild.add(ordParent);
+        update ordsChild;
+        DocumentSendTracking__c dst = new DocumentSendTracking__c(
+            Order__c = ordParent.Id,
+            EnvelopeId__c = 'idPlico_1',
+            SendMode__c = 'E-Mail'
+        );
+        insert dst;
+        insert new DocusignSettings__c(CustomerEnviromentId__c = 'HERA-TEST');
+        Test.setMock(HttpCalloutMock.class, new HDT_BA_DiscardDocusignEnvelopeTst.HDT_SRV_DiscardDocusignResponse());
+        Test.startTest();
+        ordParent.SignatureMethod__c = 'Vocal Order';
+        HDT_LC_OrderDossierWizardSignature.next(ordParent);
+		System.assertEquals(sizeChild,[SELECT Id,ParentOrder__c,ContractSigned__c FROM Order WHERE ParentOrder__c = :ordParent.Id AND SignatureMethod__c = 'Vocal Order'].size(), 'Not change Signature method');
+		Test.stopTest();
+    }
+
+    @isTest
     static void testSignatureMethodSwitchIn(){
         Order ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         Order ordChild = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, VolturaThirdTrader__c FROM Order WHERE Name='testChildOrderName' LIMIT 1];  
@@ -92,6 +119,7 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
 		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c, 'next did not work correctly');
 		System.assertNotEquals(null,ordChild.ParentOrder__c, 'next did not work correctly');
+        ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         ordParent.SignatureMethod__c = 'Vocal Order';
         HDT_UTL_DatabaseService.updateSObject(ordChild);
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
@@ -105,11 +133,11 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         acc.BillingStreetNumber__c='55';
         acc.CompanyOwner__c='HERA COMM';
         HDT_UTL_DatabaseService.updateSObject(acc);
-
+        ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         ordParent.SignatureMethod__c = 'Vocal Order';
         HDT_UTL_DatabaseService.updateSObject(ordChild);
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
-
+        ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         ordParent.SignatureMethod__c = 'Cartacea';
         ordChild.SignatureMethod__c = 'Vocal Order';
         HDT_UTL_DatabaseService.updateSObject(ordChild);
@@ -130,6 +158,7 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
 		System.assertEquals(ordParent.Id,ordChild.ParentOrder__c, 'next did not work correctly');
 		System.assertNotEquals(null,ordChild.ParentOrder__c, 'next did not work correctly');
+        ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         ordParent.SignatureMethod__c = 'Vocal Order';
         HDT_UTL_DatabaseService.updateSObject(ordChild);
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
@@ -143,11 +172,11 @@ public with sharing class HDT_LC_OrderDossierWizardSignatureTst {
         acc.BillingStreetNumber__c='55';
         acc.CompanyOwner__c='HERA COMM';
         HDT_UTL_DatabaseService.updateSObject(acc);
-
+        ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         ordParent.SignatureMethod__c = 'Vocal Order';
         HDT_UTL_DatabaseService.updateSObject(ordChild);
         HDT_LC_OrderDossierWizardSignature.next(ordParent);
-
+        ordParent = [SELECT Id,ParentOrder__c,ContractSigned__c, RecordTypeId, SignatureMethod__c, VolturaThirdTrader__c, AccountId FROM Order WHERE Name='testOrderName0' LIMIT 1];
         ordParent.SignatureMethod__c = 'Cartacea';
         ordChild.SignatureMethod__c = 'Vocal Order';
         HDT_UTL_DatabaseService.updateSObject(ordChild);

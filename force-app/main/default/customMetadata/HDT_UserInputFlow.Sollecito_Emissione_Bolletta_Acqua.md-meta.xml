@@ -60,7 +60,7 @@
     }, {
         &quot;FieldName&quot;: &quot;BillingProfile__c&quot;,
         &quot;Required&quot;: true,
-        &quot;Column&quot;: 2
+        &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;MeterCode__c&quot;,
         &quot;Required&quot;: true,
@@ -86,6 +86,10 @@
         &quot;Column&quot;: 2
     }, {
         &quot;FieldName&quot;: &quot;AtoFormula__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;CodeBlock__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 2
     }

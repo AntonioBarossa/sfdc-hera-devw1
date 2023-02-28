@@ -1437,79 +1437,74 @@
                 <label>HS_DCSC_FI_Verifiche Fatturazione</label>
             </value>
             <value>
-                <fullName>MMS-AMB</fullName>
+                <fullName>MMS_BACK_CONSERVICE</fullName>
                 <default>false</default>
-                <label>MMS-AMB</label>
+                <label>MMS_BACK_CONSERVICE</label>
             </value>
             <value>
-                <fullName>MMS-BACK</fullName>
+                <fullName>MMS_BACK_CONTACT CENTER</fullName>
                 <default>false</default>
-                <label>MMS-BACK</label>
+                <label>MMS_BACK_CONTACT CENTER</label>
             </value>
             <value>
-                <fullName>MMS-BACK CC</fullName>
+                <fullName>MMS_BACK_GESTIONE CLIENTI</fullName>
                 <default>false</default>
-                <label>MMS-BACK CC</label>
+                <label>MMS_BACK_GESTIONE CLIENTI</label>
+            </value>
+            <value>
+                <fullName>MMS_CALL CENTER_COVISIAN</fullName>
+                <default>false</default>
+                <label>MMS_CALL CENTER_COVISIAN</label>
+            </value>
+            <value>
+                <fullName>MMS_CALL CENTER_KOINE&apos;</fullName>
+                <default>false</default>
+                <label>MMS_CALL CENTER_KOINE&apos;</label>
+            </value>
+            <value>
+                <fullName>MMS_CREDITO</fullName>
+                <default>false</default>
+                <label>MMS_CREDITO</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_AMBIENTE</fullName>
+                <default>false</default>
+                <label>MMS_CRM_AMBIENTE</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_SPORTELLO</fullName>
+                <default>false</default>
+                <label>MMS_CRM_SPORTELLO</label>
+            </value>
+            <value>
+                <fullName>MMS_CRM_SPORTELLO_MSERVICE</fullName>
+                <default>false</default>
+                <label>MMS_CRM_SPORTELLO_MSERVICE</label>
+            </value>
+            <value>
+                <fullName>MMS_GESTIONE TECNICA CLIENTI</fullName>
+                <default>false</default>
+                <label>MMS_GESTIONE TECNICA CLIENTI</label>
+            </value>
+            <value>
+                <fullName>MMS_INCASSI</fullName>
+                <default>false</default>
+                <label>MMS_INCASSI</label>
+            </value>
+            <value>
+                <fullName>MMS_LEGALE</fullName>
+                <default>false</default>
+                <label>MMS_LEGALE</label>
+            </value>
+            <value>
+                <fullName>MMS_TESORERIA</fullName>
+                <default>false</default>
+                <label>MMS_TESORERIA</label>
             </value>
             <value>
                 <fullName>MMS-BACK-CC</fullName>
                 <default>false</default>
                 <label>MMS-BACK-CC</label>
-            </value>
-            <value>
-                <fullName>MMS-COORD-FRONT</fullName>
-                <default>false</default>
-                <label>MMS-COORD-FRONT</label>
-            </value>
-            <value>
-                <fullName>MMS-COORD-FRONT-CC</fullName>
-                <default>false</default>
-                <label>MMS-COORD-FRONT-CC</label>
-            </value>
-            <value>
-                <fullName>MMS-CRE</fullName>
-                <default>false</default>
-                <label>MMS-CRE</label>
-            </value>
-            <value>
-                <fullName>MMS-CRE CRM</fullName>
-                <default>false</default>
-                <label>MMS-CRE CRM</label>
-            </value>
-            <value>
-                <fullName>MMS-CRE LEG</fullName>
-                <default>false</default>
-                <label>MMS-CRE LEG</label>
-            </value>
-            <value>
-                <fullName>MMS-CV</fullName>
-                <default>false</default>
-                <label>MMS-CV</label>
-            </value>
-            <value>
-                <fullName>MMS-INC</fullName>
-                <default>false</default>
-                <label>MMS-INC</label>
-            </value>
-            <value>
-                <fullName>MMS-KNE</fullName>
-                <default>false</default>
-                <label>MMS-KNE</label>
-            </value>
-            <value>
-                <fullName>MMS-SPORT</fullName>
-                <default>false</default>
-                <label>MMS-SPORT</label>
-            </value>
-            <value>
-                <fullName>MMS-SPORT OUT</fullName>
-                <default>false</default>
-                <label>MMS-SPORT OUT</label>
-            </value>
-            <value>
-                <fullName>MMS-TES</fullName>
-                <default>false</default>
-                <label>MMS-TES</label>
             </value>
             <value>
                 <fullName>Supporto alla Vendita</fullName>

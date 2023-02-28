@@ -521,6 +521,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Il cliente rinuncia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Installazione Fallita</fullName>
             <default>false</default>
         </values>
