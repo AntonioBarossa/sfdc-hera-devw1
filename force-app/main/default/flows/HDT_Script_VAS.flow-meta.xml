@@ -4,7 +4,7 @@
     <assignments>
         <name>assignMonopattinoElettrico</name>
         <label>assignMonopattinoElettrico</label>
-        <locationX>8146</locationX>
+        <locationX>8410</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionHeraMonopattinoElettrico</assignToReference>
@@ -27,7 +27,7 @@
     <assignments>
         <name>assignMonopattinoElettrico_0</name>
         <label>assignMonopattinoElettrico</label>
-        <locationX>15890</locationX>
+        <locationX>16418</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionHeraMonopattinoElettrico_0</assignToReference>
@@ -50,7 +50,7 @@
     <assignments>
         <name>aumenataContatoreSanificatore_OB</name>
         <label>aumenataContatoreSanificatore_OB</label>
-        <locationX>16770</locationX>
+        <locationX>17298</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore_0</assignToReference>
@@ -66,7 +66,7 @@
     <assignments>
         <name>aumentaContatoreCityBikeOmega</name>
         <label>aumentaContatoreCityBikeOmega</label>
-        <locationX>10170</locationX>
+        <locationX>10434</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>cityBikeOmegaCounter</assignToReference>
@@ -89,7 +89,7 @@
     <assignments>
         <name>aumentaContatoreCityBikeUnisex</name>
         <label>aumentaContatoreCityBikeUnisex</label>
-        <locationX>10434</locationX>
+        <locationX>10698</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>cityBikeUnisexCounter</assignToReference>
@@ -112,7 +112,7 @@
     <assignments>
         <name>aumentaContatoreERUN</name>
         <label>aumentaContatoreERUN</label>
-        <locationX>7794</locationX>
+        <locationX>8058</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeErunCounter</assignToReference>
@@ -135,7 +135,7 @@
     <assignments>
         <name>aumentaContatoreERUN_0</name>
         <label>aumentaContatoreERUN</label>
-        <locationX>15538</locationX>
+        <locationX>16066</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeErunCounter_1</assignToReference>
@@ -158,7 +158,7 @@
     <assignments>
         <name>aumentaContatoreESLEEK</name>
         <label>aumentaContatoreESLEEK</label>
-        <locationX>8586</locationX>
+        <locationX>8850</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeEsleekCounter</assignToReference>
@@ -181,7 +181,7 @@
     <assignments>
         <name>aumentaContatoreESLEEK_0</name>
         <label>aumentaContatoreESLEEK</label>
-        <locationX>16330</locationX>
+        <locationX>16858</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeEsleekCounter_1</assignToReference>
@@ -204,7 +204,7 @@
     <assignments>
         <name>aumentaContatoreESPIKE</name>
         <label>aumentaContatoreESPIKE</label>
-        <locationX>8322</locationX>
+        <locationX>8586</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeEspikeCounter</assignToReference>
@@ -227,7 +227,7 @@
     <assignments>
         <name>aumentaContatoreESPIKE_0</name>
         <label>aumentaContatoreESPIKE</label>
-        <locationX>16066</locationX>
+        <locationX>16594</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeEspikeCounter_1</assignToReference>
@@ -250,7 +250,7 @@
     <assignments>
         <name>aumentaContatoreEWAY</name>
         <label>aumentaContatoreEWAY</label>
-        <locationX>7530</locationX>
+        <locationX>7794</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeEwayCounter</assignToReference>
@@ -273,7 +273,7 @@
     <assignments>
         <name>aumentaContatoreEWAY_0</name>
         <label>aumentaContatoreEWAY</label>
-        <locationX>15274</locationX>
+        <locationX>15802</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeEwayCounter_1</assignToReference>
@@ -296,7 +296,7 @@
     <assignments>
         <name>aumentaContatoreFLIPPER</name>
         <label>aumentaContatoreFLIPPER</label>
-        <locationX>17650</locationX>
+        <locationX>18178</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
@@ -319,7 +319,7 @@
     <assignments>
         <name>aumentaContatoreFoldedFlipper</name>
         <label>aumentaContatoreFoldedFlipper</label>
-        <locationX>9378</locationX>
+        <locationX>9642</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>foldedFlipperCounter</assignToReference>
@@ -342,7 +342,7 @@
     <assignments>
         <name>aumentaContatoreGraziellaGenio</name>
         <label>aumentaContatoreGraziellaGenio</label>
-        <locationX>8058</locationX>
+        <locationX>8322</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeGraziellaCounter</assignToReference>
@@ -365,7 +365,7 @@
     <assignments>
         <name>aumentaContatoreGraziellaGenio_0</name>
         <label>aumentaContatoreGraziellaGenio</label>
-        <locationX>15802</locationX>
+        <locationX>16330</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>ebikeGraziellaCounter_1</assignToReference>
@@ -388,7 +388,7 @@
     <assignments>
         <name>aumentaContatoreLampada</name>
         <label>aumentaContatoreLampada</label>
-        <locationX>9026</locationX>
+        <locationX>9290</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica</assignToReference>
@@ -404,7 +404,7 @@
     <assignments>
         <name>aumentaContatoreLampada_AZ</name>
         <label>aumentaContatoreLampada_AZ</label>
-        <locationX>20906</locationX>
+        <locationX>21434</locationX>
         <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica_0_0</assignToReference>
@@ -420,7 +420,7 @@
     <assignments>
         <name>aumentaContatoreLampada_OB</name>
         <label>aumentaContatoreLampada_OB</label>
-        <locationX>17034</locationX>
+        <locationX>17562</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>counterLampadadiRicarica_0</assignToReference>
@@ -436,7 +436,7 @@
     <assignments>
         <name>aumentaContatoreMountainBikePerformance_0</name>
         <label>aumentaContatoreMountainBikePerformance</label>
-        <locationX>9906</locationX>
+        <locationX>10170</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>mountainBikePerfomanceCounter</assignToReference>
@@ -459,7 +459,7 @@
     <assignments>
         <name>aumentaContatoreNUVOLADONNA</name>
         <label>aumentaContatoreNUVOLADONNA</label>
-        <locationX>8850</locationX>
+        <locationX>9114</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>nuvolaDonnaCounter</assignToReference>
@@ -482,7 +482,7 @@
     <assignments>
         <name>aumentaContatoreNUVOLAUOMO</name>
         <label>aumentaContatoreNUVOLAUOMO</label>
-        <locationX>9114</locationX>
+        <locationX>9378</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>nuvolaUomoCounter</assignToReference>
@@ -505,7 +505,7 @@
     <assignments>
         <name>aumentaContatoreOMEGA</name>
         <label>aumentaContatoreOMEGA</label>
-        <locationX>17386</locationX>
+        <locationX>17914</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
@@ -528,7 +528,7 @@
     <assignments>
         <name>aumentaContatorePERFORMANCE</name>
         <label>aumentaContatorePERFORMANCE</label>
-        <locationX>18178</locationX>
+        <locationX>18706</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
@@ -551,7 +551,7 @@
     <assignments>
         <name>aumentaContatorePrestigeUomo</name>
         <label>aumentaContatorePrestigeUomo</label>
-        <locationX>16858</locationX>
+        <locationX>17386</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>nuvolaUomoCounter_0</assignToReference>
@@ -574,7 +574,7 @@
     <assignments>
         <name>aumentaContatoreSanificatore_AZ</name>
         <label>aumentaContatoreSanificatore_AZ</label>
-        <locationX>20642</locationX>
+        <locationX>21170</locationX>
         <locationY>1694</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore_0_0</assignToReference>
@@ -590,7 +590,7 @@
     <assignments>
         <name>aumentaContatoreSanificatori</name>
         <label>aumentaContatoreSanificatori</label>
-        <locationX>9290</locationX>
+        <locationX>9554</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>counterSanificatore</assignToReference>
@@ -606,7 +606,7 @@
     <assignments>
         <name>aumentaContatoreTrekkingAlpha</name>
         <label>aumentaContatoreTrekkingAlpha</label>
-        <locationX>9642</locationX>
+        <locationX>9906</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>trekkingAlphaCounter</assignToReference>
@@ -629,7 +629,7 @@
     <assignments>
         <name>aumentaContatoreUNISEXC4</name>
         <label>aumentaContatoreUNISEXC4</label>
-        <locationX>17122</locationX>
+        <locationX>17650</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
@@ -652,7 +652,7 @@
     <assignments>
         <name>aumentaNuvolaDonna</name>
         <label>aumentaNuvolaDonna</label>
-        <locationX>16594</locationX>
+        <locationX>17122</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>nuvolaDonnaCounter_0</assignToReference>
@@ -675,7 +675,7 @@
     <assignments>
         <name>aumentaTREKKINGALPHA</name>
         <label>aumentaTREKKINGALPHA</label>
-        <locationX>17914</locationX>
+        <locationX>18442</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>collectionTipoEbike</assignToReference>
@@ -698,7 +698,7 @@
     <assignments>
         <name>countNormalWallbox</name>
         <label>countNormalWallbox</label>
-        <locationX>4274</locationX>
+        <locationX>4538</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>NormalWallboxCounter</assignToReference>
@@ -714,7 +714,7 @@
     <assignments>
         <name>countNormalWallbox_0</name>
         <label>countNormalWallbox</label>
-        <locationX>18970</locationX>
+        <locationX>19498</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>NormalWallboxCounter</assignToReference>
@@ -730,7 +730,7 @@
     <assignments>
         <name>countTermostatiConInstallazione</name>
         <label>countTermostatiConInstallazione</label>
-        <locationX>1018</locationX>
+        <locationX>1282</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>termostatiConInstallazioneCounter</assignToReference>
@@ -746,7 +746,7 @@
     <assignments>
         <name>countTermostatiConInstallazione_1</name>
         <label>countTermostatiConInstallazione</label>
-        <locationX>10434</locationX>
+        <locationX>10962</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>termostatiConInstallazioneCounter_1</assignToReference>
@@ -762,7 +762,7 @@
     <assignments>
         <name>countTermostatiSenzaInstallazione</name>
         <label>countTermostatiSenzaInstallazione</label>
-        <locationX>1282</locationX>
+        <locationX>1546</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>termostatiSenzaInstallazioneCounter</assignToReference>
@@ -778,7 +778,7 @@
     <assignments>
         <name>countTermostatiSenzaInstallazione_1</name>
         <label>countTermostatiSenzaInstallazione</label>
-        <locationX>10698</locationX>
+        <locationX>11226</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>termostatiSenzaInstallazioneCounter_1</assignToReference>
@@ -794,7 +794,7 @@
     <assignments>
         <name>countWallboxRfid</name>
         <label>countWallboxRfid</label>
-        <locationX>3746</locationX>
+        <locationX>4010</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>WallboxRfidCounter</assignToReference>
@@ -810,7 +810,7 @@
     <assignments>
         <name>countWallboxRfid_0</name>
         <label>countWallboxRfid</label>
-        <locationX>18442</locationX>
+        <locationX>18970</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>WallboxRfidCounter</assignToReference>
@@ -826,7 +826,7 @@
     <assignments>
         <name>isNewClientAssigment</name>
         <label>isNewClientAssigment</label>
-        <locationX>14592</locationX>
+        <locationX>14988</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>isNewClient</assignToReference>
@@ -842,7 +842,7 @@
     <assignments>
         <name>isOldClientAssignment</name>
         <label>isOldClientAssignment</label>
-        <locationX>14856</locationX>
+        <locationX>15252</locationX>
         <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>isNewClient</assignToReference>
@@ -858,7 +858,7 @@
     <assignments>
         <name>outputVasTypeAssignment</name>
         <label>outputVasTypeAssignment</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>518</locationY>
         <assignmentItems>
             <assignToReference>outputVasType</assignToReference>
@@ -874,7 +874,7 @@
     <assignments>
         <name>setInstallazioneWallbox</name>
         <label>setInstallazioneWallbox</label>
-        <locationX>4142</locationX>
+        <locationX>4406</locationX>
         <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>hasInstallazioneWallbox</assignToReference>
@@ -890,7 +890,7 @@
     <assignments>
         <name>setInstallazioneWallbox_0</name>
         <label>setInstallazioneWallbox</label>
-        <locationX>18838</locationX>
+        <locationX>19366</locationX>
         <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>hasInstallazioneWallbox</assignToReference>
@@ -906,7 +906,7 @@
     <assignments>
         <name>setKitMontaggioATerra</name>
         <label>setKitMontaggioATerra</label>
-        <locationX>4010</locationX>
+        <locationX>4274</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>hasKitMontaggioTerra</assignToReference>
@@ -922,7 +922,7 @@
     <assignments>
         <name>setKitMontaggioATerra_0</name>
         <label>setKitMontaggioATerra</label>
-        <locationX>18706</locationX>
+        <locationX>19234</locationX>
         <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>hasKitMontaggioTerra</assignToReference>
@@ -938,7 +938,7 @@
     <assignments>
         <name>setTermostatoConInstallazioneTrue</name>
         <label>setTermostatoConInstallazioneTrue</label>
-        <locationX>1018</locationX>
+        <locationX>1282</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>termostatoConInstallazione</assignToReference>
@@ -954,7 +954,7 @@
     <assignments>
         <name>setTermostatoConInstallazioneTrue_1</name>
         <label>setTermostatoConInstallazioneTrue</label>
-        <locationX>10434</locationX>
+        <locationX>10962</locationX>
         <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>termostatoConInstallazione_1</assignToReference>
@@ -970,7 +970,7 @@
     <decisions>
         <name>Canale</name>
         <label>Canale</label>
-        <locationX>9466</locationX>
+        <locationX>9730</locationX>
         <locationY>1334</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0_0</targetReference>
@@ -1002,7 +1002,7 @@
     <decisions>
         <name>Categoria</name>
         <label>Categoria</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Tipo_VAS_0</targetReference>
@@ -1027,7 +1027,7 @@
     <decisions>
         <name>checkForEbike</name>
         <label>checkForEbike</label>
-        <locationX>9114</locationX>
+        <locationX>9378</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_2</targetReference>
@@ -1245,7 +1245,7 @@
     <decisions>
         <name>checkForEbike_0</name>
         <label>checkForEbike</label>
-        <locationX>16858</locationX>
+        <locationX>17386</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_2_0</targetReference>
@@ -1463,7 +1463,7 @@
     <decisions>
         <name>checkForInstallazione</name>
         <label>checkForInstallazione</label>
-        <locationX>4274</locationX>
+        <locationX>4538</locationX>
         <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_1</targetReference>
@@ -1488,7 +1488,7 @@
     <decisions>
         <name>checkForInstallazione_0</name>
         <label>checkForInstallazione</label>
-        <locationX>18970</locationX>
+        <locationX>19498</locationX>
         <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_1_0</targetReference>
@@ -1513,7 +1513,7 @@
     <decisions>
         <name>checkLampadaDiRicarica</name>
         <label>checkLampadaDiRicarica</label>
-        <locationX>9290</locationX>
+        <locationX>9554</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_4</targetReference>
@@ -1553,7 +1553,7 @@
     <decisions>
         <name>checklampadadiRicarica_AZ</name>
         <label>checklampadadiRicarica_AZ</label>
-        <locationX>20906</locationX>
+        <locationX>21434</locationX>
         <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct4_0_0</targetReference>
@@ -1593,7 +1593,7 @@
     <decisions>
         <name>checkLampadaDiRicarica_OB</name>
         <label>checkLampadaDiRicarica_OB</label>
-        <locationX>17034</locationX>
+        <locationX>17562</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_4_0</targetReference>
@@ -1633,7 +1633,7 @@
     <decisions>
         <name>foundMonopattinoElettrico</name>
         <label>checkMonopattinoElettrico</label>
-        <locationX>8278</locationX>
+        <locationX>8542</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_3</targetReference>
@@ -1658,7 +1658,7 @@
     <decisions>
         <name>foundMonopattinoElettrico_0</name>
         <label>checkMonopattinoElettrico</label>
-        <locationX>16022</locationX>
+        <locationX>16550</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_3_0</targetReference>
@@ -1683,7 +1683,7 @@
     <decisions>
         <name>hasInstallazione</name>
         <label>hasInstallazione</label>
-        <locationX>1282</locationX>
+        <locationX>1546</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>ForEachOrderProduct_0</targetReference>
@@ -1737,7 +1737,7 @@
     <decisions>
         <name>hasInstallazione_0</name>
         <label>hasInstallazione</label>
-        <locationX>10566</locationX>
+        <locationX>11094</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>countTermostatiSenzaInstallazione_1</targetReference>
@@ -1762,7 +1762,7 @@
     <decisions>
         <name>hasRFID</name>
         <label>hasRFID</label>
-        <locationX>4010</locationX>
+        <locationX>4274</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>countNormalWallbox</targetReference>
@@ -1802,7 +1802,7 @@
     <decisions>
         <name>hasRFID_0</name>
         <label>hasRFID</label>
-        <locationX>18706</locationX>
+        <locationX>19234</locationX>
         <locationY>1814</locationY>
         <defaultConnector>
             <targetReference>countNormalWallbox_0</targetReference>
@@ -1842,7 +1842,7 @@
     <decisions>
         <name>hasWallbox</name>
         <label>hasWallbox</label>
-        <locationX>4274</locationX>
+        <locationX>4538</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>checkForInstallazione</targetReference>
@@ -1874,7 +1874,7 @@
     <decisions>
         <name>hasWallbox_0</name>
         <label>hasWallbox</label>
-        <locationX>18970</locationX>
+        <locationX>19498</locationX>
         <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>checkForInstallazione_0</targetReference>
@@ -1906,7 +1906,7 @@
     <decisions>
         <name>isVas</name>
         <label>isVas</label>
-        <locationX>14174</locationX>
+        <locationX>14570</locationX>
         <locationY>2894</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1928,7 +1928,7 @@
     <decisions>
         <name>isVas_0</name>
         <label>isVas</label>
-        <locationX>4758</locationX>
+        <locationX>4890</locationX>
         <locationY>2894</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1950,7 +1950,7 @@
     <decisions>
         <name>Nuovo_o_Vecchio_Cliente</name>
         <label>Nuovo o Vecchio Cliente</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>878</locationY>
         <defaultConnector>
             <targetReference>isOldClientAssignment</targetReference>
@@ -1975,9 +1975,24 @@
     <decisions>
         <name>Tipo_VAS</name>
         <label>Tipo VAS</label>
-        <locationX>4758</locationX>
+        <locationX>4890</locationX>
         <locationY>1454</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Hera_Led_Smart</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>SMART</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_HERA_LED_SMART_Inbound</targetReference>
+            </connector>
+            <label>HERA LED SMART</label>
+        </rules>
         <rules>
             <name>HERA_LED_0</name>
             <conditionLogic>and</conditionLogic>
@@ -2177,7 +2192,7 @@
     <decisions>
         <name>Tipo_VAS_0</name>
         <label>Tipo VAS</label>
-        <locationX>19982</locationX>
+        <locationX>20510</locationX>
         <locationY>1334</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -2274,9 +2289,24 @@
     <decisions>
         <name>Tipo_VAS_0_0</name>
         <label>Tipo VAS</label>
-        <locationX>14174</locationX>
+        <locationX>14570</locationX>
         <locationY>1454</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Hera_Led_Smart_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>SMART</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Screen_HERA_LED_SMART_Outbound</targetReference>
+            </connector>
+            <label>HERA LED SMART</label>
+        </rules>
         <rules>
             <name>HERA_LED_0_0</name>
             <conditionLogic>and</conditionLogic>
@@ -2574,6 +2604,24 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>totaleAcquistoKit1HeraLedSmart</name>
+        <dataType>Number</dataType>
+        <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <name>totaleAcquistoKit1HeraLedSmartNoPromo</name>
+        <dataType>Number</dataType>
+        <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <name>totaleAcquistoKit1HeraLedSmartPromo</name>
+        <dataType>Number</dataType>
+        <expression>112*{!GetVasOrderItem.Quantity}+9</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
         <name>totaleAcquistoKit2HeraLed</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
@@ -2590,6 +2638,24 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <dataType>Number</dataType>
         <expression>72*{!GetVasOrderItem.Quantity}+9</expression>
         <scale>2</scale>
+    </formulas>
+    <formulas>
+        <name>totaleAcquistoKit2HeraLedSmart</name>
+        <dataType>Number</dataType>
+        <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <name>totaleAcquistoKit2HeraLedSmartNoPromo</name>
+        <dataType>Number</dataType>
+        <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
+        <scale>3</scale>
+    </formulas>
+    <formulas>
+        <name>totaleAcquistoKit2HeraLedSmartPromo</name>
+        <dataType>Number</dataType>
+        <expression>112*{!GetVasOrderItem.Quantity}+9</expression>
+        <scale>3</scale>
     </formulas>
     <formulas>
         <name>totaleAcquitoKit1HeraLed</name>
@@ -2620,7 +2686,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct4_0_0</name>
         <label>ForEachOrderProduct4_0_0</label>
-        <locationX>20554</locationX>
+        <locationX>21082</locationX>
         <locationY>1454</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2634,7 +2700,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2648,7 +2714,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_0_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>10346</locationX>
+        <locationX>10874</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2662,7 +2728,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_1</name>
         <label>ForEachOrderProduct</label>
-        <locationX>3658</locationX>
+        <locationX>3922</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2676,7 +2742,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_1_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>18354</locationX>
+        <locationX>18882</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2690,7 +2756,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_2</name>
         <label>ForEachOrderProduct</label>
-        <locationX>7442</locationX>
+        <locationX>7706</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2704,7 +2770,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_2_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>15186</locationX>
+        <locationX>15714</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2718,7 +2784,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_3</name>
         <label>ForEachOrderProduct</label>
-        <locationX>8058</locationX>
+        <locationX>8322</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2732,7 +2798,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_3_0</name>
         <label>ForEachOrderProduct</label>
-        <locationX>15802</locationX>
+        <locationX>16330</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2746,7 +2812,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_4</name>
         <label>ForEachOrderProduct</label>
-        <locationX>8938</locationX>
+        <locationX>9202</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2760,7 +2826,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <loops>
         <name>ForEachOrderProduct_4_0</name>
         <label>ForEachOrderProduct_4_0</label>
-        <locationX>16682</locationX>
+        <locationX>17210</locationX>
         <locationY>1574</locationY>
         <collectionReference>GetOrderProducts_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
@@ -2794,7 +2860,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <description>Vado a cercare se ci sono contratti attivi o cessati sull&apos;Account per capire se si tratta di un Nuovo Cliente o uno Vecchio</description>
         <name>GetAccountContracts</name>
         <label>GetAccountContracts</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>758</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2829,7 +2895,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetChildOrder</name>
         <label>GetChildOrder</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2850,7 +2916,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrder</name>
         <label>GetOrder</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2871,7 +2937,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetOrderProducts_0</name>
         <label>GetOrderProducts</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>638</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2899,7 +2965,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <recordLookups>
         <name>GetVasOrderItem</name>
         <label>GetVasOrderItem</label>
-        <locationX>14724</locationX>
+        <locationX>15120</locationX>
         <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2934,7 +3000,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Aziende</name>
         <label>Screen Conferma Adesione Aziende</label>
-        <locationX>19982</locationX>
+        <locationX>20510</locationX>
         <locationY>2222</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3115,7 +3181,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Inbound</name>
         <label>Screen Conferma Adesione Famiglie Inbound</label>
-        <locationX>4626</locationX>
+        <locationX>4758</locationX>
         <locationY>3014</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3389,6 +3455,21 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>VAS_HERA_LED_SMART_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Led Smart&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;       CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>VAS_HERA_NOPROBLEM_LUCEGAS_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -3439,7 +3520,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CALDAIA_SICURA_1</name>
-            <fieldText>&lt;p&gt;Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3454,7 +3535,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_RICARICA_PUBBLICA_1</name>
-            <fieldText>&lt;p&gt;Per Hera Ricarica Pubblica, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3520,7 +3601,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_LUCE_1</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3535,7 +3616,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_GAS_0</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3550,7 +3631,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_ACQUA_1</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3565,7 +3646,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>recessoMonopIn</name>
-            <fieldText>&lt;p&gt;Per Hera Monopattino, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Monopattino&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3580,7 +3661,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_EBIKE_1</name>
-            <fieldText>&lt;p&gt;Per Hera E-Bike, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera E-Bike&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3595,7 +3676,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_SANIFICA_ARIA_1</name>
-            <fieldText>&lt;p&gt;Per Hera Sanifica Aria, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3610,7 +3691,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_FOTOVOLTAICO_1</name>
-            <fieldText>&lt;p&gt;Per Hera Fotovoltaico Kit Fai da Te, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3619,6 +3700,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA FV KIT FAIDATE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_LED_SMART_1</name>
+            <fieldText>&lt;p&gt;Il recesso può inoltre essere esercitato su tutti i KIT acquistati e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.Quantity</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3634,7 +3737,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Conferma_Adesione_Famiglie_Outbound</name>
         <label>Screen Conferma Adesione Famiglie Outbound</label>
-        <locationX>14042</locationX>
+        <locationX>14438</locationX>
         <locationY>3014</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -3810,6 +3913,21 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>VAS_HERA_LED_SMART_1_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Led Smart&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>VAS_Generico_1_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere la documentazione contrattuale presso il suo indirizzo di comunicazione postale?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -3966,7 +4084,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CONTAWATT_1_1</name>
-            <fieldText>&lt;p&gt;Per Hera ContaWatt, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3981,7 +4099,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_LUCE_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3996,7 +4114,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_GAS_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4011,7 +4129,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CALDAIA_SICURA_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4026,7 +4144,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_ACQUA_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera No Problem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera No Problem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4041,7 +4159,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>recessoSanifica</name>
-            <fieldText>&lt;p&gt;Per Hera Sanifica Aria, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4056,7 +4174,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>recessoMonopat</name>
-            <fieldText>&lt;p&gt;Per Hera Monopattino, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Monopattino&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4071,7 +4189,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_EBIKE_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera E-Bike, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera E-Bike&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4086,7 +4204,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_FOTOVOLTAICO_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera Fotovoltaico Kit Fai da Te, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4095,6 +4213,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA FV KIT FAIDATE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_LED_SMART_1_2</name>
+            <fieldText>&lt;p&gt;Il recesso può inoltre essere esercitato su tutti i KIT acquistati e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.Quantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4110,7 +4250,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Aziende</name>
         <label>Screen HERA CALDAIA SICURA Aziende</label>
-        <locationX>19674</locationX>
+        <locationX>20202</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4149,7 +4289,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Hera_Caldaia_Sicura_Inbound</name>
         <label>Screen Hera Caldaia Sicura Inbound</label>
-        <locationX>1986</locationX>
+        <locationX>2250</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4188,7 +4328,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CALDAIA_SICURA_Outbound</name>
         <label>Screen HERA CALDAIA SICURA Outbound</label>
-        <locationX>11402</locationX>
+        <locationX>11930</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4227,7 +4367,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Aziende</name>
         <label>Screen HERA CONTAWATT Aziende</label>
-        <locationX>18882</locationX>
+        <locationX>19410</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4266,7 +4406,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Inbound</name>
         <label>Screen HERA CONTAWATT Inbound</label>
-        <locationX>1194</locationX>
+        <locationX>1458</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4305,7 +4445,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_CONTAWATT_Outbound</name>
         <label>Screen HERA CONTAWATT Outbound</label>
-        <locationX>10610</locationX>
+        <locationX>11138</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4393,7 +4533,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_E_BIKE_Inbound</name>
         <label>Screen HERA E-BIKE Inbound</label>
-        <locationX>7442</locationX>
+        <locationX>7706</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -4936,7 +5076,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_E_BIKE_Outbound</name>
         <label>Screen HERA E-BIKE Outbound</label>
-        <locationX>15186</locationX>
+        <locationX>15714</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5187,7 +5327,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_Aziende</name>
         <label>Screen HERA FOTOVOLTAICO Aziende</label>
-        <locationX>20818</locationX>
+        <locationX>21346</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5246,7 +5386,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_F_IN</name>
         <label>Screen HERA FOTOVOLTAICO Famiglie In</label>
-        <locationX>9202</locationX>
+        <locationX>9466</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5355,7 +5495,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_FOTOVOLTAICO_F_OUT</name>
         <label>Screen HERA FOTOVOLTAICO Famiglie Out</label>
-        <locationX>16946</locationX>
+        <locationX>17474</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5464,7 +5604,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_LED_Inbound</name>
         <label>Screen HERA LED Inbound</label>
-        <locationX>50</locationX>
+        <locationX>314</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5617,7 +5757,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_LED_Outbound</name>
         <label>Screen HERA LED Outbound</label>
-        <locationX>9730</locationX>
+        <locationX>10258</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -5946,9 +6086,493 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Screen_HERA_LED_SMART_Inbound</name>
+        <label>Screen HERA LED SMART Inbound</label>
+        <locationX>50</locationX>
+        <locationY>1574</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isVas_0</targetReference>
+        </connector>
+        <fields>
+            <name>HERA_LED_SMART_Generico_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_Generico</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;le proponiamo l’offerta Hera Led Smart, che prevede la vendita di KIT di lampadine LED SMART.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_Generico_2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;﻿Condizioni economiche e di acquisto Hera LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1</name>
+            <fieldText>&lt;p class=&quot;ql-indent-1&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA inclusa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2</name>
+            <fieldText>&lt;p class=&quot;ql-indent-1&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA inclusa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_2</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmart} €.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.Quantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_2</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmart} €.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.Quantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_3</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;   CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_3</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_CON_POD</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_Generico_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_HERA_LED_SMART_Outbound</name>
+        <label>HERA LED SMART Outbound</label>
+        <locationX>9994</locationX>
+        <locationY>1574</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isVas</targetReference>
+        </connector>
+        <fields>
+            <name>HERA_LED_SMART_Generico_1_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED SMART&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED SMART.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_PROMO_DIP_0</name>
+            <fieldText>&lt;p&gt;Grazie alla “Promozione dipendenti Gruppo Hera”, riservata ai dipendenti del Gruppo, amici e familiari, il prezzo di acquisto di 1 KIT, scontato del 20%, è pari a 112 € IVA inclusa più il costo della spedizione di 9 € IVA inclusa.&lt;/p&gt;&lt;p&gt;Il prezzo scontato è valido se mantiene attiva la fornitura associata per almeno 24 mesi. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero pari a 152€&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_PROMO_DIP_0</name>
+            <fieldText>&lt;p&gt;Grazie alla “Promozione dipendenti Gruppo Hera”, riservata ai dipendenti del Gruppo, amici e familiari, il prezzo di acquisto di 1 KIT, scontato del 20%, è pari a 112 € IVA inclusa più il costo della spedizione di 9 € IVA inclusa.&lt;/p&gt;&lt;p&gt;Il prezzo scontato è valido se mantiene attiva la fornitura associata per almeno 24 mesi. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero pari a 152 €&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA compresa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA compresa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_ACQUISTO_MULTIPLO_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartNoPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_ACQUISTO_MULTIPLO_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_TOTALE_PROMO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_TOTALE_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartNoPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_Generico_1_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_Generico_1_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_CON_POD_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_Generico_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Screen_HERA_MONOPATTINO_ELETTRICO_Inbound</name>
         <label>Screen HERA MONOPATTINO ELETTRICO Inbound</label>
-        <locationX>8058</locationX>
+        <locationX>8322</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6057,7 +6681,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_MONOPATTINO_ELETTRICO_Outbound_0</name>
         <label>Screen HERA MONOPATTINO ELETTRICO Outbound</label>
-        <locationX>15802</locationX>
+        <locationX>16330</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6166,7 +6790,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_ACQUA_Inbound</name>
         <label>Screen HERA NO PROBLEM ACQUA Inbound</label>
-        <locationX>3922</locationX>
+        <locationX>4186</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6205,7 +6829,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_ACQUA_Outbound</name>
         <label>Screen HERA NO PROBLEM ACQUA Outbound</label>
-        <locationX>11666</locationX>
+        <locationX>12194</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6244,7 +6868,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Aziende</name>
         <label>Screen HERA NO PROBLEM GAS Aziende</label>
-        <locationX>19410</locationX>
+        <locationX>19938</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6308,7 +6932,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Inbound</name>
         <label>Screen HERA NO PROBLEM GAS Inbound</label>
-        <locationX>1722</locationX>
+        <locationX>1986</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6357,7 +6981,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_GAS_Outbound</name>
         <label>Screen HERA NO PROBLEM GAS Outbound</label>
-        <locationX>11138</locationX>
+        <locationX>11666</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6406,7 +7030,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Aziende</name>
         <label>Screen HERA NO PROBLEM LUCE Aziende</label>
-        <locationX>19146</locationX>
+        <locationX>19674</locationX>
         <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6460,7 +7084,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Inbound</name>
         <label>Screen HERA NO PROBLEM LUCE Inbound</label>
-        <locationX>1458</locationX>
+        <locationX>1722</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6519,7 +7143,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_NO_PROBLEM_LUCE_Outbound</name>
         <label>Screen HERA NO PROBLEM LUCE Outbound</label>
-        <locationX>10874</locationX>
+        <locationX>11402</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6568,7 +7192,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_RICARICA_PRIVATA_Inbound</name>
         <label>Screen HERA RICARICA PRIVATA Inbound</label>
-        <locationX>3658</locationX>
+        <locationX>3922</locationX>
         <locationY>2678</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -6911,7 +7535,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_RICARICA_PRIVATA_Outbound</name>
         <label>Screen HERA RICARICA PRIVATA Outbound</label>
-        <locationX>18354</locationX>
+        <locationX>18882</locationX>
         <locationY>2678</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7254,7 +7878,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_Hera_Ricarica_Pubblica_Inbound</name>
         <label>Screen Hera Ricarica Pubblica Inbound</label>
-        <locationX>2250</locationX>
+        <locationX>2514</locationX>
         <locationY>1574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7344,7 +7968,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Aziende</name>
         <label>Screen HERA SANIFICA ARIA Aziende</label>
-        <locationX>20554</locationX>
+        <locationX>21082</locationX>
         <locationY>2006</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7500,7 +8124,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Famiglie_Inbound_0</name>
         <label>Screen HERA SANIFICA ARIA Famiglie Inbound</label>
-        <locationX>8938</locationX>
+        <locationX>9202</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7676,7 +8300,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_SANIFICA_ARIA_Famiglie_Outbound_0</name>
         <label>Screen HERA SANIFICA ARIA Famiglie Outbound</label>
-        <locationX>16682</locationX>
+        <locationX>17210</locationX>
         <locationY>2126</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7852,7 +8476,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_THERMO_Inbound</name>
         <label>Screen HERA THERMO Inbound</label>
-        <locationX>930</locationX>
+        <locationX>1194</locationX>
         <locationY>2246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -7996,7 +8620,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
     <screens>
         <name>Screen_HERA_THERMO_Outbound</name>
         <label>Screen HERA THERMO Outbound</label>
-        <locationX>10346</locationX>
+        <locationX>10874</locationX>
         <locationY>2246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -8332,7 +8956,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>14598</locationX>
+        <locationX>14994</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetOrder</targetReference>

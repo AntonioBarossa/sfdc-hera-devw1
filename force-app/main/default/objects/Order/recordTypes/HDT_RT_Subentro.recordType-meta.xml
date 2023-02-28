@@ -475,6 +475,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Il cliente rinuncia</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Installazione Fallita</fullName>
             <default>false</default>
         </values>
@@ -2348,6 +2352,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Corso caricamento Siebel</fullName>
             <default>false</default>
         </values>
@@ -2409,6 +2417,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
     </picklistValues>

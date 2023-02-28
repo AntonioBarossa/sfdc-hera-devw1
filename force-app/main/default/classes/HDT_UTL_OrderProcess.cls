@@ -837,6 +837,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
 
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        Id poRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();
         Map<String,Order> orderMapOld = new Map<String,Order>();
 
         for (Order oldOrder : oldOrdersList) {
@@ -863,6 +864,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     {
                         newOrder.SBQQ__Contracted__c=true; 
                     }
+                }
+                if (newOrder.recordTypeId == poRtId && 'OTP Remoto'.equalsIgnoreCase(newOrder.SignatureMethod__c) &&(
+                    ('Annullato'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(old.Phase__c))
+                    || ('Annullato'.equalsIgnoreCase(newOrder.Status) && !newOrder.Status.equalsIgnoreCase(old.Status)))
+                ){
+                    newOrder.DiscardDocusignEnvelope__c = true;
                 }
             }           
         }
@@ -1142,13 +1149,40 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
     @SuppressWarnings('PMD.AvoidDebugStatements') 
     public static Boolean manageCancellationProcess(List<Order> orderList, Map<Id,SObject> orderOldMapd){
+        DateTime nowDateTime = DateTime.now();
+        //Skip da batch quality call 
+        if (System.isBatch()){
+            Boolean skip = true;
+            try{
+                for (Order o : orderList){
+                    String nqStatus = String.isBlank(o.QualityCallStatus__c)? '' : o.QualityCallStatus__c;
+                    Order old = (Order) Trigger.oldMap.get(o.Id);
+                    String oqStatus = String.isBlank(old.QualityCallStatus__c)? '' : old.QualityCallStatus__c;
+                    if (nqStatus.equalsIgnoreCase(oqStatus) || o.Skip_Callout__c == old.Skip_Callout__c){
+                        skip = false;
+                        break;
+                    }
+                    String nPhase = String.isBlank(o.Phase__c) ? '' : o.Phase__c;
+                    String oPhase = String.isBlank(old.Phase__c) ? '' : old.Phase__c;
+                    if (!nPhase.equalsIgnoreCase(oPhase)){
+                        o.PhaseStory__c = !String.isBlank(o.PhaseStory__c) 
+                            ? oPhase+'@@'+nPhase+'@@'+nowDateTime.getTime()+'@@A||'+o.PhaseStory__c
+                            : oPhase+'@@'+nPhase+'@@'+nowDateTime.getTime()+'@@A||';
+                    }
+                }
+            }catch(Exception e){
+                skip = false;
+            }
+            if (skip){
+                return true;
+            }
+        }
         HDT_SRV_LogService logService = new HDT_SRV_LogService('CREDIT_CHECK_EXCEPTION');
 		Order orderNew = orderList[0];
 		Order orderOld = (Order) Trigger.oldMap.get(orderNew.Id);
 		String newPhase = orderNew.Phase__c;
 		String oldPhase = orderOld.Phase__c;
-        DateTime nowDateTime = DateTime.now();
-		if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+        if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
             //@frpanico closes open activities on "Annullato" or "Ripensato"
             if(newPhase.equalsIgnoreCase('Annullato') || newPhase.equalsIgnoreCase('Ripensato') || newPhase.equalsIgnoreCase('Annullamento per Switch-out') || newPhase.containsIgnoreCase('Annullamento SII'))
             {                
