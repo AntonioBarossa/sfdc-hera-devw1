@@ -85,7 +85,8 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
             String calDevName = 'CAL_' + mapRes.get('CALIBRO1');
-            spNew.MeterClass__c = HDT_CaliberTranscode__mdt.getInstance(calDevName) != null ? HDT_CaliberTranscode__mdt.getInstance(calDevName).SfdcFieldValue__c : '';
+            HDT_CaliberTranscode__mdt cmdCaliber = HDT_CaliberTranscode__mdt.getInstance(calDevName);
+            spNew.MeterClass__c = cmdCaliber != null ? cmdCaliber.SfdcFieldValue__c : '';
             // if(mapRes.get('CALIBRO1')=='GRT005'){
             //     spNew.MeterClass__c = 'G10';                
             // }
@@ -140,7 +141,8 @@ public with sharing class HDT_UTL_ServicePoint {
         }
         if(mapRes.get('AF_CLASSE')!=null && !String.isBlank(mapRes.get('AF_CLASSE'))){
             String devName = 'AF_' + mapRes.get('AF_CLASSE');
-            spNew.MeterClass__c = HDT_AfClassTranscode__mdt.getInstance(devName) != null ? HDT_AfClassTranscode__mdt.getInstance(devName).SfdcFieldValue__c : '';
+            HDT_AfClassTranscode__mdt cmdAfClass = HDT_AfClassTranscode__mdt.getInstance(devName);
+            spNew.MeterClass__c = cmdAfClass != null ? cmdAfClass.SfdcFieldValue__c : '';
         }
         if(mapRes.get('STATO_PUNTO')!=null && !String.isBlank(mapRes.get('STATO_PUNTO'))){
             String metStatus = '';
