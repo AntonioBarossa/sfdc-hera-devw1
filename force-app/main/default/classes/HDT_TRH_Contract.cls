@@ -189,9 +189,4 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
        }*/
     }
 
-    private class HDT_WRP_OrderData{
-        Order ord;
-        SBQQ__Subscription__c subs;
-
-    }
 }
