@@ -114,7 +114,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 c.SBQQ__Quote__c=null;
             }
             if(
-                subsRelocation.checkContract(c, ord)
+                subsRelocation.checkConditions(c, ord)
             ){
                 //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
                 //assign subscription to old contract and end old subscriptions
@@ -154,7 +154,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             }
 
             if(
-                subsRelocation.checkContract(c, ord)
+                subsRelocation.checkConditions(c, ord)
             ){
                 //SF Created a New Contract but SAP didn't
                 oldOfferContracts.add(ord.ContractReference__r.Id);

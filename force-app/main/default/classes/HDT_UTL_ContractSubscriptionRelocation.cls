@@ -22,7 +22,7 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         for(Contract c : (List<Contract>) newMapContracts.values()){
             Order ord = mapOrder.get(c.SBQQ__Order__c);
             if(
-                checkContract(c, ord)
+                checkConditions(c, ord)
             ){
                 contractsToDelete.add(c.Id);
                 //SF Created a New Contract but SAP didn't
@@ -49,7 +49,7 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(contractsToDelete);   }
     }
 
-    public Boolean checkContract(Contract c, Order ord){
+    public Boolean checkConditions(Contract c, Order ord){
         Boolean check = STRING.isNotBlank(ord?.ContractReference__r?.SAPContractCode__c) 
                         && ord.ContractReference__r.SAPContractCode__c == c.SapContractCode__c
                         && ord.RecordTypeId == CAMBIO_TARIFFA_RT_ID;
