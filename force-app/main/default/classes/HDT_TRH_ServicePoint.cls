@@ -7,6 +7,7 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
     
     public override void beforeInsert(){
         this.manageSupplyStreet(trigger.new);
+        handleGlobalMigrationKey(Trigger.new);
     }
 
     public void manageSupplyStreet(List<ServicePoint__c> servicePointList){
@@ -19,7 +20,15 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
                     (servicePoint.SupplyStreet__c != null && servicePoint.SupplyStreet__c != '')){
                 servicePoint.SupplyStreetName__c = servicePoint.SupplyStreet__c;
             }
-        }
-        
+        } 
     }
+    private void handleGlobalMigrationKey(List<ServicePoint__c> servicePointList)
+    {
+	    for(ServicePoint__c servicePoint : servicePointList){
+		    if(String.isNotBlank(servicePoint.SAPImplantCode__c))
+            {
+			    servicePoint.GlobalMigrationKey__c = 'SP_'+servicePoint.SAPImplantCode__c;
+			}
+		}
+	}
 }

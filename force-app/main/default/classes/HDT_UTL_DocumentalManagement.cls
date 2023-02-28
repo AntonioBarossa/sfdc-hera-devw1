@@ -171,6 +171,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return false;
 	}
 	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+		SObject rec = processRecord.getSObjectType().newSObject();
+		rec.put('Id',processRecord.get('Id'));
 		String archive = response.deliverPackageResponse.archive;
 		String result = response.deliverPackageResponse.result;
 		String cluster = '';
@@ -183,12 +185,12 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		if(result == '000'){
 			if(archive != 'Y'){
-				processRecord.put('DocumentalPhase__c','Preview');
+				rec.put('DocumentalPhase__c','Preview');
 			}else{
 				if(isSignNeeded(response)){
-					processRecord.put('DocumentalPhase__c','Plico in firma');
+					rec.put('DocumentalPhase__c','Plico in firma');
 				}else {
-					processRecord.put('DocumentalPhase__c','Plico inviato');
+					rec.put('DocumentalPhase__c','Plico inviato');
 				}
 				
 				if(context.equalsIgnoreCase('Case')){
@@ -196,7 +198,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					cluster = (String) processRecord.get('Cluster__c');
 					quotationType = (String) processRecord.get('QuotationType__c');
 					if(cluster.equalsIgnoreCase('Preventivi') && String.isNotBlank(quotationType) && quotationType.equalsIgnoreCase('Predeterminabile')){
-						processRecord.put('Phase__c','Attesa conferma preventivo cliente');
+						rec.put('Phase__c','Attesa conferma preventivo cliente');
 					}
 				} else {
 					signMode = (String) processRecord.get('SignatureMethod__c');
@@ -209,24 +211,27 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 						Integer numberOfDays = Integer.valueOf(daysToExpiration[0].NumberOfDays__c);
 						if (numberOfDays > 0) {
 							Date expirationDate = Date.today().addDays(numberOfDays);
-							processRecord.put('DocusignExpirationDate__c', expirationDate);
+							rec.put('DocusignExpirationDate__c', expirationDate);
 						}
 					}
 				}
 				if(isMassive){
 					signatureMethod = (String) processRecord.get('SignatureMethod__c');
 					if(!signatureMethod.equalsIgnoreCase('Contratto già firmato')){
-						processRecord.put('Phase__c', 'Documentazione da inviare');
+						rec.put('Phase__c', 'Documentazione da inviare');
 					}
 				}
 			}
 		}else {
-			processRecord.put('DocumentalPhase__c','Errore composizione');
+			rec.put('DocumentalPhase__c','Errore composizione');
 			if(isMassive){
-				processRecord.put('Phase__c', 'Comunicazione EngageOne KO');
+				rec.put('Phase__c', 'Comunicazione EngageOne KO');
 			}
 		}
-		return HDT_UTL_DatabaseService.updateSObject(processRecord);
+		for (String field : rec.getPopulatedFieldsAsMap().keySet()){
+			processRecord.put(field,rec.get(field));
+		}
+		return HDT_UTL_DatabaseService.updateSObject(rec);
 	}
 	
 	//SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
@@ -269,6 +274,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					System.debug(LoggingLevel.DEBUG, '### Account Id: '+processRecord.get('AccountId'));
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('Email__c');
+					documentalSendTracking.SignatureMethod__c = (String) processRecord.get('SignMode__c');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('SendMode__c');
 					documentalSendTracking.Type__c = 'Plico';
 				}
@@ -277,6 +283,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 					documentalSendTracking.Account__c = (Id) processRecord.get('AccountId');
 					documentalSendTracking.SendMode__c = (String) processRecord.get('DocSendingMethod__c');
 					documentalSendTracking.Receiver__c = (String) processRecord.get('ShippingMail__c');
+					documentalSendTracking.SignatureMethod__c = (String) processRecord.get('SignatureMethod__c');
 					documentalSendTracking.Type__c = 'Plico Contrattuale';
 				}
 				when else {
