@@ -24,9 +24,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     private Integer contactCfIndex;
     private Map<Id, Id> accountContactMap = new Map<Id, Id>();
     private Map<String, Id> billProfMap;
-    private Map<String,Account> accountReferenteMao;
     Map<Id, Id> duplicateAccountMap;
-    Map<String,Contact> contactReferenteMap;
+    Map<String, Contact> contactReferenteMap;
     String accountRequiredFieldsError = Label.CarMass_SalesAccountRequiredFieldsError;
 
     public override void checks(){
@@ -63,7 +62,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
             if(contoContrattualeIndex != null){
-                System.debug('CC ' + processObj.csvSplitted[contoContrattualeIndex]);
+                //System.debug('CC ' + processObj.csvSplitted[contoContrattualeIndex]);
                 contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
             }
             if(contactCfIndex != null){
@@ -76,7 +75,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             checkContract();
         }
 
-        System.debug(LoggingLevel.DEBUG, '>>> JSON ' + JSON.serialize(processObjList));
+        //System.debug(LoggingLevel.DEBUG, '>>> JSON ' + JSON.serialize(processObjList));
 
     }
 
@@ -131,7 +130,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             sapContractCode = processObj.csvSplitted[contractIndex];
 
-            System.debug(LoggingLevel.DEBUG, '>>> sapContractCode ' + sapContractCode);
+            //System.debug(LoggingLevel.DEBUG, '>>> sapContractCode ' + sapContractCode);
 
             if(String.isNotEmpty(sapContractCode) && contractMap.containsKey(sapContractCode)){
                 currentContract = contractMap.get(sapContractCode);
@@ -185,10 +184,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(ServicePoint__c sp : [SELECT Id, ServicePointCode__c FROM ServicePoint__c WHERE ServicePointCode__c IN :codicePuntoSet]){
             codicePuntoMap.put(sp.ServicePointCode__c, sp.Id);
         }
+
         System.debug('Set CC' + contoContrattualeSet);
+
         for(BillingProfile__c bp : [SELECT Id, ContractAccountCode__c FROM BillingProfile__c WHERE ContractAccountCode__c IN :contoContrattualeSet and ContractAccountCode__c != '']){
             billProfMap.put(bp.ContractAccountCode__c, bp.Id);
         }
+
         if(!contactFiscalCodeSet.isEmpty()){
             List<Contact> contactByFiscalCode = [SELECT Id,FiscalCode__c FROM Contact WHERE FiscalCode__c IN :contactFiscalCodeSet];
             if(contactByFiscalCode.size()>0){
@@ -233,7 +235,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
  
             if(processObj.requestItem.Status__c == 'Errore'){
-               //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
@@ -260,8 +261,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 processObj.createReferente = false;
 
             }            
-            //processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Residenziale')) || String.isEmpty(processObj.csvSplitted[recTypeIndex]))?false:true;
-            System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
+            //System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
             
             for (String tempField : processObj.csvSplitted) {
 
@@ -273,7 +273,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 objField = mapAllFields.get(csvHeader);
             
                 if(String.isNotBlank(objField) && String.isNotBlank(tempField)){
-                    System.debug(LoggingLevel.DEBUG, '>>> CSV Header: ' + csvHeader + '; sObj Field: ' + objField + '; value: ' + tempField);
+                    //System.debug(LoggingLevel.DEBUG, '>>> CSV Header: ' + csvHeader + '; sObj Field: ' + objField + '; value: ' + tempField);
                     
                     if(sobjectMap.containsKey(csvHeader)){
 
@@ -449,7 +449,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 saveContactList.add(processObj.contact);
             }
             if(processObj.createReferente){
-                if(saveAccountReferenteResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
+                if(saveAccountReferenteResponse != null && saveAccountReferenteResponse.itemIdToObjId.containsKey(processObj.requestItem.Id)){
                     Id accountReferenteId = saveAccountReferenteResponse.itemIdToObjId.get(processObj.requestItem.Id);
                     processObj.referente.AccountId = accountReferenteId;
                     saveContactReferenteList.add(processObj.referente);
@@ -481,12 +481,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
-                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
+                //System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
                 continue;
             }
 
             if(saveAccountResponse != null && saveAccountResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
-                System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c error');
+                //System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c error');
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = (saveAccountResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
                 continue;
@@ -575,7 +575,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         for(HDT_WRP_ProcessObjects processObj : processObjList){
             
             if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
-                //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
             if(processObj.createReferente){
@@ -593,14 +592,12 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             if(saveBillProfResponse != null && saveBillProfResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = (saveBillProfResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
-                //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
             if(saveServPointResponse != null && saveServPointResponse.errorItemMap.containsKey(processObj.requestItem.Id)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = (saveServPointResponse.errorItemMap.get(processObj.requestItem.Id)).abbreviate(250);
-                //itemsToUpdate.add(processObj.requestItem);
                 continue;
             }
 
@@ -627,7 +624,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             processObj.requestItem.NextStepData__c = JSON.serialize(nextDataObj);
             processObj.requestItem.Status__c = 'In Lavorazione';
-            //itemsToUpdate.add(processObj.requestItem);
             
         }
         if(!acrListToInsert.isEmpty()){
@@ -738,7 +734,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         Boolean lastNameBool =  String.isEmpty(iterationContact.LastName);
         Boolean fiscalCodeBool =  String.isEmpty(iterationContact.FiscalCode__c);
         Boolean addressBool = String.isEmpty(iterationContact.MailingStreet);
-        //Boolean roleBool = iterationContact;
+
         if(nameBool || lastNameBool || fiscalCodeBool){
             return 'Valorizzare Nome, Cognome, Codice Fiscale, Ruolo e indirizzo del Referente';
         }
@@ -778,9 +774,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         if(String.isNotBlank(telefono) && String.isBlank(prefissoTelefono)){
             return 'Valorizzare il prefisso del Telefono';
         }
-        /*if(categoria.equalsIgnoreCase('Famiglie')){
 
-        }*/
         return null;
 
     }
@@ -814,7 +808,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
         }
 
-        Boolean vatNumberBool;
+        /*Boolean vatNumberBool;
         Boolean fiscalCodeBool;
         Boolean customerMarkingBool;
 
@@ -824,18 +818,13 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             fiscalCodeBool = String.isNotEmpty(a.FiscalCode__c) && String.IsNotEmpty(iterationAccount.FiscalCode__c) && a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c);
             customerMarkingBool = String.isNotEmpty(a.CustomerMarking__c) && String.IsNotEmpty(iterationAccount.CustomerMarking__c) && a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c);
 
-            //if(
-            //    a.CustomerMarking__c.equalsIgnoreCase(iterationAccount.CustomerMarking__c) &&
-            //    ( a.FiscalCode__c.equalsIgnoreCase(iterationAccount.FiscalCode__c) ||
-            //      a.VATNumber__c.equalsIgnoreCase(iterationAccount.VATNumber__c) )
-            //){
             if(
                 customerMarkingBool && (fiscalCodeBool || vatNumberBool )
             ){
                 System.debug(LoggingLevel.DEBUG, '>>> Account id [' + a.Id + '] found by FiscalCode__c,VATNumber__c,CustomerMarking__c');
                 return a;
             }
-        }
+        }*/
 
         System.debug(LoggingLevel.DEBUG, '>>> no account found on db...');
         return iterationAccount;
@@ -849,7 +838,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         mapWrapperAccountFields = new Map<String, String>();
 
         sobjectMap = new Map<String, MassiveFieldsObjectMap__c>();
-        //allFieldForThisProcess = HDT_QR_ProcessPostSales.getMapFieldsObjectByDeveloperName('Sales%');
         allFieldForThisProcess = [
             SELECT objectType__c, labelField__c, nameField__c
             FROM MassiveFieldsObjectMap__c 
@@ -968,6 +956,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }
         return '';
     }
+
     public String checkRequiredServicePointField(ServicePoint__c sp){
         String commodity = sp.CommoditySector__c;
         Boolean commodityBool = String.isNotEmpty(sp.CommoditySector__c);

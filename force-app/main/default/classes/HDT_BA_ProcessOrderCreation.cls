@@ -5,6 +5,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
     private id idLoaderRequest;
     private Integer batchSize;
     private String process;
+    private String orderCreationClass = 'HDT_UTL_ProcessOrderCreation';
     
     public HDT_BA_ProcessOrderCreation(Id varIdLoaderRequest, Integer batchSize, String process) {
         this.idLoaderRequest = varIdLoaderRequest;
@@ -28,7 +29,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
         System.debug(LoggingLevel.DEBUG, '>>> HDT_BA_ProcessRequestItem execute...');
 
         HDT_UTL_ProcessExecution cls;
-        Type t = Type.forName('HDT_UTL_ProcessOrderCreation');
+        Type t = Type.forName(orderCreationClass);
         cls = (HDT_UTL_ProcessExecution)t.newInstance();
         cls.setProcess(process);
         cls.setMassiveLoaderRequestItemList(scope);
@@ -41,7 +42,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
             //update massiveItem;
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Standard Exception: ' + e.getMessage());
-            cls.manageCatchException(batchSize, scope, e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + ']');
+            cls.manageCatchException(batchSize, scope, e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + '] - ' + orderCreationClass);
         }
 
     }
