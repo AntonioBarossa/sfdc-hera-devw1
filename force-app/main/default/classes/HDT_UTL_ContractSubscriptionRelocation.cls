@@ -17,14 +17,13 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         if(contractWithSubs.isEmpty()){    return;    }
 
         List<SBQQ__Subscription__c> subsToUpdate = new List<SBQQ__Subscription__c>();
-        List<Id> contractsToDelete = new List<Id>();
+        Set<Id> contractsToDelete = new Set<Id>();
 
         for(Contract c : (List<Contract>) newMapContracts.values()){
             Order ord = mapOrder.get(c.SBQQ__Order__c);
             if(
                 checkConditions(c, ord)
-            ){
-                contractsToDelete.add(c.Id);
+            ){                
                 //SF Created a New Contract but SAP didn't
                 List<SBQQ__Subscription__c> oldSubs = contractWithSubs.get(ord.ContractReference__r.Id)?.SBQQ__Subscriptions__r;
                 for(SBQQ__Subscription__c sub : oldSubs){
@@ -37,6 +36,7 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
                 for(SBQQ__Subscription__c sub : newSubs){
                     sub.SBQQ__Contract__c = ord.ContractReference__r.Id;
                     subsToUpdate.add(sub);
+                    contractsToDelete.add(c.Id);
                 }
             }    
         }
@@ -44,9 +44,9 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         
     }
 
-    private static void dmlOperations(List<SBQQ__Subscription__c> subsToUpdate, List<Id> contractsToDelete){
+    private static void dmlOperations(List<SBQQ__Subscription__c> subsToUpdate, Set<Id> contractsToDelete){
         if(!subsToUpdate.isEmpty()){    HDT_UTL_DatabaseService.updateSObject(subsToUpdate);    }
-        if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(contractsToDelete);   }
+        if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));   }
     }
 
     public Boolean checkConditions(Contract c, Order ord){
