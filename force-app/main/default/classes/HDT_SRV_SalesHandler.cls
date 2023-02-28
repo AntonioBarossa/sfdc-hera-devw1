@@ -563,7 +563,7 @@ public with sharing class HDT_SRV_SalesHandler {
                                             /**@frpanico 04/01/2022
                                              * Aggiunto MoveOut
                                             */
-                                            if(moveOutProcesses.contains(ordRetrieved.ProcessType__c) && !new HDT_UTL_ContractSubscriptionRelocation().checkConditions(ordRetrieved, mapRequestFields.get('VERTRAG')))
+                                            if(moveOutProcesses.contains(ordRetrieved.ProcessType__c))
                                             {
                                                 HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
                                             }
