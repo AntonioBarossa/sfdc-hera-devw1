@@ -474,9 +474,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     HDT_WRP_OrderItem requiredItem;
                     System.debug('>>> required for ' + commOffId);
+
                     if(otherRequiredOption.containsKey(commOffId)){
                         for(SBQQ__ProductOption__c requiredOption : otherRequiredOption.get(commOffId)){
                             requiredItem = setRequiredItem(requiredOption, commOffId, priceBookId);
+
+                            if(requiredItem == null){
+                                productOptionError = 'Errore nel listino prezzi prodotti opzione obbligatori';
+                                break;
+                            }
+
                             wrpChildOrder.orderItemList.add(requiredItem);
                         }
                     }
@@ -520,8 +527,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             ////system.debug(LoggingLevel.DEBUG, JSON.serializePretty(processObj));
         }
 
-        HDT_UTL_DatabaseService.insertSObject(parentOrderToInsert);
-        HDT_UTL_DatabaseService.insertSObject(saleServiceToInsert);
+        if(parentOrderToInsert.size()>0){
+            HDT_UTL_DatabaseService.insertSObject(parentOrderToInsert);
+        }
+        
+        if(saleServiceToInsert.size()>0){
+            HDT_UTL_DatabaseService.insertSObject(saleServiceToInsert);
+        }
 
         String commodity = '';
         //STEP 5: Order Fields Alignment
@@ -743,17 +755,26 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         requiredItem.product.ProductCode = requiredOption.SBQQ__OptionalSKU__r.ProductCode;
         requiredItem.orderItem = new OrderItem();
 
+        if(!additionalOrderItemMap.containsKey(commOffId)){
+            return null;
+        }
+
+        if(!pricebookEntryForOptionalMap.containsKey(priceBookId)){
+            return null;
+        }
+
         Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
         Map<Id, PriceBookEntry> pbeOptionalMap = pricebookEntryForOptionalMap.get(priceBookId);
-        if(tempMap.containsKey(requiredItem.product.ProductCode)){
-            requiredItem.product.Id = tempMap.get(requiredItem.product.ProductCode).SBQQ__OptionalSKU__c;
-            requiredItem.orderItem.Product2Id = requiredItem.product.Id;
-            requiredItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(requiredItem.product.Id).Id;
-            requiredItem.orderItem.UnitPrice = pbeOptionalMap.get(requiredItem.product.Id).UnitPrice;
-            requiredItem.orderItem.Quantity = 1;
-        } else {
-            requiredItem = null;
+        
+        if(!tempMap.containsKey(requiredItem.product.ProductCode)){
+            return null;
         }
+        
+        requiredItem.product.Id = tempMap.get(requiredItem.product.ProductCode).SBQQ__OptionalSKU__c;
+        requiredItem.orderItem.Product2Id = requiredItem.product.Id;
+        requiredItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(requiredItem.product.Id).Id;
+        requiredItem.orderItem.UnitPrice = pbeOptionalMap.get(requiredItem.product.Id).UnitPrice;
+        requiredItem.orderItem.Quantity = 1;
 
         return requiredItem;
     }
@@ -839,7 +860,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         sale.Name = 'Vendita ' + accountMap.get(accountId).Name;
         sale.SalesContactRole__c = 'Titolare';
         sale.Status__c = 'Attiva';
-        sale.Channel__c = sale.LowerChannelAgency__c;
+        //sale.Channel__c = sale.LowerChannelAgency__c;
         return sale;
     }
 
