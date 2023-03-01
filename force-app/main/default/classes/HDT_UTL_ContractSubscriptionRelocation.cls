@@ -1,6 +1,7 @@
 public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
 
     private final static Id CAMBIO_TARIFFA_RT_ID = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_CambioTariffa').getRecordTypeId();
+    private final static Id MOD_TARIFFA_RT_ID = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId();
 
     public void moveSubscriptions( Set<Id> oldOfferContracts, Map<Id, Sobject> newMapContracts, Map<Id, Order> mapOrder){
         if(oldOfferContracts.isEmpty()){    return;    }
@@ -58,6 +59,13 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
 
     public Boolean checkConditions(Contract c, Order ord){
         return c.Id != ord?.ContractReference__r?.Id && checkConditions(ord, c?.SapContractCode__c);
+    }
+
+    public Boolean checkConditionsBefore(Contract c, Order ord){
+        return c.Id != ord?.ContractReference__r?.Id 
+                && STRING.isNotBlank(ord?.ContractReference__r?.SAPContractCode__c) 
+                && ord.ContractReference__r.SAPContractCode__c == c?.SapContractCode__c
+                && (ord.RecordTypeId == CAMBIO_TARIFFA_RT_ID || ord.RecordTypeId == MOD_TARIFFA_RT_ID );
     }
 
     public Boolean checkConditions(Order ord, String newContractCode){
