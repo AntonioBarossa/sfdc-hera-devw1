@@ -475,15 +475,25 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 }
 
                 if(objFields.get('SendToDistributorDate__c') != null){
+                    Boolean foundQc = false;
                     Datetime foo = (DateTime)objFields.get('SendToDistributorDate__c');
                     String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
-                    wrts_prcgvr.MRR_1_0.Field qcDateField = new wrts_prcgvr.MRR_1_0.Field();
-                    qcDateField.name = 'QC';
-                    qcDateField.fieldType = 'STRING';
-                    qcDateField.value = dateFinal;
-                    System.debug(LoggingLevel.DEBUG, 'DEBUG_DATAQC: ' + dateFinal);
-                    obj.fields.add(qcDateField);
-                    break;
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('QC'))
+                        {
+                            foundQc = true;
+                            f.value = dateFinal;
+                            break;
+                        }
+                    }
+                    if(!foundQc){
+                        wrts_prcgvr.MRR_1_0.Field qcDateField = new wrts_prcgvr.MRR_1_0.Field();
+                        qcDateField.name = 'QC';
+                        qcDateField.fieldType = 'STRING';
+                        qcDateField.value = dateFinal;
+                        obj.fields.add(qcDateField);
+                        break;
+                    }
                 }
             }
         }

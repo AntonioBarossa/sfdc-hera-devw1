@@ -564,31 +564,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>6 x 20 - 4 mc</fullName>
+            <fullName>3 x 15 - 2.5 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>7 x 20 - 4 mc</fullName>
+            <fullName>5 x 20 - 4 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>11 x 30 - 10 mc</fullName>
+            <fullName>20 x 40 - 16 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>4 x 15 - 2.5 mc</fullName>
+            <fullName>7 x 25 - 6.3 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>5 x 15 - 2.5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>31 x 50 - 30 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>32 x 50 - 30 mc</fullName>
+            <fullName>10 x 30 - 10 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -600,7 +592,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -870,6 +878,82 @@
             <fullName>G6500</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>3 x 15 - 2.5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Caliber__c</picklist>
@@ -1110,31 +1194,23 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>6 x 20 - 4 mc</fullName>
+            <fullName>3 x 15 - 2.5 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>7 x 20 - 4 mc</fullName>
+            <fullName>5 x 20 - 4 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>11 x 30 - 10 mc</fullName>
+            <fullName>20 x 40 - 16 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>4 x 15 - 2.5 mc</fullName>
+            <fullName>7 x 25 - 6.3 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>5 x 15 - 2.5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>31 x 50 - 30 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>32 x 50 - 30 mc</fullName>
+            <fullName>10 x 30 - 10 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1146,7 +1222,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WV 80 - 63 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 100 - 100 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
             <default>false</default>
         </values>
         <values>
