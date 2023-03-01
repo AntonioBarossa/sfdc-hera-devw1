@@ -8,6 +8,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     
     private static HDT_QR_Order qrOrder = new HDT_QR_Order();
     private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
+    private final static Id MOD_TARIFFA_RT_ID = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId();
 
     public override void beforeInsert(){
         list<Contract> newContracts = (List<Contract>) Trigger.New;
@@ -115,6 +116,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             }
             if(
                 subsRelocation.checkConditions(c, ord)
+                || ord?.RecordTypeId == MOD_TARIFFA_RT_ID
             ){
                 //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
                 //assign subscription to old contract and end old subscriptions
