@@ -1237,6 +1237,11 @@
                 <label>HC_VENDITA_MM_Supporto Vendita_OT_AcAgency</label>
             </value>
             <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT_Tecnocall</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT_Tecnocall</label>
+            </value>
+            <value>
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
@@ -1300,6 +1305,11 @@
                 <fullName>HCM_BACK_Reclami</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Reclami</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_TRG_Contratto non richiesto</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Contratto non richiesto</label>
             </value>
             <value>
                 <fullName>HCM_BACK_TRG_Fatturazione</fullName>
