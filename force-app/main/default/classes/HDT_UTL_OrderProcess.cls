@@ -227,6 +227,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 order.PhaseStory__c = 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +  oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
             }
 
+            if(order.Phase__c!=oldOrder.Phase__c 
+                && 'In attesa di quality call'.equalsIgnoreCase(order.Phase__c) 
+                && 'Quality Call'.equalsIgnoreCase(order.ConfirmCustomerContract__c)
+                ){
+                String newPhase = order.isTransition__c? 'Esportazione VS Siebel' : (order.ProcessType__c == 'Voltura' || order.ProcessType__c == 'VAS') ? 'Documentazione Validata' : 'Comunicazione Verso Heroku';
+                DateTime nowDateTime = DateTime.now();
+                order.PhaseStory__c = 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +  order.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+order.PhaseStory__c;
+                order.Phase__c = newPhase;
+            }
+
             if (order.Phase__c!=oldOrder.Phase__c 
                 && order.ProcessType__c != 'Voltura'
                 && oldOrder.Phase__c != 'In attesa di quality call'
@@ -325,7 +335,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         set<Order> filtered = new set<Order>();
         List<String> ordersParent = new List<String>();
         List<Order> ordersFullList2 = orderQr.getRecordsByIds(olistd);
-
+        System.debug(LoggingLevel.DEBUG, '@@@@@EALPI TEST ' + JSON.serializePretty(ordersFullList2));
 //**** AGGIUNTA Validazione Documentale LG 2009 FF */
         List<Order> ordersFullList = HDT_UTL_Sales.validationActivityPhaseTransition(ordersFullList2);
         for(Order o : ordersFullList2){
