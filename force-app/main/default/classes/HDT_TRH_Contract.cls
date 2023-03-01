@@ -7,6 +7,8 @@
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     
     private static HDT_QR_Order qrOrder = new HDT_QR_Order();
+    private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
+    private final static Id MOD_TARIFFA_RT_ID = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId();
 
     public override void beforeInsert(){
         list<Contract> newContracts = (List<Contract>) Trigger.New;
@@ -100,15 +102,26 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
 
         list<Contract> newContracts = (List<Contract>) Trigger.New;
-        Set<Id> orderToContract = new Set<Id>();
+        List<Id> orderToContract = new List<Id>();
         for(Contract c : newContracts){
             orderToContract.add(c.SBQQ__Order__c);
         }
-        map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
+        map<Id, Order> ordersMap = qrOrder.getOrdersRecord(orderToContract);
         //Set<id> contractsToBeBlanked = new Set<id>();
         for(Contract c : newContracts){
-            if(ordersMap.containskey(c.SBQQ__Order__c) && ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
+            Order ord = ordersMap.get(c.SBQQ__Order__c);
+
+            if(ord!=null && ord.isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
                 c.SBQQ__Quote__c=null;
+            }
+            if(
+                subsRelocation.checkConditions(c, ord)
+                || ord?.RecordTypeId == MOD_TARIFFA_RT_ID
+            ){
+                //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
+                //assign subscription to old contract and end old subscriptions
+                c.GlobalMigrationKey__c = null;
+                //c.SBQQ__Quote__c = null;
             }
         }
     }
@@ -117,6 +130,8 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
         Set<Id> contractsForSieXiv = new Set<Id>();
+
+        Set<Id> oldOfferContracts = new Set<Id>();
 
         List<id> listOrderId = new List<id>();
         for (Contract c : (List<Contract>)Trigger.new) {
@@ -140,12 +155,24 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 }
                 spToActivate.put(sp.Id, sp);
             }
+
+            if(
+                subsRelocation.checkConditions(c, ord)
+            ){
+                //SF Created a New Contract but SAP didn't
+                oldOfferContracts.add(ord.ContractReference__r.Id);
+                oldOfferContracts.add(c.Id);
+            }
         }
+
+        subsRelocation.moveSubscriptions(oldOfferContracts, Trigger.newMap, mapOrder);
+
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());
             HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
             sie.initSIE(contractsForSieXiv);
         }
+
 
 
        /*list<Contract> newContracts = (List<Contract>) Trigger.New;
@@ -164,4 +191,5 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
            myUpdate(contractsToBeBlanked);
        }*/
     }
+
 }
