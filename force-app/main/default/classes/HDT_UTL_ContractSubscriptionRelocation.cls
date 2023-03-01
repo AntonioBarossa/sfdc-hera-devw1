@@ -33,12 +33,10 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
                 }
 
                 List<SBQQ__Subscription__c> newSubs = contractWithSubs.get(c.Id)?.SBQQ__Subscriptions__r;
-                if(newSubs.isEmpty()){
-                    contractsToDelete.add(c.Id);
-                }
                 for(SBQQ__Subscription__c sub : newSubs){
                     sub.SBQQ__Contract__c = ord.ContractReference__r.Id;
                     subsToUpdate.add(sub);
+                    contractsToDelete.add(c.Id);
                 }
             }    
         }
@@ -48,8 +46,15 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
 
     private static void dmlOperations(List<SBQQ__Subscription__c> subsToUpdate, Set<Id> contractsToDelete){
         if(!subsToUpdate.isEmpty()){    HDT_UTL_DatabaseService.updateSObject(subsToUpdate);    }
-        if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));   }
+        system.debug('@@@@@@ delete operation');
+        system.debug(contractsToDelete);
+        if(!contractsToDelete.isEmpty()){    System.attachFinalizer(new HDT_QBL_Finalizer(contractsToDelete));  }
     }
+    
+    /*@future
+    private static void dmlOperations(Set<Id> contractsToDelete){
+        if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));  }
+    }*/
 
     public Boolean checkConditions(Contract c, Order ord){
         return c.Id != ord?.ContractReference__r?.Id && checkConditions(ord, c?.SapContractCode__c);
@@ -66,5 +71,17 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
     }
 
 
+    public class HDT_QBL_Finalizer implements Finalizer {
+        Set<Id> contractsToDelete;
+
+        HDT_QBL_Finalizer(Set<Id> contractsToDelete){
+            this.contractsToDelete = contractsToDelete;
+        }
+
+        public void execute(FinalizerContext ctx){
+            //se queueable success chiamare servizio deda con case
+            if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));  }
+        }
+    }
 
 }
