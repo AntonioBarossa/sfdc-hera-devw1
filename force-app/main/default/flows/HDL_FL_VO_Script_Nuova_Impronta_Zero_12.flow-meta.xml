@@ -1927,6 +1927,7 @@
             <label>HERA FOTOVOLTAICO</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>AzPrezzoLordoF1Formula</name>
         <dataType>Number</dataType>
