@@ -74,7 +74,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
                 isValid = true;
                 for( let i=0; i<this.currNumber*3; i+=3){
                     if(this.mapInput[i].value){
-                        this.resultString = this.resultString+' '+this.mapInput[i].value+' '+this.mapInput[i+1].value+' '+this.mapInput[i+2].value+'; ';
+                        this.resultString = this.resultString + this.mapInput[i].value+' '+this.mapInput[i+1].value+' '+this.mapInput[i+2].value+'; ';
                         console.log(this.resultString);
                     }
                 }
@@ -139,9 +139,14 @@ export default class HdtStringGenerationForDocument extends LightningElement {
                 console.log(e);
             }
         }
-        this.uniqueString = await getUniqueString({comune : this.comune , caseProcess : this.caseProcess , caseSubProcess : this.caseSubProcess});
         this.currNumber = this.numComponenti;
-        this.resultString = this.uniqueString[0].FixedString__c.replace('[N°]',this.currNumber);
+        if(this.caseProcess.toUpperCase() == 'MODIFICA DATI CONTRATTUALI'){
+            this.uniqueString = await getUniqueString({comune : this.comune , caseProcess : this.caseProcess , caseSubProcess : this.caseSubProcess});
+            this.resultString = this.uniqueString[0].FixedString__c.replace('[N°]',this.currNumber)+' ';
+        } else if(this.caseProcess.toUpperCase() == 'MODIFICA POST ACCERTAMENTO'){
+            this.uniqueString = '';
+            this.resultString = this.uniqueString;
+        }
         this.numberOfLoop = [];
         for( let i=0; i<this.currNumber; i++){
             let wrp = {number:i, labelNome: 'Nome componente '+(i+1), labelCognome:'Cognome componente '+(i+1), labelCf:'Codice Fiscale componente '+(i+1)}
