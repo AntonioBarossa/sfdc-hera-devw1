@@ -409,5 +409,45 @@
             <controllingFieldValue>Acqua</controllingFieldValue>
             <valueName>32 x 50 - 30 mc</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>30X50</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>60X100</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV40</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV65</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV125</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV200</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV250</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV300</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV350</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>WV400</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>
