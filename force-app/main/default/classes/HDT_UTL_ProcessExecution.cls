@@ -17,6 +17,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public Id recordTypeBus = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Business').getRecordTypeId();
     public Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
     public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
+    public Boolean isTest = true;
 
     public void setRequestId(Id requestId){
         this.requestId = requestId;

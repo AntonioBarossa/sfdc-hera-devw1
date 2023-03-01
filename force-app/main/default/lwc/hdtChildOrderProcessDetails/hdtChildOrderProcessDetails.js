@@ -545,9 +545,6 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if(sectionNextActions && sectionNextActions instanceof Function ){
             if(sectionNextActions(event, currentSectionIndex, nextSectionStep)) return;//Azioni automatiche da eseguire definite nel JSON del Wizard
         }
-        
-        console.log('currentSectionName '+currentSectionName);
-
         //EVERIS AGGIUNTA LOGICA PER SEZIONE AUTOLETTURA
         if(currentSectionName === 'reading'){
             let readingComponent = this.template.querySelector('c-hdt-self-reading');
@@ -657,8 +654,37 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
+                if( this.rateCategoryVisibility(this.rateCategories.AFNCOMPreq) && 
+                    this.template.querySelector("[data-id='DomesticResidentNumber__c']") !== null && 
+                    ( this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === '' || 
+                    this.template.querySelector("[data-id='DomesticResidentNumber__c']").value === null) ) 
+                {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Numero Componenti Domestico Residente',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if( this.typeVisibility('acqua') &&
+                    this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' &&
+                    this.order.Subprocess__c == 'Retroattiva' &&
+                    this.availableSteps.find(element => element.step === nextSectionStep).label === 'Fatturazione' ) //check next section
+                {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Necessario inserire l\'autolettura',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
             }
-            console.log('currentSectionName '+currentSectionName);
             if(currentSectionName === 'dettaglioImpianto'){
                 console.log('inside '+currentSectionName);
                 if( this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && 
@@ -1158,7 +1184,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 data: [
                     new fieldData('Data Cessazione Switchout','SwitchOutDate__c', this.typeVisibility('both'), false, true, '','')
                 ]
-            },
+            },/* 
             {
                 step: 3,
                 label: 'Variabili di Processo',
@@ -1201,7 +1227,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('gas'), true, true,'',''),
                     new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business', false, false,'','')
                 ]
-            },
+            }, */
             {
                 step: 4,
                 label: 'Autolettura',
@@ -1427,78 +1453,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 || this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch')
                 && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business',
                 data:[
-                    {
-                        'label': 'Codice Destinatario',
-                        'apiname': 'SubjectCode__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'PEC Fatturazione Elettronica',
-                        'apiname': 'InvoiceCertifiedEmailAddress__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Modalità invio Fatturazione',
-                        'apiname': 'ElectronicInvoicingMethod__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Tipo invio fattura XML',
-                        'apiname': 'XMLType__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'CIG',
-                        'apiname': 'CIG__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'CUP',
-                        'apiname': 'CUP__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Data inizio Validità Codice Destinatario',
-                        'apiname': 'SubjectCodeStartDate__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    },
-                    {
-                        'label': 'Note',
-                        'apiname': 'PraxidiaNote__c',
-                        'typeVisibility': this.typeVisibility('both'),
-                        'required': false,
-                        'disabled': true,
-                        'value': '',
-                        'processVisibility': ''
-                    }
+                    new fieldData('Codice Destinatario','SubjectCode__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('PEC Fatturazione Elettronica','InvoiceCertifiedEmailAddress__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('Modalità invio Fatturazione','ElectronicInvoicingMethod__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('Tipo invio fattura XML','XMLType__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('CIG','CIG__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('CUP','CUP__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('Data inizio Validità Codice Destinatario','SubjectCodeStartDate__c', this.typeVisibility('both'), false, true, '',''),
+                    new fieldData('Note','PraxidiaNote__c', this.typeVisibility('both'), false, true, '','')
                 ]
             },
             {
