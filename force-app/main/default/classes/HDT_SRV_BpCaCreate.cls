@@ -56,4 +56,12 @@ public with sharing class HDT_SRV_BpCaCreate
         return;
     }
 
+    public String createBillingProfile(Id billingId,Id accountId){
+        String body = bpCaUtl.generateRequest(billingId, accountId);
+        String response = bpCaUtl.executeRequest(body);
+        String data = bpCaUtl.handleResponse(response);
+        bpCaUtl.updateBillingProfile(data,billingId);
+        return data;
+    }
+
 }
