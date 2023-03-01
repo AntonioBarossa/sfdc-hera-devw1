@@ -170,8 +170,8 @@ import * as rateCategories from './hdtRateCategories.js';
                 data:[
                     //new fieldData('Codice Punto','ServicePointCode__c',this.typeVisibility('both'),true, true, '', ''),
                     //new fieldData('Servizio','CommodityFormula__c',this.typeVisibility('both'),true, false, '', ''),
-                    new fieldData('Data dichiarazione','DeclarationDate__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'', getFormattedDate(new Date())),
-                    new fieldData('Data decorrenza','EffectiveDate__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'',''),
+                    new fieldData('Data dichiarazione','DeclarationDate__c', this.typeVisibility('both'), true, false,'', getFormattedDate(new Date())),
+                    new fieldData('Data decorrenza','EffectiveDate__c', this.typeVisibility('both'), true, false,'',''),
                     new fieldData('Provenienza richiesta','RequestSource__c', this.typeVisibility('both'), true, false,'','Da contribuente'),
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
@@ -192,7 +192,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Inizio periodo ravvedibile','OnerousReviewableStartDate__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
                     new fieldData('Inizio periodo non ravvedibile','OnerousUnreviewableStartDate__c', !["HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName), false, true,'',''),
                     new fieldData('Rifiuta supporto al calcolo del ravvedimento operoso','DeclineComputationSupport__c', this.order.Account.CompanyOwner__c!=="MMS", false, false,'',''),
-                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente"].includes(this.order.RecordType.DeveloperName), true, false,'', this.order.RecordType.DeveloperName=="HDT_RT_SubentroAmbiente"? this.order.ServicePoint__r.AreaDeclaredTARI__c : "", 
+                    new fieldData('Superficie Mq','Surface__c', ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName), true, false,'', this.order.RecordType.DeveloperName=="HDT_RT_SubentroAmbiente"? this.order.ServicePoint__r.AreaDeclaredTARI__c : "", 
                         function(event){
                             if(this.order.RateCategory__c==='TATUDNR001' && this.order.RecordType.DeveloperName !== 'HDT_RT_AgevolazioniAmbiente' && event.target.value){
                                 const fam = this.template.querySelector("[data-id='FamilyNumber__c']");
@@ -436,6 +436,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
+                readingButton: this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
                 hasCohabitantButton: false,
                 hasCalculateButton: this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
                 hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' || (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' && (this.order.SupplyType__c !== null && this.order.SupplyType__c === 'Non Domestico')),
@@ -1008,4 +1009,4 @@ import * as rateCategories from './hdtRateCategories.js';
         ];
     }
 
-    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration}
+    export {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration, getFormattedDate}

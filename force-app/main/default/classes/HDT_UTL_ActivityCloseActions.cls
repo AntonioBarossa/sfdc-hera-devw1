@@ -217,6 +217,11 @@ public with sharing class HDT_UTL_ActivityCloseActions {
                 if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
             }
         }
+        if(caseType.equalsIgnoreCase('Errore di Fatturazione') && ('HDT_RT_ErroreFatturazione_TARI'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_FAT004__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
         return null;
     }
     

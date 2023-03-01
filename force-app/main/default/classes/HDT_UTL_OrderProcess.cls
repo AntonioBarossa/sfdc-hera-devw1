@@ -917,6 +917,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static List<Order> updatePhase(List<Order> newOrdersList, List<Order> oldOrdersList) {
 
         Id bonusScontiRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+        Id poRtId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();
         Map<String,Order> orderMapOld = new Map<String,Order>();
 
         for (Order oldOrder : oldOrdersList) {
@@ -944,6 +945,12 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     {
                         newOrder.SBQQ__Contracted__c=true; 
                     }
+                }
+                if (newOrder.recordTypeId == poRtId && 'OTP Remoto'.equalsIgnoreCase(newOrder.SignatureMethod__c) &&(
+                    ('Annullato'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(old.Phase__c))
+                    || ('Annullato'.equalsIgnoreCase(newOrder.Status) && !newOrder.Status.equalsIgnoreCase(old.Status)))
+                ){
+                    newOrder.DiscardDocusignEnvelope__c = true;
                 }
             }           
         }

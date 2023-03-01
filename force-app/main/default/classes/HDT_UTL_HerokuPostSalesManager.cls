@@ -425,7 +425,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
 
             //Creare attività solo se esito successivo ad annullato
-            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da DL'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
+            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da DL'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da Gestore'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
                 createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
                 //Se la fase è in Annullato allora non viene cambiata.
                 if ('Annullato'.equalsIgnoreCase(currentPhase)){
@@ -546,6 +546,11 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                         contractAmb.Id = recordCase.Contract__c;
                         contractAmb.EndDate = recordCase.EffectiveDate__c;
                         HDT_UTL_SubscriptionProcess.closeSubscriptionsToday(contractAmb.Id);
+                }
+                if('Modifica dati contrattuali'.equalsIgnoreCase(recordCase.Type) && 'Superficie'.equalsIgnoreCase(recordCase.subProcess__c)
+                && recordCase.RecordTypeId == Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniTari').getRecordTypeId()){
+                    spAmb.Id = recordCase.ServicePoint__c;
+                    spAmb.AreaDeclaredTARI__c = recordCase.DeclaredArea__c;
                 }
                 if(contractAmb.Id != null){
                     HDT_UTL_DatabaseService.updateSObject(contractAmb);

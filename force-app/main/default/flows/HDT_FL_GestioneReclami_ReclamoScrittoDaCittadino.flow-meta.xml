@@ -103,6 +103,20 @@
                 <elementReference>$Flow.CurrentDate</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Marche Multiservizi S.p.A</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>11-HERASPA</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0</targetReference>
         </connector>
@@ -257,7 +271,7 @@
         <locationY>2054</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
-            <targetReference>redirectToRecord</targetReference>
+            <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>

@@ -428,6 +428,46 @@
 			<fullName>DN50 (2&quot;)  30X50 MID</fullName>
 			<default>false</default>
 		</values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV200</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV250</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV300</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV350</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MeterStatus__c</picklist>

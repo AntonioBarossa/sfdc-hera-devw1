@@ -130,7 +130,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                 throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
             }
 
-            if( currentOrder.RecordType.DeveloperName == 'HDT_RT_CambioOfferta' 
+            if( ( currentOrder.RecordType.DeveloperName == 'HDT_RT_CambioOfferta' || currentOrder.RecordType.DeveloperName == 'HDT_RT_Voltura' )
             && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) 
             && orderToUpdate.EffectiveDate__c != null && orderToUpdate.EffectiveDate__c < System.Today() )
             {

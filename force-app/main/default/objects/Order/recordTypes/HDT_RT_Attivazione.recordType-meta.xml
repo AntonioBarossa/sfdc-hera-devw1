@@ -518,7 +518,7 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
-            <default>false</default>Contatto Quality Fallito
+            <default>false</default>
         </values>
         <values>
             <fullName>Annullo cambio offerta</fullName>
@@ -574,6 +574,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2544,6 +2548,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -2561,6 +2569,10 @@
         </values>
         <values>
             <fullName>Invio allegato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
         <values>

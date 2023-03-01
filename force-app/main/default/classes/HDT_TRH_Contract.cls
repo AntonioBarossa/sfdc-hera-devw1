@@ -7,6 +7,7 @@
 public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
     
     private static HDT_QR_Order qrOrder = new HDT_QR_Order();
+    private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
 
     public override void beforeInsert(){
         list<Contract> newContracts = (List<Contract>) Trigger.New;
@@ -61,17 +62,24 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             if (mapOrder!=null && !mapOrder.isEmpty() ) {
                 for (Contract tempContract :listContract) {
                     try{
-                        if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) &&mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
-                            tempContract.ServicePoint__c   = mapOrder.get(tempContract.SBQQ__Order__c).ServicePoint__c;
-                            tempContract.BillingProfile__c = mapOrder.get(tempContract.SBQQ__Order__c).BillingProfile__c;
-                            tempContract.Market__c         = mapOrder.get(tempContract.SBQQ__Order__c).Market__c; 
-                            tempContract.VAT__c            = mapOrder.get(tempContract.SBQQ__Order__c).VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
-                            tempContract.ActivatedDate      = mapOrder.get(tempContract.SBQQ__Order__c).EffectiveDate__c ; //HRAWRM-638  17/09/2021
-                            tempContract.SapContractCode__c = mapOrder.get(tempContract.SBQQ__Order__c).SapContractCode__c ; //HRAWRM-638  17/09/2021
-                            tempContract.Pricebook2Id = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                            tempContract.SBQQ__AmendmentPricebookId__c = mapOrder.get(tempContract.SBQQ__Order__c).SBQQ__Quote__r.SBQQ__PriceBook__c;
-                            tempContract.CommercialProduct__c = mapOrder.get(tempContract.SBQQ__Order__c).CommercialProduct__c;  //08/09/2021 HRAWRM-251
-                            tempContract.ContractSalesCompany__c = mapOrder.get(tempContract.SBQQ__Order__c).SalesCompany__c;
+                        if (String.isNotBlank(String.valueOf(tempContract.SBQQ__Order__c)) && mapOrder.get(tempContract.SBQQ__Order__c)!=null ) {
+                            Order relatedOrder = mapOrder.get(tempContract.SBQQ__Order__c);
+
+                            tempContract.ServicePoint__c   = relatedOrder.ServicePoint__c;
+                            tempContract.BillingProfile__c = relatedOrder.BillingProfile__c;
+                            tempContract.Market__c         = relatedOrder.Market__c; 
+                            tempContract.VAT__c            = relatedOrder.VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
+                            tempContract.ActivatedDate      = relatedOrder.EffectiveDate__c ; //HRAWRM-638  17/09/2021
+                            tempContract.SapContractCode__c = relatedOrder.SapContractCode__c ; //HRAWRM-638  17/09/2021
+                            tempContract.Pricebook2Id = relatedOrder.SBQQ__Quote__r.SBQQ__PriceBook__c;
+                            tempContract.SBQQ__AmendmentPricebookId__c = relatedOrder.SBQQ__Quote__r.SBQQ__PriceBook__c;
+                            tempContract.CommercialProduct__c = relatedOrder.CommercialProduct__c;  //08/09/2021 HRAWRM-251
+                            tempContract.ContractSalesCompany__c = relatedOrder.SalesCompany__c;
+
+                            if('Ambiente' == relatedOrder?.Commodity__c && relatedOrder.EffectiveDate__c !=null){
+                                tempContract.StartDate = relatedOrder.EffectiveDate__c;
+                            }
+
                             /*@frpanico 14/02/2022
                             * Aggiunta scrittura della EndDate
                             * Nel caso di Temporanea - Nuova Attivazione
@@ -93,15 +101,25 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
 
         list<Contract> newContracts = (List<Contract>) Trigger.New;
-        Set<Id> orderToContract = new Set<Id>();
+        List<Id> orderToContract = new List<Id>();
         for(Contract c : newContracts){
             orderToContract.add(c.SBQQ__Order__c);
         }
-        map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
+        map<Id, Order> ordersMap = qrOrder.getOrdersRecord(orderToContract);
         //Set<id> contractsToBeBlanked = new Set<id>();
         for(Contract c : newContracts){
-            if(ordersMap.containskey(c.SBQQ__Order__c) && ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
+            Order ord = ordersMap.get(c.SBQQ__Order__c);
+
+            if(ord!=null && ord.isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
                 c.SBQQ__Quote__c=null;
+            }
+            if(
+                subsRelocation.checkConditionsBefore(c, ord)
+            ){
+                //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
+                //assign subscription to old contract and end old subscriptions
+                c.GlobalMigrationKey__c = null;
+                //c.SBQQ__Quote__c = null;
             }
         }
     }
@@ -110,6 +128,8 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
         Set<Id> contractsForSieXiv = new Set<Id>();
+
+        Set<Id> oldOfferContracts = new Set<Id>();
 
         List<id> listOrderId = new List<id>();
         for (Contract c : (List<Contract>)Trigger.new) {
@@ -133,12 +153,24 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 }
                 spToActivate.put(sp.Id, sp);
             }
+
+            if(
+                subsRelocation.checkConditions(c, ord)
+            ){
+                //SF Created a New Contract but SAP didn't
+                oldOfferContracts.add(ord.ContractReference__r.Id);
+                oldOfferContracts.add(c.Id);
+            }
         }
+
+        subsRelocation.moveSubscriptions(oldOfferContracts, Trigger.newMap, mapOrder);
+
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());
             HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
             sie.initSIE(contractsForSieXiv);
         }
+
 
 
        /*list<Contract> newContracts = (List<Contract>) Trigger.New;
@@ -157,4 +189,5 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
            myUpdate(contractsToBeBlanked);
        }*/
     }
+
 }

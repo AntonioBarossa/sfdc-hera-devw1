@@ -91,7 +91,7 @@
     </choices>
     <choices>
         <name>AXO</name>
-        <choiceText>AXO</choiceText>
+        <choiceText>&lt;span style=&quot;font-family: Verdana, sans-serif; font-size: 10pt;&quot;&gt;AXO&lt;/span&gt;</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>AXO</stringValue>
@@ -355,7 +355,7 @@
     </choices>
     <choices>
         <name>MET_GROUP</name>
-        <choiceText>MET GROUP</choiceText>
+        <choiceText>&lt;span style=&quot;font-family: Verdana, sans-serif; font-size: 10pt;&quot;&gt;MET GROUP&lt;/span&gt;</choiceText>
         <dataType>String</dataType>
         <value>
             <stringValue>MET GROUP</stringValue>
