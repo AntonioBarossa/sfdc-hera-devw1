@@ -51,7 +51,9 @@ public inherited sharing class HDT_UTL_Case {
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
                 if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
                     output.salesCompanyCode = '11-HERASPA';
-                    output.salesCompany = 'Hera Comm S.p.A';
+                    output.salesCompany = 'Marche Multiservizi S.p.A';
+                    output.vatPercentage = 'GENERICI 10%-01';
+                    output.taxes = 'Imposta usi domestici';
                 }else {
                     switch on city.SDV__c {
                         when 'HCM' {
@@ -281,6 +283,10 @@ public inherited sharing class HDT_UTL_Case {
         public String isDomestico;
         @InvocableVariable
         public Case currentCase;
+        @InvocableVariable
+        public String vatPercentage;
+        @InvocableVariable
+        public String taxes;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){

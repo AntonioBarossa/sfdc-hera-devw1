@@ -445,6 +445,56 @@
         <default>false</default>
         <label>32 x 50 - 30 mc</label>
     </customValue>
+    <customValue>
+        <fullName>30X50</fullName>
+        <default>false</default>
+        <label>30X50</label>
+    </customValue>
+    <customValue>
+        <fullName>60X100</fullName>
+        <default>false</default>
+        <label>60X100</label>
+    </customValue>
+    <customValue>
+        <fullName>WV40</fullName>
+        <default>false</default>
+        <label>WV40</label>
+    </customValue>
+    <customValue>
+        <fullName>WV65</fullName>
+        <default>false</default>
+        <label>WV65</label>
+    </customValue>
+    <customValue>
+        <fullName>WV125</fullName>
+        <default>false</default>
+        <label>WV125</label>
+    </customValue>
+    <customValue>
+        <fullName>WV200</fullName>
+        <default>false</default>
+        <label>WV200</label>
+    </customValue>
+    <customValue>
+        <fullName>WV250</fullName>
+        <default>false</default>
+        <label>WV250</label>
+    </customValue>
+    <customValue>
+        <fullName>WV300</fullName>
+        <default>false</default>
+        <label>WV300</label>
+    </customValue>
+    <customValue>
+        <fullName>WV350</fullName>
+        <default>false</default>
+        <label>WV350</label>
+    </customValue>
+    <customValue>
+        <fullName>WV400</fullName>
+        <default>false</default>
+        <label>WV400</label>
+    </customValue>
     <description>Classe contatore (Calibro)</description>
     <masterLabel>Caliber</masterLabel>
     <sorted>false</sorted>
