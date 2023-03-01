@@ -1,22 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_ProcessExecution{
 
-    /*
-        List<MassiveLoaderRequestItem__c> scope;
-        scope = [
-            SELECT Id, Data__c, NextStepData__c
-            FROM MassiveLoaderRequestItem__c
-            WHERE MassiveLoaderRequest__c = 'a3d3O000000XFIJQA4'
-            AND Status__c = 'In attesa di lavorazione'
-        ];
-        HDT_UTL_ProcessExecution cls;
-        Type t = Type.forName('HDT_UTL_ProcessOrderCreation');
-        cls = (HDT_UTL_ProcessExecution)t.newInstance();
-        cls.setProcess('TestSales');
-        cls.setMassiveLoaderRequestItemList(scope);
-        cls.execute();
-    */
-
     private Map<String, MassiveFieldsObjectMap__c> sobjectMap;
     private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     private List<HDT_WRP_ProcessObjects> processObjList;
@@ -47,7 +31,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<sObject> sObjectToDelete = new List<sObject>();
     private List<HDT_ExciseTranscode__mdt> exciseList;
     private Map<String,Double> exciseMap = new Map<String,Double>();
-    private List<HDT_RegionalAdditional__mdt> regionalAddList = new List<HDT_RegionalAdditional__mdt>();
+    private List<HDT_RegionalAdditional__mdt> regionalAddList;
     private List<RateCategory__c> rateCategoryList;
     private HDT_UTL_CarMassPredefaultValues orderPreDefault;
 
@@ -70,8 +54,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         HDT_WRP_ProcessObjects processObj;
         processObjList = new List<HDT_WRP_ProcessObjects>();
         List<String> tempSplitedFields;
-        //HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
+
         fakeOrderItem = new OrderItem();
+        // STEP 1: convert from csv the objects: 
+        //      - Sale__c
+        //      - Child Order
+        //      - Parent Order
+        //      - Order Item
+
         for(MassiveLoaderRequestItem__c item : requestItemList){
             processObj = new HDT_WRP_ProcessObjects();
             tempSplitedFields = item.Data__c.split(splitCharacter, -1);
@@ -86,7 +76,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
             processObj = buildWrapperOrderStructure(processObj, tempSplitedFields, processObj.nextDataObj);
 
-            System.debug('>>> ' + JSON.serializePretty(processObj));
+            //System.debug('>>> ' + JSON.serializePretty(processObj));
 
             String csvHeader;
             String convertionError;
@@ -138,7 +128,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             processObjList.add(processObj);
 
         }
-        getLimitDetails('convertionEnd');
+        //getLimitDetails('convertionEnd');
     }
 
     public override void getRecords(){
@@ -149,15 +139,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         List<Id> productIdList = new List<Id>();
         List<PriceBookEntry> pbeList = new List<PriceBookEntry>();
         List<SBQQ__ProductOption__c> productOptionList = new List<SBQQ__ProductOption__c>();
+        List<ProcessMatrix__c> processMatrixList;
+        List<Id> optnionalSkuIdList;
+        Set<String> defaultProdOption;
+
         commOfferMap = new Map<String, Product2>();
         additionalOrderItemMap = new Map<String, Map<String, SBQQ__ProductOption__c>>();
         pricebookEntryForOptionalMap = new Map<Id, Map<Id, PriceBookEntry>>();
         processMatrixMap = new Map<String, String>();
-        List<ProcessMatrix__c> processMatrixList = new List<ProcessMatrix__c>();
+        processMatrixList = new List<ProcessMatrix__c>();
         otherRequiredOption = new Map<Id, List<SBQQ__ProductOption__c>>();
-        Set<String> defaultProdOption = new Set<String>();
-        List<Id> optnionalSkuIdList = new List<Id>();
-        rateCategoryList=HDT_QR_RateCategory.getAllRecords();
+        defaultProdOption = new Set<String>();
+        optnionalSkuIdList = new List<Id>();
+
+        rateCategoryList = HDT_QR_RateCategory.getAllRecords();
 
         processMatrixList = [
             SELECT ProcessName__c, RecordTypeName__c, CasualCode__c
@@ -212,18 +207,9 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         productOptionList = [
-            SELECT SBQQ__ConfiguredSKU__c, 
-                SBQQ__OptionalSKU__c,
-                SBQQ__OptionalSKU__r.ProductCode, 
-                SBQQ__OptionalSKU__r.Name, 
-                SBQQ__Required__c,
-                SBQQ__OptionalSKU__r.DurationDay__c,
-                SBQQ__OptionalSKU__r.DurationDayGas__c,
-                SBQQ__OptionalSKU__r.DelayDay__c,
-                SBQQ__OptionalSKU__r.DelayDayGas__c,
-                SBQQ__OptionalSKU__r.Percentage__c,
-                SBQQ__OptionalSKU__r.Price__c,
-                SBQQ__OptionalSKU__r.PriceGas__c
+            SELECT SBQQ__ConfiguredSKU__c, SBQQ__OptionalSKU__c, SBQQ__OptionalSKU__r.ProductCode, SBQQ__OptionalSKU__r.Name, SBQQ__Required__c,
+                   SBQQ__OptionalSKU__r.DurationDay__c, SBQQ__OptionalSKU__r.DurationDayGas__c, SBQQ__OptionalSKU__r.DelayDay__c, SBQQ__OptionalSKU__r.DelayDayGas__c,
+                   SBQQ__OptionalSKU__r.Percentage__c, SBQQ__OptionalSKU__r.Price__c,SBQQ__OptionalSKU__r.PriceGas__c
             FROM SBQQ__ProductOption__c
             WHERE SBQQ__ConfiguredSKU__c IN :productIdList
             WITH SECURITY_ENFORCED
@@ -280,15 +266,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         for(Contract singleContract : contractList){
             contractMap.put(singleContract.ServicePoint__c, singleContract);
         }
-        exciseList = [SELECT
-            Id,Active__c, ExciseString__c, Excise__c
-            FROM HDT_ExciseTranscode__mdt WHERE Active__c = true
+        exciseList = [
+            SELECT Id, Active__c, ExciseString__c, Excise__c
+            FROM HDT_ExciseTranscode__mdt
+            WHERE Active__c = true
         ];
+
         for(HDT_ExciseTranscode__mdt singleExcise : exciseList){
             exciseMap.put(singleExcise.ExciseString__c, singleExcise.Excise__c);
         }
         
-        regionalAddList = [SELECT Id, Label, AdditionalValue__c, City__c, Region__c, Tax__c FROM HDT_RegionalAdditional__mdt];
+        regionalAddList = [
+            SELECT Id, Label, AdditionalValue__c, City__c, Region__c, Tax__c
+            FROM HDT_RegionalAdditional__mdt
+        ];
         
     }
 
@@ -304,6 +295,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         Id commOffId;
         Id priceBookId;
         String errorFieldCheck;
+        // STEP 2: check Sale__c required fields and save
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){
@@ -311,7 +303,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
 
             processObj.sale = setSaleObject(processObj.sale, processObj.nextDataObj.accountId, processObj.nextDataObj.contactId);
-
 
             errorFieldCheck = checkRequiredSalesField(processObj.sale);
             if(String.isNotEmpty(errorFieldCheck)){
@@ -324,12 +315,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             saleToInsert.add(processObj.sale);
         }
 
-        //HDT_UTL_DatabaseService.insertSObject(saleToInsert);
         HDT_WRP_SaveResponse saveSaleResponse;
-        saveSaleResponse = databaseUpsert(saleToInsert, requestItemForUpsert, 'Sale__C');
+        saveSaleResponse = databaseUpsert(saleToInsert, requestItemForUpsert, 'Sale__c');
 
         requestItemForUpsert.clear();
 
+        // STEP 3: set new opportunity
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){
@@ -348,11 +339,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             opportunityToinsert.add(processObj.opportunity);
         }
 
-        //HDT_UTL_DatabaseService.insertSObject(opportunityToinsert);
         HDT_WRP_SaveResponse saveOpportunityResponse;
         saveOpportunityResponse = databaseUpsert(opportunityToinsert, requestItemForUpsert, 'Opportunity');
 
         requestItemForUpsert.clear();
+
+        //STEP 4: create Order and SaleServiceItem__c
 
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
@@ -406,7 +398,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     wrpChildOrder.childOrder.Pricebook2Id = priceBookId;
                     wrpChildOrder.childOrder.EffectiveDate = Date.today();
                     wrpChildOrder.childOrder.Status = 'Draft';
-                    wrpChildOrder.childOrder.WizardCompletedDate__c=Date.today();
+                    wrpChildOrder.childOrder.WizardCompletedDate__c = Date.today();
 
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
 
@@ -496,6 +488,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         HDT_UTL_DatabaseService.insertSObject(saleServiceToInsert);
 
         String commodity = '';
+        //STEP 5: Order Fields Alignment
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){
@@ -529,6 +522,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         orderPreDefault.getMetadataList();
 
+        //STEP 6: setDefaultOrderValues only for "Voltura"
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){
@@ -544,7 +538,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }
         }
 
-        //HDT_UTL_DatabaseService.insertSObject(childOrderToInsert);
         HDT_WRP_SaveResponse saveChildOrderResponse;
         saveChildOrderResponse = databaseUpsert(childOrderToInsert, requestItemForUpsert, 'Order');
 
@@ -609,7 +602,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             itemsToUpdate.add(processObj.requestItem);
         }
 
-        System.debug('>@> ' + JSON.serialize(processObjList));
+        //System.debug('>@> ' + JSON.serialize(processObjList));
 
         HDT_WRP_SaveResponse updateOrderItemResponse;
         updateOrderItemResponse = databaseUpsert(orderItemToUpdate, requestItemForUpsert, 'OrderItem');
@@ -669,7 +662,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             }else {
                 orderToUpdate.Subprocess__c = 'Standard';
             }
-            orderToUpdate.ProcessCode__c = commodity.equalsIgnoreCase('Gas')?'VTG':'VT1';
+            orderToUpdate.ProcessCode__c = commodity.equalsIgnoreCase('Gas') ? 'VTG' : 'VT1';
             orderToUpdate.ExciseRate__c = exciseMap.get(tax);
             if(String.isNotBlank(tax) && String.isNotBlank(city) && String.isNotBlank(region)){
                 for(HDT_RegionalAdditional__mdt singleAdd : regionalAddList){
@@ -875,7 +868,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         return parentOrder;
     }
 
-    private HDT_WRP_ChildOrder handleBonus(HDT_WRP_ChildOrder wrpChildOrder,List<String> csvValues){
+    private HDT_WRP_ChildOrder handleBonus(HDT_WRP_ChildOrder wrpChildOrder, List<String> csvValues){
         HDT_WRP_OrderItem wrpOrderItem;
         String codiceBonus1 = csvValues[mapHeaderForWrapper.get('BONUS_PERC1')];
         String codiceBonusEurMese1 = csvValues[mapHeaderForWrapper.get('BONUS_EURMESE1')];
@@ -1118,10 +1111,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         rtNameMap.put('CambioOfferta', 'HDT_RT_CambioOfferta');
         rtNameMap.put('MUC', 'HDT_RT_CambioOfferta');
         rtNameMap.put('TariffeSconti', 'HDT_RT_ScontiBonus');
-
-        if(processName.equalsIgnoreCase('VolturaNoEnergy')){
-            processName = 'Voltura';
-        }
+        rtNameMap.put('VolturaNoEnergy', 'HDT_RT_Voltura');
 
         String devName = rtNameMap.get(processName);
         return Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(devName).getRecordTypeId();
@@ -1129,7 +1119,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     }
 
     private String buildProductKey(Product2 p){
-        if(processName.equalsIgnoreCase('VolturaNoEnergy')){
+        if(processName.equalsIgnoreCase('Voltura')){
             return p.ProductCode;
         } else if(processName.equalsIgnoreCase('VolturaNoEnergy')){
             return p.ProductCode;
