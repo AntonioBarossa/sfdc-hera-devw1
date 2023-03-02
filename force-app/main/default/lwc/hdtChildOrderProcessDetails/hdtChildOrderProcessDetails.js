@@ -165,6 +165,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleOnLoad(event) {
         this.disableNext = false;
+        
+        const sectionIndex = event.target.getAttribute('data-section-index');
+        const DynamicOnLoad = this.pendingSteps[sectionIndex]?.loadActions;
+        if(DynamicOnLoad && DynamicOnLoad instanceof Function ){
+            DynamicOnLoad(event);
+        }
+        
         if( this.currentSection.name === 'processVariables' || this.currentSection.name === 'dettaglioImpianto' ) {
             if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
                 this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
@@ -513,15 +520,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
     }
 
-    showMessage(title,message,variant)
+    showMessage(title,message,variant, mode)
     {
         this.loading = false;
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
             variant: variant,
+            mode: mode? mode : "dismissible"
         });
-    this.dispatchEvent(toastErrorMessage);
+        this.dispatchEvent(toastErrorMessage);
     }
 
     handleNext(event){
