@@ -10,16 +10,17 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
     ronchiDescription;
     @api order; 
     @api title;
+    @api supplyCity;
 
 
     columns = [
-        {label: 'Codice Ateco', fieldName: 'AtecoCode__c', type: 'text'},
+        {label: 'Codice Comune', fieldName: 'AtecoCode__c', type: 'text'},
         {label: 'Comune', fieldName: 'City__c', type: 'text'},
-        {label: 'Codice Istat', fieldName: 'IstatCode__c', type: 'text'},
+        {label: 'Codice Istat/Ateco', fieldName: 'IstatCode__c', type: 'text'},
         {label: 'Categoria', fieldName: 'Category__c', type: 'text'},
         {label: 'Codice Ronchi', fieldName: 'RonchiCode__c', type: 'text'},
         {label: 'Sottocategoria Ronchi', fieldName: 'RonchiSubcategory__c', type: 'text'},
-        {label: 'Descrizione Ronchi', fieldName: 'RonchiDescription__c', type: 'text'}
+        {label: 'Descrizione Ronchi', fieldName: 'Type__c', type: 'text'}
     ];
 
     get options() {
