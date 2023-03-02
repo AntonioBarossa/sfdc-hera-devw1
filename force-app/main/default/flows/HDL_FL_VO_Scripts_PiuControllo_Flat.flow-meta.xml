@@ -531,7 +531,7 @@
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Bonus</stringValue>
+                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -570,7 +570,7 @@
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Bonus</stringValue>
+                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -847,7 +847,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -867,6 +867,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -886,7 +893,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_1</name>
-            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5)</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 OR 6) AND (4 OR 5)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -922,6 +929,13 @@
                     <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Promozioni_0</targetReference>
             </connector>
@@ -939,7 +953,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_2</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -961,6 +975,13 @@
                     <stringValue>PiuControllo Flat Casa Luce</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Promozioni_2</targetReference>
             </connector>
@@ -978,7 +999,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_INB_GAS</name>
-            <conditionLogic>(1 OR 2 OR 3) AND (4 OR 5)</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -1008,10 +1029,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1300,6 +1321,7 @@
             <label>HERA FOTOVOLTAICO</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>FormulaPriceF0</name>
         <dataType>Number</dataType>
@@ -1326,19 +1348,19 @@
     <formulas>
         <name>PrezzoLordoFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>PrezzoLordoOrePieneFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>PrezzoLordoOreVuoteFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
@@ -1501,9 +1523,34 @@
             <targetReference>Bonus_Decision</targetReference>
         </connector>
         <fields>
+            <name>Bonus_Obb_FAM_OUT_EE_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Bonus_Obb_FAM_OUT_EE</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Bonus_Obb_FAM_OUT_EE_0</name>
@@ -1538,6 +1585,31 @@
             <name>Bonus_Obb_FAM_OUT_GAS</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Bonus_Obb_FAM_OUT_GAS_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -1589,7 +1661,7 @@
         </connector>
         <fields>
             <name>Copy_1_of_Bonus_Obb_FAM_OUT_GAS</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1751,7 +1823,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND 2</conditionLogic>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
@@ -1760,10 +1832,17 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1806,8 +1885,33 @@
         </connector>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 12 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 24 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CONDIZIONI_ECONOMICHE_FAM_3</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 12 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_SL</name>
@@ -1863,14 +1967,22 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CONDIZIONI_ECONOMICHE_FAM_2</name>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’76% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 24% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
+                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1925,7 +2037,7 @@
         </connector>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 12 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 24 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1974,7 +2086,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’76% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 24% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1985,6 +2097,14 @@
                         <stringValue>PiuControllo Flat Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>CONDIZIONI_ECONOMICHE_FAM_INB_1</name>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’71% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 29% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2043,8 +2163,38 @@
             <targetReference>Bonus_Obbligatorio_0</targetReference>
         </connector>
         <fields>
+            <name>PCFLAT_GAS_OUT_TEXTBOX_3_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PCFLAT_GAS_OUT_TEXTBOX_4_0</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -2057,14 +2207,22 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PCFLAT_GAS_OUT_TEXTBOX_5_0</name>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
+                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2114,15 +2272,15 @@
         </connector>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 2% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2130,6 +2288,14 @@
                         <stringValue>PiuControllo Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PCFLAT_GAS_INB_TEXTBOX_3_0</name>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 96% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2209,6 +2375,28 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>PCF_EE_PROMO_50</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -2265,6 +2453,28 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>PCF_GAS_PROMO_50_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -2295,6 +2505,28 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PCF_EE_PROMO_HERA_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -2358,6 +2590,35 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>PCF_GAS_INB_PROMO_50</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>

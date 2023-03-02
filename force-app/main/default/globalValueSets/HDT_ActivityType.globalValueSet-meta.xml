@@ -586,6 +586,11 @@
         <label>Paperless non generato</label>
     </customValue>
     <customValue>
+        <fullName>PEC da DL</fullName>
+        <default>false</default>
+        <label>PEC da DL</label>
+    </customValue>
+    <customValue>
         <fullName>Pratica avviata</fullName>
         <default>false</default>
         <label>Pratica avviata</label>
@@ -609,11 +614,6 @@
         <fullName>Pratica non gestita</fullName>
         <default>false</default>
         <label>Pratica non gestita</label>
-    </customValue>
-    <customValue>
-        <fullName>PEC da DL</fullName>
-        <default>false</default>
-        <label>PEC da DL</label>
     </customValue>
     <customValue>
         <fullName>Pratica non gestita per il DL</fullName>
@@ -729,6 +729,11 @@
         <fullName>Rapporti con i distributori e SII</fullName>
         <default>false</default>
         <label>Rapporti con i distributori e SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Reclamo da Riclassificare</fullName>
+        <default>false</default>
+        <label>Reclamo da Riclassificare</label>
     </customValue>
     <customValue>
         <fullName>Recupero contratto da Postel</fullName>
