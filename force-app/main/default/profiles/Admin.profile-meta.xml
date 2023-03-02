@@ -817,7 +817,12 @@
         <editable>true</editable>
         <field>SelfReadingOutcomeRequest__c.Status__c</field>
         <readable>true</readable>
-    </fieldPermissions>    
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AfDistrib__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.IsAddressChanged__c</field>
