@@ -400,7 +400,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                     }
 
-                }
+                } 
 
                 if(String.isNotEmpty(errorForChildOrder)){
                     break;
@@ -414,8 +414,18 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 continue;
             }
 
+            // STEP 5: create product option
             String productOptionError = '';
             for(HDT_WRP_ChildOrder wrpChildOrder : processObj.childOrderList){
+
+                if(!pricebookEntryForOptionalMap.containsKey(priceBookId)){
+                    break;
+                }
+
+                if(!additionalOrderItemMap.containsKey(commOffId)){
+                    productOptionError = 'Errore nell\'aggiunta del prodotto opzione';
+                    break;
+                }
 
                 Map<Id, PriceBookEntry> pbeOptionalMap = pricebookEntryForOptionalMap.get(priceBookId);
 
@@ -430,46 +440,50 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                     for(HDT_WRP_OrderItem wrpOrderItem : wrpChildOrder.orderItemList){
 
                         if(processName.equalsIgnoreCase('VolturaNoEnergy')){
-                            continue;
+                            break;
                         }
 
                         // check for itemType -> {'POD', 'PDR', 'promo', 'bonus'}
                         if(activationItemTypes.contains(wrpOrderItem.itemType)){
 
-                            Map<String, SBQQ__ProductOption__c> tempMap;
+                            Map<String, SBQQ__ProductOption__c> tempMap = additionalOrderItemMap.get(commOffId);
 
-                            if(!additionalOrderItemMap.containsKey(commOffId)){
-                                // product option error
-                                productOptionError = '';
-                            }
-
-                            tempMap = additionalOrderItemMap.get(commOffId);
-
-                            if(tempMap.containsKey(wrpOrderItem.product.ProductCode)){
-                                SBQQ__ProductOption__c prodOption = tempMap.get(wrpOrderItem.product.ProductCode);
-                                wrpOrderItem.product.Id = tempMap.get(wrpOrderItem.product.ProductCode).SBQQ__OptionalSKU__c;
-                                wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
-                                wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
-                                wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
-                                wrpOrderItem.orderItem.Quantity = 1;
-
-                                if(wrpOrderItem.itemType.equalsIgnoreCase('bonus')){
-                                    wrpOrderItem.orderItem.DurationDay__c= prodOption.SBQQ__OptionalSKU__r.DurationDay__c;
-                                    wrpOrderItem.orderItem.DurationDayGas__c=prodOption.SBQQ__OptionalSKU__r.DurationDayGas__c;
-                                    wrpOrderItem.orderItem.DelayDay__c=prodOption.SBQQ__OptionalSKU__r.DelayDay__c;
-                                    wrpOrderItem.orderItem.DelayDayGas__c=prodOption.SBQQ__OptionalSKU__r.DelayDayGas__c;
-                                    wrpOrderItem.orderItem.Percentage__c=prodOption.SBQQ__OptionalSKU__r.Percentage__c;
-                                    wrpOrderItem.orderItem.Price__c=prodOption.SBQQ__OptionalSKU__r.Price__c;
-                                    wrpOrderItem.orderItem.PriceGas__c=prodOption.SBQQ__OptionalSKU__r.PriceGas__c;
-                                }
-                                //system.debug(LoggingLevel.DEBUG, '>>> pbeId pod-pdr ' + wrpOrderItem.orderItem.PriceBookEntryId);
-
-                            } else {
-                                wrpOrderItem = null;
+                            if(!tempMap.containsKey(wrpOrderItem.product.ProductCode)){
+                                productOptionError = 'Errore nell\'aggiunta del prodotto opzione';
+                                break;
                             }
                             
+                            SBQQ__ProductOption__c prodOption = tempMap.get(wrpOrderItem.product.ProductCode);
+                            Id optionalSku = tempMap.get(wrpOrderItem.product.ProductCode).SBQQ__OptionalSKU__c;
+
+                            if(!pbeOptionalMap.containsKey(optionalSku)){
+                                productOptionError = 'Errore nell\'aggiunta del prodotto opzione';
+                                break;
+                            }
+
+                            wrpOrderItem.product.Id = optionalSku;
+                            wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
+                            wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
+                            wrpOrderItem.orderItem.UnitPrice = pbeOptionalMap.get(wrpOrderItem.product.Id).UnitPrice;
+                            wrpOrderItem.orderItem.Quantity = 1;
+
+                            if(wrpOrderItem.itemType.equalsIgnoreCase('bonus')){
+                                wrpOrderItem.orderItem.DurationDay__c = prodOption.SBQQ__OptionalSKU__r.DurationDay__c;
+                                wrpOrderItem.orderItem.DurationDayGas__c = prodOption.SBQQ__OptionalSKU__r.DurationDayGas__c;
+                                wrpOrderItem.orderItem.DelayDay__c = prodOption.SBQQ__OptionalSKU__r.DelayDay__c;
+                                wrpOrderItem.orderItem.DelayDayGas__c = prodOption.SBQQ__OptionalSKU__r.DelayDayGas__c;
+                                wrpOrderItem.orderItem.Percentage__c = prodOption.SBQQ__OptionalSKU__r.Percentage__c;
+                                wrpOrderItem.orderItem.Price__c = prodOption.SBQQ__OptionalSKU__r.Price__c;
+                                wrpOrderItem.orderItem.PriceGas__c = prodOption.SBQQ__OptionalSKU__r.PriceGas__c;
+                            }
+                            //system.debug(LoggingLevel.DEBUG, '>>> pbeId pod-pdr ' + wrpOrderItem.orderItem.PriceBookEntryId);
+
                         }
 
+                    }
+
+                    if(String.isNotEmpty(productOptionError)){
+                        break;
                     }
 
                     HDT_WRP_OrderItem requiredItem;
@@ -486,6 +500,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
                             wrpChildOrder.orderItemList.add(requiredItem);
                         }
+                    }
+
+                    if(String.isNotEmpty(productOptionError)){
+                        break;
                     }
 
                     processObj.parentOrder = setParentOrder(wrpChildOrder.childOrder, processObj.parentOrder, processObj.sale);
@@ -505,6 +523,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                         for(String key : tempMap.keySet()){
                             tempProdOpt = tempMap.get(key);
                             if(tempProdOpt.SBQQ__OptionalSKU__r.Name.equalsIgnoreCase('Analisi Consumi')){
+
+                                if(!pbeOptionalMap.containsKey(tempProdOpt.SBQQ__OptionalSKU__c)){
+                                    productOptionError = 'Errore nell\'aggiunta Analisi consumi';
+                                    break;
+                                }
+
                                 wrpOrderItem.product.Id = tempProdOpt.SBQQ__OptionalSKU__c;
                                 wrpOrderItem.orderItem.Product2Id = wrpOrderItem.product.Id;
                                 wrpOrderItem.orderItem.PriceBookEntryId = pbeOptionalMap.get(wrpOrderItem.product.Id).Id;
@@ -522,6 +546,13 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 childOrderToInsert.add(wrpChildOrder.childOrder);
 
             }
+
+            if(String.isNotEmpty(productOptionError)){
+                processObj.requestItem.Status__c = 'Errore';
+                processObj.requestItem.StatusDescription__c = productOptionError;
+                continue;
+            }
+
             processObj = setSaleServiceItem(processObj);
             saleServiceToInsert.add(processObj.saleServiceItem);
             ////system.debug(LoggingLevel.DEBUG, JSON.serializePretty(processObj));
@@ -536,7 +567,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
 
         String commodity = '';
-        //STEP 5: Order Fields Alignment
+        //STEP 6: Order Fields Alignment
         for(HDT_WRP_ProcessObjects processObj : processObjList){
 
             if(processObj.requestItem.Status__c == 'Errore'){

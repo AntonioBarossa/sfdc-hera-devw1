@@ -62,7 +62,6 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             codicePuntoSet.add(processObj.csvSplitted[codicePuntoIndex]);
             if(contoContrattualeIndex != null){
-                //System.debug('CC ' + processObj.csvSplitted[contoContrattualeIndex]);
                 contoContrattualeSet.add(processObj.csvSplitted[contoContrattualeIndex]);
             }
             if(contactCfIndex != null){
@@ -252,17 +251,8 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
             System.debug(LoggingLevel.DEBUG, '>>> tempSplitted ' + processObj.csvSplitted.size());
 
-            processObj.createServicePoint = (String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])) ? false : true;
-            processObj.createBillingProfile = (String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])) ? false : true;
-            
-            if(recTypeIndex != null){
-                processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Persona fisica')) || String.isEmpty(processObj.csvSplitted[recTypeIndex])) ? false:true;
-            }else{
-                processObj.createReferente = false;
+            setEnableCreateObject(processObj);
 
-            }            
-            //System.debug(LoggingLevel.DEBUG, '>>> enableCreate: billProf [' + processObj.createBillingProfile + ']; servPoint [' + processObj.createServicePoint + ']');
-            
             for (String tempField : processObj.csvSplitted) {
 
                 if ('null'.equalsIgnoreCase(tempField)) {
@@ -353,26 +343,33 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         String requiredAccountFields;
         String requiredReferenteFields;
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
             requiredReferenteFields = '';
+
             if(processObj.requestItem.Status__c.equalsIgnoreCase('Errore')){
                 System.debug(LoggingLevel.DEBUG, '>>> requestItem.Status__c ');
                 continue;
             }
+
             if(recTypeIndex != null){
                 processObj.account.RecordTypeId = recordTypeMap.get(processObj.csvSplitted[recTypeIndex]);
             }
+
             processObj.account.Name = String.isBlank(processObj.account.FirstName__c) ? processObj.account.LastName__c : processObj.account.FirstName__c + ' ' + processObj.account.LastName__c;
             processObj.account.BillingIsAddressVerified__c = true;
 
             requiredAccountFields = checkRequiredAccountFields(processObj.account);
+
             if(processObj.createReferente){
                 requiredReferenteFields = checkRequiredReferenteFields(processObj.referente);
             }
+
             if(String.isNotEmpty(requiredAccountFields) || String.isNotEmpty(requiredReferenteFields)){
                 processObj.requestItem.Status__c = 'Errore';
                 processObj.requestItem.StatusDescription__c = (String.isNotBlank(requiredAccountFields)?requiredAccountFields:requiredReferenteFields).abbreviate(250);
                 continue;
             }
+            
             if(processObj.createReferente){
                 handleReferenteCreation(processObj);
                 if(processObj.accountReferente != null){
@@ -443,7 +440,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                 // account not present in DB - create new account and contact
                 processObj.contact = new Contact();
                 processObj.contact.AccountId = saveAccountResponse.itemIdToObjId.get(processObj.requestItem.Id);
-                processObj.contact = createContact(processObj.contact, processObj.account);
+                processObj.contact = createContact(processObj.contact, processObj.account);  
                 System.debug(LoggingLevel.DEBUG, '>>> currentContact: ' + processObj.contact);
                 requestItemForUpsert.add(processObj.requestItem);
                 saveContactList.add(processObj.contact);
@@ -854,6 +851,17 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
             }
             sobjectMap.put(temp.labelField__c, temp);
         }
+    }
+
+    private void setEnableCreateObject(HDT_WRP_ProcessObjects processObj){
+        processObj.createServicePoint = (String.isNotEmpty(processObj.csvSplitted[codicePuntoIndex]) && codicePuntoMap.containsKey(processObj.csvSplitted[codicePuntoIndex])) ? false : true;
+        processObj.createBillingProfile = (String.isNotEmpty(processObj.csvSplitted[contoContrattualeIndex]) && billProfMap.containsKey(processObj.csvSplitted[contoContrattualeIndex])) ? false : true;
+        
+        if(recTypeIndex != null){
+            processObj.createReferente = ((String.isNotEmpty(processObj.csvSplitted[recTypeIndex]) && processObj.csvSplitted[recTypeIndex].equalsIgnoreCase('Persona fisica')) || String.isEmpty(processObj.csvSplitted[recTypeIndex])) ? false:true;
+        }else{
+            processObj.createReferente = false;
+        }  
     }
 
     private Contact createContact(Contact contact, Account account){
