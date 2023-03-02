@@ -22,7 +22,7 @@
     export const AFUNAC =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0','ACAUGRUNC0','ACPROMIBI0'] }; 
     export const AFUNACdisable =  { evaluationType: 'visible', rateCategories: ['ACARTCOMM0'] }; 
     export const NOTDOMESTIC =  { evaluationType: 'visible', rateCategories: ['ACANTINC00','ACAUNOPOT0','ACINTERNO0','ACPOZZI000','ACPROMISC0','ACPUBDIS00','ACPUBNDIS0','ACSUBDIST0','ACAUGENER0','ACANTIN000','ACPISPUB00','ACPROMIBI0','AITBAGRIC0','AITBNDOME0','AITMINDAP0','AITMINDBP0','AITMNDOME0'] }; 
-    export const NOTDOMESTICdisable =  { evaluationType: 'visible', rateCategories: ['ACPROMISC0','ACPROMIBI0'] }; 
+    export const NOTDOMESTICdisable =  { evaluationType: 'visible', rateCategories: ['ACPROMISC0','ACPROMIBI0'] }; //in not
     export const N_A =  { evaluationType: 'visible', rateCategories: ['ACDOMRESP0'] };
 
     //Rate Category Required
