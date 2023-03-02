@@ -356,6 +356,13 @@
                 <stringValue>In Lavorazione</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.QuotationValidityDate__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>QuotationValidityDate</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
@@ -2215,6 +2222,11 @@ IF(OR(ISPICKVAL({!Get_Input_Case.Type},&quot;Spostamento Contatore&quot;),ISPICK
         <expression>IF( OR(TEXT({!Get_Input_Case.Type}) = &quot;Nuovo Impianto&quot;,TEXT({!Get_Input_Case.Type}) = &quot;Aggiunta Attacco&quot;),
 &quot;Preventivi Riepilogo Nuovo Impianto&quot;,
 &quot;Preventivi Riepilogo&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>QuotationValidityDate</name>
+        <dataType>Date</dataType>
+        <expression>IF(TEXT({!Get_Input_Case.VoltageLevelRequested__c}) = &quot;BT&quot;, {!$Flow.CurrentDate} + 90,IF(TEXT({!Get_Input_Case.VoltageLevelRequested__c}) = &quot;MT&quot;,{!$Flow.CurrentDate} + 180, null))</expression>
     </formulas>
     <formulas>
         <description>Valorizzo il campo &quot;RateCategory__c&quot; dal campo &quot;Commodity&quot; del Case</description>
