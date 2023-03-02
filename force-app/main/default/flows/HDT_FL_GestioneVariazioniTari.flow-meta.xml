@@ -2177,7 +2177,7 @@
         <defaultConnectorLabel>altri sottoprocessi</defaultConnectorLabel>
         <rules>
             <name>concatenazioneToDo_0_0</name>
-            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5 AND 6</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 3 OR 4) AND 5</conditionLogic>
             <conditions>
                 <leftValueReference>getPostAttachment.Subprocess__c</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2211,13 +2211,6 @@
                 <operator>NotEqualTo</operator>
                 <rightValue>
                     <stringValue>D&apos;ufficio</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>getPostAttachment.Type</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Modifica dati contrattuali</stringValue>
                 </rightValue>
             </conditions>
             <connector>

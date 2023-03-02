@@ -568,6 +568,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Case.CustomerChangeDate__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>DocumentSelected__c.DocumentalSystem__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -859,6 +864,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.RemiCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AfDistrib__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

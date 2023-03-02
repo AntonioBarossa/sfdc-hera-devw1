@@ -1240,15 +1240,18 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String taxes = getFieldValue(fields, 'Taxes__c');
         String servicePointType = getFieldValue(fields, 'ServicePointType__c');
+        
         if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco') || currentCase.Type.equalsIgnoreCase('Istruttoria')){
+            String commodity = String.isNotBlank(getFieldValue(fields, 'Commodity__c'))?getFieldValue(fields, 'Commodity__c'):currentCase.Commodity__c;
+
             if(currentCase.ShipmentAddressAssign__c == null){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
             } 
-            else if(currentCase.Commodity__c == null){
+            else if(String.isBlank(commodity)){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Servizio mancante'));
             }
-            else if(currentCase.Commodity__c != null){
-                if(currentCase.Commodity__c == 'Gas' && 
+            else if(String.isNotBlank(commodity)){
+                if(commodity.equalsIgnoreCase('Gas') && 
                 (String.isNotBlank(supplyType))
                 ){
                     String taxesFormatted = taxes.substringBetween('(Cod. ',')');
@@ -1261,7 +1264,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                                                                               IsActive__c, 
                                                                               Taxes__c 
                                                                         FROM FieldCoerenceServicePoint__c
-                                                                        WHERE Commodity__c =: currentCase.Commodity__c AND
+                                                                        WHERE Commodity__c =: commodity AND
                                                                               SupplyType__c =: supplyType AND
                                                                               ImplantType__c =: servicePointType AND
                                                                               (Taxes__c =: taxesFormatted OR Taxes__c = null) AND

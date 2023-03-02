@@ -2548,6 +2548,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -2565,6 +2569,10 @@
         </values>
         <values>
             <fullName>Invio allegato a DL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
         <values>

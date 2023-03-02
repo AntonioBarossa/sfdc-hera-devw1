@@ -51,7 +51,9 @@ public inherited sharing class HDT_UTL_Case {
                 // output.salesCompanyCode = calculateSalesCompanyCode(salesCompany);
                 if(String.isNotBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
                     output.salesCompanyCode = '11-HERASPA';
-                    output.salesCompany = 'Hera Comm S.p.A';
+                    output.salesCompany = 'Marche Multiservizi S.p.A';
+                    output.vatPercentage = 'GENERICI 10%-01';
+                    output.taxes = 'Imposta usi domestici';
                 }else {
                     switch on city.SDV__c {
                         when 'HCM' {
@@ -149,6 +151,11 @@ public inherited sharing class HDT_UTL_Case {
             }else{
                 output.allineamentoGaa = 'N';
             }
+
+            if (!String.isBlank(newCurrentCase.RateCategory__c) && 'ACDOMRESP0'.equalsIgnoreCase(newCurrentCase.RateCategory__c)) {
+                output.customerChangeDate = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+            }
+
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
@@ -281,6 +288,12 @@ public inherited sharing class HDT_UTL_Case {
         public String isDomestico;
         @InvocableVariable
         public Case currentCase;
+        @InvocableVariable
+        public String vatPercentage;
+        @InvocableVariable
+        public String taxes;
+        @InvocableVariable
+        public Date customerChangeDate;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){

@@ -9,6 +9,7 @@ public inherited sharing class HDT_TRH_Subscription extends HDT_TRH_TriggerHandl
     public override void beforeInsert(){
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_SubscriptionProcess.adjustVasContractBeforeInsert(trigger.new);
+        HDT_UTL_SubscriptionProcess.alignFields(trigger.new);
     }
 
     public override void afterInsert(){

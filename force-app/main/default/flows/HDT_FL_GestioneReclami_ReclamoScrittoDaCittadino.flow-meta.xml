@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>currentCase</name>
             <value>
                 <elementReference>Get_Input_Case_Aggiornato</elementReference>
@@ -503,7 +509,7 @@
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>BP MODELLO</stringValue>
+                <stringValue>BP MODELLO MMS</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -867,7 +873,7 @@
             <targetReference>Advice</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>

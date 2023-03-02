@@ -116,6 +116,20 @@ import * as rateCategories from './hdtRateCategories.js';
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
+                loadActions : (evt) =>
+                    {
+                        if(
+                            this.currentSection.name === "variabiliDiProcesso"
+                            && this.order.RateCategory__c==='TATUDNR001' 
+                            && ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName)
+                        ){
+                            this.showMessage(
+                                "Attenzione", 
+                                "Per cliente domestico non residente, il numero di componenti è compilato automaticamente dal sistema in funzione del valore di superficie indicato.",
+                                "warning", "sticky"
+                            );
+                        }
+                    },
                 nextActions : (evt, currentSectionIndex, nextSectionStep) => 
                     {
                         savePredefaultedFields.call(this, evt?.currentTarget?.value);
@@ -333,7 +347,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 data:[
                     new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
                     new fieldData('','Subprocess__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','EffectiveDate__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
                     new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
                     new fieldData('','SendRequestDate__c', this.typeVisibility('acqua'), false, this.typeVisibility('acqua'), '',''),
@@ -342,7 +356,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('','FuiAccess__c', this.typeVisibility('gas'), false, false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'), this.typeVisibility('acqua'), this.typeVisibility('gas') || this.typeVisibility('ele'),'',''),
-                    new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Email__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','PayPurification__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PaySewer__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
@@ -352,8 +366,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
                     new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), false, false, '',''),
                     new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
-                    new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
-                    new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), this.rateCategoryVisibility(rateCategories.AF_BOC_IDRreq), false, '',''),
+                    new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), true, false, '',''),
                     new fieldData('','NumerousComunity__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, true, '',''),
                     new fieldData('','ComPostiLetto__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '',''),
                     new fieldData('','DomesticResidentNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNCOMP), this.rateCategoryVisibility(rateCategories.AFNCOMPreq), false, '',''),
@@ -364,11 +377,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     ),
                     new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
                     new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
-                    new fieldData('','NotDomesticHousingUnit__c', 
-                        this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) || this.rateCategoryVisibility(rateCategories.AFUNDI) ), 
-                        ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
-                        ( this.rateCategoryVisibility(rateCategories.AFUNDA) && this.rateCategoryVisibility(rateCategories.AFUNDAreq) ) ||
-                        ( this.rateCategoryVisibility(rateCategories.AFUNDI) && this.rateCategoryVisibility(rateCategories.AFUNDIreq) ), !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '',''),
+                    new fieldData('','NotDomesticHousingUnit__c',this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.NOTDOMESTIC), this.rateCategoryVisibility(rateCategories.NOTDOMESTICreq), !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '',''),
                     new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, true, '',''),
                     new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') /* && this.rateCategoryVisibility(rateCategories.AQCNSANNOF) */, false, true, '',''),
                     new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
@@ -481,8 +490,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('','SupplyUseType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, false, '','ACQUEDOTTO CIVILE'),
                 new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
-                new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
-                new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), this.rateCategoryVisibility(rateCategories.AF_BOC_IDRreq), false, '',''),
+                new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), true, false, '',''),
                 new fieldData('','NumerousComunity__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, true, '',''),
                 new fieldData('','ComPostiLetto__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '',''),
                 new fieldData('','DomesticResidentNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNCOMP), this.rateCategoryVisibility(rateCategories.AFNCOMPreq), false, '',''),
@@ -497,10 +505,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 ),
                 new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
                 new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
-                new fieldData('','NotDomesticHousingUnit__c', 
-                    this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) ), 
-                    ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
-                    ( this.rateCategoryVisibility(rateCategories.AFUNDA) && this.rateCategoryVisibility(rateCategories.AFUNDAreq) ) , !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '',''),
+                new fieldData('','NotDomesticHousingUnit__c',this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.NOTDOMESTIC), this.rateCategoryVisibility(rateCategories.NOTDOMESTICreq), !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '',''),
                 new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDI), false, false, '',''),
                 new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, true, '',''),
                 new fieldData('','CommercialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNAC), this.rateCategoryVisibility(rateCategories.AFUNACreq), this.rateCategoryVisibility(rateCategories.AFUNACdisable), '',''),

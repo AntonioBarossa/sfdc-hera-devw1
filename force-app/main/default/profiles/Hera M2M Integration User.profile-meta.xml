@@ -712,6 +712,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.AfDistrib__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.IsAddressChanged__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1648,6 +1653,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Case.CodeBlock__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Case.CustomerChangeDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

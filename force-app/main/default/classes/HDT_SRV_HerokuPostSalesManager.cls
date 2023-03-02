@@ -77,6 +77,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             
             mrrList = removeNonCommoditySubscriptions(mrrList);
             String processType = obj.get('Type') != null ? (String)obj.get('Type') : '';
+            String commodity = obj.get('Commodity__c') != null ? (String)obj.get('Commodity__c') : '';
             System.debug(LoggingLevel.DEBUG, 'processType: ' + processType);
             if(String.isNotBlank(processType) && 
             (processType.equalsIgnoreCase('Richiesta Domiciliazione')
@@ -90,17 +91,19 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 mrrList = changeMeterCode(mrrList,meterCode);
             }
             mrrList = supplyTypeTech(mrrList);
-            if(String.isNotBlank(processType) && 
-            (processType.equalsIgnoreCase('Modifica Unita Immobiliari Componenti'))){
-                System.debug(LoggingLevel.DEBUG, 'Processo di Modifica Unita -->');
-                Map<String,Object> objFields = new Map<String,Object>();
+            Map<String,Object> objFields = new Map<String,Object>();
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Modifica Unita Immobiliari Componenti') && 'Acqua'.equalsIgnoreCase(commodity)){
                 objFields.put('RateCategory__c', obj.get('RateCategory__c'));
                 objFields.put('Unita_Abitative__c', obj.get('Unita_Abitative__c'));
                 mrrList = handleMrrFields(mrrList, objFields);
             }
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Nuovo Impianto') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('SendToDistributorDate__c', obj.get('SendToDistributorDate__c'));
+                mrrList = handleMrrFields(mrrList, objFields);
+            }
 
             arg.put('endpoint', endpoint);
-            arg.put('timeout', 20000);
+            arg.put('timeout', 120000);
             arg.put('payload',mrrList);
             arg.put('clientType','REST');
             arg.put('contentType','application/json');
@@ -441,35 +444,57 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
         {
             if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case'))
             {
-
-                Set<String> afundiRateCategories = new Set<String>{'AITBNDOME0', 'AITMNDOME0', 'ACAUGRUNI0', 'ACINDSTR00', 'ACTINDSTR0'};
-                Set<String> afundaRateCategories = new Set<String>{'ACAGRICO00', 'ACTAGRICO0', 'ACTMAGRIC0'};
-                Set<String> afundcRateCategories = new Set<String>{'ACARTCOMM0', 'ACAUGRUNC0', 'ACTCOMMER0'};
-                Set<String> afundzRateCategories = new Set<String>{'ACAGRIZOO0', 'ACTMZOOTE0', 'ACZOOTECN0'};
-
-                System.debug(LoggingLevel.DEBUG, 'RateCategory: ' + String.valueOf(objFields.get('RateCategory__c')));
-
-                if(afundiRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'UND_IND';
-                }else if (afundaRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'UND_AGR';
-                }else if(afundcRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'UND_COM';
-                }else if(afundzRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'AFUNDZ';
-                }else if ('ACAUGENER0'.equalsIgnoreCase(String.valueOf(objFields.get('RateCategory__c')))){
-                    fieldName = 'UND';
+                if(objFields.get('Unita_Abitative__c') != null){ //da rivedere, il processo di modifica unità immobiliari permette di utilizzare solo tre RateCategory che non sono incluse tra quelle inserite nei seguenti set
+                    Set<String> afundiRateCategories = new Set<String>{'AITBNDOME0', 'AITMNDOME0', 'ACAUGRUNI0', 'ACINDSTR00', 'ACTINDSTR0'};
+                    Set<String> afundaRateCategories = new Set<String>{'ACAGRICO00', 'ACTAGRICO0', 'ACTMAGRIC0'};
+                    Set<String> afundcRateCategories = new Set<String>{'ACARTCOMM0', 'ACAUGRUNC0', 'ACTCOMMER0'};
+                    Set<String> afundzRateCategories = new Set<String>{'ACAGRIZOO0', 'ACTMZOOTE0', 'ACZOOTECN0'};
+    
+                    if(afundiRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                        fieldName = 'UND_IND';
+                    }else if (afundaRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                        fieldName = 'UND_AGR';
+                    }else if(afundcRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                        fieldName = 'UND_COM';
+                    }else if(afundzRateCategories.contains(String.valueOf(objFields.get('RateCategory__c')))){
+                        fieldName = 'AFUNDZ';
+                    }else if ('ACAUGENER0'.equalsIgnoreCase(String.valueOf(objFields.get('RateCategory__c')))){
+                        fieldName = 'UND';
+                    }
+    
+                    if(!String.isBlank(fieldName))
+                    {
+                        wrts_prcgvr.MRR_1_0.Field newField = new wrts_prcgvr.MRR_1_0.Field();
+                        newField.name = fieldName;
+                        newField.fieldType = 'STRING';
+                        newField.value =  String.valueOf(objFields.get('Unita_Abitative__c'));
+                        System.debug(LoggingLevel.DEBUG, 'DEBUG_HOUSE_UNIT: ' + JSON.serialize(newField));
+                        obj.fields.add(newField);
+                        break;
+                    }
                 }
 
-                if(!String.isBlank(fieldName))
-                {
-                    wrts_prcgvr.MRR_1_0.Field newField = new wrts_prcgvr.MRR_1_0.Field();
-                    newField.name = fieldName;
-                    newField.fieldType = 'STRING';
-                    newField.value = String.valueOf(objFields.get('Unita_Abitative__c'));
-                    obj.fields.add(newField);
+                if(objFields.get('SendToDistributorDate__c') != null){
+                    Boolean foundQc = false;
+                    Datetime foo = (DateTime)objFields.get('SendToDistributorDate__c');
+                    String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('QC'))
+                        {
+                            foundQc = true;
+                            f.value = dateFinal;
+                            break;
+                        }
+                    }
+                    if(!foundQc){
+                        wrts_prcgvr.MRR_1_0.Field qcDateField = new wrts_prcgvr.MRR_1_0.Field();
+                        qcDateField.name = 'QC';
+                        qcDateField.fieldType = 'STRING';
+                        qcDateField.value = dateFinal;
+                        obj.fields.add(qcDateField);
+                        break;
+                    }
                 }
-                break;
             }
         }
         return mrrList;
