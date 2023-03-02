@@ -151,6 +151,11 @@ public inherited sharing class HDT_UTL_Case {
             }else{
                 output.allineamentoGaa = 'N';
             }
+
+            if (!String.isBlank(newCurrentCase.RateCategory__c) && 'ACDOMRESP0'.equalsIgnoreCase(newCurrentCase.RateCategory__c)) {
+                output.customerChangeDate = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+            }
+
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
@@ -287,6 +292,8 @@ public inherited sharing class HDT_UTL_Case {
         public String vatPercentage;
         @InvocableVariable
         public String taxes;
+        @InvocableVariable
+        public Date customerChangeDate;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){
