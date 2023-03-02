@@ -9,7 +9,7 @@
     <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[{
-        &quot;FieldName&quot;: &quot;CustomerRequestDate__c&quot;,
+        &quot;FieldName&quot;: &quot;CustomerChangeDate__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 1
     }, {
