@@ -129,6 +129,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Fase_Non_Gestita</name>
+        <label>Assegna Fase Non Gestita</label>
+        <locationX>1117</locationX>
+        <locationY>2065</locationY>
+        <assignmentItems>
+            <assignToReference>FasePreventivo</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Pratica non gestita per il DL</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Conferma_Case</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Fase_Preventivo</name>
         <label>Assegna Fase Preventivo</label>
         <locationX>312</locationX>
@@ -141,7 +157,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Conferma_Case</targetReference>
+            <targetReference>Processo_Gestito_da_DL</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -314,6 +330,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Distributore_In_Rete</name>
+        <label>Distributore In Rete?</label>
+        <locationX>845</locationX>
+        <locationY>1986</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Fase_Non_Gestita</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Distributore Non InRete</defaultConnectorLabel>
+        <rules>
+            <name>Distributore_InRete</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetDispatcherInRete</leftValueReference>
+                <operator>WasVisited</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetDispatcherInRete</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Aggiorna_Conferma_Case</targetReference>
+            </connector>
+            <label>Distributore InRete</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Energia_Elettrica_o_Gas</name>
         <label>Energia Elettrica o Gas?</label>
         <locationX>688</locationX>
@@ -411,6 +459,45 @@
                 <targetReference>Rapido_o_Predeterminabile</targetReference>
             </connector>
             <label>No</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Processo_Gestito_da_DL</name>
+        <label>Processo Gestito da DL?</label>
+        <locationX>581</locationX>
+        <locationY>1876</locationY>
+        <defaultConnector>
+            <targetReference>Aggiorna_Conferma_Case</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Gestito</defaultConnectorLabel>
+        <rules>
+            <name>Non_Gestito_Da_DL</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sost. contatore cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta lettura cliente</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Consegna copia chiave GdM</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>GetDispatcherInRete</targetReference>
+            </connector>
+            <label>Non Gestito Da DL</label>
         </rules>
     </decisions>
     <decisions>
@@ -592,6 +679,30 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetDispatcherInRete</name>
+        <label>GetDispatcherInRete</label>
+        <locationX>1010</locationX>
+        <locationY>1830</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Distributore_In_Rete</targetReference>
+        </connector>
+        <faultConnector>
+            <targetReference>Assegna_Fase_Non_Gestita</targetReference>
+        </faultConnector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DispatcherCode__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case.DistributorCode__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_LocalDispatcherInrete__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Amount</name>
         <label>Aggiorna Amount</label>
@@ -635,8 +746,8 @@
     <recordUpdates>
         <name>Aggiorna_Conferma_Case</name>
         <label>Aggiorna Fase in Inviare Preventivo</label>
-        <locationX>740</locationX>
-        <locationY>1833</locationY>
+        <locationX>528</locationX>
+        <locationY>2263</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
