@@ -340,8 +340,8 @@
     <assignments>
         <name>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</name>
         <label>Assegna Fase Attesa Conferma Preventivo Cliente</label>
-        <locationX>1145</locationX>
-        <locationY>4740</locationY>
+        <locationX>1122</locationX>
+        <locationY>4773</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -357,10 +357,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Input_Case.QuotationValidityDate__c</assignToReference>
+            <assignToReference>Get_Input_Case_0.QuotationValidityDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>QuotationValidityDate</elementReference>
+                <elementReference>GetCaseForDataScadenza.QuotationValidityDate__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -511,7 +511,7 @@
         <name>AssegnaPotenzaRichiesta</name>
         <label>AssegnaPotenzaRichiesta</label>
         <locationX>357</locationX>
-        <locationY>1509</locationY>
+        <locationY>1514</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -640,7 +640,7 @@
         <name>AssegnaTipoConnessione_0</name>
         <label>AssegnaTipoConnessione</label>
         <locationX>1203</locationX>
-        <locationY>1160</locationY>
+        <locationY>1161</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.ConnectionType__c</assignToReference>
             <operator>Assign</operator>
@@ -1693,7 +1693,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</targetReference>
+                <targetReference>GetCaseForDataScadenza</targetReference>
             </connector>
             <label>Rapido</label>
         </rules>
@@ -2311,6 +2311,27 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
             <operator>EqualTo</operator>
             <value>
                 <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseForDataScadenza</name>
+        <label>GetCaseForDataScadenza</label>
+        <locationX>1055</locationX>
+        <locationY>4677</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
