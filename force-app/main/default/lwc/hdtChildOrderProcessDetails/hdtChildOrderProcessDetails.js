@@ -286,6 +286,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         return;
     }
 
+    updateContractExpenses(){
+        if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' ) {
+            this.template.querySelector("[data-id='ContractExpenses__c']").value = 'Nessun Addebito';
+        }
+        return;
+    }
+
     // @Picchiri Qui vengono popolati i campi di Credit Check    
     applyCreditCheckLogic(fieldName){    
         console.log('applyCreditCheckLogic order----->' + JSON.parse(JSON.stringify(this.order)));
