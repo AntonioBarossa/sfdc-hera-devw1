@@ -509,7 +509,7 @@
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>BP MODELLO</stringValue>
+                <stringValue>BP MODELLO MMS</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -873,7 +873,7 @@
             <targetReference>Advice</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
