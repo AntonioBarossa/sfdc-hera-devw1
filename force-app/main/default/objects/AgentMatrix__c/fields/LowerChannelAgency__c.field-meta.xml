@@ -47,6 +47,11 @@
                 <label>id di sistema</label>
             </value>
             <value>
+                <fullName>MASTER DEALER</fullName>
+                <default>false</default>
+                <label>MASTER DEALER</label>
+            </value>
+            <value>
                 <fullName>ND</fullName>
                 <default>false</default>
                 <label>ND</label>
