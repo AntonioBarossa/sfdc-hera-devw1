@@ -119,13 +119,14 @@ import * as rateCategories from './hdtRateCategories.js';
                 loadActions : (evt) =>
                     {
                         if(
-                            this.order.RateCategory__c==='TATUDNR001' 
+                            this.currentSection.name === "variabiliDiProcesso"
+                            && this.order.RateCategory__c==='TATUDNR001' 
                             && ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName)
                         ){
                             this.showMessage(
                                 "Attenzione", 
                                 "Per cliente domestico non residente, il numero di componenti è compilato automaticamente dal sistema in funzione del valore di superficie indicato.",
-                                "warning", "pester"
+                                "warning", "sticky"
                             );
                         }
                     },
