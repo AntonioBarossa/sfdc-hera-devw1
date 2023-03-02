@@ -1,6 +1,34 @@
 public inherited sharing class HDT_UTL_SubscriptionProcess {
 
     private static List<Contract> contractToDelete = new List<Contract>();
+
+
+    public static void alignFields(List<SBQQ__Subscription__c> newSubs){
+        Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
+        }
+
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>(
+            [SELECT id, 
+            Order.OrderReference__c, 
+            Order.ContractReference__c, 
+            Order.ServicePoint__c, 
+            Order.Commodity__c,
+            Order.EffectiveDate__c, 
+            Order.RecordType.DeveloperName 
+            FROM OrderItem 
+            WHERE Id IN :itemToSub.keySet()
+            WITH Security_Enforced ]);
+
+        for(SBQQ__Subscription__c sub : newSubs){
+            OrderItem item = itemsMap.get(sub.SBQQ__OrderProduct__c);
+            if(item == null ){   continue;   }
+            if('Ambiente'.equalsIgnoreCase(item?.Order?.Commodity__c) && item?.Order?.EffectiveDate__c!=null){      
+                sub.SBQQ__SubscriptionStartDate__c = item.Order.EffectiveDate__c;
+            }
+        }
+    }
     
     public static void adjustVasContractBeforeInsert(List<SBQQ__Subscription__c> newSubs){
         system.debug(LoggingLevel.DEBUG ,'******* adjustVasContractBeforeInsert');
