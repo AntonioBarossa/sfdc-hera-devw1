@@ -29,7 +29,8 @@ public with sharing class HDT_BA_QualityCallTst {
               */
             List<AgentMatrix__c> agentMatrix = HDT_UTL_DataFactoryTst.createAgentMatrix(1,false,'Sportello') ; 
             agentMatrix[0].IsMonitoring__c=true;
-            agentMatrix[0].AgencyCode__c='001';
+            agentMatrix[0].AgencyCode__c='AAA';
+            agentMatrix[0].AgentCode__c='001';
             insert agentMatrix;
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
@@ -68,7 +69,8 @@ public with sharing class HDT_BA_QualityCallTst {
                 childOrders[i].ComfortCallDaysDue__c=null;
                 childOrders[i].WizardCompletedDate__c=date.today().addDays(-60);
                 childOrders[i].IsVas__c= (i==3 || i ==6);
-                childOrders[i].AgencyCode__c='001';
+                childOrders[i].AgencyCode__c='AAA';
+                childOrders[i].CommercialId__c='001';
                 childOrders[i].Channel__c = 'Agenzia';
                 childOrders[i].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_SWITCHIN;
             
