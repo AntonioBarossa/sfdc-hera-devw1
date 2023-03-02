@@ -345,7 +345,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
-                    new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','VoltureType__c',this.typeVisibility('both'),true,false,'','',function(event){this.updateContractExpenses();}),
                     new fieldData('','Subprocess__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
@@ -485,7 +485,6 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Convenzione/Associazione','ConventionAssociation__c', ( this.typeVisibility('ele') || this.typeVisibility('gas') ) && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Livello pressione','PressureLevel__c', this.typeVisibility('gas'), true, false, '',''),
                 new fieldData('Servizio Energetico','EnergyService__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'), false, false, '',''),
-                new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
                 new fieldData('','ContractReference__c', this.typeVisibility('acqua') && this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo', false, true, '',''),
                 new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('','SupplyUseType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, false, '','ACQUEDOTTO CIVILE'),
