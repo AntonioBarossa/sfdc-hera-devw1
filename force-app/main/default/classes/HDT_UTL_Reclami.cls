@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_Reclami
     private Map<String,String> calculateDatesWater(Case inputCase, String ato)
     {
         Map<String,String> result = new Map<String,String>();
-        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
+        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) || 'Reclamo Scritto Da Cittadino'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
         Integer suspensionDays;
 
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,'Acqua');
@@ -45,7 +45,7 @@ public with sharing class HDT_UTL_Reclami
     private Map<String,String> calculateDates( Case inputCase, String commodity )
     {
         Map<String,String> result = new Map<String,String>();
-        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
+        String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) || 'Reclamo Scritto Da Cittadino'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,commodity);
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
