@@ -26,6 +26,11 @@
                 <label>Prima Attivazione Fuori delibera</label>
             </value>
             <value>
+                <fullName>Prima Attivazione Gas</fullName>
+                <default>false</default>
+                <label>Prima Attivazione Gas</label>
+            </value>
+            <value>
                 <fullName>Prima Attivazione In delibera</fullName>
                 <default>false</default>
                 <label>Prima Attivazione In delibera</label>
