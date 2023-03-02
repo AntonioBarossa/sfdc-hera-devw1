@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>currentCase</name>
             <value>
                 <elementReference>Get_Input_Case_Aggiornato</elementReference>
