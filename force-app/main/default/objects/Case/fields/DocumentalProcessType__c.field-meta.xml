@@ -9,7 +9,7 @@ IF(AND(ISPICKVAL(Type,&apos;Variazione Potenza&apos;), ISPICKVAL(ConnectionType_
 IF(AND(ISPICKVAL(Type,&apos;Verifica Tensione - Pressione&apos;), CommodityFormula__c=&apos;Gas&apos;),&apos;Verifica Pressione&apos;,
 IF(AND(ISPICKVAL(Type,&apos;Verifica Tensione - Pressione&apos;), CommodityFormula__c=&apos;Energia Elettrica&apos;),&apos;Verifica Tensione&apos;,
 IF(AND(ISPICKVAL(Type,&apos;Verifica Tensione - Pressione&apos;), CommodityFormula__c=&apos;Acqua&apos;),&apos;Verifica Pressione&apos;,
-IF(AND(ISPICKVAL(Type,&apos;Verifica GDM&apos;), CommodityFormula__c=&apos;Acqua&apos;),&apos;Verifica Metrologica GdM&apos;,
+IF(AND(ISPICKVAL(Type,&apos;Verifica GDM&apos;), CommodityFormula__c=&apos;Acqua&apos;),&apos;Verifica GDM&apos;,
 IF(ISPICKVAL(Type,&apos;Verifica GDM&apos;),&apos;Verifica GdM&apos;,
 IF(ISPICKVAL(Type,&apos;Richiesta lettura cliente&apos;),&apos;Richiesta lettura c/cliente&apos;,
 IF(ISPICKVAL(Type,&apos;Sost. contatore cliente&apos;),&apos;Sost. contatore c/cliente&apos;,
