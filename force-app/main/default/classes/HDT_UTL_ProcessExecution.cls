@@ -172,7 +172,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         return itemError;
     }
 
-    public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
+    /*public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
         saveResponse.savedObject = new List<sObject>();
@@ -214,9 +214,17 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
         return saveResponse;
 
+    }*/
+
+    public static HDT_WRP_SaveResponse databaseUpsertWithKey(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType, String fieldUpsert){
+        return databaseUpsertMethod(sObjectList, requetItems, sObjectType, fieldUpsert);
+    }
+    
+    public static HDT_WRP_SaveResponse databaseUpsert(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType){
+        return databaseUpsertMethod(sObjectList, requetItems, sObjectType, null);
     }
 
-    public static HDT_WRP_SaveResponse databaseUpsertWithKey(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType,String fieldUpsert){
+    public static HDT_WRP_SaveResponse databaseUpsertMethod(List<sObject> sObjectList, List<MassiveLoaderRequestItem__c> requetItems, String sObjectType, String fieldUpsert){
         HDT_WRP_SaveResponse saveResponse = new HDT_WRP_SaveResponse();
         saveResponse.reponseItemList = new List<MassiveLoaderRequestItem__c>();
         saveResponse.savedObject = new List<sObject>();
@@ -227,11 +235,11 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         Schema.DescribeSObjectResult objRes = objtype.getDescribe();
         Schema.SObjectField ftoken;
         List<Database.UpsertResult> upsertResults;
+
         if(objRes.isCreateable()){
             if(String.isNotBlank(fieldUpsert)){
                 ftoken = objtype.getDescribe().fields.getMap().get(fieldUpsert);
-                //ftoken = objRes.Fields.get(fieldUpsert);
-                upsertResults = Database.upsert(sObjectList, ftoken,false);
+                upsertResults = Database.upsert(sObjectList, ftoken, false);
             }else{
                 upsertResults = Database.upsert(sObjectList, false);
             }
