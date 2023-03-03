@@ -450,7 +450,7 @@
         <defaultConnectorLabel>Avanti</defaultConnectorLabel>
         <rules>
             <name>Conferma_Label</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR (2 AND 4)) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>ProcessType</leftValueReference>
                 <operator>EqualTo</operator>
@@ -466,10 +466,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                <leftValueReference>Get_Case.CommodityFormula__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>MMS</stringValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.Subprocess__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Lettura su Contratto Aperto</stringValue>
                 </rightValue>
             </conditions>
             <connector>
