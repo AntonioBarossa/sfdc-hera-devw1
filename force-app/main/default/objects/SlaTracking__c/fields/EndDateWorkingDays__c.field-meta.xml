@@ -2,6 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>EndDateWorkingDays__c</fullName>
     <externalId>false</externalId>
+    <inlineHelpText>Previsione della data di fine lavorazione calcolata in giorni lavorativi</inlineHelpText>
     <label>Data fine [gg lavorativi]</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
