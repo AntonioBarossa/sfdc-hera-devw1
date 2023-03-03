@@ -28,9 +28,11 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
                 //SF Created a New Contract but SAP didn't
                 List<SBQQ__Subscription__c> oldSubs = contractWithSubs.get(ord.ContractReference__r.Id)?.SBQQ__Subscriptions__r;
                 for(SBQQ__Subscription__c sub : oldSubs){
-                    sub.SBQQ__SubscriptionEndDate__c = date.today();
-                    sub.SBQQ__TerminatedDate__c = date.today();
-                    subsToUpdate.add(sub);
+                    if(ord.EffectiveDate__c != null){
+                        sub.SBQQ__SubscriptionEndDate__c = ord.EffectiveDate__c.addDays(-1);
+                        sub.SBQQ__TerminatedDate__c = ord.EffectiveDate__c.addDays(-1);
+                        subsToUpdate.add(sub);
+                    } 
                 }
 
                 List<SBQQ__Subscription__c> newSubs = contractWithSubs.get(c.Id)?.SBQQ__Subscriptions__r;

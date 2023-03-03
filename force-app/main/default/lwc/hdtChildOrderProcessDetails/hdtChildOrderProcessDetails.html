@@ -34,7 +34,7 @@
                                 </template>
 
                                 <template if:false={section.value.hasAddrComp}>
-                                    <lightning-record-edit-form record-id={section.value.recordId} onload={handleOnLoad} object-api-name={section.value.objectApiName}>
+                                    <lightning-record-edit-form record-id={section.value.recordId} data-section-index={section.index} onload={handleOnLoad} object-api-name={section.value.objectApiName}>
                                         <div class="slds-grid slds-wrap slds-m-top_small">
                                             <!--<template for:each={section.value.data} for:item="field">-->
                                             <template iterator:field_obj={section.value.data}>
@@ -130,7 +130,7 @@
                                             <c-hdt-codice-ateco title="Seleziona codice ateco" order={order} onupdate_cod_ateco_details={handleUpdateCodAtecoEvent}></c-hdt-codice-ateco>
                                         </template>
                                         <template if:true={section.value.hasCodiceRonchiButton}>
-                                            <c-hdt-codice-ronchi title="Seleziona codice ateco" order={order} onupdate_cod_ateco_details={handleUpdateCodAtecoEvent}></c-hdt-codice-ronchi>
+                                            <c-hdt-codice-ronchi title="Seleziona codice ateco" order={order} supply-city={order.ServicePoint__r.SupplyCity__c} onupdate_cod_ateco_details={handleUpdateCodAtecoEvent}></c-hdt-codice-ronchi>
                                         </template>
                                         <lightning-button if:true={section.value.readingButton} class="slds-p-around_small" value={section.value.name} disabled={readingDisabled} onclick={handleNext} label="Inserisci Autolettura" name='goReading' variant="brand" icon-name="utility:right"></lightning-button>
                                         <lightning-button if:false={section.value.firstStep} value={section.value.name} onclick={handlePrevious} label="Indietro" variant="brand" icon-name="utility:left" class="slds-m-left_x-small"></lightning-button>

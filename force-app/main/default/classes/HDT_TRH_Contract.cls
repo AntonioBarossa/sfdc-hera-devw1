@@ -147,7 +147,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 ServicePoint__c sp = spToActivate.get(c.ServicePoint__c);
                 sp = sp!=null? sp : new ServicePoint__c(Id=c.ServicePoint__c);
                 sp.AreaDeclaredTARI__c = ord.Surface__c;
-                if(ord.RonchiSubcat__c != null && ord.RonchiCode__c != null){
+                if(ord.CommercialProductLink__r.Family == 'Offerta commerciale'){
                     sp.RonchiCategoryCode__c = ord.RonchiCode__c;
                     sp.RonchiSubCategoryCode__c = ord.RonchiSubcat__c;
                 }

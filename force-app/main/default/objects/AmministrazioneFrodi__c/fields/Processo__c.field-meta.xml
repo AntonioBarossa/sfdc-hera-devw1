@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Prima Attivazione</fullName>
+                <default>false</default>
+                <label>Prima Attivazione</label>
+            </value>
+            <value>
                 <fullName>Prima Attivazione con modifica</fullName>
                 <default>false</default>
                 <label>Prima Attivazione con modifica</label>

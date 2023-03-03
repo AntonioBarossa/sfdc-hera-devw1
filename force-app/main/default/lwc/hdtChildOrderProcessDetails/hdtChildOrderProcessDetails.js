@@ -97,7 +97,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     //FINE SVILUPPI EVERIS
 
     handleSectionDataToSubmitCollection(event){
-        if(event.target.fieldName === 'EffectiveDate__c' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura'){
+        if( event.target.fieldName === 'EffectiveDate__c' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' && 
+            ( this.order.ServicePoint__r.CommoditySector__c == 'Gas' || this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica') )
+        {
                 console.log('EffectiveDateValue -> ' + event.target.value);
                 voltureEffectiveDateCheck({effectiveDate: event.target.value})
                     .then(result => {
@@ -165,6 +167,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleOnLoad(event) {
         this.disableNext = false;
+        
+        const sectionIndex = event.target.getAttribute('data-section-index');
+        const DynamicOnLoad = this.pendingSteps[sectionIndex]?.loadActions;
+        if(DynamicOnLoad && DynamicOnLoad instanceof Function ){
+            DynamicOnLoad(event);
+        }
+        
         if( this.currentSection.name === 'processVariables' || this.currentSection.name === 'dettaglioImpianto' ) {
             if( this.template.querySelector("[data-id='Cohabitation__c']") !== null ){
                 this.hasCohabitantButton = ( this.template.querySelector("[data-id='Cohabitation__c']").value == "Y" );
@@ -264,6 +273,26 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
         }
         return result;
+    }
+
+    updateRealEstateUnit(){
+        let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") ? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value) : 0;
+        let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']") ? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
+        let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']") ? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
+        let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']") && (this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
+        let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']") && (this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
+        let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']") && (this.template.querySelector("[data-id='CommercialHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
+        let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']") && (this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
+        let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
+        this.template.querySelector("[data-id='RealEstateUnit__c']").value = sumUnit;
+        return;
+    }
+
+    updateContractExpenses(){
+        if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' ) {
+            this.template.querySelector("[data-id='ContractExpenses__c']").value = 'Nessun Addebito';
+        }
+        return;
     }
 
     // @Picchiri Qui vengono popolati i campi di Credit Check    
@@ -513,15 +542,16 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         
     }
 
-    showMessage(title,message,variant)
+    showMessage(title,message,variant, mode)
     {
         this.loading = false;
         const toastErrorMessage = new ShowToastEvent({
             title: title,
             message: message,
             variant: variant,
+            mode: mode? mode : "dismissible"
         });
-    this.dispatchEvent(toastErrorMessage);
+        this.dispatchEvent(toastErrorMessage);
     }
 
     handleNext(event){
@@ -670,8 +700,27 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     return;
                 }
                 if( this.typeVisibility('acqua') &&
+                    this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' && 
+                    this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && 
+                    ( this.template.querySelector("[data-id='RealEstateUnit__c']").value === '' || 
+                    this.template.querySelector("[data-id='RealEstateUnit__c']").value === null) )
+                {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Unità Immobiliari',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                let date = new Date();
+                let today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                let effectiveDate = new Date(this.template.querySelector("[data-id='EffectiveDate__c']").value);
+                if( this.typeVisibility('acqua') &&
                     this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' &&
-                    this.order.Subprocess__c == 'Retroattiva' &&
+                    ( this.order.Subprocess__c == 'Retroattiva' || effectiveDate < today ) &&
                     this.availableSteps.find(element => element.step === nextSectionStep).label === 'Fatturazione' ) //check next section
                 {
                     this.loading = false;
@@ -745,6 +794,22 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         const toastErrorMessage = new ShowToastEvent({
                             title: 'Errore',
                             message: 'Popolare il campo Superficie Servita',
+                            variant: 'error',
+                            mode: 'sticky'
+                        });
+                    this.dispatchEvent(toastErrorMessage);
+                    return;
+                }
+                if( this.typeVisibility('acqua') &&
+                    ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) && 
+                    this.template.querySelector("[data-id='RealEstateUnit__c']") !== null && 
+                    ( this.template.querySelector("[data-id='RealEstateUnit__c']").value === '' || 
+                    this.template.querySelector("[data-id='RealEstateUnit__c']").value === null ) )
+                {
+                    this.loading = false;
+                        const toastErrorMessage = new ShowToastEvent({
+                            title: 'Errore',
+                            message: 'Popolare il campo Unità Immobiliari',
                             variant: 'error',
                             mode: 'sticky'
                         });
@@ -1184,50 +1249,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 data: [
                     new fieldData('Data Cessazione Switchout','SwitchOutDate__c', this.typeVisibility('both'), false, true, '','')
                 ]
-            },/* 
-            {
-                step: 3,
-                label: 'Variabili di Processo',
-                name: 'processVariables',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                readingButton:true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
-                data:[
-                    new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
-                    new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
-                    new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
-                    new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
-                    new fieldData('','MaxRequiredPotential__c',this.typeVisibility('gas'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
-                    new fieldData('','FuiAccess__c', this.typeVisibility('gas'), false, false,'',''),
-                    new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','PhoneNumber__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','AnnualConsumption__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','Market__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','SupplyType__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','Commodity__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','ServicePointCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','ImplantType__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','SAPImplantCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','CustomerCategory__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','MeterSN__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','Resident__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','SapContractCode__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('Disalimentabilità','Disconnectable__c',this.typeVisibility('both'),true, true, '', ''),
-                    new fieldData('Categoria disalimentabilità','DisconnectibilityType__c',this.typeVisibility('both'),false, true, '', ''),
-                    new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true,'',''),
-                    new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true,'',''),
-                    new fieldData('Tensione','VoltageLevel__c', this.typeVisibility('ele'), true, true,'',''),
-                    new fieldData('Uso energia','UseTypeEnergy__c', this.typeVisibility('ele'), true, true,'',''),
-                    new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), true, true,'',''),
-                    new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('gas'), true, true,'',''),
-                    new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business', false, false,'','')
-                ]
-            }, */
+            },
             {
                 step: 4,
                 label: 'Autolettura',
@@ -1253,7 +1275,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('P.Iva precedente intestatario','PreviousHolderVatNumber__c', true, false, false, '','')
                     //new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','')
                 ]
-            },
+            },/* 
             {
                 step: 5,
                 label: 'Variabili di Processo',
@@ -1318,8 +1340,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'), true, this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt', '',''),
                 new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),false, true, '','')
                ]
-            },
-
+            }, */
             {
                 step: 5,
                 label: 'Riepilogo Dati',
@@ -1924,9 +1945,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     handleUpdateCodAtecoEvent(event){
         console.log('###Ateco Event >>> ' + JSON.stringify(event.detail));
         if(event.detail?.isRonchi){
-            this.template.querySelector("[data-id='AtecoCode__c']").value = safeStr(event.detail?.atecoCode), this.sectionDataToSubmit["AtecoCode__c"]=safeStr(event.detail?.atecoCode);
+            //this.template.querySelector("[data-id='AtecoCode__c']").value = safeStr(event.detail?.atecoCode), this.sectionDataToSubmit["AtecoCode__c"]=safeStr(event.detail?.atecoCode);
             this.template.querySelector("[data-id='RonchiCode__c']").value = safeStr(event.detail?.ronchiCode), this.sectionDataToSubmit["RonchiCode__c"]=safeStr(event.detail?.ronchiCode);
-            this.template.querySelector("[data-id='RonchiSubcat__c']").value = safeStr(event.detail?.ronchiSubcategory), this.sectionDataToSubmit["RonchiSubcat__c"]=safeStr(event.detail?.ronchiSubcategory);;
+            this.template.querySelector("[data-id='RonchiSubcat__c']").value = safeStr(event.detail?.ronchiSubcategory), this.sectionDataToSubmit["RonchiSubcat__c"]=safeStr(event.detail?.ronchiSubcategory);
+            this.template.querySelector("[data-id='HerAteco__c']").value = safeStr(event.detail?.istatCode), this.sectionDataToSubmit["RonchiSubcat__c"]=safeStr(event.detail?.istatCode);            
         }
         else{
             this.template.querySelector("[data-id='AtecoCode__c']").value = event.detail;
