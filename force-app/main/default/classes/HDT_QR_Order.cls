@@ -44,7 +44,7 @@ public inherited sharing class HDT_QR_Order {
             Name, AccountId,SAPImplantCode__c,SalesCompany__c,SapContractCode__c,EffectiveDate__c,ContractAccountCode__c,  Account.Name, 
             Account.VATNumber__c, Account.FiscalCode__c,BillingProfile__c,ServicePoint__c,Status, ContractSigned__c, SignedDate__c,
             SignatureMethod__c, DocSendingMethod__c,Market__c,VAT__c, SBQQ__Quote__r.SBQQ__PriceBook__c, Surface__c, Commodity__c, 
-            RonchiCode__c, RonchiSubcat__c, ContractReference__r.SAPContractCode__c,isMultipleQuoteOffer__c, RecordTypeId,
+            RonchiCode__c, RonchiSubcat__c, ContractReference__r.SAPContractCode__c,isMultipleQuoteOffer__c, RecordTypeId, CommercialProductLink__r.Family,
             CommercialProduct__c, TemporaryConnectionEndDate__c, ProcessType__c
             FROM Order 
             WHERE Id IN :orderId

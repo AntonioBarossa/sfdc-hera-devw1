@@ -130,7 +130,7 @@
                                             <c-hdt-codice-ateco title="Seleziona codice ateco" order={order} onupdate_cod_ateco_details={handleUpdateCodAtecoEvent}></c-hdt-codice-ateco>
                                         </template>
                                         <template if:true={section.value.hasCodiceRonchiButton}>
-                                            <c-hdt-codice-ronchi title="Seleziona codice ateco" order={order} onupdate_cod_ateco_details={handleUpdateCodAtecoEvent}></c-hdt-codice-ronchi>
+                                            <c-hdt-codice-ronchi title="Seleziona codice ateco" order={order} supply-city={order.ServicePoint__r.SupplyCity__c} onupdate_cod_ateco_details={handleUpdateCodAtecoEvent}></c-hdt-codice-ronchi>
                                         </template>
                                         <lightning-button if:true={section.value.readingButton} class="slds-p-around_small" value={section.value.name} disabled={readingDisabled} onclick={handleNext} label="Inserisci Autolettura" name='goReading' variant="brand" icon-name="utility:right"></lightning-button>
                                         <lightning-button if:false={section.value.firstStep} value={section.value.name} onclick={handlePrevious} label="Indietro" variant="brand" icon-name="utility:left" class="slds-m-left_x-small"></lightning-button>
