@@ -12,9 +12,9 @@ public with sharing class HDT_UTL_LicenseAssignment {
         System.debug('LIC CPQ ID:'+cpqLicId.Id);
 
         //Recupero permissionset CPQ
-        PermissionSet psCPQ=[select id from PermissionSet where LicenseId  in (select id from PermissionSetLicense where MasterLabel ='Salesforce CPQ License')  and name='HDT_SalesforceCPQLicense'];
+        PermissionSet psCpq=[select id from PermissionSet where LicenseId  in (select id from PermissionSetLicense where MasterLabel ='Salesforce CPQ License')  and name='HDT_SalesforceCPQLicense'];
 
-        System.debug('PS CPQ ID:'+psCPQ.Id);
+        System.debug('PS CPQ ID:'+psCpq.Id);
 
         //Recupero nome licenza CRM
         PermissionSetLicense crmLicId=[select id from PermissionSetLicense where MasterLabel ='CRM User' ];
@@ -22,9 +22,9 @@ public with sharing class HDT_UTL_LicenseAssignment {
         System.debug('LIC CRM id:'+crmLicId.Id);
 
         //Recupero permissionset CRM
-        PermissionSet psCRM=[select id from PermissionSet where LicenseId  in (select id from PermissionSetLicense where MasterLabel ='CRM User')];
+        PermissionSet psCrm=[select id from PermissionSet where LicenseId  in (select id from PermissionSetLicense where MasterLabel ='CRM User')];
 
-        System.debug('PS CRM ID:'+psCRM.Id);
+        System.debug('PS CRM ID:'+psCrm.Id);
 
         //Recupero nome licenza Service
         PermissionSetLicense servLicId=[select id from PermissionSetLicense where MasterLabel ='Service User' ];
@@ -85,7 +85,7 @@ public with sharing class HDT_UTL_LicenseAssignment {
             //controllo se l'utente ha la licenza CPQ ma non la licenza Service e CRM
             if(userCpq.contains(usr.Id) && !userCrm.contains(usr.Id) && !userService.contains(usr.Id)){
                 //gli devo aggiungere la CRM
-                PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = psCRM.Id, AssigneeId = usr.Id);
+                PermissionSetAssignment psa = new PermissionSetAssignment(PermissionSetId = psCrm.Id, AssigneeId = usr.Id);
                 psAssignmentList.add(psa);
                 userToAddCrm=userToAddCrm+1;
                 continue;
