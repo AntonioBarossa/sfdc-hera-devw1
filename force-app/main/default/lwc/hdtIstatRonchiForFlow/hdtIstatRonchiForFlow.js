@@ -1,11 +1,12 @@
 import { LightningElement, track, api } from 'lwc';
-import HdtCodiceAteco from 'c/hdtCodiceAteco';
-import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixListIstatRonchi';
+import HdtCodiceRonchi from 'c/hdtCodiceRonchi';
+import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixList';
+import getAtecoMatrixListIstatRonchi from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixListIstatRonchi';
 import saveIstatRonchiCase from '@salesforce/apex/HDT_LC_CodiceAteco.saveIstatRonchiCase';
 import { getRecordNotifyChange } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
-export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
+export default class HdtIstatRonchiForFlow extends HdtCodiceRonchi {
 
     ronchiCode;
     ronchiSubcategory;
@@ -13,15 +14,17 @@ export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
     @track buttonLabel;
     @api caseRecord;
     @api title;
-    @track columns;
+    @api supplyCity;
 
     columnsData = {
         Istat:[
+            {label: 'Codice Comune', fieldName: 'AtecoCode__c', type: 'text'},
             {label: 'Comune', fieldName: 'City__c', type: 'text'},
-            {label: 'Codice Ateco', fieldName: 'AtecoCode__c', type: 'text'},
-            {label: 'Codice Istat', fieldName: 'IstatCode__c', type: 'text'}
+            {label: 'Codice Istat', fieldName: 'IstatCode__c', type: 'text'},
+            {label: 'Categoria', fieldName: 'Category__c', type: 'text'}
         ],
         Ronchi:[
+            {label: 'Codice Comune', fieldName: 'AtecoCode__c', type: 'text'},
             {label: 'Comune', fieldName: 'City__c', type: 'text'},
             {label: 'Codice Ronchi', fieldName: 'RonchiCode__c', type: 'text'},
             {label: 'Sottocategoria Ronchi', fieldName: 'RonchiSubcategory__c', type: 'text'},
@@ -29,71 +32,28 @@ export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
         ]
     }
 
+    get options() {
+        switch (this.title.toUpperCase()) {
+            case 'ISTAT':
+                return [
+                    {label: 'Comune', value: 'City__c'},
+                    {label: 'Codice Istat', value: 'IstatCode__c'}
+                ];
+                break;
+            case 'RONCHI':
+                return [
+                    {label: 'Comune', value: 'CityRonchi'},
+                    {label: 'Codice Istat', value: 'IstatCodeAndCity'},
+                    {label: 'Codice Ronchi', value: 'RonchiCodeAndCity'}
+                ];
+                break;
+            default:
+                return [];
+        }
+    }
+
     constructor(){
         super();
-    }
-    
-    createTable(data) {
-        let i, j, temporary, chunk = 4;
-        this.pages = [];
-        for (i = 0, j = data.length; i < j; i += chunk) {
-            temporary = data.slice(i, i + chunk);
-            this.pages.push(temporary);
-        }
-        this.totalPages = this.pages.length;
-        this.currentPage = 0;
-        this.reLoadTable();
-    }
-
-    getTableSelection(event){
-        console.log('getTableSelection: ' + JSON.stringify(event.detail.selectedRows));
-        let selectedRows = event.detail.selectedRows;
-        this.selectedCode = selectedRows[0].AtecoCode__c;
-        this.selectedIstatCode = selectedRows[0].IstatCode__c;
-        this.ronchiCode = selectedRows[0].RonchiCode__c;
-        this.ronchiSubcategory = selectedRows[0].RonchiSubcategory__c;
-        this.ronchiDescription = selectedRows[0].Type__c;
-        this.disabledSave = false;
-    }
-
-    submitSearch(){
-        this.loading = true;
-        console.log('******:' + JSON.stringify(this.searchInputValue));
-        getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue, whichCode: this.title}).then(data =>{
-            this.loading = false;
-            this.isTableVisible = true;
-
-            console.log('getAtecoMatrixList: ' + JSON.stringify(data));
-
-            if(data.length > 0){
-                this.showEmptyMessage = false;
-                this.createTable(data);
-            } else { 
-                this.showEmptyMessage = true;
-            }
-
-        }).catch(error => {
-            this.loading = false;
-
-            let errorMessage = '';
-
-            if (error.body.message !== undefined) {
-                errorMessage = error.body.message;
-            } else if(error.message !== undefined){
-                errorMessage = error.message;
-            } else if(error.body.pageErrors !== undefined){
-                errorMessage = error.body.pageErrors[0].message;
-            }
-
-            console.log('Error: ', errorMessage);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: errorMessage,
-                variant: 'error',
-                mode: 'sticky'
-            });
-            this.dispatchEvent(toastErrorMessage);
-        });
     }
 
     getParams(){
@@ -110,6 +70,19 @@ export default class HdtIstatRonchiForFlow extends HdtCodiceAteco {
             };
         }else{
             return {};
+        }
+    }
+
+    searchPromise(){
+        switch (this.title.toUpperCase()) {
+            case 'ISTAT':
+                return getAtecoMatrixListIstatRonchi({filterType: this.filterType, filterValue: this.searchInputValue, whichCode : this.title });
+                break;
+            case 'RONCHI':
+                return getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue, supplyCity : this.supplyCity });
+                break;
+            default:
+                return [];
         }
     }
 

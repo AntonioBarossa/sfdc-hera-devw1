@@ -12,7 +12,8 @@
 
             <property name="caseRecord" type="@salesforce/schema/Case" label="Case" description="Record Case" role="inputOnly"/>
             <property name="title" type="String" label="Title" description="Titolo" role="inputOnly"/>
-
+            <property name="supplyCity" type="String" label="supplyCity" description="supplyCity" role="inputOnly"/>
+            
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
