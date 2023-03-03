@@ -26,7 +26,7 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
 
     get options() {
         return [
-            {label: 'Comune', value: 'City__c'},
+            {label: 'Comune', value: 'CityRonchi'},
             {label: 'Codice Istat', value: 'IstatCodeAndCity'},
             {label: 'Codice Ronchi', value: 'RonchiCodeAndCity'}
         ];
