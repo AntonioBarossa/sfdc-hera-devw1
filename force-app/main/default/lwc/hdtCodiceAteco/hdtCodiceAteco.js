@@ -143,6 +143,7 @@ export default class HdtCodiceAteco extends LightningElement {
             this.pages.push(temporary);
         }
         this.totalPages = this.pages.length;
+        this.currentPage=0;
         this.reLoadTable();
     }
 

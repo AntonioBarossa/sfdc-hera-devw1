@@ -173,4 +173,48 @@ public inherited sharing class HDT_QR_AtecoMatrix {
             WITH SECURITY_ENFORCED
         ];
     }
+
+    public static List<AtecoMatrix__c> getAtecoMatrixByCodiceIstatRonchi(String codiceIstat, String supplyCity){
+        return [
+            SELECT
+            Id,
+            Name,
+            AtecoCode__c,
+            City__c,
+            IstatCode__c,
+            Category__c,
+            RonchiCode__c,
+            RonchiSubcategory__c,
+            Type__c
+            FROM AtecoMatrix__c
+            WHERE
+            IstatCode__c = :codiceIstat
+            AND City__c =:supplyCity
+            AND RonchiCode__c != null
+            AND RonchiSubcategory__c != null
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public static List<AtecoMatrix__c> getAtecoMatrixByCodiceRonchi(String codiceRonchi, String supplyCity){
+        return [
+            SELECT
+            Id,
+            Name,
+            AtecoCode__c,
+            City__c,
+            IstatCode__c,
+            Category__c,
+            RonchiCode__c,
+            RonchiSubcategory__c,
+            Type__c
+            FROM AtecoMatrix__c
+            WHERE
+            RonchiCode__c = :codiceRonchi
+            AND City__c =:supplyCity
+            AND RonchiCode__c != null
+            AND RonchiSubcategory__c != null
+            WITH SECURITY_ENFORCED
+        ];
+    }
 }

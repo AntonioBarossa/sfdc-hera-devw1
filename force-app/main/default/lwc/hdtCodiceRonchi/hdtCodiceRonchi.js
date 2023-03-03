@@ -1,6 +1,7 @@
 import { api } from 'lwc';
 import HdtCodiceAteco from 'c/hdtCodiceAteco';
 import saveAtecoRonchiCode from '@salesforce/apex/HDT_LC_CodiceAteco.saveAtecoRonchiCode';
+import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixList';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtCodiceRonchi extends HdtCodiceAteco {
@@ -26,8 +27,8 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
     get options() {
         return [
             {label: 'Comune', value: 'City__c'},
-            {label: 'Codice Istat', value: 'IstatCode__c'},
-            {label: 'Codice Ronchi', value: 'RonchiCode__c'}
+            {label: 'Codice Istat', value: 'IstatCodeAndCity'},
+            {label: 'Codice Ronchi', value: 'RonchiCodeAndCity'}
         ];
     }
 
@@ -40,6 +41,10 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
         this.ronchiSubcategory = selectedRows[0].RonchiSubcategory__c;
         this.ronchiDescription = selectedRows[0].RonchiDescription__c;
         this.disabledSave = false;
+    }
+
+    searchPromise(){
+        return getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue, supplyCity : this.supplyCity });
     }
 
     handleSaveAtecoCode(){
