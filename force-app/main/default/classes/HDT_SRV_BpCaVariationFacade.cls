@@ -61,7 +61,7 @@ global with sharing class HDT_SRV_BpCaVariationFacade implements wrts_prcgvr.Int
         caseToUpdate.Id = recordId;
         caseToUpdate.SendDate__c = Date.today();
         caseToUpdate.TecnicalPhase__c = okFromSap ? 'Esito OK da SAP' : 'Errore Lavorazione SAP';
-        if ('Errore Lavorazione SAP'.equalsIgnoreCase(caseToUpdate.TecnicalPhase__c)){
+        if (!okFromSap){
             caseToUpdate.distributorflowcode__c = 'KO';
         }
 

@@ -93,6 +93,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
                         caseToUpdate.Phase__c = 'Esito OK da SAP';
                     } else if (selfReadingRequest.ActivityType__c.equalsIgnoreCase('Esito KO da SAP')) {
                         caseToUpdate.Phase__c = 'Esito KO da SAP';
+                        caseToUpdate.DistributorFlowCode__c	= 'KO';
                     } else if (selfReadingRequest.ActivityType__c.equalsIgnoreCase('KO Pre-MDM')) {
                         caseToUpdate.Phase__c = 'Esito KO pre-MDM';
                     }else if(selfReadingRequest.ActivityType__c.equalsIgnoreCase('Autolettura Forzata')){

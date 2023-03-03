@@ -185,7 +185,9 @@ public inherited sharing class HDT_UTL_CreatePaymentsRequestBody {
             //createActivity(recordId, 'Comunicazione con SAP fallita', 'Esito KO da SAP');
 
         }
-
+        if ('Esito KO da SAP'.equalsIgnoreCase(caseToUpdate.TecnicalPhase__c)){
+            caseToUpdate.distributorflowcode__c = 'KO';
+        }
         caseToUpdate.NotCancellable__c = true;
         updateFuture(JSON.serialize(caseToUpdate));
 
