@@ -98,7 +98,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
     handleSectionDataToSubmitCollection(event){
         if( event.target.fieldName === 'EffectiveDate__c' && this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' && 
-            ( this.order.ServicePoint__r.CommoditySector__c == 'Gas' || this.order.ServicePoint__r.CommoditySector__c == 'Enegia Elettrica') )
+            ( this.order.ServicePoint__r.CommoditySector__c == 'Gas' || this.order.ServicePoint__r.CommoditySector__c == 'Energia Elettrica') )
         {
                 console.log('EffectiveDateValue -> ' + event.target.value);
                 voltureEffectiveDateCheck({effectiveDate: event.target.value})
