@@ -467,6 +467,9 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('AFNCOMP')!=null && !String.isBlank(mapRes.get('AFNCOMP'))){
             spNew.NumberOfFamilyMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNCOMP')));
         }
+        if(mapRes.get('PADRE-FIGLIO')!=null && !String.isBlank(mapRes.get('PADRE-FIGLIO'))){
+            spNew.MeterRelation__c = mapRes.get('PADRE-FIGLIO');
+        }
          /**Edoardo Zanatta 2023-01-11
          * Aggiunta gestione SAPContractAccountCode__c
          */
