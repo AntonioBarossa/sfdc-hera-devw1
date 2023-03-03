@@ -632,6 +632,11 @@
                 <label>HC_CVMBO_MMSME_CFBS_Appuntamenti_Koinè</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Autoletture_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Autoletture_NC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</label>
@@ -690,6 +695,11 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_ Errore di fatturazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_ Errore di fatturazione_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Escalation_HC</fullName>
