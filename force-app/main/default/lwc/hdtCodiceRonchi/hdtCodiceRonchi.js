@@ -1,6 +1,7 @@
 import { api } from 'lwc';
 import HdtCodiceAteco from 'c/hdtCodiceAteco';
 import saveAtecoRonchiCode from '@salesforce/apex/HDT_LC_CodiceAteco.saveAtecoRonchiCode';
+import getAtecoMatrixList from '@salesforce/apex/HDT_LC_CodiceAteco.getAtecoMatrixList';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 
 export default class HdtCodiceRonchi extends HdtCodiceAteco {
@@ -10,17 +11,26 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
     ronchiDescription;
     @api order; 
     @api title;
+    @api supplyCity;
 
 
     columns = [
-        {label: 'Codice Ateco', fieldName: 'AtecoCode__c', type: 'text'},
+        {label: 'Codice Comune', fieldName: 'AtecoCode__c', type: 'text'},
         {label: 'Comune', fieldName: 'City__c', type: 'text'},
-        {label: 'Codice Istat', fieldName: 'IstatCode__c', type: 'text'},
+        {label: 'Codice Istat/Ateco', fieldName: 'IstatCode__c', type: 'text'},
         {label: 'Categoria', fieldName: 'Category__c', type: 'text'},
         {label: 'Codice Ronchi', fieldName: 'RonchiCode__c', type: 'text'},
         {label: 'Sottocategoria Ronchi', fieldName: 'RonchiSubcategory__c', type: 'text'},
-        {label: 'Descrizione Ronchi', fieldName: 'RonchiDescription__c', type: 'text'}
+        {label: 'Descrizione Ronchi', fieldName: 'Type__c', type: 'text'}
     ];
+
+    get options() {
+        return [
+            {label: 'Comune', value: 'CityRonchi'},
+            {label: 'Codice Istat', value: 'IstatCodeAndCity'},
+            {label: 'Codice Ronchi', value: 'RonchiCodeAndCity'}
+        ];
+    }
 
     getTableSelection(event){
         console.log('getTableSelection: ' + JSON.stringify(event.detail.selectedRows));
@@ -31,6 +41,10 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
         this.ronchiSubcategory = selectedRows[0].RonchiSubcategory__c;
         this.ronchiDescription = selectedRows[0].RonchiDescription__c;
         this.disabledSave = false;
+    }
+
+    searchPromise(){
+        return getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue, supplyCity : this.supplyCity });
     }
 
     handleSaveAtecoCode(){
@@ -49,7 +63,8 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
                 isRonchi:true,
                 atecoCode: this.selectedCode, 
                 ronchiCode: this.ronchiCode, 
-                ronchiSubcategory: this.ronchiSubcategory
+                ronchiSubcategory: this.ronchiSubcategory,
+                istatCode : this.selectedIstatCode
             }}));
 
             this.handleCloseModal();

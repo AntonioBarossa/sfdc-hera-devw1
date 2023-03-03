@@ -90,10 +90,14 @@ export default class HdtCodiceAteco extends LightningElement {
         }
     }
 
+    searchPromise(){
+        return getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue});
+    }
+
     submitSearch(){
         this.loading = true;
         console.log('******:' + JSON.stringify(this.searchInputValue));
-        getAtecoMatrixList({filterType: this.filterType, filterValue: this.searchInputValue}).then(data =>{
+        this.searchPromise().then(data =>{
             this.loading = false;
             this.isTableVisible = true;
 
@@ -132,13 +136,14 @@ export default class HdtCodiceAteco extends LightningElement {
 
     //Pagination start
     createTable(data) {
-        let i, j, temporary, chunk = 4;
+        let i, j, temporary, chunk = 10;
         this.pages = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
             temporary = data.slice(i, i + chunk);
             this.pages.push(temporary);
         }
         this.totalPages = this.pages.length;
+        this.currentPage=0;
         this.reLoadTable();
     }
 
