@@ -24,7 +24,7 @@ public inherited sharing class HDT_UTL_SlaTracking {
         }
 
         List<SlaAdministration__c> slaAdminList = HDT_QR_SlaTracking.getSlaAdminList(adminRuleIds);
-        List<Holiday> holidayList = HDT_QR_SlaTracking.getHolidayList();
+        List<TechnicalHolidaysCalendar__c> holidayList = HDT_QR_SlaTracking.getHolidaysList();
 
         if(slaAdminList.size() > 0){
             adminRuleMap = new Map<Id, SlaAdministration__c>(slaAdminList);
@@ -42,7 +42,7 @@ public inherited sharing class HDT_UTL_SlaTracking {
             if(adminRuleMap.containsKey(track.SlaAdministration__c)){
                 rangeType = adminRuleMap.get(track.SlaAdministration__c).RangeType__c;
                 if(String.isNotEmpty(rangeType) && rangeType.equalsIgnoreCase('Giorni Lavorativi')){
-                    track.SlaValue__c = calculateWorkingDays(track.StartDateTime__c, Integer.valueOf(track.SlaValue__c), holidayList);
+                    track.SlaValue__c = calculateWorkingDaysInteger(startDate, Integer.valueOf(track.SlaValue__c), holidayList);
                 }
             }
 
@@ -64,7 +64,7 @@ public inherited sharing class HDT_UTL_SlaTracking {
         }
 
         List<SlaAdministration__c> slaAdminList = HDT_QR_SlaTracking.getSlaAdminList(adminRuleIds);
-        List<Holiday> holidayList = HDT_QR_SlaTracking.getHolidayList();
+        List<TechnicalHolidaysCalendar__c> holidayList = HDT_QR_SlaTracking.getHolidaysList();
 
         if(slaAdminList.size() > 0){
             adminRuleMap = new Map<Id, SlaAdministration__c>(slaAdminList);
@@ -77,20 +77,49 @@ public inherited sharing class HDT_UTL_SlaTracking {
             startDate = convertDateTime(track.StartDateTime__c);
             slaRange = Integer.valueOf(adminRuleMap.get(track.SlaAdministration__c).Range__c);
             track.EndDateSolarDays__c = startDate.addDays(slaRange);
-            slaRange = calculateWorkingDays(track.StartDateTime__c, slaRange, holidayList);
-            track.EndDateWorkingDays__c = startDate.addDays(slaRange);
+            //slaRange = calculateWorkingDays(track.StartDateTime__c, slaRange, holidayList);
+            track.EndDateWorkingDays__c = calculateWorkingDays(startDate, slaRange, holidayList);
         }
 
     }
 
-    public static Integer calculateWorkingDays(DateTime startDateTime, Integer diff, List<Holiday> holidayList){
+    public static Date calculateWorkingDays(Date startDate, Integer slaRange, List<TechnicalHolidaysCalendar__c> holidayList){
+        Set<Date> holidays = new Set<Date>();
+        for(TechnicalHolidaysCalendar__c holiday : holidayList){
+            if(holiday.HolidayDate__c >= startDate){
+                holidays.add(holiday.HolidayDate__c);
+            }
+        }    
+    
+        Date finalDate = startDate;
+        Integer direction = slaRange < 0 ? -1 : 1;
+        while(slaRange != 0){
+            finalDate = finalDate.addDays(direction);
+            if(!isWeekend(finalDate) && !holidays.contains(finalDate)){
+                slaRange -= direction;
+            }
+        }
+        return finalDate;
+    }
+
+    private static Boolean isWeekend(Date myDate){
+        String myDateString = Datetime.newInstance(myDate.year(), myDate.month(),myDate.day()).format('EEE');
+        return 'Sat'.equals(myDateString) || 'Sun'.equals(myDateString);
+    }
+
+    public static Date convertDateTime(DateTime dt){
+        return Date.newinstance(dt.year(), dt.month(), dt.day());
+    }
+
+    public static Integer calculateWorkingDaysInteger(Date startDate, Integer diff, List<TechnicalHolidaysCalendar__c> holidayList){
 
         Set<String> dayToAvoid = new Set<String>{'Saturday', 'Sunday', 'Sabato', 'Domenica'};
-        Set<String> holidays = new Set<String>();
-
-        for(Holiday hDay : holidayList){
-            holidays.add(String.valueOf(hDay.ActivityDate.day()) + '-' + String.valueOf(hDay.ActivityDate.month()));//01-01
-        }
+        Set<Date> holidays = new Set<Date>();
+        for(TechnicalHolidaysCalendar__c holiday : holidayList){
+            if(holiday.HolidayDate__c >= startDate){
+                holidays.add(holiday.HolidayDate__c);
+            }
+        }  
 
         String dayOfWeek;
         Integer slaValue = 0;
@@ -98,11 +127,11 @@ public inherited sharing class HDT_UTL_SlaTracking {
         Boolean isWeekEnd;
         Boolean isHoliday;
         for(Integer day=0; day<diff; day++){
-            dt = startDateTime.addDays(day);
+            dt = startDate.addDays(day);
             dayOfWeek = dt.format('EEEE');
 
             isWeekEnd = dayToAvoid.contains(dayOfWeek);
-            isHoliday = holidays.contains(String.valueOf(dt.day()) + '-' + String.valueOf(dt.month()));
+            isHoliday = holidays.contains(convertDateTime(dt));
             
 
             if(!isWeekEnd && !isHoliday){
@@ -112,11 +141,6 @@ public inherited sharing class HDT_UTL_SlaTracking {
             //System.debug('>>> date ' + Date.valueOf(dt) + ' - ' + dayOfWeek + ' - slaValue ' + slaValue);
         }
         return slaValue;
-    }
-
-    public static Date convertDateTime(DateTime dt){
-        //return Date.valueOf(dt);
-        return Date.newinstance(dt.year(), dt.month(), dt.day());
     }
 
 }
