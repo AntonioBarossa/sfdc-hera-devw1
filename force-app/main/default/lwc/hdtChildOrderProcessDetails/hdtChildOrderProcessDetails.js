@@ -715,9 +715,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
+                let date = new Date();
+                let today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+                let effectiveDate = new Date(this.template.querySelector("[data-id='EffectiveDate__c']").value);
                 if( this.typeVisibility('acqua') &&
                     this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' &&
-                    this.order.Subprocess__c == 'Retroattiva' &&
+                    ( this.order.Subprocess__c == 'Retroattiva' || effectiveDate < today ) &&
                     this.availableSteps.find(element => element.step === nextSectionStep).label === 'Fatturazione' ) //check next section
                 {
                     this.loading = false;

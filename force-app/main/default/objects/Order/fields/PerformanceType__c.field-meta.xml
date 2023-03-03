@@ -11,9 +11,9 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>Nuovo Allacciamento</fullName>
+                <fullName>Nuovo Allaccio</fullName>
                 <default>false</default>
-                <label>Nuovo Allacciamento</label>
+                <label>Nuovo Allaccio</label>
             </value>
             <value>
                 <fullName>Aggiunta Attacco</fullName>
