@@ -218,7 +218,7 @@ public inherited sharing class HDT_QR_AtecoMatrix {
         ];
     }
 
-    public static List<AtecoMatrix__c> getAtecoMatrixByComune(String comune){
+    public static List<AtecoMatrix__c> getAtecoMatrixByComuneRonchi(String comune){
         return [
             SELECT
             Id,

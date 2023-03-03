@@ -24,7 +24,7 @@ public inherited sharing class HDT_LC_CodiceAteco {
                 atecoMatrixList = HDT_QR_AtecoMatrix.getAtecoMatrixByCodiceIstat(filterValue);
             }
             when 'CityRonchi' {
-                atecoMatrixList = HDT_QR_AtecoMatrix.getAtecoMatrixByComuneRonchi(filterValue, supplyCity);
+                atecoMatrixList = HDT_QR_AtecoMatrix.getAtecoMatrixByComuneRonchi(filterValue);
             }
             when 'IstatCodeAndCity' {
                 atecoMatrixList = HDT_QR_AtecoMatrix.getAtecoMatrixByCodiceIstatRonchi(filterValue, supplyCity);
