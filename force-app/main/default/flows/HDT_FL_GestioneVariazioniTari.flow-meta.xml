@@ -4218,6 +4218,12 @@
                             <elementReference>getAfterAddress</elementReference>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>supplyCity</name>
+                        <value>
+                            <elementReference>getAfterAddress.SupplyCity__c</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -4247,6 +4253,12 @@
                         <name>caseRecord</name>
                         <value>
                             <elementReference>getAfterAddress</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>supplyCity</name>
+                        <value>
+                            <elementReference>getAfterAddress.SupplyCity__c</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
