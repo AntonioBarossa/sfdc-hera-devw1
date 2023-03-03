@@ -645,7 +645,7 @@
         <defaultConnectorLabel>Predeterminabile</defaultConnectorLabel>
         <rules>
             <name>Rapido_0_euro</name>
-            <conditionLogic>((1 AND 2) OR 3) AND 4</conditionLogic>
+            <conditionLogic>((1 AND 2) OR 3 OR 5) AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -672,6 +672,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MMS</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -804,7 +811,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Rapido_a_0</name>
-            <conditionLogic>((1 AND 2) OR 3) AND 4</conditionLogic>
+            <conditionLogic>((1 AND 2) OR 3 OR 5) AND 4</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -831,6 +838,13 @@
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Case.CompanyOwner__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>MMS</stringValue>
                 </rightValue>
             </conditions>
             <connector>
