@@ -349,7 +349,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('','Subprocess__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
-                    new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
+                    //new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
                     new fieldData('','SendRequestDate__c', this.typeVisibility('acqua'), false, this.typeVisibility('acqua'), '',''),
                     new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
                     new fieldData('','MaxRequiredPotential__c',this.typeVisibility('gas'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
@@ -496,7 +496,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','PaySewer__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','BonusDeliveryMode__c', this.typeVisibility('acqua'), false, false, '',''),
-                new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua') && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
+                new fieldData('','RealEstateUnit__c', this.typeVisibility('acqua') && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
                 function(event){
                     checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                 }
