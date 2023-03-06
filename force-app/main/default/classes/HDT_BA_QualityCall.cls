@@ -10,7 +10,7 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
 
     public Database.QueryLocator start(Database.BatchableContext bc) {
         //modifica ticket 937835C anche lo stato completata deve avere la possibilità di esitare le QC
-        String query = 'SELECT Id,Skip_Callout__c, ParentOrder__r.Status, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,AgencyCode__c,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
+        String query = 'SELECT Id,Skip_Callout__c, ParentOrder__r.Status, OrderNumber, IsVAS__c,Phase__c,PhaseStory__c,Channel__c,CustomerCategory__c,SignatureMethod__c,RecordType.DeveloperName,ComfortCallDaysDue__c,DateComfortCall__c,WizardCompletedDate__c,ParentOrder__c,QualityCall__c,QualityCallUnique__c,Contact__c,CommissioningCampaign__c,PhoneNumber__c,AccountId,ActivatedDate,LoginChannel__c,VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c FROM Order '+
         'Where Phase__c NOT IN (\'In attesa validazione\', \'Accettazione Voltura\', \'Da Inviare\', \'Bozza\',  \'In attesa conferma cliente\', \'Voltura Rifiutata\', \'Annullato\',\'Attesa Credit Check\',\'Credit Check KO\') AND QualityCall__c = true AND ComfortCallDaysDue__c = null AND VasSubtype__c != \'Analisi Consumi\' AND QualityCallStatus__c = \'\' AND ParentOrder__r.Status = \'Completed\'';
         return Database.getQueryLocator(query);
     }
@@ -114,7 +114,8 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                         if (startDate!= null && orderActivityMap.containsKey(ordId) && startDate != orderActivityMap.get(ordId).QualityCallStartDate__c){
                             actToUpdate.add(new wrts_prcgvr__Activity__c(
                                 Id = orderActivityMap.get(ordId).Id,
-                                QualityCallStartDate__c = startDate
+                               // QualityCallStartDate__c = startDate
+                               QualityCallStartDate__c = null
                             ));
                         }
                     }
@@ -151,10 +152,10 @@ public with sharing class HDT_BA_QualityCall implements Database.Batchable<sObje
                 List<Database.SaveResult> srList = Database.insert(notDuplicatedCampToIns.values(), false);
                 qCall.setLogRecord(srList, notDuplicatedCampToIns.values(), logs, 'insert Campaign Member');
             }
-            if(!campaignMembersUpdate.isEmpty()){
+           /* if(!campaignMembersUpdate.isEmpty()){
                 List<Database.SaveResult> srList = Database.update(campaignMembersUpdate.values(), false);
                 qCall.setLogRecord(srList, campaignMembersUpdate.values(), logs, 'update Campaign Member');
-            }
+            }*/
             if(!actToUpdate.isEmpty()){
                 List<Database.SaveResult> srList = Database.update(actToUpdate, false);
                 qCall.setLogRecord(srList, actToUpdate, logs, 'update activity');
