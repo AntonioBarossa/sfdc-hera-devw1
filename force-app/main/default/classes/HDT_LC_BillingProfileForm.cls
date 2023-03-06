@@ -59,7 +59,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
             'IbanCIN__c',
             'IbanABI__c',
             'IbanCAB__c',
-            'IbanCodeNumber__c'
+            'IbanCodeNumber__c',
+            'DivergentSubject__c'
             // 'CareOf__c' //Presso
         };
 

@@ -138,4 +138,15 @@ public class HDT_SRV_PostSalesCriteriaManagerTst {
         Test.stopTest();
         System.assertEquals(true, result, 'areActivityOpen riuscito');
     } 
+    @isTest
+    static void isDistributorManaged()
+    {
+         
+        HDT_SRV_PostSalesCriteriaManager psc = new HDT_SRV_PostSalesCriteriaManager();
+        Case c = new Case(DistributorCode__c = 'TEST000000', Type = 'Sost. contatore cliente');
+        Test.startTest();
+            Boolean result = psc.evaluate(setArgs('isDistributoreInRete', c));
+        Test.stopTest();
+        System.assertEquals(false, result, 'Distributor in Rete');
+    }
 }
