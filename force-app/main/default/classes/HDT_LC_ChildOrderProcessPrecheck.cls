@@ -199,7 +199,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 when 'Acqua' {
                     //Inizio: Predefault valido per tutti i processi
                     List<Contract> contractsList = contractQr.getContractFromServicePoint(order.ServicePoint__c);
-                    newOrder.ContractReference__c = !contractsList.isEmpty()? contractsList[0]?.Id : '';
+                    newOrder.ContractReference__c = !contractsList.isEmpty()? contractsList[0]?.Id : null;
                     AmministrazioneSottotipologiaUso__c ammSubType = HDT_SRV_DataEnrichmentPostSales.handleSubType( order.SalesCompany__c, order.RateCategory__c );
                     List<ServicePoint__c> updatedServicePoint = servicePointQr.getRecordById( order.ServicePoint__c , 'Ato__c,PayPurification__c,PaySewer__c' );
                     newOrder.UseSubCategory__c = ammSubType?.SottotipologiaUso__c;
