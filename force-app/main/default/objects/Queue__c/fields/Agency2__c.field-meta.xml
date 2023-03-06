@@ -136,6 +136,11 @@
                 <default>false</default>
                 <label>Target Sinergie</label>
             </value>
+            <value>
+                <fullName>Tecnocall</fullName>
+                <default>false</default>
+                <label>Tecnocall</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

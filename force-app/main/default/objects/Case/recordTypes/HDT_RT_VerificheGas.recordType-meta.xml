@@ -7941,6 +7941,10 @@
     <picklistValues>
         <picklist>Phase__c</picklist>
         <values>
+            <fullName>Pratica non gestita per il DL</fullName>
+            <default>false</default>
+        </values> 
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
