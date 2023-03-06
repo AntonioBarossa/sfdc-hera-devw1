@@ -57,11 +57,12 @@
                 <field>StartDateTime__c</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
+                <behavior>Edit</behavior>
+                <field>SlaValue__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>TodaySlaValue__c</field>
+                <field>RangeType__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
