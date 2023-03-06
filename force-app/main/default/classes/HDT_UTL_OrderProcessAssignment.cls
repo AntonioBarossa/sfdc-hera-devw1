@@ -169,22 +169,31 @@ public inherited sharing class HDT_UTL_OrderProcessAssignment {
         }
         return false;
     }
-
+    /**
+     * Le sospensioni TARI sono mutuamente esclusive pertanto se ho una sospensione attiva e la voglio sostituire
+     * il CPQ genera due Order Item, uno con quantità negativa e uno con quantità positiva.
+     * Per questo motivo il metodo verifica la somma delle quantity. Se negativa è solo rimozione, se positiva o 0 allora è
+     * un caso ibrido di aggiunta e rimozione e va considerata come Aggiunta.
+    */
     private static Boolean isRemoveSubscriptions(Order ord){
+        Double quantity = 0;
         if(String.isNotBlank(ord.ServicePoint__r.CommoditySector__c) && 'Ambiente'.equalsIgnoreCase(ord.ServicePoint__r.CommoditySector__c)){
             List<OrderItem> items = orderItemQr.getMainItem(ord.id);
+            
             if(!items.isEmpty()){
                 for(OrderItem oi : items){
                     //product Family è sempre valorizzato
-                    if(oi.Quantity != null && oi.Quantity <= 0){
-                        return true;
+                    if(oi.Quantity != null){
+                        quantity = quantity +oi.Quantity;
                     }
                 }
-                return false;
             }
-            return false; 
         }
-        return false;
+        if(quantity < 0){
+            return true;
+        }else {
+            return false;
+        }
     }
 
 
