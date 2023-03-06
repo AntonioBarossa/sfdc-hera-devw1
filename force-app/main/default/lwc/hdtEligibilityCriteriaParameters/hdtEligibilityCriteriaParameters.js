@@ -64,7 +64,13 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
       console.log('>>>> handleSubmitButtonClick > ');
       var criteriaObj = {};
       this.template.querySelectorAll('lightning-input-field').forEach((field) => {
-        criteriaObj[field.fieldName] = field.value;
+        
+        if(field.value == ''){
+          criteriaObj[field.fieldName] = null;
+        } else {
+          criteriaObj[field.fieldName] = field.value;
+        }
+        
       });
 
       if(this.eligibilityId != undefined){
@@ -89,7 +95,7 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         }
       } else {
         var jsonRecord = JSON.stringify(criteriaObj);
-        console.log(jsonRecord);
+        //console.log(jsonRecord);
         const saverecord = new CustomEvent("saverecord", {
           detail: {record: jsonRecord}
         });
@@ -111,6 +117,26 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
         if(res.length > 100){
           checkResult.error = true;
           checkResult.message = 'Non puoi selezionare più di 100 valori!';
+          return checkResult;
+        }
+      }
+
+      if(obj.ClientAgeMax__c != null && obj.ClientAgeMax__c > 999){        
+          checkResult.error = true;
+          checkResult.message = 'Valore età cliente max non corretto!';
+          return checkResult;
+      }
+
+      if(obj.ClientAgeMin__c != null && obj.ClientAgeMin__c > 999){        
+          checkResult.error = true;
+          checkResult.message = 'Valore età cliente min non corretto!';
+          return checkResult;
+      }
+
+      if(obj.ClientAgeMax__c != null && obj.ClientAgeMin__c != null){
+        if(obj.ClientAgeMax__c < obj.ClientAgeMin__c){
+          checkResult.error = true;
+          checkResult.message = 'Valore età max è inferiore ad età minima!';
           return checkResult;
         }
       }

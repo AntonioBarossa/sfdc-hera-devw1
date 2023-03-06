@@ -569,6 +569,12 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                     currentCase.Phase__c = currentPhase; 
                 }
             }
+
+            if(reqWrp.requestMap.get('DATA_ESECUZIONE') != null && reqWrp.requestMap.get('DATA_ESECUZIONE') != ''){
+                String exDateString = reqWrp.requestMap.get('DATA_ESECUZIONE');
+                currentCase.ExecutionDate__c = Date.valueOf(exDateString);
+            }
+
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');

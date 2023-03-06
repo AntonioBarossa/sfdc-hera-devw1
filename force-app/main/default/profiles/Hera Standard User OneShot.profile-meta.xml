@@ -34843,7 +34843,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
-        <field>SlaTracking__c.TodaySlaValue__c</field>
+        <field>SlaTracking__c.RangeType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

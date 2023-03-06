@@ -43,6 +43,10 @@
                 <behavior>Readonly</behavior>
                 <field>Range__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RangeType__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>
@@ -60,8 +64,8 @@
                 <emptySpace>true</emptySpace>
             </layoutItems>
             <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>TodaySlaValue__c</field>
+                <behavior>Edit</behavior>
+                <field>SlaValue__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
