@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 21-02-2023
+ * @last modified on  : 06-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -219,6 +219,21 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
         if(caseType.equalsIgnoreCase('Errore di Fatturazione') && ('HDT_RT_ErroreFatturazione_TARI'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
             if('CBS_FAT004__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
+        if(caseType.equalsIgnoreCase('Rimborso') && ('HDT_RT_Rimborso'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_PAG003__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
+        if(caseType.equalsIgnoreCase('Comunicazione Pagamento') && ('HDT_RT_ComunicazionePagamento'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_PAG003__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
+        if(caseType.equalsIgnoreCase('Doppi Pagamenti/Incassi') && ('HDT_RT_ComunicazionePagamento'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_PAG003__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
                 if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
             }
         }
