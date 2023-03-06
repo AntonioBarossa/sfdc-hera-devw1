@@ -64,6 +64,9 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -127,6 +130,9 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -189,6 +195,9 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -250,6 +259,9 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -309,6 +321,8 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -368,6 +382,8 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -427,6 +443,8 @@
             <controllingFieldValue>Hera Placet Variabile Luce</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Gas</controllingFieldValue>
             <controllingFieldValue>Hera Placet Variabile Lavoro Luce</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua</controllingFieldValue>
             <controllingFieldValue>Hera Scaldacqua Business</controllingFieldValue>
             <controllingFieldValue>Hera Thermo</controllingFieldValue>
@@ -459,6 +477,9 @@
             <controllingFieldValue>PiuControllo Flat Extra Casa Dual</controllingFieldValue>
             <controllingFieldValue>PiuControllo Flat Extra Casa Luce</controllingFieldValue>
             <controllingFieldValue>PiuControllo Flat Extra Casa Gas</controllingFieldValue>
+            <controllingFieldValue>Hera ProtezionePiu Casa Dual</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Gas</controllingFieldValue>
+		    <controllingFieldValue>Hera ProtezionePiu Casa Luce</controllingFieldValue>
             <valueName>HVAC</valueName>
         </valueSettings>
     </valueSet>
