@@ -16,7 +16,7 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         this.childsId = childsId;
         this.parentsId = parentsId;
         this.actMap = actToParentOrderMap;
-        this.isMonitoringList = HDT_UTL_AgentMatrix.agencyCodeIsMonitoringList();
+        this.isMonitoringList = HDT_UTL_AgentMatrix.agentCodeIsMonitoringList();
         this.docValidList = HDT_QR_ComfortQualityCall.getRecordsWithDocumentValidationAndQualityEnabled();
         this.mapOrderToManage = new Map<String,Boolean>();
         this.qCall = new HDT_UTL_QualityCall();
@@ -26,20 +26,20 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
         //Da verificare
         if (this.parentsId.isEmpty()){
             return Database.getQueryLocator([
-                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, CommercialId__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
                 FROM ORDER 
                 WHERE Id IN: this.childsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
             ]);
         }
         if (this.childsId.isEmpty()){
             return Database.getQueryLocator([
-                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+                SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, CommercialId__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
                 FROM ORDER 
                 WHERE ParentOrder__c IN :this.parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
             ]);
         }
         return Database.getQueryLocator([
-            SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, AgencyCode__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
+            SELECT Id,Status,Skip_Callout__c, OrderNumber, IsVAS__c, Phase__c, PhaseStory__c, Channel__c, CustomerCategory__c, SignatureMethod__c, RecordType.DeveloperName, WizardCompletedDate__c, ParentOrder__c, QualityCall__c, QualityCallUnique__c, Contact__c, PhoneNumber__c, AccountId, CommercialId__c, ActivatedDate, LoginChannel__c, VASType__c, Account.CompanyOwner__c, isTransition__c, QualityCallStatus__c, HerokuPracticeCode__c, ProcessType__c
             FROM ORDER 
             WHERE (Id IN: this.childsId OR ParentOrder__c IN :this.parentsId) AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null AND QualityCallStatus__c != :HDT_UTL_QualityCall.HANDLE_DEADLINE
         ]);    
@@ -105,13 +105,13 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 Boolean needsActivity = false;
                 
                 if ('CANCEL'.equalsIgnoreCase(result) && canDeleteOrder 
-                    && ((isMonitoringList.contains(o.AgencyCode__c) /* && o.IsVAS__c */) || hasCancellableProduct)) {
+                    && ((isMonitoringList.contains(o.CommercialId__c) /* && o.IsVAS__c */) || hasCancellableProduct)) {
                         ordToUpd.Phase__c = 'Annullato';
                         ordToUpd.Status = 'Annullato';         
                         orderToCancel.add(ordToUpd.Id);
                         ordersToUpdate.add(ordToUpd);
                         continue;     
-                }else if ((isMonitoringList.contains(o.AgencyCode__c)/*  && o.IsVAS__c */) || hasCancellableProduct){
+                }else if ((isMonitoringList.contains(o.CommercialId__c)/*  && o.IsVAS__c */) || hasCancellableProduct){
                     needsActivity = true;
                 }
                 if (!'Activated'.equalsIgnoreCase(o.Status)){

@@ -115,7 +115,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             //'Esito KO da SII',
             'KO rilavorato',
             'KO definitivo',
-            'Errore invio a DL/SII'
+            'Errore invio a DL/SII',
+            'In Corso caricamento Siebel'
         };
 
         List<String> notCancelNonBillable = new List<String>{
