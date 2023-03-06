@@ -101,6 +101,11 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 objFields.put('SendToDistributorDate__c', obj.get('SendToDistributorDate__c'));
                 mrrList = handleMrrFields(mrrList, objFields);
             }
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Interna') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
+                objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                mrrList = handleMrrFields(mrrList, objFields);
+            }
 
             arg.put('endpoint', endpoint);
             arg.put('timeout', 120000);
@@ -492,6 +497,28 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         qcDateField.fieldType = 'STRING';
                         qcDateField.value = dateFinal;
                         obj.fields.add(qcDateField);
+                        break;
+                    }
+                }
+
+                if (objFields.get('PhoneNumber__c') != null) {
+                    Boolean foundNote = false;
+                    String concatPhoneNote = String.valueOf(objFields.get('PhoneNumber__c')) + (objFields.get('DistributorNote__c') != null ? ' ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                    for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
+                        if(f.name.equalsIgnoreCase('ANNOTAZIONI'))
+                        {
+                            f.value = concatPhoneNote;
+                            foundNote = true;
+                            break;
+                        }
+                    }
+
+                    if(!foundNote){
+                        wrts_prcgvr.MRR_1_0.Field dlNoteField = new wrts_prcgvr.MRR_1_0.Field();
+                        dlNoteField.name = 'ANNOTAZIONI';
+                        dlNoteField.fieldType = 'STRING';
+                        dlNoteField.value = concatPhoneNote;
+                        obj.fields.add(dlNoteField);
                         break;
                     }
                 }
