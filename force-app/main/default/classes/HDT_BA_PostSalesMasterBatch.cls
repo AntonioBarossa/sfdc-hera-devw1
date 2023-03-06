@@ -39,6 +39,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
         List<Case> myCurrentCaseList = new List<Case>();
         HDT_UTL_PostSalesCriteriaManager psCrit = new HDT_UTL_PostSalesCriteriaManager();
+        List<Integration_Log__c> intLogList = new List<Integration_Log__c>();
+
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
         List<Case> casesToCheck = new List<Case>();
 
@@ -158,13 +160,24 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             }
             catch(Exception e)
             {
-                System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+                //System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+
+                Integration_Log__c intLog = new Integration_Log__c();
+                intLog.WebService__c = 'viewLogBulk';
+                intLog.Method__c = 'execute';
+                intLog.Error__c = e.getMessage() + '. At line: ' + e.getLineNumber();
+                intLogList.add(intLog);
+                
                 continue;
             }
         }
         if (actToInsert.size() > 0){
             insert actToInsert;
             update actToUpdate;
+        }
+
+        if(!intLogList.isEmpty()){
+           HDT_UTL_DatabaseService.insertSObject(intLogList);
         }
         // if(!eventsToPublish.isEmpty()){
         //     //EventBus.publish(eventsToPublish);

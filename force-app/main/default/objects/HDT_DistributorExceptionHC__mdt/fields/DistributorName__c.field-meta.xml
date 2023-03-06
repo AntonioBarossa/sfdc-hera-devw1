@@ -25,6 +25,11 @@
                 <default>false</default>
                 <label>DIRETTO EDISON-10R0000051</label>
             </value>
+            <value>
+                <fullName>A.S.SE.M SPA-10R0000068</fullName>
+                <default>false</default>
+                <label>A.S.SE.M SPA-10R0000068</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

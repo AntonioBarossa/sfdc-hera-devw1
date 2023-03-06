@@ -44,7 +44,6 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
     public Boolean activityLetturaNonInseritaInSapPresente(String caseId)
     {
         List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Case__c = :caseId AND Type__c = 'Gestione Back Office' AND wrts_prcgvr__IsClosed__c = true WITH SECURITY_ENFORCED];
-
         return !activities.isEmpty();
     }
     public Boolean activityLetturaNonInseritaInSapAssenti(String caseId)
@@ -53,5 +52,29 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
 
         return activities.isEmpty();
     }
+    /* TK 945508C - Solo per i processi di Sost. contatore cliente, richiesta lettura cliente e Consegna copia chiave GDM
+    * e' necessario eseguire un controllo se il distributore sia InRete o no in modo da veicolare corretamente
+    * l'avanzamento del Case.
+    */
+    public Boolean isDistributoreInRete(SObject sender)
+    {   
+        Case currentCase = (Case) sender;
+        if(String.isBlank(currentCase.DistributorCode__c))
+        {
+            return false;
+        }
+        if((currentCase.Type != 'Sost. contatore cliente' && currentCase.Type != 'Richiesta lettura cliente' && currentCase.Type != 'Consegna copia chiave GdM')) 
+        {
+            return true;
+        }
+        List<HDT_LocalDispatcherInrete__mdt> cmdtInRete = [SELECT Id FROM HDT_LocalDispatcherInrete__mdt WHERE DispatcherCode__c = :currentCase.DistributorCode__c WITH SECURITY_ENFORCED];
+        
+        return !cmdtInRete.isEmpty();
+    }
+    public Boolean isNotDistributorInRete(SObject sender)
+    {
+        return !(isDistributoreInRete(sender));
+    }
+
 
 }
