@@ -440,6 +440,7 @@
             <label>isEE</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <description>Contiene la mail per la restituzione del modulo. Mail diversa a seconda del canale di vendita</description>
         <name>emailRestituzioneModuloFormula</name>
@@ -584,8 +585,23 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text6_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET FISSA LUCE LAVORO &lt;/strong&gt;sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,6514 €/kWh nella fascia F1, 0,5708 €/kWh nella fascia F2 e 0,44405 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,5940 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 90% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 8% circa della spesa annua.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA LUCE LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0229 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’84% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 3% della spesa annua. Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 13% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0529 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’87% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 3% della spesa annua. Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -682,8 +698,23 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text6</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,6514 €/kWh nella fascia F1, 0,5708 €/kWh nella fascia F2 e 0,44405 €/kWh nella fascia F3, definite dall’Autorità per l’energia elettrica il gas e il sistema idrico.&amp;nbsp;&lt;/p&gt;&lt;p&gt;•	Nel caso di contatore monorario, il prezzo sarà pari a 0,5940 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 90% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 8% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA LUCE LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0229 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’84% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 3% della spesa annua. Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 13% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0529 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il l’87% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 3% della spesa annua. Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -780,8 +811,38 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text6_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET FISSA GAS LAVORO&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,790 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 102% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 1% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -3% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA GAS LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text7_0</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM MARCHE PLACET FISSA GAS LAVORO&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,790 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 102% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 1% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -3% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM MARCHE PLACET FISSA GAS LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,26 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 95% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,550€/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 103% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 1% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -4% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -868,9 +929,45 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_2</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,26 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 95% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 2% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 3% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_EE_Text6_0</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,790 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 102% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 1% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -3% circa della spesa annua.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA GAS LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM MARCHE PLACET FISSA GAS LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_2</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,550 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 103% della spesa annua per un cliente non domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il % della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -4% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM MARCHE PLACET VARIABILE GAS LAVORO</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_0_0_0</name>
@@ -951,8 +1048,8 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,022 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’78% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 12% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_EE_Text9</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET FISSA LUCE CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,6713 €/kWh nella fascia F1 e 0,5745 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,6050 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’85% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa l’8% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10%circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -960,7 +1057,52 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Placet Variabile Luce Casa</stringValue>
+                        <stringValue>HERA COMM PLACET FISSA LUCE CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text10</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;ESTENERGY PLACET FISSA LUCE CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,6713 €/kWh nella fascia F1 e 0,5745 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,6050 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’85% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa l’8% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10%circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>ESTENERGY PLACET FISSA LUCE CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text2</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET VARIABILE LUCE CASA &lt;/strong&gt;sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,520 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 10% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 9% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET VARIABILE LUCE CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text15</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;ESTENERGY PLACET VARIABILE LUCE CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,520 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 10% della spesa annua.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 9% circa della spesa annua.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>ESTENERGY PLACET VARIABILE LUCE CASA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1049,8 +1191,38 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text6_0_0</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET FISSA LUCE CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,6713 €/kWh nella fascia F1 e 0,5745 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,6050 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’85% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa l’8% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA LUCE CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text7</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;ESTENERGY PLACET FISSA LUCE CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è pari a 0,6713 €/kWh nella fascia F1 e 0,5745 €/kWh nella fascia F23. La fascia “F1”, è quella dalle 8.00 alle 19.00 dei giorni dal lunedì al venerdì, escluse le festività nazionali; quella “F23” è invece quelle dalle 19.00 alle 08.00 dal lunedì al venerdì, e tutte le ore del giorno dei sabati, delle domeniche e delle festività nazionali. Nel caso di contatore monorario, il prezzo sarà pari a 0,6050 €/kWh.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’85% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa l’8% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento e di capacità, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>ESTENERGY PLACET FISSA LUCE CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,022 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’78% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 12% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 10% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo dell’energia elettrica, comprensivo delle perdite di rete, è variabile e calcolato come somma della media aritmetica del Prezzo Unico Nazionale rilevato nel mese di prelievo e del parametro a copertura dei restanti costi per la materia prima e pari a 0,0520 €/kWh.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/POD/anno ed incide per circa il 10% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi di dispacciamento, e la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che insieme rappresentano il restante 9% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1161,8 +1333,53 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text6_0_0_0</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET FISSA GAS CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 4% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text7</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;AMGA ENERGIA &amp;amp; SERVIZI PLACET GAS CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 4% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>AMGA ENERGIA &amp; SERVIZI PLACET GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text8</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM MARCHE PLACET FISSA GAS CASA &lt;/strong&gt;sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 4% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM MARCHE PLACET FISSA GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text3</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,23 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 4% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,52 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 5% della spesa annua.&lt;/p&gt;&lt;p&gt;•	Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1273,8 +1490,53 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text11</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET FISSA GAS CASA &lt;/strong&gt;sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 4% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM PLACET FISSA GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text12</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;AMGA ENERGIA &amp;amp; SERVIZI PLACET GAS CASA  &lt;/strong&gt;sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 4% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>AMGA ENERGIA &amp; SERVIZI PLACET GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text13</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM MARCHE PLACET FISSA GAS CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è pari a 2,690 €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 4% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM MARCHE PLACET FISSA GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text3_0</name>
-            <fieldText>&lt;p&gt;Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,23 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 7% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante 4% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM PLACET VARIABILE GAS CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,52 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa l’98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 5% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1282,7 +1544,37 @@ NOT(CONTAINS(Text({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCo
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductCode__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Placet Variabile Gas Casa</stringValue>
+                        <stringValue>HERA COMM PLACET VARIABILE GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text14</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;AMGA ENERGIA &amp;amp; SERVIZI PLACET VARIABILE GAS CASA&lt;/strong&gt;  sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,52 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 5% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>AMGA ENERGIA &amp; SERVIZI PLACET VARIABILE GAS CASA</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text15</name>
+            <fieldText>&lt;p&gt;Le condizioni economiche &lt;strong&gt;HERA COMM MARCHE PLACET VARIABILE GAS CASA&lt;/strong&gt; sono valide per 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo del gas è variabile e calcolato come somma della media trimestrale del mercato olandese TTF e del parametro a copertura dei restanti costi per la materia prima e pari a 0,52 €/Smc.&lt;/p&gt;&lt;p&gt;Tale prezzo rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Il corrispettivo di commercializzazione è pari a 144 €/PdR/anno ed incide per circa il 5% della spesa annua.&lt;/p&gt;&lt;p&gt;Infine, è prevista la spesa per il trasporto, la gestione del contatore ed oneri di sistema, che rappresenta il restante -2% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProduct__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA COMM MARCHE PLACET VARIABILE GAS CASA</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>

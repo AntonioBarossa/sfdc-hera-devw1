@@ -127,7 +127,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }
 
         let draftData = this.sectionDataToSubmit;
-        draftData.Id = this.currentSectionRecordId;
+        if( this.currentSectionRecordId )
+        {
+            draftData.Id = this.currentSectionRecordId;
+        }
         if(this.lastStepNumber === this.currentSection.step) {
             this.lastStepData = draftData;
         }

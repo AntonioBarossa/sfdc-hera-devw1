@@ -632,6 +632,11 @@
                 <label>HC_CVMBO_MMSME_CFBS_Appuntamenti_Koinè</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Autoletture_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Autoletture_NC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Bonif Anagr da DAFC_HC</label>
@@ -690,6 +695,11 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Doppi pagamenti/incassi/Rimborso_Koinè</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_ Errore di fatturazione_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_ Errore di fatturazione_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Escalation_HC</fullName>
@@ -1237,6 +1247,11 @@
                 <label>HC_VENDITA_MM_Supporto Vendita_OT_AcAgency</label>
             </value>
             <value>
+                <fullName>HC_VENDITA_MM_Supporto Vendita_OT_Tecnocall</fullName>
+                <default>false</default>
+                <label>HC_VENDITA_MM_Supporto Vendita_OT_Tecnocall</label>
+            </value>
+            <value>
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
@@ -1300,6 +1315,11 @@
                 <fullName>HCM_BACK_Reclami</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Reclami</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_TRG_Contratto non richiesto</fullName>
+                <default>false</default>
+                <label>HCM_BACK_TRG_Contratto non richiesto</label>
             </value>
             <value>
                 <fullName>HCM_BACK_TRG_Fatturazione</fullName>
