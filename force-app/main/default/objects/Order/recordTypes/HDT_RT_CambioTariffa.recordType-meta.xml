@@ -238,10 +238,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>30 x 50 - 30 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>4</fullName>
             <default>false</default>
         </values>
@@ -475,10 +471,6 @@
         </values>
         <values>
             <fullName>WV 50 - 25 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV 65 - 50 mc</fullName>
             <default>false</default>
         </values>
         <values>
