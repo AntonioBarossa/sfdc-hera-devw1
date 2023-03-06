@@ -186,6 +186,21 @@
         <label>Hera Placet Variabile Lavoro Luce</label>
     </customValue>
     <customValue>
+        <fullName>Hera ProtezionePiu Casa Dual</fullName>
+        <default>false</default>
+        <label>Hera ProtezionePiu Casa Dual</label>
+    </customValue>
+	<customValue>
+        <fullName>Hera ProtezionePiu Casa Gas</fullName>
+        <default>false</default>
+        <label>Hera ProtezionePiu Casa Gas</label>
+    </customValue>
+	<customValue>
+        <fullName>Hera ProtezionePiu Casa Luce</fullName>
+        <default>false</default>
+        <label>Hera ProtezionePiu Casa Luce</label>
+    </customValue>
+    <customValue>
         <fullName>Hera Ricarica Business</fullName>
         <default>false</default>
         <label>Hera Ricarica Business</label>
