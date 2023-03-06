@@ -26,7 +26,7 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
 
     get options() {
         return [
-            {label: 'Comune', value: 'City__c'},
+            {label: 'Comune', value: 'CityRonchi'},
             {label: 'Codice Istat', value: 'IstatCodeAndCity'},
             {label: 'Codice Ronchi', value: 'RonchiCodeAndCity'}
         ];
@@ -39,7 +39,7 @@ export default class HdtCodiceRonchi extends HdtCodiceAteco {
         this.selectedIstatCode = selectedRows[0].IstatCode__c;
         this.ronchiCode = selectedRows[0].RonchiCode__c;
         this.ronchiSubcategory = selectedRows[0].RonchiSubcategory__c;
-        this.ronchiDescription = selectedRows[0].RonchiDescription__c;
+        this.ronchiDescription = selectedRows[0].Type__c;
         this.disabledSave = false;
     }
 

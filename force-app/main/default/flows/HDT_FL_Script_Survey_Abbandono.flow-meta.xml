@@ -410,6 +410,14 @@
         </value>
     </choices>
     <choices>
+        <name>POSTE_ENERGIA</name>
+        <choiceText>POSTE ENERGIA</choiceText>
+        <dataType>String</dataType>
+        <value>
+            <stringValue>POSTE ENERGIA</stringValue>
+        </value>
+    </choices>
+    <choices>
         <name>RB2Choice1</name>
         <choiceText>Ho ricevuto una chiamata da un call center e ho fatto il contratto al telefono</choiceText>
         <dataType>String</dataType>
@@ -1090,6 +1098,7 @@
             <choiceReferences>E_DI_ENERGIA</choiceReferences>
             <choiceReferences>SINECOM</choiceReferences>
             <choiceReferences>EON</choiceReferences>
+            <choiceReferences>POSTE_ENERGIA</choiceReferences>
             <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Energia Elettrica</fieldText>
@@ -1157,6 +1166,7 @@
             <choiceReferences>E_DI_ENERGIA</choiceReferences>
             <choiceReferences>SINECOM</choiceReferences>
             <choiceReferences>EON</choiceReferences>
+            <choiceReferences>POSTE_ENERGIA</choiceReferences>
             <choiceReferences>Altro</choiceReferences>
             <dataType>String</dataType>
             <fieldText>Gas</fieldText>
