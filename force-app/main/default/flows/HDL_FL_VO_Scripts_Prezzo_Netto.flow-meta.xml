@@ -37,7 +37,7 @@
         <name>AssignExistCaldaiaSicura</name>
         <label>AssignExistCaldaiaSicura</label>
         <locationX>1214</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>AssignExistWattProblem</name>
         <label>AssignExistWattProblem</label>
         <locationX>1478</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistWatt</assignToReference>
             <operator>Assign</operator>
@@ -112,26 +112,26 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assignmentCheckForVas</name>
-        <label>assignmentCheckForVas</label>
+        <name>AssignmentAnalisiConsumi</name>
+        <label>AssignmentAnalisiConsumi</label>
         <locationX>1038</locationX>
-        <locationY>5342</locationY>
+        <locationY>5702</locationY>
         <assignmentItems>
-            <assignToReference>CheckForVas</assignToReference>
+            <assignToReference>AnalisiConsumi</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LoopOrdiniFigli</targetReference>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssignmenteRicaricaPubblica</name>
         <label>AssignmenteRicaricaPubblica</label>
         <locationX>3062</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistPubblica</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignmentRicaricaPrivata</name>
         <label>AssignmentRicaricaPrivata</label>
         <locationX>3326</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistPrivata</assignToReference>
             <operator>Assign</operator>
@@ -234,22 +234,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>categoryAssign</name>
-        <label>categoryAssign</label>
-        <locationX>950</locationX>
-        <locationY>7238</locationY>
-        <assignmentItems>
-            <assignToReference>categoryVariableAssign</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Servizi_Bundle_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>ContatoreWallBox</name>
         <label>ContatoreWallBox</label>
         <locationX>1018</locationX>
@@ -279,38 +263,6 @@
         </assignmentItems>
         <connector>
             <targetReference>DecisionForInstallazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ExistAnaConsAssignment</name>
-        <label>ExistAnaConsAssignment</label>
-        <locationX>1082</locationX>
-        <locationY>6902</locationY>
-        <assignmentItems>
-            <assignToReference>ExistAnaCons</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>categoryAssign</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ExistAnaConsAssignment_0</name>
-        <label>ExistAnaConsAssignment_0</label>
-        <locationX>818</locationX>
-        <locationY>7022</locationY>
-        <assignmentItems>
-            <assignToReference>ExistAnaCons</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>categoryAssign</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -365,7 +317,7 @@
         <name>LedAssignment</name>
         <label>LedAssignment</label>
         <locationX>2270</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistLed</assignToReference>
             <operator>Assign</operator>
@@ -395,7 +347,7 @@
         <name>NoProblemAcquaAssignment</name>
         <label>NoProblemAcquaAssignment</label>
         <locationX>2798</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblmeAcqua</assignToReference>
             <operator>Assign</operator>
@@ -418,7 +370,7 @@
         <name>NoProblemGasAssignment</name>
         <label>NoProblemGasAssignment</label>
         <locationX>2006</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -441,7 +393,7 @@
         <name>NoProblemLuceAssignment</name>
         <label>NoProblemLuceAssignment</label>
         <locationX>1742</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -464,7 +416,7 @@
         <name>ThermoAssignment</name>
         <label>ThermoAssignment</label>
         <locationX>2534</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -494,7 +446,7 @@
         <name>VASPresenti</name>
         <label>VASPresentiAssign</label>
         <locationX>2402</locationX>
-        <locationY>6014</locationY>
+        <locationY>6374</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -810,35 +762,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Categoria_Cliente_Decision_0</name>
-        <label>Categoria Cliente Decision</label>
-        <locationX>950</locationX>
-        <locationY>7478</locationY>
-        <defaultConnector>
-            <targetReference>Durata_Contratto_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
-        <rules>
-            <name>isFamiglie_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Famiglie</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Durata_Contratto</targetReference>
-            </connector>
-            <label>isFamiglie</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>7814</locationY>
+        <locationY>7694</locationY>
         <defaultConnector>
             <targetReference>ChannelDecisionAziende</targetReference>
         </defaultConnector>
@@ -860,10 +787,35 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Categoria_Cliente_Decision_1</name>
+        <label>Categoria Cliente Decision</label>
+        <locationX>950</locationX>
+        <locationY>7022</locationY>
+        <defaultConnector>
+            <targetReference>DecisionServiziBuddle_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
+        <rules>
+            <name>isFamiglie_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DecisionServiziBuddle</targetReference>
+            </connector>
+            <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>686</locationX>
-        <locationY>7934</locationY>
+        <locationY>7814</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
         </defaultConnector>
@@ -888,7 +840,7 @@
         <name>ChannelDecisionAziende</name>
         <label>ChannelDecisionAziende</label>
         <locationX>1214</locationX>
-        <locationY>7934</locationY>
+        <locationY>7814</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0_0_0_0</targetReference>
         </defaultConnector>
@@ -907,6 +859,31 @@
                 <targetReference>Conferma_Adesione_Screen_0</targetReference>
             </connector>
             <label>Outbound_AZ</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionAnalisiConsumi</name>
+        <label>DecisionAnalisiConsumi</label>
+        <locationX>1170</locationX>
+        <locationY>5582</locationY>
+        <defaultConnector>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumiChildsLoop.CommercialProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Analisi Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentAnalisiConsumi</targetReference>
+            </connector>
+            <label>Contains</label>
         </rules>
     </decisions>
     <decisions>
@@ -1042,28 +1019,53 @@
         </rules>
     </decisions>
     <decisions>
-        <name>ExistOrderAnaCons</name>
-        <label>ExistOrderAnaCons</label>
-        <locationX>950</locationX>
-        <locationY>6782</locationY>
+        <name>DecisionServiziBuddle</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>730</locationX>
+        <locationY>7142</locationY>
         <defaultConnector>
-            <targetReference>ExistAnaConsAssignment</targetReference>
+            <targetReference>Durata_Contratto</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>ExistOrderAnaCons_1</name>
+            <name>Contains_Analisi_Consumi</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetOrderAnaCons</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetAnalisiConsumi_0</targetReference>
+                <targetReference>Servizi_Bundle_Screen</targetReference>
             </connector>
-            <label>ExistOrderAnaCons_1</label>
+            <label>Contains Analisi Consumi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionServiziBuddle_0</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>1170</locationX>
+        <locationY>7142</locationY>
+        <defaultConnector>
+            <targetReference>Durata_Contratto_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Analisi_Consumi_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Servizi_Bundle_Screen_0</targetReference>
+            </connector>
+            <label>Contains Analisi Consumi</label>
         </rules>
     </decisions>
     <decisions>
@@ -1397,31 +1399,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>isVas</name>
-        <label>isVas</label>
-        <locationX>1170</locationX>
-        <locationY>5222</locationY>
-        <defaultConnector>
-            <targetReference>LoopOrdiniFigli</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isVasForChild</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>LoopOrdiniFigli.ProcessType__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>VAS</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>assignmentCheckForVas</targetReference>
-            </connector>
-            <label>isVasForChild</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
         <locationX>930</locationX>
@@ -1525,7 +1502,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1720</locationX>
-        <locationY>5894</locationY>
+        <locationY>6254</locationY>
         <defaultConnector>
             <targetReference>VASPresenti</targetReference>
         </defaultConnector>
@@ -1550,7 +1527,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2402</locationX>
-        <locationY>6134</locationY>
+        <locationY>6494</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1691,6 +1668,7 @@
             <label>RicaricaPrivata</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>NomeOffertaCalcolato_Introduzione</name>
         <dataType>String</dataType>
@@ -1727,6 +1705,20 @@
     <interviewLabel>HDL FL VO Scripts - Prezzo Netto {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Scripts - Prezzo Netto</label>
     <loops>
+        <name>AnalisiConsumiChildsLoop</name>
+        <label>AnalisiConsumiChildsLoop</label>
+        <locationX>950</locationX>
+        <locationY>5462</locationY>
+        <collectionReference>getChilds</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DecisionAnalisiConsumi</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Bonus_Loop</name>
         <label>Bonus Loop</label>
         <locationX>930</locationX>
@@ -1741,20 +1733,6 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>LoopOrdiniFigli</name>
-        <label>LoopOrdiniFigli</label>
-        <locationX>950</locationX>
-        <locationY>5102</locationY>
-        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>isVas</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>50</locationX>
@@ -1765,7 +1743,7 @@
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>LoopOrdiniFigli</targetReference>
+            <targetReference>getParent</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -1779,21 +1757,21 @@
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli_0</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>LoopOrdiniFigli</targetReference>
+            <targetReference>getParent</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>950</locationX>
-        <locationY>5654</locationY>
+        <locationY>6014</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>GetOrderAnaCons</targetReference>
+            <targetReference>Categoria_Cliente_Decision_1</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1816,41 +1794,20 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>GetAnalisiConsumi_0</name>
-        <label>GetAnalisiConsumi</label>
-        <locationX>818</locationX>
-        <locationY>6902</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>ExistAnaConsAssignment_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>OrderId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetOrderAnaCons.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>OrderItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetOrderAnaCons</name>
-        <label>GetOrderAnaCons</label>
+        <name>getChilds</name>
+        <label>getChilds</label>
         <locationX>950</locationX>
-        <locationY>6662</locationY>
+        <locationY>5342</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>ExistOrderAnaCons</targetReference>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>idOrdinePadreInput</elementReference>
+                <elementReference>getParent.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -1867,7 +1824,7 @@
                 <stringValue>Analisi Consumi</stringValue>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -1890,6 +1847,55 @@
         </filters>
         <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOrderProduct</name>
+        <label>getOrderProduct</label>
+        <locationX>950</locationX>
+        <locationY>5222</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getChilds</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getParent.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getParent</name>
+        <label>getParent</label>
+        <locationX>950</locationX>
+        <locationY>5102</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getOrderProduct</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <screens>
@@ -3441,7 +3447,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1082</locationX>
-        <locationY>8054</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3605,7 +3611,7 @@
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>554</locationX>
-        <locationY>8054</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4168,7 +4174,7 @@
         <name>Conferma_Adesione_Screen_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>818</locationX>
-        <locationY>8054</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4793,7 +4799,7 @@
         <name>Conferma_Adesione_Screen_0_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1346</locationX>
-        <locationY>8054</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6312,8 +6318,8 @@
     <screens>
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
-        <locationX>818</locationX>
-        <locationY>7598</locationY>
+        <locationX>730</locationX>
+        <locationY>7478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6402,8 +6408,8 @@
     <screens>
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
-        <locationX>1082</locationX>
-        <locationY>7598</locationY>
+        <locationX>1170</locationX>
+        <locationY>7478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6466,65 +6472,23 @@
     <screens>
         <name>Servizi_Bundle_Screen</name>
         <label>Servizi Bundle Screen</label>
-        <locationX>950</locationX>
-        <locationY>7358</locationY>
+        <locationX>598</locationX>
+        <locationY>7262</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0</targetReference>
+            <targetReference>Durata_Contratto</targetReference>
         </connector>
         <fields>
-            <name>SB_Text1</name>
-            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta {!offertaInput}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  {!GetAnalisiConsumi_0.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetAnalisiConsumi_0.Surface__c} &lt;/span&gt;metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Aziende</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>ExistAnaCons</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>SB_Text3</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi_0.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi_0.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!getOrderProduct.OccupantsNumber__c} e la superficie è {!getOrderProduct.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SB_Text4</name>
-            <fieldText>&lt;p&gt;•	 la sua abitazione è {!GetAnalisiConsumi_0.DwellingType__c}&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	 la sua abitazione è {!getOrderProduct.DwellingType__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SB_Text5</name>
@@ -6533,17 +6497,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi_0.OwnerAC__c</leftValueReference>
+                    <leftValueReference>getOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
+                        <stringValue>Sì</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6555,17 +6512,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi_0.OwnerAC__c</leftValueReference>
+                    <leftValueReference>getOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6574,38 +6524,30 @@
             <name>SB_Text7</name>
             <fieldText>&lt;p&gt;Il report di Diario dei consumi le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, i servizi, di cui riceverà il dettaglio nel plico contrattuale, non saranno più disponibili.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SB_Text3_0</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;HERA FAST CHECK UP&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.PrimaryEmail__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Servizi_Bundle_Screen_0</name>
+        <label>Servizi Bundle Screen</label>
+        <locationX>1038</locationX>
+        <locationY>7262</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Durata_Contratto_0</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_SB_Text1</name>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta {!offertaInput}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  {!getOrderProduct.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!getOrderProduct.Surface__c} &lt;/span&gt;metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -6760,7 +6702,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1720</locationX>
-        <locationY>5774</locationY>
+        <locationY>6134</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -6768,19 +6710,19 @@
         <inputAssignments>
             <name>checkForVas</name>
             <value>
-                <elementReference>CheckForVas</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>getInputCanale</name>
             <value>
-                <stringValue>Inbound</stringValue>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>getInputCategoria</name>
             <value>
-                <stringValue>Famiglie</stringValue>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6791,6 +6733,16 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>AnalisiConsumi</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>AnalisiConsumiOrderId</name>
         <dataType>String</dataType>
