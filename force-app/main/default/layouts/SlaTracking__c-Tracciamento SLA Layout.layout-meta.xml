@@ -74,9 +74,6 @@
                 <field>EndDateTime__c</field>
             </layoutItems>
             <layoutItems>
-                <emptySpace>true</emptySpace>
-            </layoutItems>
-            <layoutItems>
                 <behavior>Edit</behavior>
                 <field>EndDateWorkingDays__c</field>
             </layoutItems>
