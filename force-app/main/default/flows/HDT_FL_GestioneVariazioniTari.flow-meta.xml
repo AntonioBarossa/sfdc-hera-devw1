@@ -131,6 +131,20 @@
                 <elementReference>billingAddressFormula</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>restoreInvoicingAddress</targetReference>
         </connector>
@@ -400,6 +414,20 @@
                 <elementReference>newAddressLwc_0_0.theCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0_0.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0_0.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updateAddress_0</targetReference>
         </connector>
@@ -472,6 +500,20 @@
                 <elementReference>getPreUpdateAddress.ServicePoint__r.SupplyAddress__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreUpdateAddress.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreUpdateAddress.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updateAddress_0_0</targetReference>
         </connector>
@@ -535,6 +577,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getAfterSubprocess.ServicePoint__r.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplySAPCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterSubprocess.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAfterSubprocess.ServicePoint__r.SupplySAPStreetCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -953,6 +1009,20 @@
                 <elementReference>getCase.Account.BillingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.BillingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.Account.BillingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>commitPostForm</targetReference>
         </connector>
@@ -1018,6 +1088,20 @@
                 <elementReference>getPreCheckTari.BillingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreCheckTari.BillingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreCheckTari.BillingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>commitPostForm</targetReference>
         </connector>
@@ -1078,6 +1162,20 @@
         </assignmentItems>
         <assignmentItems>
             <assignToReference>getPreCheckTari.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.InvoicingStreetCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <stringValue></stringValue>
@@ -1148,6 +1246,20 @@
                 <elementReference>tempCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updatePostSecondForm</targetReference>
         </connector>
@@ -1211,6 +1323,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getCase.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCase.InvoicingStreetCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -2818,16 +2944,6 @@
         <expression>&apos;Il Comune ha subito una variazione! Da: &apos;+{!getCase.ServicePoint__r.SupplyCity__c}+&apos; A: &apos;+{!newAddressLwc_0.theCase.InvoicingCity__c}+
 &quot; Si proceda con l&apos;annullamento del processo corrente e innescare il processo di Cambio Offerta&quot;</expression>
     </formulas>
-    <formulas>
-        <name>transCityCode</name>
-        <dataType>String</dataType>
-        <expression>TEXT(VALUE({!newAddressLwc_0.theCase.InvoicingCityCode__c}))</expression>
-    </formulas>
-    <formulas>
-        <name>transStreetCode</name>
-        <dataType>String</dataType>
-        <expression>TEXT(VALUE({!newAddressLwc_0.theCase.InvoicingStreetCode__c}))</expression>
-    </formulas>
     <interviewLabel>HDT_FL_GestioneVariazioniTari {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_GestioneVariazioniTari</label>
     <processMetadataValues>
@@ -3214,9 +3330,6 @@
         <label>finalUpdate</label>
         <locationX>1187</locationX>
         <locationY>3542</locationY>
-        <connector>
-            <targetReference>updateAddressServicePoint</targetReference>
-        </connector>
         <inputReference>getAfterForm_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3238,99 +3351,6 @@
             <targetReference>getAfterForm_0</targetReference>
         </connector>
         <inputReference>getPreUpdateAddress</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>updateAddressServicePoint</name>
-        <label>updateAddressServicePoint</label>
-        <locationX>1187</locationX>
-        <locationY>3662</locationY>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>Id</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>getCase.ServicePoint__c</elementReference>
-            </value>
-        </filters>
-        <inputAssignments>
-            <field>SupplyCityCode__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingCityCode__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyCity__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingCity__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyCountry__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingCountry__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyPlace__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingPlace__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyPostalCode__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingPostalCode__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyProvince__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingProvince__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplySAPCityCode__c</field>
-            <value>
-                <elementReference>transCityCode</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplySAPStreetCode__c</field>
-            <value>
-                <elementReference>transStreetCode</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyStreetCode__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetCode__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyStreetName__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyStreetNumberExtension__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumberExtension__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyStreetNumber__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <field>SupplyStreet__c</field>
-            <value>
-                <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
-            </value>
-        </inputAssignments>
-        <object>ServicePoint__c</object>
     </recordUpdates>
     <recordUpdates>
         <name>updateafterSecondForm</name>
