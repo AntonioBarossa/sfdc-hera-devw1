@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>IF(ISPICKVAL(SlaAdministration__r.RangeType__c, &apos;Giorni Solari&apos;),&apos;Giorni Solari&apos;,&apos;Giorni Lavorativi&apos;)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Calcolato in</label>
+    <label>Tipo intervallo</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Text</type>
