@@ -4,6 +4,7 @@
     <externalId>false</externalId>
     <formula>SlaAdministration__r.Range__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <inlineHelpText>Intervallo SLA indicato nella regola</inlineHelpText>
     <label>Intervallo SLA</label>
     <precision>18</precision>
     <required>false</required>

@@ -465,6 +465,13 @@
                 <elementReference>newAddressLwc_0.theCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreUpdateAddress.ShipmentAddressAssign__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPreUpdateAddress.ServicePoint__r.SupplyAddress__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updateAddress_0_0</targetReference>
         </connector>
@@ -3317,6 +3324,12 @@
                 <elementReference>newAddressLwc_0.theCase.InvoicingStreetNumber__c</elementReference>
             </value>
         </inputAssignments>
+        <inputAssignments>
+            <field>SupplyStreet__c</field>
+            <value>
+                <elementReference>newAddressLwc_0.theCase.InvoicingStreetName__c</elementReference>
+            </value>
+        </inputAssignments>
         <object>ServicePoint__c</object>
     </recordUpdates>
     <recordUpdates>
@@ -4205,6 +4218,12 @@
                             <elementReference>getAfterAddress</elementReference>
                         </value>
                     </inputParameters>
+                    <inputParameters>
+                        <name>supplyCity</name>
+                        <value>
+                            <elementReference>getAfterAddress.SupplyCity__c</elementReference>
+                        </value>
+                    </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
                     <isRequired>true</isRequired>
                     <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -4234,6 +4253,12 @@
                         <name>caseRecord</name>
                         <value>
                             <elementReference>getAfterAddress</elementReference>
+                        </value>
+                    </inputParameters>
+                    <inputParameters>
+                        <name>supplyCity</name>
+                        <value>
+                            <elementReference>getAfterAddress.SupplyCity__c</elementReference>
                         </value>
                     </inputParameters>
                     <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>

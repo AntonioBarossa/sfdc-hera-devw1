@@ -561,6 +561,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
 
+            //Creare attività solo se esito successivo ad annullato
+            if('Validazione OK da Gestore'.equalsIgnoreCase(currentCase.Phase__c) && 'Annullato'.equalsIgnoreCase(currentPhase)){
+                createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
+                //Se la fase è in Annullato allora non viene cambiata.
+                if ('Annullato'.equalsIgnoreCase(currentPhase)){
+                    currentCase.Phase__c = currentPhase; 
+                }
+            }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');
