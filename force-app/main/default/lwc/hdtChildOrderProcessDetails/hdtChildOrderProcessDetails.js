@@ -279,15 +279,17 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     updateRealEstateUnit(){
-        let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") ? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value) : 0;
-        let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']") ? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
-        let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']") ? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
-        let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']") && (this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
-        let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']") && (this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
-        let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']") && (this.template.querySelector("[data-id='CommercialHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
-        let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']") && (this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
-        let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
-        this.template.querySelector("[data-id='RealEstateUnit__c']").value = sumUnit;
+        if ( this.typeVisibility('acqua') ) {
+            let noResDom = this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']") && (this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='NotResidentDomesticHousingUnit__c']").value) : 0;
+            let resDom = this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']") && (this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='ResidentDomesticHousingUnit__c']").value) : 0;
+            let noDom = this.template.querySelector("[data-id='NotDomesticHousingUnit__c']") && (this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='NotDomesticHousingUnit__c']").value) : 0;
+            let indUnit = this.template.querySelector("[data-id='IndustrialHousingUnit__c']") && (this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='IndustrialHousingUnit__c']").value) : 0;
+            let zooUnit = this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']") && (this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='ZootechnicalHousingUnit__c']").value) : 0;
+            let commUnit = this.template.querySelector("[data-id='CommercialHousingUnit__c']") && (this.template.querySelector("[data-id='CommercialHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='CommercialHousingUnit__c']").value) : 0;
+            let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']") && (this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value)? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
+            let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
+            this.template.querySelector("[data-id='RealEstateUnit__c']").value = sumUnit;
+        }
         return;
     }
 
@@ -980,9 +982,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
-                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='HydrantMouthsNumber__c']") !== null 
-                && (this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === ''
-                    || this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === null)) {
+                if( this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && 
+                    this.template.querySelector("[data-id='HydrantMouthsNumber__c']") !== null &&
+                    ( this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === '' || 
+                    this.template.querySelector("[data-id='HydrantMouthsNumber__c']").value === null ) ) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -993,9 +996,9 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.dispatchEvent(toastErrorMessage);
                 return;
                 }
-                if(this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null 
-                && (this.template.querySelector("[data-id='IntendedUse__c']").value === ''
-                    || this.template.querySelector("[data-id='IntendedUse__c']").value === null)) {
+                if( this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' && this.template.querySelector("[data-id='IntendedUse__c']") !== null &&
+                    (this.template.querySelector("[data-id='IntendedUse__c']").value === '' ||
+                    this.template.querySelector("[data-id='IntendedUse__c']").value === null ) ) {
                 this.loading = false;
                     const toastErrorMessage = new ShowToastEvent({
                         title: 'Errore',
@@ -1293,72 +1296,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('P.Iva precedente intestatario','PreviousHolderVatNumber__c', true, false, false, '','')
                     //new fieldData('Voltura c/o VT','VolturaThirdTrader__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '','')
                 ]
-            },/* 
-            {
-                step: 5,
-                label: 'Variabili di Processo',
-                name: 'dettaglioImpianto',
-                objectApiName: 'Order',
-                recordId: this.order.Id,
-                hasCalculateButton: this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
-                hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' || (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' && (this.order.SupplyType__c !== null && this.order.SupplyType__c === 'Non Domestico')),
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
-                || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
-               data: [
-                new fieldData('Disalimentabilità','Disconnectable__c', this.typeVisibility('both'), false, false, '',''),
-                new fieldData('Categoria disalimentabilità','DisconnectibilityType__c', this.typeVisibility('both'), false, false, '',''),
-                new fieldData('Uso energia','UseTypeEnergy__c', this.typeVisibility('both'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), '',''),
-                new fieldData('Attivazione Anticipata','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', true, (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
-                new fieldData('Azione commerciale','CommercialAction__c', this.typeVisibility('both'), false, false, '',''),
-                new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
-                new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), false, false, '','N'),
-                new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
-                new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
-                new fieldData('Ore di utilizzo','HoursOfUse__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
-                new fieldData('Potenzialità massima richiesta','MaxRequiredPotential__c', this.typeVisibility('gas') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' , this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro', false, '',''),
-                new fieldData('Classe prelievo','WithdrawalClass__c',  this.typeVisibility('gas'), this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
-                new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
-                new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', !(this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'), this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso', '',''),
-                new fieldData('','Revoke__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
-                new fieldData('','CreditAcquire__c', this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
-                new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,this.permissionFlag, '',''),
-                new fieldData('Codice Ateco','AtecoCode__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('SurfaceServed__c','SurfaceServed__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), true, false, '',''),
-                new fieldData('Convenzione/Associazione','ConventionAssociation__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
-                new fieldData('Livello pressione','PressureLevel__c', this.typeVisibility('gas'), true, false, '',''),
-                new fieldData('Servizio Energetico','EnergyService__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'), false, false, '',''),
-                new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
-                new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', !(this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'),'',''),
-                new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Tipo Mercato','Market__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Potenza impegnata','PowerCommitted__c', this.typeVisibility('ele'), false, true, '',''),
-                new fieldData('Potenza disponibile','PowerAvailable__c', this.typeVisibility('ele'), false, true, '',''),
-                new fieldData('Potenza richiesta','PowerRequested__c', this.typeVisibility('ele'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', '',''),
-                new fieldData('Tensione','VoltageLevel__c', this.typeVisibility('ele'), false, true, '',''),
-                new fieldData('Recapito telefonico','DisconnectibilityPhone__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && (this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business' && this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'), false, false, '',''),
-                new fieldData('Residente all\'indirizzo di Fornitura','Resident__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Misuratore','MeterSN__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Classe Contatore','Caliber__c', this.typeVisibility('gas'), false, true, '',''),
-                new fieldData('Località/Codice REMI','RemiCode__c', this.typeVisibility('gas'), false, true, '',''),
-                new fieldData('Autocert. contr connessione','SelfCertificationConnection__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt' ), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
-                new fieldData('Recapito telefonico','PhoneNumber__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Autocert Instanza','InstanceSelfCertification__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', false, true, '',''),
-                new fieldData('SAPImplantCode__c','SAPImplantCode__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'), false, true, '',''),
-                new fieldData('ConnectionType__c','ConnectionType__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), true, this.order.ProcessType__c==='Prima Attivazione Ele' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
-                new fieldData('Preavviso di recesso (numerico)','RecessNotice__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', true, false, '',''),
-                new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
-                new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'), true, this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt', '',''),
-                new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),false, true, '','')
-               ]
-            }, */
+            },
             {
                 step: 5,
                 label: 'Riepilogo Dati',
