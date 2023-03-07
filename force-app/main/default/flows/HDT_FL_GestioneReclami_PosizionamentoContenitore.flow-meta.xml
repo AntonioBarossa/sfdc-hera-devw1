@@ -124,6 +124,20 @@
                 <elementReference>AddressForm_0.theCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterAddress.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AddressForm_0.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getAfterAddress.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>AddressForm_0.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updateFinishAddress</targetReference>
         </connector>
