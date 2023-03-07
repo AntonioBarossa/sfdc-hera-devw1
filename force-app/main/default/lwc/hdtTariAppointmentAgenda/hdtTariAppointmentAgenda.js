@@ -136,9 +136,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                 }
             }
         }).catch(error =>{
-            this.closeModal();
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
+            this.closeModal();
         });
     }
 
