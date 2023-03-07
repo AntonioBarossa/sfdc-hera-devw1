@@ -295,6 +295,13 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' ) {
             this.template.querySelector("[data-id='ContractExpenses__c']").value = 'Nessun Addebito';
         }
+        if( this.typeVisibility('acqua') &&
+            ( this.template.querySelector("[data-id='VoltureType__c']").value === 'In continuità_si_addebito' || 
+            this.template.querySelector("[data-id='VoltureType__c']").value === 'In continuità_no_addebito' || 
+            this.template.querySelector("[data-id='VoltureType__c']").value === 'Recupero' ) )
+        {
+            this.showMessage('Attenzione', 'Valore non consentito per l\'idrico', 'warning');
+        }
         return;
     }
 
@@ -665,6 +672,14 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;
                     }
+                }
+                if( this.typeVisibility('acqua') &&
+                    ( this.template.querySelector("[data-id='VoltureType__c']").value === 'In continuità_si_addebito' || 
+                    this.template.querySelector("[data-id='VoltureType__c']").value === 'In continuità_no_addebito' || 
+                    this.template.querySelector("[data-id='VoltureType__c']").value === 'Recupero' ) )
+                {
+                    this.showMessage('Errore', 'Valore di Tipo Voltura non consentito per l\'idrico', 'error');
+                    return;
                 }
                 if(this.checkFieldAvailable('MaxRequiredPotential__c', true) === '' && this.typeVisibility('gas'))
                 {
