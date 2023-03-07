@@ -185,7 +185,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
 
             SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(SBQQ__Opportunity2__c = newOpportunity.Id));
 
-            HDT_UTL_QuoteProcess.amendProcessManagementAfter(newQuoteList);
+            HDT_UTL_QuoteProcess.amendProcessManagementAfter(new List<SBQQ__Quote__c>{newQuote});
 
             newQuote = new SBQQ__Quote__c(
                 Id = newQuote.Id,
