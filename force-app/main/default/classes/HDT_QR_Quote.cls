@@ -200,7 +200,8 @@ public inherited sharing class HDT_QR_Quote {
             Role__c,
             NewClient__c,
             SuperUser__c,
-            SBQQ__PricebookId__c
+            SBQQ__PricebookId__c,
+            CommercialId__c
             FROM SBQQ__Quote__c
             WHERE SBQQ__Status__c = :status
             AND AmendmentAllowed__c = :amendementAllowed
