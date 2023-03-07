@@ -887,10 +887,6 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
-                    <name>displayPhaseLabel</name>
-                    <value>false</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
                     <name>sortField</name>
                     <value>--None--</value>
                 </componentInstanceProperties>
@@ -955,10 +951,6 @@
                 <componentInstanceProperties>
                     <name>displayTitle</name>
                     <value>true</value>
-                </componentInstanceProperties>
-                <componentInstanceProperties>
-                    <name>handleOpenActivities</name>
-                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>whiteBackground</name>
