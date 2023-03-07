@@ -279,45 +279,4 @@ public inherited sharing class HDT_QR_Quote {
         }
         
     }
-    public List<SBQQ__Quote__c> getQuoteToMap(String quoteId)
-    {
-        return [SELECT Sale__c,
-        Campaign__c,
-        Channel__c,
-        AmendmentAllowed__c,
-        Agency__c,
-        FriendCode__c,
-        SaleBy__c,
-        SalesCompany__c,
-        Market__c,
-        SupplyCity__c,
-        ContractReference__c,
-        SalesCompanyCode__c,
-        SBQQ__Status__c,
-        SBQQ__Opportunity2__c,
-        SBQQ__Account__c,
-        SBQQ__Primary__c,
-        CampaignCode__c,
-        CreatedBy__c,
-        BrandLogo__c,
-        isTransition__c,
-        AllowChangeUse__c,
-        UseCategory__c,
-        ConsumptionRangeEE__c,
-        ConsumptionRangeGAS__c,
-        PowerFlow__c,
-        MarketOrigin__c,
-        ResidentDeliveryAddress__c,
-        MeterType__c,
-        SupplyProvince__c,
-        Login__c,
-        LoginGroup__c,
-        Role__c,
-        NewClient__c,
-        SuperUser__c,
-        SBQQ__PricebookId__c
-        FROM SBQQ__Quote__c
-        WHERE Id = :quoteId
-        WITH SECURITY_ENFORCED];
-    }
 }
