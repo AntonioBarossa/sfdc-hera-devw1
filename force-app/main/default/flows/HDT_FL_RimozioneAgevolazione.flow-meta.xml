@@ -332,7 +332,7 @@
         <inputAssignments>
             <field>Step__c</field>
             <value>
-                <numberValue>2.0</numberValue>
+                <numberValue>1.0</numberValue>
             </value>
         </inputAssignments>
         <object>Order</object>
