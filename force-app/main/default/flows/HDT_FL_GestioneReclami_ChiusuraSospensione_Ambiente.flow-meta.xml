@@ -116,7 +116,7 @@
             <assignToReference>Get_Activity.ClosingCreatorGroup__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>$User.LoginChannel__c</elementReference>
+                <elementReference>$User.CreatorGroup__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
