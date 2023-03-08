@@ -10,6 +10,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
     private String recordTypeDevName;
     private Map<Id, Object> sObjectCriteriaMap;
     private List<String> criteriaFields;
+    private Set<Id> deletedRecords;
 
     public HDT_UTL_SlaManagement(String executionObject) {
         System.debug(logginglevel.DEBUG, '>>> HDT_UTL_SlaManagement...');
@@ -56,7 +57,11 @@ public inherited sharing class HDT_UTL_SlaManagement {
         this.wrpCaseList = wrpEventObjMap.values();
         recordIdList = wrpEventObjMap.keySet();
     }
-    
+
+    public void setDeletedRecordIdsList(Set<Id> deletedRecords){
+        this.deletedRecords = deletedRecords;
+    }
+
     public void execute(){
 
         try{
@@ -373,7 +378,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
-    public static void deleteEventHandler(Set<Id> deletedRecords, Datetime deletedTime){
+    public void deleteEventHandler(Datetime deletedTime){
         System.debug(logginglevel.DEBUG, '>>> deleteEventHandler');
 
         //List<SlaTracking__c> trackingRecordsList = new List<SlaTracking__c>();
@@ -383,13 +388,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
         //    WHERE TrackedId__c IN :deletedRecords
         //    WITH SECURITY_ENFORCED
         //];
-//
+        //
         //if(trackingRecordsList.size() > 0){
         //    for(SlaTracking__c track : trackingRecordsList){
         //        track.EndDateTime__c = deletedTime;
         //        track.Status__c = 'Chiuso';
         //    }
-//
+        //
         //    HDT_UTL_DatabaseService.updateSObject(trackingRecordsList);
         //}
 
