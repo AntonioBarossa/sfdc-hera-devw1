@@ -103,7 +103,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 this.requestObj.contractCode = this.contractNumber;
                 this.requestObj.date = this.setMyDate(-2);//'2022-05-28, --TODAY - 2 GG';
                 this.requestObj.idAggregation = 'D';
-                this.buttonGroup.push({name: 'dayly', type: '', parameters: 'D', label: 'Giornaliero'});
+                this.buttonGroup.push({name: 'daily', type: '', parameters: 'D', label: 'Giornaliero'});
                 this.buttonGroup.push({name: 'weekly', type: '', parameters: 'W', label: 'Settimanale'});
                 this.buttonGroup.push({name: 'monthly', type: '', parameters: 'M', label: 'Mensile'});
                 this.showTimeButton = true;
@@ -181,14 +181,12 @@ export default class HdtConsumptionActivityList extends LightningElement {
     backendCall(){
         console.log('# Get data from WS #');
         console.log('>>> request: ' + JSON.stringify(this.requestObj));
-        
-        //this.setMockData();
 
         getRecordsFromWs({type: this.tabType, requestObj: JSON.stringify(this.requestObj)})
         .then(result => {
             console.log('# WS result #');
             var obj = JSON.parse(result);
-            console.log('# success: ' + result);
+            //console.log('# success: ' + result);
 
             if(obj.response.item === null || obj.response.item === undefined){
                 //this.errorMessage = obj.response.outcomeSapDescr;
@@ -202,6 +200,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 );
             } else {
                 this.contractDataToView = obj.response.item;
+                this.showMainTable = true;
                 this.afterWsCall();
             }
 
@@ -219,9 +218,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
     afterWsCall(){
         if(this.tabType === 'consumptionList2g'){
             if(this.contractDataToView[0].details.item != null && this.contractDataToView[0].details.item.length > 0) {
-                this.detailsDataToView.push(this.contractDataToView[0].details.item[0]);
+                this.detailsDataToView = this.contractDataToView[0].details.item;
                 this.showDetailTable = true;
-                this.showMainTable = true;
             } else {
                 this.showDetailTable = false;
             }
@@ -229,7 +227,6 @@ export default class HdtConsumptionActivityList extends LightningElement {
             if(this.contractDataToView != null && this.contractDataToView.length > 0) {
                 this.detailsDataToView.push(this.contractDataToView);
                 this.showDetailTable = true;
-                this.showMainTable = true;
             } else {
                 this.showDetailTable = false;
             }
@@ -243,13 +240,22 @@ export default class HdtConsumptionActivityList extends LightningElement {
         //console.log('# handleRowAction >>> ' + JSON.stringify(event.detail.row));
 
         if(this.requestObj.idAggregation != 'D'){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione!',
-                    message: 'Dettaglio disponibile solo per vista giornaliera',
-                    variant: 'warning',
-                }),
-            );
+
+            this.requestObj.idAggregation = 'D';
+            this.requestObj.date = event.detail.row.consDateStart;
+            this.spinner = true;
+
+            this.backendCall();
+            this.focusOnButton('daily');
+
+            //this.dispatchEvent(
+            //    new ShowToastEvent({
+            //        title: 'Attenzione!',
+            //        message: 'Dettaglio disponibile solo per vista giornaliera',
+            //        variant: 'warning',
+            //    }),
+            //);
+
         } else {
             this.detailsDataToView = event.detail.row.details.item;
 
