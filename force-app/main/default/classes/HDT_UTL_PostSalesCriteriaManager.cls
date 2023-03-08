@@ -1,6 +1,15 @@
 public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
 
-
+    public Boolean isSuspendedMeter(SObject sender){
+        String servicePointId = (String)sender.get('ServicePoint__c');
+        if(String.isBlank(servicePointId)) return false;
+        List<ServicePoint__c> spList = [SELECT Id,MeterStatus__c FROM ServicePoint__c WHERE Id =:servicePointId];
+        if(!spList.isEmpty() && String.isNotBlank(spList[0].MeterStatus__c) && 'Sospeso'.equalsIgnoreCase(spList[0].MeterStatus__c)){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public Boolean distributorManagement(String phaseStory){
 
         return !(phaseStory.containsIgnoreCase('Pratica non gestita per il DL'));
