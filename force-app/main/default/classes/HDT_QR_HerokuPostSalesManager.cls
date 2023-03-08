@@ -101,13 +101,18 @@ public inherited sharing class HDT_QR_HerokuPostSalesManager {
     }
 
     public List<Case> getRelatedCase(String recordId){
+        Set<String> processList = new Set<String>();
+        processList.add('Sospensione Fornitura');
+        processList.add('Chiusura Presa Stradale');
         return [SELECT Id,
         Type,
         Phase__c,
         CreatedDate,
         ParentId
         FROM Case
-        WHERE Type = 'Sospensione Fornitura'
+        WHERE 
+        Type IN:processList
+        AND Status != 'Closed'
         AND ParentId = :recordId
         WITH SECURITY_ENFORCED
         ORDER BY CreatedDate DESC
