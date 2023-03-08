@@ -575,6 +575,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.ExecutionDate__c = Date.valueOf(exDateString);
             }
 
+            if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
+            }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');

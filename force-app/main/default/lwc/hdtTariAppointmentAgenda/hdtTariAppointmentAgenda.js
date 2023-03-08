@@ -123,7 +123,7 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
             }else{
                 //let data = JSON.parse(result);
                 let data = result;
-                if(data.status.localeCompare('success') === 0){
+                if(data.status.localeCompare('success') === 0 && data.data.noticeNumber){
                     this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
                     //this.case.Phase__c = 'Inviata a SAP';
                     //this.updateCase(this.case, true);
@@ -136,9 +136,9 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
                 }
             }
         }).catch(error =>{
-            this.closeModal();
             this.showAlert('Errore',error.body.message,'error');
             this.dispatchEvent(new CustomEvent('cancelevent',{detail : this.refreshRecord}));
+            this.closeModal();
         });
     }
 
