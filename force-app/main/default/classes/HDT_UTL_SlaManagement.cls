@@ -330,7 +330,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
             System.debug(logginglevel.DEBUG, '>>> startRule.field: ' + singleRule.startRule.field);
             currentTrack = new SlaTracking__c();
             currentTrack.Status__c = 'Aperto';
-            //currentTrack.Case__c = eventObj.recordId;
+            //currentTrack.TrackedId__c = eventObj.recordId;
             currentTrack.SlaAdministration__c = singleRule.adminRuleId;
 
             if(eventObj.activityEvent != null && eventObj.activityEvent.Id != null){
@@ -370,6 +370,28 @@ public inherited sharing class HDT_UTL_SlaManagement {
         } else {
             return null;
         }
+
+    }
+
+    public static void deleteEventHandler(Set<Id> deletedRecords, Datetime deletedTime){
+        System.debug(logginglevel.DEBUG, '>>> deleteEventHandler');
+
+        //List<SlaTracking__c> trackingRecordsList = new List<SlaTracking__c>();
+        //trackingRecordsList = [
+        //    SELECT Id, EndDateTime__c, Status__c
+        //    FROM SlaTracking__c
+        //    WHERE TrackedId__c IN :deletedRecords
+        //    WITH SECURITY_ENFORCED
+        //];
+//
+        //if(trackingRecordsList.size() > 0){
+        //    for(SlaTracking__c track : trackingRecordsList){
+        //        track.EndDateTime__c = deletedTime;
+        //        track.Status__c = 'Chiuso';
+        //    }
+//
+        //    HDT_UTL_DatabaseService.updateSObject(trackingRecordsList);
+        //}
 
     }
 

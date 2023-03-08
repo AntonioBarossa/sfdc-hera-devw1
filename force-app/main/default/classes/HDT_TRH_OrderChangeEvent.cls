@@ -5,6 +5,7 @@ public with sharing class HDT_TRH_OrderChangeEvent {
         System.debug(logginglevel.DEBUG, '>>> eventSize: ' + orderChangeEventList.size());
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
+        Set<Id> deletedRecords = new Set<Id>();
 
         try{
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
@@ -16,6 +17,16 @@ public with sharing class HDT_TRH_OrderChangeEvent {
 
                 List<Id> eventIds = header.getRecordIds();
                 System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
+
+                if(header.changeType.equalsIgnoreCase('UNDELETE')){
+                    // UNDELETE action not managed
+                    continue;
+                }
+
+                if(header.changeType.equalsIgnoreCase('DELETE')){
+                    deletedRecords.addAll(eventIds);
+                    continue;
+                }
 
                 for(Id i : eventIds){
                     if(wrpObjMap.containsKey(i)){
@@ -32,16 +43,6 @@ public with sharing class HDT_TRH_OrderChangeEvent {
 
                 List<String> objFields;
                 objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Order', 'ChangeEventFields');
-
-                //switch on header.changeType {
-                //    when 'CREATE' {
-                //        objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
-                //    }	
-                //    when 'UPDATE' {
-                //        objFields = new List<String>();
-                //        objFields = header.changedFields;
-                //    }
-                //}
 
                 for(String field : objFields) {
                     
@@ -83,10 +84,19 @@ public with sharing class HDT_TRH_OrderChangeEvent {
         System.debug(logginglevel.DEBUG, '>>> wrpObjMap: ' + String.valueOf(wrpObjMap));
 
         if(wrpObjMap.size() > 0){
-            //HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
-            //management.setChangedObjList(wrpObjMap);
-            //management.execute();
+            // only for CREATE and UPDATE events
+            System.debug(logginglevel.DEBUG, '>>> CREATE and UPDATE events...');
+            HDT_UTL_SlaManagement management = new HDT_UTL_SlaManagement('Order');
+            management.setChangedObjList(wrpObjMap);
+            management.execute();
         }
+
+        if(deletedRecords.size() > 0){
+            // only for DELETE event
+            System.debug(logginglevel.DEBUG, '>>> DELETE handler event...');
+            HDT_UTL_SlaManagement.deleteEventHandler(deletedRecords, Datetime.now());
+        }
+
     }
 
 }

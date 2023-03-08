@@ -13,6 +13,15 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
             List<Id> activityIds = new List<Id>();
             for(wrts_prcgvr__Activity__ChangeEvent event : activityChangeEventList){
                 EventBus.ChangeEventHeader header = event.ChangeEventHeader;
+                if(header.changeType.equalsIgnoreCase('UNDELETE')){
+                    // UNDELETE action not managed
+                    continue;
+                }
+
+                if(header.changeType.equalsIgnoreCase('DELETE')){
+                    //deletedRecords.addAll(eventIds);
+                    continue;
+                }
                 activityIds.addAll(header.getRecordIds());
             }
 
@@ -36,7 +45,18 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
 
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
             for(wrts_prcgvr__Activity__ChangeEvent event : activityChangeEventList){
-                //System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
+
+                if(header.changeType.equalsIgnoreCase('UNDELETE')){
+                    // UNDELETE action not managed
+                    continue;
+                }
+
+                if(header.changeType.equalsIgnoreCase('DELETE')){
+                    //deletedRecords.addAll(eventIds);
+                    continue;
+                }
+
+                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
                 EventBus.ChangeEventHeader header = event.ChangeEventHeader;
                 List<Id> eventIds = header.getRecordIds();
                 //System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
@@ -51,6 +71,9 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
                     } else {
                         wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
                         wrpObj.recordId = changeId;
+                        if(changeId==null){
+                            continue;
+                        }
                         wrpObj.sObjType = String.valueOf(changeId.getSobjectType());
                         wrpObj.eventType = header.changeType;
                         wrpObj.fieldMap = new Map<String, Object>();
@@ -102,7 +125,7 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
             }
 
         } catch(Exception e){
-            System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()));
+            System.debug(logginglevel.DEBUG, '>>> Exception ' + e.getMessage() + ' - at line [' + String.valueOf(e.getLineNumber()) + ']');
         }
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjCaseMap;
