@@ -105,7 +105,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     @track recordTypeId;
     @track existsServicePoint = false;
     callWinBack = false;
-    managedMeterClass = ['5 x 20 - 4 mc', '6 x 20 - 4 mc', '7 x 20 - 4 mc', '10 x 30 - 10 mc', '11 x 30 - 10 mc', '20 x 40 - 16 mc', '3 x 15 - 2.5 mc', '4 x 15 - 2.5 mc', '5 x 15 - 2.5 mc', '30 x 50 - 30 mc', '31 x 50 - 30 mc', '32 x 50 - 30 mc', '7 x 25 - 6.3 mc', 'WV 100 - 100 mc', 'WV 50 - 25 mc', 'WV 65 - 50 mc', 'WV 80 - 63 mc', 'WV150 - 300 mc'];
+    managedMeterClass = ['10 x 30 - 10 mc', '20 x 40 - 16 mc', '3 x 15 - 2.5 mc', '5 x 20 - 4 mc', '7 x 25 - 6.3 mc', 'WV 100 - 100 mc', 'WV 50 - 25 mc', 'WV 80 - 63 mc', 'WV150 - 300 mc'];
     
     /**
      * Handle save button availability

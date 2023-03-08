@@ -156,6 +156,50 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>relatedListApiName</name>
+                    <value>AcquaReadings__r</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListComponentOverride</name>
+                    <value>ADVGRID</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>rowsToDisplay</name>
+                    <value>10</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>showActionBar</name>
+                    <value>true</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer10</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Subprocess__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Standard</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ProcessType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Voltura</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Acqua</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </componentInstance>
+        </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Order.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
                     <value>EleReadings__r</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
@@ -173,7 +217,7 @@
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer4</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Subprocess__c}</leftValue>
                         <operator>NE</operator>
@@ -183,6 +227,11 @@
                         <leftValue>{!Record.ProcessType__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Voltura</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Acqua</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -212,7 +261,7 @@
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer5</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2</booleanFilter>
+                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Subprocess__c}</leftValue>
                         <operator>NE</operator>
@@ -222,6 +271,11 @@
                         <leftValue>{!Record.ProcessType__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Voltura</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Acqua</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
@@ -770,6 +824,10 @@
         <itemInstances>
             <componentInstance>
                 <componentInstanceProperties>
+                    <name>displayPhaseLabel</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>sortField</name>
                     <value>--None--</value>
                 </componentInstanceProperties>
@@ -816,6 +874,10 @@
     <flexiPageRegions>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>
@@ -876,6 +938,10 @@
                 <componentInstanceProperties>
                     <name>displayTitle</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>handleOpenActivities</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>whiteBackground</name>

@@ -225,6 +225,20 @@
                 <elementReference>newAddressLwc.theCase.InvoicingPlace__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>updateAfterAddress</targetReference>
         </connector>

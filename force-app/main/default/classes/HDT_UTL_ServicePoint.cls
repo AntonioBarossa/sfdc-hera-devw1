@@ -470,6 +470,10 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('PADRE-FIGLIO')!=null && !String.isBlank(mapRes.get('PADRE-FIGLIO'))){
             spNew.MeterRelation__c = mapRes.get('PADRE-FIGLIO');
         }
+
+        //Reset flag di check creazione activity di "Modifica Indirizzo Fornitura", tale flag verrà impostato a true nel caso in cui si vada a modificare l'indirizzo sul form del service point.
+        spNew.IsAddressChanged__c = false;
+
          /**Edoardo Zanatta 2023-01-11
          * Aggiunta gestione SAPContractAccountCode__c
          */
