@@ -57,6 +57,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
     modalBody;
     parameter;
     buttonName;
+    currentView;
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
     wiredRecord({ error, data }) {
@@ -89,7 +90,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
         this.template.querySelectorAll('button').forEach((but) => {
             but.classList.remove('slds-button_brand');
             but.classList.add('slds-button_neutral');
-            if(but.name === thisButton){
+            if(but.dataset.parameters === thisButton){
                 but.classList.add('slds-button_brand');
             }            
         });
@@ -103,6 +104,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 this.requestObj.contractCode = this.contractNumber;
                 this.requestObj.date = this.setMyDate(-2);//'2022-05-28, --TODAY - 2 GG';
                 this.requestObj.idAggregation = 'D';
+                this.currentView = 'D';
                 this.buttonGroup.push({name: 'daily', type: '', parameters: 'D', label: 'Giornaliero'});
                 this.buttonGroup.push({name: 'weekly', type: '', parameters: 'W', label: 'Settimanale'});
                 this.buttonGroup.push({name: 'monthly', type: '', parameters: 'M', label: 'Mensile'});
@@ -164,12 +166,12 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 }
 
                 this.backendCall();
-
+                
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
                 this.errorMessage = result.message;
-                this.spinner = false;                
+                this.spinner = false;
             }
 
         }).catch(error => {
@@ -199,9 +201,13 @@ export default class HdtConsumptionActivityList extends LightningElement {
                     }),
                 );
             } else {
-                this.contractDataToView = obj.response.item;
+                //this.contractDataToView = obj.response.item;
                 this.showMainTable = true;
-                this.afterWsCall();
+                this.afterWsCall(obj);
+            }
+
+            if(this.tabType === 'consumptionList2g'){
+                this.focusOnButton(this.currentView);
             }
 
             this.spinner = false;
@@ -215,17 +221,25 @@ export default class HdtConsumptionActivityList extends LightningElement {
     
     }
 
-    afterWsCall(){
+    afterWsCall(obj){
+
         if(this.tabType === 'consumptionList2g'){
-            if(this.contractDataToView[0].details.item != null && this.contractDataToView[0].details.item.length > 0) {
-                this.detailsDataToView = this.contractDataToView[0].details.item;
+
+            if(this.requestObj.idAggregation === this.currentView){
+                this.contractDataToView = obj.response.item;
+            }
+
+            if(obj.response.item[0].details.item != null && obj.response.item[0].details.item.length > 0) {
+                this.detailsDataToView = obj.response.item[0].details.item;
                 this.showDetailTable = true;
             } else {
                 this.showDetailTable = false;
             }
+
         } else {
-            if(this.contractDataToView != null && this.contractDataToView.length > 0) {
-                this.detailsDataToView.push(this.contractDataToView);
+            this.contractDataToView = obj.response.item;
+            if(obj.response.item != null && obj.response.item.length > 0) {
+                this.detailsDataToView.push(obj.response.item);
                 this.showDetailTable = true;
             } else {
                 this.showDetailTable = false;
@@ -236,35 +250,25 @@ export default class HdtConsumptionActivityList extends LightningElement {
     }
 
     handleRowAction(event) {
-        console.log('# handleRowAction # ' + this.requestObj.idAggregation);
+        console.log('# handleRowAction > ' + this.requestObj.idAggregation);
+        console.log('# currentView > ' + this.currentView);
         //console.log('# handleRowAction >>> ' + JSON.stringify(event.detail.row));
 
-        if(this.requestObj.idAggregation != 'D'){
-
+        if(this.currentView == 'W' || this.currentView == 'M'){
             this.requestObj.idAggregation = 'D';
             this.requestObj.date = event.detail.row.consDateStart;
             this.spinner = true;
-
             this.backendCall();
-            this.focusOnButton('daily');
-
-            //this.dispatchEvent(
-            //    new ShowToastEvent({
-            //        title: 'Attenzione!',
-            //        message: 'Dettaglio disponibile solo per vista giornaliera',
-            //        variant: 'warning',
-            //    }),
-            //);
 
         } else {
             this.detailsDataToView = event.detail.row.details.item;
-
             if(event.detail.row.details.item.length > 0) {
                 this.showDetailTable = true;
             } else {
                 this.showDetailTable = false;
             }
         }
+
     }
 
     buttonHandler(event){
@@ -278,6 +282,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
             //if(event.currentTarget.dataset.parameters!=null && event.currentTarget.dataset.parameters!=undefined&&event.currentTarget.dataset.parameters!='filter'){
             if(this.tabType === 'consumptionList2g'){
                 this.requestObj.idAggregation = event.currentTarget.dataset.parameters;
+                this.currentView = event.currentTarget.dataset.parameters;
             }
             
             this.buttonName = event.currentTarget.name;
@@ -296,7 +301,10 @@ export default class HdtConsumptionActivityList extends LightningElement {
             console.log('## applyConfirm ' + JSON.stringify(event.detail));
             this.requestObj = event.detail.requestObject;
             this.backendCall();
-            this.focusOnButton(event.detail.buttonName);
+            if(event.detail.buttonName == 'filter'){
+                this.focusOnButton(event.detail.buttonName);
+            }
+
         }
         this.openModal = false;
     }

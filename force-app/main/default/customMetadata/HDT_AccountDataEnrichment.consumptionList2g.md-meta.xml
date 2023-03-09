@@ -101,7 +101,7 @@
     ]
   },
   {
-    &quot;tableTitle&quot;: &quot;Costo Consumi&quot;,
+    &quot;tableTitle&quot;: &quot;Costo Consumi (Giornaliero)&quot;,
     &quot;tableName&quot;: &quot;details&quot;,
     &quot;iconName&quot;: &quot;standard:record_update&quot;,
     &quot;columns&quot;: [
