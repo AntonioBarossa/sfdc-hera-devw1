@@ -14,7 +14,7 @@
             <value>
                 <fullName>BAND_DISCOUNT</fullName>
                 <default>false</default>
-                <label>BAND DISCOUNT</label>
+                <label>BAND_DISCOUNT</label>
             </value>
             <value>
                 <fullName>SPECIAL_DAY</fullName>
