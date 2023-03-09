@@ -102,6 +102,7 @@ public inherited sharing class HDT_QR_Contract {
             Contract
             WHERE AccountId = :accountId									 
             AND Status IN ('Activated', 'Attivo')
+            AND CommoditySectorFormula__c IN ('Energia Elettrica', 'Gas')
             WITH SECURITY_ENFORCED
         ];
     }
