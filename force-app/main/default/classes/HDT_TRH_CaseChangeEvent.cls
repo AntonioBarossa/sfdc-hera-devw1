@@ -9,13 +9,13 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
         Set<Id> deletedRecords = new Set<Id>();
 
         try{
-            List<String> objFields;
+            List<String> filterFields;
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
             List<Id> eventIds;
             EventBus.ChangeEventHeader header;
             Object fieldValue;
 
-            objFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
+            filterFields = HDT_UTL_SlaManagement.getFieldsForChangeEvent('Case', 'ChangeEventFields');
 
             for(CaseChangeEvent event : CaseChangeEventList){
                 
@@ -37,33 +37,32 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
                     continue;
                 }
                 
-                for(String field : objFields) {
+                for(String field : filterFields) {
                     
-                    if(event.get(field) != null) {
-                        fieldValue = event.get(field);
-                        //System.debug(logginglevel.DEBUG, '>>> field: ' + field + ' - value: ' + fieldValue);
+                    fieldValue = event.get(field);
+                    //System.debug(logginglevel.DEBUG, '>>> field: ' + field + ' - value: ' + fieldValue);
 
-                        for(Id i : eventIds){
-                            if(wrpObjMap.containsKey(i)){
-                                wrpObj = wrpObjMap.get(i);
-                                wrpObj.fieldMap.put(field, fieldValue);
-                            } else {
-                                wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
-                                wrpObj.recordId = i;
-                                wrpObj.sObjType = 'Case';
-                                wrpObj.eventType = header.changeType;
-                                wrpObj.fieldMap = new Map<String, Object>{field => fieldValue};
-                                wrpObjMap.put(i, wrpObj);
-                            }
+                    if(fieldValue == null) {
+                        continue;
+                    }
 
-                            if(!wrpObjMap.get(i).fieldMap.containsKey('LastModifiedDate')){
-                                wrpObjMap.remove(i);
-                            }
-
+                    for(Id i : eventIds){
+                        if(wrpObjMap.containsKey(i)){
+                            wrpObj = wrpObjMap.get(i);
+                            wrpObj.fieldMap.put(field, fieldValue);
+                        } else {
+                            wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
+                            wrpObj.recordId = i;
+                            wrpObj.sObjType = 'Case';
+                            wrpObj.eventType = header.changeType;
+                            wrpObj.fieldMap = new Map<String, Object>{field => fieldValue};
+                            wrpObjMap.put(i, wrpObj);
                         }
 
-                    } else {
-                        continue;
+                        if(!wrpObjMap.get(i).fieldMap.containsKey('LastModifiedDate')){
+                            wrpObjMap.remove(i);
+                        }
+
                     }
 
                 }

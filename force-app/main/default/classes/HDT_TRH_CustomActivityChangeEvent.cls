@@ -8,11 +8,18 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
         Map<Id, Id> activityIdsMap = new Map<Id, Id>();
         Map<Id, wrts_prcgvr__Activity__c> activityMap = new Map<Id, wrts_prcgvr__Activity__c>();
+        List<String> objFields = new List<String>();
+        objFields.add('ActivityStartTime__c');
+        objFields.add('ActivityEndTime__c');
 
         try{
             List<Id> activityIds = new List<Id>();
+            EventBus.ChangeEventHeader header;
+
             for(wrts_prcgvr__Activity__ChangeEvent event : activityChangeEventList){
-                EventBus.ChangeEventHeader header = event.ChangeEventHeader;
+                
+                header = event.ChangeEventHeader;
+
                 if(header.changeType.equalsIgnoreCase('UNDELETE')){
                     // UNDELETE action not managed
                     continue;
@@ -44,84 +51,66 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
             }
 
             HDT_WRP_SlaManagement.HDT_WRP_Event wrpObj;
+            EventBus.ChangeEventHeader eventHeader;
+            List<Id> eventIds;
+            Object fieldValue;
             for(wrts_prcgvr__Activity__ChangeEvent event : activityChangeEventList){
 
-                if(header.changeType.equalsIgnoreCase('UNDELETE')){
+                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
+
+                eventHeader = event.ChangeEventHeader;
+                eventIds = eventHeader.getRecordIds();
+                //System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
+
+                if(eventHeader.changeType.equalsIgnoreCase('UNDELETE')){
                     // UNDELETE action not managed
                     continue;
                 }
 
-                if(header.changeType.equalsIgnoreCase('DELETE')){
+                if(eventHeader.changeType.equalsIgnoreCase('DELETE')){
                     //deletedRecords.addAll(eventIds);
                     continue;
                 }
 
-                System.debug(logginglevel.DEBUG, '>>> ' + JSON.serialize(event));
-                EventBus.ChangeEventHeader header = event.ChangeEventHeader;
-                List<Id> eventIds = header.getRecordIds();
-                //System.debug(logginglevel.DEBUG, '>>> eventIds ' + eventIds);
-
-                Id changeId;
-                for(Id i : eventIds){
-
-                    changeId = activityIdsMap.get(i);
-
-                    if(wrpObjMap.containsKey(changeId)){ 
-                        wrpObj = wrpObjMap.get(changeId);
-                    } else {
-                        wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
-                        wrpObj.recordId = changeId;
-                        if(changeId==null){
-                            continue;
-                        }
-                        wrpObj.sObjType = String.valueOf(changeId.getSobjectType());
-                        wrpObj.eventType = header.changeType;
-                        wrpObj.fieldMap = new Map<String, Object>();
-                        wrpObj.activityEvent = activityMap.get(i);
-                        wrpObjMap.put(changeId, wrpObj);
-                    }
-                }
-
-                
-
-                List<String> objFields = new List<String>();
-                objFields.add('ActivityStartTime__c');
-                objFields.add('ActivityEndTime__c');
-
                 for(String field : objFields) {
                     
-                    if(event.get(field) != null) {
-                        Object fieldValue = event.get(field);
+                    fieldValue = event.get(field);
+                    //System.debug(logginglevel.DEBUG, '>>> field: ' + field + ' - value: ' + fieldValue);
+
+                    if(fieldValue == null) {
+                        continue;
+                    }
                         
-                        Id replaceId;
-                        for(Id i : eventIds){
+                    Id changeId;
+                    for(Id i : eventIds){
 
-                            replaceId = activityIdsMap.get(i);
+                        changeId = activityIdsMap.get(i);
 
-                            if(wrpObjMap.containsKey(replaceId)){
-                                wrpObj = wrpObjMap.get(replaceId);
-                                wrpObj.fieldMap.put(field, fieldValue);
-                            }
+                        if(changeId == null){
+                            continue;
+                        }
+
+                        if(wrpObjMap.containsKey(changeId)){ 
+                            wrpObj = wrpObjMap.get(changeId);
+                            wrpObj.fieldMap.put(field, fieldValue);
+                        } else {
+                            wrpObj = new HDT_WRP_SlaManagement.HDT_WRP_Event();
+                            wrpObj.recordId = changeId;
+                            wrpObj.sObjType = String.valueOf(changeId.getSobjectType());
+                            wrpObj.eventType = header.changeType;
+                            wrpObj.fieldMap = new Map<String, Object>{field => fieldValue};
+                            wrpObj.activityEvent = activityMap.get(i);
+                            wrpObjMap.put(changeId, wrpObj);
+                        }
+
+                        if(!wrpObjMap.get(i).fieldMap.containsKey('LastModifiedDate')){
+                            wrpObjMap.remove(i);
                         }
 
                     }
 
                 }
 
-            }
-
-            for(String key : wrpObjMap.keySet()){
-                Integer conter = 0;
-                
-                for(String field : wrpObjMap.get(key).fieldMap.keySet()){
-                    if(!field.equalsIgnoreCase('LastModifiedDate')){
-                        conter++;
-                    }
-                }
-
-                if(conter == 0){
-                    wrpObjMap.remove(key);
-                }
             }
 
         } catch(Exception e){
@@ -145,6 +134,9 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
 
         if(wrpObjCaseMap.size() > 0){
             HDT_UTL_SlaManagement managementCase = new HDT_UTL_SlaManagement('Case');
+
+            System.debug('>>>>>>>>>> wrpObjCaseMap ' + wrpObjCaseMap);
+
             managementCase.setChangedObjList(wrpObjCaseMap);
             managementCase.execute();
         }
