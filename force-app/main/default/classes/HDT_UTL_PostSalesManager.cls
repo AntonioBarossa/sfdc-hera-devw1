@@ -252,12 +252,19 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 for ( Case cs : caseToUpdate )
                 {
                     if( cs.Id != currentCase.Id ){
-                        cs.Email__c = currentCase.Email__c;
-                        cs.PhoneNumber__c = currentCase.PhoneNumber__c;
-                        cs.Mobile__c = currentCase.Mobile__c;
-                        cs.CertifiedEmail__c = currentCase.CertifiedEmail__c;
-                        cs.Fax__c = currentCase.Fax__c;
-                        cs.CustomerMarking__c = currentCase.CustomerMarking__c;
+                        // cs.Email__c = currentCase.Email__c;
+                        // cs.PhoneNumber__c = currentCase.PhoneNumber__c;
+                        // cs.Mobile__c = currentCase.Mobile__c;
+                        // cs.CertifiedEmail__c = currentCase.CertifiedEmail__c;
+                        // cs.Fax__c = currentCase.Fax__c;
+                        // cs.CustomerMarking__c = currentCase.CustomerMarking__c;
+                        cs.Email__c = !String.isBlank(currentCase.Email__c) ? currentCase.Email__c : cs.Email__c;
+                        cs.SuppliedEmail = !String.isBlank(currentCase.SuppliedEmail) ? currentCase.SuppliedEmail : cs.SuppliedEmail;
+                        cs.PhoneNumber__c = !String.isBlank(currentCase.Mobile__c) ? currentCase.Mobile__c : !String.isBlank(currentCase.PhoneNumber__c) ? currentCase.PhoneNumber__c : cs.PhoneNumber__c;
+                        cs.Mobile__c = !String.isBlank(currentCase.Mobile__c) ? currentCase.Mobile__c : cs.Mobile__c;
+                        cs.CertifiedEmail__c = !String.isBlank(currentCase.CertifiedEmail__c) ? currentCase.CertifiedEmail__c : cs.CertifiedEmail__c;
+                        cs.Fax__c = !String.isBlank(currentCase.Fax__c) ? currentCase.Fax__c : cs.Fax__c;
+                        cs.CustomerMarking__c = !String.isBlank(currentCase.CustomerMarking__c) ? currentCase.CustomerMarking__c : cs.CustomerMarking__c;
                         objToUpdate.add(cs);
                     }
                 }

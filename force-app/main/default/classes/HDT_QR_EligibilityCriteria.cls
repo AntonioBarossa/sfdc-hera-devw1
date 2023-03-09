@@ -16,6 +16,7 @@ public inherited sharing class HDT_QR_EligibilityCriteria {
         muniList = new List<EligibleMunicipality__c>();
         muniList = [
             SELECT Id, Name, AreaCode__c, JSONCode__c
+            //#### 24-02-2023 enhanced eligibleForAllCities , EligibleForAllCities__c
             FROM EligibleMunicipality__c
             WHERE EligibilityCriteria__c =: eligibilityId
             WITH SECURITY_ENFORCED

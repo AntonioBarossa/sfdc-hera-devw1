@@ -281,6 +281,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </actionCalls>
     <actionCalls>
+        <name>Predefault_Campi_Modifica_Impianto</name>
+        <label>Predefault Campi Modifica Impianto</label>
+        <locationX>5093</locationX>
+        <locationY>2126</locationY>
+        <actionName>HDT_UTL_Case</actionName>
+        <actionType>apex</actionType>
+        <connector>
+            <targetReference>Assegna_Predefault_1</targetReference>
+        </connector>
+        <flowTransactionModel>Automatic</flowTransactionModel>
+        <inputParameters>
+            <name>cluster</name>
+            <value>
+                <elementReference>Get_Input_Case.Cluster__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
+            <name>currentCase</name>
+            <value>
+                <elementReference>Get_Input_Case</elementReference>
+            </value>
+        </inputParameters>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </actionCalls>
+    <actionCalls>
         <name>Predefault_Campi_Nuovo_Impianto</name>
         <label>Predefault Campi Nuovo Impianto</label>
         <locationX>2721</locationX>
@@ -505,9 +530,25 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assegna_Predefault_1</name>
+        <label>Assegna Predefault</label>
+        <locationX>5093</locationX>
+        <locationY>2246</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.SupplyUseType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Predefault_Campi_Modifica_Impianto.supplyUseType</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AggiornaCase</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Quotation_Validity_Date_0</name>
         <label>Assegna Quotation Validity Date</label>
-        <locationX>5247</locationX>
+        <locationX>5225</locationX>
         <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.QuotationValidityDate__c</assignToReference>
@@ -517,7 +558,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AggiornaCase</targetReference>
+            <targetReference>Processo</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -2068,6 +2109,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Processo</name>
+        <label>Processo?</label>
+        <locationX>5225</locationX>
+        <locationY>2006</locationY>
+        <defaultConnector>
+            <targetReference>AggiornaCase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Altri</defaultConnectorLabel>
+        <rules>
+            <name>Modifica_Impianto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Modifica Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Predefault_Campi_Modifica_Impianto</targetReference>
+            </connector>
+            <label>Modifica Impianto</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Riprendi_Case</name>
         <label>Riprendi Case</label>
         <locationX>3676</locationX>
@@ -2959,7 +3025,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>5379</locationX>
-        <locationY>2102</locationY>
+        <locationY>2558</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Processo_Screen</targetReference>
