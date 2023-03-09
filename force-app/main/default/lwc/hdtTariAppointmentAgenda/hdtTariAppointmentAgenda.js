@@ -332,7 +332,8 @@ export default class HdtTariAppointmentAgenda extends LightningElement {
 
     formatDateTime(stringDateTime){
         const match = stringDateTime?.match(/(\d+)-(\d+)-(\d+)\s+(\d+:\d+:\d+)/);
-        return new Date(`${match[3]}-${match[2]}-${match[1]}T${match[4]}+01:00`);//"2015-03-25T12:00:00Z"
+        //return new Date(`${match[3]}-${match[2]}-${match[1]}T${match[4]}+01:00`);//"2015-03-25T12:00:00Z"
+        return new Date(match[3], match[2]-1, match[1], ...(match[4].split(":")));//"2015-03-25T12:00:00Z"
     }
  
     formatData(dateToFormat){

@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
-    <fullName>ProductIdentifier__c</fullName>
-    <description>Indica l&apos;identificativo del prodotto (BRIM)</description>
+    <fullName>Index__c</fullName>
     <externalId>false</externalId>
-    <label>Identificativo prodotto</label>
+    <label>Indice</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Picklist</type>
@@ -12,19 +11,19 @@
         <valueSetDefinition>
             <sorted>false</sorted>
             <value>
-                <fullName>BAND_DISCOUNT</fullName>
+                <fullName>PUN_24</fullName>
                 <default>false</default>
-                <label>BAND_DISCOUNT</label>
+                <label>PUN_24</label>
             </value>
             <value>
-                <fullName>SPECIAL_DAY</fullName>
+                <fullName>PUN_123</fullName>
                 <default>false</default>
-                <label>SPECIAL DAY</label>
+                <label>PUN_123</label>
             </value>
             <value>
-                <fullName>PUN</fullName>
+                <fullName>PUN_SL</fullName>
                 <default>false</default>
-                <label>PUN</label>
+                <label>PUN_SL</label>
             </value>
         </valueSetDefinition>
     </valueSet>

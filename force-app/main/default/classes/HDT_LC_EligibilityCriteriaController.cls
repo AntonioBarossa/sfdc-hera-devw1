@@ -34,9 +34,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
         System.debug(LoggingLevel.DEBUG,'# search this criteria > ' + recordId);
 
         HDT_WRP_EligibilityCriteria.HDT_WRP_MunicipalityTreeObj municipalityTreeObj;
-
-        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeObj(municipalityTreeObj, recordId);
-        //municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityTreeCompleteObj(municipalityTreeObj, recordId);
         municipalityTreeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createMunicipalityNotAvailableObj(municipalityTreeObj, recordId);
 
         return municipalityTreeObj;
@@ -53,8 +50,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
             
             if(String.isEmpty(eligibilityId)){
                 // eligibilityId IS NULL, so get all Municipalities code
-                //StaticResource sr = [SELECT Id, Body FROM StaticResource WHERE Name = 'Municipalities' WITH SECURITY_ENFORCED LIMIT 1];
-                //cityZipCodeObj  = (HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode)JSON.deserialize(sr.Body.toString(), HDT_WRP_EligibilityCriteria.HDT_WRP_CityZipCode.class);
                 cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
                 cityZipCodeObj.isEditable = true;
                 cityZipCodeObj.success = true;
@@ -67,11 +62,8 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
                 if(criteria[0].EligibleForAllCities__c){
                     cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.createDefaultCityZipCodeObj(cityZipCodeObj);
                 } else {
-                    // eligibilityId IS NOT NULL, so get eligibility database records
-                    //cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(eligibilityId, cityZipCodeObj);
-
                     // eligibilityId IS NOT NULL, so get eligibility database records ---> returns 2 list: cityAvailable and cityRemoved 
-                    cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities2(eligibilityId, cityZipCodeObj);
+                    cityZipCodeObj = HDT_LC_EligibilityCriteriaCtrlHelper.getExistingEligibleMunicipalities(eligibilityId, cityZipCodeObj);
 
                     if(!cityZipCodeObj.success){
                         return cityZipCodeObj;
@@ -167,13 +159,11 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
         try{
 
-            //List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province> provinceList = (List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>)JSON.deserialize(dataReceived, List<HDT_WRP_EligibilityCriteria.HDT_WRP_Province>.class);
             HDT_WRP_EligibilityCriteria.HDT_WRP_Region obj = (HDT_WRP_EligibilityCriteria.HDT_WRP_Region)JSON.deserialize(dataReceived, HDT_WRP_EligibilityCriteria.HDT_WRP_Region.class);
             
             System.debug(LoggingLevel.DEBUG,'# provinceList size -> ' + obj.provinceList.size());
 
             saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.saveEligibilityCriteriaHelper(productId, record, obj);
-            //HDT_LC_EligibilityCriteriaCtrlHelper.updateEligibilityCriteria(productId, true);
 
             if(!saveResponse.success){
                 System.debug(LoggingLevel.DEBUG,'# on controller #');
@@ -204,7 +194,6 @@ public inherited sharing class HDT_LC_EligibilityCriteriaController {
 
             if(criteriaListToDelete.size()>0){
                 saveResponse = HDT_LC_EligibilityCriteriaCtrlHelper.deleteEligibilityCriteriaHelper(criteriaListToDelete, saveResponse);
-                //HDT_LC_EligibilityCriteriaCtrlHelper.updateEligibilityCriteria(productId, false);
             }
 
         } catch (Exception ex){
