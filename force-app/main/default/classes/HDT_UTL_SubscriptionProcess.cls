@@ -329,7 +329,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
 
     public static void dmlOnAfterInsert(){
         if(!contractToDelete.isEmpty()){
-            if(System.isQueueable() && !isFinalizerAttached){
+            if(System.isQueueable() && !isFinalizerAttached && !Test.isRunningTest()){
                 System.attachFinalizer(new HDT_QBL_Finalizer(contractToDelete));
                 //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
                 //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione

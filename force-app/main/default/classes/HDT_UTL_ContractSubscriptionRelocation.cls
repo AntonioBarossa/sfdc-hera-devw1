@@ -49,11 +49,11 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         return mapToReturn;
     }
 
-    public void moveSubscriptions( Set<Id> oldOfferContracts, Map<Id, Sobject> newMapContracts, Map<Id, Order> mapOrder){
+    /* public void moveSubscriptions( Set<Id> oldOfferContracts, Map<Id, Sobject> newMapContracts, Map<Id, Order> mapOrder){
         if(oldOfferContracts.isEmpty()){    return;    }
-        /*Set<Id> allContractsIds = new Set<Id>();
-        allContractsIds.addAll(newMapContracts.keySet());
-        allContractsIds.addAll(oldOfferContracts);*/
+        //Set<Id> allContractsIds = new Set<Id>();
+        //allContractsIds.addAll(newMapContracts.keySet());
+        //allContractsIds.addAll(oldOfferContracts);
         Map<Id, Contract> contractWithSubs = new Map<Id, Contract>([
             SELECT
             Id, (Select SBQQ__TerminatedDate__c, SBQQ__SubscriptionEndDate__c from SBQQ__Subscriptions__r)
@@ -101,7 +101,7 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         system.debug('@@@@@@ delete operation');
         system.debug(contractsToDelete);
         if(!contractsToDelete.isEmpty()){    System.attachFinalizer(new HDT_QBL_Finalizer(contractsToDelete));  }
-    }
+    } */
     
     /*@future
     private static void dmlOperations(Set<Id> contractsToDelete){
@@ -128,20 +128,6 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
                         && ord.ContractReference__r.SAPContractCode__c == newContractCode
                         && ord.RecordTypeId == CAMBIO_TARIFFA_RT_ID;
         return check;
-    }
-
-
-    public class HDT_QBL_Finalizer implements Finalizer {
-        Set<Id> contractsToDelete;
-
-        HDT_QBL_Finalizer(Set<Id> contractsToDelete){
-            this.contractsToDelete = contractsToDelete;
-        }
-
-        public void execute(FinalizerContext ctx){
-            //se queueable success chiamare servizio deda con case
-            if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));  }
-        }
     }
 
 }
