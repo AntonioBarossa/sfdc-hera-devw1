@@ -43,7 +43,7 @@ export default class HdtTechnicalOfferEditForm extends LightningElement {
         {fieldName: 'P0__c', required: false},
         {fieldName: 'K__c', required: false},
         {fieldName: 'I0__c', required: false},
-        {fieldName: 'Lambda__c', required: false},
+        //{fieldName: 'Lambda__c', required: false},
         {fieldName: 'DailyContribution__c', required: false},
         {fieldName: 'WeeklyContribution__c', required: false},
         {fieldName: 'ProductIdentifier__c', required: false},
