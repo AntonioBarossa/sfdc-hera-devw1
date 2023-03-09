@@ -118,7 +118,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             ){
                 //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
                 //assign subscription to old contract and end old subscriptions
-                c.SapContractCode__c = null;
+                //c.SapContractCode__c = null;
                 c.GlobalMigrationKey__c = null;
                 //c.SBQQ__Quote__c = null;
             }
@@ -164,7 +164,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             }
         }
 
-        subsRelocation.moveSubscriptions(oldOfferContracts, Trigger.newMap, mapOrder);
+        //subsRelocation.moveSubscriptions(oldOfferContracts, Trigger.newMap, mapOrder);
 
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());

@@ -1,6 +1,9 @@
 public inherited sharing class HDT_UTL_SubscriptionProcess {
 
     private static List<Contract> contractToDelete = new List<Contract>();
+    private static List<Contract> contractToUpdate = new List<Contract>();
+    private static List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
+    private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
 
 
     public static void alignFields(List<SBQQ__Subscription__c> newSubs){
@@ -27,6 +30,51 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             if('Ambiente'.equalsIgnoreCase(item?.Order?.Commodity__c) && item?.Order?.EffectiveDate__c!=null){      
                 sub.SBQQ__SubscriptionStartDate__c = item.Order.EffectiveDate__c;
             }
+        }
+    }
+
+    public static void fakeMoveOutMoveInForOffers(List<SBQQ__Subscription__c> newSubs){
+        Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            itemToSub.put(sub.SBQQ__OrderProduct__c, sub);
+        }
+        Map<Id, OrderItem> itemsMap = new Map<Id, OrderItem>(
+            [
+                SELECT id, 
+                Order.OrderReference__c, 
+                Order.ContractReference__c, 
+                Order.ServicePoint__c, 
+                Order.ContractReference__r.SAPContractCode__c,
+                Order.SapContractCode__c,
+                Order.EffectiveDate__c,
+                Order.RecordTypeId,
+                Order.RecordType.DeveloperName 
+                FROM OrderItem 
+                WHERE Id IN :itemToSub.keySet()
+                WITH Security_Enforced 
+            ]
+        );
+
+
+        List<SBQQ__Subscription__c> subsToMove = new List<SBQQ__Subscription__c>();
+        Set<Id> oldOfferContracts = new Set<Id>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            OrderItem item = itemsMap.get(sub.SBQQ__OrderProduct__c);
+            if(subsRelocation.checkConditions(item?.Order, item?.Order?.SapContractCode__c)){
+                subsToMove.add(sub);
+                oldOfferContracts.add(item.Order.ContractReference__c);
+            }
+        }
+
+        Map<String, List<Sobject>> sobjectsToDml = subsRelocation.moveSubscriptionOffers( subsToMove, oldOfferContracts, itemsMap );
+        if(sobjectsToDml?.get('deleteContracts')?.isEmpty() == false){
+            contractToDelete.addAll((List<Contract>) sobjectsToDml?.get('deleteContracts'));
+        }
+        if(sobjectsToDml?.get('updateContracts')?.isEmpty() == false){
+            contractToUpdate.addAll((List<Contract>) sobjectsToDml?.get('updateContracts'));
+        }
+        if(sobjectsToDml?.get('updateSubs')?.isEmpty() == false){
+            subscriptionToUpdate.addAll((List<SBQQ__Subscription__c>) sobjectsToDml?.get('updateSubs'));
         }
     }
     
@@ -259,6 +307,24 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     public static void deleteContractsOnAfterInsert(){
         if(!contractToDelete.isEmpty()){
             HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+            contractToDelete.clear();
+        }
+    }
+
+    public static void dmlOnAfterInsert(){
+        /*if(!contractToDelete.isEmpty()){
+            HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+            contractToDelete.clear();
+        }*/
+        if(!contractToUpdate.isEmpty()){
+            HDT_UTL_DatabaseService.updateSObject(contractToUpdate);
+            contractToUpdate.clear();
+        }
+        if(!subscriptionToUpdate.isEmpty()){
+            //system.debug('updateSubs ');
+            //system.debug(json.serializePretty(subscriptionToUpdate));
+            HDT_UTL_DatabaseService.updateSObject(subscriptionToUpdate);
+            subscriptionToUpdate.clear();
         }
     }
 
