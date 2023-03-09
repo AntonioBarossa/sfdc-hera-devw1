@@ -79,6 +79,8 @@ public inherited sharing class HDT_UTL_Case {
                         }
                     }
                 }
+            }else if ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) && !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+                output.supplyUseType = 'ACQUEDOTTO CIVILE';
             }
         } 
         else if('Compatibilita'.equalsIgnoreCase(process))
@@ -294,6 +296,8 @@ public inherited sharing class HDT_UTL_Case {
         public String taxes;
         @InvocableVariable
         public Date customerChangeDate;
+        @InvocableVariable
+        public String supplyUseType;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){

@@ -43,6 +43,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     spIds.add(servicePoint);
                     needUpdate.put(servicePoint, true);
                 }
+                singleNewCase.Email__c = String.isBlank(singleNewCase.Email__c) && !String.isBlank(singleNewCase.SuppliedEmail) ? singleNewCase.SuppliedEmail : singleNewCase.Email__c;
             }
         }
         //2. Is From Updated
