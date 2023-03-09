@@ -309,8 +309,11 @@ public inherited sharing class HDT_QR_Case {
         return [
             SELECT
             Id,
+            Email__c,
             Phase__c,
             SuppliedEmail,
+            PhoneNumber__c,
+            Mobile__c,
             CertifiedEmail__c,
             Fax__c,
             CustomerMarking__c
