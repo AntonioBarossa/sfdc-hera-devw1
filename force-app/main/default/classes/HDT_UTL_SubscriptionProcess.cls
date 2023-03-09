@@ -4,7 +4,23 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     private static List<Contract> contractToUpdate = new List<Contract>();
     private static List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
     private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
+    private static Boolean isFinalizerAttached = false;
 
+    public class HDT_QBL_Finalizer implements Finalizer {
+        List<Contract> contrsToDelete;
+
+        HDT_QBL_Finalizer(List<Contract> contrsToDelete){
+            this.contrsToDelete = contrsToDelete;
+        }
+
+        public void execute(FinalizerContext ctx){
+            //se queueable success chiamare servizio deda con case
+            if(!this.contrsToDelete.isEmpty()){
+                Map<Id, Contract> removeDuplicates = new Map<Id, Contract>(this.contrsToDelete);
+                HDT_UTL_DatabaseService.deleteSObject(removeDuplicates.values());
+            }
+        }
+    }
 
     public static void alignFields(List<SBQQ__Subscription__c> newSubs){
         Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
@@ -312,10 +328,17 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     }
 
     public static void dmlOnAfterInsert(){
-        /*if(!contractToDelete.isEmpty()){
-            HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
-            contractToDelete.clear();
-        }*/
+        if(!contractToDelete.isEmpty()){
+            if(System.isQueueable() && !isFinalizerAttached){
+                System.attachFinalizer(new HDT_QBL_Finalizer(contractToDelete));
+                //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
+                //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione
+                isFinalizerAttached = true;
+            }else if(!(System.isQueueable() || isFinalizerAttached)){
+                HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+                contractToDelete.clear();
+            }
+        }
         if(!contractToUpdate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(contractToUpdate);
             contractToUpdate.clear();
