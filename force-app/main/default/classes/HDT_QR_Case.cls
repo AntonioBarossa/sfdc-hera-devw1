@@ -309,7 +309,11 @@ public inherited sharing class HDT_QR_Case {
         return [
             SELECT
             Id,
-            Phase__c
+            Phase__c,
+            SuppliedEmail,
+            CertifiedEmail__c,
+            Fax__c,
+            CustomerMarking__c
             FROM
             Case
             WHERE AccountId = :accountId

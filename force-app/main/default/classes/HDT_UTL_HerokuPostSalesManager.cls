@@ -425,7 +425,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
 
             //Creare attività solo se esito successivo ad annullato
-            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da DL'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
+            if(('Validazione OK DL simulata'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da DL'.equalsIgnoreCase(currentCase.Phase__c) || 'Validazione OK da Gestore'.equalsIgnoreCase(currentCase.Phase__c)) && 'Annullato'.equalsIgnoreCase(currentPhase)){
                 createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
                 //Se la fase è in Annullato allora non viene cambiata.
                 if ('Annullato'.equalsIgnoreCase(currentPhase)){
@@ -561,6 +561,28 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             }
             //END>>>marco.arci@webresults.it Gestione Risposta per postSales Ambiente
 
+            //Creare attività solo se esito successivo ad annullato
+            if('Validazione OK da Gestore'.equalsIgnoreCase(currentCase.Phase__c) && 'Annullato'.equalsIgnoreCase(currentPhase)){
+                createActivity(currentCase.Id,null, 'Gestione M01/M02', 'Gestione M01/M02', 'Gestione M01/M02');
+                //Se la fase è in Annullato allora non viene cambiata.
+                if ('Annullato'.equalsIgnoreCase(currentPhase)){
+                    currentCase.Phase__c = currentPhase; 
+                }
+            }
+
+            if(reqWrp.requestMap.get('DATA_ESECUZIONE') != null && reqWrp.requestMap.get('DATA_ESECUZIONE') != ''){
+                String exDateString = reqWrp.requestMap.get('DATA_ESECUZIONE');
+                currentCase.ExecutionDate__c = Date.valueOf(exDateString);
+            }
+
+            if(reqWrp.requestMap.get('TESTO_ERRR') != null && reqWrp.requestMap.get('TESTO_ERRR') != ''){
+                String description = recordCase.Description != null?recordCase.Description:'';
+                currentCase.Description = nowDateFormat + ': ' + reqWrp.requestMap.get('TESTO_ERRR') + '\n' + description;
+            }
+            if(STRING.isNotBlank(reqWrp.requestMap.get('TESTO_ERRR'))){
+                String discardDescription = currentCase.DiscardDescription__c != null?currentCase.DiscardDescription__c:'';
+                currentCase.DiscardDescription__c = discardDescription + HDT_UTL_Accents.removeDiacritics(reqWrp.requestMap.get('TESTO_ERRR'));
+            }
         }else if(method.equalsIgnoreCase('AddAttivita')){
             String type = reqWrp.requestMap.get('TIPO_ATTIVITA');
             String message = reqWrp.requestMap.get('MESSAGGIO');

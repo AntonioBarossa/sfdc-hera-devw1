@@ -198,6 +198,10 @@
                 <behavior>Readonly</behavior>
                 <field>CancellationNote__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>RequestSource__c</field>
+            </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
     </layoutSections>

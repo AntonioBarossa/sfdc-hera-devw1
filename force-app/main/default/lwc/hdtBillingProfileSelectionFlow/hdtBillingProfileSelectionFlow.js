@@ -1,27 +1,46 @@
-import { LightningElement,api,track } from 'lwc';
+import { LightningElement,api,track,wire } from 'lwc';
 import getConfiguration from '@salesforce/apex/HDT_LC_BillingProfileSelection.getConfiguration';
+import createBpInSap from '@salesforce/apex/HDT_LC_BillingProfileSelection.handleNewBillingProfile';
+import { getRecord } from 'lightning/uiRecordApi';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
-
+const FIELDS = ['Case.Id',
+				'Case.Commodity__c'];
 export default class HdtBillingProfileSelectionFlow extends LightningElement {
     @api searchLabel;
     @api searchVariant;
     @api searchPlaceholder;
     @api results;
+    @api codiceCa;
     @api accountId;
     @api selectionType;
     @api cancelCase = false;
     //@frpanico 13/09 added variable to skip required selection (process "BP/CA errata categoria")
     @api nonReqSelection = false;
     @api enableNew = false;
-
-
+    @track commodity;
+    @api caseId;
     @track queryParams;
     @track maxRow;
     @track showSelector;
     @track columns;
     @track showModal = false;
 
+    @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
+        wiredCase({ error, data }) {
+            if (error) {
+                let message = 'Unknown error';
+                if (Array.isArray(error.body)) {
+                    message = error.body.map(e => e.message).join(', ');
+                } else if (typeof error.body.message === 'string') {
+                    message = error.body.message;
+                }
+                console.log('data error ' +message);
+            } else if (data) {
+                console.log('data loaded');
+                this.commodity = data.fields.Commodity__c.value;
+            }
+        }
     getConfiguration(){
         getConfiguration({
             search: this.selectionType
@@ -62,7 +81,24 @@ export default class HdtBillingProfileSelectionFlow extends LightningElement {
     handleNewBilling(event){
         console.log('event received' + event.detail);
         this.results = event.detail;
-        this.handleNext();
+        if(this.commodity && (this.commodity==='Acqua' || this.commodity === 'Teleriscaldamento')){
+            createBpInSap({
+                billingId:this.results,
+                accountId:this.accountId
+            }).then(result=>{
+                var response = JSON.parse(result);
+                if(response.codiceContatto && response.codiceContatto != null && response.codiceContatto != 'undefined'){
+                    this.codiceCa = response.codiceContatto;
+                    this.handleNext();
+                }else{
+                    this.showMessage('Errore',response.commenti,'error');
+                }
+            }).catch(error => {
+                console.log('error ' + JSON.stringify(error));
+            });
+        }else{
+            this.handleNext();
+        }
         //this.handleShowModal();
     }
 

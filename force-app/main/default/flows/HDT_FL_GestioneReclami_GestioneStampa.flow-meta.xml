@@ -103,7 +103,7 @@
     <assignments>
         <name>Assegna_a_Collection</name>
         <label>Assegna a Collection</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>5486</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
@@ -221,7 +221,7 @@
     <assignments>
         <name>AssegnaActivityToLoop</name>
         <label>AssegnaActivityToLoop</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>5246</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop</assignToReference>
@@ -254,7 +254,7 @@
     <assignments>
         <name>AssegnaCase_0</name>
         <label>AssegnaCase</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>4430</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop</assignToReference>
@@ -274,7 +274,7 @@
     <assignments>
         <name>AssegnaCaseToLoop</name>
         <label>AssegnaCaseToLoop</label>
-        <locationX>974</locationX>
+        <locationX>1106</locationX>
         <locationY>5246</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
@@ -337,7 +337,7 @@
     <assignments>
         <name>AssegnaFase_0_0</name>
         <label>AssegnaFase</label>
-        <locationX>1194</locationX>
+        <locationX>1458</locationX>
         <locationY>4790</locationY>
         <assignmentItems>
             <assignToReference>CaseToLoop.Phase__c</assignToReference>
@@ -385,7 +385,7 @@
     <assignments>
         <name>AssegnaStatoActivity</name>
         <label>AssegnaStatoActivity</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>5366</locationY>
         <assignmentItems>
             <assignToReference>ActivityToLoop.wrts_prcgvr__Status__c</assignToReference>
@@ -499,7 +499,7 @@
     <decisions>
         <name>ActivityTrovata</name>
         <label>ActivityTrovata</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>5126</locationY>
         <defaultConnector>
             <targetReference>AssegnaCaseToLoop</targetReference>
@@ -631,7 +631,7 @@
     <decisions>
         <name>Quale_Fase</name>
         <label>Quale Fase</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>4670</locationY>
         <defaultConnector>
             <targetReference>AssegnaFase_0_0</targetReference>
@@ -734,6 +734,22 @@
             </connector>
             <label>Completata - Ambiente</label>
         </rules>
+        <rules>
+            <name>Completata_Recl_Cittadino</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetCaseInviato.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>AssegnaFase</targetReference>
+            </connector>
+            <label>Completata - Recl. Cittadino</label>
+        </rules>
     </decisions>
     <decisions>
         <name>Record_Trovato</name>
@@ -835,7 +851,7 @@
     <decisions>
         <name>ToLoop_0</name>
         <label>ToLoop?</label>
-        <locationX>358</locationX>
+        <locationX>490</locationX>
         <locationY>5606</locationY>
         <defaultConnector>
             <targetReference>AggiornaActivityCollection</targetReference>
@@ -951,7 +967,7 @@
     <recordLookups>
         <name>GetActivityPraticaGestita</name>
         <label>GetActivityPraticaGestita</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>5006</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1253,7 +1269,7 @@
     <recordUpdates>
         <name>AggiornaActivityCollection</name>
         <label>AggiornaActivityCollection</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>5726</locationY>
         <connector>
             <targetReference>AggiornaCases</targetReference>
@@ -1277,7 +1293,7 @@
     <recordUpdates>
         <name>AggiornaCases</name>
         <label>AggiornaCases</label>
-        <locationX>446</locationX>
+        <locationX>578</locationX>
         <locationY>5846</locationY>
         <inputReference>CaseCollection</inputReference>
     </recordUpdates>
@@ -1437,7 +1453,7 @@
     <subflows>
         <name>GestioneIndennizzi</name>
         <label>Gestione Indennizzi</label>
-        <locationX>666</locationX>
+        <locationX>798</locationX>
         <locationY>4550</locationY>
         <connector>
             <targetReference>Quale_Fase</targetReference>

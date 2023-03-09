@@ -116,6 +116,20 @@ import * as rateCategories from './hdtRateCategories.js';
                 hasAllegatiObbligatori: true,
                 diffObjApi: 'Sale',
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'].includes(this.order.RecordType.DeveloperName),
+                loadActions : (evt) =>
+                    {
+                        if(
+                            this.currentSection.name === "variabiliDiProcesso"
+                            && this.order.RateCategory__c==='TATUDNR001' 
+                            && ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName)
+                        ){
+                            this.showMessage(
+                                "Attenzione", 
+                                "Per cliente domestico non residente, il numero di componenti è compilato automaticamente dal sistema in funzione del valore di superficie indicato.",
+                                "warning", "sticky"
+                            );
+                        }
+                    },
                 nextActions : (evt, currentSectionIndex, nextSectionStep) => 
                     {
                         savePredefaultedFields.call(this, evt?.currentTarget?.value);
@@ -176,7 +190,8 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Documentazione consegnata da contribuente','DeliveredDocumentation__c', this.typeVisibility('both'), false, false,'',''),
                     new fieldData('Tipo Impianto','ImplantType__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Residente','Resident__c', this.typeVisibility('both'), false, true,'',''),
-                    new fieldData('Codice ATECO','AtecoCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice Istat','AtecoCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'', this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? '999999' : ''),
+                    new fieldData('Codice Ateco','HerAteco__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Codice Ronchi','RonchiCode__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Sottocategoria Ronchi','RonchiSubcat__c', this.order.RateCategory__c=='TATND00001' && !["HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), this.order.RateCategory__c=='TATND00001', false,'',''),
                     new fieldData('Contratto Precedente','ContractReference__c', ["HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente", "HDT_RT_ModificaTariffaRimozione"].includes(this.order.RecordType.DeveloperName), true, true,'',''),
@@ -331,18 +346,18 @@ import * as rateCategories from './hdtRateCategories.js';
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
                 || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
-                    new fieldData('Tipo Voltura','VoltureType__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','VoltureType__c',this.typeVisibility('both'),true,false,'','',function(event){this.updateContractExpenses();}),
                     new fieldData('','Subprocess__c',this.typeVisibility('both'),false,true,'',''),
-                    new fieldData('','EffectiveDate__c',this.typeVisibility('both'),true,false,'',''),
+                    new fieldData('','EffectiveDate__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
-                    new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
+                    //new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
                     new fieldData('','SendRequestDate__c', this.typeVisibility('acqua'), false, this.typeVisibility('acqua'), '',''),
                     new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
                     new fieldData('','MaxRequiredPotential__c',this.typeVisibility('gas'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
                     new fieldData('','FuiAccess__c', this.typeVisibility('gas'), false, false,'',''),
                     new fieldData('','AccountId',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PhoneNumber__c',this.typeVisibility('both'), this.typeVisibility('acqua'), this.typeVisibility('gas') || this.typeVisibility('ele'),'',''),
-                    new fieldData('','Email__c',this.typeVisibility('both'),false,true,'',''),
+                    new fieldData('','Email__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','PayPurification__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','PaySewer__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
@@ -352,8 +367,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
                     new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), false, false, '',''),
                     new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
-                    new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
-                    new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), this.rateCategoryVisibility(rateCategories.AF_BOC_IDRreq), false, '',''),
+                    new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), true, false, '',''),
                     new fieldData('','NumerousComunity__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, true, '',''),
                     new fieldData('','ComPostiLetto__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '',''),
                     new fieldData('','DomesticResidentNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNCOMP), this.rateCategoryVisibility(rateCategories.AFNCOMPreq), false, '',''),
@@ -362,14 +376,13 @@ import * as rateCategories from './hdtRateCategories.js';
                         checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                     }
                     ),
-                    new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
-                    new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
-                    new fieldData('','NotDomesticHousingUnit__c', 
-                        this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) || this.rateCategoryVisibility(rateCategories.AFUNDI) ), 
-                        ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
-                        ( this.rateCategoryVisibility(rateCategories.AFUNDA) && this.rateCategoryVisibility(rateCategories.AFUNDAreq) ) ||
-                        ( this.rateCategoryVisibility(rateCategories.AFUNDI) && this.rateCategoryVisibility(rateCategories.AFUNDIreq) ), !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '',''),
-                    new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, true, '',''),
+                    new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '','',function(event){this.updateRealEstateUnit();}),
+                    new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUADRS), this.rateCategoryVisibility(rateCategories.AFUADRSreq), this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '','',function(event){this.updateRealEstateUnit();}),
+                    new fieldData('','NotDomesticHousingUnit__c',this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.NOTDOMESTIC), this.rateCategoryVisibility(rateCategories.NOTDOMESTICreq), !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '','',function(event){this.updateRealEstateUnit();}),
+                    new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDI),  this.rateCategoryVisibility(rateCategories.AFUNDIreq), this.rateCategoryVisibility(rateCategories.AFUNDIdisable), '','',function(event){this.updateRealEstateUnit();}),
+                    new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), this.rateCategoryVisibility(rateCategories.AFUNDZreq), true, '','',function(event){this.updateRealEstateUnit();}),
+                    new fieldData('','CommercialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNAC), this.rateCategoryVisibility(rateCategories.AFUNACreq), this.rateCategoryVisibility(rateCategories.AFUNACdisable), '','',function(event){this.updateRealEstateUnit();}),
+                    new fieldData('','AgriculturalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDA), true, true, '','',function(event){this.updateRealEstateUnit();}),
                     new fieldData('Consumi Anno','AnnualConsumption__c', this.typeVisibility('both') /* && this.rateCategoryVisibility(rateCategories.AQCNSANNOF) */, false, true, '',''),
                     new fieldData('','WithdrawalClass__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','Market__c',this.typeVisibility('both'),false,true,'',''),
@@ -394,7 +407,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('Mercato di provenienza','MarketOrigin__c', this.typeVisibility('both'), true, true,'',''),
                     new fieldData('Categoria uso','UseCategory__c', this.typeVisibility('gas'), true, true,'',''),
                     new fieldData('Conferma contratto cliente','ConfirmCustomerContract__c', this.typeVisibility('ele') && this.order.Account.RecordType.DeveloperName !== 'HDT_RT_Business', false, false,'',''),
-                    new fieldData('','Cohabitation__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '','',
+                    new fieldData('','Cohabitation__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), true, false, '','',
                     function(event){
                         if( this.template.querySelector("[data-id='Cohabitation__c']") && this.template.querySelector("[data-id='Cohabitation__c']").value === 'Y'){
                             this.hasCohabitantButton = true;
@@ -454,7 +467,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
                 new fieldData('','Email__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',true,false,'',''),
                 new fieldData('','AlternativeEmail__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',false,false,'',''),
-                new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta'), this.typeVisibility('acqua'), this.typeVisibility('acqua'), '','No'),
+                new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ESDEPCAU), false, false, '','No'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Ore di utilizzo','HoursOfUse__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
@@ -465,9 +478,8 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Muc', 'IsMuc__c', !this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,this.permissionFlag, '',''),
                 new fieldData('Addebito Spese Contrattuali','ContractExpenses__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AQCNSANNOF), false, this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
                 new fieldData('Data Differita','DeferredDate__c', this.typeVisibility('acqua') && (this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro') , false, false, '',''),
-                new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'), true, this.typeVisibility('acqua'), '',''),
+                new fieldData('Data Decorrenza','EffectiveDate__c', this.typeVisibility('acqua') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione') && !(this.order.RecordType.DeveloperName === 'HDT_RT_Subentro'), true, this.typeVisibility('acqua') && !this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
                 new fieldData('','SendRequestDate__c', this.typeVisibility('acqua'), false, this.typeVisibility('acqua'), '',''),
-                new fieldData('','RetroactiveDate__c', this.typeVisibility('acqua') &&  this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', false, false, '',''),
                 new fieldData('Tipo impianto','ImplantType__c', this.typeVisibility('both'), this.order.ProcessType__c!=='Prima Attivazione Ele' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica', (this.order.ProcessType__c==='Prima Attivazione Ele' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica' || this.typeVisibility('acqua') ),'',''),
                 new fieldData('','UseSubCategory__c',this.typeVisibility('acqua'),false,true,'',''),
                 new fieldData('Codice Ateco','AtecoCode__c', this.typeVisibility('gas') || this.typeVisibility('ele') , false, true, '',''),
@@ -476,13 +488,11 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Convenzione/Associazione','ConventionAssociation__c', ( this.typeVisibility('ele') || this.typeVisibility('gas') ) && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt') && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business', false, false, '',''),
                 new fieldData('Livello pressione','PressureLevel__c', this.typeVisibility('gas'), true, false, '',''),
                 new fieldData('Servizio Energetico','EnergyService__c', this.typeVisibility('gas') && (this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'), false, false, '',''),
-                new fieldData('Tipo Voltura','VoltureType__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch', true, false, '',''),
                 new fieldData('','ContractReference__c', this.typeVisibility('acqua') && this.order.ProcessType__c === 'Voltura - Subentro Scarico produttivo', false, true, '',''),
                 new fieldData('POD/PdR','ServicePointCodeFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('','SupplyUseType__c', this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione', false, false, '','ACQUEDOTTO CIVILE'),
                 new fieldData('','SeasonUse__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ZGEWKEY), this.rateCategoryVisibility(rateCategories.ZGEWKEYreq), false, '',''),
-                new fieldData('','ForfaitSewer__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AQVOL_FORF), false, false, '',''),
-                new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), this.rateCategoryVisibility(rateCategories.AF_BOC_IDRreq), false, '',''),
+                new fieldData('','HydrantMouthsNumber__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AF_BOC_IDR), true, false, '',''),
                 new fieldData('','NumerousComunity__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, true, '',''),
                 new fieldData('','ComPostiLetto__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '',''),
                 new fieldData('','DomesticResidentNumber__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFNCOMP), this.rateCategoryVisibility(rateCategories.AFNCOMPreq), false, '',''),
@@ -490,20 +500,18 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','PaySewer__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','BonusDeliveryMode__c', this.typeVisibility('acqua'), false, false, '',''),
-                new fieldData('Unita Immobiliari','RealEstateUnit__c', this.typeVisibility('acqua')  && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
+                new fieldData('','RealEstateUnit__c', this.typeVisibility('acqua') && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
                 function(event){
                     checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );
                 }
                 ),
-                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '',''),
-                new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.AFUADRS), false, this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '',''),
-                new fieldData('','NotDomesticHousingUnit__c', 
-                    this.typeVisibility('both') && ( this.rateCategoryVisibility(rateCategories.AFUND) || this.rateCategoryVisibility(rateCategories.AFUNDA) ), 
-                    ( this.rateCategoryVisibility(rateCategories.AFUND) && this.rateCategoryVisibility(rateCategories.AFUNDreq) ) ||
-                    ( this.rateCategoryVisibility(rateCategories.AFUNDA) && this.rateCategoryVisibility(rateCategories.AFUNDAreq) ) , !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '',''),
-                new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDI), false, false, '',''),
-                new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), false, true, '',''),
-                new fieldData('','CommercialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNAC), this.rateCategoryVisibility(rateCategories.AFUNACreq), this.rateCategoryVisibility(rateCategories.AFUNACdisable), '',''),
+                new fieldData('','NotResidentDomesticHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUADNR), this.rateCategoryVisibility(rateCategories.AFUADNRreq), this.rateCategoryVisibility(rateCategories.AFUADNRdisable), '','',function(event){this.updateRealEstateUnit();}),
+                new fieldData('','ResidentDomesticHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUADRS), this.rateCategoryVisibility(rateCategories.AFUADRSreq), this.rateCategoryVisibility(rateCategories.AFUADRSdisable), '','',function(event){this.updateRealEstateUnit();}),
+                new fieldData('','NotDomesticHousingUnit__c',this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.NOTDOMESTIC), this.rateCategoryVisibility(rateCategories.NOTDOMESTICreq), !this.rateCategoryVisibility(rateCategories.NOTDOMESTICdisable), '','',function(event){this.updateRealEstateUnit();}),
+                new fieldData('','IndustrialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDI), this.rateCategoryVisibility(rateCategories.AFUNDIreq), this.rateCategoryVisibility(rateCategories.AFUNDIdisable), '','',function(event){this.updateRealEstateUnit();}),
+                new fieldData('','ZootechnicalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDZ), this.rateCategoryVisibility(rateCategories.AFUNDZreq), true, '','',function(event){this.updateRealEstateUnit();}),
+                new fieldData('','CommercialHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNAC), this.rateCategoryVisibility(rateCategories.AFUNACreq), this.rateCategoryVisibility(rateCategories.AFUNACdisable), '','',function(event){this.updateRealEstateUnit();}),
+                new fieldData('','AgriculturalHousingUnit__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFUNDA), true, true, '','',function(event){this.updateRealEstateUnit();}),
                 new fieldData('Tipo Mercato','Market__c', this.typeVisibility('gas') || this.typeVisibility('ele'), false, true, '',''),
                 new fieldData('Settore merceologico','CommodityFormula__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Distributore','DistributorFormula__c', this.typeVisibility('both'), false, true, '',''),
@@ -536,7 +544,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Società di vendita','SalesCompany__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Opzione richiesta','RequestOption__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta'), true, this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt', '',''),
                 new fieldData('Tipo Apparechiatura','MeterType__c',this.typeVisibility('ele') && (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'),false, true, '',''),
-                new fieldData('','Cohabitation__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), false, false, '','',
+                new fieldData('','Cohabitation__c', this.typeVisibility('acqua') && this.rateCategoryVisibility(rateCategories.AFNUM_COMP), true, false, '','',
                 function(event){
                     if( this.template.querySelector("[data-id='Cohabitation__c']") && this.template.querySelector("[data-id='Cohabitation__c']").value === 'Y'){
                         this.hasCohabitantButton = true;

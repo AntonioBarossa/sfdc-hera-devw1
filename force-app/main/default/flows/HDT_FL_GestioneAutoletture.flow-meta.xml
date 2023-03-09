@@ -92,7 +92,7 @@
         <name>AssegnaLetturaAvvisoCliente</name>
         <label>AssegnaLetturaAvvisoCliente</label>
         <locationX>754</locationX>
-        <locationY>998</locationY>
+        <locationY>1238</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Avviso_Cliente.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -159,6 +159,29 @@
             <targetReference>Set_Fase_Attesa_check_preliminari</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Predefault_Telefono_ed_email</name>
+        <label>Predefault Telefono ed email</label>
+        <locationX>534</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Case.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.ContactEmail</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Case.PhoneNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case.ContactMobile</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Lettura_Acqua</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Delibera_2018</name>
         <choiceText>Delibera 2018</choiceText>
@@ -196,7 +219,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Lettura_Acqua_Avviso_al_Cliente</targetReference>
+                <targetReference>Predefault_Telefono_ed_email</targetReference>
             </connector>
             <label>Lettura Acqua Avviso al Cliente</label>
         </rules>
@@ -467,7 +490,7 @@
         <name>Pulsante_Premuto_Avviso_Cliente</name>
         <label>Pulsante Premuto Avviso Cliente</label>
         <locationX>534</locationX>
-        <locationY>878</locationY>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>AssegnaLetturaAvvisoCliente</targetReference>
         </defaultConnector>
@@ -703,7 +726,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <name>Get_Case_Avviso_Cliente</name>
         <label>Get Case</label>
         <locationX>534</locationX>
-        <locationY>758</locationY>
+        <locationY>998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Pulsante_Premuto_Avviso_Cliente</targetReference>
@@ -786,6 +809,16 @@ TODO: Formula da adeguare in Wave 2.</description>
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordUpdates>
+        <name>Aggiorna_Case_Lettura_Acqua</name>
+        <label>Aggiorna Case Lettura Acqua</label>
+        <locationX>534</locationX>
+        <locationY>758</locationY>
+        <connector>
+            <targetReference>Lettura_Acqua_Avviso_al_Cliente</targetReference>
+        </connector>
+        <inputReference>Get_Case</inputReference>
+    </recordUpdates>
     <recordUpdates>
         <description>Il tracciato del DL prevede solo autoletture da processo ELE mono-orario, in caso di multi annulliamo il Case che rimane solo su sfdc per tracciatura.</description>
         <name>Annullamento_Autolettura_Multi_oraria</name>
@@ -995,7 +1028,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <name>Update_Record_Lettura_Avviso_Cliente</name>
         <label>Update Record Lettura Avviso Cliente</label>
         <locationX>754</locationX>
-        <locationY>1118</locationY>
+        <locationY>1358</locationY>
         <inputReference>Get_Case_Avviso_Cliente</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -1242,7 +1275,7 @@ TODO: Formula da adeguare in Wave 2.</description>
         <name>Lettura_Acqua_Avviso_al_Cliente</name>
         <label>Lettura Acqua Avviso al Cliente</label>
         <locationX>534</locationX>
-        <locationY>638</locationY>
+        <locationY>878</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

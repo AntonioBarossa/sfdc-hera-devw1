@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>commodity</name>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.Commodity__c</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>currentCase</name>
             <value>
                 <elementReference>Get_Input_Case_Aggiornato</elementReference>
@@ -217,6 +223,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>newAddressLwc.theCase.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>newAddressLwc.theCase.InvoicingStreetCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -503,7 +523,7 @@
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>BP MODELLO</stringValue>
+                <stringValue>BP MODELLO MMS</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>

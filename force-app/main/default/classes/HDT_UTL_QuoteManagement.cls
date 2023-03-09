@@ -32,7 +32,8 @@ public inherited sharing class HDT_UTL_QuoteManagement {
 		String operationType = inputs[0].operationtype;
         String commodity = inputs[0].commodity;
 		String subprocess = inputs[0].subprocess;
-		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType,subprocess);
+		String caliber = inputs[0].caliber;
+		return HDT_QR_QuoteManagement.queryAddInformation(commodity, operationType,subprocess,caliber);
 	}
 	
 	@SuppressWarnings('PMD.CyclomaticComplexity')

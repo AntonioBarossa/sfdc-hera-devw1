@@ -70,7 +70,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                             tempContract.Market__c         = relatedOrder.Market__c; 
                             tempContract.VAT__c            = relatedOrder.VAT__c ;  //02/09/2021 Email Fix Campo VAT__c su Contratto
                             tempContract.ActivatedDate      = relatedOrder.EffectiveDate__c ; //HRAWRM-638  17/09/2021
-                            tempContract.SapContractCode__c = relatedOrder.SapContractCode__c ; //HRAWRM-638  17/09/2021
+                            tempContract.SapContractCode__c = String.isNotBlank(relatedOrder.SapContractCode__c)?relatedOrder.SapContractCode__c:tempContract.SapContractCode__c; //HRAWRM-638  17/09/2021
                             tempContract.Pricebook2Id = relatedOrder.SBQQ__Quote__r.SBQQ__PriceBook__c;
                             tempContract.SBQQ__AmendmentPricebookId__c = relatedOrder.SBQQ__Quote__r.SBQQ__PriceBook__c;
                             tempContract.CommercialProduct__c = relatedOrder.CommercialProduct__c;  //08/09/2021 HRAWRM-251
@@ -118,6 +118,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             ){
                 //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
                 //assign subscription to old contract and end old subscriptions
+                c.SapContractCode__c = null;
                 c.GlobalMigrationKey__c = null;
                 //c.SBQQ__Quote__c = null;
             }
@@ -147,7 +148,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 ServicePoint__c sp = spToActivate.get(c.ServicePoint__c);
                 sp = sp!=null? sp : new ServicePoint__c(Id=c.ServicePoint__c);
                 sp.AreaDeclaredTARI__c = ord.Surface__c;
-                if(ord.RonchiSubcat__c != null && ord.RonchiCode__c != null){
+                if(ord.CommercialProductLink__r.Family == 'Offerta commerciale'){
                     sp.RonchiCategoryCode__c = ord.RonchiCode__c;
                     sp.RonchiSubCategoryCode__c = ord.RonchiSubcat__c;
                 }

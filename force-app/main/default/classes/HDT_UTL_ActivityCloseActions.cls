@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : federico.defelice@webresults.it
  * @group             : WR
- * @last modified on  : 21-02-2023
+ * @last modified on  : 06-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.ExcessiveParameterList, PMD.IfElseStmtsMustUseBraces, PMD.IfStmtsMustUseBraces, PMD.CyclomaticComplexity , PMD.NcssMethodCount')
@@ -50,6 +50,10 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             this.parentSObjectPhase = parentSObjectPhase;
         }
         HDT_WRP_UpdateSobj(Sobject sobj){
+            this.sobjToUpdate=sobj;
+        }
+        HDT_WRP_UpdateSobj(String phase, Sobject sobj){
+            this(phase);
             this.sobjToUpdate=sobj;
         }
 
@@ -159,9 +163,19 @@ public with sharing class HDT_UTL_ActivityCloseActions {
 
         if (allActivity.isEmpty())    return new Map<String,List<wrts_prcgvr__Activity__c>>();
         Map<String,List<wrts_prcgvr__Activity__c>> result = new Map<String,List<wrts_prcgvr__Activity__c>>();
-        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, Case__r.Subprocess__c, Case__r.RequestSource__c , Case__r.ModuleFromContributor__c, Case__r.RecordType.DeveloperName,
-                                                            Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, Order__r.CommercialProduct__c,
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Case__r.Id, Case__r.Type, Case__r.Phase__c, Case__r.RelatedCase__c, Case__r.PhaseStory__c, 
+                                                            Case__r.Subprocess__c, Case__r.RequestSource__c , Case__r.ModuleFromContributor__c, 
+                                                            Case__r.RecordType.DeveloperName, Case__r.ServicePoint__c, 
+                                                            Case__r.SupplyCity__c, Case__r.SupplyPostalCode__c, Case__r.SupplyCountry__c,
+                                                            Case__r.SupplyProvince__c, Case__r.SupplyStreetName__c, Case__r.SupplyStreetNumber__c,
+                                                            Case__r.SupplyStreetNumberExtension__c, Case__r.SupplyPlace__c, Case__r.SupplyCityCode__c,
+                                                            Case__r.SupplyStreetCode__c,
+                                                            
+                                                            Order__r.Id, Order__r.ProcessType__c, Order__r.Phase__c, Order__r.PhaseStory__c, 
+                                                            Order__r.CommercialProduct__c,
+
                                                             wrts_prcgvr__ActivityTemplate__r.Name 
+
                                                      FROM wrts_prcgvr__Activity__c 
                                                      WHERE Id IN :allActivity  
                                                      WITH Security_Enforced];
@@ -219,6 +233,21 @@ public with sharing class HDT_UTL_ActivityCloseActions {
         }
         if(caseType.equalsIgnoreCase('Errore di Fatturazione') && ('HDT_RT_ErroreFatturazione_TARI'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
             if('CBS_FAT004__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
+        if(caseType.equalsIgnoreCase('Rimborso') && ('HDT_RT_Rimborso'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_PAG003__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
+        if(caseType.equalsIgnoreCase('Comunicazione Pagamento') && ('HDT_RT_ComunicazionePagamento'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_PAG003__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
+                if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
+            }
+        }
+        if(caseType.equalsIgnoreCase('Doppi Pagamenti/Incassi') && ('HDT_RT_ComunicazionePagamento'.equalsIgnoreCase(selectedCase.RecordType.DeveloperName))){
+            if('CBS_PAG003__ELABORAZIONE_MANUALE'.equalsIgnoreCase(activityType)) {
                 if('Negativo'.equalsIgnoreCase(approved)) return new HDT_WRP_UpdateSobj('Completata');
             }
         }
@@ -297,7 +326,25 @@ public with sharing class HDT_UTL_ActivityCloseActions {
             ('Modifica dati contrattuali'.equalsIgnoreCase(caseType) &&
              subprocessesNonIntegrati.contains(selectedCase.Subprocess__c))){
             if('Positivo'.equalsIgnoreCase(outcome)){
-                return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+                if('Variazione indirizzo di fornitura'.equalsIgnoreCase(caseType)){
+                    ServicePoint__c servicePointToUpdate = new ServicePoint__C(
+                                                                                Id = selectedCase.ServicePoint__c,                                                                                
+                                                                                SupplyCity__c = selectedCase.SupplyCity__c,
+                                                                                SupplyCountry__c = selectedCase.SupplyCountry__c,
+                                                                                SupplyPlace__c = selectedCase.SupplyPlace__c,
+                                                                                SupplyPostalCode__c = selectedCase.SupplyPostalCode__c,
+                                                                                SupplyProvince__c = selectedCase.SupplyProvince__c,
+                                                                                SupplySAPCityCode__c = selectedCase.SupplyCityCode__c,
+                                                                                SupplySAPStreetCode__c = selectedCase.SupplyStreetCode__c,
+                                                                                SupplyStreetName__c = selectedCase.SupplyStreetName__c,
+                                                                                SupplyStreetNumberExtension__c = selectedCase.SupplyStreetNumberExtension__c,
+                                                                                SupplyStreetNumber__c = selectedCase.SupplyStreetNumber__c,
+                                                                                SupplyStreet__c = selectedCase.SupplyStreetName__c
+                                                                              );
+                    return new HDT_WRP_UpdateSobj('Completata', servicePointToUpdate);
+                }else{
+                    return new HDT_WRP_UpdateSobj('Completata'); //aggiorna la fase del case
+                }
             }else{
                 Case caseUpdate = new Case(Id=selectedCase.Id, Phase__c = 'Annullato', CancellationRequestDate__c = Date.today(), Status = 'Closed');
                 return new HDT_WRP_UpdateSobj(caseUpdate);
