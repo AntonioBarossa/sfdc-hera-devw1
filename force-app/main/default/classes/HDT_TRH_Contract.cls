@@ -130,8 +130,6 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
         Set<Id> contractsForSieXiv = new Set<Id>();
 
-        Set<Id> oldOfferContracts = new Set<Id>();
-
         List<id> listOrderId = new List<id>();
         for (Contract c : (List<Contract>)Trigger.new) {
             if( c.SBQQ__Order__c != null){      listOrderId.add(c.SBQQ__Order__c);     }
@@ -154,17 +152,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 }
                 spToActivate.put(sp.Id, sp);
             }
-
-            if(
-                subsRelocation.checkConditions(c, ord)
-            ){
-                //SF Created a New Contract but SAP didn't
-                oldOfferContracts.add(ord.ContractReference__r.Id);
-                oldOfferContracts.add(c.Id);
-            }
         }
-
-        //subsRelocation.moveSubscriptions(oldOfferContracts, Trigger.newMap, mapOrder);
 
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());

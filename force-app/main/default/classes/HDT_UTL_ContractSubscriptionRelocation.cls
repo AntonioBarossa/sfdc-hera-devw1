@@ -108,9 +108,9 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));  }
     }*/
 
-    public Boolean checkConditions(Contract c, Order ord){
+    /*public Boolean checkConditions(Contract c, Order ord){
         return c.Id != ord?.ContractReference__r?.Id && checkConditions(ord, c?.SapContractCode__c);
-    }
+    }*/
 
     public Boolean checkConditionsBefore(Contract c, Order ord){
         return c.Id != ord?.ContractReference__r?.Id 
