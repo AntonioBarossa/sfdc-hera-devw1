@@ -218,8 +218,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && oldOrder.Phase__c == 'In attesa di quality call' 
                 && order.Phase__c == 'Quality Call OK'
                 ){
-                String newPhase = order.ProcessType__c == 'Voltura' ? 'Documentazione Validata' : 
-                    (order.ProcessType__c == 'VAS' && !'VAS Fatturabili'.equalsIgnoreCase(order.VASType__c )) ? 'Comunicazione Motore VAS' : 'Comunicazione Verso Heroku';
+                String newPhase = phaseAfterQuality(order);
                 order.Phase__c = newPhase;
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +  oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+oldOrder.PhaseStory__c;
@@ -229,8 +228,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 && 'In attesa di quality call'.equalsIgnoreCase(order.Phase__c) 
                 && 'Quality Call'.equalsIgnoreCase(order.ConfirmCustomerContract__c)
                 ){
-                String newPhase = order.isTransition__c? 'Esportazione VS Siebel' :  order.ProcessType__c == 'Voltura' ? 'Documentazione Validata' : 
-                (order.ProcessType__c == 'VAS' && !'VAS Fatturabili'.equalsIgnoreCase(order.VASType__c )) ? 'Comunicazione Motore VAS' : 'Comunicazione Verso Heroku';
+                String newPhase = order.isTransition__c? 'Esportazione VS Siebel' : phaseAfterQuality(order);
                 DateTime nowDateTime = DateTime.now();
                 order.PhaseStory__c = 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +  order.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+order.PhaseStory__c;
                 order.Phase__c = newPhase;
@@ -248,6 +246,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     order.PhaseStory__c = oldOrder.Phase__c+'@@'+'Quality Call OK'+'@@'+nowDateTime.getTime()+'@@A||'+ 'Quality Call OK'+'@@'+newPhase+'@@'+nowDateTime.getTime()+'@@A||' +oldOrder.PhaseStory__c;
             }
         }        
+    }
+
+    private static String phaseAfterQuality(Order o){
+        if ('Voltura'.equalsIgnoreCase(o.ProcessType__c)){
+            return 'Documentazione Validata';
+        }
+        if ('VAS Servizio'.equalsIgnoreCase(o.VASType__c) && !o.IsEarlyActivation__c){
+            return 'In attesa tempi di ripensamento';
+        }
+        if ('VAS'.equalsIgnoreCase(o.ProcessType__c) && !'VAS Fatturabili'.equalsIgnoreCase(o.VASType__c )){
+            return 'Comunicazione Motore VAS';
+        }
+        return 'Comunicazione Verso Heroku';
     }
     /**
     * @author NTTDATA
