@@ -382,17 +382,14 @@
         <value>
             <fullName>Verifica Integrita Sigilli</fullName>
             <default>false</default>
-            <label>Verifica Integrita Sigilli</label>
         </value>
         <value>
             <fullName>Verifica Interna</fullName>
             <default>false</default>
-            <label>Verifica Interna</label>
         </value>
         <value>
             <fullName>Verifica Tensione - Pressione</fullName>
             <default>false</default>
-            <label>Verifica Tensione - Pressione</label>
         </value>
     </picklistValues>
 </RecordType>
