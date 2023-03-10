@@ -8107,6 +8107,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In attesa Data Decorrenza</fullName>
             <default>false</default>
         </values>
