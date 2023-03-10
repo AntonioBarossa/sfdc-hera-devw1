@@ -118,7 +118,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             ){
                 //SF Created a New Contract but SAP didn't so we must blank Global Migration Key, 
                 //assign subscription to old contract and end old subscriptions
-                c.SapContractCode__c = null;
+                //c.SapContractCode__c = null;
                 c.GlobalMigrationKey__c = null;
                 //c.SBQQ__Quote__c = null;
             }
@@ -129,8 +129,6 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         HDT_UTL_ActiveServicesKpi.run(Trigger.newMap, Trigger.oldMap);
         Map<Id, ServicePoint__c> spToActivate = new Map<Id, ServicePoint__c>();
         Set<Id> contractsForSieXiv = new Set<Id>();
-
-        Set<Id> oldOfferContracts = new Set<Id>();
 
         List<id> listOrderId = new List<id>();
         for (Contract c : (List<Contract>)Trigger.new) {
@@ -154,17 +152,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                 }
                 spToActivate.put(sp.Id, sp);
             }
-
-            if(
-                subsRelocation.checkConditions(c, ord)
-            ){
-                //SF Created a New Contract but SAP didn't
-                oldOfferContracts.add(ord.ContractReference__r.Id);
-                oldOfferContracts.add(c.Id);
-            }
         }
-
-        subsRelocation.moveSubscriptions(oldOfferContracts, Trigger.newMap, mapOrder);
 
         if(!spToActivate.isEmpty()){
             HDT_UTL_DatabaseService.updateSObject(spToActivate.values());

@@ -43,6 +43,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     spIds.add(servicePoint);
                     needUpdate.put(servicePoint, true);
                 }
+                singleNewCase.Email__c = String.isBlank(singleNewCase.Email__c) && !String.isBlank(singleNewCase.SuppliedEmail) ? singleNewCase.SuppliedEmail : singleNewCase.Email__c;
             }
         }
         //2. Is From Updated
@@ -181,7 +182,7 @@ public with sharing class HDT_UTL_CaseProcess {
             if(newPhase.indexOf('Annullamento') > -1 || newPhase.equalsIgnoreCase('Annullato') || newPhase.indexOf('Ripensamento') > -1 || newPhase.equalsIgnoreCase('Ripensato')){
                 //Annullamento Case di Richiesta Parere legati al case di Reclamo
                 //Annullamento activities legate al case di Richiesta Parere
-                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info')){    
+                if(caseNew.Type.equalsIgnoreCase('Reclamo Scritto/Rich. Info') || caseNew.Type.equalsIgnoreCase('Reclamo Scritto Da Cittadino')){  
                     List<Case> childCases = new List<Case>();
                     List<String> caseIds = new List<String>();
                     List<wrts_prcgvr__Activity__c> activities = new List<wrts_prcgvr__Activity__c>();

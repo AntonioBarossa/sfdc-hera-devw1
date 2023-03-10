@@ -300,6 +300,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Channel__c</field>
+            <value>
+                <elementReference>$User.SalesChannel__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Contact__c</field>
             <value>
                 <elementReference>theCase.ContactId</elementReference>
@@ -309,6 +315,12 @@
             <field>EffectiveDate</field>
             <value>
                 <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>LoginChannel__c</field>
+            <value>
+                <elementReference>$User.LoginChannel__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -332,7 +344,7 @@
         <inputAssignments>
             <field>Step__c</field>
             <value>
-                <numberValue>2.0</numberValue>
+                <numberValue>1.0</numberValue>
             </value>
         </inputAssignments>
         <object>Order</object>

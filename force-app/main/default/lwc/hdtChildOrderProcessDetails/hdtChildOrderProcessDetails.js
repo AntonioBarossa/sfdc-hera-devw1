@@ -438,13 +438,19 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('isRetroactive: '+this.isRetroactive);
         console.log('isReading: '+this.isReading);
         console.log('CurrentSectionName: '+this.currentSectionName);
-        console.log('isUpdateStep: '+ this.isVolture === true && this.currentSectionName === 'processVariables');
+        console.log('isUpdateStep: '+ ( this.isVolture === true && this.currentSectionName === 'processVariables') );
         let orderId = this.order.Id;
         if(this.sectionDataToSubmit["Id"] !== undefined && this.sectionDataToSubmit["Id"] === this.analisiConsumi.Id)
         {
             this.sectionDataToSubmit["OrderId"] = orderId;
             this.sectionDataToSubmit["Description"] = nextSectionStep;
             console.log('#Section ANalisi Consumi >>> ' + JSON.stringify(this.sectionDataToSubmit));
+        }
+        if( (this.currentSection.name === 'processVariables' || this.currentSection.name === 'dettaglioImpianto') &&
+            this.template.querySelector("[data-id='RealEstateUnit__c']") &&
+            this.template.querySelector("[data-id='RealEstateUnit__c']").value )
+        {
+            this.sectionDataToSubmit["RealEstateUnit__c"] = this.template.querySelector("[data-id='RealEstateUnit__c']").value;
         }
         updateProcessStep(
             {order: {Id: orderId, Step__c: nextSectionStep, 

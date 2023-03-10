@@ -95,18 +95,26 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Modifica Unita Immobiliari Componenti') && 'Acqua'.equalsIgnoreCase(commodity)){
                 objFields.put('RateCategory__c', obj.get('RateCategory__c'));
                 objFields.put('Unita_Abitative__c', obj.get('Unita_Abitative__c'));
-                mrrList = handleMrrFields(mrrList, objFields);
+                objFields.put('Type', 'Modifica Unita Immobiliari Componenti');
             }
             if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Nuovo Impianto') && 'Acqua'.equalsIgnoreCase(commodity)){
                 objFields.put('SendToDistributorDate__c', obj.get('SendToDistributorDate__c'));
-                mrrList = handleMrrFields(mrrList, objFields);
+                objFields.put('Type', 'Nuovo Impianto');
             }
             if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Interna') && 'Acqua'.equalsIgnoreCase(commodity)){
                 objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
                 objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                objFields.put('Type', 'Verifica Interna');
+            }
+            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Integrita Sigilli') && 'Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
+                objFields.put('PhoneNumber__c', obj.get('PhoneNumber__c'));
+                objFields.put('Reason__c', obj.get('Reason__c'));
+                objFields.put('Type', 'Verifica Integrita Sigilli');
+            }
+            if(!objFields.isEmpty()){
                 mrrList = handleMrrFields(mrrList, objFields);
             }
-
             arg.put('endpoint', endpoint);
             arg.put('timeout', 120000);
             arg.put('payload',mrrList);
@@ -501,9 +509,17 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                     }
                 }
 
-                if (objFields.get('PhoneNumber__c') != null) {
+                if (objFields.get('PhoneNumber__c') != null || 'Verifica Integrita Sigilli'.equalsIgnoreCase(String.valueOf(objFields.get('Type')))) {
                     Boolean foundNote = false;
-                    String concatPhoneNote = String.valueOf(objFields.get('PhoneNumber__c')) + (objFields.get('DistributorNote__c') != null ? ' ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                    String concatPhoneNote = '';
+                    if('Verifica Integrita Sigilli'.equalsIgnoreCase(String.valueOf(objFields.get('Type')))){
+                        //W2 Concatenazione Recapito Telefonico - Motivazione - Note
+                        concatPhoneNote = (objFields.get('PhoneNumber__c') != null ? String.valueOf(objFields.get('PhoneNumber__c')) : '') + (objFields.get('Reason__c') != null ? ' - ' + String.valueOf(objFields.get('Reason__c')) : '') +(objFields.get('DistributorNote__c') != null ? ' - ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                        System.debug(LoggingLevel.DEBUG, 'NOTE A DL: ' + concatPhoneNote);
+                    }else{
+                        //W2 Concatenazione Recapito Telefonico - Note
+                        concatPhoneNote = String.valueOf(objFields.get('PhoneNumber__c')) + (objFields.get('DistributorNote__c') != null ? ' - ' + String.valueOf(objFields.get('DistributorNote__c')) : '');
+                    }
                     for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
                         if(f.name.equalsIgnoreCase('ANNOTAZIONI'))
                         {

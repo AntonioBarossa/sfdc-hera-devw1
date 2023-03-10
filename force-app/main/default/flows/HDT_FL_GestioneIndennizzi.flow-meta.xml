@@ -1116,13 +1116,6 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>getInputCase.CorrectionRight__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Si</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
                 <leftValueReference>getInputCase.IndemnityDueSendResponse__c</leftValueReference>
                 <operator>GreaterThan</operator>
                 <rightValue>

@@ -60,6 +60,10 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
             {
                 result = criteriaUtl.isNotDistributorInRete(sender);
             }
+            when 'isSuspendedMeter'
+            {
+                result = criteriaUtl.isSuspendedMeter(sender);
+            }
         }
 
         return result;
