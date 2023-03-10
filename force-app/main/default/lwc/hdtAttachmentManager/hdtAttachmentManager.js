@@ -120,6 +120,14 @@ export default class HdtAttachmentManager extends LightningElement {
                         };  
                     }
                     break;
+                case 'PAGAMENTO UNICO ANNUALE TARI':
+                    if( this.currObject.RequestSource__c.toUpperCase() != 'DA CONTRIBUENTE' || this.currObject.ModuleFromContributor__c != false ){
+                        objectToReturn = { 
+                            isValid: false, 
+                            errorMessage: 'È obbligatorio inserire almeno un allegato' 
+                        };  
+                    }
+                    break;
                 /*
                     if( 'SUPERFICIE' == this.currObject.Subprocess__c?.toUpperCase() && 
                         'NON DOMESTICO' == this.currObject.ServicePoint__r?.SupplyType__c.toUpperCase() && 

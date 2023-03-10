@@ -3,42 +3,41 @@
     <label>Pagamenti - Pagamento Unico Annuale TARI</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Energia Elettrica</value>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 	{
 		&quot;FieldName&quot;: &quot;RequestSource__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 1
-	},
-	{
-		&quot;FieldName&quot;: &quot;ClientIdentificationDate__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 1
-	},
-	{
-		&quot;FieldName&quot;: &quot;ClientIdentificationDate__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 1
-	},
-	{
-		&quot;FieldName&quot;: &quot;AlternativeAddress__c&quot;,
-		&quot;Required&quot;: false,
+		&quot;Required&quot;: true,
 		&quot;Column&quot;: 1
 	},
 	{
 		&quot;FieldName&quot;: &quot;SubscriberType__c&quot;,
-		&quot;Required&quot;: false,
+		&quot;Required&quot;: true,
 		&quot;Column&quot;: 1
 	},
 	{
-		&quot;FieldName&quot;: &quot;SubscriptionPlace__c&quot;,
-		&quot;Required&quot;: false,
+		&quot;FieldName&quot;: &quot;DeclarationDate__c&quot;,
+		&quot;Required&quot;: true,
 		&quot;Column&quot;: 1
+	},
+	{
+		&quot;FieldName&quot;: &quot;AnnualUnicInstallment__c&quot;,
+		&quot;Required&quot;: true,
+		&quot;Column&quot;: 2
+	},
+	{
+		&quot;FieldName&quot;: &quot;SubscriptionPlace__c&quot;,
+		&quot;Required&quot;: true,
+		&quot;Column&quot;: 2
 	},
 	{
 		&quot;FieldName&quot;: &quot;ModuleFromContributor__c&quot;,
 		&quot;Required&quot;: false,
-		&quot;Column&quot;: 1
+		&quot;Column&quot;: 2
 	}
 ]</value>
     </values>
@@ -49,43 +48,36 @@
     <values>
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[
-        {
-		&quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
-		&quot;Column&quot;: 1
-	},
-        {
-		&quot;FieldName&quot;: &quot;ContractCode__c&quot;,
-		&quot;Column&quot;: 1
-	},
-        {
-		&quot;FieldName&quot;: &quot;Commodity__c&quot;,
-		&quot;Column&quot;: 1
-	},
-        {
+	{
 		&quot;FieldName&quot;: &quot;AccountId&quot;,
+		&quot;Required&quot;: true,
+		&quot;Column&quot;: 1
+	},
+	{
+		&quot;FieldName&quot;: &quot;ContractCode__c&quot;,
+		&quot;Required&quot;: true,
+		&quot;Column&quot;: 1
+	},
+	{
+		&quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
+		&quot;Required&quot;: true,
+		&quot;Column&quot;: 1
+	},
+	{
+		&quot;FieldName&quot;: &quot;Commodity__c&quot;,
+		&quot;Required&quot;: true,
 		&quot;Column&quot;: 2
 	},
 	{
-		&quot;FieldName&quot;: &quot;AccountId.Name&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 2
-	},
-	{
-		&quot;FieldName&quot;: &quot;Account.LastName&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 2
-	},
-	{
-		&quot;FieldName&quot;: &quot;Account.BirthDate__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 2
-	},
-	{
-		&quot;FieldName&quot;: &quot;Account.BirthProvince__c&quot;,
-		&quot;Required&quot;: false,
+		&quot;FieldName&quot;: &quot;CustomerRequestDate__c&quot;,
+		&quot;Required&quot;: true,
 		&quot;Column&quot;: 2
 	}
 ]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ValidateClass__c</field>
