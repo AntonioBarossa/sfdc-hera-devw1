@@ -3,8 +3,8 @@
     <actionCalls>
         <name>calcAnnualita</name>
         <label>calcAnnualita</label>
-        <locationX>825</locationX>
-        <locationY>5342</locationY>
+        <locationX>1595</locationX>
+        <locationY>5702</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -29,8 +29,8 @@
     <assignments>
         <name>Aggiorna_Case_Da_Inviare</name>
         <label>Case Da Inviare</label>
-        <locationX>1837</locationX>
-        <locationY>6638</locationY>
+        <locationX>2607</locationX>
+        <locationY>6998</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Status</assignToReference>
             <operator>Assign</operator>
@@ -52,8 +52,8 @@
     <assignments>
         <name>Aggiorna_Case_In_attesa</name>
         <label>Aggiorna Case In attesa</label>
-        <locationX>1397</locationX>
-        <locationY>7454</locationY>
+        <locationX>2167</locationX>
+        <locationY>7814</locationY>
         <assignmentItems>
             <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -75,8 +75,8 @@
     <assignments>
         <name>assigmentPostForm</name>
         <label>assigmentPostForm</label>
-        <locationX>314</locationX>
-        <locationY>3542</locationY>
+        <locationX>1084</locationX>
+        <locationY>3902</locationY>
         <assignmentItems>
             <assignToReference>getPostFirstForm.FirstName__c</assignToReference>
             <operator>Assign</operator>
@@ -119,8 +119,8 @@
     <assignments>
         <name>assignAddress</name>
         <label>assignAddress</label>
-        <locationX>846</locationX>
-        <locationY>758</locationY>
+        <locationX>684</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.SupplyCity__c</assignToReference>
             <operator>Assign</operator>
@@ -198,8 +198,8 @@
     <assignments>
         <name>assignBillingAddress</name>
         <label>assignBillingAddress</label>
-        <locationX>248</locationX>
-        <locationY>4454</locationY>
+        <locationX>1018</locationX>
+        <locationY>4814</locationY>
         <assignmentItems>
             <assignToReference>getPostSecondForm.BillingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -284,8 +284,8 @@
     <assignments>
         <name>AssignFieldsAfterSupplySelection</name>
         <label>AssignFieldsAfterSupplySelection</label>
-        <locationX>846</locationX>
-        <locationY>638</locationY>
+        <locationX>684</locationX>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.ServicePoint__c</assignToReference>
             <operator>Assign</operator>
@@ -314,8 +314,8 @@
     <assignments>
         <name>assignTempCase</name>
         <label>assignTempCase</label>
-        <locationX>1143</locationX>
-        <locationY>278</locationY>
+        <locationX>981</locationX>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>tempCase.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -393,8 +393,8 @@
     <assignments>
         <name>Bozza_annullata</name>
         <label>Bozza annullata</label>
-        <locationX>912</locationX>
-        <locationY>1358</locationY>
+        <locationX>750</locationX>
+        <locationY>1478</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -416,8 +416,8 @@
     <assignments>
         <name>preAssignBillingAccount</name>
         <label>preAssignBillingAccount</label>
-        <locationX>314</locationX>
-        <locationY>3662</locationY>
+        <locationX>1084</locationX>
+        <locationY>4022</locationY>
         <assignmentItems>
             <assignToReference>getPostFirstForm.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -495,8 +495,8 @@
     <assignments>
         <name>preAssignBillingAsIs</name>
         <label>preAssignBillingAsIs</label>
-        <locationX>50</locationX>
-        <locationY>3422</locationY>
+        <locationX>820</locationX>
+        <locationY>3782</locationY>
         <assignmentItems>
             <assignToReference>getPostFirstForm.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -574,8 +574,8 @@
     <assignments>
         <name>preAssignBillingNulls</name>
         <label>preAssignBillingNulls</label>
-        <locationX>578</locationX>
-        <locationY>3542</locationY>
+        <locationX>1348</locationX>
+        <locationY>3902</locationY>
         <assignmentItems>
             <assignToReference>getPostFirstForm.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -653,8 +653,8 @@
     <assignments>
         <name>restoreInvoicingAddress</name>
         <label>restoreInvoicingAddress</label>
-        <locationX>248</locationX>
-        <locationY>4574</locationY>
+        <locationX>1018</locationX>
+        <locationY>4934</locationY>
         <assignmentItems>
             <assignToReference>getPostSecondForm.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -732,8 +732,8 @@
     <assignments>
         <name>stringa_attiva</name>
         <label>stringa attiva</label>
-        <locationX>1045</locationX>
-        <locationY>6758</locationY>
+        <locationX>1815</locationX>
+        <locationY>7118</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -748,8 +748,8 @@
     <assignments>
         <name>stringa_disattiva</name>
         <label>stringa disattiva</label>
-        <locationX>1309</locationX>
-        <locationY>6758</locationY>
+        <locationX>2079</locationX>
+        <locationY>7118</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -764,8 +764,8 @@
     <decisions>
         <name>alertCustomer</name>
         <label>alertCustomer</label>
-        <locationX>825</locationX>
-        <locationY>5582</locationY>
+        <locationX>1595</locationX>
+        <locationY>5942</locationY>
         <defaultConnector>
             <targetReference>View_annualit</targetReference>
         </defaultConnector>
@@ -789,8 +789,8 @@
     <decisions>
         <name>Annullamento</name>
         <label>Annullamento</label>
-        <locationX>248</locationX>
-        <locationY>4814</locationY>
+        <locationX>1018</locationX>
+        <locationY>5174</locationY>
         <defaultConnector>
             <targetReference>calcAnnualita</targetReference>
         </defaultConnector>
@@ -827,8 +827,8 @@
     <decisions>
         <name>Annullamento_0</name>
         <label>Annullamento</label>
-        <locationX>825</locationX>
-        <locationY>6038</locationY>
+        <locationX>1595</locationX>
+        <locationY>6398</locationY>
         <defaultConnector>
             <targetReference>Inserimento_allegato</targetReference>
         </defaultConnector>
@@ -864,8 +864,8 @@
     <decisions>
         <name>Annullamento_0_0</name>
         <label>Annullamento</label>
-        <locationX>1221</locationX>
-        <locationY>6398</locationY>
+        <locationX>1991</locationX>
+        <locationY>6758</locationY>
         <defaultConnector>
             <targetReference>Quale_fase</targetReference>
         </defaultConnector>
@@ -889,8 +889,8 @@
     <decisions>
         <name>avanti</name>
         <label>quale step</label>
-        <locationX>846</locationX>
-        <locationY>998</locationY>
+        <locationX>684</locationX>
+        <locationY>1118</locationY>
         <defaultConnector>
             <targetReference>Compatibilit</targetReference>
         </defaultConnector>
@@ -915,8 +915,8 @@
     <decisions>
         <name>avanti_0</name>
         <label>quale step</label>
-        <locationX>184</locationX>
-        <locationY>2822</locationY>
+        <locationX>954</locationX>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>getPostFirstForm</targetReference>
         </defaultConnector>
@@ -952,8 +952,8 @@
     <decisions>
         <name>generalit_popolate</name>
         <label>generalità popolate</label>
-        <locationX>248</locationX>
-        <locationY>3302</locationY>
+        <locationX>1018</locationX>
+        <locationY>3662</locationY>
         <defaultConnector>
             <targetReference>Qualit_Soggetto_Passivo</targetReference>
         </defaultConnector>
@@ -998,8 +998,8 @@
     <decisions>
         <name>Gestito</name>
         <label>Gestito?</label>
-        <locationX>1143</locationX>
-        <locationY>2246</locationY>
+        <locationX>1913</locationX>
+        <locationY>2606</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_annulla_processo</targetReference>
         </defaultConnector>
@@ -1023,8 +1023,8 @@
     <decisions>
         <name>Is_Compatibile</name>
         <label>Is Compatibile?</label>
-        <locationX>1044</locationX>
-        <locationY>1238</locationY>
+        <locationX>882</locationX>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>Arricchimento_Dati</targetReference>
         </defaultConnector>
@@ -1055,8 +1055,8 @@
     <decisions>
         <name>Quale_fase</name>
         <label>Perfezionamento documentazione</label>
-        <locationX>1573</locationX>
-        <locationY>6518</locationY>
+        <locationX>2343</locationX>
+        <locationY>6878</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Da_Inviare</targetReference>
         </defaultConnector>
@@ -1087,10 +1087,10 @@
     <decisions>
         <name>Quale_stato</name>
         <label>Quale stato?</label>
-        <locationX>1143</locationX>
-        <locationY>398</locationY>
+        <locationX>981</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>getPreCheckTari</targetReference>
+            <targetReference>getCityTechnicalData</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1119,8 +1119,8 @@
     <decisions>
         <name>quale_step</name>
         <label>quale bottone</label>
-        <locationX>1309</locationX>
-        <locationY>7214</locationY>
+        <locationX>2079</locationX>
+        <locationY>7574</locationY>
         <defaultConnector>
             <targetReference>get_case_dopo_doc</targetReference>
         </defaultConnector>
@@ -1144,8 +1144,8 @@
     <decisions>
         <name>quale_stringa</name>
         <label>quale stringa</label>
-        <locationX>1309</locationX>
-        <locationY>6638</locationY>
+        <locationX>2079</locationX>
+        <locationY>6998</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>attiva</name>
@@ -1181,8 +1181,8 @@
     <decisions>
         <name>Qualit_Soggetto_Passivo</name>
         <label>Qualità Soggetto Passivo?</label>
-        <locationX>446</locationX>
-        <locationY>3422</locationY>
+        <locationX>1216</locationX>
+        <locationY>3782</locationY>
         <defaultConnector>
             <targetReference>preAssignBillingNulls</targetReference>
         </defaultConnector>
@@ -1206,8 +1206,8 @@
     <decisions>
         <name>RiaperturaPreFirstForm</name>
         <label>Riapertura</label>
-        <locationX>184</locationX>
-        <locationY>2366</locationY>
+        <locationX>954</locationX>
+        <locationY>2726</locationY>
         <defaultConnector>
             <targetReference>updatePreFirstForm</targetReference>
         </defaultConnector>
@@ -1231,8 +1231,8 @@
     <decisions>
         <name>Riaperuta</name>
         <label>Riaperuta?</label>
-        <locationX>545</locationX>
-        <locationY>3182</locationY>
+        <locationX>1315</locationX>
+        <locationY>3542</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Qualit_Soggetto_Passivo</targetReference>
@@ -1257,8 +1257,8 @@
     <decisions>
         <name>showSecondScreen</name>
         <label>showSecondScreen?</label>
-        <locationX>825</locationX>
-        <locationY>3062</locationY>
+        <locationX>1595</locationX>
+        <locationY>3422</locationY>
         <defaultConnector>
             <targetReference>calcAnnualita</targetReference>
         </defaultConnector>
@@ -1279,6 +1279,31 @@
             <label>Si</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>unicPaymentLimitDate_is_Null</name>
+        <label>unicPaymentLimitDate is Null?</label>
+        <locationX>981</locationX>
+        <locationY>2246</locationY>
+        <defaultConnector>
+            <targetReference>getPreCheckTari</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Yes</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCityTechnicalData.UnicPaymentLimitDate__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>showError</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>billingAddressFormula</name>
@@ -1288,6 +1313,11 @@
 &amp;IF(!ISBLANK({!getPostSecondForm.BillingPlace__c}),&apos;, &apos;&amp; {!getPostSecondForm.BillingPlace__c},&apos;&apos;)
 &amp;&apos;, &apos;&amp;{!getPostSecondForm.BillingCity__c}&amp;&apos; &apos;&amp;{!getPostSecondForm.BillingProvince__c}
 &amp;&apos;, &apos;&amp;{!getPostSecondForm.BillingPostalCode__c}&amp;&apos; &apos;&amp;{!getPostSecondForm.BillingCountry__c}</expression>
+    </formulas>
+    <formulas>
+        <name>errorUnicPaymentLimitDateMessage</name>
+        <dataType>String</dataType>
+        <expression>&apos;Per il seguente comune: &apos;&amp;{!Get_Process_Case.SupplyCity__c}&amp;&apos;, la &quot;Data Limite Pagamento Unico&quot; non è valorizzata.&apos;</expression>
     </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_PagamentoUnicoAnnualeTARI {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Pagamento Unico Annuale TARI</label>
@@ -1313,8 +1343,8 @@
     <recordLookups>
         <name>get_case_aggiornato</name>
         <label>get case aggiornato</label>
-        <locationX>825</locationX>
-        <locationY>5462</locationY>
+        <locationX>1595</locationX>
+        <locationY>5822</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>alertCustomer</targetReference>
@@ -1334,8 +1364,8 @@
     <recordLookups>
         <name>get_case_dopo_doc</name>
         <label>get case dopo doc</label>
-        <locationX>1397</locationX>
-        <locationY>7334</locationY>
+        <locationX>2167</locationX>
+        <locationY>7694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Case_In_attesa</targetReference>
@@ -1355,8 +1385,8 @@
     <recordLookups>
         <name>Get_Process_Case</name>
         <label>Get Process Case</label>
-        <locationX>1143</locationX>
-        <locationY>158</locationY>
+        <locationX>981</locationX>
+        <locationY>278</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignTempCase</targetReference>
@@ -1374,10 +1404,31 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getCityTechnicalData</name>
+        <label>getCityTechnicalData</label>
+        <locationX>981</locationX>
+        <locationY>2126</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>unicPaymentLimitDate_is_Null</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CadastralCity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Process_Case.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CityTechnicalData__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getPostFirstForm</name>
         <label>getPostFirstForm</label>
-        <locationX>825</locationX>
-        <locationY>2942</locationY>
+        <locationX>1595</locationX>
+        <locationY>3302</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>showSecondScreen</targetReference>
@@ -1397,8 +1448,8 @@
     <recordLookups>
         <name>getPostSecondForm</name>
         <label>getPostSecondForm</label>
-        <locationX>248</locationX>
-        <locationY>4334</locationY>
+        <locationX>1018</locationX>
+        <locationY>4694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>assignBillingAddress</targetReference>
@@ -1418,8 +1469,8 @@
     <recordLookups>
         <name>getPreCheckTari</name>
         <label>getPreCheckTari</label>
-        <locationX>1143</locationX>
-        <locationY>2006</locationY>
+        <locationX>1913</locationX>
+        <locationY>2366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CheckTariManaged_0</targetReference>
@@ -1439,8 +1490,8 @@
     <recordLookups>
         <name>getPreSecondScreen</name>
         <label>getPreSecondScreen</label>
-        <locationX>248</locationX>
-        <locationY>4094</locationY>
+        <locationX>1018</locationX>
+        <locationY>4454</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>secondScreen</targetReference>
@@ -1460,15 +1511,39 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>912</locationX>
-        <locationY>1478</locationY>
+        <locationX>750</locationX>
+        <locationY>1598</locationY>
         <inputReference>Get_Process_Case</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>assignFieldsPreProcess</name>
+        <label>assignFieldsPreProcess</label>
+        <locationX>981</locationX>
+        <locationY>158</locationY>
+        <connector>
+            <targetReference>Get_Process_Case</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <stringValue>VT1</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>commitPostGeneralitaLogic</name>
         <label>commitPostGeneralitaLogic</label>
-        <locationX>248</locationX>
-        <locationY>3974</locationY>
+        <locationX>1018</locationX>
+        <locationY>4334</locationY>
         <connector>
             <targetReference>getPreSecondScreen</targetReference>
         </connector>
@@ -1477,22 +1552,22 @@
     <recordUpdates>
         <name>Salva_Case_0</name>
         <label>Salva Case</label>
-        <locationX>1397</locationX>
-        <locationY>7574</locationY>
+        <locationX>2167</locationX>
+        <locationY>7934</locationY>
         <inputReference>get_case_dopo_doc</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Salva_Case_1</name>
         <label>Salva Case</label>
-        <locationX>1837</locationX>
-        <locationY>6758</locationY>
+        <locationX>2607</locationX>
+        <locationY>7118</locationY>
         <inputReference>get_case_aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>update_case</name>
         <label>update case</label>
-        <locationX>1309</locationX>
-        <locationY>6974</locationY>
+        <locationX>2079</locationX>
+        <locationY>7334</locationY>
         <connector>
             <targetReference>screenDocumentale</targetReference>
         </connector>
@@ -1501,8 +1576,8 @@
     <recordUpdates>
         <name>updateAttachments</name>
         <label>updateAttachments</label>
-        <locationX>1221</locationX>
-        <locationY>6278</locationY>
+        <locationX>1991</locationX>
+        <locationY>6638</locationY>
         <connector>
             <targetReference>Annullamento_0_0</targetReference>
         </connector>
@@ -1531,8 +1606,8 @@
     <recordUpdates>
         <name>updatePostSecondForm</name>
         <label>updatePostSecondForm</label>
-        <locationX>248</locationX>
-        <locationY>4694</locationY>
+        <locationX>1018</locationX>
+        <locationY>5054</locationY>
         <connector>
             <targetReference>Annullamento</targetReference>
         </connector>
@@ -1541,8 +1616,8 @@
     <recordUpdates>
         <name>UpdatePreCompatibilita</name>
         <label>UpdatePreCompatibilita</label>
-        <locationX>846</locationX>
-        <locationY>878</locationY>
+        <locationX>684</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>avanti</targetReference>
         </connector>
@@ -1551,8 +1626,8 @@
     <recordUpdates>
         <name>updatePreFirstForm</name>
         <label>updatePreFirstForm</label>
-        <locationX>272</locationX>
-        <locationY>2486</locationY>
+        <locationX>1042</locationX>
+        <locationY>2846</locationY>
         <connector>
             <targetReference>Campi_input_operatore</targetReference>
         </connector>
@@ -1588,8 +1663,8 @@
     <screens>
         <name>Campi_input_operatore</name>
         <label>Campi input operatore</label>
-        <locationX>184</locationX>
-        <locationY>2702</locationY>
+        <locationX>954</locationX>
+        <locationY>3062</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1681,8 +1756,8 @@
     <screens>
         <name>Inserimento_allegato</name>
         <label>Inserimento allegato</label>
-        <locationX>1221</locationX>
-        <locationY>6158</locationY>
+        <locationX>1991</locationX>
+        <locationY>6518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1777,8 +1852,8 @@
     <screens>
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
-        <locationX>1309</locationX>
-        <locationY>7094</locationY>
+        <locationX>2079</locationX>
+        <locationY>7454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1846,8 +1921,8 @@
     <screens>
         <name>secondScreen</name>
         <label>secondScreen</label>
-        <locationX>248</locationX>
-        <locationY>4214</locationY>
+        <locationX>1018</locationX>
+        <locationY>4574</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2066,10 +2141,62 @@
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>showError</name>
+        <label>showError</label>
+        <locationX>50</locationX>
+        <locationY>2366</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Copy_1_of_annulla_processo</targetReference>
+        </connector>
+        <fields>
+            <name>errorToast</name>
+            <extensionName>c:hdtShowToastForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isBlocking</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>errorUnicPaymentLimitDateMessage</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>sticky</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Attenzione!</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>error</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>showMessage</name>
         <label>showMessage</label>
-        <locationX>693</locationX>
-        <locationY>5702</locationY>
+        <locationX>1463</locationX>
+        <locationY>6062</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2120,8 +2247,8 @@
     <screens>
         <name>View_annualit</name>
         <label>View annualità</label>
-        <locationX>825</locationX>
-        <locationY>5918</locationY>
+        <locationX>1595</locationX>
+        <locationY>6278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -2194,20 +2321,20 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1017</locationX>
+        <locationX>855</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>Get_Process_Case</targetReference>
+            <targetReference>assignFieldsPreProcess</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>1176</locationX>
-        <locationY>1358</locationY>
+        <locationX>1014</locationX>
+        <locationY>1478</locationY>
         <connector>
-            <targetReference>getPreCheckTari</targetReference>
+            <targetReference>getCityTechnicalData</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
         <inputAssignments>
@@ -2232,8 +2359,8 @@
     <subflows>
         <name>CheckTariManaged_0</name>
         <label>CheckTariManaged</label>
-        <locationX>1143</locationX>
-        <locationY>2126</locationY>
+        <locationX>1913</locationX>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>Gestito</targetReference>
         </connector>
@@ -2270,8 +2397,8 @@
     <subflows>
         <name>Compatibilit</name>
         <label>Compatibilità</label>
-        <locationX>1044</locationX>
-        <locationY>1118</locationY>
+        <locationX>882</locationX>
+        <locationY>1238</locationY>
         <connector>
             <targetReference>Is_Compatibile</targetReference>
         </connector>
@@ -2290,8 +2417,8 @@
     <subflows>
         <name>Copy_1_of_annulla_processo</name>
         <label>annulla processo</label>
-        <locationX>1143</locationX>
-        <locationY>8390</locationY>
+        <locationX>981</locationX>
+        <locationY>8846</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -2321,8 +2448,8 @@
     <subflows>
         <name>Selezione_fornitura</name>
         <label>Selezione fornitura</label>
-        <locationX>846</locationX>
-        <locationY>518</locationY>
+        <locationX>684</locationX>
+        <locationY>638</locationY>
         <connector>
             <targetReference>AssignFieldsAfterSupplySelection</targetReference>
         </connector>
