@@ -140,7 +140,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         Set<Id> allOrdersVas  = new Set<Id>(); 
         if(ordToCheck[0].Recordtype.Developername !='HDT_RT_VAS'){
-            allOrdersVas = orderQr.getAllOrdersVASForComfort(ordId ,ordToCheck[0].SBQQ__Quote__c);
+            allOrdersVas = orderQr.getAllOrdersVasForComfort(ordId ,ordToCheck[0].SBQQ__Quote__c);
         }
 
         if (allOrders!=null && allOrders.size()>0) {
