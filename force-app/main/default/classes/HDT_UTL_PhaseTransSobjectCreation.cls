@@ -24,7 +24,7 @@ global inherited sharing class HDT_UTL_PhaseTransSobjectCreation implements wrts
                 for(SObject s : senders){
                     if(s instanceof Order){
                         Order ord = (Order) s;
-                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Cluster__c = 'Segnalazioni', Order__c = ord.Id, AccountId = ord.AccountId );
+                        Case caso = new Case(RecordTypeId = recordTypeId, Type = 'Avviso di Servizio', Phase__c = 'Bozza', Cluster__c = 'Segnalazioni', Order__c = ord.Id, AccountId = ord.AccountId, OperationGroup__c = 'Altri servizi-IUAS0002', TypeOperation__c = 'Verifica tariffa', Material__c = 'DistanzaCassonDaDomicilioUT');
                         sObjectsToInsert.add(caso);
                     }
                 }
