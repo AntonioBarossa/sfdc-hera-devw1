@@ -231,5 +231,168 @@
             <fullName>Voltura</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Adesione Rinuncia Fondo Fughe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cambio contatore non registrato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione post accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Cessazione Scarichi Produttivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiusura Presa Stradale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione Pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumo Anomalo Idrico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Doppi Pagamenti/Incassi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore di Fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Calamità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interventi con Verifica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inversione del Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Istruttoria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura Acqua Avviso al Cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Limitazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica dati contrattuali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica post accertamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Unita Immobiliari Componenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica/Azzeramento Consumo Annuo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Unico Annuale TARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Piano Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Posizionamento Contenitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclamo Scritto Da Cittadino</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclamo Scritto/Rich. Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricostruzione Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Contrattuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Ambientali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito Emissione Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Storno Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Fuga Idrica</fullName>
+            <default>false</default>
+        </values>
+        <value>
+            <fullName>Verifica Integrita Sigilli</fullName>
+            <default>false</default>
+            <label>Verifica Integrita Sigilli</label>
+        </value>
+        <value>
+            <fullName>Verifica Interna</fullName>
+            <default>false</default>
+            <label>Verifica Interna</label>
+        </value>
+        <value>
+            <fullName>Verifica Tensione - Pressione</fullName>
+            <default>false</default>
+            <label>Verifica Tensione - Pressione</label>
+        </value>
     </picklistValues>
 </RecordType>
