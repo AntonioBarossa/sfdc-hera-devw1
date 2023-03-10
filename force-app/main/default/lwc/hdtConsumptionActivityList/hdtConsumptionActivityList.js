@@ -45,12 +45,14 @@ export default class HdtConsumptionActivityList extends LightningElement {
     contractData = [];
     contractDataToView = [];
     sortDirection = 'desc';
+    filterString = '';
     sortedBy;
     contract;
     requestObj = {};
     mainTitle;
     mainIcon;
     detailTitle;
+    detailTitlePrefix;
     detailIcon;
     buttonGroup = [];
     modalHeader;
@@ -120,7 +122,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 this.showFilter = true;
             break;
         }
-
+        this.helpTextHandler();
     }
 
     setMyDate(days){
@@ -152,7 +154,9 @@ export default class HdtConsumptionActivityList extends LightningElement {
                         this.mainTitle = result.tables[0].tableTitle;
                         this.mainIcon = result.tables[0].iconName;
                         this.detailColumns = result.tables[1].columns;
-                        this.detailTitle = result.tables[1].tableTitle;
+                        //this.detailTitle = result.tables[1].tableTitle;
+                        this.detailTitlePrefix = result.tables[1].tableTitle;
+                        this.detailTitle = this.detailTitlePrefix;
                         this.detailIcon = result.tables[1].iconName;
                         this.hasDetailTable = true;
                         this.showDetailTable = true;
@@ -231,8 +235,10 @@ export default class HdtConsumptionActivityList extends LightningElement {
 
             if(obj.response.item[0].details.item != null && obj.response.item[0].details.item.length > 0) {
                 this.detailsDataToView = obj.response.item[0].details.item;
+                this.detailTitle = this.detailTitlePrefix + ' - ' + this.requestObj.date;
                 this.showDetailTable = true;
             } else {
+                this.detailTitle = this.detailTitlePrefix;
                 this.showDetailTable = false;
             }
 
@@ -247,6 +253,20 @@ export default class HdtConsumptionActivityList extends LightningElement {
         }
 
         this.spinner = false;  
+    }
+
+    helpTextHandler(){
+        if(this.requestObj != null && this.requestObj != undefined){
+            switch (this.tabType) {
+                case "consumptionList2g"://Elenco Consumi 2G
+                    this.filterString = 'Data dal: ' + this.requestObj.date;
+                break;
+    
+                case "activityList2g": //Elenco Attività 2G
+                    this.filterString = 'Data dal: ' + this.requestObj.dateFrom + ' al ' + this.requestObj.dateTo + ', ' + this.requestObj.idService;
+                break;
+            } 
+        }
     }
 
     handleRowAction(event) {
@@ -300,6 +320,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
             this.spinner = true;
             console.log('## applyConfirm ' + JSON.stringify(event.detail));
             this.requestObj = event.detail.requestObject;
+            this.helpTextHandler();
             this.backendCall();
             if(event.detail.buttonName == 'filter'){
                 this.focusOnButton(event.detail.buttonName);
