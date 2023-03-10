@@ -260,7 +260,13 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
          * Aggiunta valorizzazione
          * ContractAccountCode__c
          */
-        orderToUpdate.ContractAccountCode__c = String.isBlank(orderToUpdate.ContractAccountCode__c) ? (servicePoint.Account__c == orderToUpdate.AccountId ? servicePoint.SAPContractAccountCode__c : null) : orderToUpdate.ContractAccountCode__c; 
+        if( String.isBlank(orderToUpdate.ContractAccountCode__c) &&
+            !'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) && 
+            !'Teleriscaldamento'.equalsIgnoreCase(servicePoint.CommoditySector__c) &&
+            servicePoint.Account__c == orderToUpdate.AccountId )
+        {
+            orderToUpdate.ContractAccountCode__c = servicePoint.SAPContractAccountCode__c;
+        }
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
         orderToUpdate.ATO__c = 'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) ? servicePoint.ATO__c : '';
         List<String> ratecategoryResident = new List<String>{'ACDOMRESP0','TATUDRES01'};
