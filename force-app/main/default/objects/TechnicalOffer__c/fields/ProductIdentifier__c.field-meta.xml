@@ -19,7 +19,7 @@
             <value>
                 <fullName>SPECIAL_DAY</fullName>
                 <default>false</default>
-                <label>SPECIAL DAY</label>
+                <label>SPECIAL_DAY</label>
             </value>
             <value>
                 <fullName>PUN</fullName>
