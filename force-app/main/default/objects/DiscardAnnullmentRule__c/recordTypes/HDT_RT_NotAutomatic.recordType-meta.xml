@@ -379,17 +379,17 @@
             <fullName>Verifica Fuga Idrica</fullName>
             <default>false</default>
         </values>
-        <value>
+        <values>
             <fullName>Verifica Integrita Sigilli</fullName>
             <default>false</default>
-        </value>
-        <value>
+        </values>
+        <values>
             <fullName>Verifica Interna</fullName>
             <default>false</default>
-        </value>
-        <value>
+        </values>
+        <values>
             <fullName>Verifica Tensione - Pressione</fullName>
             <default>false</default>
-        </value>
+        </values>
     </picklistValues>
 </RecordType>
