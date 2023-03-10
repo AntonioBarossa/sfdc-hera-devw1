@@ -3,12 +3,12 @@
     <actionCalls>
         <name>calcAnnualita</name>
         <label>calcAnnualita</label>
-        <locationX>957</locationX>
-        <locationY>1766</locationY>
+        <locationX>825</locationX>
+        <locationY>5342</locationY>
         <actionName>HDT_UTL_TariManagement</actionName>
         <actionType>apex</actionType>
         <connector>
-            <targetReference>View_annualit</targetReference>
+            <targetReference>get_case_aggiornato</targetReference>
         </connector>
         <flowTransactionModel>Automatic</flowTransactionModel>
         <inputParameters>
@@ -27,15 +27,38 @@
     </actionCalls>
     <apiVersion>54.0</apiVersion>
     <assignments>
+        <name>Aggiorna_Case_Da_Inviare</name>
+        <label>Case Da Inviare</label>
+        <locationX>1837</locationX>
+        <locationY>6638</locationY>
+        <assignmentItems>
+            <assignToReference>get_case_aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>get_case_aggiornato.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Salva_Case_1</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Aggiorna_Case_In_attesa</name>
         <label>Aggiorna Case In attesa</label>
-        <locationX>726</locationX>
-        <locationY>3638</locationY>
+        <locationX>1397</locationX>
+        <locationY>7454</locationY>
         <assignmentItems>
             <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In attesa Documentazione</stringValue>
+                <stringValue>In attesa validazione</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
@@ -46,14 +69,332 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Copy_2_of_Salva_Case</targetReference>
+            <targetReference>Salva_Case_0</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assigmentPostForm</name>
+        <label>assigmentPostForm</label>
+        <locationX>314</locationX>
+        <locationY>3542</locationY>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.FirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.FirstName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.LastName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.Birthday__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BirthDate__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.Birthcity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BirthProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingAddressFormula__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>preAssignBillingAccount</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignAddress</name>
+        <label>assignAddress</label>
+        <locationX>846</locationX>
+        <locationY>758</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.SupplyStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.ServicePoint__r.SupplyStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>UpdatePreCompatibilita</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignBillingAddress</name>
+        <label>assignBillingAddress</label>
+        <locationX>248</locationX>
+        <locationY>4454</locationY>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>billingAddressFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.BillingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>cbIndirizzi.theCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>restoreInvoicingAddress</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssignFieldsAfterSupplySelection</name>
+        <label>AssignFieldsAfterSupplySelection</label>
+        <locationX>846</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ServicePointId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Contract</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Process_Case.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Commodity</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>assignAddress</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignTempCase</name>
+        <label>assignTempCase</label>
+        <locationX>1143</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>tempCase.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Process_Case.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Quale_stato</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Bozza_annullata</name>
         <label>Bozza annullata</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>912</locationX>
+        <locationY>1358</locationY>
         <assignmentItems>
             <assignToReference>Get_Process_Case.Status</assignToReference>
             <operator>Assign</operator>
@@ -73,56 +414,326 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Aggiorna_Case_Da_Inviare</name>
-        <label>Copy 1 of Aggiorna Case Da Inviare</label>
-        <locationX>1254</locationX>
-        <locationY>2702</locationY>
+        <name>preAssignBillingAccount</name>
+        <label>preAssignBillingAccount</label>
+        <locationX>314</locationX>
+        <locationY>3662</locationY>
         <assignmentItems>
-            <assignToReference>get_case_aggiornato.Status</assignToReference>
+            <assignToReference>getPostFirstForm.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <elementReference>getPostFirstForm.Account.BillingCity</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>get_case_aggiornato.Phase__c</assignToReference>
+            <assignToReference>getPostFirstForm.InvoicingPostalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Da Inviare</stringValue>
+                <elementReference>getPostFirstForm.Account.BillingPostalCode</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingCountry</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingState</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.Account.BillingStreetCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Copy_3_of_Salva_Case</targetReference>
+            <targetReference>commitPostGeneralitaLogic</targetReference>
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_Aggiorna_Case_In_attesa</name>
-        <label>Copy 1 of Aggiorna Case In attesa</label>
-        <locationX>990</locationX>
-        <locationY>3638</locationY>
+        <name>preAssignBillingAsIs</name>
+        <label>preAssignBillingAsIs</label>
+        <locationX>50</locationX>
+        <locationY>3422</locationY>
         <assignmentItems>
-            <assignToReference>get_case_dopo_doc.Phase__c</assignToReference>
+            <assignToReference>getPostFirstForm.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In attesa validazione</stringValue>
+                <elementReference>getPostFirstForm.BillingCity__c</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>get_case_dopo_doc.Status</assignToReference>
+            <assignToReference>getPostFirstForm.InvoicingPostalCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In Lavorazione</stringValue>
+                <elementReference>getPostFirstForm.BillingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostFirstForm.BillingStreetCode__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Copy_2_of_Salva_Case</targetReference>
+            <targetReference>commitPostGeneralitaLogic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>preAssignBillingNulls</name>
+        <label>preAssignBillingNulls</label>
+        <locationX>578</locationX>
+        <locationY>3542</locationY>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostFirstForm.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>commitPostGeneralitaLogic</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>restoreInvoicingAddress</name>
+        <label>restoreInvoicingAddress</label>
+        <locationX>248</locationX>
+        <locationY>4574</locationY>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostSecondForm.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>tempCase.InvoicingStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updatePostSecondForm</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>stringa_attiva</name>
         <label>stringa attiva</label>
-        <locationX>396</locationX>
-        <locationY>2822</locationY>
+        <locationX>1045</locationX>
+        <locationY>6758</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -137,8 +748,8 @@
     <assignments>
         <name>stringa_disattiva</name>
         <label>stringa disattiva</label>
-        <locationX>660</locationX>
-        <locationY>2822</locationY>
+        <locationX>1309</locationX>
+        <locationY>6758</locationY>
         <assignmentItems>
             <assignToReference>get_case_aggiornato.Note__c</assignToReference>
             <operator>Assign</operator>
@@ -151,10 +762,135 @@
         </connector>
     </assignments>
     <decisions>
+        <name>alertCustomer</name>
+        <label>alertCustomer</label>
+        <locationX>825</locationX>
+        <locationY>5582</locationY>
+        <defaultConnector>
+            <targetReference>View_annualit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Yes_alert</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>calcAnnualita.showMessage</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>showMessage</targetReference>
+            </connector>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento</name>
+        <label>Annullamento</label>
+        <locationX>248</locationX>
+        <locationY>4814</locationY>
+        <defaultConnector>
+            <targetReference>calcAnnualita</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Avanti</defaultConnectorLabel>
+        <rules>
+            <name>Annullamento_postSecond</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>secondFrom.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Copy_1_of_annulla_processo</targetReference>
+            </connector>
+            <label>Annullamento</label>
+        </rules>
+        <rules>
+            <name>Salva_in_bozza_postSecond</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>secondFrom.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva  in bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0</name>
+        <label>Annullamento</label>
+        <locationX>825</locationX>
+        <locationY>6038</locationY>
+        <defaultConnector>
+            <targetReference>Inserimento_allegato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Annullato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>nav.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_annulla_processo</targetReference>
+            </connector>
+            <label>Annullato</label>
+        </rules>
+        <rules>
+            <name>Salva_in_Bozza</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>nav.saveDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <label>Salva in Bozza</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Annullamento_0_0</name>
+        <label>Annullamento</label>
+        <locationX>1221</locationX>
+        <locationY>6398</locationY>
+        <defaultConnector>
+            <targetReference>Quale_fase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Annullato_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>navigazione.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_annulla_processo</targetReference>
+            </connector>
+            <label>Annullato</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>avanti</name>
         <label>quale step</label>
-        <locationX>248</locationX>
-        <locationY>518</locationY>
+        <locationX>846</locationX>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Compatibilit</targetReference>
         </defaultConnector>
@@ -163,14 +899,15 @@
             <name>annullata</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Selezione_fornitura.cancelCase</leftValueReference>
+                <leftValueReference>cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>annulla_processo</targetReference>
+                <isGoTo>true</isGoTo>
+                <targetReference>Copy_1_of_annulla_processo</targetReference>
             </connector>
             <label>annullata</label>
         </rules>
@@ -178,10 +915,10 @@
     <decisions>
         <name>avanti_0</name>
         <label>quale step</label>
-        <locationX>545</locationX>
-        <locationY>1646</locationY>
+        <locationX>184</locationX>
+        <locationY>2822</locationY>
         <defaultConnector>
-            <targetReference>calcAnnualita</targetReference>
+            <targetReference>getPostFirstForm</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -195,93 +932,133 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>annulla_processo_0</targetReference>
+                <targetReference>Copy_1_of_annulla_processo</targetReference>
             </connector>
             <label>annullata</label>
         </rules>
-    </decisions>
-    <decisions>
-        <name>Avviso_anno_prossimo</name>
-        <label>Avviso anno prossimo</label>
-        <locationX>957</locationX>
-        <locationY>2006</locationY>
-        <defaultConnector>
-            <targetReference>Inserimento_allegato</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>Mostra_avviso</name>
+            <name>Salva_in_bozza_firstForm</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>calcAnnualita.annuality</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>recordEditForm.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>Get_Process_Case.CustomerRequestDate__c</elementReference>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
-            <connector>
-                <targetReference>Screen_avviso_anno_prossimo</targetReference>
-            </connector>
-            <label>Mostra avviso</label>
+            <label>Salva in bozza</label>
         </rules>
     </decisions>
     <decisions>
-        <name>controllo_risultato_documentale</name>
-        <label>controllo risultato documentale</label>
-        <locationX>858</locationX>
-        <locationY>3518</locationY>
+        <name>generalit_popolate</name>
+        <label>generalità popolate</label>
+        <locationX>248</locationX>
+        <locationY>3302</locationY>
         <defaultConnector>
-            <targetReference>Copy_1_of_Aggiorna_Case_In_attesa</targetReference>
+            <targetReference>Qualit_Soggetto_Passivo</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>in_attesa_documentazione</name>
+            <name>Si_Generalit</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>getPostFirstForm.FirstName__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPostFirstForm.LastName__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPostFirstForm.Birthday__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getPostFirstForm.Birthcity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>preAssignBillingAsIs</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Gestito</name>
+        <label>Gestito?</label>
+        <locationX>1143</locationX>
+        <locationY>2246</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_annulla_processo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Si</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>componentDocumentale.skipDocumentalPhase</leftValueReference>
+                <leftValueReference>CheckTariManaged_0.result</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Aggiorna_Case_In_attesa</targetReference>
+                <targetReference>RiaperturaPreFirstForm</targetReference>
             </connector>
-            <label>in attesa documentazione</label>
+            <label>Copy 1 of Si</label>
         </rules>
     </decisions>
     <decisions>
         <name>Is_Compatibile</name>
         <label>Is Compatibile?</label>
-        <locationX>446</locationX>
-        <locationY>758</locationY>
+        <locationX>1044</locationX>
+        <locationY>1238</locationY>
         <defaultConnector>
-            <targetReference>Bozza_annullata</targetReference>
+            <targetReference>Arricchimento_Dati</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>Compatibile</defaultConnectorLabel>
         <rules>
-            <name>Compatibile</name>
+            <name>Non_Compatibile</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Selezione_fornitura.IsCompatibile</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>IsCompatibile</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>IsCompatibile</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Arricchimento_Dati</targetReference>
+                <targetReference>Bozza_annullata</targetReference>
             </connector>
-            <label>Compatibile</label>
+            <label>Non Compatibile</label>
         </rules>
     </decisions>
     <decisions>
         <name>Quale_fase</name>
         <label>Perfezionamento documentazione</label>
-        <locationX>957</locationX>
-        <locationY>2582</locationY>
+        <locationX>1573</locationX>
+        <locationY>6518</locationY>
         <defaultConnector>
-            <targetReference>Copy_1_of_Aggiorna_Case_Da_Inviare</targetReference>
+            <targetReference>Aggiorna_Case_Da_Inviare</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -310,10 +1087,10 @@
     <decisions>
         <name>Quale_stato</name>
         <label>Quale stato?</label>
-        <locationX>545</locationX>
-        <locationY>278</locationY>
+        <locationX>1143</locationX>
+        <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Campi_input_operatore</targetReference>
+            <targetReference>getPreCheckTari</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -326,6 +1103,13 @@
                     <stringValue>New</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Selezione_fornitura</targetReference>
             </connector>
@@ -335,8 +1119,8 @@
     <decisions>
         <name>quale_step</name>
         <label>quale bottone</label>
-        <locationX>660</locationX>
-        <locationY>3278</locationY>
+        <locationX>1309</locationX>
+        <locationY>7214</locationY>
         <defaultConnector>
             <targetReference>get_case_dopo_doc</targetReference>
         </defaultConnector>
@@ -360,8 +1144,8 @@
     <decisions>
         <name>quale_stringa</name>
         <label>quale stringa</label>
-        <locationX>660</locationX>
-        <locationY>2702</locationY>
+        <locationX>1309</locationX>
+        <locationY>6638</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>attiva</name>
@@ -394,7 +1178,117 @@
             <label>disattiva</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Qualit_Soggetto_Passivo</name>
+        <label>Qualità Soggetto Passivo?</label>
+        <locationX>446</locationX>
+        <locationY>3422</locationY>
+        <defaultConnector>
+            <targetReference>preAssignBillingNulls</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_soggettoPassivo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getPostFirstForm.SubscriberType__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Soggetto passivo</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>assigmentPostForm</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>RiaperturaPreFirstForm</name>
+        <label>Riapertura</label>
+        <locationX>184</locationX>
+        <locationY>2366</locationY>
+        <defaultConnector>
+            <targetReference>updatePreFirstForm</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_RiaperturaPreFirstForm</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Campi_input_operatore</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Riaperuta</name>
+        <label>Riaperuta?</label>
+        <locationX>545</locationX>
+        <locationY>3182</locationY>
+        <defaultConnector>
+            <isGoTo>true</isGoTo>
+            <targetReference>Qualit_Soggetto_Passivo</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_Riapertura</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>ResumeFromDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>generalit_popolate</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>showSecondScreen</name>
+        <label>showSecondScreen?</label>
+        <locationX>825</locationX>
+        <locationY>3062</locationY>
+        <defaultConnector>
+            <targetReference>calcAnnualita</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si_showSecondScreen</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getPostFirstForm.RequestSource__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>D&apos;ufficio</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Riaperuta</targetReference>
+            </connector>
+            <label>Si</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
+    <formulas>
+        <name>billingAddressFormula</name>
+        <dataType>String</dataType>
+        <expression>{!getPostSecondForm.BillingStreetName__c}&amp;&apos; &apos;&amp;{!getPostSecondForm.BillingStreetNumber__c}
+&amp;IF(!ISBLANK({!getPostSecondForm.BillingStreetNumberExtension__c}),&apos;/&apos;&amp; {!getPostSecondForm.BillingStreetNumberExtension__c},&apos;&apos;)
+&amp;IF(!ISBLANK({!getPostSecondForm.BillingPlace__c}),&apos;, &apos;&amp; {!getPostSecondForm.BillingPlace__c},&apos;&apos;)
+&amp;&apos;, &apos;&amp;{!getPostSecondForm.BillingCity__c}&amp;&apos; &apos;&amp;{!getPostSecondForm.BillingProvince__c}
+&amp;&apos;, &apos;&amp;{!getPostSecondForm.BillingPostalCode__c}&amp;&apos; &apos;&amp;{!getPostSecondForm.BillingCountry__c}</expression>
+    </formulas>
     <interviewLabel>HDT_FL_GestionePagamenti_PagamentoUnicoAnnualeTARI {!$Flow.CurrentDateTime}</interviewLabel>
     <label>Gestione Pagamenti - Pagamento Unico Annuale TARI</label>
     <processMetadataValues>
@@ -419,11 +1313,11 @@
     <recordLookups>
         <name>get_case_aggiornato</name>
         <label>get case aggiornato</label>
-        <locationX>957</locationX>
-        <locationY>2462</locationY>
+        <locationX>825</locationX>
+        <locationY>5462</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Quale_fase</targetReference>
+            <targetReference>alertCustomer</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -440,11 +1334,11 @@
     <recordLookups>
         <name>get_case_dopo_doc</name>
         <label>get case dopo doc</label>
-        <locationX>858</locationX>
-        <locationY>3398</locationY>
+        <locationX>1397</locationX>
+        <locationY>7334</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>controllo_risultato_documentale</targetReference>
+            <targetReference>Aggiorna_Case_In_attesa</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -461,18 +1355,102 @@
     <recordLookups>
         <name>Get_Process_Case</name>
         <label>Get Process Case</label>
-        <locationX>545</locationX>
+        <locationX>1143</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Quale_stato</targetReference>
+            <targetReference>assignTempCase</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPostFirstForm</name>
+        <label>getPostFirstForm</label>
+        <locationX>825</locationX>
+        <locationY>2942</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>showSecondScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPostSecondForm</name>
+        <label>getPostSecondForm</label>
+        <locationX>248</locationX>
+        <locationY>4334</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>assignBillingAddress</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPreCheckTari</name>
+        <label>getPreCheckTari</label>
+        <locationX>1143</locationX>
+        <locationY>2006</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CheckTariManaged_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getPreSecondScreen</name>
+        <label>getPreSecondScreen</label>
+        <locationX>248</locationX>
+        <locationY>4094</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>secondScreen</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -482,40 +1460,136 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>912</locationX>
+        <locationY>1478</locationY>
         <inputReference>Get_Process_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Copy_2_of_Salva_Case</name>
-        <label>Copy 2 of Salva Case</label>
-        <locationX>858</locationX>
-        <locationY>3854</locationY>
+        <name>commitPostGeneralitaLogic</name>
+        <label>commitPostGeneralitaLogic</label>
+        <locationX>248</locationX>
+        <locationY>3974</locationY>
+        <connector>
+            <targetReference>getPreSecondScreen</targetReference>
+        </connector>
+        <inputReference>getPostFirstForm</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Salva_Case_0</name>
+        <label>Salva Case</label>
+        <locationX>1397</locationX>
+        <locationY>7574</locationY>
         <inputReference>get_case_dopo_doc</inputReference>
     </recordUpdates>
     <recordUpdates>
-        <name>Copy_3_of_Salva_Case</name>
-        <label>Copy 3 of Salva Case</label>
-        <locationX>1254</locationX>
-        <locationY>2822</locationY>
+        <name>Salva_Case_1</name>
+        <label>Salva Case</label>
+        <locationX>1837</locationX>
+        <locationY>6758</locationY>
         <inputReference>get_case_aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>update_case</name>
         <label>update case</label>
-        <locationX>660</locationX>
-        <locationY>3038</locationY>
+        <locationX>1309</locationX>
+        <locationY>6974</locationY>
         <connector>
             <targetReference>screenDocumentale</targetReference>
         </connector>
         <inputReference>get_case_aggiornato</inputReference>
     </recordUpdates>
+    <recordUpdates>
+        <name>updateAttachments</name>
+        <label>updateAttachments</label>
+        <locationX>1221</locationX>
+        <locationY>6278</locationY>
+        <connector>
+            <targetReference>Annullamento_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>AdditionalAttachments__c</field>
+            <value>
+                <elementReference>allegatiObb.additional</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>MandatoryAttachments__c</field>
+            <value>
+                <elementReference>allegatiObb.required</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updatePostSecondForm</name>
+        <label>updatePostSecondForm</label>
+        <locationX>248</locationX>
+        <locationY>4694</locationY>
+        <connector>
+            <targetReference>Annullamento</targetReference>
+        </connector>
+        <inputReference>getPostSecondForm</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>UpdatePreCompatibilita</name>
+        <label>UpdatePreCompatibilita</label>
+        <locationX>846</locationX>
+        <locationY>878</locationY>
+        <connector>
+            <targetReference>avanti</targetReference>
+        </connector>
+        <inputReference>Get_Process_Case</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updatePreFirstForm</name>
+        <label>updatePreFirstForm</label>
+        <locationX>272</locationX>
+        <locationY>2486</locationY>
+        <connector>
+            <targetReference>Campi_input_operatore</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>DeclarationDate__c</field>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>RequestSource__c</field>
+            <value>
+                <stringValue>Da contribuente</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>SubscriptionPlace__c</field>
+            <value>
+                <elementReference>Get_Process_Case.Account.BillingCity</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
     <runInMode>DefaultMode</runInMode>
     <screens>
         <name>Campi_input_operatore</name>
         <label>Campi input operatore</label>
-        <locationX>545</locationX>
-        <locationY>1526</locationY>
+        <locationX>184</locationX>
+        <locationY>2702</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -607,13 +1681,13 @@
     <screens>
         <name>Inserimento_allegato</name>
         <label>Inserimento allegato</label>
-        <locationX>957</locationX>
-        <locationY>2342</locationY>
+        <locationX>1221</locationX>
+        <locationY>6158</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>get_case_aggiornato</targetReference>
+            <targetReference>updateAttachments</targetReference>
         </connector>
         <fields>
             <name>allegatiObb</name>
@@ -634,7 +1708,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Get_Process_Case.Id</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
@@ -678,7 +1752,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>Get_Process_Case.Id</elementReference>
+                    <elementReference>InputCase</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -698,40 +1772,24 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
-        <name>Screen_avviso_anno_prossimo</name>
-        <label>Screen avviso anno prossimo</label>
-        <locationX>825</locationX>
-        <locationY>2126</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>false</allowPause>
-        <backButtonLabel>Indietro</backButtonLabel>
-        <connector>
-            <targetReference>Inserimento_allegato</targetReference>
-        </connector>
-        <fields>
-            <name>testo_avviso</name>
-            <fieldText>&lt;p&gt;&lt;i style=&quot;color: rgb(199, 7, 20); font-family: -apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Oxygen, Ubuntu, &amp;quot;Fira Sans&amp;quot;, &amp;quot;Droid Sans&amp;quot;, &amp;quot;Helvetica Neue&amp;quot;, sans-serif; font-size: 14px; background-color: rgba(235, 236, 240, 0.592);&quot;&gt;&lt;u&gt;Attenzione: avvisare il cliente che la rata unica sarà attiva dall’anno prossimo.&lt;/u&gt;&lt;/i&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
-        <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>screenDocumentale</name>
         <label>screenDocumentale</label>
-        <locationX>660</locationX>
-        <locationY>3158</locationY>
+        <locationX>1309</locationX>
+        <locationY>7094</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
             <targetReference>quale_step</targetReference>
         </connector>
+        <fields>
+            <name>headerDocumentale</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Process_Case.Type}&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
         <fields>
             <name>componentDocumentale</name>
             <extensionName>c:hdtDocumentSignatureManagerFlow</extensionName>
@@ -751,7 +1809,7 @@
             <inputParameters>
                 <name>isAmbiente</name>
                 <value>
-                    <booleanValue>true</booleanValue>
+                    <booleanValue>false</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -783,23 +1841,302 @@
             <storeOutputAutomatically>true</storeOutputAutomatically>
         </fields>
         <showFooter>false</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>secondScreen</name>
+        <label>secondScreen</label>
+        <locationX>248</locationX>
+        <locationY>4214</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>getPostSecondForm</targetReference>
+        </connector>
+        <fields>
+            <name>headerSecondScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Process_Case.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Compilare manualmente i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>secondFrom</name>
+            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <stringValue>Second Pagamento Unico Annuale TARI</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>density</name>
+                <value>
+                    <stringValue>Comfy</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>draftButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelDraftButton</name>
+                <value>
+                    <stringValue>Salva In Bozza</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Dati di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextStep</name>
+                <value>
+                    <stringValue>NEXT</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>objectName</name>
+                <value>
+                    <stringValue>Case</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>previousButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordType</name>
+                <value>
+                    <elementReference>Get_Process_Case.RecordTypeId</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>saveButton</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>showReadOnly</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>headerIndirizzo</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); font-size: 16px; color: rgb(68, 68, 68);&quot;&gt;Indirizzo residenza/sede legale/recapito&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>cbIndirizzi</name>
+            <extensionName>c:hdtTargetObjectAddressForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelCase</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>hideNavigationButtons</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>interviewId</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>theCase</name>
+                <value>
+                    <elementReference>getPreSecondScreen</elementReference>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <fields>
+            <name>hdtFlowNavButtons</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isCancel</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isDraft</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>isPrevious</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>recordId</name>
+                <value>
+                    <elementReference>InputCase</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>sessionid</name>
+                <value>
+                    <elementReference>$Flow.InterviewGuid</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>disabledNavigationEvent</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>showMessage</name>
+        <label>showMessage</label>
+        <locationX>693</locationX>
+        <locationY>5702</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>View_annualit</targetReference>
+        </connector>
+        <fields>
+            <name>messageToast</name>
+            <extensionName>c:hdtShowToastForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isBlocking</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <elementReference>calcAnnualita.message</elementReference>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>sticky</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Attenzione!</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>warning</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
     </screens>
     <screens>
         <name>View_annualit</name>
         <label>View annualità</label>
-        <locationX>957</locationX>
-        <locationY>1886</locationY>
+        <locationX>825</locationX>
+        <locationY>5918</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <backButtonLabel>Indietro</backButtonLabel>
         <connector>
-            <targetReference>Avviso_anno_prossimo</targetReference>
+            <targetReference>Annullamento_0</targetReference>
         </connector>
         <fields>
+            <name>headerAnnualityScreen</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px;&quot;&gt;Processo di {!Get_Process_Case.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Verificare i dati sottostanti&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>Annuity</name>
-            <fieldText>&lt;p&gt;Data limite: &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!calcAnnualita.limitDate}&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Annualità: {!calcAnnualita.annuality}&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Data limite: &lt;/strong&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;{!calcAnnualita.limitDate}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255); font-size: 16px;&quot;&gt;Data dichiarazione: {!getPostSecondForm.DeclarationDate__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;font-size: 16px;&quot;&gt;Annualità: {!calcAnnualita.annuality}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -815,7 +2152,7 @@
             <inputParameters>
                 <name>isDraft</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -854,10 +2191,10 @@
         </fields>
         <nextOrFinishButtonLabel>Avanti</nextOrFinishButtonLabel>
         <showFooter>false</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>419</locationX>
+        <locationX>1017</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Process_Case</targetReference>
@@ -865,76 +2202,76 @@
     </start>
     <status>Active</status>
     <subflows>
-        <name>annulla_processo</name>
-        <label>annulla processo</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
-        <flowName>HDT_FL_GestioneAnnullamento</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>Get_Process_Case.Id</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ProcessType</name>
-            <value>
-                <stringValue>Annullamento prestazione</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
-        <name>annulla_processo_0</name>
-        <label>annulla processo</label>
-        <locationX>132</locationX>
-        <locationY>1766</locationY>
-        <flowName>HDT_FL_GestioneAnnullamento</flowName>
-        <inputAssignments>
-            <name>InputCase</name>
-            <value>
-                <elementReference>caseId</elementReference>
-            </value>
-        </inputAssignments>
-        <inputAssignments>
-            <name>ProcessType</name>
-            <value>
-                <stringValue>Annullamento prestazione</stringValue>
-            </value>
-        </inputAssignments>
-    </subflows>
-    <subflows>
         <name>Arricchimento_Dati</name>
         <label>Arricchimento Dati</label>
-        <locationX>314</locationX>
-        <locationY>878</locationY>
+        <locationX>1176</locationX>
+        <locationY>1358</locationY>
         <connector>
-            <targetReference>Campi_input_operatore</targetReference>
+            <targetReference>getPreCheckTari</targetReference>
         </connector>
         <flowName>HDT_FL_DataEnrichmentPostSales</flowName>
         <inputAssignments>
             <name>ContractId</name>
             <value>
-                <elementReference>Selezione_fornitura.Contract</elementReference>
+                <elementReference>Contract</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>Get_Process_Case.Id</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>ServicePointId</name>
             <value>
-                <elementReference>Selezione_fornitura.ServicePointId</elementReference>
+                <elementReference>ServicePointId</elementReference>
             </value>
         </inputAssignments>
     </subflows>
     <subflows>
+        <name>CheckTariManaged_0</name>
+        <label>CheckTariManaged</label>
+        <locationX>1143</locationX>
+        <locationY>2126</locationY>
+        <connector>
+            <targetReference>Gestito</targetReference>
+        </connector>
+        <flowName>HDT_FL_CheckTariManaged</flowName>
+        <inputAssignments>
+            <name>city</name>
+            <value>
+                <elementReference>getPreCheckTari.SupplyCity__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>companyOwner</name>
+        </inputAssignments>
+        <inputAssignments>
+            <name>declarationDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>effectiveDate</name>
+            <value>
+                <elementReference>$Flow.CurrentDate</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isBlocking</name>
+            <value>
+                <booleanValue>false</booleanValue>
+            </value>
+        </inputAssignments>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </subflows>
+    <subflows>
         <name>Compatibilit</name>
         <label>Compatibilità</label>
-        <locationX>446</locationX>
-        <locationY>638</locationY>
+        <locationX>1044</locationX>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>Is_Compatibile</targetReference>
         </connector>
@@ -942,37 +2279,52 @@
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>Get_Process_Case.Id</elementReference>
+                <elementReference>InputCase</elementReference>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>IsCompatibile</assignToReference>
+            <name>IsCompatible</name>
+        </outputAssignments>
     </subflows>
     <subflows>
         <name>Copy_1_of_annulla_processo</name>
         <label>annulla processo</label>
-        <locationX>462</locationX>
-        <locationY>3398</locationY>
+        <locationX>1143</locationX>
+        <locationY>8390</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
             <value>
-                <elementReference>caseId</elementReference>
+                <elementReference>InputCase</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>isCheckOwnerOk</name>
+            <value>
+                <booleanValue>true</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>ProcessType</name>
             <value>
-                <stringValue>Annullamento prestazione</stringValue>
+                <stringValue>Annullamento doppi pagamenti tari</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <name>sObjectRecordToCancell</name>
+            <value>
+                <stringValue>Case</stringValue>
             </value>
         </inputAssignments>
     </subflows>
     <subflows>
         <name>Selezione_fornitura</name>
         <label>Selezione fornitura</label>
-        <locationX>248</locationX>
-        <locationY>398</locationY>
+        <locationX>846</locationX>
+        <locationY>518</locationY>
         <connector>
-            <targetReference>avanti</targetReference>
+            <targetReference>AssignFieldsAfterSupplySelection</targetReference>
         </connector>
         <flowName>HDT_FL_SupplySelection</flowName>
         <inputAssignments>
@@ -993,14 +2345,93 @@
                 <stringValue>Fornitura</stringValue>
             </value>
         </inputAssignments>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
+        <outputAssignments>
+            <assignToReference>cancelCase</assignToReference>
+            <name>cancelCase</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Commodity</assignToReference>
+            <name>Commodity</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>Contract</assignToReference>
+            <name>Contract</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServicePointId</assignToReference>
+            <name>ServicePointId</name>
+        </outputAssignments>
+        <outputAssignments>
+            <assignToReference>ServiceRequestId</assignToReference>
+            <name>ServiceRequestId</name>
+        </outputAssignments>
     </subflows>
     <variables>
+        <name>cancelCase</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Commodity</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>Contract</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <description>Id of the process Case</description>
-        <name>caseId</name>
+        <name>InputCase</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
         <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IsCompatibile</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ResumeFromDraft</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
+    <variables>
+        <name>ServicePointId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>ServiceRequestId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>tempCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
     </variables>
 </Flow>
