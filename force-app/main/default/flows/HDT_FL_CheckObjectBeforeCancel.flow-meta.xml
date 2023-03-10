@@ -494,7 +494,7 @@ OR(
 	AND(
 		{!processType}!=&quot;Ripensamento&quot;,
 		OR(
-			{!order.NotCancellable__c},
+			AND({!order.NotCancellable__c},NOT({!isDiscardActivity})),
 			AND(
 				{!order.FlyingRequest__c},
 				NOT({!$Permission.HDT_CP_AnnullamentoPraticheInVolo})
