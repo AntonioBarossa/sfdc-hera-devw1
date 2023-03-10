@@ -342,15 +342,13 @@ import * as rateCategories from './hdtRateCategories.js';
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCohabitantButton: false,
-                readingButton:true,
-                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
-                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
+                readingButton: !(this.typeVisibility('acqua') && this.order.ServicePoint__r.MeterStatus__c === 'Sospeso'),
+                processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
                     new fieldData('','VoltureType__c',this.typeVisibility('both'),true,false,'','',function(event){this.updateContractExpenses();}),
                     new fieldData('','Subprocess__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','EffectiveDate__c',this.typeVisibility('both'),false,false,'',''),
                     new fieldData('','SignedDate__c',this.order.ParentOrder__r.SignedDate__c != null,true,true,'',this.order.ParentOrder__r.SignedDate__c),
-                    //new fieldData('','RetroactiveDate__c',this.typeVisibility('acqua') && this.order.Volture__c === 'Retroattiva' ,true,true,'',''),
                     new fieldData('','SendRequestDate__c', this.typeVisibility('acqua'), false, this.typeVisibility('acqua'), '',''),
                     new fieldData('','NotRegisteredMeterCase__c',this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,false,'',''),
                     new fieldData('','MaxRequiredPotential__c',this.typeVisibility('gas'),this.order.RecordType.DeveloperName === 'HDT_RT_Voltura',false,'',''),
