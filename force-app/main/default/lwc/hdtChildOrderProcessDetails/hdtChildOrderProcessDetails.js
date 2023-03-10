@@ -741,10 +741,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     this.dispatchEvent(toastErrorMessage);
                     return;
                 }
+                // Per la voltura retroattiva acqua necessario inserire l'autolettura
                 let date = new Date();
                 let today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
                 let effectiveDate = new Date(this.template.querySelector("[data-id='EffectiveDate__c']").value);
                 if( this.typeVisibility('acqua') &&
+                    this.order.ServicePoint__r.MeterStatus__c !== 'Sospeso' && // eccetto per punto moroso
                     this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' &&
                     ( this.order.Subprocess__c == 'Retroattiva' || effectiveDate < today ) &&
                     this.availableSteps.find(element => element.step === nextSectionStep).label === 'Fatturazione' ) //check next section
@@ -1360,7 +1362,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Codice Istat','SupplyCityCode__c', this.typeVisibility('both'), false, true, '','')
                 ]
             },
-            {
+            /* {
                 step: '',
                 label: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale' ? 'Indirizzo di residenza' : 'Indirizzo sede legale',
                 name: 'indirizzoResidenzaOsedeLegale',
@@ -1422,8 +1424,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         'processVisibility': ''
                     }
                 ]
-            },
-            {
+            }, */
+            /* {
                 step: '',
                 label: 'Fatturazione elettronica',
                 name: 'fatturazioneElettronicaClienteNonResidenziale',
@@ -1466,8 +1468,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, true, false, '')
 
                 ]
-            },
-            {
+            }, */
+            /* {
                 step: 6,
                 label: 'Indirizzo di attivazione',
                 name: 'indirizzodiAttivazione',
@@ -1517,7 +1519,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('CAP', 'BillingPostalCode__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('Codice ISTAT', 'BillingCityCode__c',this.typeVisibility('both'),false,true,'','')
                 ]
-            },
+            }, */
             {
                 step: 9,
                 label: 'Referente Cliente Finale/Anagrafica',
@@ -1551,7 +1553,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Codice Ateco', 'AtecoCode__c',this.typeVisibility('both'),false,false,true,'')
                 ]
             },
-            {
+            /* {
                 step: 11,
                 label:'Iva e accise',
                 name: 'ivaAccise',
@@ -1572,7 +1574,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Aliquota Accise','ExciseRate__c',this.typeVisibility('ele'),false,true,this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn',''),
                     new fieldData('Addizionale Regionale', 'RegionalAdditional__c',this.typeVisibility('ele'),false,true,this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn','')
                 ]
-            },
+            }, */
             {
                 step: '',
                 label: 'Metodo Firma e Canale Invio',
@@ -1586,7 +1588,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Data Firma','SignedDate__c', this.typeVisibility('both'),false, true, '', this.order.ParentOrder__r.SignedDate__c)
                 ]
             },  
-            {
+            /* {
                 step: '',
                 label: 'Metodo pagamento',
                 name: 'metodoPagamento',
@@ -1613,7 +1615,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('Cognome Intestario c/c','BankAccountSignatoryLastName__c',this.typeVisibility('both'), false, false, '',''),
                     new fieldData('Modalità di Fatturazione VAS','VASBillingMode__c',this.typeVisibility('both'), false, true, '','')
                 ]
-            },
+            }, */
             {
                 step: 10,
                 label: 'Date ordine',
