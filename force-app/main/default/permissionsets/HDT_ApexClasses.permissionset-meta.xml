@@ -241,6 +241,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_BA_DeltaSelfReadingManagement</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_BA_Dependencies</apexClass>
         <enabled>true</enabled>
     </classAccesses>
