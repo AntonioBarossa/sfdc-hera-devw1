@@ -14,12 +14,12 @@
             <value>
                 <fullName>BAND_DISCOUNT</fullName>
                 <default>false</default>
-                <label>BAND DISCOUNT</label>
+                <label>BAND_DISCOUNT</label>
             </value>
             <value>
                 <fullName>SPECIAL_DAY</fullName>
                 <default>false</default>
-                <label>SPECIAL DAY</label>
+                <label>SPECIAL_DAY</label>
             </value>
             <value>
                 <fullName>PUN</fullName>
