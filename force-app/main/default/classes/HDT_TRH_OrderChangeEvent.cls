@@ -6,6 +6,7 @@ public with sharing class HDT_TRH_OrderChangeEvent {
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
         Set<Id> deletedRecords = new Set<Id>();
+        Set<String> gapEvents = HDT_UTL_SlaManagement.getGapEventSet();
 
         try{
             List<String> filterFields;
@@ -32,6 +33,11 @@ public with sharing class HDT_TRH_OrderChangeEvent {
 
                 if(header.changeType.equalsIgnoreCase('DELETE')){
                     deletedRecords.addAll(eventIds);
+                    continue;
+                }
+
+                if(gapEvents.contains(header.changeType)){
+                    // todo - handle gap events
                     continue;
                 }
 

@@ -7,6 +7,7 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
 
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
         Set<Id> deletedRecords = new Set<Id>();
+        Set<String> gapEvents = HDT_UTL_SlaManagement.getGapEventSet();
 
         try{
             List<String> filterFields;
@@ -28,6 +29,11 @@ public inherited sharing class HDT_TRH_CaseChangeEvent {
 
                 if(header.changeType.equalsIgnoreCase('UNDELETE')){
                     // UNDELETE action not managed
+                    continue;
+                }
+
+                if(gapEvents.contains(header.changeType)){
+                    // todo - handle gap events
                     continue;
                 }
 

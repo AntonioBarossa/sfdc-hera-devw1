@@ -53,6 +53,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
+    public static Set<String> getGapEventSet(){
+        return new Set<String>{'GAP_CREATE', 'GAP_UPDATE', 'GAP_DELETE', 'GAP_UNDELETE', 'GAP_OVERFLOW'};
+    }
+
     public void setChangedObjList(Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap){
         this.wrpCaseList = wrpEventObjMap.values();
         recordIdList = wrpEventObjMap.keySet();

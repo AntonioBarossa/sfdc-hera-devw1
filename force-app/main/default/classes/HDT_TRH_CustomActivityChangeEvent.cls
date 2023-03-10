@@ -8,6 +8,7 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
         Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpObjMap = new Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event>();
         Map<Id, Id> activityIdsMap = new Map<Id, Id>();
         Map<Id, wrts_prcgvr__Activity__c> activityMap = new Map<Id, wrts_prcgvr__Activity__c>();
+        Set<String> gapEvents = HDT_UTL_SlaManagement.getGapEventSet();
         List<String> objFields = new List<String>();
         objFields.add('ActivityStartTime__c');
         objFields.add('ActivityEndTime__c');
@@ -29,6 +30,12 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
                     //deletedRecords.addAll(eventIds);
                     continue;
                 }
+
+                if(gapEvents.contains(header.changeType)){
+                    // todo - handle gap events
+                    continue;
+                }
+
                 activityIds.addAll(header.getRecordIds());
             }
 
@@ -69,6 +76,11 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
 
                 if(eventHeader.changeType.equalsIgnoreCase('DELETE')){
                     //deletedRecords.addAll(eventIds);
+                    continue;
+                }
+
+                if(gapEvents.contains(header.changeType)){
+                    // todo - handle gap events
                     continue;
                 }
 
