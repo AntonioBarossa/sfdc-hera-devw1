@@ -1,8 +1,8 @@
 public with sharing class HDT_UTL_BillingProfile {
-    public static Map<Id,Account> getSubscriberData(Map<Id,SObject> newRecordsMap){
+    public static Map<Id,Account> getSubscriberData(List<SObject> newRecords){
         HDT_QR_Account accountQr = new HDT_QR_Account();
         List<Id> accountsId = new List<Id>();
-        for (SObject obj : newRecordsMap.values()){
+        for (SObject obj : newRecords){
             BillingProfile__c bp = (BillingProfile__c)obj;
             if ('RID'.equalsIgnoreCase(bp.PaymentMethod__c) 
                 &&'Stesso Sottoscrittore'.equalsIgnoreCase(bp.SignatoryType__c) 
