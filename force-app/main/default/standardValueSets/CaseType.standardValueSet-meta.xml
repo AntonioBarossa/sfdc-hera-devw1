@@ -157,6 +157,11 @@
         <label>Consumo Anomalo Idrico</label>
     </standardValue>
     <standardValue>
+        <fullName>Contenitore Morosità</fullName>
+        <default>false</default>
+        <label>Contenitore Morosità</label>
+    </standardValue>
+    <standardValue>
         <fullName>Contenzioso In Corso</fullName>
         <default>false</default>
         <label>Contenzioso In Corso</label>

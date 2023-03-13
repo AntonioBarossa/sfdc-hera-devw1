@@ -77,7 +77,7 @@
         <name>Set_Response_Fase_Finale</name>
         <label>Set Response</label>
         <locationX>413</locationX>
-        <locationY>1682</locationY>
+        <locationY>2018</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -100,7 +100,7 @@
         <name>Set_Response_Fase_Non_Annullabile</name>
         <label>Set Response</label>
         <locationX>941</locationX>
-        <locationY>1682</locationY>
+        <locationY>2018</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -120,7 +120,7 @@
         <name>Set_Response_InCorso</name>
         <label>Set Response</label>
         <locationX>677</locationX>
-        <locationY>1682</locationY>
+        <locationY>2018</locationY>
         <assignmentItems>
             <assignToReference>stopAnnullamento</assignToReference>
             <operator>Assign</operator>
@@ -143,7 +143,7 @@
         <name>Check_Final_Phase</name>
         <label>Check Final Phase</label>
         <locationX>809</locationX>
-        <locationY>1562</locationY>
+        <locationY>1898</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Fase_Finale</name>
@@ -190,7 +190,7 @@
         </rules>
         <rules>
             <name>Processo_Annullamento_in_corso</name>
-            <conditionLogic>or</conditionLogic>
+            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>phase</leftValueReference>
                 <operator>Contains</operator>
@@ -203,6 +203,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Ripensamento -</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>isDiscardActivity</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -276,7 +283,7 @@
         <locationX>798</locationX>
         <locationY>638</locationY>
         <defaultConnector>
-            <targetReference>Check_Final_Phase</targetReference>
+            <targetReference>Verifica_Attivit</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>ok</defaultConnectorLabel>
         <rules>
@@ -301,7 +308,7 @@
         <locationX>952</locationX>
         <locationY>398</locationY>
         <defaultConnector>
-            <targetReference>Check_Final_Phase</targetReference>
+            <targetReference>Verifica_Attivit</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>no check</defaultConnectorLabel>
         <rules>
@@ -333,7 +340,7 @@
         <locationX>336</locationX>
         <locationY>1190</locationY>
         <defaultConnector>
-            <targetReference>Check_Final_Phase</targetReference>
+            <targetReference>Verifica_Attivit</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>no check</defaultConnectorLabel>
         <rules>
@@ -363,7 +370,7 @@
         <name>Gestione_da_Activity</name>
         <label>Gestione da Activity</label>
         <locationX>809</locationX>
-        <locationY>2018</locationY>
+        <locationY>2354</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Si</name>
@@ -414,6 +421,38 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Verifica_Attivit</name>
+        <label>Verifica Attività</label>
+        <locationX>809</locationX>
+        <locationY>1562</locationY>
+        <defaultConnector>
+            <targetReference>Check_Final_Phase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Da_Verificare</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>activityId</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>activityId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DiscardActivity</targetReference>
+            </connector>
+            <label>Da Verificare</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Verify_Record_Type</name>
         <label>Verify Record Type</label>
         <locationX>336</locationX>
@@ -455,7 +494,7 @@ OR(
 	AND(
 		{!processType}!=&quot;Ripensamento&quot;,
 		OR(
-			{!order.NotCancellable__c},
+			AND({!order.NotCancellable__c},NOT({!isDiscardActivity})),
 			AND(
 				{!order.FlyingRequest__c},
 				NOT({!$Permission.HDT_CP_AnnullamentoPraticheInVolo})
@@ -550,6 +589,29 @@ OR(
         </outputAssignments>
     </recordLookups>
     <recordLookups>
+        <name>DiscardActivity</name>
+        <label>DiscardActivity</label>
+        <locationX>677</locationX>
+        <locationY>1682</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Check_Final_Phase</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>activityId</elementReference>
+            </value>
+        </filters>
+        <object>wrts_prcgvr__Activity__c</object>
+        <outputAssignments>
+            <assignToReference>isDiscardActivity</assignToReference>
+            <field>DiscardCancellation__c</field>
+        </outputAssignments>
+    </recordLookups>
+    <recordLookups>
         <name>Get_Child_Orders</name>
         <label>Get Child Orders</label>
         <locationX>182</locationX>
@@ -604,7 +666,7 @@ OR(
         <name>Chiusura_Activity</name>
         <label>Chiusura Activity</label>
         <locationX>677</locationX>
-        <locationY>2138</locationY>
+        <locationY>2474</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
@@ -701,6 +763,16 @@ OR(
         <isOutput>true</isOutput>
         <value>
             <stringValue></stringValue>
+        </value>
+    </variables>
+    <variables>
+        <name>isDiscardActivity</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
         </value>
     </variables>
     <variables>

@@ -290,7 +290,7 @@ public with sharing class HDT_LC_AttachmentManager {
         SObject recordToCheck;
         String nameObject = recordId.getSObjectType().getDescribe().getName();
         if('Case'.equalsIgnoreCase(nameObject)){
-            recordToCheck = [SELECT Id, DeclaredArea__c, RequestSource__c, Type, subprocess__c, Surface__c, servicePoint__r.SupplyType__c
+            recordToCheck = [SELECT Id, DeclaredArea__c, RequestSource__c, ModuleFromContributor__c, Type, subprocess__c, Surface__c, servicePoint__r.SupplyType__c
                                         FROM Case
                                         WHERE Id =: recordId
                                         WITH SECURITY_ENFORCED];

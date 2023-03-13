@@ -10,6 +10,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
     private static HDT_UTL_HelperMethods helperMethods = new HDT_UTL_HelperMethods();
     private static HDT_SRV_Opportunity opportunityService = new HDT_SRV_Opportunity();
     private static HDT_SRV_Quote quoteService = new HDT_SRV_Quote();
+    private static HDT_QR_Quote qrQuote = new HDT_QR_Quote();
     private static HDT_QR_SaleServiceItem saleServiceItemQuery = new HDT_QR_SaleServiceItem();
     private static HDT_QR_ServicePoint servicePointQuery = new HDT_QR_ServicePoint();
     private static HDT_SRV_ServicePoint servicePointSrv = new HDT_SRV_ServicePoint();
@@ -184,7 +185,12 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
                 AccountId = sale.Account__c
             ));
 
-            SBQQ__Quote__c newQuote = new SBQQ__Quote__c(
+            SBQQ__Quote__c newQuote = quoteService.createRecord(new SBQQ__Quote__c(SBQQ__Opportunity2__c = newOpportunity.Id));
+
+            HDT_UTL_QuoteProcess.amendProcessManagementAfter(new List<SBQQ__Quote__c>{newQuote});
+
+            newQuote = new SBQQ__Quote__c(
+                Id = newQuote.Id,
                 Sale__c = sale.Id,
                 SBQQ__Status__c = 'In Review',
                 SBQQ__Opportunity2__c = newOpportunity.Id,
@@ -245,7 +251,7 @@ public inherited sharing class HDT_SRV_SaleServiceItem {
             /** Andrei Necsulescu - 30/08/2021
              *  Moved actual quote creation to account for profile logic
              */
-            quoteService.createRecord(newQuote);
+            quoteService.updateRecord(newQuote);
             newOpportunity.SBQQ__PrimaryQuote__c = newQuote.Id;
             opportunityService.updateRecord(newOpportunity);
             newSaleServiceItem = new SaleServiceItem__c(
