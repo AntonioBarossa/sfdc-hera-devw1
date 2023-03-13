@@ -2537,6 +2537,14 @@
             <fullName>Verifiche documentale</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Verifiche Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Bonus Sociale</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Validation__c</picklist>

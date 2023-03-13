@@ -836,7 +836,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1106</locationX>
-        <locationY>3662</locationY>
+        <locationY>3782</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -859,7 +859,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1370</locationX>
-        <locationY>3422</locationY>
+        <locationY>3542</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
             <operator>Assign</operator>
@@ -1803,7 +1803,7 @@
         <name>OutputCase_0</name>
         <label>OutputCase</label>
         <locationX>1964</locationX>
-        <locationY>4094</locationY>
+        <locationY>4214</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -1920,7 +1920,7 @@
         <name>Modalit_Comunicazione</name>
         <label>Modalità Comunicazione</label>
         <locationX>1238</locationX>
-        <locationY>3302</locationY>
+        <locationY>3422</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1929,45 +1929,10 @@
             <name>Assegnazione</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
-                <operator>NotEqualTo</operator>
+                <leftValueReference>getOpinionTableRequest.Azione__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Costing e Forecasting</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Parere Legale</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Privacy</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Parere Normativo</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Vendita diretta</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</leftValueReference>
-                <operator>NotEqualTo</operator>
-                <rightValue>
-                    <stringValue>Vendita indiretta</stringValue>
+                    <stringValue>Activity</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2346,7 +2311,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Modalit_Comunicazione</targetReference>
+                <targetReference>getOpinionTableRequest</targetReference>
             </connector>
             <label>Reclamo Scritto/Rich. Info</label>
         </rules>
@@ -2550,7 +2515,7 @@
         <name>Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
         <locationX>1106</locationX>
-        <locationY>3542</locationY>
+        <locationY>3662</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0</targetReference>
         </connector>
@@ -2710,7 +2675,7 @@
         <name>Get_Template</name>
         <label>Get Template</label>
         <locationX>1106</locationX>
-        <locationY>3422</locationY>
+        <locationY>3542</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere</targetReference>
@@ -2746,6 +2711,41 @@
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
         <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOpinionTableRequest</name>
+        <label>getOpinionTableRequest</label>
+        <locationX>1238</locationX>
+        <locationY>3302</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Modalit_Comunicazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parere_1_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.FirstLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parere_2_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Company_Owner__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.CompanyOwner__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_OpionionTableRequestSetting__mdt</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
@@ -2836,7 +2836,7 @@
         <name>Aggiorna_Case_Richiesta_Parere</name>
         <label>Aggiorna Case Richiesta Parere</label>
         <locationX>1964</locationX>
-        <locationY>3974</locationY>
+        <locationY>4094</locationY>
         <connector>
             <targetReference>OutputCase_0</targetReference>
         </connector>

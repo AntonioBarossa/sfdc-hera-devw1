@@ -990,6 +990,21 @@
                 <label>SMS Non Inviato</label>
             </value>
             <value>
+                <fullName>Sollecito 1</fullName>
+                <default>false</default>
+                <label>Sollecito 1</label>
+            </value>
+            <value>
+                <fullName>Sollecito 2</fullName>
+                <default>false</default>
+                <label>Sollecito 2</label>
+            </value>
+            <value>
+                <fullName>Sollecito 3</fullName>
+                <default>false</default>
+                <label>Sollecito 3</label>
+            </value>
+            <value>
                 <fullName>Sospesa</fullName>
                 <default>false</default>
                 <label>Sospesa</label>
