@@ -672,6 +672,16 @@
                 <label>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Credit Check_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Credit Check_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Credit Check_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Credit Check_Target</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</label>
