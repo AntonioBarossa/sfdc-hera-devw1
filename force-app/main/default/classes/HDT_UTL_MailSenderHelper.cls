@@ -198,6 +198,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             }else {
                 mailCase.AccountId = recordId;
             }
+            HDT_QR_Account qrAccount = new HDT_QR_Account();
+            Account acc= qrAccount.getRecordById(mailCase.AccountId, 'FirstName__c, LastName__c');
 
             mailCase.RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Informative').getRecordTypeId();
             mailCase.Type = 'Comunicazione con il Gestore';
@@ -206,6 +208,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mailCase.Cluster__c = 'Informative';
             mailCase.ServiceRequestID__c = '';
             mailCase.PhaseStory__c = null;
+            mailCase.FirstName__c = acc.FirstName__c;
+            mailCase.LastName__c = acc.LastName__c;
 
             SObjectType objtype = Schema.getGlobalDescribe().get('Case');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -311,7 +315,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mail.setToAddresses(new String[]{mailStructure.toAddress});
             //mail.setCcAddresses(new String[]{'antonino.fugazzotto@2hy53hdpybee3yyzu1pnnhfr9jl2twp6abttuei499hjwqdemq.3n-8mj0uaa.cs128.case.sandbox.salesforce.com'});
             mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
-            mail.setSubject(subjectString);
+            mail.setSubject(subjectString + '[ thread::' + caseResult.caseId + ':: ]');
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 

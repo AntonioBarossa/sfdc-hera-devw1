@@ -8421,6 +8421,22 @@
             <fullName>Risposta Parere Ricevuta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito 3</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>
