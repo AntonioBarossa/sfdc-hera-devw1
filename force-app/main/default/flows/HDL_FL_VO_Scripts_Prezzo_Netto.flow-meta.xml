@@ -37,7 +37,7 @@
         <name>AssignExistCaldaiaSicura</name>
         <label>AssignExistCaldaiaSicura</label>
         <locationX>1214</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>AssignExistWattProblem</name>
         <label>AssignExistWattProblem</label>
         <locationX>1478</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistWatt</assignToReference>
             <operator>Assign</operator>
@@ -112,26 +112,26 @@
         </connector>
     </assignments>
     <assignments>
-        <name>assignmentCheckForVas</name>
-        <label>assignmentCheckForVas</label>
+        <name>AssignmentAnalisiConsumi</name>
+        <label>AssignmentAnalisiConsumi</label>
         <locationX>1038</locationX>
-        <locationY>5342</locationY>
+        <locationY>5702</locationY>
         <assignmentItems>
-            <assignToReference>CheckForVas</assignToReference>
+            <assignToReference>AnalisiConsumi</assignToReference>
             <operator>Assign</operator>
             <value>
                 <booleanValue>true</booleanValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>LoopOrdiniFigli</targetReference>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssignmenteRicaricaPubblica</name>
         <label>AssignmenteRicaricaPubblica</label>
         <locationX>3062</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistPubblica</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignmentRicaricaPrivata</name>
         <label>AssignmentRicaricaPrivata</label>
         <locationX>3326</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistPrivata</assignToReference>
             <operator>Assign</operator>
@@ -234,22 +234,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>categoryAssign</name>
-        <label>categoryAssign</label>
-        <locationX>950</locationX>
-        <locationY>7238</locationY>
-        <assignmentItems>
-            <assignToReference>categoryVariableAssign</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Servizi_Bundle_Screen</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>ContatoreWallBox</name>
         <label>ContatoreWallBox</label>
         <locationX>1018</locationX>
@@ -279,38 +263,6 @@
         </assignmentItems>
         <connector>
             <targetReference>DecisionForInstallazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ExistAnaConsAssignment</name>
-        <label>ExistAnaConsAssignment</label>
-        <locationX>1082</locationX>
-        <locationY>6902</locationY>
-        <assignmentItems>
-            <assignToReference>ExistAnaCons</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>false</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>categoryAssign</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ExistAnaConsAssignment_0</name>
-        <label>ExistAnaConsAssignment_0</label>
-        <locationX>818</locationX>
-        <locationY>7022</locationY>
-        <assignmentItems>
-            <assignToReference>ExistAnaCons</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>categoryAssign</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -365,7 +317,7 @@
         <name>LedAssignment</name>
         <label>LedAssignment</label>
         <locationX>2270</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistLed</assignToReference>
             <operator>Assign</operator>
@@ -395,7 +347,7 @@
         <name>NoProblemAcquaAssignment</name>
         <label>NoProblemAcquaAssignment</label>
         <locationX>2798</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblmeAcqua</assignToReference>
             <operator>Assign</operator>
@@ -418,7 +370,7 @@
         <name>NoProblemGasAssignment</name>
         <label>NoProblemGasAssignment</label>
         <locationX>2006</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -441,7 +393,7 @@
         <name>NoProblemLuceAssignment</name>
         <label>NoProblemLuceAssignment</label>
         <locationX>1742</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -464,7 +416,7 @@
         <name>ThermoAssignment</name>
         <label>ThermoAssignment</label>
         <locationX>2534</locationX>
-        <locationY>6254</locationY>
+        <locationY>6614</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -494,7 +446,7 @@
         <name>VASPresenti</name>
         <label>VASPresentiAssign</label>
         <locationX>2402</locationX>
-        <locationY>6014</locationY>
+        <locationY>6374</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -512,12 +464,12 @@
         <locationX>710</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>isPromo_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -533,10 +485,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Prezzo Netto Special Web</stringValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -551,12 +503,19 @@
         <locationX>270</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>isPromo_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus_EE_OUT_FAM</name>
             <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prezzo Netto Natura Casa Luce</stringValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -565,17 +524,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Prezzo Netto Natura Casa Luce</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Prezzo Netto Special Web Casa</stringValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -810,35 +762,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Categoria_Cliente_Decision_0</name>
-        <label>Categoria Cliente Decision</label>
-        <locationX>950</locationX>
-        <locationY>7478</locationY>
-        <defaultConnector>
-            <targetReference>Durata_Contratto_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
-        <rules>
-            <name>isFamiglie_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Famiglie</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Durata_Contratto</targetReference>
-            </connector>
-            <label>isFamiglie</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>7814</locationY>
+        <locationY>7694</locationY>
         <defaultConnector>
             <targetReference>ChannelDecisionAziende</targetReference>
         </defaultConnector>
@@ -860,12 +787,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Categoria_Cliente_Decision_1</name>
+        <label>Categoria Cliente Decision</label>
+        <locationX>950</locationX>
+        <locationY>7022</locationY>
+        <defaultConnector>
+            <targetReference>DecisionServiziBuddle_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
+        <rules>
+            <name>isFamiglie_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DecisionServiziBuddle</targetReference>
+            </connector>
+            <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>686</locationX>
-        <locationY>7934</locationY>
+        <locationY>7814</locationY>
         <defaultConnector>
-            <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
+            <targetReference>Durata_Contratto</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Inbound</defaultConnectorLabel>
         <rules>
@@ -879,7 +831,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
+                <targetReference>Durata_Contratto_Out_Fam</targetReference>
             </connector>
             <label>Outbound</label>
         </rules>
@@ -888,7 +840,7 @@
         <name>ChannelDecisionAziende</name>
         <label>ChannelDecisionAziende</label>
         <locationX>1214</locationX>
-        <locationY>7934</locationY>
+        <locationY>7814</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0_0_0_0</targetReference>
         </defaultConnector>
@@ -907,6 +859,31 @@
                 <targetReference>Conferma_Adesione_Screen_0</targetReference>
             </connector>
             <label>Outbound_AZ</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionAnalisiConsumi</name>
+        <label>DecisionAnalisiConsumi</label>
+        <locationX>1170</locationX>
+        <locationY>5582</locationY>
+        <defaultConnector>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumiChildsLoop.CommercialProduct__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Analisi Consumi</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentAnalisiConsumi</targetReference>
+            </connector>
+            <label>Contains</label>
         </rules>
     </decisions>
     <decisions>
@@ -1042,28 +1019,53 @@
         </rules>
     </decisions>
     <decisions>
-        <name>ExistOrderAnaCons</name>
-        <label>ExistOrderAnaCons</label>
-        <locationX>950</locationX>
-        <locationY>6782</locationY>
+        <name>DecisionServiziBuddle</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>730</locationX>
+        <locationY>7142</locationY>
         <defaultConnector>
-            <targetReference>ExistAnaConsAssignment</targetReference>
+            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>ExistOrderAnaCons_1</name>
+            <name>Contains_Analisi_Consumi</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetOrderAnaCons</leftValueReference>
-                <operator>IsNull</operator>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetAnalisiConsumi_0</targetReference>
+                <targetReference>Servizi_Bundle_Screen</targetReference>
             </connector>
-            <label>ExistOrderAnaCons_1</label>
+            <label>Contains Analisi Consumi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionServiziBuddle_0</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>1170</locationX>
+        <locationY>7142</locationY>
+        <defaultConnector>
+            <targetReference>Durata_Contratto_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Analisi_Consumi_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Servizi_Bundle_Screen_0</targetReference>
+            </connector>
+            <label>Contains Analisi Consumi</label>
         </rules>
     </decisions>
     <decisions>
@@ -1077,12 +1079,12 @@
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus_FAM_OUT_GAS_DEC</name>
-            <conditionLogic>(1 OR 5) AND 2 AND (3 OR 4)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Prezzo Netto Natura Casa</stringValue>
+                    <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1096,21 +1098,7 @@
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Bonus Natura</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Prezzo Netto Special Web</stringValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1132,45 +1120,13 @@
             <name>isBonus_IN_GAS_DEC</name>
             <conditionLogic>1 AND (2 OR 3)</conditionLogic>
             <conditions>
-                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Bonus</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Prezzo Netto Special Web</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Condizioni_Economiche_Bonus_GAS_IN</targetReference>
-            </connector>
-            <label>isBonus</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isBonusAZ_IN_EE_0_0</name>
-        <label>isBonus</label>
-        <locationX>2730</locationX>
-        <locationY>2006</locationY>
-        <defaultConnector>
-            <targetReference>Servizio_Decision_0_0_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isBonusAZ_IN_EE_DEC_0_0</name>
-            <conditionLogic>1 AND 2</conditionLogic>
-            <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
@@ -1178,14 +1134,14 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Prezzo Netto Special Web</stringValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Condizioni_Economiche_Bonus_EE_AZ_IN_0</targetReference>
+                <targetReference>Condizioni_Economiche_Bonus_GAS_IN</targetReference>
             </connector>
             <label>isBonus</label>
         </rules>
@@ -1196,12 +1152,12 @@
         <locationX>2510</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isBonus_0_0</name>
-            <conditionLogic>1 AND 2</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -1210,10 +1166,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Prezzo Netto Lavoro Luce</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1228,12 +1191,12 @@
         <locationX>3390</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isBonus_0</name>
-            <conditionLogic>1 AND 2</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -1242,10 +1205,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Prezzo Netto Lavoro Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1260,12 +1230,12 @@
         <locationX>2070</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isBonusOUT_EE</name>
-            <conditionLogic>1 AND 2</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -1274,10 +1244,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Prezzo Netto Lavoro Luce</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1292,12 +1269,12 @@
         <locationX>2950</locationX>
         <locationY>1478</locationY>
         <defaultConnector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>isBonusOUTGas_0</name>
-            <conditionLogic>1 AND 2</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -1306,16 +1283,243 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Prezzo Netto Lavoro Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Bonus_Gas_AZ_OUT</targetReference>
             </connector>
             <label>isBonus</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isPromo_0</name>
+        <label>isPromo</label>
+        <locationX>710</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>GetOrderItems</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_0_0</name>
+            <conditionLogic>1 OR 2 OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promozione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Condizioni_Economiche_Promo_Inb_EE_Fam</targetReference>
+            </connector>
+            <label>isPromo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isPromo_0_0_0</name>
+        <label>isPromo</label>
+        <locationX>270</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>GetOrderItems</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_0_0_0_0</name>
+            <conditionLogic>1 OR 2 OR 3</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promozione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Promo_Out_EE_FAM</targetReference>
+            </connector>
+            <label>isPromo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isPromo_0_0_0_0_0</name>
+        <label>isPromo</label>
+        <locationX>2510</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_AZ_EE_INB</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prezzo Netto Lavoro Luce</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Promo_EE_INB_AZ</targetReference>
+            </connector>
+            <label>isPromo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isPromo_0_0_0_0_0_0</name>
+        <label>isPromo</label>
+        <locationX>3390</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_AZ_INB_GAS</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Promo_GAS_INB_AZ</targetReference>
+            </connector>
+            <label>isPromo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isPromo_0_0_0_0_0_0_0</name>
+        <label>isPromo</label>
+        <locationX>2070</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_AZ_OUT_EE</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prezzo Netto Lavoro Luce</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Promo_EE_OUT_AZ</targetReference>
+            </connector>
+            <label>isPromo</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>isPromo_0_0_0_0_0_0_0_0</name>
+        <label>isPromo</label>
+        <locationX>2950</locationX>
+        <locationY>1814</locationY>
+        <defaultConnector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_AZ_OUT_GAS</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Condizioni_Economiche_Promo_GAS_OUT_AZ</targetReference>
+            </connector>
+            <label>isPromo</label>
         </rules>
     </decisions>
     <decisions>
@@ -1326,15 +1530,15 @@
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_Fam_Gas_Out_DEC</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                <operator>Contains</operator>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Prezzo Netto Natura Casa</stringValue>
+                    <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1349,6 +1553,20 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 100</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1365,15 +1583,22 @@
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+            <conditions>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
+                </rightValue>
+            </conditions>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Promozione</stringValue>
+                    <stringValue>Promo</stringValue>
                 </rightValue>
             </conditions>
             <conditions>
@@ -1384,41 +1609,23 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 100</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Promo_Gas_In_Fam</targetReference>
             </connector>
             <label>isPromo</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>isVas</name>
-        <label>isVas</label>
-        <locationX>1170</locationX>
-        <locationY>5222</locationY>
-        <defaultConnector>
-            <targetReference>LoopOrdiniFigli</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
-        <rules>
-            <name>isVasForChild</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>LoopOrdiniFigli.ProcessType__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>VAS</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>assignmentCheckForVas</targetReference>
-            </connector>
-            <label>isVasForChild</label>
         </rules>
     </decisions>
     <decisions>
@@ -1525,7 +1732,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1720</locationX>
-        <locationY>5894</locationY>
+        <locationY>6254</locationY>
         <defaultConnector>
             <targetReference>VASPresenti</targetReference>
         </defaultConnector>
@@ -1550,7 +1757,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2402</locationX>
-        <locationY>6134</locationY>
+        <locationY>6494</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1691,6 +1898,7 @@
             <label>RicaricaPrivata</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>NomeOffertaCalcolato_Introduzione</name>
         <dataType>String</dataType>
@@ -1727,6 +1935,20 @@
     <interviewLabel>HDL FL VO Scripts - Prezzo Netto {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Scripts - Prezzo Netto</label>
     <loops>
+        <name>AnalisiConsumiChildsLoop</name>
+        <label>AnalisiConsumiChildsLoop</label>
+        <locationX>950</locationX>
+        <locationY>5462</locationY>
+        <collectionReference>getChilds</collectionReference>
+        <iterationOrder>Asc</iterationOrder>
+        <nextValueConnector>
+            <targetReference>DecisionAnalisiConsumi</targetReference>
+        </nextValueConnector>
+        <noMoreValuesConnector>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
+        </noMoreValuesConnector>
+    </loops>
+    <loops>
         <name>Bonus_Loop</name>
         <label>Bonus Loop</label>
         <locationX>930</locationX>
@@ -1741,20 +1963,6 @@
         </noMoreValuesConnector>
     </loops>
     <loops>
-        <name>LoopOrdiniFigli</name>
-        <label>LoopOrdiniFigli</label>
-        <locationX>950</locationX>
-        <locationY>5102</locationY>
-        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>isVas</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>50</locationX>
@@ -1765,7 +1973,7 @@
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>LoopOrdiniFigli</targetReference>
+            <targetReference>getParent</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
@@ -1779,21 +1987,21 @@
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli_0</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>LoopOrdiniFigli</targetReference>
+            <targetReference>getParent</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>950</locationX>
-        <locationY>5654</locationY>
+        <locationY>6014</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>GetOrderAnaCons</targetReference>
+            <targetReference>Categoria_Cliente_Decision_1</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1816,41 +2024,20 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>GetAnalisiConsumi_0</name>
-        <label>GetAnalisiConsumi</label>
-        <locationX>818</locationX>
-        <locationY>6902</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>ExistAnaConsAssignment_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>OrderId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetOrderAnaCons.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>OrderItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetOrderAnaCons</name>
-        <label>GetOrderAnaCons</label>
+        <name>getChilds</name>
+        <label>getChilds</label>
         <locationX>950</locationX>
-        <locationY>6662</locationY>
+        <locationY>5342</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>ExistOrderAnaCons</targetReference>
+            <targetReference>AnalisiConsumiChildsLoop</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>idOrdinePadreInput</elementReference>
+                <elementReference>getParent.Id</elementReference>
             </value>
         </filters>
         <filters>
@@ -1867,7 +2054,7 @@
                 <stringValue>Analisi Consumi</stringValue>
             </value>
         </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
         <object>Order</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
@@ -1892,6 +2079,55 @@
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>getOrderProduct</name>
+        <label>getOrderProduct</label>
+        <locationX>950</locationX>
+        <locationY>5222</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getChilds</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getParent.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getParent</name>
+        <label>getParent</label>
+        <locationX>950</locationX>
+        <locationY>5102</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getOrderProduct</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <screens>
         <name>Bonus_EE_AZ_IN</name>
         <label>Bonus EE AZ IN</label>
@@ -1901,7 +2137,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Copy_1_of_Copy_1_of_Bonus_SS_EE_AZ_IN_0</name>
@@ -1937,7 +2173,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Bonus_EE_OUT_AZ</name>
@@ -1973,7 +2209,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Copy_1_of_Bonus_SS_EE_AZ_IN_0</name>
@@ -2009,7 +2245,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>isBonusAZ_IN_EE_0_0</targetReference>
+            <targetReference>isPromo_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Copy_2_of_Copy_1_of_Bonus_SS_EE_AZ_IN_0</name>
@@ -2058,23 +2294,8 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text4_0_0</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0</name>
-            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 79% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;€/kWh e lo&lt;/span&gt; sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 21% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€/kWh e lo&lt;/span&gt; sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Sono inoltre a suo carico tasse, Iva ed imposte previste dalla legge.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2089,7 +2310,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 80% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo &lt;/span&gt;sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 20% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo &lt;/span&gt;sbilanciamento pari a 0,006 €/kWh, corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2098,21 +2319,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Lavoro Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2_0_3</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 82% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh, corrispettivo di commercializzazione, pari a 125 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 18% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2165,7 +2371,7 @@
         </fields>
         <fields>
             <name>CEG_PrezzoNettoLavoroImolaLuce</name>
-            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’79% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 21% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Sul prezzo sopra definito e con riferimento ai consumi effettivi, le sarà riconosciuto uno sconto del 10% nelle fasce orarie “F2” ed “F3”, oppure, in caso di misuratore elettronico gestito monorario, uno sconto del 5%.&amp;nbsp;&lt;/p&gt;&lt;p&gt;Il prezzo in bolletta, denominato Prezzo Netto, è calcolato come media aritmetica del Prezzo Unico Nazionale rilevato nel mese precedente quello di consumo, per ciascuna delle tre fasce orarie, varierà quindi mensilmente e sarà applicato ai consumi effettivi ed alle perdite di rete.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2180,7 +2386,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text3_0_0_1</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 80% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 20% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0159 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 74% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh e lo sbilanciamento pari a 0,006 €/kWh, il corrispettivo di commercializzazione, pari a 150 €/punto di fornitura/anno, capacità e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 27% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2189,21 +2395,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Lavoro Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text2_0_3_0</name>
-            <fieldText>&lt;p&gt;•	La fornitura prevede un contributo sui consumi effettivi a carico del cliente pari a 0,0139 €/kWh in caso di contatore gestito orario o per fasce orarie.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa l’82% della spesa annua per un cliente con 10 kW di potenza impegnata ed un consumo annuo di 10.000 kWh, escluse Iva ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero il corrispettivo Integrazione Mercato Capacità pari a 0,003 €/kWh, il corrispettivo di commercializzazione, pari a 125 €/punto di fornitura/anno, e dispacciamento, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 18% circa della spesa annua.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2260,38 +2451,13 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text4</name>
-            <fieldText>&lt;p&gt;•	Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF,&amp;nbsp;&lt;/p&gt;&lt;p&gt;e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,115 € al metro cubo.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text5</name>
             <fieldText>&lt;p&gt;•	Il prezzo applicato alla componente energia sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,120 € al metro cubo e in bolletta sarà denominato prezzo netto. Varierà mensilmente, e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Lavoro Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 100% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 0% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 94% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2300,21 +2466,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Lavoro Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>text11</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 96% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 125 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2366,38 +2517,13 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text6</name>
-            <fieldText>&lt;p&gt;•	Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF,&amp;nbsp;e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,115 € al metro cubo.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7</name>
             <fieldText>&lt;p&gt;•	Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF, e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,120 € al metro cubo e in bolletta sarà denominato prezzo netto. Varierà mensilmente, e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Lavoro Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 100% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 0% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 94% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 150 €/punto di fornitura/anno e 0,04 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2406,21 +2532,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Lavoro Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>text11_0</name>
-            <fieldText>&lt;p&gt;&amp;nbsp;•	Il prezzo netto ed il contributo rappresentano circa il 95% della spesa annua per un cliente tipo, con 5.000 metri cubi di consumo annuo, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 125 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 5% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Lavoro Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2456,42 +2567,6 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Condizioni_Economiche_Bonus_EE_AZ_IN_0</name>
-        <label>Condizioni Economiche Bonus EE AZ IN</label>
-        <locationX>2598</locationX>
-        <locationY>2126</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>Servizio_Decision_0_0_0</targetReference>
-        </connector>
-        <fields>
-            <name>Bonus_SS_EE_AZ_IN_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Soluzioni Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta_0.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Lavoro Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
-    <screens>
         <name>Condizioni_Economiche_Bonus_EE_FAM_IN</name>
         <label>Condizioni_Economiche_Bonus_EE_FAM_IN</label>
         <locationX>578</locationX>
@@ -2500,7 +2575,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>isPromo_0</targetReference>
         </connector>
         <fields>
             <name>Bonus_SS_I_FAM_1</name>
@@ -2529,21 +2604,6 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>Bonus_SS_I_FAM_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;BONUS NATURA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -2556,7 +2616,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>GetOrderItems</targetReference>
+            <targetReference>isPromo_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Bonus_Title_OUT_FAM</name>
@@ -2573,7 +2633,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
@@ -2581,28 +2641,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Natura Casa Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_NA_EE_OUT</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Natura&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2633,39 +2671,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Prezzo Netto Natura Casa</stringValue>
+                        <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_NA_Gas_Out_Fam</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;BONUS NATURA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2707,21 +2723,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_SS_GAS_IN_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;BONUS NATURA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Prezzo Netto Special Web Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2818,7 +2819,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo netto ed il contributo rappresentano circa il 76% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 24% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo netto ed il contributo rappresentano circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2891,7 +2892,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 75% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 15% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 65% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 35% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3010,8 +3011,30 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>Condizioni_Economiche_Famiglie_EE_Text4_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	La fornitura prevede un contributo mensile a carico del cliente di 4 €, nei casi di consumo annuo effettivo non superiore ai 2.700 kWh. In caso contrario il contributo mensile sarà di 6 €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>or</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Natura Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Natura Casa Imola Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	La fornitura prevede un contributo mensile a carico del cliente di 4 €, nei casi di consumo annuo effettivo non superiore ai 2.700 kWh. In caso contrario il contributo mensile sarà di 6 €.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 79% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 21% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3084,7 +3107,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 76% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 24% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo netto ed il contributo rappresentano circa il 65% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero sbilanciamento, pari a 0,008 €/kWh, corrispettivo di commercializzazione, pari a 120 €/punto di fornitura/anno, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi e dispacciamento e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 35% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3182,7 +3205,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 100% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 0% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3294,8 +3317,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/p&gt;&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 100% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 0% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text5_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;La fornitura prevede un contributo mensile a carico del cliente di 4,00 €, nei casi di consumo annuo effettivo superiore a 300 metri cubi. In caso contrario il contributo mensile sarà di 2,00 €.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3309,8 +3332,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>text_3_0</name>
-            <fieldText>&lt;p&gt;Il prezzo applicato alla componente energia sarà fino a tutto settembre il prezzo medio mensile del mercato olandese TTF, e da ottobre in poi sarà il prezzo medio mensile del mercato italiano PSV, incrementato di un corrispettivo sui consumi pari a 0,10 € al metro cubo,, e in bolletta sarà denominato prezzo netto. Varierà mensilmente e sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La fornitura prevede un contributo mensile onnicomprensivo a carico del cliente, pari a 120 €/anno. Il prezzo netto ed il contributo rappresentano circa il 100% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente gli oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 0% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
+            <fieldText>&lt;p&gt;•	Il prezzo netto ed il contributo rappresentano circa il 97% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 90 €/punto di fornitura/anno e 0,02 €/Smc e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 3% circa della spesa annua.&lt;/p&gt;&lt;p&gt;•	L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3318,7 +3341,7 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Prezzo Netto Special Web Gas</stringValue>
+                        <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3361,6 +3384,88 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
+        <name>Condizioni_Economiche_Promo_EE_INB_AZ</name>
+        <label>Condizioni Economiche Promo EE INB AZ</label>
+        <locationX>2378</locationX>
+        <locationY>1934</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Title_Promo_EE_INB_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_Hera_EE_INB_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Lavoro Luce</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Promo_EE_OUT_AZ</name>
+        <label>Condizioni Economiche Promo EE OUT AZ</label>
+        <locationX>1938</locationX>
+        <locationY>1934</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Title_Promo_EE_OUT_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Copy_1_of_Promo_Hera_EE_OUT_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Lavoro Luce</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
         <name>Condizioni_Economiche_Promo_Gas_In_Fam</name>
         <label>Condizioni Economiche Promo Gas In Fam</label>
         <locationX>1458</locationX>
@@ -3372,7 +3477,12 @@
             <targetReference>GetOrderItems</targetReference>
         </connector>
         <fields>
-            <name>Promo_Hera_100_Gas_In_Fam</name>
+            <name>Title_Promo_GAS_INB</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_100_Gas_In_Fam</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Promo 100&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
@@ -3384,11 +3494,165 @@
                         <stringValue>100</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_Hera_Gas_In_Fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_50_Gas_In_Fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Promo_GAS_INB_AZ</name>
+        <label>Condizioni Economiche Promo GAS INB AZ</label>
+        <locationX>3258</locationX>
+        <locationY>1934</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_Copy_1_of_Title_Promo_GAS_INB</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_Hera_GAS_In_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Promo_GAS_OUT_AZ</name>
+        <label>Condizioni Economiche Promo GAS OUT AZ</label>
+        <locationX>2818</locationX>
+        <locationY>1934</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Servizio_Decision_0_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Title_Promo_GAS_OUT</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_Hera_GAS_OUT_AZ</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Condizioni_Economiche_Promo_Out_EE_FAM</name>
+        <label>Condizioni Economiche Promo Out EE FAM</label>
+        <locationX>138</locationX>
+        <locationY>1934</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetOrderItems</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_Copy_1_of_Title_Promo_Gas_Out_Fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_50_EE_Out_fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_hera_Out_EE_fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Natura Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3409,12 +3673,12 @@
         </connector>
         <fields>
             <name>Title_Promo_Gas_Out_Fam</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Promo&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Promo_100_Gas_Out_fam</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 100&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 100&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3422,14 +3686,44 @@
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>100</stringValue>
+                        <stringValue>Promo 100</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Natura Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_Hera_Gas_Out_fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Prezzo Netto Natura Casa</stringValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_50_Gas_Out_fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3441,7 +3735,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1082</locationX>
-        <locationY>8054</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4793,13 +5087,18 @@
         <name>Conferma_Adesione_Screen_0_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1346</locationX>
-        <locationY>8054</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
+            <name>Title_Conferma_Adesione_AZ_INB</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>ConfermaAdesioneAziendeText_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce &lt;/strong&gt;e &lt;strong&gt;Gas &lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce &lt;/strong&gt;e &lt;strong&gt;Gas &lt;/strong&gt;che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4821,7 +5120,7 @@
         </fields>
         <fields>
             <name>Title_Only_Luce</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Luce&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4843,7 +5142,7 @@
         </fields>
         <fields>
             <name>Title_Only_Gas</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Conferma adesione&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Mi conferma che vuole aderire alle offerte tramite registrazione di questa telefonata ed accetta quindi le condizioni contrattuali dei servizi &lt;strong&gt;Gas&lt;/strong&gt; che le ho descritto fin qui?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4949,6 +5248,62 @@
             <name>textCA1_0_0</name>
             <fieldText>&lt;p&gt;Le ricordo che il contratto si conclude al termine della telefonata.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se deve inviare un reclamo o richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;La informo che, qualora lei abbia i requisiti previsti per legge e voglia l’applicazione dell’aliquota IVA ridotta al 10%, ci dovrà restituire, debitamente compilata, la modulistica predisposta a tale scopo che troverà all’interno del plico contrattuale che riceverà per posta.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento della nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesContact__r.LastName} abbiamo terminato la registrazione, benvenuto/a in {!HDT_Script_Introduzione.salesCompany}&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Copy_1_of_Condizioni_Economiche_Promo_Inb_EE_Fam</name>
+        <label>Condizioni Economiche Promo INB EE FAM</label>
+        <locationX>578</locationX>
+        <locationY>1934</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>GetOrderItems</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_Title_Promo_Gas_Out_Fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_50_Inb_EE_fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_hera_Inb_EE_fam</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo HERA&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Prezzo Netto Natura Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -6313,12 +6668,12 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>818</locationX>
-        <locationY>7598</locationY>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+            <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
         </connector>
         <fields>
             <name>title_Durata_Contratto</name>
@@ -6402,8 +6757,8 @@
     <screens>
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
-        <locationX>1082</locationX>
-        <locationY>7598</locationY>
+        <locationX>1170</locationX>
+        <locationY>7478</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6417,7 +6772,7 @@
         </fields>
         <fields>
             <name>CaldaiaSicuraText</name>
-            <fieldText>&lt;p&gt;•	Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta mensile con consumi reali. Se ciò non fosse possibile, i consumi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;&lt;span class=&quot;ql-cursor&quot;&gt;﻿&lt;/span&gt;&lt;/strong&gt;•	Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta mensile con consumi reali. Se ciò non fosse possibile, i consumi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6431,13 +6786,28 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>NoProblemText</name>
-            <fieldText>&lt;p&gt;•	Per Hera NoProblem, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <name>NoProblemLuceText</name>
+            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>ExistNoProblem</leftValueReference>
+                    <leftValueReference>ExistNoProblemLuce</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NoProblemGasText</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera NoProblem Gas&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>ExistNoProblemGas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -6447,7 +6817,7 @@
         </fields>
         <fields>
             <name>ContaWattText</name>
-            <fieldText>&lt;p&gt;•	Per Hera ContaWatt, Lei potrà esercitare il diritto di recesso dal servizio nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso dal servizio nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6464,31 +6834,80 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Servizi_Bundle_Screen</name>
-        <label>Servizi Bundle Screen</label>
-        <locationX>950</locationX>
-        <locationY>7358</locationY>
+        <name>Durata_Contratto_Out_Fam</name>
+        <label>Durata Contratto</label>
+        <locationX>554</locationX>
+        <locationY>7934</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0</targetReference>
+            <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
         </connector>
         <fields>
-            <name>SB_Text1</name>
-            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta {!offertaInput}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  {!GetAnalisiConsumi_0.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!GetAnalisiConsumi_0.Surface__c} &lt;/span&gt;metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Copy_1_of_title_Durata_Contratto</name>
+            <fieldText>&lt;h1&gt;&lt;strong style=&quot;font-size: 14px;&quot;&gt;Durata contratto&lt;/strong&gt;&lt;/h1&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>text_isGas_Out_Fam</name>
+            <fieldText>&lt;h1&gt;&lt;span style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;•	In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;Gas  &lt;/strong&gt;&lt;span style=&quot;font-family: var(--lwc-fontFamily,-apple-system, BlinkMacSystemFont, &amp;quot;Segoe UI&amp;quot;, Roboto, Helvetica, Arial, sans-serif, &amp;quot;Apple Color Emoji&amp;quot;, &amp;quot;Segoe UI Emoji&amp;quot;, &amp;quot;Segoe UI Symbol&amp;quot;); font-size: var(--lwc-fontSize3,0.8125rem); color: var(--lwc-colorTextWeak,rgb(68, 68, 68)); background-color: var(--lwc-colorBackgroundInput,rgb(255, 255, 255));&quot;&gt;{!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/h1&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Aziende</stringValue>
+                        <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>ExistAnaCons</leftValueReference>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>text_isELE_Out_Fam</name>
+            <fieldText>&lt;p&gt;•	In riferimento all’offerta &lt;strong&gt;Luce  &lt;/strong&gt;{!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Luce_Gas_True_Out_Fam</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	In riferimento all’offerta &lt;/span&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Luce e Gas&lt;/strong&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;  {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>isEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>isGas</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -6497,34 +6916,33 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>SB_Text3</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi_0.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi_0.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <name>Durata_Contratto_Text1_Out_Fam</name>
+            <fieldText>&lt;p&gt;•	La presente offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno 10 (dieci) del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;•	In mancanza di consumi reali, questi saranno stimati, con successivo conguaglio.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Servizi_Bundle_Screen</name>
+        <label>Servizi Bundle Screen</label>
+        <locationX>598</locationX>
+        <locationY>7262</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>SB_Text3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi Diario dei consumi e Hera Fast check up. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!getOrderProduct.OccupantsNumber__c} e la superficie è {!getOrderProduct.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>SB_Text4</name>
-            <fieldText>&lt;p&gt;•	 la sua abitazione è {!GetAnalisiConsumi_0.DwellingType__c}&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	 la sua abitazione è {!getOrderProduct.DwellingType__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SB_Text5</name>
@@ -6533,17 +6951,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi_0.OwnerAC__c</leftValueReference>
+                    <leftValueReference>getOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Si</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
+                        <stringValue>Sì</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6555,17 +6966,10 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi_0.OwnerAC__c</leftValueReference>
+                    <leftValueReference>getOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6574,38 +6978,30 @@
             <name>SB_Text7</name>
             <fieldText>&lt;p&gt;Il report di Diario dei consumi le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, i servizi, di cui riceverà il dettaglio nel plico contrattuale, non saranno più disponibili.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>SB_Text3_0</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;HERA FAST CHECK UP&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta Luce o dell’offerta Gas, avrà a disposizione, gratuitamente sui Servizi On Line, per tutta la durata della fornitura, il servizio Hera Fast check up.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio, di cui riceverà il dettaglio nel plico contrattuale, non sarà più disponibile.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.PrimaryEmail__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>categoryVariableAssign</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Famiglie</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Servizi_Bundle_Screen_0</name>
+        <label>Servizi Bundle Screen</label>
+        <locationX>1038</locationX>
+        <locationY>7262</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>Durata_Contratto_0</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_SB_Text1</name>
+            <fieldText>&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;DIARIO DEI CONSUMI&lt;/strong&gt;&lt;/p&gt;&lt;p style=&quot;text-align: justify;&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Con la sottoscrizione dell’offerta {!offertaInput}, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, il servizio DIARIO DEI CONSUMI. A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è  {!getOrderProduct.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!getOrderProduct.Surface__c} &lt;/span&gt;metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -6760,7 +7156,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1720</locationX>
-        <locationY>5774</locationY>
+        <locationY>6134</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -6768,19 +7164,19 @@
         <inputAssignments>
             <name>checkForVas</name>
             <value>
-                <elementReference>CheckForVas</elementReference>
+                <booleanValue>false</booleanValue>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>getInputCanale</name>
             <value>
-                <stringValue>Inbound</stringValue>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.ChannelOutput</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
             <name>getInputCategoria</name>
             <value>
-                <stringValue>Famiglie</stringValue>
+                <elementReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -6791,6 +7187,16 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>AnalisiConsumi</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>AnalisiConsumiOrderId</name>
         <dataType>String</dataType>
@@ -6859,16 +7265,6 @@
     </variables>
     <variables>
         <name>ExistLed</name>
-        <dataType>Boolean</dataType>
-        <isCollection>false</isCollection>
-        <isInput>false</isInput>
-        <isOutput>false</isOutput>
-        <value>
-            <booleanValue>false</booleanValue>
-        </value>
-    </variables>
-    <variables>
-        <name>ExistNoProblem</name>
         <dataType>Boolean</dataType>
         <isCollection>false</isCollection>
         <isInput>false</isInput>

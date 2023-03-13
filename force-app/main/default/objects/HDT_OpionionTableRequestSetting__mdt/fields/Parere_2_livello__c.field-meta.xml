@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Parere_2_livello__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Parere 2° livello</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Acqua</fullName>
+                <default>true</default>
+                <label>Acqua</label>
+            </value>
+            <value>
+                <fullName>Ambiente</fullName>
+                <default>false</default>
+                <label>Ambiente</label>
+            </value>
+            <value>
+                <fullName>Bonus Sociale</fullName>
+                <default>false</default>
+                <label>Bonus Sociale</label>
+            </value>
+            <value>
+                <fullName>Canone RAI</fullName>
+                <default>false</default>
+                <label>Canone RAI</label>
+            </value>
+            <value>
+                <fullName>CMOR</fullName>
+                <default>false</default>
+                <label>CMOR</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni vs DL</fullName>
+                <default>false</default>
+                <label>Comunicazioni vs DL</label>
+            </value>
+            <value>
+                <fullName>Comunicazioni vs SII</fullName>
+                <default>false</default>
+                <label>Comunicazioni vs SII</label>
+            </value>
+            <value>
+                <fullName>Condomini e PA</fullName>
+                <default>false</default>
+                <label>Condomini e PA</label>
+            </value>
+            <value>
+                <fullName>Contratti</fullName>
+                <default>false</default>
+                <label>Contratti</label>
+            </value>
+            <value>
+                <fullName>Contratto Salesforce</fullName>
+                <default>false</default>
+                <label>Contratto Salesforce</label>
+            </value>
+            <value>
+                <fullName>Contratto SAP</fullName>
+                <default>false</default>
+                <label>Contratto SAP</label>
+            </value>
+            <value>
+                <fullName>Costing e Forecasting</fullName>
+                <default>false</default>
+                <label>Costing e Forecasting</label>
+            </value>
+            <value>
+                <fullName>Credit Management</fullName>
+                <default>false</default>
+                <label>Credit Management</label>
+            </value>
+            <value>
+                <fullName>Dichiarazione di intento</fullName>
+                <default>false</default>
+                <label>Dichiarazione di intento</label>
+            </value>
+            <value>
+                <fullName>Domiciliazioni</fullName>
+                <default>false</default>
+                <label>Domiciliazioni</label>
+            </value>
+            <value>
+                <fullName>Energia Elettrica</fullName>
+                <default>false</default>
+                <label>Energia Elettrica</label>
+            </value>
+            <value>
+                <fullName>Fattura SD</fullName>
+                <default>false</default>
+                <label>Fattura SD</label>
+            </value>
+            <value>
+                <fullName>Fatturazione Elettronica</fullName>
+                <default>false</default>
+                <label>Fatturazione Elettronica</label>
+            </value>
+            <value>
+                <fullName>Fondo svalutazione crediti</fullName>
+                <default>false</default>
+                <label>Fondo svalutazione crediti</label>
+            </value>
+            <value>
+                <fullName>Gas</fullName>
+                <default>false</default>
+                <label>Gas</label>
+            </value>
+            <value>
+                <fullName>Gestione Call Center</fullName>
+                <default>false</default>
+                <label>Gestione Call Center</label>
+            </value>
+            <value>
+                <fullName>Gestione Sportello</fullName>
+                <default>false</default>
+                <label>Gestione Sportello</label>
+            </value>
+            <value>
+                <fullName>Iva e accise</fullName>
+                <default>false</default>
+                <label>Iva e accise</label>
+            </value>
+            <value>
+                <fullName>Morosità  riattivazione</fullName>
+                <default>false</default>
+                <label>Morosità  riattivazione</label>
+            </value>
+            <value>
+                <fullName>Morosità  sospensione</fullName>
+                <default>false</default>
+                <label>Morosità  sospensione</label>
+            </value>
+            <value>
+                <fullName>Pagamenti e incassi</fullName>
+                <default>false</default>
+                <label>Pagamenti e incassi</label>
+            </value>
+            <value>
+                <fullName>Parere Legale</fullName>
+                <default>false</default>
+                <label>Parere Legale</label>
+            </value>
+            <value>
+                <fullName>Parere Normativo</fullName>
+                <default>false</default>
+                <label>Parere Normativo</label>
+            </value>
+            <value>
+                <fullName>Piani di rientro</fullName>
+                <default>false</default>
+                <label>Piani di rientro</label>
+            </value>
+            <value>
+                <fullName>Post Vendita</fullName>
+                <default>false</default>
+                <label>Post Vendita</label>
+            </value>
+            <value>
+                <fullName>Privacy</fullName>
+                <default>false</default>
+                <label>Privacy</label>
+            </value>
+            <value>
+                <fullName>Rateizzazioni</fullName>
+                <default>false</default>
+                <label>Rateizzazioni</label>
+            </value>
+            <value>
+                <fullName>Recupero diretto</fullName>
+                <default>false</default>
+                <label>Recupero diretto</label>
+            </value>
+            <value>
+                <fullName>Recupero indiretto</fullName>
+                <default>false</default>
+                <label>Recupero indiretto</label>
+            </value>
+            <value>
+                <fullName>Storno iva detraibile</fullName>
+                <default>false</default>
+                <label>Storno iva detraibile</label>
+            </value>
+            <value>
+                <fullName>Supporto HC</fullName>
+                <default>false</default>
+                <label>Supporto HC</label>
+            </value>
+            <value>
+                <fullName>Supporto Pratiche legali</fullName>
+                <default>false</default>
+                <label>Supporto Pratiche legali</label>
+            </value>
+            <value>
+                <fullName>Supporto Responsabile HC</fullName>
+                <default>false</default>
+                <label>Supporto Responsabile HC</label>
+            </value>
+            <value>
+                <fullName>Vendita diretta</fullName>
+                <default>false</default>
+                <label>Vendita diretta</label>
+            </value>
+            <value>
+                <fullName>Vendita indiretta</fullName>
+                <default>false</default>
+                <label>Vendita indiretta</label>
+            </value>
+            <value>
+                <fullName>Verifica fattura Sap</fullName>
+                <default>false</default>
+                <label>Verifica fattura Sap</label>
+            </value>
+            <value>
+                <fullName>Verifiche clienti TOP</fullName>
+                <default>false</default>
+                <label>Verifiche clienti TOP</label>
+            </value>
+            <value>
+                <fullName>Verifiche portali</fullName>
+                <default>false</default>
+                <label>Verifiche portali</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

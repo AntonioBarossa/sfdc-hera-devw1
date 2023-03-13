@@ -392,6 +392,10 @@
             <fullName>G6500</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Elettronico</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     </picklistValues>
     <picklistValues>

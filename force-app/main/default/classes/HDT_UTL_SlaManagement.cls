@@ -10,6 +10,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
     private String recordTypeDevName;
     private Map<Id, Object> sObjectCriteriaMap;
     private List<String> criteriaFields;
+    private Set<Id> deletedRecords;
 
     public HDT_UTL_SlaManagement(String executionObject) {
         System.debug(logginglevel.DEBUG, '>>> HDT_UTL_SlaManagement...');
@@ -52,11 +53,19 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
+    public static Set<String> getGapEventSet(){
+        return new Set<String>{'GAP_CREATE', 'GAP_UPDATE', 'GAP_DELETE', 'GAP_UNDELETE', 'GAP_OVERFLOW'};
+    }
+
     public void setChangedObjList(Map<Id, HDT_WRP_SlaManagement.HDT_WRP_Event> wrpEventObjMap){
         this.wrpCaseList = wrpEventObjMap.values();
         recordIdList = wrpEventObjMap.keySet();
     }
-    
+
+    public void setDeletedRecordIdsList(Set<Id> deletedRecords){
+        this.deletedRecords = deletedRecords;
+    }
+
     public void execute(){
 
         try{
@@ -330,7 +339,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
             System.debug(logginglevel.DEBUG, '>>> startRule.field: ' + singleRule.startRule.field);
             currentTrack = new SlaTracking__c();
             currentTrack.Status__c = 'Aperto';
-            //currentTrack.Case__c = eventObj.recordId;
+            //currentTrack.TrackedId__c = eventObj.recordId;
             currentTrack.SlaAdministration__c = singleRule.adminRuleId;
 
             if(eventObj.activityEvent != null && eventObj.activityEvent.Id != null){
@@ -370,6 +379,28 @@ public inherited sharing class HDT_UTL_SlaManagement {
         } else {
             return null;
         }
+
+    }
+
+    public void deleteEventHandler(Datetime deletedTime){
+        System.debug(logginglevel.DEBUG, '>>> deleteEventHandler');
+
+        //List<SlaTracking__c> trackingRecordsList = new List<SlaTracking__c>();
+        //trackingRecordsList = [
+        //    SELECT Id, EndDateTime__c, Status__c
+        //    FROM SlaTracking__c
+        //    WHERE TrackedId__c IN :deletedRecords
+        //    WITH SECURITY_ENFORCED
+        //];
+        //
+        //if(trackingRecordsList.size() > 0){
+        //    for(SlaTracking__c track : trackingRecordsList){
+        //        track.EndDateTime__c = deletedTime;
+        //        track.Status__c = 'Chiuso';
+        //    }
+        //
+        //    HDT_UTL_DatabaseService.updateSObject(trackingRecordsList);
+        //}
 
     }
 

@@ -360,7 +360,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             Test.startTest();
 
-            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersOld = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                         Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
@@ -368,7 +368,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersOld[0].Phase__c = 'In attesa di quality call';
             update ordersOld;
 
-            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersNew = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order 
