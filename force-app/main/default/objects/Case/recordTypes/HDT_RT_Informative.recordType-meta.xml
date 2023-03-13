@@ -8318,6 +8318,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
@@ -8415,6 +8419,22 @@
         </values>
         <values>
             <fullName>Risposta Parere Ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito 1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito 2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito 3</fullName>
             <default>false</default>
         </values>
     </picklistValues>

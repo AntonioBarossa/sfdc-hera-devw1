@@ -342,7 +342,7 @@ public inherited sharing class HDT_UTL_Case {
             }
             when '13CB-Non domestici in BT'{
 
-                if(powerRequested > 0 && powerRequested <= 1.5) {
+                if(powerRequested >= 0 && powerRequested <= 1.5) {
                     result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
                 } else if(powerRequested > 1.5 && powerRequested <= 3) {
                     result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';

@@ -367,6 +367,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Hera ProtezionePiu Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera ProtezionePiu Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera ProtezionePiu Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
 			<fullName>Hera Ricarica Business</fullName>
 			<default>false</default>
 		</values>
