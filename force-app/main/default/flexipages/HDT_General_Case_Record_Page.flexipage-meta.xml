@@ -942,7 +942,7 @@
                         <valueListItems>
                             <value>Case.HDT_CreateDistributorApointment</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3 OR 4) AND 5</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4)  AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Cluster__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -967,6 +967,16 @@
                                     <leftValue>{!Record.CommodityFormula__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Gas</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completata</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
