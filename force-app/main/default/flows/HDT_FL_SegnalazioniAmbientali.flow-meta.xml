@@ -741,7 +741,7 @@
         </fields>
         <fields>
             <name>WizardLwc</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <extensionName>c:hdtEnviromentalReports</extensionName>
             <fieldType>ComponentInstance</fieldType>
             <inputParameters>
                 <name>cancelButton</name>
