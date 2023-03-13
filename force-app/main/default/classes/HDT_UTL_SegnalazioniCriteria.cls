@@ -25,4 +25,20 @@ global inherited sharing class HDT_UTL_SegnalazioniCriteria implements wrts_prcg
         }
         return result;
     }
+
+    @AuraEnabled(cacheable=true)
+    public static list<HDT_SegnalazioniAmbientali__mdt> getMaterialOptions(String operationGroup, String operationType) {        
+	    if(STRING.isBlank(operationGroup) || STRING.isBlank(operationType)){    return null;   }
+
+        list<HDT_SegnalazioniAmbientali__mdt> pickoptions = [   
+                SELECT Material__c
+                FROM HDT_SegnalazioniAmbientali__mdt 
+                WHERE 
+                OperationGroup__c =:operationGroup
+                AND TypeOperation__c =:operationType 
+                WITH SECURITY_ENFORCED 
+        ];
+
+        return pickoptions;
+    }
 }

@@ -32,6 +32,16 @@
                                             required="true"
                                             onchange={handleChange}>
                                     </lightning-input-field>
+                                    <lightning-combobox 
+                                        required="true"
+                                        disabled={disableMaterial}
+                                        name="Material_Combobox"
+                                        label="Materiale"
+                                        variant="label-inline"
+                                        value={materialValue}
+                                        options={materialOptions}
+                                        onchange={handleMaterialChange}>
+                                    </lightning-combobox>
                                     <lightning-input-field
                                             class="slds-hide"
                                             data-id="Material__c"
