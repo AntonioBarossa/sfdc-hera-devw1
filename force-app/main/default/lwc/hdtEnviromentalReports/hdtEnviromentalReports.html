@@ -1,4 +1,5 @@
 <template>
+    <lightning-button if:true={materialValue} variant="base" label={materialValue} class="slds-m-left_x-small"></lightning-button>
     <template if:true={error}>
         <p> Si è verificato un errore {errorMessage}</p>
     </template>
@@ -36,19 +37,25 @@
                                         required="true"
                                         disabled={disableMaterial}
                                         name="Material_Combobox"
-                                        label="Materiale"
+                                        label="Materiale custom"
                                         variant="label-inline"
                                         value={materialValue}
                                         options={materialOptions}
                                         onchange={handleMaterialChange}>
                                     </lightning-combobox>
                                     <lightning-input-field
-                                            class="slds-hide"
                                             data-id="Material__c"
                                             field-name="Material__c"
                                             required="true"
                                             onchange={handleChange}>
                                     </lightning-input-field>
+                                    <!--<lightning-input-field
+                                            class="slds-hide"
+                                            data-id="Material__c"
+                                            field-name="Material__c"
+                                            required="true"
+                                            onchange={handleChange}>
+                                    </lightning-input-field>-->
                                     <template for:each={firstColumn} for:item="field">
                                         <template if:false={field.Label}>
                                             <lightning-input-field
