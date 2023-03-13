@@ -18,11 +18,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Fiscale</controllingFieldValue>
-            <valueName>Storno iva detraibile</valueName>
+            <valueName>Iva e accise</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Fiscale</controllingFieldValue>
-            <valueName>Iva e accise</valueName>
+            <valueName>Storno iva detraibile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Normativo</controllingFieldValue>
@@ -30,11 +30,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Normativo</controllingFieldValue>
-            <valueName>Privacy</valueName>
+            <valueName>Parere Normativo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Normativo</controllingFieldValue>
-            <valueName>Parere Normativo</valueName>
+            <valueName>Privacy</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto Vendita</controllingFieldValue>
+            <valueName>Condomini e PA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto Vendita</controllingFieldValue>
@@ -43,10 +47,6 @@
         <valueSettings>
             <controllingFieldValue>Supporto Vendita</controllingFieldValue>
             <valueName>Vendita indiretta</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Supporto Vendita</controllingFieldValue>
-            <valueName>Condomini e PA</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Verifica Gestione Front</controllingFieldValue>
@@ -58,11 +58,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>
-            <valueName>Contratto SAP</valueName>
+            <valueName>Contratto Salesforce</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>
-            <valueName>Contratto Salesforce</valueName>
+            <valueName>Contratto SAP</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
@@ -74,23 +74,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
-            <valueName>Ambiente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
             <valueName>Acqua</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
-            <valueName>Supporto Pratiche legali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
-            <valueName>Rateizzazioni</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
-            <valueName>Verifiche clienti TOP</valueName>
+            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
+            <valueName>Ambiente</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
@@ -105,12 +93,28 @@
             <valueName>Piani di rientro</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
+            <valueName>Rateizzazioni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
+            <valueName>Supporto Pratiche legali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
+            <valueName>Verifiche clienti TOP</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Supporto HC</controllingFieldValue>
             <valueName>Contratti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto HC</controllingFieldValue>
             <valueName>Post Vendita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto HC</controllingFieldValue>
+            <valueName>Supporto HC</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto responsabile HC</controllingFieldValue>
@@ -122,6 +126,29 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
+            <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
+            <valueName>CMOR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
+            <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
+            <valueName>Comunicazioni vs DL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
+            <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
+            <valueName>Comunicazioni vs SII</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
+            <valueName>Credit Management</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
+            <valueName>Fondo svalutazione crediti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
             <valueName>Recupero diretto</valueName>
         </valueSettings>
         <valueSettings>
@@ -130,47 +157,16 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
-            <valueName>Fondo svalutazione crediti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Supporto credito Hera SPA</controllingFieldValue>
-            <valueName>Credit Management</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
-            <valueName>Comunicazioni vs DL</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
-            <valueName>Comunicazioni vs SII</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
             <valueName>Verifiche portali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Rapporto con i distributori e SII</controllingFieldValue>
-            <valueName>CMOR</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
-            <valueName>Canone RAI</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
             <valueName>Bonus Sociale</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
-            <valueName>Fatturazione Elettronica</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
-            <valueName>Verifica fattura Sap</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
-            <valueName>Pagamenti e incassi</valueName>
+            <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
+            <valueName>Canone RAI</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
@@ -179,6 +175,18 @@
         <valueSettings>
             <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
             <valueName>Fattura SD</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
+            <valueName>Fatturazione Elettronica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
+            <valueName>Pagamenti e incassi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
+            <valueName>Verifica fattura Sap</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
