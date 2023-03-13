@@ -32,7 +32,8 @@ export default class HdtBillDeliveryChooser extends LightningElement {
         return [
             { label: 'Bolletta per E-mail', value: 'Bolletta per e-mail' },
             { label: 'Cartaceo', value: 'Cartaceo' },
-            { label: 'Invio tramite PEC', value: 'Invio tramite PEC'}
+            { label: 'Invio tramite PEC', value: 'Invio tramite PEC'},
+            { label: 'Fatturazione PA', value: 'Fatturazione PA'}
         ];
     }
     @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
