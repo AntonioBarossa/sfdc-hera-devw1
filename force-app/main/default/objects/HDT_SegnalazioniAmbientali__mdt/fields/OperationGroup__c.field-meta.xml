@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OperationGroup__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Gruppo Intervento</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Altri servizi-IUAS0001</fullName>
+                <default>true</default>
+                <label>Altri servizi-IUAS0001</label>
+            </value>
+            <value>
+                <fullName>Altri servizi-IUAS0002</fullName>
+                <default>false</default>
+                <label>Altri servizi-IUAS0002</label>
+            </value>
+            <value>
+                <fullName>Cimiteriali-IUIN0023</fullName>
+                <default>false</default>
+                <label>Cimiteriali-IUIN0023</label>
+            </value>
+            <value>
+                <fullName>DLGS_116/2020-IUAS0003</fullName>
+                <default>false</default>
+                <label>DLGS_116/2020-IUAS0003</label>
+            </value>
+            <value>
+                <fullName>Pulizia aree pubblic-IUPS0000</fullName>
+                <default>false</default>
+                <label>Pulizia aree pubblic-IUPS0000</label>
+            </value>
+            <value>
+                <fullName>Pulizia aree pubblic-IUPS0002</fullName>
+                <default>false</default>
+                <label>Pulizia aree pubblic-IUPS0002</label>
+            </value>
+            <value>
+                <fullName>Pulizia aree pubblic-IUPS0007</fullName>
+                <default>false</default>
+                <label>Pulizia aree pubblic-IUPS0007</label>
+            </value>
+            <value>
+                <fullName>Raccolta differenziat-IURD0023</fullName>
+                <default>false</default>
+                <label>Raccolta differenziat-IURD0023</label>
+            </value>
+            <value>
+                <fullName>Raccolta indifferenz-IUIN0021</fullName>
+                <default>false</default>
+                <label>Raccolta indifferenz-IUIN0021</label>
+            </value>
+            <value>
+                <fullName>SOLLEC_Amianto/Etern-IURD0026</fullName>
+                <default>false</default>
+                <label>SOLLEC_Amianto/Etern-IURD0026</label>
+            </value>
+            <value>
+                <fullName>SOLLEC_Verde-IURD0043</fullName>
+                <default>false</default>
+                <label>SOLLEC_Verde-IURD0043</label>
+            </value>
+            <value>
+                <fullName>Scarichi abusivi-IUPS0000</fullName>
+                <default>false</default>
+                <label>Scarichi abusivi-IUPS0000</label>
+            </value>
+            <value>
+                <fullName>Servizi a pag.carcass-IUAS0001</fullName>
+                <default>false</default>
+                <label>Servizi a pag.carcass-IUAS0001</label>
+            </value>
+            <value>
+                <fullName>Servizi a pagamento-IUAS0002</fullName>
+                <default>false</default>
+                <label>Servizi a pagamento-IUAS0002</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

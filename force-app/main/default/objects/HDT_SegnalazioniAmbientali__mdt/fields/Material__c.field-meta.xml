@@ -1,0 +1,330 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Materiale</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Carta</fullName>
+                <default>true</default>
+                <label>Carta</label>
+            </value>
+            <value>
+                <fullName>Verde</fullName>
+                <default>false</default>
+                <label>Verde</label>
+            </value>
+            <value>
+                <fullName>Vetro</fullName>
+                <default>false</default>
+                <label>Vetro</label>
+            </value>
+            <value>
+                <fullName>Nessun materiale</fullName>
+                <default>false</default>
+                <label>Nessun materiale</label>
+            </value>
+            <value>
+                <fullName>Macerie</fullName>
+                <default>false</default>
+                <label>Macerie</label>
+            </value>
+            <value>
+                <fullName>Utenza inserita in PAP_CENTRO</fullName>
+                <default>false</default>
+                <label>Utenza inserita in PAP_CENTRO</label>
+            </value>
+            <value>
+                <fullName>Utenza inserita in PAP_ZAI</fullName>
+                <default>false</default>
+                <label>Utenza inserita in PAP_ZAI</label>
+            </value>
+            <value>
+                <fullName>Portico</fullName>
+                <default>false</default>
+                <label>Portico</label>
+            </value>
+            <value>
+                <fullName>Marciapiede</fullName>
+                <default>false</default>
+                <label>Marciapiede</label>
+            </value>
+            <value>
+                <fullName>Pista ciclabile</fullName>
+                <default>false</default>
+                <label>Pista ciclabile</label>
+            </value>
+            <value>
+                <fullName>Multimateriale</fullName>
+                <default>false</default>
+                <label>Multimateriale</label>
+            </value>
+            <value>
+                <fullName>Plastica</fullName>
+                <default>false</default>
+                <label>Plastica</label>
+            </value>
+            <value>
+                <fullName>Plastica/Lattine</fullName>
+                <default>false</default>
+                <label>Plastica/Lattine</label>
+            </value>
+            <value>
+                <fullName>Vetro/Vetro + lattine</fullName>
+                <default>false</default>
+                <label>Vetro/Vetro + lattine</label>
+            </value>
+            <value>
+                <fullName>Carta/Cartone</fullName>
+                <default>false</default>
+                <label>Carta/Cartone</label>
+            </value>
+            <value>
+                <fullName>Pseudoedili</fullName>
+                <default>false</default>
+                <label>Pseudoedili</label>
+            </value>
+            <value>
+                <fullName>Organico</fullName>
+                <default>false</default>
+                <label>Organico</label>
+            </value>
+            <value>
+                <fullName>Pile</fullName>
+                <default>false</default>
+                <label>Pile</label>
+            </value>
+            <value>
+                <fullName>RSU</fullName>
+                <default>false</default>
+                <label>RSU</label>
+            </value>
+            <value>
+                <fullName>cestini</fullName>
+                <default>false</default>
+                <label>cestini</label>
+            </value>
+            <value>
+                <fullName>Lattine</fullName>
+                <default>false</default>
+                <label>Lattine</label>
+            </value>
+            <value>
+                <fullName>Farmaci</fullName>
+                <default>false</default>
+                <label>Farmaci</label>
+            </value>
+            <value>
+                <fullName>Potature</fullName>
+                <default>false</default>
+                <label>Potature</label>
+            </value>
+            <value>
+                <fullName>Ingombranti+Raee</fullName>
+                <default>false</default>
+                <label>Ingombranti+Raee</label>
+            </value>
+            <value>
+                <fullName>Amianto</fullName>
+                <default>false</default>
+                <label>Amianto</label>
+            </value>
+            <value>
+                <fullName>DistanzaCassonDaDomicilioUT</fullName>
+                <default>false</default>
+                <label>DistanzaCassonDaDomicilioUT</label>
+            </value>
+            <value>
+                <fullName>Caduta calcinacci</fullName>
+                <default>false</default>
+                <label>Caduta calcinacci</label>
+            </value>
+            <value>
+                <fullName>Siringhe</fullName>
+                <default>false</default>
+                <label>Siringhe</label>
+            </value>
+            <value>
+                <fullName>Con rimozione</fullName>
+                <default>false</default>
+                <label>Con rimozione</label>
+            </value>
+            <value>
+                <fullName>Olio vegetale/Alimentare</fullName>
+                <default>false</default>
+                <label>Olio vegetale/Alimentare</label>
+            </value>
+            <value>
+                <fullName>RAEE</fullName>
+                <default>false</default>
+                <label>RAEE</label>
+            </value>
+            <value>
+                <fullName>Pannolini/Pannoloni</fullName>
+                <default>false</default>
+                <label>Pannolini/Pannoloni</label>
+            </value>
+            <value>
+                <fullName>Pannolini</fullName>
+                <default>false</default>
+                <label>Pannolini</label>
+            </value>
+            <value>
+                <fullName>Legno_soloAziende</fullName>
+                <default>false</default>
+                <label>Legno_soloAziende</label>
+            </value>
+            <value>
+                <fullName>Fangosi pericolosi</fullName>
+                <default>false</default>
+                <label>Fangosi pericolosi</label>
+            </value>
+            <value>
+                <fullName>Pile/Batterie</fullName>
+                <default>false</default>
+                <label>Pile/Batterie</label>
+            </value>
+            <value>
+                <fullName>Rifiuti Speciali</fullName>
+                <default>false</default>
+                <label>Rifiuti Speciali</label>
+            </value>
+            <value>
+                <fullName>Carcasse animali</fullName>
+                <default>false</default>
+                <label>Carcasse animali</label>
+            </value>
+            <value>
+                <fullName>Abiti usati</fullName>
+                <default>false</default>
+                <label>Abiti usati</label>
+            </value>
+            <value>
+                <fullName>Fangosi non pericolosi</fullName>
+                <default>false</default>
+                <label>Fangosi non pericolosi</label>
+            </value>
+            <value>
+                <fullName>Ingombranti</fullName>
+                <default>false</default>
+                <label>Ingombranti</label>
+            </value>
+            <value>
+                <fullName>LEGNO</fullName>
+                <default>false</default>
+                <label>LEGNO</label>
+            </value>
+            <value>
+                <fullName>RSU_SoloAziende</fullName>
+                <default>false</default>
+                <label>RSU_SoloAziende</label>
+            </value>
+            <value>
+                <fullName>Amianto/Ethernit</fullName>
+                <default>false</default>
+                <label>Amianto/Ethernit</label>
+            </value>
+            <value>
+                <fullName>Sfalci e potature</fullName>
+                <default>false</default>
+                <label>Sfalci e potature</label>
+            </value>
+            <value>
+                <fullName>Toner</fullName>
+                <default>false</default>
+                <label>Toner</label>
+            </value>
+            <value>
+                <fullName>Cartone_soloAziende</fullName>
+                <default>false</default>
+                <label>Cartone_soloAziende</label>
+            </value>
+            <value>
+                <fullName>Organico_soloUTNonDom</fullName>
+                <default>false</default>
+                <label>Organico_soloUTNonDom</label>
+            </value>
+            <value>
+                <fullName>Vetro/Plastica/Lattine</fullName>
+                <default>false</default>
+                <label>Vetro/Plastica/Lattine</label>
+            </value>
+            <value>
+                <fullName>FITOFARMACI</fullName>
+                <default>false</default>
+                <label>FITOFARMACI</label>
+            </value>
+            <value>
+                <fullName>RD</fullName>
+                <default>false</default>
+                <label>RD</label>
+            </value>
+            <value>
+                <fullName>Sede stradale</fullName>
+                <default>false</default>
+                <label>Sede stradale</label>
+            </value>
+            <value>
+                <fullName>ECOSELF (carta e plastica)</fullName>
+                <default>false</default>
+                <label>ECOSELF (carta e plastica)</label>
+            </value>
+            <value>
+                <fullName>Liquidi pericolosi</fullName>
+                <default>false</default>
+                <label>Liquidi pericolosi</label>
+            </value>
+            <value>
+                <fullName>Liquidi non pericolosi</fullName>
+                <default>false</default>
+                <label>Liquidi non pericolosi</label>
+            </value>
+            <value>
+                <fullName>Solidi non pericolosi</fullName>
+                <default>false</default>
+                <label>Solidi non pericolosi</label>
+            </value>
+            <value>
+                <fullName>Solidi pericolosi</fullName>
+                <default>false</default>
+                <label>Solidi pericolosi</label>
+            </value>
+            <value>
+                <fullName>Olio su strada</fullName>
+                <default>false</default>
+                <label>Olio su strada</label>
+            </value>
+            <value>
+                <fullName>Vetri a terra</fullName>
+                <default>false</default>
+                <label>Vetri a terra</label>
+            </value>
+            <value>
+                <fullName>Rimozione/Rovesciamento casson</fullName>
+                <default>false</default>
+                <label>Rimozione/Rovesciamento casson</label>
+            </value>
+            <value>
+                <fullName>Lavaggio/pulizia sede stradale</fullName>
+                <default>false</default>
+                <label>Lavaggio/pulizia sede stradale</label>
+            </value>
+            <value>
+                <fullName>Buche su strada</fullName>
+                <default>false</default>
+                <label>Buche su strada</label>
+            </value>
+            <value>
+                <fullName>Animali d&apos;affezione</fullName>
+                <default>false</default>
+                <label>Animali d&apos;affezione</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

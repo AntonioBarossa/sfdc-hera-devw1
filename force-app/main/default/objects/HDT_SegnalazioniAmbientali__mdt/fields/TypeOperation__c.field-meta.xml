@@ -1,0 +1,360 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TypeOperation__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Tipo Intervento</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Scarichi abusivi</fullName>
+                <default>true</default>
+                <label>Scarichi abusivi</label>
+            </value>
+            <value>
+                <fullName>raccolta porta a porta</fullName>
+                <default>false</default>
+                <label>raccolta porta a porta</label>
+            </value>
+            <value>
+                <fullName>rimozione Cassonetto</fullName>
+                <default>false</default>
+                <label>rimozione Cassonetto</label>
+            </value>
+            <value>
+                <fullName>spostamento contenitore</fullName>
+                <default>false</default>
+                <label>spostamento contenitore</label>
+            </value>
+            <value>
+                <fullName>Servizi a feste e manifestaz</fullName>
+                <default>false</default>
+                <label>Servizi a feste e manifestaz</label>
+            </value>
+            <value>
+                <fullName>Consegna KIT Porta a Porta</fullName>
+                <default>false</default>
+                <label>Consegna KIT Porta a Porta</label>
+            </value>
+            <value>
+                <fullName>Contenitore danneggiato</fullName>
+                <default>false</default>
+                <label>Contenitore danneggiato</label>
+            </value>
+            <value>
+                <fullName>Richiesta sacchi</fullName>
+                <default>false</default>
+                <label>Richiesta sacchi</label>
+            </value>
+            <value>
+                <fullName>Lavaggio contenitore</fullName>
+                <default>false</default>
+                <label>Lavaggio contenitore</label>
+            </value>
+            <value>
+                <fullName>Richiesta compostiera</fullName>
+                <default>false</default>
+                <label>Richiesta compostiera</label>
+            </value>
+            <value>
+                <fullName>Pulizia arenile</fullName>
+                <default>false</default>
+                <label>Pulizia arenile</label>
+            </value>
+            <value>
+                <fullName>Richiesta contenitore</fullName>
+                <default>false</default>
+                <label>Richiesta contenitore</label>
+            </value>
+            <value>
+                <fullName>Calotta_manutenzione</fullName>
+                <default>false</default>
+                <label>Calotta_manutenzione</label>
+            </value>
+            <value>
+                <fullName>Verifica tariffa</fullName>
+                <default>false</default>
+                <label>Verifica tariffa</label>
+            </value>
+            <value>
+                <fullName>Servizi deiezioni canine</fullName>
+                <default>false</default>
+                <label>Servizi deiezioni canine</label>
+            </value>
+            <value>
+                <fullName>svuotamento contenitore</fullName>
+                <default>false</default>
+                <label>svuotamento contenitore</label>
+            </value>
+            <value>
+                <fullName>Pulizia suolo pubblico</fullName>
+                <default>false</default>
+                <label>Pulizia suolo pubblico</label>
+            </value>
+            <value>
+                <fullName>rifiuti attorno al contenitore</fullName>
+                <default>false</default>
+                <label>rifiuti attorno al contenitore</label>
+            </value>
+            <value>
+                <fullName>SE_segnalazione disservizi</fullName>
+                <default>false</default>
+                <label>SE_segnalazione disservizi</label>
+            </value>
+            <value>
+                <fullName>Chiavetta elettronica_consegna</fullName>
+                <default>false</default>
+                <label>Chiavetta elettronica_consegna</label>
+            </value>
+            <value>
+                <fullName>Chiavetta elettronica_manutenz</fullName>
+                <default>false</default>
+                <label>Chiavetta elettronica_manutenz</label>
+            </value>
+            <value>
+                <fullName>Spostamento Cassonetto</fullName>
+                <default>false</default>
+                <label>Spostamento Cassonetto</label>
+            </value>
+            <value>
+                <fullName>Sollec RitiroGratuito senzaApp</fullName>
+                <default>false</default>
+                <label>Sollec RitiroGratuito senzaApp</label>
+            </value>
+            <value>
+                <fullName>Lavaggio Portici</fullName>
+                <default>false</default>
+                <label>Lavaggio Portici</label>
+            </value>
+            <value>
+                <fullName>Consegna/Ritiro cassone</fullName>
+                <default>false</default>
+                <label>Consegna/Ritiro cassone</label>
+            </value>
+            <value>
+                <fullName>Rimozione contenitore</fullName>
+                <default>false</default>
+                <label>Rimozione contenitore</label>
+            </value>
+            <value>
+                <fullName>Rich. verifica sconti racc.dif</fullName>
+                <default>false</default>
+                <label>Rich. verifica sconti racc.dif</label>
+            </value>
+            <value>
+                <fullName>Svuotamento cestini/cestoni</fullName>
+                <default>false</default>
+                <label>Svuotamento cestini/cestoni</label>
+            </value>
+            <value>
+                <fullName>Prelievo carcasse animali</fullName>
+                <default>false</default>
+                <label>Prelievo carcasse animali</label>
+            </value>
+            <value>
+                <fullName>Raccolta siringhe</fullName>
+                <default>false</default>
+                <label>Raccolta siringhe</label>
+            </value>
+            <value>
+                <fullName>Cancellazione scritte murarie</fullName>
+                <default>false</default>
+                <label>Cancellazione scritte murarie</label>
+            </value>
+            <value>
+                <fullName>Richiesta Informazioni</fullName>
+                <default>false</default>
+                <label>Richiesta Informazioni</label>
+            </value>
+            <value>
+                <fullName>Smaltimento Rifiuti Speciali</fullName>
+                <default>false</default>
+                <label>Smaltimento Rifiuti Speciali</label>
+            </value>
+            <value>
+                <fullName>Sostituzione contenitore</fullName>
+                <default>false</default>
+                <label>Sostituzione contenitore</label>
+            </value>
+            <value>
+                <fullName>Sollecito Ritiro a Pagamento</fullName>
+                <default>false</default>
+                <label>Sollecito Ritiro a Pagamento</label>
+            </value>
+            <value>
+                <fullName>Cessazione_RestituzContenitore</fullName>
+                <default>false</default>
+                <label>Cessazione_RestituzContenitore</label>
+            </value>
+            <value>
+                <fullName>Sollec RitiroGratuito conApp</fullName>
+                <default>false</default>
+                <label>Sollec RitiroGratuito conApp</label>
+            </value>
+            <value>
+                <fullName>Pronto Intervento</fullName>
+                <default>false</default>
+                <label>Pronto Intervento</label>
+            </value>
+            <value>
+                <fullName>Ritiro a pagamento</fullName>
+                <default>false</default>
+                <label>Ritiro a pagamento</label>
+            </value>
+            <value>
+                <fullName>RestituzContenitore</fullName>
+                <default>false</default>
+                <label>RestituzContenitore</label>
+            </value>
+            <value>
+                <fullName>Servizio Neve</fullName>
+                <default>false</default>
+                <label>Servizio Neve</label>
+            </value>
+            <value>
+                <fullName>FE - MO - Spazzamento meccaniz</fullName>
+                <default>false</default>
+                <label>FE - MO - Spazzamento meccaniz</label>
+            </value>
+            <value>
+                <fullName>Consegna pannolini</fullName>
+                <default>false</default>
+                <label>Consegna pannolini</label>
+            </value>
+            <value>
+                <fullName>Cimiteriali</fullName>
+                <default>false</default>
+                <label>Cimiteriali</label>
+            </value>
+            <value>
+                <fullName>Segnalaz comportamen cittadini</fullName>
+                <default>false</default>
+                <label>Segnalaz comportamen cittadini</label>
+            </value>
+            <value>
+                <fullName>Noleggio cassoni</fullName>
+                <default>false</default>
+                <label>Noleggio cassoni</label>
+            </value>
+            <value>
+                <fullName>Spazzamento meccaniz</fullName>
+                <default>false</default>
+                <label>Spazzamento meccaniz</label>
+            </value>
+            <value>
+                <fullName>Diserbo</fullName>
+                <default>false</default>
+                <label>Diserbo</label>
+            </value>
+            <value>
+                <fullName>Dismissione compostiera</fullName>
+                <default>false</default>
+                <label>Dismissione compostiera</label>
+            </value>
+            <value>
+                <fullName>Pulizia Caditoie</fullName>
+                <default>false</default>
+                <label>Pulizia Caditoie</label>
+            </value>
+            <value>
+                <fullName>Lavaggio strade</fullName>
+                <default>false</default>
+                <label>Lavaggio strade</label>
+            </value>
+            <value>
+                <fullName>Muschio_Erba murella</fullName>
+                <default>false</default>
+                <label>Muschio_Erba murella</label>
+            </value>
+            <value>
+                <fullName>Servizio Bora</fullName>
+                <default>false</default>
+                <label>Servizio Bora</label>
+            </value>
+            <value>
+                <fullName>Ritiro animali morti</fullName>
+                <default>false</default>
+                <label>Ritiro animali morti</label>
+            </value>
+            <value>
+                <fullName>Rimozione Contenitore PAP</fullName>
+                <default>false</default>
+                <label>Rimozione Contenitore PAP</label>
+            </value>
+            <value>
+                <fullName>AperturaElettronicaNonFunziona</fullName>
+                <default>false</default>
+                <label>AperturaElettronicaNonFunziona</label>
+            </value>
+            <value>
+                <fullName>GuastoCheimpedisceConferimento</fullName>
+                <default>false</default>
+                <label>GuastoCheimpedisceConferimento</label>
+            </value>
+            <value>
+                <fullName>Segnalazione su CDR</fullName>
+                <default>false</default>
+                <label>Segnalazione su CDR</label>
+            </value>
+            <value>
+                <fullName>RichiestaContenitAggiuntivoPAP</fullName>
+                <default>false</default>
+                <label>RichiestaContenitAggiuntivoPAP</label>
+            </value>
+            <value>
+                <fullName>Odori Mezzi/Dotazione/Impianti</fullName>
+                <default>false</default>
+                <label>Odori Mezzi/Dotazione/Impianti</label>
+            </value>
+            <value>
+                <fullName>Rumori di Mezzi/Impianti</fullName>
+                <default>false</default>
+                <label>Rumori di Mezzi/Impianti</label>
+            </value>
+            <value>
+                <fullName>Pulizia Giardini</fullName>
+                <default>false</default>
+                <label>Pulizia Giardini</label>
+            </value>
+            <value>
+                <fullName>Manutenzione contenitore</fullName>
+                <default>false</default>
+                <label>Manutenzione contenitore</label>
+            </value>
+            <value>
+                <fullName>Pseudoedili</fullName>
+                <default>false</default>
+                <label>Pseudoedili</label>
+            </value>
+            <value>
+                <fullName>Manutenzione Cestini</fullName>
+                <default>false</default>
+                <label>Manutenzione Cestini</label>
+            </value>
+            <value>
+                <fullName>CONSEGNA/RITIRO TUTTI I CONTEN</fullName>
+                <default>false</default>
+                <label>CONSEGNA/RITIRO TUTTI I CONTEN</label>
+            </value>
+            <value>
+                <fullName>Manutenzione contenitore PAP</fullName>
+                <default>false</default>
+                <label>Manutenzione contenitore PAP</label>
+            </value>
+            <value>
+                <fullName>Consegna KIT Pannolini ECO</fullName>
+                <default>false</default>
+                <label>Consegna KIT Pannolini ECO</label>
+            </value>
+            <value>
+                <fullName>Lamentele Comportam Operatore</fullName>
+                <default>false</default>
+                <label>Lamentele Comportam Operatore</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
