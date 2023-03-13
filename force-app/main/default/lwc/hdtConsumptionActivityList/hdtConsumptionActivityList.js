@@ -45,18 +45,21 @@ export default class HdtConsumptionActivityList extends LightningElement {
     contractData = [];
     contractDataToView = [];
     sortDirection = 'desc';
+    filterString = '';
     sortedBy;
     contract;
     requestObj = {};
     mainTitle;
     mainIcon;
     detailTitle;
+    detailTitlePrefix;
     detailIcon;
     buttonGroup = [];
     modalHeader;
     modalBody;
     parameter;
     buttonName;
+    currentView;
 
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
     wiredRecord({ error, data }) {
@@ -89,7 +92,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
         this.template.querySelectorAll('button').forEach((but) => {
             but.classList.remove('slds-button_brand');
             but.classList.add('slds-button_neutral');
-            if(but.name === thisButton){
+            if(but.dataset.parameters === thisButton){
                 but.classList.add('slds-button_brand');
             }            
         });
@@ -103,7 +106,8 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 this.requestObj.contractCode = this.contractNumber;
                 this.requestObj.date = this.setMyDate(-2);//'2022-05-28, --TODAY - 2 GG';
                 this.requestObj.idAggregation = 'D';
-                this.buttonGroup.push({name: 'dayly', type: '', parameters: 'D', label: 'Giornaliero'});
+                this.currentView = 'D';
+                this.buttonGroup.push({name: 'daily', type: '', parameters: 'D', label: 'Giornaliero'});
                 this.buttonGroup.push({name: 'weekly', type: '', parameters: 'W', label: 'Settimanale'});
                 this.buttonGroup.push({name: 'monthly', type: '', parameters: 'M', label: 'Mensile'});
                 this.showTimeButton = true;
@@ -118,7 +122,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 this.showFilter = true;
             break;
         }
-
+        this.helpTextHandler();
     }
 
     setMyDate(days){
@@ -150,7 +154,9 @@ export default class HdtConsumptionActivityList extends LightningElement {
                         this.mainTitle = result.tables[0].tableTitle;
                         this.mainIcon = result.tables[0].iconName;
                         this.detailColumns = result.tables[1].columns;
-                        this.detailTitle = result.tables[1].tableTitle;
+                        //this.detailTitle = result.tables[1].tableTitle;
+                        this.detailTitlePrefix = result.tables[1].tableTitle;
+                        this.detailTitle = this.detailTitlePrefix;
                         this.detailIcon = result.tables[1].iconName;
                         this.hasDetailTable = true;
                         this.showDetailTable = true;
@@ -164,12 +170,12 @@ export default class HdtConsumptionActivityList extends LightningElement {
                 }
 
                 this.backendCall();
-
+                
             } else {
                 console.log('>>>> ERROR > getContractRecords');
                 this.error = true;
                 this.errorMessage = result.message;
-                this.spinner = false;                
+                this.spinner = false;
             }
 
         }).catch(error => {
@@ -181,14 +187,12 @@ export default class HdtConsumptionActivityList extends LightningElement {
     backendCall(){
         console.log('# Get data from WS #');
         console.log('>>> request: ' + JSON.stringify(this.requestObj));
-        
-        //this.setMockData();
 
         getRecordsFromWs({type: this.tabType, requestObj: JSON.stringify(this.requestObj)})
         .then(result => {
             console.log('# WS result #');
             var obj = JSON.parse(result);
-            console.log('# success: ' + result);
+            //console.log('# success: ' + result);
 
             if(obj.response.item === null || obj.response.item === undefined){
                 //this.errorMessage = obj.response.outcomeSapDescr;
@@ -201,8 +205,13 @@ export default class HdtConsumptionActivityList extends LightningElement {
                     }),
                 );
             } else {
-                this.contractDataToView = obj.response.item;
-                this.afterWsCall();
+                //this.contractDataToView = obj.response.item;
+                this.showMainTable = true;
+                this.afterWsCall(obj);
+            }
+
+            if(this.tabType === 'consumptionList2g'){
+                this.focusOnButton(this.currentView);
             }
 
             this.spinner = false;
@@ -216,20 +225,28 @@ export default class HdtConsumptionActivityList extends LightningElement {
     
     }
 
-    afterWsCall(){
+    afterWsCall(obj){
+
         if(this.tabType === 'consumptionList2g'){
-            if(this.contractDataToView[0].details.item != null && this.contractDataToView[0].details.item.length > 0) {
-                this.detailsDataToView.push(this.contractDataToView[0].details.item[0]);
+
+            if(this.requestObj.idAggregation === this.currentView){
+                this.contractDataToView = obj.response.item;
+            }
+
+            if(obj.response.item[0].details.item != null && obj.response.item[0].details.item.length > 0) {
+                this.detailsDataToView = obj.response.item[0].details.item;
+                this.detailTitle = this.detailTitlePrefix + ' - ' + this.requestObj.date;
                 this.showDetailTable = true;
-                this.showMainTable = true;
             } else {
+                this.detailTitle = this.detailTitlePrefix;
                 this.showDetailTable = false;
             }
+
         } else {
-            if(this.contractDataToView != null && this.contractDataToView.length > 0) {
-                this.detailsDataToView.push(this.contractDataToView);
+            this.contractDataToView = obj.response.item;
+            if(obj.response.item != null && obj.response.item.length > 0) {
+                this.detailsDataToView.push(obj.response.item);
                 this.showDetailTable = true;
-                this.showMainTable = true;
             } else {
                 this.showDetailTable = false;
             }
@@ -238,27 +255,40 @@ export default class HdtConsumptionActivityList extends LightningElement {
         this.spinner = false;  
     }
 
+    helpTextHandler(){
+        if(this.requestObj != null && this.requestObj != undefined){
+            switch (this.tabType) {
+                case "consumptionList2g"://Elenco Consumi 2G
+                    this.filterString = 'Data dal: ' + this.requestObj.date;
+                break;
+    
+                case "activityList2g": //Elenco Attività 2G
+                    this.filterString = 'Data dal: ' + this.requestObj.dateFrom + ' al ' + this.requestObj.dateTo + ', ' + this.requestObj.idService;
+                break;
+            } 
+        }
+    }
+
     handleRowAction(event) {
-        console.log('# handleRowAction # ' + this.requestObj.idAggregation);
+        console.log('# handleRowAction > ' + this.requestObj.idAggregation);
+        console.log('# currentView > ' + this.currentView);
         //console.log('# handleRowAction >>> ' + JSON.stringify(event.detail.row));
 
-        if(this.requestObj.idAggregation != 'D'){
-            this.dispatchEvent(
-                new ShowToastEvent({
-                    title: 'Attenzione!',
-                    message: 'Dettaglio disponibile solo per vista giornaliera',
-                    variant: 'warning',
-                }),
-            );
+        if(this.currentView == 'W' || this.currentView == 'M'){
+            this.requestObj.idAggregation = 'D';
+            this.requestObj.date = event.detail.row.consDateStart;
+            this.spinner = true;
+            this.backendCall();
+
         } else {
             this.detailsDataToView = event.detail.row.details.item;
-
             if(event.detail.row.details.item.length > 0) {
                 this.showDetailTable = true;
             } else {
                 this.showDetailTable = false;
             }
         }
+
     }
 
     buttonHandler(event){
@@ -272,6 +302,7 @@ export default class HdtConsumptionActivityList extends LightningElement {
             //if(event.currentTarget.dataset.parameters!=null && event.currentTarget.dataset.parameters!=undefined&&event.currentTarget.dataset.parameters!='filter'){
             if(this.tabType === 'consumptionList2g'){
                 this.requestObj.idAggregation = event.currentTarget.dataset.parameters;
+                this.currentView = event.currentTarget.dataset.parameters;
             }
             
             this.buttonName = event.currentTarget.name;
@@ -289,8 +320,12 @@ export default class HdtConsumptionActivityList extends LightningElement {
             this.spinner = true;
             console.log('## applyConfirm ' + JSON.stringify(event.detail));
             this.requestObj = event.detail.requestObject;
+            this.helpTextHandler();
             this.backendCall();
-            this.focusOnButton(event.detail.buttonName);
+            if(event.detail.buttonName == 'filter'){
+                this.focusOnButton(event.detail.buttonName);
+            }
+
         }
         this.openModal = false;
     }
