@@ -141,9 +141,14 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         List<Order> allOrders = orderQr.getAllOrdersForComfort(ordToCheck[0].ParentOrder__c);
 
+        Set<Id> allOrdersVas  = new Set<Id>(); 
+        if(ordToCheck[0].Recordtype.Developername !='HDT_RT_VAS'){
+            allOrdersVas = orderQr.getAllOrdersVasForComfort(ordId ,ordToCheck[0].SBQQ__Quote__c);
+        }
+
         if (allOrders!=null && allOrders.size()>0) {
             for (Order currOrd:allOrders){
-                if (currOrd.Id!=ordToCheck[0].Id) {
+                if (currOrd.Id!=ordToCheck[0].Id && (!allOrdersVas.contains(currOrd.Id))) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
                     (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
