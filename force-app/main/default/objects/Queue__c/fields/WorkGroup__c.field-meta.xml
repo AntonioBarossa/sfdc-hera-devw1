@@ -962,6 +962,11 @@
                 <label>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_MMSME_CRGC_Escalation Legge 80_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRGC_Escalation Legge 80_HC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_MMSME_CVMC_Annullamento contratti_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CVMC_Annullamento contratti_HC</label>
@@ -1270,6 +1275,11 @@
                 <fullName>HCM_BACK_Approvazione</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Approvazione</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Annullamento Contratti</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Annullamento Contratti</label>
             </value>
             <value>
                 <fullName>HCM_BACK_CON_Fatturazione</fullName>
