@@ -3701,6 +3701,10 @@
         <enabled>true</enabled>
     </classAccesses>
     <classAccesses>
+        <apexClass>HDT_UTL_BillingProfile</apexClass>
+        <enabled>true</enabled>
+    </classAccesses>
+    <classAccesses>
         <apexClass>HDT_UTL_BrandSalesCompany</apexClass>
         <enabled>true</enabled>
     </classAccesses>
