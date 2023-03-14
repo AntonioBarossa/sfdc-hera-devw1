@@ -490,9 +490,15 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
 
                 if(objFields.get('INVIADATAQC') != null && 'Y'.equalsIgnoreCase(String.valueOf(objFields.get('INVIADATAQC')))){
                     Boolean foundQc = false;
-                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - WrittenReceiptRequestDate__c: ' + objFields.get('WrittenReceiptRequestDate__c'));
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR  - WrittenReceiptRequestDate__c: ' + objFields.get('WrittenReceiptRequestDate__c'));
                     System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - CreatedDate: ' + objFields.get('CreatedDate'));
-                    Datetime foo = (DateTime)(objFields.get('WrittenReceiptRequestDate__c') != null ? objFields.get('WrittenReceiptRequestDate__c') : objFields.get('CreatedDate'));
+                    Datetime foo = System.now();
+                    if (objFields.get('WrittenReceiptRequestDate__c') != null) {
+                        Date receiptDate = Date.valueOf(objFields.get('WrittenReceiptRequestDate__c'));
+                        foo = Datetime.newInstance(receiptDate, System.now().time());
+                    }else{
+                        foo = (Datetime) objFields.get('CreatedDate');
+                    }
                     String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
                     System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - dateFinal: ' + dateFinal);
                     for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
