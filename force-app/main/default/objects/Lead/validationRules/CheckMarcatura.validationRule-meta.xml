@@ -6,7 +6,8 @@
 (
     OR
 				(ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;), ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;), ISPICKVAL(CustomerMarking__c, &quot;Ditta individuale&quot;)),
-    NOT
+    ISPICKVAL(Category__c, &quot;Aziende Soho&quot;),
+				NOT
 				(
 				    OR
 								(
