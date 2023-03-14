@@ -6,6 +6,9 @@
         <label>isCaseValorized?</label>
         <locationX>182</locationX>
         <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>updateCase_2</targetReference>
+        </defaultConnector>
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>YES_0</name>
@@ -15,6 +18,13 @@
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCustomAct.ActivityOutcome__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>Negativo</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -97,6 +107,33 @@
         <name>updateCase</name>
         <label>updateCase</label>
         <locationX>50</locationX>
+        <locationY>518</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getCustomAct.Case__c</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>updateCase_2</name>
+        <label>updateCase</label>
+        <locationX>314</locationX>
         <locationY>518</locationY>
         <filterLogic>and</filterLogic>
         <filters>
