@@ -550,6 +550,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> activityValoriNonCorrispondentiSet = new Set<Id>();
         List<Order> newOrdersListRecalc = new List<Order>();
         List<Order> newOrdersListComfort = new List<Order>();
+        List<Order> newOrdersListReadingDate = new List<Order>();
         for(Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
         }
@@ -640,6 +641,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }else {
                             if(String.isNotBlank(newOrder.CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(newOrder.CommodityFormula__c)){
                                 newOrder.EffectiveDate__c = System.today();
+                                if( 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
+                                    newOrdersListReadingDate.add(newOrder);
+                                }
                             }else{
                                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                             }
@@ -659,6 +663,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         if(!newOrdersListComfort.isEmpty()){
             HDT_UTL_ProcessDateManager.calculateOrderProcessDate(newOrdersListComfort);
+        }
+        if(!newOrdersListReadingDate.isEmpty()){
+            HDT_UTL_ProcessDateManager.updateReadingDate(newOrdersListReadingDate);
         }
     }
 

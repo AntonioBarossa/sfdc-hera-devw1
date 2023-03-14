@@ -97,9 +97,10 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 objFields.put('Unita_Abitative__c', obj.get('Unita_Abitative__c'));
                 objFields.put('Type', 'Modifica Unita Immobiliari Componenti');
             }
-            if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Nuovo Impianto') && 'Acqua'.equalsIgnoreCase(commodity)){
-                objFields.put('SendToDistributorDate__c', obj.get('SendToDistributorDate__c'));
-                objFields.put('Type', 'Nuovo Impianto');
+            if('Acqua'.equalsIgnoreCase(commodity)){
+                objFields.put('INVIADATAQC', 'Y');
+                objFields.put('WrittenReceiptRequestDate__c', obj.get('WrittenReceiptRequestDate__c'));
+                objFields.put('CreatedDate', obj.get('CreatedDate'));
             }
             if(String.isNotBlank(processType) && processType.equalsIgnoreCase('Verifica Interna') && 'Acqua'.equalsIgnoreCase(commodity)){
                 objFields.put('DistributorNote__c', obj.get('DistributorNote__c'));
@@ -487,10 +488,13 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                     }
                 }
 
-                if(objFields.get('SendToDistributorDate__c') != null){
+                if(objFields.get('INVIADATAQC') != null && 'Y'.equalsIgnoreCase(String.valueOf(objFields.get('INVIADATAQC')))){
                     Boolean foundQc = false;
-                    Datetime foo = (DateTime)objFields.get('SendToDistributorDate__c');
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - WrittenReceiptRequestDate__c: ' + objFields.get('WrittenReceiptRequestDate__c'));
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - CreatedDate: ' + objFields.get('CreatedDate'));
+                    Datetime foo = (DateTime)(objFields.get('WrittenReceiptRequestDate__c') != null ? objFields.get('WrittenReceiptRequestDate__c') : objFields.get('CreatedDate'));
                     String dateFinal = foo.format('yyyy-MM-dd HH:mm:ss');
+                    System.debug(LoggingLevel.DEBUG, 'DATAQCCALCULATOR - dateFinal: ' + dateFinal);
                     for(wrts_prcgvr.MRR_1_0.Field f : obj.fields){
                         if(f.name.equalsIgnoreCase('QC'))
                         {
