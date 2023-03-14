@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CheckMarcatura</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND
+(
+    OR
+				(ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;), ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;), ISPICKVAL(CustomerMarking__c, &quot;Ditta individuale&quot;)),
+    NOT
+				(
+				    OR
+								(
+				        AND( ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;), ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), OR(AND(FiscalCode__c != &quot;&quot;, ISNUMBER(FiscalCode__c)), ISBLANK(FiscalCode__c)), NOT(ISBLANK(VATNumber__c)) ),
+				        AND( ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;), ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), OR(AND(FiscalCode__c != &quot;&quot;, ISNUMBER(FiscalCode__c)), ISBLANK(FiscalCode__c)), NOT(ISBLANK(VATNumber__c)) ),
+				        AND( ISPICKVAL(CustomerMarking__c, &quot;Ditta individuale&quot;), ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), FiscalCode__c != &quot;&quot;, NOT(ISNUMBER(FiscalCode__c)), NOT(ISBLANK(VATNumber__c)) )
+        )
+    )
+)</errorConditionFormula>
+    <errorDisplayField>Agency__c</errorDisplayField>
+    <errorMessage>Errori sulle corrispondenze della Marcatura Cliente. Verificare e riprovare</errorMessage>
+</ValidationRule>
