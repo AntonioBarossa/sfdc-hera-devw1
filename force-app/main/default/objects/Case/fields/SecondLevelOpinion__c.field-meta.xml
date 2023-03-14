@@ -57,12 +57,162 @@
             <valueName>Gestione Sportello</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>02A - Determinazione volumi da fermi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>02B - Determinazione volumi da illeggibili</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>02C - Determinazione volumi da verifiche metriche</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>04 BIS - Richiesta di prescrizione biennale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>04 -  Contestazioni/modifiche cat. Contrattuali (retroattività)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>05 - Consumi su contatori non contrattualizzati</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>06 - Applicazione procapite, aggiornamenti da anagrafe comunale, SII</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>09 - Richiesta ulteriore sgravio per fuga acqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>10 - Cambio contatore non registrato in bolletta e rotti dal gelo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>11 - Fatturazione insediamenti produttivi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <valueName>12 - problemi di mancata lettura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>54 – Recupero Letture su Contatori non Letti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 - Problematiche tecniche Rete Fognaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 QUATER - Problematiche scarichi industriali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>19 - Cattivi odori o scarichi post depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>21 - Rich. Info e Reclami su Contatore: ordini di apertura, chiusura, att. Morosi - chiusura morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>22 - Richiesta lettura/verifica in campo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>87 - Sostituzione massiva contatori (programmata)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>132 - Risposte da Call Center Tecnico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>13 - Comportamento Letturista</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>14 - Interruzione fornitura a seguito di problemi su impianti/risorsa idrica - Reclami</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>15 - Pressione, perdite su rete stradale, interruzione fornitura o alterazione qualitativa a seguito riparazione rete, manutenzione reti.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>16bis - Temi Qualità Acqua - Richieste info</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>16 - Temi Qualità Acqua - Reclami</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>25 - Reclami relativi aspetti legati alla gestione CDR (comportamenti degli operatori dei CDR, errori nelle registrazioni, mancata emissione scontrino, elenco dei conferimenti effettuati per eventuali verifiche da parte dei contribuenti …)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>26 - Pulizia strade, rumorosità mezzi, ubicazione cassonetti, metodologia di raccolta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>59 - AMBIENTE - verifica indennizzo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Risarcimento danni</controllingFieldValue>
+            <valueName>74- richiesta risarcimento danni</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>
             <valueName>Contratto Salesforce</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>
             <valueName>Contratto SAP</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
+            <valueName>Acqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
+            <valueName>Ambiente</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
@@ -73,12 +223,8 @@
             <valueName>Gas</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
-            <valueName>Acqua</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
-            <valueName>Ambiente</valueName>
+            <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
+            <valueName>Anomalie solleciti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
@@ -98,6 +244,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Supporto credito Hera Comm</controllingFieldValue>
+            <controllingFieldValue>Supporto recupero credito legale</controllingFieldValue>
             <valueName>Supporto Pratiche legali</valueName>
         </valueSettings>
         <valueSettings>
@@ -162,6 +309,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
+            <valueName>07 - Bonus sociale H2o</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
+            <valueName>Bonus sociale Gas</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
             <valueName>Bonus Sociale</valueName>
         </valueSettings>
         <valueSettings>
@@ -182,11 +337,35 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
+            <valueName>Mancato recapito</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
             <valueName>Pagamenti e incassi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
+            <valueName>Rimborsi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione e pagamenti</controllingFieldValue>
             <valueName>Verifica fattura Sap</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica posizione contributiva</controllingFieldValue>
+            <valueName>27 - TARI - retroattività domestica e non domestica</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica posizione contributiva</controllingFieldValue>
+            <valueName>27 - TIA recupero evasione elusione NON DOMESTICO</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica posizione contributiva</controllingFieldValue>
+            <valueName>51 - Reclami/chiarimenti scontistiche relative a raccolte differenziate (pap, sacchi carta IF, …) e sconti da CdR</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Verifica posizione contributiva</controllingFieldValue>
+            <valueName>56 - Applicazione componenti TARI, verifica aggiornamenti anagrafici, TARI evasione domestico</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

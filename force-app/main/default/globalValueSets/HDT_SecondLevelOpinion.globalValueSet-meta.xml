@@ -1,6 +1,221 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</fullName>
+        <default>false</default>
+        <label>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>02A - Determinazione volumi da fermi</fullName>
+        <default>false</default>
+        <label>02A - Determinazione volumi da fermi</label>
+    </customValue>
+    <customValue>
+        <fullName>02B - Determinazione volumi da illeggibili</fullName>
+        <default>false</default>
+        <label>02B - Determinazione volumi da illeggibili</label>
+    </customValue>
+    <customValue>
+        <fullName>02C - Determinazione volumi da verifiche metriche</fullName>
+        <default>false</default>
+        <label>02C - Determinazione volumi da verifiche metriche</label>
+    </customValue>
+    <customValue>
+        <fullName>04 BIS - Richiesta di prescrizione biennale</fullName>
+        <default>false</default>
+        <label>04 BIS - Richiesta di prescrizione biennale</label>
+    </customValue>
+    <customValue>
+        <fullName>04 -  Contestazioni/modifiche cat. Contrattuali (retroattività)</fullName>
+        <default>false</default>
+        <label>04 -  Contestazioni/modifiche cat. Contrattuali (retroattività)</label>
+    </customValue>
+    <customValue>
+        <fullName>05 - Consumi su contatori non contrattualizzati</fullName>
+        <default>false</default>
+        <label>05 - Consumi su contatori non contrattualizzati</label>
+    </customValue>
+    <customValue>
+        <fullName>06 - Applicazione procapite, aggiornamenti da anagrafe comunale, SII</fullName>
+        <default>false</default>
+        <label>06 - Applicazione procapite, aggiornamenti da anagrafe comunale, SII</label>
+    </customValue>
+    <customValue>
+        <fullName>07 - Bonus sociale H2o</fullName>
+        <default>false</default>
+        <label>07 - Bonus sociale H2o</label>
+    </customValue>
+    <customValue>
+        <fullName>09 - Richiesta ulteriore sgravio per fuga acqua</fullName>
+        <default>false</default>
+        <label>09 - Richiesta ulteriore sgravio per fuga acqua</label>
+    </customValue>
+    <customValue>
+        <fullName>10 - Cambio contatore non registrato in bolletta e rotti dal gelo</fullName>
+        <default>false</default>
+        <label>10 - Cambio contatore non registrato in bolletta e rotti dal gelo</label>
+    </customValue>
+    <customValue>
+        <fullName>11 - Fatturazione insediamenti produttivi</fullName>
+        <default>false</default>
+        <label>11 - Fatturazione insediamenti produttivi</label>
+    </customValue>
+    <customValue>
+        <fullName>12 - problemi di mancata lettura</fullName>
+        <default>false</default>
+        <label>12 - problemi di mancata lettura</label>
+    </customValue>
+    <customValue>
+        <fullName>132 - Risposte da Call Center Tecnico</fullName>
+        <default>false</default>
+        <label>132 - Risposte da Call Center Tecnico</label>
+    </customValue>
+    <customValue>
+        <fullName>13 - Comportamento Letturista</fullName>
+        <default>false</default>
+        <label>13 - Comportamento Letturista</label>
+    </customValue>
+    <customValue>
+        <fullName>14 - Interruzione fornitura a seguito di problemi su impianti/risorsa idrica - Reclami</fullName>
+        <default>false</default>
+        <label>14 - Interruzione fornitura a seguito di problemi su impianti/risorsa idrica - Reclami</label>
+    </customValue>
+    <customValue>
+        <fullName>15 - Pressione, perdite su rete stradale, interruzione fornitura o alterazione qualitativa a seguito riparazione rete, manutenzione reti.</fullName>
+        <default>false</default>
+        <label>15 - Pressione, perdite su rete stradale, interruzione fornitura o alterazione qualitativa a seguito riparazione rete, manutenzione reti.</label>
+    </customValue>
+    <customValue>
+        <fullName>16bis - Temi Qualità Acqua - Richieste info</fullName>
+        <default>false</default>
+        <label>16bis - Temi Qualità Acqua - Richieste info</label>
+    </customValue>
+    <customValue>
+        <fullName>16 - Temi Qualità Acqua - Reclami</fullName>
+        <default>false</default>
+        <label>16 - Temi Qualità Acqua - Reclami</label>
+    </customValue>
+    <customValue>
+        <fullName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
+        <default>false</default>
+        <label>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</label>
+    </customValue>
+    <customValue>
+        <fullName>18 - Problematiche tecniche Rete Fognaria</fullName>
+        <default>false</default>
+        <label>18 - Problematiche tecniche Rete Fognaria</label>
+    </customValue>
+    <customValue>
+        <fullName>18 QUATER - Problematiche scarichi industriali</fullName>
+        <default>false</default>
+        <label>18 QUATER - Problematiche scarichi industriali</label>
+    </customValue>
+    <customValue>
+        <fullName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
+        <default>false</default>
+        <label>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>19 - Cattivi odori o scarichi post depurazione</fullName>
+        <default>false</default>
+        <label>19 - Cattivi odori o scarichi post depurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</fullName>
+        <default>false</default>
+        <label>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</fullName>
+        <default>false</default>
+        <label>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</label>
+    </customValue>
+    <customValue>
+        <fullName>21 - Rich. Info e Reclami su Contatore: ordini di apertura, chiusura, att. Morosi - chiusura morosità</fullName>
+        <default>false</default>
+        <label>21 - Rich. Info e Reclami su Contatore: ordini di apertura, chiusura, att. Morosi - chiusura morosità</label>
+    </customValue>
+    <customValue>
+        <fullName>22 - Richiesta lettura/verifica in campo</fullName>
+        <default>false</default>
+        <label>22 - Richiesta lettura/verifica in campo</label>
+    </customValue>
+    <customValue>
+        <fullName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</fullName>
+        <default>false</default>
+        <label>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</label>
+    </customValue>
+    <customValue>
+        <fullName>25 - Reclami relativi aspetti legati alla gestione CDR (comportamenti degli operatori dei CDR, errori nelle registrazioni, mancata emissione scontrino, elenco dei conferimenti effettuati per eventuali verifiche da parte dei contribuenti …)</fullName>
+        <default>false</default>
+        <label>25 - Reclami relativi aspetti legati alla gestione CDR (comportamenti degli operatori dei CDR, errori nelle registrazioni, mancata emissione scontrino, elenco dei conferimenti effettuati per eventuali verifiche da parte dei contribuenti …)</label>
+    </customValue>
+    <customValue>
+        <fullName>26 - Pulizia strade, rumorosità mezzi, ubicazione cassonetti, metodologia di raccolta</fullName>
+        <default>false</default>
+        <label>26 - Pulizia strade, rumorosità mezzi, ubicazione cassonetti, metodologia di raccolta</label>
+    </customValue>
+    <customValue>
+        <fullName>27 - TARI - retroattività domestica e non domestica</fullName>
+        <default>false</default>
+        <label>27 - TARI - retroattività domestica e non domestica</label>
+    </customValue>
+    <customValue>
+        <fullName>27 - TIA recupero evasione elusione NON DOMESTICO</fullName>
+        <default>false</default>
+        <label>27 - TIA recupero evasione elusione NON DOMESTICO</label>
+    </customValue>
+    <customValue>
+        <fullName>51 - Reclami/chiarimenti scontistiche relative a raccolte differenziate (pap, sacchi carta IF, …) e sconti da CdR</fullName>
+        <default>false</default>
+        <label>51 - Reclami/chiarimenti scontistiche relative a raccolte differenziate (pap, sacchi carta IF, …) e sconti da CdR</label>
+    </customValue>
+    <customValue>
+        <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
+        <default>false</default>
+        <label>54 – Recupero Letture su Contatori non Letti</label>
+    </customValue>
+    <customValue>
+        <fullName>56 - Applicazione componenti TARI, verifica aggiornamenti anagrafici, TARI evasione domestico</fullName>
+        <default>false</default>
+        <label>56 - Applicazione componenti TARI, verifica aggiornamenti anagrafici, TARI evasione domestico</label>
+    </customValue>
+    <customValue>
+        <fullName>59 - AMBIENTE - verifica indennizzo</fullName>
+        <default>false</default>
+        <label>59 - AMBIENTE - verifica indennizzo</label>
+    </customValue>
+    <customValue>
+        <fullName>74- richiesta risarcimento danni</fullName>
+        <default>false</default>
+        <label>74- richiesta risarcimento danni</label>
+    </customValue>
+    <customValue>
+        <fullName>87 - Sostituzione massiva contatori (programmata)</fullName>
+        <default>false</default>
+        <label>87 - Sostituzione massiva contatori (programmata)</label>
+    </customValue>
+    <customValue>
+        <fullName>Acqua</fullName>
+        <default>false</default>
+        <label>Acqua</label>
+    </customValue>
+    <customValue>
+        <fullName>Bonus sociale Gas</fullName>
+        <default>false</default>
+        <label>Bonus sociale Gas</label>
+    </customValue>
+    <customValue>
+        <fullName>Ambiente</fullName>
+        <default>false</default>
+        <label>Ambiente</label>
+    </customValue>
+    <customValue>
+        <fullName>Anomalie solleciti</fullName>
+        <default>false</default>
+        <label>Anomalie solleciti</label>
+    </customValue>
+    <customValue>
         <fullName>Bonus Sociale</fullName>
         <default>false</default>
         <label>Bonus Sociale</label>
@@ -106,6 +321,11 @@
         <label>Iva e accise</label>
     </customValue>
     <customValue>
+        <fullName>Mancato recapito</fullName>
+        <default>false</default>
+        <label>Mancato recapito</label>
+    </customValue>
+    <customValue>
         <fullName>Morosità riattivazione</fullName>
         <default>false</default>
         <label>Morosità riattivazione</label>
@@ -141,6 +361,11 @@
         <label>Post Vendita</label>
     </customValue>
     <customValue>
+        <fullName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</fullName>
+        <default>false</default>
+        <label>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</label>
+    </customValue>
+    <customValue>
         <fullName>Privacy</fullName>
         <default>false</default>
         <label>Privacy</label>
@@ -159,6 +384,11 @@
         <fullName>Recupero indiretto</fullName>
         <default>false</default>
         <label>Recupero indiretto</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborsi</fullName>
+        <default>false</default>
+        <label>Rimborsi</label>
     </customValue>
     <customValue>
         <fullName>Storno iva detraibile</fullName>
@@ -204,16 +434,6 @@
         <fullName>Verifiche portali</fullName>
         <default>false</default>
         <label>Verifiche portali</label>
-    </customValue>
-    <customValue>
-        <fullName>Acqua</fullName>
-        <default>false</default>
-        <label>Acqua</label>
-    </customValue>
-    <customValue>
-        <fullName>Ambiente</fullName>
-        <default>false</default>
-        <label>Ambiente</label>
     </customValue>
     <masterLabel>Pareri 2° Livello</masterLabel>
     <sorted>true</sorted>
