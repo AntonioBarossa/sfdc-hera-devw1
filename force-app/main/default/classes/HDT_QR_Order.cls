@@ -160,6 +160,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.isReseller__c,
             ServicePoint__r.distributor__r.code__c,
             ServicePoint__r.MeterClass__c,
+            ServicePoint__r.MeterSN__c,
             ServicePoint__r.MeterStatus__c,
             ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,

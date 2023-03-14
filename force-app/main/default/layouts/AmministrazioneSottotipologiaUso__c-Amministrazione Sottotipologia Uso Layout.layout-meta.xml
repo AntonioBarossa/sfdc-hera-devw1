@@ -42,6 +42,10 @@
                 <behavior>Readonly</behavior>
                 <field>Attivo__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>IntendedUse__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

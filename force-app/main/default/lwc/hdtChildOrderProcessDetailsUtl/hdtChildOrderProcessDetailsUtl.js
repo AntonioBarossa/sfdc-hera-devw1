@@ -342,7 +342,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 objectApiName: 'Order',
                 recordId: this.order.Id,
                 hasCohabitantButton: false,
-                readingButton: !(this.typeVisibility('acqua') && this.order.ServicePoint__r.MeterStatus__c === 'Sospeso'),
+                readingButton: !( this.typeVisibility('acqua') && ( !(this.order.ServicePoint__r.MeterSN__c) || this.order.ServicePoint__r.MeterStatus__c === 'Sospeso' ) ),
                 processVisibility: this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch'),
                 data:[
                     new fieldData('','VoltureType__c',this.typeVisibility('both'),true,false,'','',function(event){this.updateContractExpenses();}),
@@ -447,7 +447,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 name: 'dettaglioImpianto',
                 objectApiName: 'Order',
                 recordId: this.order.Id,
-                readingButton: this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',
+                readingButton: this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.MeterSN__c,
                 hasCohabitantButton: false,
                 hasCalculateButton: this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica',
                 hasCodiceAtecoButton: this.order.Account.RecordType.DeveloperName === 'HDT_RT_Business' || (this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso' && (this.order.SupplyType__c !== null && this.order.SupplyType__c === 'Non Domestico')),

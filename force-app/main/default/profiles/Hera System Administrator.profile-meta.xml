@@ -37290,7 +37290,7 @@
         <recordType>Case.HDT_RT_PianoRateizzazione</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_PosizionamentoContenitore</layout>
+        <layout>Case-HDT_ReclamiScrittiTARI</layout>
         <recordType>Case.HDT_RT_PosizionamentoContenitore</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -37306,7 +37306,7 @@
         <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_ReclamoDaCittadino</layout>
+        <layout>Case-HDT_ReclamiScrittiTARI</layout>
         <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
     </layoutAssignments>
     <layoutAssignments>

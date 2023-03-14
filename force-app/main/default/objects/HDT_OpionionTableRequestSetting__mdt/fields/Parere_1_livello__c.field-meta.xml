@@ -9,10 +9,10 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
             <value>
                 <fullName>Anomalia contratto</fullName>
-                <default>true</default>
+                <default>false</default>
                 <label>Anomalia contratto</label>
             </value>
             <value>
@@ -31,14 +31,39 @@
                 <label>Costing e Forecasting</label>
             </value>
             <value>
+                <fullName>Fatturazione consumi/contratti</fullName>
+                <default>false</default>
+                <label>Fatturazione consumi/contratti</label>
+            </value>
+            <value>
                 <fullName>Fatturazione e pagamenti</fullName>
                 <default>false</default>
                 <label>Fatturazione e pagamenti</label>
             </value>
             <value>
+                <fullName>Fognatura e Depurazione</fullName>
+                <default>false</default>
+                <label>Fognatura e Depurazione</label>
+            </value>
+            <value>
+                <fullName>Preventivi/Lavori/Prestazioni</fullName>
+                <default>false</default>
+                <label>Preventivi/Lavori/Prestazioni</label>
+            </value>
+            <value>
+                <fullName>Qualità e Continuità di servizio</fullName>
+                <default>false</default>
+                <label>Qualità e Continuità di servizio</label>
+            </value>
+            <value>
                 <fullName>Rapporto con i distributori e SII</fullName>
                 <default>false</default>
                 <label>Rapporto con i distributori e SII</label>
+            </value>
+            <value>
+                <fullName>Risarcimento danni</fullName>
+                <default>false</default>
+                <label>Risarcimento danni</label>
             </value>
             <value>
                 <fullName>Supporto credito Hera Comm</fullName>
@@ -66,6 +91,11 @@
                 <label>Supporto Normativo</label>
             </value>
             <value>
+                <fullName>Supporto recupero credito legale</fullName>
+                <default>false</default>
+                <label>Supporto recupero credito legale</label>
+            </value>
+            <value>
                 <fullName>Supporto responsabile HC</fullName>
                 <default>false</default>
                 <label>Supporto responsabile HC</label>
@@ -79,6 +109,11 @@
                 <fullName>Verifica Gestione Front</fullName>
                 <default>false</default>
                 <label>Verifica Gestione Front</label>
+            </value>
+            <value>
+                <fullName>Verifica posizione contributiva</fullName>
+                <default>false</default>
+                <label>Verifica posizione contributiva</label>
             </value>
         </valueSetDefinition>
     </valueSet>
