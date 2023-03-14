@@ -142,7 +142,7 @@ export default class HdtFormAccountResidenziale extends NavigationMixin(Lightnin
     
     roleOptions=[
         { label: 'Titolare', value: 'Titolare' },
-        { label: 'Familiare', value: 'Familiare' }
+        /*{ label: 'Familiare', value: 'Familiare' }*/
     ];
     handleCompanyOwnerChange(event) {
         console.log("***************CHANGE" + event.target.value);
