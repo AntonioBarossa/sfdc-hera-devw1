@@ -74,6 +74,17 @@ public class HDT_SRV_FieldCoerenceServicePoint {
                 resultMap.put('valid', false);
                 resultMap.put('message','Per Tipo Fornitura: \"' + supplyType + '\" impossibile selezionare Tensione di consegna: \"' + voltageLevel + '\"');
             }
+            if(String.isNotBlank(implantType) && String.isNotBlank(voltageLevel)) 
+			{
+				if((implantType.containsIgnoreCase('BT') && !voltageLevel.equalsIgnoreCase('BT')) || 
+					(implantType.containsIgnoreCase('MT') && !voltageLevel.equalsIgnoreCase('MT')) ||  
+						(implantType.containsIgnoreCase('AT') && (!voltageLevel.equalsIgnoreCase('AT') && !voltageLevel.equalsIgnoreCase('AAT') ))														
+					)
+				{
+					resultMap.put('valid', false);
+					resultMap.put('message','Deve esserci coerenza nella compilazione dei seguenti campi: Tipologia Impianto, Tensione di Consegna.');
+				}
+			}
         }
         return resultMap;
     }
