@@ -610,7 +610,7 @@
             <field>Name</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>theCase.InvoicingCity__c</elementReference>
+                <elementReference>theCaseIndirizzi.InvoicingCity__c</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
