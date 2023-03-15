@@ -45,7 +45,9 @@ public inherited sharing class HDT_QR_CaseValidations {
         BillingCountry__c,
         Caliber__c,
         Channel__c,
-        DepositPaymentMode__c
+        DepositPaymentMode__c,
+        UseSubCategory__c,
+        IntendedUse__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED
