@@ -410,7 +410,7 @@
             <field>LastName__c</field>
             <operator>EqualTo</operator>
             <value>
-                <stringValue>BP MODELLO</stringValue>
+                <stringValue>BP MODELLO MMS</stringValue>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
