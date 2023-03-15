@@ -314,6 +314,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var record = event.detail.records;
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
+        this.handleReadOnlyOnFields();
         console.log('Edit Form Loaded ' + fields);
         
         }
@@ -461,6 +462,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         this.disconnectableLogic();
         //Variazioni customLogic
         this.variationsTerminationsLogic();     //MODIFICA 27/01/23 marco.arci@webresults.it Logica form compilazione Variazioni/Cessazioni
+        //Preventivi - Nuovo Impianto W2
+        this.handleReadOnlyOnFields();
     }
 
     disconnectedCallback(){
@@ -748,5 +751,17 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     unsubscribeToMessageChannel() {
         unsubscribe(this.subscription);
         this.subscription = null;
+    }
+
+    handleReadOnlyOnFields(){
+        let commodity = this.selector('Commodity__c');
+        let useSubCategory = this.selector('UseSubCategory__c');
+        let intendedUse = this.selector('IntendedUse__c');
+        if(commodity && commodity.value === 'Acqua' && useSubCategory && useSubCategory.value === 'Uso pubblico non disalimentabile' && intendedUse){
+            intendedUse.disabled = false;
+        }else if (commodity && commodity.value === 'Acqua' && useSubCategory && useSubCategory.value !== 'Uso pubblico non disalimentabile' && intendedUse){
+            intendedUse.disabled = true;
+            intendedUse.value = '';
+        }
     }
 }

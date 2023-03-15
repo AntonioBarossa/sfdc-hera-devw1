@@ -54,6 +54,21 @@ public inherited sharing class HDT_UTL_Case {
                     output.salesCompany = 'Marche Multiservizi S.p.A';
                     output.vatPercentage = 'GENERICI 10%-01';
                     output.taxes = 'Imposta usi domestici';
+
+                    if(!String.isBlank(currentCase.UseSubCategory__c) && !'Uso pubblico non disalimentabile'.equalsIgnoreCase(currentCase.UseSubCategory__c)){
+                        
+                        List <HDT_HeraCompany__mdt> compCodeList = [SELECT CompanyCode__c FROM HDT_HeraCompany__mdt  WHERE MasterLabel =: output.salesCompany WITH SECURITY_ENFORCED];
+
+                        String campCode = null;
+
+                        if(compCodeList.size() > 0){
+                            campCode = compCodeList[0].CompanyCode__c;
+                            String intendedUse = [SELECT IntendedUse__c FROM AmministrazioneSottotipologiaUso__c WHERE Societa__c =: campCode AND SottotipologiaUso__c =: currentCase.UseSubCategory__c WITH SECURITY_ENFORCED LIMIT 1]?.IntendedUse__c;
+                            output.intendedUse = intendedUse;
+                        }
+                    }else if (!String.isBlank(currentCase.UseSubCategory__c) && 'Uso pubblico non disalimentabile'.equalsIgnoreCase(currentCase.UseSubCategory__c)){
+                        output.intendedUse = currentCase.IntendedUse__c;
+                    }
                 }else {
                     switch on city.SDV__c {
                         when 'HCM' {
@@ -298,6 +313,8 @@ public inherited sharing class HDT_UTL_Case {
         public Date customerChangeDate;
         @InvocableVariable
         public String supplyUseType;
+        @InvocableVariable
+        public String intendedUse;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){
