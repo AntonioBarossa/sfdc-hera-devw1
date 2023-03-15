@@ -212,10 +212,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
-            <valueName>Ambiente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
             <valueName>Energia Elettrica</valueName>
         </valueSettings>
         <valueSettings>
