@@ -1093,7 +1093,7 @@
             <inputParameters>
                 <name>groupOptions</name>
                 <value>
-                    <stringValue>CONTRACTS_VAS;</stringValue>
+                    <stringValue>CONTRACTS_SEGNAL_VAS;</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
