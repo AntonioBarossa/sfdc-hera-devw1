@@ -206,7 +206,7 @@
         <name>Sottometti_ad_Approvazione</name>
         <label>Sottometti ad Approvazione</label>
         <locationX>1018</locationX>
-        <locationY>9650</locationY>
+        <locationY>9314</locationY>
         <actionName>HDT_UTL_CaseApprovalProcess</actionName>
         <actionType>apex</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -222,7 +222,7 @@
         <name>Assegna_Fase_0</name>
         <label>Assegna Fase</label>
         <locationX>1546</locationX>
-        <locationY>9194</locationY>
+        <locationY>8858</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -275,7 +275,7 @@
         <name>Assegna_Fase_0_0_0_0_0_0_0_0_0</name>
         <label>Assegna Fase</label>
         <locationX>754</locationX>
-        <locationY>9194</locationY>
+        <locationY>8858</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -305,7 +305,7 @@
         <name>Assegna_Flag</name>
         <label>Assegna Flag</label>
         <locationX>578</locationX>
-        <locationY>7826</locationY>
+        <locationY>7490</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
@@ -328,7 +328,7 @@
         <name>Assegna_giorni_sospensione</name>
         <label>Assegna giorni sospensione</label>
         <locationX>1018</locationX>
-        <locationY>8858</locationY>
+        <locationY>8522</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.SuspensionDays__c</assignToReference>
             <operator>Assign</operator>
@@ -351,7 +351,7 @@
         <name>Assegna_Valori_Fase</name>
         <label>Assegna Valori Fase</label>
         <locationX>50</locationX>
-        <locationY>6770</locationY>
+        <locationY>6434</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -374,7 +374,7 @@
         <name>AssegnaCodiceCausale</name>
         <label>AssegnaCodiceCausale</label>
         <locationX>1150</locationX>
-        <locationY>7586</locationY>
+        <locationY>7250</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -427,7 +427,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Modalit_Acconto_Bonifico</targetReference>
+            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -450,7 +450,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Modalit_Acconto_Bonifico</targetReference>
+            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -538,7 +538,7 @@
         <name>Copy_1_of_Assegna_Fase</name>
         <label>Copy 1 of Assegna Fase</label>
         <locationX>1018</locationX>
-        <locationY>9194</locationY>
+        <locationY>8858</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -568,7 +568,7 @@
         <name>Copy_1_of_Assegna_Flag</name>
         <label>Copy 1 of Assegna Flag</label>
         <locationX>1062</locationX>
-        <locationY>7826</locationY>
+        <locationY>7490</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
             <operator>Assign</operator>
@@ -584,7 +584,7 @@
         <name>Copy_1_of_Copy_2_of_Assegna_Flag</name>
         <label>Copy 1 of Copy 2 of Assegna Flag</label>
         <locationX>1722</locationX>
-        <locationY>7826</locationY>
+        <locationY>7490</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
@@ -607,7 +607,7 @@
         <name>Copy_2_of_Assegna_Fase</name>
         <label>Copy 2 of Assegna Fase</label>
         <locationX>1282</locationX>
-        <locationY>9194</locationY>
+        <locationY>8858</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -637,7 +637,7 @@
         <name>Copy_2_of_Assegna_Flag</name>
         <label>Copy 2 of Assegna Flag</label>
         <locationX>1458</locationX>
-        <locationY>7826</locationY>
+        <locationY>7490</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.ApprovalProcess__c</assignToReference>
             <operator>Assign</operator>
@@ -654,22 +654,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Residuo_Nullo</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>GestioneAllegati</name>
-        <label>GestioneAllegati</label>
-        <locationX>600</locationX>
-        <locationY>6314</locationY>
-        <assignmentItems>
-            <assignToReference>Get_Case.AttachmentManagement__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>AggiornaCase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -846,7 +830,7 @@
         <name>Approvazione_o_Documentale</name>
         <label>Approvazione o Documentale?</label>
         <locationX>1150</locationX>
-        <locationY>7706</locationY>
+        <locationY>7370</locationY>
         <defaultConnector>
             <targetReference>Copy_1_of_Copy_2_of_Assegna_Flag</targetReference>
         </defaultConnector>
@@ -992,7 +976,7 @@
         <name>Attesa_Modulo_Firmato_0_0_0_0_0</name>
         <label>Attesa Modulo Firmato?</label>
         <locationX>1150</locationX>
-        <locationY>9074</locationY>
+        <locationY>8738</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_0</targetReference>
         </defaultConnector>
@@ -1126,7 +1110,7 @@
         <name>Conferma_o_Annulla</name>
         <label>Conferma o Annulla?</label>
         <locationX>1062</locationX>
-        <locationY>8066</locationY>
+        <locationY>7730</locationY>
         <defaultConnector>
             <targetReference>Residuo_Nullo</targetReference>
         </defaultConnector>
@@ -1278,7 +1262,7 @@
         <name>Documentale</name>
         <label>Documentale?</label>
         <locationX>1700</locationX>
-        <locationY>7010</locationY>
+        <locationY>6674</locationY>
         <defaultConnector>
             <targetReference>ScreenDocumentale</targetReference>
         </defaultConnector>
@@ -1433,7 +1417,7 @@
         <name>Inviare_ad_Approvazione</name>
         <label>Inviare ad Approvazione?</label>
         <locationX>1150</locationX>
-        <locationY>9530</locationY>
+        <locationY>9194</locationY>
         <defaultConnectorLabel>Non Inviare in Approvazione</defaultConnectorLabel>
         <rules>
             <name>Inviare_in_Approvazione</name>
@@ -1555,31 +1539,6 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Modalit_Acconto_Bonifico</name>
-        <label>Modalità Acconto: Bonifico?</label>
-        <locationX>732</locationX>
-        <locationY>6194</locationY>
-        <defaultConnector>
-            <targetReference>AggiornaCase</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Non Bonifico</defaultConnectorLabel>
-        <rules>
-            <name>Bonifico</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Case.DepositPaymentMode__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Bonifico</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>GestioneAllegati</targetReference>
-            </connector>
-            <label>Bonifico</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>NumeroRateNull</name>
         <label>NumeroRateNull?</label>
         <locationX>732</locationX>
@@ -1633,7 +1592,7 @@
         <name>Piano_Rate_Concedibile_SME</name>
         <label>Piano Rate Concedibile? (SME)</label>
         <locationX>732</locationX>
-        <locationY>6650</locationY>
+        <locationY>6314</locationY>
         <defaultConnector>
             <targetReference>Inserimento_Allegato_Obbligatorio</targetReference>
         </defaultConnector>
@@ -1690,7 +1649,7 @@
         <name>Residuo_Nullo</name>
         <label>Residuo Nullo?</label>
         <locationX>1150</locationX>
-        <locationY>8618</locationY>
+        <locationY>8282</locationY>
         <defaultConnector>
             <targetReference>Attesa_Modulo_Firmato_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1794,7 +1753,7 @@
         <name>Salva_o_Conferma_0</name>
         <label>Salva o Conferma?</label>
         <locationX>1700</locationX>
-        <locationY>7346</locationY>
+        <locationY>7010</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0</name>
@@ -1838,7 +1797,7 @@
         <name>Salva_o_Conferma_0_0</name>
         <label>Salva o Conferma?</label>
         <locationX>1414</locationX>
-        <locationY>6890</locationY>
+        <locationY>6554</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Annulla_0_0</name>
@@ -2157,7 +2116,7 @@
         <name>GetCodiceCausale</name>
         <label>GetCodiceCausale</label>
         <locationX>1150</locationX>
-        <locationY>7466</locationY>
+        <locationY>7130</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaCodiceCausale</targetReference>
@@ -2245,7 +2204,7 @@
         <name>GetSuspensioDays</name>
         <label>GetSuspensioDays</label>
         <locationX>1018</locationX>
-        <locationY>8738</locationY>
+        <locationY>8402</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_giorni_sospensione</targetReference>
@@ -2307,7 +2266,7 @@
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>732</locationX>
-        <locationY>6530</locationY>
+        <locationY>6194</locationY>
         <connector>
             <targetReference>Piano_Rate_Concedibile_SME</targetReference>
         </connector>
@@ -2317,7 +2276,7 @@
         <name>Passa_a_Chiuso</name>
         <label>Passa a &quot;Chiuso&quot;</label>
         <locationX>50</locationX>
-        <locationY>6890</locationY>
+        <locationY>6554</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -2334,7 +2293,7 @@
         <name>Passa_In_Attesa_Approvazione</name>
         <label>Passa &quot;In Attesa Approvazione&quot;</label>
         <locationX>1150</locationX>
-        <locationY>9410</locationY>
+        <locationY>9074</locationY>
         <connector>
             <targetReference>Inviare_ad_Approvazione</targetReference>
         </connector>
@@ -2527,7 +2486,7 @@
         <name>Copy_1_of_Screen_Documentale</name>
         <label>Copy 1 of Screen Documentale</label>
         <locationX>1062</locationX>
-        <locationY>7946</locationY>
+        <locationY>7610</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2584,7 +2543,7 @@
         <name>Inserimento_Allegato_Obbligatorio</name>
         <label>Inserimento Allegato Obbligatorio</label>
         <locationX>1414</locationX>
-        <locationY>6770</locationY>
+        <locationY>6434</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -3580,7 +3539,7 @@
         <name>ScreenDocumentale</name>
         <label>Screen Documentale</label>
         <locationX>1788</locationX>
-        <locationY>7130</locationY>
+        <locationY>6794</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3730,7 +3689,7 @@
         <name>Annullamento_Prestazione_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>1986</locationX>
-        <locationY>7466</locationY>
+        <locationY>7130</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3780,7 +3739,7 @@
         <name>Annullamento_Prestazione_0_0_0</name>
         <label>Annullamento Prestazione</label>
         <locationX>314</locationX>
-        <locationY>7010</locationY>
+        <locationY>6674</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -3871,7 +3830,7 @@
         <name>Copy_1_of_Annullamento_Prestazione</name>
         <label>Copy 1 of Annullamento Prestazione</label>
         <locationX>1018</locationX>
-        <locationY>8186</locationY>
+        <locationY>7850</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
