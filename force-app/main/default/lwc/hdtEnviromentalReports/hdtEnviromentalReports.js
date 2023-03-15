@@ -82,17 +82,17 @@ export default class HdtEnviromentalReports extends HdtRecordEditFormFlow {
                     this.operationGroupValue = value;
                     Promise.resolve().then(()=>{
                         this.operationTypeValue = this.template.querySelector("[data-id='TypeOperation__c']")?.value;
-                        this.materialValue = this.template.querySelector("[data-id='Material__c']")?.value;
+                        //this.materialValue = this.template.querySelector("[data-id='Material__c']")?.value;
                         if(!this.operationTypeValue){
-                            this.disableMaterial=false;
+                            this.disableMaterial=true;
                         }
                     });
                 }else{
                     this.operationTypeValue = value;
-                    Promise.resolve().then(()=>{
+                    /*Promise.resolve().then(()=>{
                         this.materialValue = this.template.querySelector("[data-id='Material__c']")?.value;
                         this.disableMaterial=false;
-                    });
+                    });*/
                 }
             }else{
                 this.materialValue = null;
