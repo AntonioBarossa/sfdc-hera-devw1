@@ -925,6 +925,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             if (this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']) {
                 this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
+                this.servicePointRetrievedData['SupplyStreetName__c'] = this.theRecord['Via'];
             }
             if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune']) {
                 this.servicePointRetrievedData['SupplyCity__c'] = this.theRecord['Comune'];
