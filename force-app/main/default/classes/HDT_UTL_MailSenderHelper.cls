@@ -19,8 +19,12 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             currentRecordId = caseList[0].Id;
         }
 
-        emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, comGestore);
-        return !(emailMessageList.size() == 0);
+        // emailMessageList = HDT_QR_MailSender.getEmailMessage(currentRecordId, comGestore);
+        // return !(emailMessageList.size() == 0);
+        
+        List<Case> finalRecordList = HDT_QR_MailSender.getCaseById(currentRecordId);
+        Set<String> allowedCasePhases = new Set<String>{'In attesa risposta Mail','Sollecito 1', 'Sollecito 2', 'Sollecito 3'};
+        return (finalRecordList.size() > 0 && allowedCasePhases.contains(finalRecordList[0].Phase__c));
     }
 
     public static HDT_WRP_MailSender.HDT_WRP_Result getReminderMetadataHelper(Id recordId) {
@@ -145,7 +149,27 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
             Case reminderCase = new Case();
             reminderCase.Id = caseId;
-            //reminderCase.Phase__c = '';
+            
+            List<Case> detailedCases = HDT_QR_MailSender.getCaseById(caseId);
+            String newPhase = '';
+            if(detailedCases.size() >0){
+                String oldPhase = detailedCases[0].Phase__c;
+                switch on oldPhase {
+                    when 'In attesa risposta Mail'{
+                        newPhase = 'Sollecito 1';
+                    }
+                    when 'Sollecito 1'{
+                        newPhase = 'Sollecito 2';
+                    }
+                    when 'Sollecito 2'{
+                        newPhase = 'Sollecito 3';
+                    }
+                }
+            }
+
+            if(!String.isBlank(newPhase)){
+                reminderCase.Phase__c = newPhase;
+            }
 
             SObjectType objtype = Schema.getGlobalDescribe().get('Case');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -300,7 +324,12 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 //mail.setBccAddresses(new List<String>{''});
             } else {
                 subjectString = comGestore;
-                caseResult = generateNewCase(mailStructure.recordId, isCaseObj);
+                List<Case> detailedCaseList = HDT_QR_MailSender.getCaseById(mailStructure.recordId);
+                if(detailedCaseList.size() > 0 && 'Comunicazione con il Gestore'.equalsIgnoreCase(detailedCaseList[0].Type)){
+                    caseResult = updateReminderCase(mailStructure.recordId, isCaseObj);
+                }else{
+                    caseResult = generateNewCase(mailStructure.recordId, isCaseObj);
+                }
     
                 if(!caseResult.success){
                     sendMailResult.success = false;
@@ -330,7 +359,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             sendMailResult.message = e.getMessage() + ' linea [' + String.valueOf(e.getLineNumber()) + ']';
         }
 
-        if(sendMailResult.success){
+        if(sendMailResult.success && !mailStructure.isReminder){
             Case caseUpdate = new Case(id=caseResult.caseId, Phase__c = 'In attesa risposta Mail',Status = 'In Lavorazione');
             HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         }

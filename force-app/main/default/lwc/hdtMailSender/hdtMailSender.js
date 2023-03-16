@@ -231,6 +231,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
                 this.spinner = false;
                 this.goToNewRecord();
                 this.closeAction();
+                eval("$A.get('e.force:refreshView').fire();");
             } else {
                 console.log('# FAIL #');
                 this.dispatchEvent(
