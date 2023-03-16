@@ -6,6 +6,10 @@ import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId
 import checkLastReadings from '@salesforce/apex/HDT_LC_SelfReading.checkLastReadings';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import gasCommodity from '@salesforce/label/c.gasCommodity';
+import processTypeAutoletturaCliente from '@salesforce/label/c.processTypeAutoletturaCliente';
+import autoletturaSmartMeterError from '@salesforce/label/c.autoletturaSmartMeterError';
+
 
 const columns = [
     {
@@ -23,7 +27,6 @@ const columns = [
         cellAttributes: { class: { fieldName: 'windowClass' } }
     }
 ];
-
 export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
@@ -191,16 +194,14 @@ export default class HdtSelfReading extends LightningElement {
             if (result === 'ERROR_NO_ASSET_NUMBER') {
                 lastReadings = this.emptyArrayAutoletturaDaProcesso();
             } else {
-                /*
-                usare per forzare il parametro GB_TELELETT
+
+                /*usare per forzare il parametro GB_TELELETT
                 let tempObj=JSON.parse(result);
                 tempObj.data['GB_TELELETT']='Y';
                 const parsedResult = JSON.parse( JSON.stringify(tempObj));
-                */
+                   */
                 const parsedResult = JSON.parse( result);
-
                 // Verifichiamo se la response contiene un errore da SAP.
-                console.log('check last reading new field: '+JSON.stringify(parsedResult));
                 if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
                     this.isLoading = false;
                     this.buttonDisabled = false;
@@ -209,8 +210,8 @@ export default class HdtSelfReading extends LightningElement {
                     return;
                 }
                 lastReadings = this.fillLastReadingsArray(parsedResult);
-                if(this.commodity==='Gas' && this.processType==='Autolettura da cliente' && parsedResult.data?.GB_TELELETT && parsedResult.data.GB_TELELETT.toLowerCase()==='y'){
-                    this.showToastMessage("SMART METER LETTURA NON ACQUISIBILE");
+                if(this.commodity.toLowerCase()===gasCommodity && this.processType.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.GB_TELELETT && parsedResult.data.GB_TELELETT.toLowerCase()==='y'){
+                    this.showToastMessage(autoletturaSmartMeterError);
                     forceAbort=true;
                 }
             }
@@ -230,9 +231,7 @@ export default class HdtSelfReading extends LightningElement {
                     //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
                 });
             }
-            if(forceAbort){
-                this.template.querySelector('c-hdt-flow-navigation-button').clickAbort();
-            }
+            if(forceAbort) this.template.querySelector('c-hdt-flow-navigation-button').clickAbort();
         }).catch(error =>{
             this.isLoading = false;
             this.buttonDisabled = false;
