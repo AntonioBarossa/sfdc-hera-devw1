@@ -25,4 +25,5 @@ global inherited sharing class HDT_UTL_SegnalazioniCriteria implements wrts_prcg
         }
         return result;
     }
+
 }
