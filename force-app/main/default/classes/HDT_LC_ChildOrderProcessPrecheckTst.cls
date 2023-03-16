@@ -27,9 +27,9 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
             HDT_UTL_DataFactoryTst.pClickInstance();
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-            List<Account> accDistr = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accDistr = HDT_UTL_DataFactoryTst.createSimpleAccountDistributore(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(3,true,'MMS','G3 - MMS Azienda','Aziende SME');
 
             List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,false);
             points[0].RecordTypeId = constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
@@ -176,7 +176,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         VasSubtype__c,
                         ServicePoint__r.SapContractStatus__c,
                         ServicePoint__r.CommoditySector__c,
-                        isSTG__c
+                        isSTG__c,
+                        RateCategory__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -215,7 +216,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                         SupplyCity__c,
                      	AccountId,
                      	Account.RecordType.DeveloperName,
-                        SupplyType__c
+                        SupplyType__c,
+                        RateCategory__c
                         From Order
                         WHERE Name = 'testOrderName0'];
         
@@ -272,7 +274,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                          CommodityFormula__c,
                      	 Account.RecordType.DeveloperName,
                          SupplyCity__c,
-                         SupplyType__c                          
+                         SupplyType__c,
+                         RateCategory__c                          
                          From Order
                          WHERE Name = 'testOrderName0'];
             
@@ -331,7 +334,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -390,7 +394,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      CommodityFormula__c,
                      SupplyCity__c,
                      Account.RecordType.DeveloperName,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -448,7 +453,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -515,7 +521,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             
@@ -785,7 +792,8 @@ public class HDT_LC_ChildOrderProcessPrecheckTst {
                      ServicePoint__r.isReseller__c,
                      Account.RecordType.DeveloperName,
                      CommodityFormula__c,
-                     SupplyType__c
+                     SupplyType__c,
+                     RateCategory__c
                      From Order
                      WHERE Name = 'testOrderName0'];
             

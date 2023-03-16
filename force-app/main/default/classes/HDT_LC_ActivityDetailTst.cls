@@ -28,7 +28,7 @@ public class HDT_LC_ActivityDetailTst {
             HDT_UTL_DataFactoryTst.pClickInstance();
 		    HDT_UTL_DataFactoryTst.pClickCasePhase();
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;
 
 			List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(1,true,accId,'Bozza');

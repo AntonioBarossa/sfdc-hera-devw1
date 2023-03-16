@@ -21,7 +21,7 @@ public with sharing class HDT_UTL_DoubleCalloutPreventionTst {
         HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Bozza',constants.CASE_RECORDTYPEID_AUTOLETTURA,constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA);
 
 
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','G3 - MMS Azienda','Aziende SME');
         insert accs;
         List<Contact> conts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
         conts[0].Company__c='MMS';

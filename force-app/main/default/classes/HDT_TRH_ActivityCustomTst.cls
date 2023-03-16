@@ -134,7 +134,7 @@ public with sharing class HDT_TRH_ActivityCustomTst{
 		System.runAs(tUser){
 
 			test.startTest();
-			List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+			List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 			accs[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Partner').getRecordTypeId();
 			accs[0].CompanyOwner__c = null;
 			update accs;

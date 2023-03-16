@@ -9,7 +9,7 @@ public with sharing class HDT_UTL_CreditCheckTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.newPhaseTransition('Credit Check KO','Bozza',constants.ORDER_RECORDTYPEID_SUBENTRO,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SUBENTRO);
 
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'MMS','G3 - MMS Azienda','Aziende SME');
         insert accs;
         List<Contact> conts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
         conts[0].Company__c='MMS';
