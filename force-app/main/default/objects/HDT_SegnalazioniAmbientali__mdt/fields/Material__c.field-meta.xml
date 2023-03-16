@@ -13,87 +13,87 @@
             <value>
                 <fullName>ABITI USATI</fullName>
                 <default>false</default>
-                <label>ABITI USATI</label>
+                <label>Abiti usati</label>
             </value>
             <value>
                 <fullName>AMIANTO</fullName>
                 <default>false</default>
-                <label>AMIANTO</label>
+                <label>Amianto</label>
             </value>
             <value>
                 <fullName>AMIANTO/ETHERNIT</fullName>
                 <default>false</default>
-                <label>AMIANTO/ETHERNIT</label>
+                <label>Amianto/Ethernit</label>
             </value>
             <value>
                 <fullName>ANIMALI D&apos;AFFEZIONE</fullName>
                 <default>false</default>
-                <label>ANIMALI D&apos;AFFEZIONE</label>
+                <label>Animali d&apos;affezione</label>
             </value>
             <value>
                 <fullName>BUCHE SU STRADA</fullName>
                 <default>false</default>
-                <label>BUCHE SU STRADA</label>
+                <label>Buche su strada</label>
             </value>
             <value>
                 <fullName>CADUTA CALCINACCI</fullName>
                 <default>false</default>
-                <label>CADUTA CALCINACCI</label>
+                <label>Caduta calcinacci</label>
             </value>
             <value>
                 <fullName>CARCASSE ANIMALI</fullName>
                 <default>false</default>
-                <label>CARCASSE ANIMALI</label>
+                <label>Carcasse animali</label>
             </value>
             <value>
                 <fullName>CARTA</fullName>
                 <default>false</default>
-                <label>CARTA</label>
+                <label>Carta</label>
             </value>
             <value>
                 <fullName>CARTA/CARTONE</fullName>
                 <default>false</default>
-                <label>CARTA/CARTONE</label>
+                <label>Carta/Cartone</label>
             </value>
             <value>
                 <fullName>CARTONE_SOLOAZIENDE</fullName>
                 <default>false</default>
-                <label>CARTONE_SOLOAZIENDE</label>
+                <label>Cartone_soloAziende</label>
             </value>
             <value>
                 <fullName>CESTINI</fullName>
                 <default>false</default>
-                <label>CESTINI</label>
+                <label>cestini</label>
             </value>
             <value>
                 <fullName>CON RIMOZIONE</fullName>
                 <default>false</default>
-                <label>CON RIMOZIONE</label>
+                <label>Con rimozione</label>
             </value>
             <value>
                 <fullName>DISTANZACASSONDADOMICILIOUT</fullName>
                 <default>false</default>
-                <label>DISTANZACASSONDADOMICILIOUT</label>
+                <label>DistanzaCassonDaDomicilioUT</label>
             </value>
             <value>
                 <fullName>ECOSELF (CARTA E PLASTICA)</fullName>
                 <default>false</default>
-                <label>ECOSELF (CARTA E PLASTICA)</label>
+                <label>ECOSELF (carta e plastica)</label>
             </value>
             <value>
                 <fullName>FANGOSI NON PERICOLOSI</fullName>
                 <default>false</default>
-                <label>FANGOSI NON PERICOLOSI</label>
+                <label>Fangosi non pericolosi</label>
             </value>
             <value>
                 <fullName>FANGOSI PERICOLOSI</fullName>
                 <default>false</default>
-                <label>FANGOSI PERICOLOSI</label>
+                <label>Fangosi pericolosi</label>
             </value>
             <value>
                 <fullName>FARMACI</fullName>
                 <default>false</default>
-                <label>FARMACI</label>
+                <label>Farmaci</label>
             </value>
             <value>
                 <fullName>FITOFARMACI</fullName>
@@ -103,22 +103,22 @@
             <value>
                 <fullName>INGOMBRANTI</fullName>
                 <default>false</default>
-                <label>INGOMBRANTI</label>
+                <label>Ingombranti</label>
             </value>
             <value>
                 <fullName>INGOMBRANTI+RAEE</fullName>
                 <default>false</default>
-                <label>INGOMBRANTI+RAEE</label>
+                <label>Ingombranti+Raee</label>
             </value>
             <value>
                 <fullName>LATTINE</fullName>
                 <default>false</default>
-                <label>LATTINE</label>
+                <label>Lattine</label>
             </value>
             <value>
                 <fullName>LAVAGGIO/PULIZIA SEDE STRADALE</fullName>
                 <default>false</default>
-                <label>LAVAGGIO/PULIZIA SEDE STRADALE</label>
+                <label>Lavaggio/pulizia sede stradale</label>
             </value>
             <value>
                 <fullName>LEGNO</fullName>
@@ -128,107 +128,107 @@
             <value>
                 <fullName>LEGNO_SOLOAZIENDE</fullName>
                 <default>false</default>
-                <label>LEGNO_SOLOAZIENDE</label>
+                <label>Legno_soloAziende</label>
             </value>
             <value>
                 <fullName>LIQUIDI NON PERICOLOSI</fullName>
                 <default>false</default>
-                <label>LIQUIDI NON PERICOLOSI</label>
+                <label>Liquidi non pericolosi</label>
             </value>
             <value>
                 <fullName>LIQUIDI PERICOLOSI</fullName>
                 <default>false</default>
-                <label>LIQUIDI PERICOLOSI</label>
+                <label>Liquidi pericolosi</label>
             </value>
             <value>
                 <fullName>MACERIE</fullName>
                 <default>false</default>
-                <label>MACERIE</label>
+                <label>Macerie</label>
             </value>
             <value>
                 <fullName>MARCIAPIEDE</fullName>
                 <default>false</default>
-                <label>MARCIAPIEDE</label>
+                <label>Marciapiede</label>
             </value>
             <value>
                 <fullName>MULTIMATERIALE</fullName>
                 <default>false</default>
-                <label>MULTIMATERIALE</label>
+                <label>Multimateriale</label>
             </value>
             <value>
                 <fullName>NESSUN MATERIALE</fullName>
                 <default>false</default>
-                <label>NESSUN MATERIALE</label>
+                <label>Nessun materiale</label>
             </value>
             <value>
                 <fullName>OLIO SU STRADA</fullName>
                 <default>false</default>
-                <label>OLIO SU STRADA</label>
+                <label>Olio su strada</label>
             </value>
             <value>
                 <fullName>OLIO VEGETALE/ALIMENTARE</fullName>
                 <default>false</default>
-                <label>OLIO VEGETALE/ALIMENTARE</label>
+                <label>Olio vegetale/Alimentare</label>
             </value>
             <value>
                 <fullName>ORGANICO</fullName>
                 <default>false</default>
-                <label>ORGANICO</label>
+                <label>Organico</label>
             </value>
             <value>
                 <fullName>ORGANICO_SOLOUTNONDOM</fullName>
                 <default>false</default>
-                <label>ORGANICO_SOLOUTNONDOM</label>
+                <label>Organico_soloUTNonDom</label>
             </value>
             <value>
                 <fullName>PANNOLINI</fullName>
                 <default>false</default>
-                <label>PANNOLINI</label>
+                <label>Pannolini</label>
             </value>
             <value>
                 <fullName>PANNOLINI/PANNOLONI</fullName>
                 <default>false</default>
-                <label>PANNOLINI/PANNOLONI</label>
+                <label>Pannolini/Pannoloni</label>
             </value>
             <value>
                 <fullName>PILE</fullName>
                 <default>false</default>
-                <label>PILE</label>
+                <label>Pile</label>
             </value>
             <value>
                 <fullName>PILE/BATTERIE</fullName>
                 <default>false</default>
-                <label>PILE/BATTERIE</label>
+                <label>Pile/Batterie</label>
             </value>
             <value>
                 <fullName>PISTA CICLABILE</fullName>
                 <default>false</default>
-                <label>PISTA CICLABILE</label>
+                <label>Pista ciclabile</label>
             </value>
             <value>
                 <fullName>PLASTICA</fullName>
                 <default>false</default>
-                <label>PLASTICA</label>
+                <label>Plastica</label>
             </value>
             <value>
                 <fullName>PLASTICA/LATTINE</fullName>
                 <default>false</default>
-                <label>PLASTICA/LATTINE</label>
+                <label>Plastica/Lattine</label>
             </value>
             <value>
                 <fullName>PORTICO</fullName>
                 <default>false</default>
-                <label>PORTICO</label>
+                <label>Portico</label>
             </value>
             <value>
                 <fullName>POTATURE</fullName>
                 <default>false</default>
-                <label>POTATURE</label>
+                <label>Potature</label>
             </value>
             <value>
                 <fullName>PSEUDOEDILI</fullName>
                 <default>false</default>
-                <label>PSEUDOEDILI</label>
+                <label>Pseudoedili</label>
             </value>
             <value>
                 <fullName>RAEE</fullName>
@@ -243,12 +243,12 @@
             <value>
                 <fullName>RIFIUTI SPECIALI</fullName>
                 <default>false</default>
-                <label>RIFIUTI SPECIALI</label>
+                <label>Rifiuti Speciali</label>
             </value>
             <value>
                 <fullName>RIMOZIONE/ROVESCIAMENTO CASSON</fullName>
                 <default>false</default>
-                <label>RIMOZIONE/ROVESCIAMENTO CASSON</label>
+                <label>Rimozione/Rovesciamento casson</label>
             </value>
             <value>
                 <fullName>RSU</fullName>
@@ -258,52 +258,52 @@
             <value>
                 <fullName>RSU_SOLOAZIENDE</fullName>
                 <default>false</default>
-                <label>RSU_SOLOAZIENDE</label>
+                <label>RSU_SoloAziende</label>
             </value>
             <value>
                 <fullName>SEDE STRADALE</fullName>
                 <default>false</default>
-                <label>SEDE STRADALE</label>
+                <label>Sede stradale</label>
             </value>
             <value>
                 <fullName>SFALCI E POTATURE</fullName>
                 <default>false</default>
-                <label>SFALCI E POTATURE</label>
+                <label>Sfalci e potature</label>
             </value>
             <value>
                 <fullName>SIRINGHE</fullName>
                 <default>false</default>
-                <label>SIRINGHE</label>
+                <label>Siringhe</label>
             </value>
             <value>
                 <fullName>SOLIDI NON PERICOLOSI</fullName>
                 <default>false</default>
-                <label>SOLIDI NON PERICOLOSI</label>
+                <label>Solidi non pericolosi</label>
             </value>
             <value>
                 <fullName>SOLIDI PERICOLOSI</fullName>
                 <default>false</default>
-                <label>SOLIDI PERICOLOSI</label>
+                <label>Solidi pericolosi</label>
             </value>
             <value>
                 <fullName>TONER</fullName>
                 <default>false</default>
-                <label>TONER</label>
+                <label>Toner</label>
             </value>
             <value>
                 <fullName>UTENZA INSERITA IN PAP_CENTRO</fullName>
                 <default>false</default>
-                <label>UTENZA INSERITA IN PAP_CENTRO</label>
+                <label>Utenza inserita in PAP_CENTRO</label>
             </value>
             <value>
                 <fullName>UTENZA INSERITA IN PAP_ZAI</fullName>
                 <default>false</default>
-                <label>UTENZA INSERITA IN PAP_ZAI</label>
+                <label>Utenza inserita in PAP_ZAI</label>
             </value>
             <value>
                 <fullName>VERDE</fullName>
                 <default>false</default>
-                <label>VERDE</label>
+                <label>Verde</label>
             </value>
             <value>
                 <fullName>VERDE/SFALCI/POTATURE</fullName>
@@ -313,22 +313,22 @@
             <value>
                 <fullName>VETRI A TERRA</fullName>
                 <default>false</default>
-                <label>VETRI A TERRA</label>
+                <label>Vetri a terra</label>
             </value>
             <value>
                 <fullName>VETRO</fullName>
                 <default>false</default>
-                <label>VETRO</label>
+                <label>Vetro</label>
             </value>
             <value>
                 <fullName>VETRO/PLASTICA/LATTINE</fullName>
                 <default>false</default>
-                <label>VETRO/PLASTICA/LATTINE</label>
+                <label>Vetro/Plastica/Lattine</label>
             </value>
             <value>
                 <fullName>VETRO/VETRO + LATTINE</fullName>
                 <default>false</default>
-                <label>VETRO/VETRO + LATTINE</label>
+                <label>Vetro/Vetro + lattine</label>
             </value>
             <value>
                 <fullName>VETRO+LATTINE</fullName>
