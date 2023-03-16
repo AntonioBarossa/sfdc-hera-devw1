@@ -324,7 +324,12 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 //mail.setBccAddresses(new List<String>{''});
             } else {
                 subjectString = comGestore;
-                caseResult = generateNewCase(mailStructure.recordId, isCaseObj);
+                List<Case> detailedCaseList = HDT_QR_MailSender.getCaseById(mailStructure.recordId);
+                if(detailedCaseList.size() > 0 && 'Comunicazione con il Gestore'.equalsIgnoreCase(detailedCaseList[0].Type)){
+                    caseResult = updateReminderCase(mailStructure.recordId, isCaseObj);
+                }else{
+                    caseResult = generateNewCase(mailStructure.recordId, isCaseObj);
+                }
     
                 if(!caseResult.success){
                     sendMailResult.success = false;
