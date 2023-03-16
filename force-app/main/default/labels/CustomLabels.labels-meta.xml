@@ -1234,4 +1234,25 @@
         <shortDescription>UrlImportBonusSociale</shortDescription>
         <value>https://heravendita.lightning.force.com/lightning/r/Knowledge__kav/ka02o000000cvf1AAA/view</value>
     </labels>
+    <labels>
+        <fullName>gasCommodity</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>gasCommodity</shortDescription>
+        <value>gas</value>
+    </labels>
+    <labels>
+        <fullName>processTypeAutoletturaCliente</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>processTypeAutoletturaCliente</shortDescription>
+        <value>autolettura da cliente</value>
+    </labels>
+    <labels>
+        <fullName>autoletturaSmartMeterError</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>autoletturaSmartMeterError</shortDescription>
+        <value>Smart meter lettura non acquisibile</value>
+    </labels>
 </CustomLabels>
