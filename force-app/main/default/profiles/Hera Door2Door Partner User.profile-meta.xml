@@ -35806,7 +35806,7 @@
         <recordType>Order.HDT_RT_CambioTariffa</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazioni Ambiente</layout>
+        <layout>Order-Subentro ambiente</layout>
         <recordType>Order.HDT_RT_SubentroAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
