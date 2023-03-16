@@ -5,7 +5,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>1766</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -28,7 +28,7 @@
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
         <locationX>974</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -51,7 +51,7 @@
         <name>AssignEbike</name>
         <label>AssignEbike</label>
         <locationX>2822</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistEbike</assignToReference>
             <operator>Assign</operator>
@@ -83,7 +83,7 @@
         <name>AssignFotoVoltaico</name>
         <label>AssignFotoVoltaico</label>
         <locationX>3614</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistFotoVoltaico</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignLED</name>
         <label>AssignLED</label>
         <locationX>446</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
             <operator>Assign</operator>
@@ -186,7 +186,7 @@
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
         <locationX>3086</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
@@ -202,7 +202,7 @@
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
         <locationX>2558</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -225,7 +225,7 @@
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
         <locationX>1502</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -248,7 +248,7 @@
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
         <locationX>1238</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -271,7 +271,7 @@
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
         <locationX>2294</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -294,7 +294,7 @@
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
         <locationX>2030</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
             <operator>Assign</operator>
@@ -310,7 +310,7 @@
         <name>AssignSanifica</name>
         <label>AssignSanifica</label>
         <locationX>3350</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
@@ -326,7 +326,7 @@
         <name>AssignThermo</name>
         <label>AssignThermo</label>
         <locationX>710</locationX>
-        <locationY>5846</locationY>
+        <locationY>5966</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -418,7 +418,7 @@
         <name>Vas_PresentiAssign</name>
         <label>Vas PresentiAssign</label>
         <locationX>2162</locationX>
-        <locationY>5606</locationY>
+        <locationY>5726</locationY>
         <assignmentItems>
             <assignToReference>VariableVasPresenti</assignToReference>
             <operator>Assign</operator>
@@ -1095,7 +1095,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1216</locationX>
-        <locationY>5486</locationY>
+        <locationY>5606</locationY>
         <defaultConnector>
             <targetReference>Vas_PresentiAssign</targetReference>
         </defaultConnector>
@@ -1120,7 +1120,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2162</locationX>
-        <locationY>5726</locationY>
+        <locationY>5846</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1405,14 +1405,14 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>182</locationX>
-        <locationY>5246</locationY>
+        <locationY>5366</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Servizi_Bundle</targetReference>
+            <targetReference>ChannelDecision</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1462,7 +1462,7 @@
         <locationY>5126</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
+            <targetReference>Servizi_Bundle</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -4651,12 +4651,12 @@
         <name>Servizi_Bundle</name>
         <label>Servizi Bundle</label>
         <locationX>182</locationX>
-        <locationY>6254</locationY>
+        <locationY>5246</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>ChannelDecision</targetReference>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
         <fields>
             <name>PCF_BUNDLE_FAM_TITLE_GAS</name>
@@ -4902,7 +4902,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1216</locationX>
-        <locationY>5366</locationY>
+        <locationY>5486</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
