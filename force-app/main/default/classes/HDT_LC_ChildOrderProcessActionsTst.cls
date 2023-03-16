@@ -22,7 +22,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
 		insert internalUser;
 
-		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false)};
+		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager', false)};
 
 		insert permissionSetAssignments;
 
@@ -120,7 +120,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             myAccountResidenziale.RecordTypeId = accountResidenziale;
             myAccountResidenziale.Name = 'Test Residenziale';
             myAccountResidenziale.CompanyOwner__c = 'MMS';
-            myAccountResidenziale.CustomerMarking__c = 'MMS Persona fisica';
+            myAccountResidenziale.CustomerMarking__c = 'G1 - MMS Persona fisica';
             myAccountResidenziale.Category__c = 'Famiglie';
             myAccountResidenziale.BillingCityCode__c='Roma';
 			myAccountResidenziale.BillingStreetName__c='via roma';
@@ -1246,10 +1246,9 @@ public class HDT_LC_ChildOrderProcessActionsTst {
     static void testSaveDraftAccount(){
         
         Test.startTest();
-
             List<Account> tAccount=[SELECT Id,Name, PrimaryEmail__c
                                 FROM Account
-                                WHERE Name='INRETE DIST. ENER.-13R0000000'
+                                WHERE Name='MARCO ROSSI'
                                 LIMIT 1];
 
 
@@ -1259,7 +1258,6 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
             String updatedEmail = [SELECT PrimaryEmail__c FROM Account WHERE Id =: tAccount[0].Id].PrimaryEmail__c;
             System.assertEquals(tAccount[0].PrimaryEmail__c, updatedEmail, 'test.primary@email.com');
-        
         Test.stopTest();
 
     }
@@ -1360,7 +1358,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Account> tAccount=[SELECT Id,Name, PrimaryEmail__c
                                 FROM Account
-                                WHERE Name='INRETE DIST. ENER.-13R0000000'
+                                WHERE Name='MARCO ROSSI'
                                 LIMIT 1];
 
         tAccount[0].PrimaryEmail__c = 'test.primary@email.com';
