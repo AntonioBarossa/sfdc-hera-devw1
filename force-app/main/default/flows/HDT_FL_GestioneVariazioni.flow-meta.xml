@@ -4179,6 +4179,11 @@
         <scale>2</scale>
     </formulas>
     <formulas>
+        <name>FormulaMostraSezioneAllegati</name>
+        <dataType>Boolean</dataType>
+        <expression> IF((ISPICKVAL({!GetInputCase.Commodity__c}, &quot;Acqua&quot;)), True, False)</expression>
+    </formulas>
+    <formulas>
         <name>NextLabel</name>
         <dataType>String</dataType>
         <expression>IF(
@@ -8433,7 +8438,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>addContentDocument</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <elementReference>FormulaMostraSezioneAllegati</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>

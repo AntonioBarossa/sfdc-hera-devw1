@@ -836,7 +836,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1106</locationX>
-        <locationY>3782</locationY>
+        <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -859,7 +859,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1370</locationX>
-        <locationY>3542</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
             <operator>Assign</operator>
@@ -875,7 +875,7 @@
         <name>AssegnaValoriParere_0_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
         <locationX>1634</locationX>
-        <locationY>3302</locationY>
+        <locationY>3182</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1205,7 +1205,7 @@
         <name>AssegnaValoriParere_6</name>
         <label>AssegnaValoriParere</label>
         <locationX>2426</locationX>
-        <locationY>3542</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1390,36 +1390,6 @@
         </assignmentItems>
         <connector>
             <targetReference>AssegnaCollection</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>assignParamsAttachments</name>
-        <label>assignParamsAttachments</label>
-        <locationX>1832</locationX>
-        <locationY>2606</locationY>
-        <assignmentItems>
-            <assignToReference>paramsAttachmentsTari.city</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachmentsTari.SupplyCity__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsAttachmentsTari.cluster</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachmentsTari.Cluster__c</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>paramsAttachmentsTari.processType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getPreAttachmentsTari.Type</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Gestione_Allegati_Tari</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1625,7 +1595,7 @@
         <name>Copy_2_of_AssegnaValoriParere</name>
         <label>AssegnaValoriParere</label>
         <locationX>1898</locationX>
-        <locationY>3542</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1748,7 +1718,7 @@
         <name>Copy_4_of_AssegnaValoriParere</name>
         <label>AssegnaValoriParere</label>
         <locationX>2162</locationX>
-        <locationY>3542</locationY>
+        <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1803,7 +1773,7 @@
         <name>OutputCase_0</name>
         <label>OutputCase</label>
         <locationX>1964</locationX>
-        <locationY>4214</locationY>
+        <locationY>4094</locationY>
         <assignmentItems>
             <assignToReference>CaseId</assignToReference>
             <operator>Assign</operator>
@@ -1920,7 +1890,7 @@
         <name>Modalit_Comunicazione</name>
         <label>Modalità Comunicazione</label>
         <locationX>1238</locationX>
-        <locationY>3422</locationY>
+        <locationY>3302</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -2281,7 +2251,7 @@
         <name>Quale_Processo_Parent_0_0_0</name>
         <label>Quale Processo Parent?</label>
         <locationX>1964</locationX>
-        <locationY>3182</locationY>
+        <locationY>3062</locationY>
         <defaultConnector>
             <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
         </defaultConnector>
@@ -2445,7 +2415,7 @@
         <name>Copy_1_of_Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
         <locationX>1898</locationX>
-        <locationY>3422</locationY>
+        <locationY>3302</locationY>
         <connector>
             <targetReference>Copy_2_of_AssegnaValoriParere</targetReference>
         </connector>
@@ -2480,7 +2450,7 @@
         <name>Copy_2_of_Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
         <locationX>2162</locationX>
-        <locationY>3422</locationY>
+        <locationY>3302</locationY>
         <connector>
             <targetReference>Copy_4_of_AssegnaValoriParere</targetReference>
         </connector>
@@ -2515,7 +2485,7 @@
         <name>Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
         <locationX>1106</locationX>
-        <locationY>3662</locationY>
+        <locationY>3542</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0</targetReference>
         </connector>
@@ -2556,7 +2526,7 @@
         <name>Crea_Activity_Richiesta_Parere_3</name>
         <label>Crea Activity Richiesta Parere</label>
         <locationX>2426</locationX>
-        <locationY>3422</locationY>
+        <locationY>3302</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_6</targetReference>
         </connector>
@@ -2591,7 +2561,7 @@
         <name>Copy_1_of_Get_Template</name>
         <label>Get Template</label>
         <locationX>1898</locationX>
-        <locationY>3302</locationY>
+        <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_Crea_Activity_Richiesta_Parere</targetReference>
@@ -2612,7 +2582,7 @@
         <name>Copy_2_of_Get_Template</name>
         <label>Get Template</label>
         <locationX>2162</locationX>
-        <locationY>3302</locationY>
+        <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_2_of_Crea_Activity_Richiesta_Parere</targetReference>
@@ -2654,7 +2624,7 @@
         <name>Get_Parere_Aggiornato</name>
         <label>Get Parere Aggiornato</label>
         <locationX>1964</locationX>
-        <locationY>3062</locationY>
+        <locationY>2942</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Quale_Processo_Parent_0_0_0</targetReference>
@@ -2675,7 +2645,7 @@
         <name>Get_Template</name>
         <label>Get Template</label>
         <locationX>1106</locationX>
-        <locationY>3542</locationY>
+        <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere</targetReference>
@@ -2696,7 +2666,7 @@
         <name>Get_Template_3</name>
         <label>Get Template</label>
         <locationX>2426</locationX>
-        <locationY>3302</locationY>
+        <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere_3</targetReference>
@@ -2717,7 +2687,7 @@
         <name>getOpinionTableRequest</name>
         <label>getOpinionTableRequest</label>
         <locationX>1238</locationX>
-        <locationY>3302</locationY>
+        <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Modalit_Comunicazione</targetReference>
@@ -2776,14 +2746,14 @@
         <locationY>2486</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>assignParamsAttachments</targetReference>
+            <targetReference>Gestione_Allegati_Tari</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputCase</elementReference>
+                <elementReference>IdParere</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2836,7 +2806,7 @@
         <name>Aggiorna_Case_Richiesta_Parere</name>
         <label>Aggiorna Case Richiesta Parere</label>
         <locationX>1964</locationX>
-        <locationY>4094</locationY>
+        <locationY>3974</locationY>
         <connector>
             <targetReference>OutputCase_0</targetReference>
         </connector>
@@ -2863,7 +2833,7 @@
         <name>updateAttachmentsTari</name>
         <label>updateAttachmentsTari</label>
         <locationX>1832</locationX>
-        <locationY>2846</locationY>
+        <locationY>2726</locationY>
         <connector>
             <targetReference>Get_Parere_Aggiornato</targetReference>
         </connector>
@@ -2966,7 +2936,7 @@
         <name>Gestione_Allegati_Tari</name>
         <label>Gestione Allegati Tari</label>
         <locationX>1832</locationX>
-        <locationY>2726</locationY>
+        <locationY>2606</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2997,13 +2967,7 @@
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>InputCase</elementReference>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>paramsWrap</name>
-                <value>
-                    <elementReference>paramsAttachmentsTari</elementReference>
+                    <elementReference>IdParere</elementReference>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
