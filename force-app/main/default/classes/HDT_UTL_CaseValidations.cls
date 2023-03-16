@@ -1276,6 +1276,16 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     else{
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                     }
+                }else if ('Acqua'.equalsIgnoreCase(commodity) && 'Nuovo Impianto'.equalsIgnoreCase(currentCase.Type)){
+                    String useSubCategory = getFieldValue(fields, 'UseSubCategory__c');
+                    String intendedUse = getFieldValue(fields, 'IntendedUse__c');
+                    Set<String> setValidIntendedUses = new Set<String>{'Antincendio', 'Ospedali/case di cura/'};
+        
+                    if('Uso pubblico non disalimentabile'.equalsIgnoreCase(useSubCategory) && !setValidIntendedUses.contains(intendedUse)){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Errore di coerenza tra Sottotipologia e Destinazione D\'Uso. Per la Sottotipologia selezionata, inserire Antincendio o Ospedali/case di cura come Destinazione D\'Uso.'));
+                    }else{
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                    }
                 }else{
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                 }

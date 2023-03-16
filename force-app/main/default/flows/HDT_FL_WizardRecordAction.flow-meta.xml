@@ -45,13 +45,6 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_case.Description</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>CaseDescription</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
             <assignToReference>Get_case.Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -123,7 +116,7 @@
     <formulas>
         <name>CaseNote</name>
         <dataType>String</dataType>
-        <expression>IF(LEN({!Get_case.Note__c})&gt;0, {!Get_case.Note__c}&amp;BR()&amp;{!$Label.Note_Ultimo_Sollecito} &amp;{!Note}, {!$Label.Note_Ultimo_Sollecito} &amp;{!Note})</expression>
+        <expression>IF(LEN({!Get_case.Note__c})&gt;0, {!Get_case.Note__c}&amp;BR()&amp;{!$Label.Note_Ultimo_Sollecito} &amp; &quot; &quot; &amp; {!Note}, {!$Label.Note_Ultimo_Sollecito} &amp; &quot; &quot; &amp; {!Note})</expression>
     </formulas>
     <interviewLabel>HDT_FL_WizardRecordAction {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_WizardRecordAction</label>
@@ -188,6 +181,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Completata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>PhoneNumber__c</field>
             <value>
                 <elementReference>Get_case.PhoneNumber__c</elementReference>
@@ -203,6 +202,12 @@
             <field>Status</field>
             <value>
                 <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Subject</field>
+            <value>
+                <stringValue>Sollecito Integrato</stringValue>
             </value>
         </inputAssignments>
         <inputAssignments>
@@ -298,13 +303,19 @@
             <targetReference>HDT_UTL_Case_caseFlowPredefaults_sollecito</targetReference>
         </connector>
         <fields>
+            <name>Text_Invia_Sollecito</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Invia sollecito a SAP&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Compila le note del sollecito&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>Note</name>
             <fieldText>Note</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <nextOrFinishButtonLabel>Invia</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
+        <showHeader>false</showHeader>
     </screens>
     <start>
         <locationX>56</locationX>

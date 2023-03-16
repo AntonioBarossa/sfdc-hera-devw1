@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_EmailMessage {
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         List<Case> caseList = (List<Case>) recordList;
         
@@ -134,6 +134,7 @@ public with sharing class HDT_SRV_EmailMessage {
                 System.debug(LoggingLevel.DEBUG, debugString + ' - Incoming Mail, case type: ' + caseRecord.Type);
                 
                 if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type) /* || CASE_TYPE4.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE5.equalsIgnoreCase(caseRecord.Type) */ || CASE_TYPE6.equalsIgnoreCase(caseRecord.Type)){ // HRAWRM-1941 (3 Riadattamento Processo)
+                        String oldPhase = caseRecord.Phase__c;
                         caseRecord.Phase__c = 'Risposta ricevuta';
                         //Gestione avanzamento ParentCase di Reclamo
                         if(CASE_TYPE3.equals(caseRecord.Type)){
@@ -145,6 +146,11 @@ public with sharing class HDT_SRV_EmailMessage {
                                 caseToUpdate.add(parentRecord);
                                 System.debug(LoggingLevel.DEBUG, debugString + ' - ### adding parentRecord --> ' + parentRecord);
                             }
+                        }else if (CASE_TYPE6.equals(caseRecord.Type) && !'Risposta ricevuta'.equalsIgnoreCase(oldPhase)){
+                            DateTime nowDateTime = DateTime.now();
+                            caseRecord.PhaseStory__c = oldPhase+'@@Risposta ricevuta@@'+nowDateTime.getTime()+'@@A||'+caseRecord.PhaseStory__c;
+                            
+                            HDT_UTL_Case.createActivity(caseRecord.Id, '', 'Risposta Ricevuta', 'Risposta Ricevuta');
                         }
                 }
                 caseToUpdate.add(caseRecord);
