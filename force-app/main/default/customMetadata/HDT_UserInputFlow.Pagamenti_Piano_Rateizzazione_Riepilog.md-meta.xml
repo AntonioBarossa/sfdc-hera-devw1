@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>ValidateClass__c</field>
-        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidationsExt</value>
     </values>
 </CustomMetadata>
