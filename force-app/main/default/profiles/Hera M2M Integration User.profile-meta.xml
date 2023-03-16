@@ -35385,10 +35385,6 @@
         <recordType>Case.HDT_RT_Segnalazioni</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-Subentro ambiente</layout>
-        <recordType>Case.HDT_RT_SubentroAmbiente</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>CaseClose-Close Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
