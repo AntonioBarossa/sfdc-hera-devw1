@@ -33,7 +33,7 @@ public class HDT_BA_CampaignBollettaTst {
             List<Lead> leads = HDT_UTL_DataFactoryTst.createLead(50,true); 
                 
                 
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(50,false,accId);

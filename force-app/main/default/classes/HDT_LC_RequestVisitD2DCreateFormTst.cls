@@ -27,7 +27,7 @@ public class HDT_LC_RequestVisitD2DCreateFormTst {
             
             HDT_UTL_DataFactoryTst.createLead(1,true);
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','G3 - MMS Azienda','Aziende SME');
             for(Account a : accs){
                 a.Name = 'test00';
             }

@@ -42,7 +42,7 @@ public class HDT_BA_VasSupplierTableTst {
             vsTables[2].VasSupplierStatus__c = 'KO FORNITORE';
             insert vsTables;
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 			Id accId = accs[0].id; 
             
             List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,true,accId,'Bozza'); 

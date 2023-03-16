@@ -2,7 +2,7 @@
 public with sharing class HDT_UTL_GlobalMigrationKeyTst {
     @TestSetup
     static void makeData(){
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','G3 - MMS Azienda','Aziende SME');
         accs[0].CustomerCode__c = '1111111111';
         insert accs;
         List<Contract> contracts = HDT_UTL_DataFactoryTst.createContract(1,false,accs[0].Id);

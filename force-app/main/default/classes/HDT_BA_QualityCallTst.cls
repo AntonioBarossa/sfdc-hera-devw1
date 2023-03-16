@@ -32,7 +32,7 @@ public with sharing class HDT_BA_QualityCallTst {
             agentMatrix[0].AgencyCode__c='AAA';
             agentMatrix[0].AgentCode__c='001';
             insert agentMatrix;
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(2,false,accId);
