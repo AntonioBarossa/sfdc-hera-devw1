@@ -59,6 +59,10 @@
                 <behavior>Readonly</behavior>
                 <field>MeterRelation__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>WrittenReceiptRequestDate__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
