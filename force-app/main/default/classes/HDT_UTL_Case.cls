@@ -54,6 +54,9 @@ public inherited sharing class HDT_UTL_Case {
                     output.salesCompany = 'Marche Multiservizi S.p.A';
                     output.vatPercentage = 'GENERICI 10%-01';
                     output.taxes = 'Imposta usi domestici';
+                    Date writtenReceiptRequestDate = date.newinstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+                    currentCase.WrittenReceiptRequestDate__c = writtenReceiptRequestDate;
+                    output.currentCase = currentCase;
 
                     if(!String.isBlank(currentCase.UseSubCategory__c) && !'Uso pubblico non disalimentabile'.equalsIgnoreCase(currentCase.UseSubCategory__c)){
                         
