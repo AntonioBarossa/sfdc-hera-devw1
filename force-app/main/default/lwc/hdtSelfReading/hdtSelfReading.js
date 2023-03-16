@@ -194,12 +194,6 @@ export default class HdtSelfReading extends LightningElement {
             if (result === 'ERROR_NO_ASSET_NUMBER') {
                 lastReadings = this.emptyArrayAutoletturaDaProcesso();
             } else {
-
-                /*usare per forzare il parametro GB_TELELETT
-                let tempObj=JSON.parse(result);
-                tempObj.data['GB_TELELETT']='Y';
-                const parsedResult = JSON.parse( JSON.stringify(tempObj));
-                   */
                 const parsedResult = JSON.parse( result);
                 // Verifichiamo se la response contiene un errore da SAP.
                 if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
