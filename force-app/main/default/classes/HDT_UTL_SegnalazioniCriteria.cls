@@ -37,6 +37,7 @@ global inherited sharing class HDT_UTL_SegnalazioniCriteria implements wrts_prcg
                 OperationGroup__c =:operationGroup
                 AND TypeOperation__c =:operationType 
                 WITH SECURITY_ENFORCED 
+                Order By Material__c
         ];
 
         return pickoptions;
