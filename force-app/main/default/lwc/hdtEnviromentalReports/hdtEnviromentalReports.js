@@ -1,7 +1,7 @@
 import {api, track, wire} from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import HdtRecordEditFormFlow from 'c/hdtRecordEditFormFlow';
-import getMaterialOptions from '@salesforce/apex/HDT_UTL_SegnalazioniCriteria.getMaterialOptions';
+import getMaterialOptions from '@salesforce/apex/HDT_UTL_SegnalazioniTariValidation.getMaterialOptions';
 
 export default class HdtEnviromentalReports extends HdtRecordEditFormFlow {
     @api processType;
@@ -128,6 +128,19 @@ export default class HdtEnviromentalReports extends HdtRecordEditFormFlow {
     handleMaterialChange(event){
         console.log("material change");
         this.materialValue = event.detail.value;
+    }
+
+    handleSubmit(event){
+        if(!this.materialValue){
+            event.preventDefault();
+            this.disableMaterial=false;
+            Promise.resolve().then(()=>{
+                this.template.querySelectorAll("lightning-combobox")[0].reportValidity();
+                this.disableMaterial=true;
+            });
+            return;
+        }
+        super.handleSubmit(event);
     }
 
 }
