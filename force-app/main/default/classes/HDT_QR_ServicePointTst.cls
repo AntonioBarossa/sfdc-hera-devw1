@@ -19,6 +19,8 @@ public with sharing class HDT_QR_ServicePointTst {
         User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
         internalUser.UserPermissionsMarketingUser=true;
         insert internalUser;
+        List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager',false)};
+        insert permissionSetAssignments;
 
         Id rtServPoint=constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
