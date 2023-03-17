@@ -201,6 +201,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
         else
         {
+            Map<String,String> cancelCode = getCancelCode(ordToCheck[0].ProcessCode__c,causal);
             String phase = (HDT_UTL_Order.checkCancellationPhase(new Set<String>{ordId})).get(ordId);
             String status = phase.equalsIgnoreCase('Annullato') ? 'Annullato' : 'In Lavorazione';
             wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId);
@@ -222,6 +223,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 CancellationReason__c = causal,
                 CancellationRequestDate__c = System.today(),
                 Status = status,
+                CancellationReasonCode__c = cancelCode.get('cCode'),
+                CancellationReasonDescription__c = cancelCode.get('cReason'),
                 WorkedQualityCall__c = qualityMessage
             ));
 
@@ -242,6 +245,19 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         else {
             return null;
         }
+    }
+
+    private static Map<String,String> getCancelCode(String cCode, String cReason){
+        Map<String,String> cc = new Map<String,String>();
+        HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason rcrIn = new HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason();
+        rcrIn.causalCode = cCode;
+        rcrIn.processCancellationReason = cReason;
+        HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason rcrOut = HDT_UTL_CaseCancellation.getCancellationReason(rcrIn);
+        if ('OK'.equalsIgnoreCase(rcrOut.outcome)){
+            cc.put('cCode', rcrOut.causalCode);
+            cc.put('cReason', rcrOut.cancellationReason);
+        }
+        return cc;
     }
 
     @AuraEnabled
