@@ -464,7 +464,6 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('Note per il DL','CommentForDL__c', this.typeVisibility('both'), false, false, '',''),
                 new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
                 new fieldData('','Email__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',true,false,'',''),
-                new fieldData('','AlternativeEmail__c',this.typeVisibility('acqua') && this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione',false,false,'',''),
                 new fieldData('Esclusione dal deposito cauzionale','SecurityDepositExcluded__c', this.typeVisibility('both') && this.rateCategoryVisibility(rateCategories.ESDEPCAU), false, false, '','No'),
                 new fieldData('Data Inizio Connessione Temporanea','TemporaryConnectionStartDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
                 new fieldData('Data fine connessione temporanea','TemporaryConnectionEndDate__c', this.typeVisibility('ele') &&  this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt', true, false, '',''),
