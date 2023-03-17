@@ -33,6 +33,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, false, accounts[0].Id, 'Attiva');
 			sales[0].CommercialId__c = 'XXX0000111';
+			insert sales;
 			opps[0].Sale__c=sales[0].Id;
 			insert opps;
 
