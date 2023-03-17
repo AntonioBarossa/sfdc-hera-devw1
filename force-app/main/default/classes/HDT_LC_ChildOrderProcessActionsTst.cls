@@ -195,8 +195,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[0].IsActivationDeferred__c=true;
 			orders[0].VATfacilitationFlag__c=true;
             orders[0].SupplyType__c = 'Domestico';
+            orders[0].Commodity__c = 'Gas';
 
-            
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
 			orders[1].ProcessCode__c='PN1';
