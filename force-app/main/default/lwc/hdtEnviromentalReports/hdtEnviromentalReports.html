@@ -194,7 +194,7 @@
                     <div class="actionsRight">
                         <lightning-button
                             data-id="submitButton" class={submitButtonClass}
-                            variant={variantButton} type="submit" name="save" label={labelSaveButton}>
+                            variant={variantButton} type="submit" onclick={handleValidation} name="save" label={labelSaveButton}>
                         </lightning-button>
                         <template if:true={draftButton}>
                             <lightning-button class="slds-m-top_xsmall slds-m-bottom_xsmall slds-p-left_x-small slds-float--right"
