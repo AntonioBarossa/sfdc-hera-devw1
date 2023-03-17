@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_EmailMessage {
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c FROM Case WHERE Id in (\''+ idString +'\')';
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c, CompanyOwner__c FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         List<Case> caseList = (List<Case>) recordList;
         
@@ -150,7 +150,18 @@ public with sharing class HDT_SRV_EmailMessage {
                             DateTime nowDateTime = DateTime.now();
                             caseRecord.PhaseStory__c = oldPhase+'@@Risposta ricevuta@@'+nowDateTime.getTime()+'@@A||'+caseRecord.PhaseStory__c;
                             
-                            HDT_UTL_Case.createActivity(caseRecord.Id, '', 'Risposta Ricevuta', 'Risposta Ricevuta');
+                            try {
+                                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+                                activity.Case__c = caseRecord.Id;
+                                activity.CausalError__c = '';
+                                activity.wrts_prcgvr__Description__c = '';
+                                activity.Type__c = 'Risposta Ricevuta';
+                                activity.CompanyOwner__c = caseRecord.CompanyOwner__c;
+                                HDT_UTL_DatabaseService.insertSObject(activity);
+                            } catch (Exception e) {
+                                System.debug(LoggingLevel.DEBUG, 'Error: ' + e.getStackTraceString());
+                            }
+                            
                         }
                 }
                 caseToUpdate.add(caseRecord);
