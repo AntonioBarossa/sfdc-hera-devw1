@@ -133,16 +133,6 @@ export default class HdtEnviromentalReports extends HdtRecordEditFormFlow {
     handleSubmit(event){
         if(!this.materialValue){
             event.preventDefault();
-            /*if(this.disableMaterial){
-                this.disableMaterial=false;
-                Promise.resolve().then(()=>{
-                    this.template.querySelectorAll("lightning-combobox")[0].reportValidity();
-                    this.disableMaterial=true;
-                });
-            }else{
-                this.template.querySelectorAll("lightning-combobox")[0].reportValidity();
-            }*/
-
             return;
         }
         super.handleSubmit(event);
