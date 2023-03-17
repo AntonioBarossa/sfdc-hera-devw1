@@ -5,7 +5,7 @@
         <name>AssignEle</name>
         <label>AssignEle</label>
         <locationX>490</locationX>
-        <locationY>1118</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>isEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>AssignEle_0</name>
         <label>AssignEle</label>
         <locationX>2290</locationX>
-        <locationY>1118</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>isEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssignExistCaldaiaSicura</name>
         <label>AssignExistCaldaiaSicura</label>
         <locationX>1214</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -60,7 +60,7 @@
         <name>AssignExistWattProblem</name>
         <label>AssignExistWattProblem</label>
         <locationX>1478</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistWatt</assignToReference>
             <operator>Assign</operator>
@@ -83,7 +83,7 @@
         <name>AssignGas</name>
         <label>AssignGas</label>
         <locationX>1370</locationX>
-        <locationY>1118</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
             <operator>Assign</operator>
@@ -99,7 +99,7 @@
         <name>AssignGas_0</name>
         <label>AssignGas</label>
         <locationX>3170</locationX>
-        <locationY>1118</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
             <operator>Assign</operator>
@@ -114,8 +114,8 @@
     <assignments>
         <name>AssignmentAnalisiConsumi</name>
         <label>AssignmentAnalisiConsumi</label>
-        <locationX>1038</locationX>
-        <locationY>5702</locationY>
+        <locationX>818</locationX>
+        <locationY>638</locationY>
         <assignmentItems>
             <assignToReference>AnalisiConsumi</assignToReference>
             <operator>Assign</operator>
@@ -124,14 +124,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+            <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssignmenteRicaricaPubblica</name>
         <label>AssignmenteRicaricaPubblica</label>
         <locationX>3062</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistPubblica</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignmentRicaricaPrivata</name>
         <label>AssignmentRicaricaPrivata</label>
         <locationX>3326</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistPrivata</assignToReference>
             <operator>Assign</operator>
@@ -160,10 +160,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignOrderPadreId</name>
+        <label>AssignOrderPadreId</label>
+        <locationX>950</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>idPadre</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>getParent.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>getChilds</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignVariabiliConcatenate</name>
         <label>AssignVariabiliConcatenate</label>
         <locationX>930</locationX>
-        <locationY>878</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -200,7 +216,7 @@
         <name>AssignVariabiliConcatenate_Az</name>
         <label>AssignVariabiliConcatenate_Az</label>
         <locationX>2730</locationX>
-        <locationY>878</locationY>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -237,7 +253,7 @@
         <name>ContatoreWallBox</name>
         <label>ContatoreWallBox</label>
         <locationX>1018</locationX>
-        <locationY>3710</locationY>
+        <locationY>4406</locationY>
         <assignmentItems>
             <assignToReference>CounterWallBox</assignToReference>
             <operator>Add</operator>
@@ -253,7 +269,7 @@
         <name>CounterTermostato</name>
         <label>CounterTermostato</label>
         <locationX>1018</locationX>
-        <locationY>2702</locationY>
+        <locationY>3398</locationY>
         <assignmentItems>
             <assignToReference>TermostatoQuantity</assignToReference>
             <operator>Add</operator>
@@ -269,7 +285,7 @@
         <name>InstallazioneStandardTrue</name>
         <label>InstallazioneStandardTrue</label>
         <locationX>1018</locationX>
-        <locationY>4046</locationY>
+        <locationY>4742</locationY>
         <assignmentItems>
             <assignToReference>InstallazioneStandard</assignToReference>
             <operator>Assign</operator>
@@ -285,7 +301,7 @@
         <name>InstallazioneTrue</name>
         <label>InstallazioneTrue</label>
         <locationX>1018</locationX>
-        <locationY>3038</locationY>
+        <locationY>3734</locationY>
         <assignmentItems>
             <assignToReference>InstallazioneTermostato</assignToReference>
             <operator>Assign</operator>
@@ -301,7 +317,7 @@
         <name>Kit2True</name>
         <label>Kit2True</label>
         <locationX>1018</locationX>
-        <locationY>3374</locationY>
+        <locationY>4070</locationY>
         <assignmentItems>
             <assignToReference>KitLed</assignToReference>
             <operator>Assign</operator>
@@ -317,7 +333,7 @@
         <name>LedAssignment</name>
         <label>LedAssignment</label>
         <locationX>2270</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistLed</assignToReference>
             <operator>Assign</operator>
@@ -347,7 +363,7 @@
         <name>NoProblemAcquaAssignment</name>
         <label>NoProblemAcquaAssignment</label>
         <locationX>2798</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblmeAcqua</assignToReference>
             <operator>Assign</operator>
@@ -370,7 +386,7 @@
         <name>NoProblemGasAssignment</name>
         <label>NoProblemGasAssignment</label>
         <locationX>2006</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -393,7 +409,7 @@
         <name>NoProblemLuceAssignment</name>
         <label>NoProblemLuceAssignment</label>
         <locationX>1742</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -416,7 +432,7 @@
         <name>ThermoAssignment</name>
         <label>ThermoAssignment</label>
         <locationX>2534</locationX>
-        <locationY>6614</locationY>
+        <locationY>7190</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -446,7 +462,7 @@
         <name>VASPresenti</name>
         <label>VASPresentiAssign</label>
         <locationX>2402</locationX>
-        <locationY>6374</locationY>
+        <locationY>6950</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -462,7 +478,7 @@
         <name>BonusDecision</name>
         <label>BonusDecision</label>
         <locationX>710</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_0</targetReference>
         </defaultConnector>
@@ -501,7 +517,7 @@
         <name>BonusDecision_EE_OUT_FAM</name>
         <label>BonusDecision</label>
         <locationX>270</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0</targetReference>
         </defaultConnector>
@@ -540,7 +556,7 @@
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
         <locationX>490</locationX>
-        <locationY>1238</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_0</targetReference>
         </defaultConnector>
@@ -565,7 +581,7 @@
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1370</locationX>
-        <locationY>1238</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -590,7 +606,7 @@
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2290</locationX>
-        <locationY>1238</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_EE_0</targetReference>
         </defaultConnector>
@@ -615,7 +631,7 @@
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>3170</locationX>
-        <locationY>1238</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_GAS_0</targetReference>
         </defaultConnector>
@@ -640,7 +656,7 @@
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>666</locationX>
-        <locationY>4478</locationY>
+        <locationY>5174</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -665,7 +681,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1194</locationX>
-        <locationY>4478</locationY>
+        <locationY>5174</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -690,7 +706,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2466</locationX>
-        <locationY>2462</locationY>
+        <locationY>3158</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_EE_0_0</targetReference>
         </defaultConnector>
@@ -715,7 +731,7 @@
         <name>CanaleVenditaDecision_0_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>2994</locationX>
-        <locationY>2462</locationY>
+        <locationY>3158</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_GAS_0_0</targetReference>
         </defaultConnector>
@@ -740,7 +756,7 @@
         <name>Categoria_Cliente_Decision</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>518</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
         </defaultConnector>
@@ -765,9 +781,9 @@
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>7694</locationY>
+        <locationY>7598</locationY>
         <defaultConnector>
-            <targetReference>ChannelDecisionAziende</targetReference>
+            <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isAziende</defaultConnectorLabel>
         <rules>
@@ -787,16 +803,16 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Categoria_Cliente_Decision_1</name>
+        <name>Categoria_Cliente_Decision_2</name>
         <label>Categoria Cliente Decision</label>
         <locationX>950</locationX>
-        <locationY>7022</locationY>
+        <locationY>6038</locationY>
         <defaultConnector>
             <targetReference>DecisionServiziBuddle_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isAziende</defaultConnectorLabel>
         <rules>
-            <name>isFamiglie_1</name>
+            <name>isFamiglie_2</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
@@ -815,7 +831,7 @@
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>686</locationX>
-        <locationY>7814</locationY>
+        <locationY>7718</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto</targetReference>
         </defaultConnector>
@@ -840,7 +856,7 @@
         <name>ChannelDecisionAziende</name>
         <label>ChannelDecisionAziende</label>
         <locationX>1214</locationX>
-        <locationY>7814</locationY>
+        <locationY>7838</locationY>
         <defaultConnector>
             <targetReference>Conferma_Adesione_Screen_0_0_0_0</targetReference>
         </defaultConnector>
@@ -864,20 +880,20 @@
     <decisions>
         <name>DecisionAnalisiConsumi</name>
         <label>DecisionAnalisiConsumi</label>
-        <locationX>1170</locationX>
-        <locationY>5582</locationY>
+        <locationX>950</locationX>
+        <locationY>518</locationY>
         <defaultConnector>
-            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+            <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Contains</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>AnalisiConsumiChildsLoop.CommercialProduct__c</leftValueReference>
-                <operator>EqualTo</operator>
+                <leftValueReference>getChilds</leftValueReference>
+                <operator>IsNull</operator>
                 <rightValue>
-                    <stringValue>Analisi Consumi</stringValue>
+                    <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -890,7 +906,7 @@
         <name>DecisionForInstallazione</name>
         <label>DecisionForInstallazione</label>
         <locationX>1150</locationX>
-        <locationY>2918</locationY>
+        <locationY>3614</locationY>
         <defaultConnector>
             <targetReference>DecisionForKit</targetReference>
         </defaultConnector>
@@ -915,7 +931,7 @@
         <name>DecisionForKit</name>
         <label>DecisionForKit</label>
         <locationX>1150</locationX>
-        <locationY>3254</locationY>
+        <locationY>3950</locationY>
         <defaultConnector>
             <targetReference>DecisionForWallBox</targetReference>
         </defaultConnector>
@@ -940,7 +956,7 @@
         <name>DecisionForQuantity</name>
         <label>DecisionForQuantity</label>
         <locationX>1150</locationX>
-        <locationY>2582</locationY>
+        <locationY>3278</locationY>
         <defaultConnector>
             <targetReference>DecisionForInstallazione</targetReference>
         </defaultConnector>
@@ -972,7 +988,7 @@
         <name>DecisionForWallBox</name>
         <label>DecisionForWallBox</label>
         <locationX>1150</locationX>
-        <locationY>3590</locationY>
+        <locationY>4286</locationY>
         <defaultConnector>
             <targetReference>DecisionInstallazioneStandard</targetReference>
         </defaultConnector>
@@ -997,7 +1013,7 @@
         <name>DecisionInstallazioneStandard</name>
         <label>DecisionInstallazioneStandard</label>
         <locationX>1150</locationX>
-        <locationY>3926</locationY>
+        <locationY>4622</locationY>
         <defaultConnector>
             <targetReference>Bonus_Loop</targetReference>
         </defaultConnector>
@@ -1022,9 +1038,9 @@
         <name>DecisionServiziBuddle</name>
         <label>DecisionServiziBuddle</label>
         <locationX>730</locationX>
-        <locationY>7142</locationY>
+        <locationY>6158</locationY>
         <defaultConnector>
-            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1047,9 +1063,9 @@
         <name>DecisionServiziBuddle_0</name>
         <label>DecisionServiziBuddle</label>
         <locationX>1170</locationX>
-        <locationY>7142</locationY>
+        <locationY>6158</locationY>
         <defaultConnector>
-            <targetReference>Durata_Contratto_0</targetReference>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -1072,7 +1088,7 @@
         <name>isBonus_FAM_OUT_GAS</name>
         <label>isBonus</label>
         <locationX>1150</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_Fam_Gas_Out</targetReference>
         </defaultConnector>
@@ -1111,7 +1127,7 @@
         <name>isBonus_IN_GAS</name>
         <label>isBonus</label>
         <locationX>1590</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_Gas_IN_FAM</targetReference>
         </defaultConnector>
@@ -1150,7 +1166,7 @@
         <name>isBonusINBEE</name>
         <label>isBonusINBEE</label>
         <locationX>2510</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1189,7 +1205,7 @@
         <name>isBonusINBGAS</name>
         <label>isBonusINBGAS</label>
         <locationX>3390</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1228,7 +1244,7 @@
         <name>isBonusOUTEE</name>
         <label>isBonusINBEE</label>
         <locationX>2070</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1267,7 +1283,7 @@
         <name>isBonusOUTGAS</name>
         <label>isBonusOUTGAS</label>
         <locationX>2950</locationX>
-        <locationY>1478</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>isPromo_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1306,7 +1322,7 @@
         <name>isPromo_0</name>
         <label>isPromo</label>
         <locationX>710</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1345,7 +1361,7 @@
         <name>isPromo_0_0_0</name>
         <label>isPromo</label>
         <locationX>270</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1384,7 +1400,7 @@
         <name>isPromo_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>2510</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1423,7 +1439,7 @@
         <name>isPromo_0_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>3390</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1455,7 +1471,7 @@
         <name>isPromo_0_0_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>2070</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1494,7 +1510,7 @@
         <name>isPromo_0_0_0_0_0_0_0_0</name>
         <label>isPromo</label>
         <locationX>2950</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -1526,7 +1542,7 @@
         <name>isPromo_Fam_Gas_Out</name>
         <label>isPromo</label>
         <locationX>1150</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1579,7 +1595,7 @@
         <name>isPromo_Gas_IN_FAM</name>
         <label>isPromo</label>
         <locationX>1590</locationX>
-        <locationY>1814</locationY>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>GetOrderItems</targetReference>
         </defaultConnector>
@@ -1632,7 +1648,7 @@
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
         <locationX>930</locationX>
-        <locationY>998</locationY>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>AssignGas</targetReference>
         </defaultConnector>
@@ -1657,7 +1673,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
         <locationX>930</locationX>
-        <locationY>4358</locationY>
+        <locationY>5054</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1682,7 +1698,7 @@
         <name>Servizio_Decision_0_0</name>
         <label>Servizio Decision</label>
         <locationX>2730</locationX>
-        <locationY>998</locationY>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>AssignGas_0</targetReference>
         </defaultConnector>
@@ -1707,7 +1723,7 @@
         <name>Servizio_Decision_0_0_0</name>
         <label>Servizio Decision</label>
         <locationX>2730</locationX>
-        <locationY>2342</locationY>
+        <locationY>3038</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1732,7 +1748,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1720</locationX>
-        <locationY>6254</locationY>
+        <locationY>6830</locationY>
         <defaultConnector>
             <targetReference>VASPresenti</targetReference>
         </defaultConnector>
@@ -1757,7 +1773,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2402</locationX>
-        <locationY>6494</locationY>
+        <locationY>7070</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1935,24 +1951,10 @@
     <interviewLabel>HDL FL VO Scripts - Prezzo Netto {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Scripts - Prezzo Netto</label>
     <loops>
-        <name>AnalisiConsumiChildsLoop</name>
-        <label>AnalisiConsumiChildsLoop</label>
-        <locationX>950</locationX>
-        <locationY>5462</locationY>
-        <collectionReference>getChilds</collectionReference>
-        <iterationOrder>Asc</iterationOrder>
-        <nextValueConnector>
-            <targetReference>DecisionAnalisiConsumi</targetReference>
-        </nextValueConnector>
-        <noMoreValuesConnector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
-        </noMoreValuesConnector>
-    </loops>
-    <loops>
         <name>Bonus_Loop</name>
         <label>Bonus Loop</label>
         <locationX>930</locationX>
-        <locationY>2462</locationY>
+        <locationY>3158</locationY>
         <collectionReference>GetOrderItems</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1966,42 +1968,42 @@
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>1334</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>getParent</targetReference>
+            <targetReference>getOrderId</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>LoopOrdiniFigliOfferta_0</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>1850</locationX>
-        <locationY>638</locationY>
+        <locationY>1334</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli_0</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>getParent</targetReference>
+            <targetReference>getOrderId</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>950</locationX>
-        <locationY>6014</locationY>
+        <locationY>6590</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Categoria_Cliente_Decision_1</targetReference>
+            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -2027,17 +2029,17 @@
         <name>getChilds</name>
         <label>getChilds</label>
         <locationX>950</locationX>
-        <locationY>5342</locationY>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>AnalisiConsumiChildsLoop</targetReference>
+            <targetReference>DecisionAnalisiConsumi</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>getParent.Id</elementReference>
+                <elementReference>idPadre</elementReference>
             </value>
         </filters>
         <filters>
@@ -2059,10 +2061,45 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getOrderId</name>
+        <label>getOrderId</label>
+        <locationX>950</locationX>
+        <locationY>5798</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getOrderProduct</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idPadre</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ProcessType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>VAS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>VasSubtype__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Analisi Consumi</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetOrderItems</name>
         <label>GetOrderItems</label>
         <locationX>930</locationX>
-        <locationY>2342</locationY>
+        <locationY>3038</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Bonus_Loop</targetReference>
@@ -2083,17 +2120,17 @@
         <name>getOrderProduct</name>
         <label>getOrderProduct</label>
         <locationX>950</locationX>
-        <locationY>5222</locationY>
+        <locationY>5918</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>getChilds</targetReference>
+            <targetReference>Categoria_Cliente_Decision_2</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>OrderId</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>getParent.Id</elementReference>
+                <elementReference>getOrderId.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2104,10 +2141,10 @@
         <name>getParent</name>
         <label>getParent</label>
         <locationX>950</locationX>
-        <locationY>5102</locationY>
+        <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>getOrderProduct</targetReference>
+            <targetReference>AssignOrderPadreId</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2132,7 +2169,7 @@
         <name>Bonus_EE_AZ_IN</name>
         <label>Bonus EE AZ IN</label>
         <locationX>2378</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2168,7 +2205,7 @@
         <name>Bonus_EE_AZ_OUT</name>
         <label>Bonus EE AZ OUT</label>
         <locationX>1938</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2204,7 +2241,7 @@
         <name>Bonus_Gas_AZ_IN</name>
         <label>Bonus Gas AZ IN</label>
         <locationX>3258</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2240,7 +2277,7 @@
         <name>Bonus_Gas_AZ_OUT</name>
         <label>Bonus Gas AZ OUT</label>
         <locationX>2818</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2276,7 +2313,7 @@
         <name>Condizioni_Economiche_Aziende_EE</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>2070</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2352,7 +2389,7 @@
         <name>Condizioni_Economiche_Aziende_EE_0</name>
         <label>Condizioni Economiche Aziende EE</label>
         <locationX>2510</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2433,7 +2470,7 @@
         <name>Condizioni_Economiche_Aziende_GAS_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>3390</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2499,7 +2536,7 @@
         <name>Condizioni_Economiche_Aziende_GAS_0_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
         <locationX>2950</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2570,7 +2607,7 @@
         <name>Condizioni_Economiche_Bonus_EE_FAM_IN</name>
         <label>Condizioni_Economiche_Bonus_EE_FAM_IN</label>
         <locationX>578</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2611,7 +2648,7 @@
         <name>Condizioni_Economiche_Bonus_EE_OUT</name>
         <label>Condizioni_Economiche_Bonus_EE_OUT</label>
         <locationX>138</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2652,7 +2689,7 @@
         <name>Condizioni_Economiche_Bonus_FAM_OUT_GAS</name>
         <label>Condizioni Economiche Bonus FAM OUT GAS</label>
         <locationX>1018</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2693,7 +2730,7 @@
         <name>Condizioni_Economiche_Bonus_GAS_IN</name>
         <label>Condizioni_Economiche_Bonus_GAS_IN</label>
         <locationX>1458</locationX>
-        <locationY>1598</locationY>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2734,7 +2771,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>710</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2961,7 +2998,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_0_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>270</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3176,7 +3213,7 @@
         <name>Condizioni_Economiche_Famiglie_GAS</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>1590</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3284,7 +3321,7 @@
         <name>Condizioni_Economiche_Famiglie_GAS_0</name>
         <label>Condizioni Economiche Famiglie GAS</label>
         <locationX>1150</locationX>
-        <locationY>1358</locationY>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3387,7 +3424,7 @@
         <name>Condizioni_Economiche_Promo_EE_INB_AZ</name>
         <label>Condizioni Economiche Promo EE INB AZ</label>
         <locationX>2378</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3428,7 +3465,7 @@
         <name>Condizioni_Economiche_Promo_EE_OUT_AZ</name>
         <label>Condizioni Economiche Promo EE OUT AZ</label>
         <locationX>1938</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3469,7 +3506,7 @@
         <name>Condizioni_Economiche_Promo_Gas_In_Fam</name>
         <label>Condizioni Economiche Promo Gas In Fam</label>
         <locationX>1458</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3540,7 +3577,7 @@
         <name>Condizioni_Economiche_Promo_GAS_INB_AZ</name>
         <label>Condizioni Economiche Promo GAS INB AZ</label>
         <locationX>3258</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3574,7 +3611,7 @@
         <name>Condizioni_Economiche_Promo_GAS_OUT_AZ</name>
         <label>Condizioni Economiche Promo GAS OUT AZ</label>
         <locationX>2818</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3608,7 +3645,7 @@
         <name>Condizioni_Economiche_Promo_Out_EE_FAM</name>
         <label>Condizioni Economiche Promo Out EE FAM</label>
         <locationX>138</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3664,7 +3701,7 @@
         <name>Condizioni_Economiche_Promo_Out_Gas_Fam</name>
         <label>Condizioni Economiche Promo Out Gas Fam</label>
         <locationX>1018</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3735,7 +3772,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1082</locationX>
-        <locationY>7934</locationY>
+        <locationY>7958</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3899,7 +3936,7 @@
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>554</locationX>
-        <locationY>8054</locationY>
+        <locationY>7958</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4462,7 +4499,7 @@
         <name>Conferma_Adesione_Screen_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>818</locationX>
-        <locationY>8054</locationY>
+        <locationY>7958</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5087,7 +5124,7 @@
         <name>Conferma_Adesione_Screen_0_0_0_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>1346</locationX>
-        <locationY>7934</locationY>
+        <locationY>7958</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5256,7 +5293,7 @@
         <name>Copy_1_of_Condizioni_Economiche_Promo_Inb_EE_Fam</name>
         <label>Condizioni Economiche Promo INB EE FAM</label>
         <locationX>578</locationX>
-        <locationY>1934</locationY>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5312,7 +5349,7 @@
         <name>Dati_Tecnici_Aziende_EE_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>2598</locationX>
-        <locationY>2582</locationY>
+        <locationY>3278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5445,7 +5482,7 @@
         <name>Dati_Tecnici_Aziende_EE_0_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
         <locationX>2334</locationX>
-        <locationY>2582</locationY>
+        <locationY>3278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5578,7 +5615,7 @@
         <name>Dati_Tecnici_Aziende_GAS_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>3126</locationX>
-        <locationY>2582</locationY>
+        <locationY>3278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5723,7 +5760,7 @@
         <name>Dati_Tecnici_Aziende_GAS_0_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
         <locationX>2862</locationX>
-        <locationY>2582</locationY>
+        <locationY>3278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5871,7 +5908,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>798</locationX>
-        <locationY>4598</locationY>
+        <locationY>5294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6134,7 +6171,7 @@
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>534</locationX>
-        <locationY>4598</locationY>
+        <locationY>5294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6267,7 +6304,7 @@
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1326</locationX>
-        <locationY>4598</locationY>
+        <locationY>5294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6530,7 +6567,7 @@
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
         <locationX>1062</locationX>
-        <locationY>4598</locationY>
+        <locationY>5294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6668,7 +6705,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>818</locationX>
-        <locationY>7934</locationY>
+        <locationY>7838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6757,13 +6794,13 @@
     <screens>
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
-        <locationX>1170</locationX>
-        <locationY>7478</locationY>
+        <locationX>1214</locationX>
+        <locationY>7718</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+            <targetReference>ChannelDecisionAziende</targetReference>
         </connector>
         <fields>
             <name>text12_0</name>
@@ -6837,7 +6874,7 @@
         <name>Durata_Contratto_Out_Fam</name>
         <label>Durata Contratto</label>
         <locationX>554</locationX>
-        <locationY>7934</locationY>
+        <locationY>7838</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6927,12 +6964,12 @@
         <name>Servizi_Bundle_Screen</name>
         <label>Servizi Bundle Screen</label>
         <locationX>598</locationX>
-        <locationY>7262</locationY>
+        <locationY>6278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
         <fields>
             <name>SB_Text3</name>
@@ -6991,12 +7028,12 @@
         <name>Servizi_Bundle_Screen_0</name>
         <label>Servizi Bundle Screen</label>
         <locationX>1038</locationX>
-        <locationY>7262</locationY>
+        <locationY>6278</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Durata_Contratto_0</targetReference>
+            <targetReference>Order_Items_Vas_Loop</targetReference>
         </connector>
         <fields>
             <name>Copy_1_of_SB_Text1</name>
@@ -7010,7 +7047,7 @@
         <locationX>824</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
+            <targetReference>getParent</targetReference>
         </connector>
     </start>
     <status>Active</status>
@@ -7018,7 +7055,7 @@
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
         <locationX>930</locationX>
-        <locationY>758</locationY>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate</targetReference>
         </connector>
@@ -7035,7 +7072,7 @@
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli_0</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
         <locationX>2730</locationX>
-        <locationY>758</locationY>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate_Az</targetReference>
         </connector>
@@ -7052,7 +7089,7 @@
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
         <locationX>950</locationX>
-        <locationY>158</locationY>
+        <locationY>854</locationY>
         <connector>
             <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
@@ -7075,7 +7112,7 @@
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
         <locationX>950</locationX>
-        <locationY>398</locationY>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Categoria_Cliente_Decision</targetReference>
         </connector>
@@ -7115,7 +7152,7 @@
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
         <locationX>950</locationX>
-        <locationY>278</locationY>
+        <locationY>974</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
@@ -7156,7 +7193,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1720</locationX>
-        <locationY>6134</locationY>
+        <locationY>6710</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -7358,6 +7395,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>idPadre</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>
