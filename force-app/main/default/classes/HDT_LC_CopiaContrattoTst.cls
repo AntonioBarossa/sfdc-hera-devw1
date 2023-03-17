@@ -70,7 +70,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<Order> tOrder=[SELECT Id, Name, AccountId
@@ -135,7 +135,7 @@ public with sharing class HDT_LC_CopiaContrattoTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<Case> tCase=[SELECT Id, HerokuPracticeCode__c

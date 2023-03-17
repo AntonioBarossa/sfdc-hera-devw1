@@ -63,7 +63,7 @@ public class HDT_QR_ActivityTst{
 
 			List<Account> tAccs=[SELECT Id, Name
 			                     FROM Account
-			                     WHERE Name='test account0'];
+			                     WHERE Name='test account bsn0'];
 
 			List<Sale__c> tSale=[SELECT Id, Name
 			                     FROM Sale__c
@@ -93,7 +93,7 @@ public class HDT_QR_ActivityTst{
 
 			List<Account> tAccs=[SELECT Id, Name
 			                     FROM Account
-			                     WHERE Name='test account0'];
+			                     WHERE Name='test account bsn0'];
 
 			List<Sale__c> tSale=[SELECT Id, Name
 			                     FROM Sale__c
