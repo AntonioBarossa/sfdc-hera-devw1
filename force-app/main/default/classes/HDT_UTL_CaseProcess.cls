@@ -44,6 +44,9 @@ public with sharing class HDT_UTL_CaseProcess {
                     needUpdate.put(servicePoint, true);
                 }
                 singleNewCase.Email__c = String.isBlank(singleNewCase.Email__c) && !String.isBlank(singleNewCase.SuppliedEmail) ? singleNewCase.SuppliedEmail : singleNewCase.Email__c;
+                if('Acqua'.equalsIgnoreCase(commodity)){
+                    singleNewCase.WrittenReceiptRequestDate__c = date.today();
+                }
             }
         }
         //2. Is From Updated
@@ -70,6 +73,9 @@ public with sharing class HDT_UTL_CaseProcess {
                         singleCaseToUpdate.Commodity__c = spMap.get(singleCaseToUpdate.ServicePoint__c).CommoditySector__c;
                         singleCaseToUpdate.FirstName__c = String.isBlank(singleCaseToUpdate.FirstName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.FirstName__c:singleCaseToUpdate.FirstName__c;
                         singleCaseToUpdate.LastName__c = String.isBlank(singleCaseToUpdate.LastName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.LastName__c:singleCaseToUpdate.LastName__c;
+                    }
+                    if('Acqua'.equalsIgnoreCase(singleCaseToUpdate.Commodity__c)){
+                        singleCaseToUpdate.WrittenReceiptRequestDate__c = date.today();
                     }
                 }
             }

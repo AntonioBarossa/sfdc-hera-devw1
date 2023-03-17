@@ -22,7 +22,7 @@ public class HDT_BA_AttributesLeadTst {
 
         System.runAs(internalUser){        
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
             List<ServicePoint__c> points = HDT_UTL_DataFactoryTst.createServicePoint(1,true);

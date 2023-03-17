@@ -45,4 +45,21 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
     public String getFieldValue(String fields, String fieldToGet){
         return String.valueOf(this.fieldsMap.get(fieldToGet));
     }
+
+    @AuraEnabled(cacheable=true)
+    public static list<HDT_SegnalazioniAmbientali__mdt> getMaterialOptions(String operationGroup, String operationType) {        
+	    if(STRING.isBlank(operationGroup) || STRING.isBlank(operationType)){    return null;   }
+
+        list<HDT_SegnalazioniAmbientali__mdt> pickoptions = [   
+                SELECT toLabel(Material__c)
+                FROM HDT_SegnalazioniAmbientali__mdt 
+                WHERE 
+                OperationGroup__c =:operationGroup
+                AND TypeOperation__c =:operationType 
+                WITH SECURITY_ENFORCED 
+                Order By Material__c
+        ];
+
+        return pickoptions;
+    }
 }

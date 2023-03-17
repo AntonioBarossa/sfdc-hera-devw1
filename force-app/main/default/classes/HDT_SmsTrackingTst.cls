@@ -15,7 +15,7 @@ public class HDT_SmsTrackingTst {
         
         Test.startTest();
         
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
         List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accs[0].id);
         contacts[0].Company__c='MMS';
         insert contacts;

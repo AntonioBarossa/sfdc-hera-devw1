@@ -35,6 +35,10 @@
         &quot;ReadOnly&quot;: true,
         &quot;Column&quot;: 1
     }, {
+        &quot;FieldName&quot;: &quot;WrittenReceiptRequestDate__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
         &quot;FieldName&quot;: &quot;SupplyUseType__c&quot;,
         &quot;Required&quot;: true,
         &quot;Column&quot;: 2
@@ -69,10 +73,6 @@
     }, {
         &quot;FieldName&quot;: &quot;PhoneNumber__c&quot;,
         &quot;Required&quot;: true,
-        &quot;Column&quot;: 2
-    }, {
-        &quot;FieldName&quot;: &quot;AlternativeEmail__c&quot;,
-        &quot;Required&quot;: false,
         &quot;Column&quot;: 2
     }
 ]</value>
