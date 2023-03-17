@@ -757,9 +757,9 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         let commodity = this.selector('Commodity__c');
         let useSubCategory = this.selector('UseSubCategory__c');
         let intendedUse = this.selector('IntendedUse__c');
-        if(commodity && commodity.value === 'Acqua' && useSubCategory && useSubCategory.value === 'Uso pubblico non disalimentabile' && intendedUse){
+        if(commodity && commodity.value === 'Acqua' && this.type === 'Nuovo Impianto' && useSubCategory && useSubCategory.value === 'Uso pubblico non disalimentabile' && intendedUse){
             intendedUse.disabled = false;
-        }else if (commodity && commodity.value === 'Acqua' && useSubCategory && useSubCategory.value !== 'Uso pubblico non disalimentabile' && intendedUse){
+        }else if (commodity && commodity.value === 'Acqua' && this.type === 'Nuovo Impianto' && useSubCategory && useSubCategory.value !== 'Uso pubblico non disalimentabile' && intendedUse){
             intendedUse.disabled = true;
             intendedUse.value = '';
         }
