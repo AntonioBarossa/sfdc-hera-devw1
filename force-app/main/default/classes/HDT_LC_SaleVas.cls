@@ -314,6 +314,37 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = [SELECT Id, SAPContractCode__c,Status, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
 
             }
+            when 'CONTRACTS_SEGNAL_VAS'{ 
+                Set<Id> contractIds = new Set<Id>();
+                Set<Id> servicePointIds = new Set<Id>();
+                List<SObject> sobjList = new List<SObject>();
+                sobjList.addAll([SELECT Id, SBQQ__Contract__c, SBQQ__Contract__r.Status, SBQQ__Contract__r.ContractNumber, SBQQ__Contract__r.ServicePoint__c, 
+                 SBQQ__Contract__r.ServicePoint__r.ServicePointCode__c, SBQQ__Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM SBQQ__Subscription__c WHERE SBQQ__Account__c = :searchString AND SBQQ__Contract__r.Status IN ('Attivo','Cessato')]);
+                sobjList.addAll([SELECT Id, Contract__c, Contract__r.Status, Contract__r.ContractNumber, Contract__r.ServicePoint__c,
+                Contract__r.ServicePoint__r.ServicePointCode__c, Contract__r.ServicePoint__r.SupplyAddress__c
+                 FROM Asset WHERE AccountId = :searchString AND Contract__r.Status IN ('Attivo','Cessato')]);
+                for(SObject sobj : sobjList)
+                {
+                    String sobjName = sobj.getSObjectType().getDescribe().getName();
+                    String contractId = '';
+                    if(sobjName.equalsIgnoreCase('SBQQ__Subscription__c'))
+                    {
+                        contractId = (String)sobj.get('SBQQ__Contract__c');
+                    }
+                    if(sobjName.equalsIgnoreCase('Asset'))
+                    {
+                        contractId = (String)sobj.get('Contract__c');
+                    }
+                    if(!contractIds.contains(contractId))
+                    {
+                        contractIds.add(contractId);
+                    }
+                }
+                 
+                records = [SELECT Id, SAPContractCode__c,Status, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c FROM Contract WHERE ID IN :contractIds WITH SECURITY_ENFORCED];
+
+            }
             when 'SUBS_FROM_CONTRACT'{ 
                 records = [SELECT Name, SBQQ__ProductName__c
                     FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c=:searchString and SBQQ__Product__r.Family like 'VAS%'
