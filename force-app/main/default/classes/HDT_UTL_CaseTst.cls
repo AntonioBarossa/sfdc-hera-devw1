@@ -56,7 +56,7 @@ public with sharing class HDT_UTL_CaseTst {
     @isTest
     private static void caseFlowPredefaultsTest(){
 
-        List<Case> caseList = [SELECT Id, Note__c, Type,Distributor__r.Code__c, ParentId, PODPDRFormula__c FROM Case];
+        List<Case> caseList = [SELECT Id, Note__c, Type,Distributor__r.Code__c, ParentId, PODPDRFormula__c,CreatedDate FROM Case];
 
         Case myCase = caseList[0];
         myCase.Note__c = 'Note';
