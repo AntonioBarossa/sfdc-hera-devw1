@@ -602,9 +602,69 @@
                 <label>HC_CVMBO_CORPMUI_PTA_SD singola_HC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Annullamento contratti_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Annullamento contratti_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Comportamento Venditori_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Comportamento Venditori_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Contratto non richiesto_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Contratto non richiesto_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_M01_M02 Esiti KO_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_M01_M02 Esiti KO_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Protocollo_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Protocollo_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Contratto non richiesto_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Contratto non richiesto_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Escalation_HC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_PV_M01_M02 Esiti KO_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_PV_M01_M02 Esiti KO_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_PV_Reclami_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_PV_Reclami_NC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy</fullName>
@@ -1282,14 +1342,14 @@
                 <label>HC_VenditaMM</label>
             </value>
             <value>
-                <fullName>HCM_BACK_Approvazione</fullName>
-                <default>false</default>
-                <label>HCM_BACK_Approvazione</label>
-            </value>
-            <value>
                 <fullName>HCM_BACK_Annullamento Contratti</fullName>
                 <default>false</default>
                 <label>HCM_BACK_Annullamento Contratti</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Approvazione</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Approvazione</label>
             </value>
             <value>
                 <fullName>HCM_BACK_CON_Fatturazione</fullName>
