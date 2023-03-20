@@ -132,7 +132,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
       Order oneOrder = [select id,Name,AccountId,MarketOrigin__c,PowerRequested__c,PowerCommitted__c,IsWinback__c,VoltageLevel__c,PowerAvailable__c,
       ServicePoint__r.MeterStatus__c,ServicePoint__r.Account__c, ServicePoint__r.PlugPresence__c,ServicePoint__r.ServicePointCode__c,
       SBQQ__Quote__r.AllowChangeUse__c,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.RecordType.DeveloperName,SBQQ__Quote__r.ContractReference__c,
-      ServicePoint__r.isReseller__c, ServicePoint__r.SapContractStatus__c,isSTG__c,ServicePoint__r.CommoditySector__c
+      ServicePoint__r.isReseller__c, ServicePoint__r.SapContractStatus__c,isSTG__c,ServicePoint__r.CommoditySector__c, RateCategory__c
       FROM Order 
       WHERE PowerRequested__c=10];
 
