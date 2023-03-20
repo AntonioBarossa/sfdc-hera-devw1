@@ -32,9 +32,9 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 
 			List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G6 - MMS Associazione','Aziende SME');
 			
-			List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1, true, accs.get(0).Id, null, null, null, null);
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrder(1, true, accs.get(0).Id, 'Bozza');
-
+			HDT_UTL_DataFactoryTst.createCase(1, true, accs.get(0).Id, null, null, null, null);
+			HDT_UTL_DataFactoryTst.createOrder(1, true, accs.get(0).Id, 'Bozza');
+			
 		}
 	}
 
@@ -45,18 +45,15 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 
 		String filterType='City__c';
 		string filterValue='Roma';
+		string supplyCity='Roma';
+		
+		HDT_LC_CodiceAteco.getAtecoMatrixList(filterType, filterValue, supplyCity);
 
-		List<AtecoMatrix__c> tAtecoMatrix=HDT_LC_CodiceAteco.getAtecoMatrixList(filterType, filterValue);
-
-		System.debug('tAtecoMatrix = '+tAtecoMatrix);
-
+	
 		filterType='IstatCode__c';
 		filterValue='test';
 
-		List<AtecoMatrix__c> tAtecoMatrix2=HDT_LC_CodiceAteco.getAtecoMatrixList(filterType, filterValue);
-
-		System.debug('tAtecoMatrix2 = '+tAtecoMatrix2);
-
+		List<AtecoMatrix__c> tAtecoMatrix2=HDT_LC_CodiceAteco.getAtecoMatrixList(filterType, filterValue, supplyCity);
 		System.assertEquals('Roma', tAtecoMatrix2[0].City__c, 'Ateco Matrix return is wrong');
 		System.assertNotEquals('', tAtecoMatrix2[0].City__c, 'value of parameter is not matching');
 		Test.stopTest();
@@ -78,8 +75,6 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 		Order tOrder=[SELECT Id, AtecoCode__c
 		              FROM Order
 		              LIMIT 1];
-
-		System.debug('tOrder = '+tOrder);
 
 		System.assertEquals('atecoCode', tOrder.AtecoCode__c, 'Order not updated');
 		System.assertNotEquals('', tOrder.AtecoCode__c, 'value of parameter is not matching');
@@ -110,11 +105,11 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 		currOrder = [SELECT Id,AtecoCode__c,HerAteco__c,RonchiCode__c,RonchiSubcat__c,RonchiDescription__c
 							FROM Order LIMIT 1];
 							  
-		system.assertEquals('1', currOrder[0].AtecoCode__c);
-		system.assertEquals('2', currOrder[0].HerAteco__c);
-		system.assertEquals('3', currOrder[0].RonchiCode__c);
-		system.assertEquals('4', currOrder[0].RonchiSubcat__c);
-		system.assertEquals('5', currOrder[0].RonchiDescription__c);
+		system.assertEquals('1', currOrder[0].AtecoCode__c, 'OK');
+		system.assertEquals('2', currOrder[0].HerAteco__c, 'OK');
+		system.assertEquals('3', currOrder[0].RonchiCode__c, 'OK');
+		system.assertEquals('4', currOrder[0].RonchiSubcat__c, 'OK');
+		system.assertEquals('5', currOrder[0].RonchiDescription__c, 'OK');
 
 	}
 
@@ -142,11 +137,11 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 		currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiCodeDescription__c
 		 					FROM Case LIMIT 1];
 
-		system.assertEquals('1', currCase[0].AtecoCode__c);
-		system.assertEquals('2', currCase[0].SupplyCityCode__c);
-		system.assertEquals('3', currCase[0].RonchiCode__c);
-		system.assertEquals('4', currCase[0].RonchiSubcategory__c);
-		system.assertEquals('5', currCase[0].RonchiCodeDescription__c);
+		system.assertEquals('1', currCase[0].AtecoCode__c, 'OK');
+		system.assertEquals('2', currCase[0].SupplyCityCode__c, 'OK');
+		system.assertEquals('3', currCase[0].RonchiCode__c, 'OK');
+		system.assertEquals('4', currCase[0].RonchiSubcategory__c, 'OK');
+		system.assertEquals('5', currCase[0].RonchiCodeDescription__c, 'OK');
 
 	}
 
@@ -187,11 +182,11 @@ public with sharing class HDT_LC_CodiceAtecoTst{
 		currCase = [SELECT Id,AtecoCode__c,SupplyCityCode__c,RonchiCode__c,RonchiSubcategory__c,RonchiCodeDescription__c
 		 					FROM Case LIMIT 1];
 
-		system.assertEquals('1', currCase[0].AtecoCode__c);
-		system.assertEquals('2', currCase[0].SupplyCityCode__c);
-		system.assertEquals('3', currCase[0].RonchiCode__c);
-		system.assertEquals('4', currCase[0].RonchiSubcategory__c);
-		system.assertEquals('5', currCase[0].RonchiCodeDescription__c);
+		system.assertEquals('1', currCase[0].AtecoCode__c, 'OK');
+		system.assertEquals('2', currCase[0].SupplyCityCode__c, 'OK');
+		system.assertEquals('3', currCase[0].RonchiCode__c, 'OK');
+		system.assertEquals('4', currCase[0].RonchiSubcategory__c, 'OK');
+		system.assertEquals('5', currCase[0].RonchiCodeDescription__c, 'OK');
 		
 		Test.stopTest();
 		
