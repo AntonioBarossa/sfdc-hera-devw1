@@ -279,7 +279,7 @@ public with sharing class HDT_UTL_OrderTst {
 
     @IsTest
     static void calculateRateCategoryNotResOperatoreDiversoTest(){
-
+        Test.startTest();
         Order myOrder = [SELECT Id FROM Order where Name = 'testOrderName0'];
         Account myAcc = [Select Id, Code__c from Account where Name = 'Mario Rossi'];
         RateCategory__c myRatCat = [Select Id, operatore__c, ProductName__c from RateCategory__c];
@@ -290,7 +290,7 @@ public with sharing class HDT_UTL_OrderTst {
         myRatCat.operatore__c = 'Diverso';
         update myRatCat;
 
-        Test.startTest();
+        
         Boolean result = HDT_UTL_Order.calculateRateCategory(myOrder);
         Test.stopTest();
 

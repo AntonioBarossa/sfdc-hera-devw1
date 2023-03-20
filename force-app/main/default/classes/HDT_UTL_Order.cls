@@ -76,6 +76,7 @@ public inherited sharing class HDT_UTL_Order {
         if(!res){
             listRate = HDT_QR_RateCategory.getRateList(o.ServicePoint__c != null ? o.ServicePoint__r.CommoditySector__c : 'Energia Elettrica',o.ServicePoint__r.distributor__r.code__c,'N/A',o.SupplyType__c != null ? o.SupplyType__c : o.supplyTypeTechnical__c);
             for(RateCategory__c r : listRate){
+                System.debug('Distributor Code ' + o.ServicePoint__r.distributor__r.code__c);
                 if(r.DistributorCode__c == o.ServicePoint__r.distributor__r.code__c && r.operatore__c == 'Uguale'){
                     code = r.CalculatedValue__c;
                     res = true;
