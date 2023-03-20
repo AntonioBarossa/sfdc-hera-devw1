@@ -154,6 +154,14 @@ public with sharing class HDT_UTL_AppointmentAgenda {
                     responseString = 'OK'; 
                 }
                 when '0' {
+                    activity = getActivity(activityId,'Id,wrts_prcgvr__Status__c,AppointmentDate__c,MaxTimeModificationAppointment__c,MaxDateModificationAppointment__c,AppointmentCode__c,AppoitmentTimeSlotConfirmed__c,AppointmentDuration__c');
+                    activity.MaxTimeModificationAppointment__c = '';
+                    activity.MaxDateModificationAppointment__c = null;
+                    activity.AppointmentCode__c = '';
+                    activity.AppoitmentTimeSlotConfirmed__c = '';
+                    activity.AppointmentDuration__c = '';
+                    activity.AppointmentDate__c = null;
+                    activity.wrts_prcgvr__Status__c = 'Creata';
                     responseString = 'ERRORE CONFERMA';
                 }
             }
