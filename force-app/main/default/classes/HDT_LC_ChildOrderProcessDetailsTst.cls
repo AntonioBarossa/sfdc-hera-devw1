@@ -220,19 +220,19 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrder1=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder1=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test1'];
 
-			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, RetroactiveDate__c, Subprocess__c
+			List<Order> tOrder2=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, RetroactiveDate__c, Subprocess__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test2Voltura'];
 
-			List<Order> tOrder3=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder3=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test3'];
 
-			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c
+			List<Order> tOrder4=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, PowerCommitted__c, TemporaryConnectionStartDate__c, RecordType.DeveloperName, VATfacilitationFlag__c, FacilitationExcise__c, DeferredDate__c
 			                    FROM Order
 			                    WHERE CreditCheckDescription__c='test5Conessione1'];
 
@@ -263,7 +263,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.stopTest();
 
-			List<Order> tOrderupdated=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, ReadingCustomerDate__c, Subprocess__c
+			List<Order> tOrderupdated=[SELECT Id, Name, AccountId, NotRegisteredMeterCase__c, EffectiveDate__c, VoltureType__c, ImplantType__c, RequestOption__c, ReadingCustomerDate__c, Subprocess__c, DeferredDate__c
 			                           FROM Order
 			                           WHERE Name='testOrderName1'
 			                           LIMIT 1];
