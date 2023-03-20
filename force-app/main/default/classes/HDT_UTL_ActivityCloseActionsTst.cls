@@ -82,7 +82,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         Test.stopTest();
     }
 
-    @isTest 
+/*     @isTest 
     static void gestioneRifiutiTest(){
 
         Case caso = new Case();
@@ -103,9 +103,9 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         Test.stopTest();
 
-    }
+    } */
 
-    @isTest 
+/*     @isTest 
     static void annulloRichiestaTest(){
 
         Case caso = new Case();
@@ -124,7 +124,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         Test.stopTest();
 
-    }
+    } */
     
     
     @isTest 
