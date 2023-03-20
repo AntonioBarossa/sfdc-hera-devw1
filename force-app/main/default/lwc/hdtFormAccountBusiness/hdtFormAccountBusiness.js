@@ -204,9 +204,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     get ruoloOptions() {
         return [
             { label: 'Titolare', value: 'Titolare' },
-            { label: 'Legale rappresentante', value: 'Legale rappresentante' },
+            /*{ label: 'Legale rappresentante', value: 'Legale rappresentante' },
             { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }
+            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }*/
         ];
     }
     closeModal() {

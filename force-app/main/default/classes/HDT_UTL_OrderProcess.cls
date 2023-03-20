@@ -651,7 +651,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }
                     }else if(
                             (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 
-                            && ((newOrder.ConfirmCustomerContract__c == 'Comfort call' && !newOrder.isTransition__c) ||  newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
+                            && (/* (newOrder.ConfirmCustomerContract__c == 'Comfort call' && !newOrder.isTransition__c) ||  */ newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
                         ){
                         newOrdersListComfort.add(newOrder);
                     }

@@ -332,6 +332,10 @@
     </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_SprinklrSettings__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
     </customSettingAccesses>
     <customSettingAccesses>

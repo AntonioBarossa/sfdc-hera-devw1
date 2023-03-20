@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String result;
 
-        if(caseType == 'Reclamo Scritto/Rich. Info' || caseType == 'Richiesta Parere'){
+        if(caseType == 'Reclamo Scritto/Rich. Info' || caseType == 'Richiesta Parere' || caseType == 'Reclamo Scritto Da Cittadino'){
 
             result = validateReclamoScritto(fields, recordId, currentCase);
 

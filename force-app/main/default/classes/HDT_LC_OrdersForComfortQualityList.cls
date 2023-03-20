@@ -27,7 +27,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
-        List<Order> upList = new List<Order>();
+        //List<Order> upList = new List<Order>();
         String qualityMessage = 'Attività lavorata da ' + UserInfo.getUserId()+ ' il ' +Date.today()+ '. Esito Contatto: ' + confirmText +' OK.';
         Order orderUpdate = new Order(
             Id = ordId,
@@ -58,9 +58,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             causalQuality = 'Comfort Call OK';
             //orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
-            //upList.add(orderUpdate);
-            upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
-            upList.add(orderUpdate);
+            /* upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
+            upList.add(orderUpdate); */
+            //Divisione update order padre rispetto al figlio per il calcolo delle date.
+            orderSrv.updateRecord(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
@@ -74,10 +75,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 
             }
             causalQuality = 'Quality Call OK';
-            upList.add(orderUpdate);
+            //upList.add(orderUpdate);
         }
-        HDT_UTL_DatabaseService.updateSObject(upList);
-        //orderSrv.updateRecord(orderUpdate);
+        //HDT_UTL_DatabaseService.updateSObject(upList);
+        
 
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
@@ -91,6 +92,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        //Cambio fase con date già calcolate.
+        orderSrv.updateRecord(orderUpdate);
         if (campMembList!=null && campMembList.size()>0) {
             return campMembList[0];
         }
