@@ -200,7 +200,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzo();
         request.comune =  tryParse(infoOrder.Account.BillingCity);
-        request.nazione =  tryParse(infoOrder.Account.BillingCountry.Substring(0,2)).toUpperCase();
+        request.nazione =  tryParse(infoOrder.Account.BillingCountry?.Substring(0,2)).toUpperCase();
         request.toponimo =  '';
         request.frazione =  '';
         request.piano =  tryParse(infoOrder.Account.BuildingFloor__c);
@@ -304,7 +304,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.InvoicingCity__c);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c.Substring(0,2)).toUpperCase();
+        request.nazione = tryParse(infoOrder.BillingProfile__r.InvoicingCountry__c?.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumberExtension__c);
@@ -319,7 +319,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(billing.InvoicingCity__c);
-        request.nazione = tryParse(billing.InvoicingCountry__c.Substring(0,2)).toUpperCase();
+        request.nazione = tryParse(billing.InvoicingCountry__c?.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(billing.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(billing.InvoicingStreetNumberExtension__c);
@@ -374,7 +374,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCity);
-        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry.Substring(0,2)).toUpperCase();
+        request.nazione = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingCountry?.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c);
@@ -389,7 +389,7 @@ public with sharing class HDT_UTL_BpCaCreate
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationIndirizzoIndirizzoAlt();
         request.comune = tryParse(billing.DivergentSubject__r.MailingCity);
-        request.nazione = tryParse(billing.DivergentSubject__r.MailingCountry.Substring(0,2)).toUpperCase();
+        request.nazione = tryParse(billing.DivergentSubject__r.MailingCountry?.Substring(0,2)).toUpperCase();
         request.piano = '';
         request.civico = tryParse(billing.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(billing.DivergentSubject__r.MailingStreetNumberExtension__c);
