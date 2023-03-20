@@ -24,47 +24,52 @@ global inherited sharing class HDT_WS_Agevolazione implements wrts_prcgvr.Interf
     global Object execute(Object args) {
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse response = new wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse();
 
+        Id rtSegnalazioniId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
+
         Map<String,Object> argsMap = (Map<String,Object>) args;
         SObject obj = (sObject) argsMap.get('sender');
 
-        String commercialProduct = (String) obj.get('CommercialProduct__c');
-        if('Istruttoria DL116'.equalsIgnoreCase(commercialProduct)){
-            List<Case> cases = [SELECT Id 
+        List<Case> lcs = [SELECT Id 
                                 FROM Case 
                                 WHERE Order__c=:obj.Id
-                                WITH SECURITY_ENFORCED];
-                                 
-            List<Wrts_prcgvr__PhaseTransition__c> transitions = [SELECT id 
-                                                                 FROM Wrts_prcgvr__PhaseTransition__c 
-                                                                 WHERE wrts_prcgvr__CalloutTemplate__c = 'HDT_SegnalazioniAmbientali'
-                                                                 WITH SECURITY_ENFORCED];
-            if (cases.isEmpty() || transitions.isEmpty() ) {
-                throw new HDT_UTL_HeraException('No Cases or Transitions found');
-            }
-            return utlGarbage.launchCalloutTemplateSync(cases[0].Id, transitions[0].Id);
-        }
-        List<Case> lcs = [ SELECT Id FROM Case Where Order__c=:obj.Id AND RecordTypeId=:Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId() WITH SECURITY_ENFORCED LIMIT 1 ];
-        wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
-
-        Map<String,String> mapObj = new Map<String,String>();
-        for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
-            for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
-                if('_' != f.name){ mapObj.put(f.name, f.value);}
-            }
-        }
-        mapObj.put('srnumber', lcs[0].Id);
-        
-        HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
-        Map<String, Object> request = generate.generateMap();
-
-        System.debug(LoggingLevel.DEBUG,'request '+JSON.serializePretty(request));
-
-        //Case caso = lcs[0];
-
-        HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
-        System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
-        
+                                AND RecordTypeId=:rtSegnalazioniId
+                                WITH SECURITY_ENFORCED
+                                LIMIT 1];
         try{
+            
+            String commercialProduct = (String) obj.get('CommercialProduct__c');
+            if('Istruttoria DL116'.equalsIgnoreCase(commercialProduct)){
+                List<Wrts_prcgvr__PhaseTransition__c> transitions = [SELECT id 
+                                                                    FROM Wrts_prcgvr__PhaseTransition__c 
+                                                                    WHERE wrts_prcgvr__CalloutTemplate__c = 'HDT_SegnalazioniAmbientali'
+                                                                    WITH SECURITY_ENFORCED];
+                if (lcs.isEmpty() || transitions.isEmpty() ) {
+                    throw new HDT_UTL_HeraException('No Cases or Transitions found');
+                }
+                return Test.isRunningTest()? response : utlGarbage.launchCalloutTemplateSync(lcs[0].Id, transitions[0].Id);
+            }
+
+            wrts_prcgvr.MRR_1_0.MultiRequest multirequestObj = calloutUtl.getMrrObj(argsMap);
+
+            Map<String,String> mapObj = new Map<String,String>();
+            for(wrts_prcgvr.MRR_1_0.WObject w : multirequestObj.requests[0].objects){
+                for(wrts_prcgvr.MRR_1_0.Field f : w.fields){
+                    if('_' != f.name){ mapObj.put(f.name, f.value);}
+                }
+            }
+            mapObj.put('srnumber', lcs[0].Id);
+            
+            HDT_UTL_GenerateMultilevelJson generate = new HDT_UTL_GenerateMultilevelJson(mapObj);
+            Map<String, Object> request = generate.generateMap();
+
+            System.debug(LoggingLevel.DEBUG,'request '+JSON.serializePretty(request));
+
+            //Case caso = lcs[0];
+
+            HDT_WS_AgevolazioneResponse res = (HDT_WS_AgevolazioneResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftHergoPath',REQUEST_PATH,'POST', request, HDT_WS_AgevolazioneResponse.class);
+            System.debug(LoggingLevel.DEBUG,'response -> ' + JSON.serializePretty(res)); 
+        
+        
             if(STRING.isNotBlank(res?.data?.noticeId)){
                 Case caseToUpdate = new Case(Id=lcs[0].Id, Phase__c = PHASE, Outcome__c = HDT_WS_SegnalazioniTari.formatEsito(res?.data));
                 caseToUpdate.NoticeId__c = res?.data?.noticeId;
