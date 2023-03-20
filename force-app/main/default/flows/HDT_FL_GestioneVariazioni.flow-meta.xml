@@ -2558,10 +2558,10 @@
             <name>Positivo</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.SignalOutcome__c</leftValueReference>
+                <leftValueReference>GetCaseAggiornatoEsenzioneModificaFognature.InquiryOutcome__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>Non Accolta</stringValue>
+                    <stringValue>Non accolta</stringValue>
                 </rightValue>
             </conditions>
             <connector>

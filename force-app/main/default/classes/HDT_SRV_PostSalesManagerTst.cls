@@ -226,7 +226,7 @@ public class HDT_SRV_PostSalesManagerTst {
     @IsTest
     static void handleVarAnagrCliModDatiContatto(){
 
-        Case currentCase = [SELECT Id, AccountId, CustomerMarking__c, SubProcess__c, ContactId, Email__c, PhoneNumber__c, Mobile__c, CertifiedEmail__c, Fax__c FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
+        Case currentCase = [SELECT Id, AccountId, CustomerMarking__c, SubProcess__c, ContactId, Email__c, PhoneNumber__c, Mobile__c, CertifiedEmail__c, Fax__c, SuppliedEmail FROM Case WHERE Type  = 'Variazione indirizzo di fornitura' LIMIT 1];
 
         currentCase.SubProcess__c = 'Modifica Dati di Contatto';
         currentCase.Category__c = 'Aziende Soho';
