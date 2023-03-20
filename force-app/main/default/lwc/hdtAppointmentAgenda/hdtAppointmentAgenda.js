@@ -125,9 +125,10 @@ export default class HdtAppointmentAgenda extends LightningElement {
             }else if (result.localeCompare('OK') === 0){
                 this.showAlert('Operazione Riuscita','L\'appuntamento è stato confermato','success');
                 this.refreshPage(this.isCommunity);
-            }else if (result.localeCompare('ERRORE CONFERMA') === 0){
-                this.showAlert('Errore','Impossibile confermare l\'appuntamento selezionato','error');
+            }else if (result.localeCompare('ERRORE CONFERMA')===0){
+                this.showAlert('Errore',' Slot appuntamento scaduto, è necessario prendere un nuovo Appuntamento.','error');
                 this.showSpinner = false;
+                this.refreshPage(this.isCommunity);
             }
         }).catch(error =>{
             this.showAlert('Errore',error.body.message,'error');

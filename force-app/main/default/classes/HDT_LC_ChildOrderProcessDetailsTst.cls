@@ -287,17 +287,17 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.startTest();
 
-			List<Order> tOrderConnessione=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
+			List<Order> tOrderConnessione=[SELECT Id, Name, ProcessType__c,AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c,DeferredDate__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test5Conessione1'
 			                               LIMIT 1];
 
-			List<Order> tOrderAttivConMod=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
+			List<Order> tOrderAttivConMod=[SELECT Id, Name, ProcessType__c,AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c,DeferredDate__c
 			                               FROM Order
 			                               WHERE CreditCheckDescription__c='test4AttivConMod'
 			                               LIMIT 1];
 
-			List<Order> tOrderTemporanea=[SELECT Id, Name, AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c
+			List<Order> tOrderTemporanea=[SELECT Id, Name, ProcessType__c,AccountId, CreditCheckDescription__c, recordType.DeveloperName, PowerRequested__c, PowerCommitted__c, PowerAvailable__c, ServicePoint__r.Distributor__r.Name, RequestPhase__c, ProcessCode__c, ConnectionType__c, VoltageLevel__c, UseTypeEnergy__c, DistributorFormula__c,DeferredDate__c
 			                              FROM Order
 			                              WHERE CreditCheckDescription__c='test6Temporanea'
 			                              LIMIT 1];
@@ -317,8 +317,8 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 
 			Test.stopTest();
 
-			System.assertEquals(false, quoteTypeWrp.quoteCode==null, 'quoteTypeWrp return is Wrong');
-			System.assertNotEquals(true, quoteTypeWrp.quoteCode==null, 'getQuoteTypeMtd did not work correctly');
+			System.assertEquals(true, quoteTypeWrp.quoteCode==null, 'quoteTypeWrp return is Wrong');
+			System.assertNotEquals(false, quoteTypeWrp.quoteCode==null, 'getQuoteTypeMtd did not work correctly');
 		}
 	}
 

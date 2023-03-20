@@ -246,9 +246,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             if(recordTypeDevName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
                 metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
-                wrp.quoteType = metas[0].QuoteType__c; 
-                wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
-                system.debug(metas);
+                if(!metas?.isEmpty()){
+                    wrp.quoteType = metas[0].QuoteType__c; 
+                    wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 
+                    system.debug(metas);
+                }
                 return wrp;
             }
 
