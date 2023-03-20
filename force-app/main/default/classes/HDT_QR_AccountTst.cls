@@ -21,6 +21,9 @@ public with sharing class HDT_QR_AccountTst {
         accList[0].BillingCityCode__c = 'TO';
         accList[0].Code__c = 'iddqd';
         insert accList;
+
+        HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'MMS', 'G1 - MMS Persona fisica', 'Famiglie');
+        
     }
 
     @isTest
@@ -100,7 +103,7 @@ public with sharing class HDT_QR_AccountTst {
 
         Test.startTest();
 
-        Account acc = [SELECT Id, FiscalCode__c FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
+        Account acc = [SELECT Id, FiscalCode__c FROM Account WHERE CompanyOwner__c = 'MMS' LIMIT 1];
 
         List<Account> accList = qrAcc.getAccountByFiscalCode(acc.FiscalCode__c);
 
