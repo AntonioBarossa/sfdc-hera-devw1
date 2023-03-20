@@ -37,6 +37,16 @@
                 <label>Hera EtaPiu Luce</label>
             </value>
             <value>
+                <fullName>Hera ProtezionePiu Gas</fullName>
+                <default>false</default>
+                <label>Hera ProtezionePiu Gas</label>
+            </value>
+            <value>
+                <fullName>Hera ProtezionePiu Luce</fullName>
+                <default>false</default>
+                <label>Hera ProtezionePiu Luce</label>
+            </value>
+            <value>
                 <fullName>Nuova Impronta Zero Casa Gas</fullName>
                 <default>false</default>
                 <label>Nuova Impronta Zero Casa Gas</label>
@@ -50,6 +60,16 @@
                 <fullName>Nuova Impronta Zero Casa Luce</fullName>
                 <default>false</default>
                 <label>Nuova Impronta Zero Casa Luce</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Extra Casa Gas</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Extra Casa Gas</label>
+            </value>
+            <value>
+                <fullName>Nuova Impronta Zero Extra Casa Luce</fullName>
+                <default>false</default>
+                <label>Nuova Impronta Zero Extra Casa Luce</label>
             </value>
             <value>
                 <fullName>Nuova Impronta Zero Lavoro Gas</fullName>
@@ -95,6 +115,16 @@
                 <fullName>PiuControllo Flat Casa Luce</fullName>
                 <default>false</default>
                 <label>PiuControllo Flat Casa Luce</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Gas</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Gas</label>
+            </value>
+            <value>
+                <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+                <default>false</default>
+                <label>PiuControllo Flat Extra Casa Luce</label>
             </value>
             <value>
                 <fullName>PiuControllo Special Active Casa Gas</fullName>
