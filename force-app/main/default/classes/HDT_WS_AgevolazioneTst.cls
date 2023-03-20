@@ -90,7 +90,7 @@ public with sharing class HDT_WS_AgevolazioneTst{
         HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
         Test.setMock(HttpCalloutMock.class, mock);
     
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c, CommercialProduct__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         

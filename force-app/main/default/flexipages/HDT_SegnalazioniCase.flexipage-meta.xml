@@ -555,7 +555,7 @@
                         <valueListItems>
                             <value>CustomButton.Case.Invio_Sollecito</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2) AND 3</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type}</leftValue>
                                     <operator>EQUAL</operator>
@@ -565,6 +565,11 @@
                                     <leftValue>{!Record.Type}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Segnalazioni Ambientali</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Avviso di Servizio</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
