@@ -8466,6 +8466,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Blocco per frode</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Calamità Naturali</fullName>
             <default>false</default>
         </values>
