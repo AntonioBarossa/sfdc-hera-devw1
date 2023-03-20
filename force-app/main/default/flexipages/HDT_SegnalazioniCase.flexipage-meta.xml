@@ -555,7 +555,7 @@
                         <valueListItems>
                             <value>CustomButton.Case.Invio_Sollecito</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3) AND 4</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3) AND 4 AND 5</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type}</leftValue>
                                     <operator>EQUAL</operator>
@@ -575,6 +575,10 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Closed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.NoticeId__c}</leftValue>
+                                    <operator>NE</operator>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
