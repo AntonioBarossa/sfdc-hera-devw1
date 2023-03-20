@@ -106,17 +106,17 @@ public class HDT_SRV_LeadTst{
 
 			List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, true);
 
-			leads[0].MobilePhone='1234567906';
+			leads[0].MobilePhone='3234567906';
 
 			HDT_SRV_Lead.updateRecord(leads[0]);
 
 			Lead updatedLead=[SELECT Id, MobilePhone
 			                  FROM Lead
-			                  WHERE MobilePhone='1234567906'];
+			                  WHERE MobilePhone='3234567906'];
 
 			Test.stopTest();
 
-			System.assertEquals(true, updatedLead.MobilePhone=='1234567906', 'Lead not updated');
+			System.assertEquals(true, updatedLead.MobilePhone=='3234567906', 'Lead not updated');
 			System.assertNotEquals(true, updatedLead.MobilePhone==null, 'Lead not updated');
 		}
 	}
