@@ -8892,10 +8892,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Pratiche legali</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto Responsabile HC</fullName>
             <default>false</default>
         </values>
