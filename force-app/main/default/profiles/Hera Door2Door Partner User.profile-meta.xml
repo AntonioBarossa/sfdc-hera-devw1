@@ -10480,7 +10480,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
