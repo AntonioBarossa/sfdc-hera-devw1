@@ -9028,7 +9028,7 @@
             <default>false</default>
         </values>
 		<values>
-            <fullName>54 – Recupero Letture su Contatori non Letti </fullName>
+            <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
             <default>false</default>
         </values>
 		<values>
@@ -9081,10 +9081,6 @@
         </values>
 		<values>
             <fullName>22 - Richiesta lettura/verifica in campo</fullName>
-            <default>false</default>
-        </values>
-		<values>
-            <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
             <default>false</default>
         </values>
 		<values>
