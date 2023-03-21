@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 02-12-2022
+ * @last modified on  : 20-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -62,6 +62,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         
         Test.setMock(HttpCalloutMock.class, mock);
         Test.startTest();
+        
         Case theCase = [SELECT Id, CreatedDate, WithdrawalFee__c, ServicePoint__c, AccountCode__c FROM Case LIMIT 1];
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse  appConfirm = new HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse();
