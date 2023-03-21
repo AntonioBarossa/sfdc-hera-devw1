@@ -23,9 +23,11 @@ public with sharing class HDT_UTL_BillingProfile {
     public static void setSubscriberData(BillingProfile__c bp, Map<Id,Account> bpSubscriber){
         if (bpSubscriber.containsKey(bp.Account__c)){
             Account acc = bpSubscriber.get(bp.Account__c);
+            String fiscalcode = acc.FiscalCode__c;
+            fiscalcode = String.isNotBlank(fiscalcode) && fiscalcode.isAlphanumeric()?fiscalcode:'';
             bp.BankAccountSignatoryFirstName__c = acc.FirstName__c;
             bp.BankAccountSignatoryLastName__c = acc.LastName__c;
-            bp.BankAccountSignatoryFiscalCode__c = acc.FiscalCode__c;
+            bp.BankAccountSignatoryFiscalCode__c = fiscalcode;
         }
     }
 }
