@@ -50,7 +50,9 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
 
                 currentCase.TecnicalPhase__c = 'Annullato';
                 currentCase.Status= 'Closed';
-
+                //currentCase.Description= STRING.valueOf(obj.get(Case.Description))+'\n\nNota Cancellazione App.to da Call Center';
+                currentCase.Description= 'Nota Cancellazione App.to da Call Center';
+                
                 if(!currentCase.WithdrawalFee__c && currentCase.ServicePoint__c != null){ //Se Ritiro Gratuito
             
                     Datetime createdDate = currentCase.CreatedDate;

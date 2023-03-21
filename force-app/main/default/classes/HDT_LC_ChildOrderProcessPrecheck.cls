@@ -303,11 +303,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
             newOrder.ProcessCode__c = processCode;
             newOrder.Phase__c = 'Bozza';
 
-            //Update RateCategory sul Service Point
-            order.ServicePoint__r.RateCategory__c = order.RateCategory__c;
-
             objToUpdate.add(newOrder);
-            objToUpdate.add(order.ServicePoint__r);
             HDT_UTL_DatabaseService.updateSObject(objToUpdate);
             
         }

@@ -16,6 +16,7 @@ public class HDT_QR_AtecoMatrixTst{
 		atecoMats[0].Category__c='test3';
 		atecoMats[0].RonchiCode__c='test4';
 		atecoMats[0].AtecoCode__c='test5';
+		atecoMats[0].RonchiSubcategory__c='test6';
 
 		insert atecoMats;
 	}
@@ -74,5 +75,44 @@ public class HDT_QR_AtecoMatrixTst{
 
 		Test.stopTest();
 		
+	}
+
+	@isTest
+	static void testgetAtecoMatrixByCodiceIstatRonchi(){
+
+		Test.startTest();
+
+		List<AtecoMatrix__c> testGetByIstatCode=HDT_QR_AtecoMatrix.getAtecoMatrixByCodiceIstatRonchi('test1','RO');
+
+		System.assertEquals('test1', testGetByIstatCode[0].IstatCode__c, 'Ateco Matrix returned is wrong');
+		System.assertNotEquals('', testGetByIstatCode[0].IstatCode__c, 'getAtecoMatrixByCodiceIstat did not work correctly');
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void getAtecoMatrixByCodiceRonchi(){
+
+		Test.startTest();
+
+		List<AtecoMatrix__c> testGetByIstatCode=HDT_QR_AtecoMatrix.getAtecoMatrixByCodiceRonchi('test4','RO');
+
+		System.assertEquals('test1', testGetByIstatCode[0].IstatCode__c, 'Ateco Matrix returned is wrong');
+		System.assertNotEquals('', testGetByIstatCode[0].IstatCode__c, 'getAtecoMatrixByCodiceIstat did not work correctly');
+
+		Test.stopTest();
+	}
+
+	@isTest
+	static void getAtecoMatrixByComuneRonchi(){
+
+		Test.startTest();
+
+		List<AtecoMatrix__c> testGetByIstatCode=HDT_QR_AtecoMatrix.getAtecoMatrixByComuneRonchi('RO');
+
+		System.assertEquals('test1', testGetByIstatCode[0].IstatCode__c, 'Ateco Matrix returned is wrong');
+		System.assertNotEquals('', testGetByIstatCode[0].IstatCode__c, 'getAtecoMatrixByCodiceIstat did not work correctly');
+
+		Test.stopTest();
 	}
 }
