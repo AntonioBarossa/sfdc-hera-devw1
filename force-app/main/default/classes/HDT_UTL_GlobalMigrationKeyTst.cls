@@ -1,5 +1,7 @@
 @IsTest
 public with sharing class HDT_UTL_GlobalMigrationKeyTst {
+    private static HDT_UTL_Constants utlConstants=new HDT_UTL_Constants();
+
     @TestSetup
     static void makeData(){
         List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','G3 - MMS Azienda','Aziende SME');
@@ -74,19 +76,27 @@ public with sharing class HDT_UTL_GlobalMigrationKeyTst {
     }
     @IsTest
     public static void testDistributor(){
-        Test.startTest();
-            Account distributor = new Account();
-            distributor.Code__c = 'DISTRIBUTOR';
-            distributor.Name = 'DISTRIBUTOR';
-            distributor.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Distributore').getRecordTypeId();
-            distributor.CompanyOwner__c = 'MMS';
-            insert distributor;
-            distributor = [SELECT Id,Code__c,GlobalMigrationKey__c FROM Account WHERE Code__c = 'DISTRIBUTOR' LIMIT 1];
-            System.assertEquals(distributor.Code__c, distributor.GlobalMigrationKey__c, 'Il Distributore è stato aggiornato');
-            distributor.Code__c = 'DISTRIBUTOR_2';
-            update distributor;
-            distributor = [SELECT Id,Code__c,GlobalMigrationKey__c FROM Account WHERE Code__c = 'DISTRIBUTOR_2' LIMIT 1];
-            System.assertEquals(distributor.Code__c, distributor.GlobalMigrationKey__c, 'Il Distributore è stato aggiornato');
-        Test.stopTest();
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.HERA_SYSTEM_ADMINISTRATOR_NAME);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
+		insert internalUser;
+		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{ HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager', false)};
+		insert permissionSetAssignments;
+		System.runAs(internalUser){
+            Test.startTest();
+                Account distributor = new Account();
+                distributor.Code__c = 'DISTRIBUTOR';
+                distributor.Name = 'DISTRIBUTOR';
+                distributor.RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByName().get('Distributore').getRecordTypeId();
+                distributor.CompanyOwner__c = 'MMS';
+                insert distributor;
+                distributor = [SELECT Id,Code__c,GlobalMigrationKey__c FROM Account WHERE Code__c = 'DISTRIBUTOR' LIMIT 1];
+                System.assertEquals(distributor.Code__c, distributor.GlobalMigrationKey__c, 'Il Distributore è stato aggiornato');
+                distributor.Code__c = 'DISTRIBUTOR_2';
+                update distributor;
+                distributor = [SELECT Id,Code__c,GlobalMigrationKey__c FROM Account WHERE Code__c = 'DISTRIBUTOR_2' LIMIT 1];
+                System.assertEquals(distributor.Code__c, distributor.GlobalMigrationKey__c, 'Il Distributore è stato aggiornato');
+            Test.stopTest();
+        }
     }
 }

@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 24-11-2022
+ * @last modified on  : 20-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -82,50 +82,6 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         Test.stopTest();
     }
 
-/*     @isTest 
-    static void gestioneRifiutiTest(){
-
-        Case caso = new Case();
-        caso.Type = 'Gestione Rifiuti';
-        caso.PhaseStory__c='';
-        insert caso;
-        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.ActivityOutcome__c = 'Positivo';
-        insert activity;
-        String activityType = 'Risposta Ricevuta';
-
-        Test.startTest();
-        HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        System.assertEquals(action.phase, 'Annullato', 'OK');
-        HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        activity.ActivityOutcome__c = 'Negativo';
-        update activity;
-        HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        Test.stopTest();
-
-    } */
-
-/*     @isTest 
-    static void annulloRichiestaTest(){
-
-        Case caso = new Case();
-        caso.Type = 'Ambiente annullo richiesta senza appuntamento';
-        insert caso;
-        wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
-        activity.ActivityOutcome__c = 'Positivo';
-        insert activity;
-        String activityType = 'Risposta Ricevuta';
-
-        Test.startTest();
-        HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        System.assertEquals(action.phase, 'Completata', 'OK');
-        activity.ActivityOutcome__c = 'Negativoo';
-        update activity;
-        HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
-        Test.stopTest();
-
-    } */
-    
     
     @isTest 
     static void approvazioneAgevolazioneTst(){
@@ -142,7 +98,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
 
         Test.startTest();
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
-        system.assertEquals(action.activityType, 'Contattare Cliente', 'OK');
+        system.assertEquals(action.activityType, 'CBS_CRP001__CONTATTARE_IL_CLIENTE_SALES', 'OK');
 		activity.ActivityOutcome__c = 'Positivo';
         action= HDT_UTL_ActivityCloseActions.getOnCloseActions(ord, activity, activityType);
         system.assertEquals(action.phase, 'Documentazione Validata', 'OK');
@@ -208,6 +164,25 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         wrts_prcgvr__Activity__c an = new wrts_prcgvr__Activity__c(); //activity manuale negativa
         an.ActivityOutcome__c = 'Negativo';
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action;
+
+        Case selectedCase = new Case(); // Variazione indirizzo di fornitura - update ServicePoint
+        selectedCase.Phase__c = 'Esito KO da SAP';
+        selectedCase.Type = 'Variazione indirizzo di fornitura';
+        selectedCase.Subprocess__c = 'DOM_Componenti residenti';
+        selectedCase.RecordTypeId = rtId;
+        selectedCase.ServicePoint__c = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0].Id;
+        selectedCase.SupplyCity__c ='';
+        selectedCase.SupplyCountry__c ='';
+        selectedCase.SupplyPlace__c ='';
+        selectedCase.SupplyPostalCode__c ='';
+        selectedCase.SupplyProvince__c ='';
+        selectedCase.SupplyCityCode__c ='';
+        selectedCase.SupplyStreetCode__c ='';
+        selectedCase.SupplyStreetName__c ='';
+        selectedCase.SupplyStreetNumberExtension__c ='';
+        selectedCase.SupplyStreetNumber__c ='';
+        selectedCase.SupplyStreetName__c ='';
+
         Test.startTest();
             action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(c, ap);
        		system.assertEquals(action.phase, 'Da Inviare', 'OK');
@@ -227,6 +202,7 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         	system.assertEquals(action.phase, 'Da Inviare', 'OK');
         	action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(csap, an);
         	system.assertEquals(((Case) action.sobjToUpdate).Phase__c, 'Annullato', 'OK');
+            action = HDT_UTL_ActivityCloseActions.tariLogicVarDis(selectedCase, ap);
         Test.stopTest();
     }
 

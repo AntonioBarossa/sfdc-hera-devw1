@@ -110,7 +110,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         Map<String, Object> args=new Map<String, Object>();
         
         args.put('action', myCase);
-        args.put('sender', myCase);
+        args.put('sender', myCase); 
         args.put('wrts_prcgvr__CalloutTemplate__c', 'prova');
         args.put('transition', myTransition);
         args.put('templateMap', paramsCallOut);
@@ -131,6 +131,8 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         res2.outcome='';
         res2.errorMessage='errMsg';
         res2.noticeId='ntcId';
+
+        System.assertEquals('KO', responseReturn.message, 'The call was not successful');
         Test.stopTest();
     }
 
@@ -147,6 +149,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         
         Case myCase = [Select id, DiscardDescription__c, AccountId, CaseNumber, Phase__c, NoticeId__c, Outcome__c, RecordType.DeveloperName from case WHERE DiscardDescription__c <> 'zero' LIMIT 1];
         myCase.NoticeId__c = 'fakeid12345';
+        myCase.AccountId = null;
         
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 

@@ -70,7 +70,6 @@ public with sharing class HDT_BA_DeleteServicePoints implements Database.Batchab
 
         if(kpiMeta!=null && kpiMeta.EnableTracking__c){
             srvBatchEx.updateRecord(kpiTrack.Id,counterOk, counterKo, counterKo + counterOk);
-            System.debug('£££ '+ (Datetime.now().getTime() -start.getTime())/60000);
         }
     }
 }
