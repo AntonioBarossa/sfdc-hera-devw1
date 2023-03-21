@@ -1,14 +1,15 @@
 public inherited sharing class HDT_UTL_SubscriptionProcess {
 
-    private static List<Contract> contractToDelete = new List<Contract>();
-    private static List<Contract> contractToUpdate = new List<Contract>();
-    private static List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
+    @TestVisible private static List<Contract> contractToDelete = new List<Contract>();
+    @TestVisible private static List<Contract> contractToUpdate = new List<Contract>();
+    @TestVisible private static List<SBQQ__Subscription__c> subscriptionToUpdate = new List<SBQQ__Subscription__c>();
     private static HDT_UTL_ContractSubscriptionRelocation subsRelocation = new HDT_UTL_ContractSubscriptionRelocation();
     private static Boolean isFinalizerAttached = false;
 
     public class HDT_QBL_Finalizer implements Finalizer {
         List<Contract> contrsToDelete;
 
+        @TestVisible
         HDT_QBL_Finalizer(List<Contract> contrsToDelete){
             this.contrsToDelete = contrsToDelete;
         }
