@@ -625,6 +625,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Account_Partner_Matching__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -30624,6 +30629,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>TechnicalOffer__c.WeeklyContribution__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.AccountPartner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.ProfileName__c</field>
         <readable>true</readable>
     </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
