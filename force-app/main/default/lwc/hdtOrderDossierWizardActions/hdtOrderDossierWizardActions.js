@@ -58,7 +58,12 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     get disablePreviewButton(){
         return this.isPreviewForbidden || this.isSaveButtonDisabled;
     }
-
+    @api
+    disableSendButton(){
+        console.log('in disableSendButton');
+        this.isPrintButtonDisabled = true;
+        this.isPreviewForbidden = false;
+    }
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
