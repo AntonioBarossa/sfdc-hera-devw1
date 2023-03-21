@@ -16,6 +16,7 @@ global with sharing class HDT_WS_GarbageMan {
 
     //public HDT_WS_GarbageMan(){}
     
+    @TestVisible
     private class HDT_WRP_WasteDisposalRequest extends HDT_WS_Request{
 
         private String phoneNumber {get;set;}
@@ -32,9 +33,13 @@ global with sharing class HDT_WS_GarbageMan {
     }
 
     global class HDT_WRP_WasteDisposalResponse extends HDT_WS_Response{
-
+        
+        @TestVisible 
         private List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
+
+        @TestVisible 
         private String requestInCharge {get;set;}
+
         private Datetime createdDate {get;set;}
         private String requestCode {get;set;}
         private String codeRds {get;set;}
@@ -60,17 +65,7 @@ global with sharing class HDT_WS_GarbageMan {
         HDT_WRP_WasteDisposalRequest request = (HDT_WRP_WasteDisposalRequest) JSON.deserialize(body,HDT_WRP_WasteDisposalRequest.Class);
         
         try{
-            if(
-                STRING.isBlank(request.requestCode)
-                || STRING.isBlank(request.streetCode)
-                || !( STRING.isBlank(request.fiscalCode) || CF_PATTERN.matcher(request.fiscalCode).matches() )
-                || STRING.isBlank(request.contactName)
-                || STRING.isBlank(request.city)
-                || STRING.isBlank(request.street)
-                || STRING.isBlank(request.typeInt)
-            ){
-                throw new HDT_UTL_HeraException('incomplete data');
-            }
+            checkRequest(request);
             
             Account account;
             List<Account> accounts = qrAccount.getAccountByFiscalCode(request.fiscalCode);
@@ -83,6 +78,7 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.description = request.materialDescription;
 
             theCase.TypeOperation__c = request.typeInt;
+            theCase.ClientTypology__c = request.clientTypology;
             theCase.MaterialDescription__c = request.materialDescription;
             theCase.Description = request.materialDescription;
             theCase.AlternativeAddress__c = request.city + request.street + request.streetNumber + request.streetCode;
@@ -115,6 +111,22 @@ global with sharing class HDT_WS_GarbageMan {
         return new HDT_WRP_WasteDisposalResponse('N',null, request.requestCode, null);
     }
 
+    @SuppressWarnings('PMD.CyclomaticComplexity')
+    private static void checkRequest(HDT_WRP_WasteDisposalRequest request){
+        if(
+            STRING.isBlank(request.requestCode)
+            || STRING.isBlank(request.streetCode)
+            || !( STRING.isBlank(request.fiscalCode) || CF_PATTERN.matcher(request.fiscalCode).matches() )
+            || STRING.isBlank(request.contactName)
+            || STRING.isBlank(request.city)
+            || STRING.isBlank(request.street)
+            || STRING.isBlank(request.typeInt)
+        ){
+            throw new HDT_UTL_HeraException('incomplete data');
+        }
+    }
+
+    @TestVisible
     private static String getPhoneNumber(HDT_WRP_WasteDisposalRequest request, Account acc){
         if(STRING.isNotBlank(request.phoneNumber))  return request.phoneNumber;
         if(STRING.isNotBlank(acc?.Phone))  return acc.Phone;
