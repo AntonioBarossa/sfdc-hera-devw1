@@ -4203,6 +4203,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <expression>TEXT({!GetInputCase.Type}) &amp; &quot; &quot; &amp; {!GetInputCase.CommodityFormula__c}</expression>
     </formulas>
     <formulas>
+        <name>processTypeModificaAzzeramentoConsumoAnnuo</name>
+        <dataType>String</dataType>
+        <expression>IF(AND(ISPICKVAL({!GetInputCase.Type}, &quot;Modifica/Azzeramento Consumo Annuo&quot;), {!GetInputCase.CommodityFormula__c} = &quot;Acqua&quot;), &quot;Modifica/Azzeramento Consumo Annuo Acqua&quot;, TEXT({!GetInputCase.Type}))</expression>
+    </formulas>
+    <formulas>
         <name>Unit_ND_Comm_Case</name>
         <dataType>Number</dataType>
         <expression>IF(ISBLANK({!GetCaseAggiornatoModificaUnitaImmobiliari_0.CommercialHousingUnit__c}), 0,{!GetCaseAggiornatoModificaUnitaImmobiliari_0.CommercialHousingUnit__c})</expression>
@@ -8399,7 +8404,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>GetInputCase.Type</elementReference>
+                    <elementReference>processTypeModificaAzzeramentoConsumoAnnuo</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
