@@ -128,10 +128,6 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[9].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
         caseList[9].PhaseStory__c = 'Bozza@@Attesa';
 
-        for(Case c: caseList){
-            System.debug('Case id: '+c.Id+' | RTId: '+c.RecordTypeId);
-        }
-
         update caseList;        
 
         wrts_prcgvr__Activity__c actOne = new wrts_prcgvr__Activity__c();
