@@ -555,8 +555,12 @@ public with sharing class HDT_UTL_CaseProcess {
             }
 
             List<wrts_prcgvr__Activity__c> actToInsert = new List<wrts_prcgvr__Activity__c>();
-            actToInsert.addAll(HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(modPostAccForActivity, 'CBS_VAR005__GESTIONE_MANUALE'));
-            actToInsert.addAll(HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(cesPostAccForActivity, 'CBS_DIS002__GESTIONE_MANUALE'));
+            if(modPostAccForActivity.size() > 0){
+                actToInsert.addAll(HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(modPostAccForActivity, 'CBS_VAR005__GESTIONE_MANUALE'));
+            }
+            if(cesPostAccForActivity.size() > 0){
+                actToInsert.addAll(HDT_UTL_Scarti.createActivityByObjectIdAndTemplateNameBulk(cesPostAccForActivity, 'CBS_DIS002__GESTIONE_MANUALE'));
+            }
 
             system.debug('##### activity: '+actToInsert);
             String caseType;
