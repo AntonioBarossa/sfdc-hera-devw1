@@ -22,8 +22,7 @@ public with sharing class HDT_LC_AttachmentManagerTst {
 		insert internalUser;
 
         System.runAs(internalUser){
-            
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G1 - MMS Persona fisica','Famiglie');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
 
             list<Case> listFakeCases = HDT_UTL_DataFactoryTst.createCase(1, false, accId, null, null, null, null);
@@ -121,7 +120,7 @@ public with sharing class HDT_LC_AttachmentManagerTst {
     Test.startTest();
         varString = HDT_LC_AttachmentManager.getRequiredAttachment(caseId, null);
     Test.stopTest();  
-    system.assert(varString.length()>0);
+    system.assert(varString == '');
     }
 
     @isTest
