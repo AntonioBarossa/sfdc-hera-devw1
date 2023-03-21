@@ -175,6 +175,8 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
 
                             if (successfullReturn) {
                                 customRes.status = 'success';
+                                customRes.data = new HDT_WS_AnnullamentoSegnalazione.HDT_WRP_ResponseData();
+                                customRes.data.esito='success';
 
                                 res.setStatus('success');
                                 res.setStatusCode(200);
@@ -184,6 +186,7 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
                                 res.setStatus('error');
                                 res.setStatusCode(500);
                             }
+                            system.debug('*********callout mock obj '+customRes.data?.esito);
 
                             res.setBody(JSON.serialize(customRes));
 

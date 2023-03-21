@@ -13,6 +13,7 @@ public with sharing class HDT_LC_MaterialSelection {
         @AuraEnabled public List<VolumetricEstimate__c> preselectedValues {get;set;}
         @AuraEnabled public List<Id> preselectedKeys {get;set;}
 
+        @TestVisible 
         HDT_WRP_Data(){return;}
         public HDT_WRP_Data(List<VolumetricEstimate__c> volumetricEstimate, Map<Id,VolumetricEstimate__c> preselectedValuesMap){
             this.volumetricEstimate=volumetricEstimate;

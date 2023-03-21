@@ -26,8 +26,10 @@ public with sharing class HDT_UTL_TariCaseValidation implements HDT_UTL_CaseVali
             if(currentCase.Channel__c != 'Protocollo'){
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Caricare almeno un allegato'));
             }
-            if(getFieldValue(fields, 'RequestSource__c') != 'Da contribuente' && 
-                (getFieldValue(fields, 'CancellationNote__c') == '' || getFieldValue(fields, 'CancellationNote__c') == null) ){
+            if(
+                getFieldValue(fields, 'RequestSource__c') != 'Da contribuente' && 
+                STRING.isBlank(getFieldValue(fields, 'CancellationNote__c'))
+            ){
                 return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Caricare almeno un allegato'));
             }
         }

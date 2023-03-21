@@ -34,7 +34,37 @@ public with sharing class HDT_UTL_TariCaseValidationTst {
         Test.startTest();
         String fields= '{"Description":null}';
         String result = tariValidation.validate(fields, caso.Id);
-        System.assertEquals(result, '{"outcomeDescription":"Popolare il campo descrizione","outcomeCode":"Error"}','Popolare il campo descrizione');
+        Map<String,Object> response = (Map<String,Object>) JSON.deserializeUntyped(result);
+        System.assertEquals(String.valueOf(response.get('outcomeDescription')), 'Popolare il campo descrizione', 'Unexpected Result');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void annullamentoContrattiValidation() {
+
+        Case caso = [SELECT Id, Type FROM Case LIMIT 1];
+        caso.InvoicingCity__c='';
+        caso.Type = 'Annullamento Contratti';
+        update caso;
+        HDT_UTL_TariCaseValidation tariValidation = new HDT_UTL_TariCaseValidation();
+        Test.startTest();
+        String fields= '{"Description":null}';
+        String result = tariValidation.validate(fields, caso.Id);
+        
+        Map<String,Object> response = (Map<String,Object>) JSON.deserializeUntyped(result);
+        System.assertEquals(String.valueOf(response.get('outcomeDescription')), 'Caricare almeno un allegato', 'Unexpected Result');
+
+        caso.Channel__c ='Protocollo';
+        update caso;
+        result = tariValidation.validate(fields, caso.Id);
+        response = (Map<String,Object>) JSON.deserializeUntyped(result);
+        System.assertEquals(String.valueOf(response.get('outcomeDescription')), 'Caricare almeno un allegato', 'Unexpected Result');
+
+        fields= '{"Description":null, "RequestSource__c" : "Da contribuente"}';
+        result = tariValidation.validate(fields, caso.Id);
+        response = (Map<String,Object>) JSON.deserializeUntyped(result);
+        System.assertEquals(String.valueOf(response.get('outcomeCode')), 'OK', 'Unexpected KO');
+
         Test.stopTest();
     }
 
@@ -49,7 +79,8 @@ public with sharing class HDT_UTL_TariCaseValidationTst {
         Test.startTest();
         String fields= '{"Description":null}';
         String result = tariValidation.validate(fields, caso.Id);
-        System.assertEquals(result, '{"outcomeDescription":"Caricare almeno un allegato","outcomeCode":"Error"}', 'Caricare almeno un allegato');
+        Map<String,Object> response = (Map<String,Object>) JSON.deserializeUntyped(result);
+        System.assertEquals(String.valueOf(response.get('outcomeDescription')), 'Caricare almeno un allegato', 'Unexpected Result');
         Test.stopTest();
     }   
 }
