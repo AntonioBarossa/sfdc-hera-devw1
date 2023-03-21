@@ -94,7 +94,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			Id rt=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 
-            List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'HERA COMM','Condominio','Grandi Condomini');
+            List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'HERA COMM','Azienda','Aziende SME');
 			accounts[0].ActiveMonitoring__c=false;
 			accounts[0].Name='INRETE DIST. ENER.-13R0000000';
 			accounts[0].LastName__c='INRETE DIST. ENER.-13R0000000';

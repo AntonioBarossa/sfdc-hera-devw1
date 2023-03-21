@@ -10480,7 +10480,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12122,6 +12122,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_CaliberTranscode__mdt.SfdcFieldValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CaliberTranscode__mdt.IsSfdcManaged__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

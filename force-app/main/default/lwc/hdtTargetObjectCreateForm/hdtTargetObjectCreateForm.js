@@ -1701,8 +1701,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     async populateDistributor(){
 
         //W2 blocco per classe contatore non gestita
-        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' &&  this.allSubmitedFields['MeterStatus__c'] === 'Bozza' && !this.managedMeterClass.includes(this.allSubmitedFields['MeterClass__c'])){
-            this.alert('Errore', 'La classe contatore selezionata non può essere utilizzata per Stato Apparecchiatura = Bozza e Servizio = Acqua.', 'error');
+        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' &&  !this.allSubmitedFields['MeterSN__c'] && !this.managedMeterClass.includes(this.allSubmitedFields['MeterClass__c'])){
+            this.alert('Errore', 'La classe contatore selezionata non può essere utilizzata per il servizio Acqua.', 'error');
         }else{
 
             this.loading = true;

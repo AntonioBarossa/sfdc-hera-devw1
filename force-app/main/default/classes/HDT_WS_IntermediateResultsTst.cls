@@ -89,6 +89,26 @@ private class HDT_WS_IntermediateResultsTst {
     }
 
     @isTest
+    public static void getPhaseByCodeTest() {
+        HDT_WS_IntermediateResults.HDT_WRP_Response responseError = new HDT_WS_IntermediateResults.HDT_WRP_Response('status', 'error');
+        system.assertEquals(
+            'error',
+            responseError.errorMsg,
+            'messaggio errore errato'
+        );
+        HDT_WS_IntermediateResults.HDT_QBL_IntermediateResultsJob res = new HDT_WS_IntermediateResults.HDT_QBL_IntermediateResultsJob(null);
+        system.assertEquals(
+            'Presa In Carico',
+            res.getIstruttoriaFaseByCode('0060'),
+            'Coppia Fase-Codice Inaspettata'
+        );
+        system.assert(
+            res.getIstruttoriaFaseByCode('#####') == null,
+            'Coppia Fase-Codice Inaspettata'
+        );
+    }
+
+    @isTest
     public static void testIntermediateResultsJob2() {
 
         Order myOrder = [SELECT Id FROM Order];
@@ -102,6 +122,58 @@ private class HDT_WS_IntermediateResultsTst {
         fieldObj.descNota = '';
         fieldObj.textNota = '';
         fieldObj.phase = 'Rifiutata';
+
+        List<HDT_WS_IntermediateResults.HDT_WRP_Field> fieldList = new List<HDT_WS_IntermediateResults.HDT_WRP_Field>();
+        fieldList.add(fieldObj);
+
+        HDT_WS_IntermediateResults.HDT_WRP_Reminder reminderObj = new HDT_WS_IntermediateResults.HDT_WRP_Reminder();
+        reminderObj.caseId = myCase.Id;
+        reminderObj.noticeId = '';
+        reminderObj.field = fieldList;
+
+        List<HDT_WS_IntermediateResults.HDT_WRP_Reminder> reminderList = new List<HDT_WS_IntermediateResults.HDT_WRP_Reminder>();
+        reminderList.add(reminderObj);
+
+        HDT_WS_IntermediateResults.HDT_WRP_Request request = new HDT_WS_IntermediateResults.HDT_WRP_Request();
+        request.requestId = '';
+        request.dataRequest = '';
+        request.reminder = reminderList;
+
+         //test
+         Test.startTest();
+
+         //setup for test
+         RestRequest req = new RestRequest(); 
+         RestResponse res = new RestResponse();
+ 
+         String reqString = JSON.serialize(request);
+         req.requestURI = 'services/apexrest/IntermediateResults';
+         req.httpMethod = 'POST';
+         req.requestBody = Blob.valueOf(reqString);  
+ 
+         RestContext.request = req;
+         RestContext.response = res;
+
+         //call webservice method
+         HDT_WS_IntermediateResults.postIntermediateResults();
+         res = RestContext.response;
+         Test.StopTest();
+    }
+
+    @isTest
+    public static void testInvalidNoteCode() {
+
+        Order myOrder = [SELECT Id FROM Order];
+        
+        Case myCase = [SELECT Id FROM Case];
+        System.debug('myCase => '+myCase);
+
+        HDT_WS_IntermediateResults.HDT_WRP_Field fieldObj = new HDT_WS_IntermediateResults.HDT_WRP_Field();
+        fieldObj.codActivity = '';
+        fieldObj.codNota = '#####';
+        fieldObj.descNota = '';
+        fieldObj.textNota = '';
+        fieldObj.phase = 'Completata';
 
         List<HDT_WS_IntermediateResults.HDT_WRP_Field> fieldList = new List<HDT_WS_IntermediateResults.HDT_WRP_Field>();
         fieldList.add(fieldObj);

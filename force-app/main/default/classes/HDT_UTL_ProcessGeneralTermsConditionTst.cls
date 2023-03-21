@@ -1,8 +1,12 @@
 @isTest
 public with sharing class HDT_UTL_ProcessGeneralTermsConditionTst {
+    
+    private static HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
 
     @testSetup
     static void setup(){
+
+        //n.b. StaticResource
 
         List<MassiveFieldsObjectMap__c> mappingList = new List<MassiveFieldsObjectMap__c>();
         MassiveFieldsObjectMap__c mapping;
@@ -66,7 +70,7 @@ public with sharing class HDT_UTL_ProcessGeneralTermsConditionTst {
         request.TotalRequest__c = 1;
         request.Priority__c = 1;
         request.ProcessType__c = 'CaricamentoCGC';
-        request.Status__c = 'In attesa di lavorazione';
+        request.Status__c = constantsUtl.MASSIVLOADER_STATUS_INATTESAlAVORAZIONE ;
         insert request;
 
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
