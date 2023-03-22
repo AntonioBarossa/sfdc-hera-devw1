@@ -1714,6 +1714,13 @@
                 <booleanValue>false</booleanValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseAggiornato_0_0_0_0_0.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valorizzaCampoNoteConsumoAnnuoAcqua</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Case_0_0_0_0_0</targetReference>
         </connector>
@@ -4238,6 +4245,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
 &amp; IF(!ISBLANK(TEXT({!Community_Beds})),&quot;Comunità Posti Letto: &quot; &amp; TEXT({!Community_Beds}) &amp; BR(), &quot;&quot;)  
 &amp; IF(!ISBLANK({!FormInserimentoAnagraficaComponenti.resultString}),{!FormInserimentoAnagraficaComponenti.resultString} &amp; BR(),&quot;&quot;)
 &amp; IF(!ISBLANK({!frequenzaAllineamentoGAA}),&quot;Frequenza: &quot; &amp; {!frequenzaAllineamentoGAA},&quot;&quot;)</expression>
+    </formulas>
+    <formulas>
+        <name>valorizzaCampoNoteConsumoAnnuoAcqua</name>
+        <dataType>String</dataType>
+        <expression>IF(!ISBLANK({!GetCaseAggiornato_0_0_0_0_0.Note__c}), {!GetCaseAggiornato_0_0_0_0_0.Note__c} &amp; BR() &amp; &quot;Consumo Dichiarato: &quot; &amp; {!Consumo_Dichiarato_Virtual_Field}, &quot;Consumo Dichiarato: &quot; &amp;  {!Consumo_Dichiarato_Virtual_Field})</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -8312,6 +8324,69 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <name>DisplayHeader_0_0_0_0_0_0</name>
             <fieldText>&lt;p&gt;&lt;b style=&quot;font-size: 18px;&quot;&gt;Processo di {!GetInputCase.Type}&lt;/b&gt;&lt;/p&gt;&lt;p&gt;Compila manualmente i dati sottostanti&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>ScreenInputFiscale_0_0_0_0_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Consumo_Dichiarato_Virtual_Field</name>
+                    <dataType>String</dataType>
+                    <fieldText>Consumo Dichiarato</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>true</isRequired>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>4</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetInputCase.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Modifica/Azzeramento Consumo Annuo</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetInputCase.CommodityFormula__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Acqua</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
         </fields>
         <fields>
             <name>hdtRecordEditForm_0_0_0_0_0_0</name>

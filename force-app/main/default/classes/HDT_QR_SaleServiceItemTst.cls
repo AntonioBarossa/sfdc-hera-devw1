@@ -37,7 +37,6 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].Id, 'Bozza');
         List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, false, orderList[0].Id, oppList[0].Id, saleList[0].Id, 'Quote');
         quoteList[0].Login__c = 'loginTest';
-        quoteList[0].LoginGroup__c = 'loginGroupTest';
         quoteList[0].Role__c = 'roleTest';
         quoteList[0].Profile__c = 'profileTest';
         quoteList[0].NewClient__c = 'Y';
@@ -60,10 +59,9 @@ public with sharing class HDT_QR_SaleServiceItemTst {
         Test.startTest();
         Sale__c tSale = [SELECT Id, Agency__c, Campaign__c FROM Sale__c LIMIT 1];
         ServicePoint__c tServicePoint = [SELECT Id, RecordType.DeveloperName, SupplyCity__c, MarketOrigin__c, SupplyProvince__c, MeterType__c, UseCategory__c  FROM ServicePoint__c LIMIT 1];
-        //SBQQ__Quote__c tQuote = [SELECT Id, Login__c, LoginGroup__c, Role__c, Profile__c, NewClient__c, ResidentDeliveryAddress__c, ConsumptionRangeEE__c, ConsumptionRangeGAS__c, PowerFlow__c, AmendmentAllowed__c FROM SBQQ__Quote__c WHERE AmendmentAllowed__c = false];
         Map<String,String> tMapString = new Map<String,String>();
         tMapString.put('login', 'loginTest');
-        tMapString.put('loginGroup', 'loginGroupTest');
+        tMapString.put('loginGroup', 'Back Office');
         tMapString.put('role', 'roleTest');
         tMapString.put('profile', 'profileTest');
         tMapString.put('newClient', 'Y');
