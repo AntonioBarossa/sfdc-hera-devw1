@@ -151,6 +151,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA).getRecordTypeId();
 
+    // Order RecordType Modifica Tariffa
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI = 'HDT_RT_AgevolazioniAmbiente';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_MODIFICATARI =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI).getRecordTypeId();
+
     //@frpanico 05/08 Case RecordType default Morosita
     @AuraEnabled
     public final String CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA = 'HDT_RT_Morosita';

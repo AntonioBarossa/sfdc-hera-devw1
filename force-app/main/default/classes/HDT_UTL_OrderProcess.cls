@@ -457,7 +457,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
             List<Order> ordersNonEnergy = new List<Order>();
-            List<Order> ordersCompletata = new List<Order>();
+            //List<Order> ordersCompletata = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
@@ -472,8 +472,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ordersNonEnergy.add(o);
                 }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
                     if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
-                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
-                    else{   ordersHeroku.add(o);    }
+                    //else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else if (o.IntegratedSAP__c){   ordersHeroku.add(o);    }
                 }
                 else{
                     ordersHeroku.add(o);
@@ -487,9 +487,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
             );
-            vasOrdersToUpdate.putAll(
+            /*vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersCompletata, 'Documentazione Validata', 'Completata','Documentazione Validata','Comunicazione Motore VAS')
-            );
+            );*/
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
             }
