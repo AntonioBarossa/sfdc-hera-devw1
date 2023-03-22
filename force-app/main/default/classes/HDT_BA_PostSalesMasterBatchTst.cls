@@ -45,6 +45,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'In attesa Data Decorrenza', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Data Decorrenza', 'Da Inviare', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
 
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdBloccoSollecitoInteressi, rtNameBloccoSollecitoInteressi, 'A','','','');
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
@@ -55,8 +56,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(9, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
-        
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(10, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+
         Datetime oneDayAgo = Datetime.now().addDays(-5);
         Test.setCreatedDate(caseList[3].Id, oneDayAgo);
 
@@ -103,29 +104,29 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[6].Phase__c = 'Bozza';
         caseList[6].Reason__c = 'Ricalcolo consumi';
         caseList[6].BillingProfile__c = billingProfileList[0].Id;
-        caseList[6].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AltriProcessiPagamenti').getRecordTypeId();
-        caseList[6].Type = 'Blocco Sollecito/Interessi';
-        caseList[6].Phase__c = 'Pratica In Attesa';
-        caseList[6].SuspensionDate__c = Date.today()-10;
-        caseList[6].SuspensionDays__c = 5;
-        caseList[6].DepositPaymentMode__c = 'Bonifico';
 
-        caseList[7].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
-        caseList[7].Type = 'Voltura Tecnica';
-        caseList[7].Phase__c = 'In attesa Data Decorrenza';
-        caseList[7].Subject = 'Test ricalcolo';
+        caseList[7].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AltriProcessiPagamenti').getRecordTypeId();
+        caseList[7].Type = 'Blocco Sollecito/Interessi';
+        caseList[7].Phase__c = 'Pratica In Attesa';
         caseList[7].SuspensionDate__c = Date.today()-10;
-        caseList[7].EffectiveDate__c = Date.today();
-        caseList[7].Order__c = ordList[1].Id;
+        caseList[7].SuspensionDays__c = 5;
+        caseList[7].DepositPaymentMode__c = 'Bonifico';
 
-        caseList[8].BillingProfile__c = billingProfileList[0].Id;
-        caseList[8].Phase__c = 'Ammissibilità OK';
-        caseList[8].QuotationValidityDate__c = Date.today()-5;
-        caseList[8].QuotationType__c = 'Predeterminabile';
-        caseList[8].Cluster__c = 'Verifiche';
-        caseList[8].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
-        caseList[8].PhaseStory__c = 'Bozza@@Attesa';
-        
+        caseList[8].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();
+        caseList[8].Type = 'Voltura Tecnica';
+        caseList[8].Phase__c = 'In attesa Data Decorrenza';
+        caseList[8].Subject = 'Test ricalcolo';
+        caseList[8].SuspensionDate__c = Date.today()-10;
+        caseList[8].EffectiveDate__c = Date.today();
+        caseList[8].Order__c = ordList[1].Id;
+
+        caseList[9].BillingProfile__c = billingProfileList[0].Id;
+        caseList[9].Phase__c = 'Ammissibilità OK';
+        caseList[9].QuotationValidityDate__c = Date.today()-5;
+        caseList[9].QuotationType__c = 'Predeterminabile';
+        caseList[9].Cluster__c = 'Verifiche';
+        caseList[9].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
+        caseList[9].PhaseStory__c = 'Bozza@@Attesa';
 
         update caseList;        
 

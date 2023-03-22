@@ -26,11 +26,12 @@ public with sharing class HDT_UTL_LandRegistryTst {
     @isTest 
     public static void getLandRegistryByServicePointTest(){
 
-        Case cs = [SELECT Id, ServicePoint__c FROM Case LIMIT 1];
-
+        
         Test.startTest();
-        LandRegistry__c land = HDT_UTL_LandRegistry.retrieveLandRegistryTable(cs.Id, null, cs.ServicePoint__c).get(0);
-        System.assertEquals(land.LegalCity__c, 'Roma', 'The correct LandRegistry__c was not retrieved');
+            Case cs = [SELECT Id, ServicePoint__c FROM Case LIMIT 1];
+
+            LandRegistry__c land = HDT_UTL_LandRegistry.retrieveLandRegistryTable(cs.Id, null, cs.ServicePoint__c).get(0);
+            System.assertEquals(land.LegalCity__c, 'Roma', 'The correct LandRegistry__c was not retrieved');
         Test.stopTest();
 
     }
@@ -54,6 +55,16 @@ public with sharing class HDT_UTL_LandRegistryTst {
     public static void getCitiesTest(){
 
         Test.startTest();
+        
+        List<CityTechnicalData__c> cityTechs = [SELECT Id, CadastralCity__c, CityCode__c, Province__c 
+                                                FROM CityTechnicalData__c 
+                                                WITH SECURITY_ENFORCED 
+                                                ORDER BY CadastralCity__c ASC
+                                                LIMIT 1];
+        cityTechs[0].Province__c = 'Roma';
+        cityTechs[0].CityCode__c = 'RM000';
+        update cityTechs;
+
         CityTechnicalData__c cities = HDT_UTL_LandRegistry.getCities()[0];
         System.assertEquals(cities.CadastralCity__c, 'Roma', 'The CityTechnicalData__c was not retrieved correctly');
         Test.stopTest();

@@ -68,7 +68,7 @@ private class HDT_SRV_BillingRefundsServiceOneTst {
     @IsTest
     static void callServiceOneFromFlowsOkTst() {
         Case consumoCase=[SELECT ServicePoint__r.Distributor__r.CompanyOwner__c,CaseNumber,
-                Id,Contract__r.SAPContractCode__c,AbnormalReading__c,AbnormalReadingDate__c,AccountId,Contract__c FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+                Id,Contract__r.SAPContractCode__c,AbnormalReading__c,AbnormalReadingDate__c,AccountId,Contract__c, CustomerSelfReading__c, ReadingDate__c FROM Case WITH SECURITY_ENFORCED LIMIT 1];
         Test.setMock(HttpCalloutMock.class, new MockGenerator());
         HDT_SRV_BillingRefundsServiceOne classToTest=new HDT_SRV_BillingRefundsServiceOne();
         Test.startTest();
@@ -80,7 +80,7 @@ private class HDT_SRV_BillingRefundsServiceOneTst {
     @IsTest
     static void callServiceOneFromFlowsKoTst(){
         Case consumoCase=[SELECT ServicePoint__r.Distributor__r.CompanyOwner__c,CaseNumber,
-                Id,Contract__r.SAPContractCode__c,AbnormalReading__c,AbnormalReadingDate__c,AccountId,Contract__c FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+                Id,Contract__r.SAPContractCode__c,AbnormalReading__c,AbnormalReadingDate__c,AccountId,Contract__c, CustomerSelfReading__c, ReadingDate__c FROM Case WITH SECURITY_ENFORCED LIMIT 1];
         String koBody='{"status":"failed","correlationId":"5f8e3660-7b02-11ed-b7ae-06af14a00b76","timestamp":"2022-12-13T17:22:44","errorDetails": [{"code":"ERROR","message": "TEST ERROR","additionalInfo": "THIS IS A TEST ERROR"}]}';
         Test.setMock(HttpCalloutMock.class, new MockGenerator(201,koBody));
         HDT_SRV_BillingRefundsServiceOne classToTest=new HDT_SRV_BillingRefundsServiceOne();

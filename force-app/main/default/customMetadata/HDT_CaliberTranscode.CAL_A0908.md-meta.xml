@@ -3,6 +3,10 @@
     <label>CAL_A0908</label>
     <protected>false</protected>
     <values>
+        <field>IsSfdcManaged__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>SapFieldValue__c</field>
         <value xsi:type="xsd:string">A0908</value>
     </values>
