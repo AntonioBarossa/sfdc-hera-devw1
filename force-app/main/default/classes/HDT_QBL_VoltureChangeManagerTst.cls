@@ -117,7 +117,8 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
                                         WithdrawalClass__c,
                                         EnergyService__c,
                                         UseCategory__c,
-                                        Caliber__c 
+                                        Caliber__c,
+                                        ServicePoint__r.CommoditySector__c 
                                 FROM Order 
                                 WHERE ParentOrder__c != null
                                 AND ProcessType__c = 'Switch in Ele'];

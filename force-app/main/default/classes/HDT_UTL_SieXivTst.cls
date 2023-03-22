@@ -8,7 +8,6 @@ public with sharing class HDT_UTL_SieXivTst {
         c.SBQQ__Order__c=o.Id;
         insert c;
     }
-
     static void createOrderAndSale(Contract c){
             Order o = HDT_UTL_DataFactoryTst.createOrder(1, false, c.AccountId, 'Bozza')[0];
             o.SalesCompany__c=c.contractSalesCompany__c;
@@ -24,7 +23,7 @@ public with sharing class HDT_UTL_SieXivTst {
     @TestSetup
     static void makeData(){
         List<Account> accounts= HDT_UTL_DataFactoryTst.createAccountResidenziale(4, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
-
+        List<Order> orderToInsert = new List<Order>();
         Account accountOne = accounts.get(0);
         createOrder(new Contract(AccountId=accountOne.Id, ContractSalesCompany__c='Hera Comm Marche'));
         createOrder(new Contract(AccountId=accountOne.Id, ContractSalesCompany__c='Hera Comm Marche'));
@@ -75,7 +74,7 @@ public with sharing class HDT_UTL_SieXivTst {
 
     @isTest
     static void testSieXivcheckBpcaChanges() {
-        
+        Test.startTest();
         wrts_prcgvr.InstallIntegration.install();
         HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Case');
         Id accountId = [SELECT Id FROM Account LIMIT 1].Id;
@@ -94,69 +93,11 @@ public with sharing class HDT_UTL_SieXivTst {
         Map<Id, Sobject> newMap = new Map<Id, Sobject>{testCase.Id => testCase};
         Map<Id, Sobject> oldMap = new Map<Id, Sobject>{testCase.Id => new Case(Id=testCase.Id, Phase__c='Test')};
 
-        Test.startTest();
+        
         HDT_UTL_CaseProcess.caseBpcaSieManagement(newMap, oldMap);
         Test.stopTest();
         String result = [Select Segment__c from account where id=:accountId].Segment__c;
         system.assertEquals('CORPORATE_IC', result.toUpperCase(), 'Unexpected Behaviour');
     }
-
-    /*
-    private static boolean doLogicAndSimplifyExpr(String expression, String operator, SObject obj){
-        List<String> indexes = new List<String>();
-        for(String s : expression.split(operator)){
-            indexes.add(s.trim());
-        }
-        switch on operator {
-            when  'AND' {
-                checkLogicAndGate(indexes, obj);
-            }
-            when 'OR' {
-                
-            }
-        }
-    }*/
-    
-    /*private static boolean checkLogicAndOrGateChain(SObject obj, List<String> indexes, String Gate){//Logica AND
-        //l'oggetto contiene una lista di condizioni. Se la lista è vuota O se tutte sono vere, torna true.
-        //if(!indexes?.size() > 0)     return true;
-        if(!this.conditions?.size()>0)  return true;//If no conditions, always true
-        if(!indexes?.size() > 0)    return allConditionsAndGate(obj);//if no indexes, all conditions are and evaluated
-        Boolean isAnd = Gate.equalsIgnoreCase('AND')? true : false;
-        for(String booleanIndex : indexes){
-            if(booleanIndex=='true') return true;
-            if(booleanIndex=='false') return false;
-            Integer index = Integer.valueOf(booleanIndex);
-            if(!this.conditions?.size()>booleanIndex) return false;//if the logic calls a condition not in the list, it returns false
-            HDT_WRP_SieCondition condition = this.conditions.get(booleanIndex);
-            String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
-
-            if(condition.checkCondition(actualValue) != isAnd)   return !isAnd;
-            //Se siamo in AND, Alla prima espressione falsa, il processo si blocca negativamente (short evaluation).
-            //Se siamo in OR, alla prima espressione vera il processo si blocca positivamente (short evaluation).
-            //Implementato tramite XOR
-        }
-
-        return isAnd;
-        //Se abbiamo finito il ciclo e siamo in AND, vuoldire che era tutto true e torniamo true.
-        //Se abbiamo finito il ciclo e siamo in OR, non c'era neanche un true e torniamo false.
-    }*/
-/*
-    private static boolean checkLogicOrGate(SObject obj, List<String> indexes){//Logica AND
-        //l'oggetto contiene una lista di condizioni. Se la lista è vuota O se tutte sono vere, torna true.
-        if(indexes?.size() > 0){
-            if(!this.conditions?.size()>0)   return false;
-            for(String booleanIndex : indexes){
-                if(booleanIndex=='true') return true;
-                if(booleanIndex=='false') return false;
-                Integer index = Integer.valueOf(booleanIndex);
-                if(!this.conditions?.size()>booleanIndex) return false;
-                HDT_WRP_SieCondition condition = this.conditions.get(booleanIndex);
-                String actualValue=utlSbj.dinamicFieldValue(condition.fieldName, obj);
-                if(!condition.checkCondition(actualValue))   return false;//Alla prima espressione falsa, il processo si blocca negativamente.
-            }
-        }
-        return true;//Se è tutto vero o la lista è vuota, torna true.
-    }*/
     
 }
