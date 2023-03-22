@@ -54,7 +54,7 @@ public class HDT_LC_ProcessesContainerTst{
 		System.debug('testcontrollerInitRedirect = '+testcontrollerInitRedirect);
 
 
-		System.assertEquals(4, testcontrollerInitRedirect.values().size(), 'Result Map is Wrong');
+		System.assertEquals(5, testcontrollerInitRedirect.values().size(), 'Result Map is Wrong');
 
 		System.assertNotEquals(1, testcontrollerInitRedirect.values().size(), 'controllerInitRedirect did not work correctly');
 

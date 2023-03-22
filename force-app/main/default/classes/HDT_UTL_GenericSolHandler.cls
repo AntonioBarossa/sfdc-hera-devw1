@@ -151,6 +151,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 Note__c=params.containsKey('note') ? (String) params.get('note'):'',
                 PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '',
                 Email__c= String.isNotBlank(cont.Email) ? cont.Email : accContRel.Account.PrimaryEmail__c,
+                Channel__c='Web',
                 Step__c=1.0
         );
         //System.Label.statusInLavorazione
@@ -180,6 +181,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.Type='New';
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
+        childOrder.Channel__c='Web';
         if( parentOrder.Note__c == null && params.containsKey('note')){
             childOrder.Note__c=(String) params.get('note');
         }
