@@ -21,9 +21,9 @@
         <label>02C - Determinazione volumi da verifiche metriche</label>
     </customValue>
     <customValue>
-        <fullName>04 -  Contestazioni/modifiche cat. Contrattuali (retroattività)</fullName>
+        <fullName>04 - Contestazioni/modifiche cat. Contrattuali (retroattività)</fullName>
         <default>false</default>
-        <label>04 -  Contestazioni/modifiche cat. Contrattuali (retroattività)</label>
+        <label>04 - Contestazioni/modifiche cat. Contrattuali (retroattività)</label>
     </customValue>
     <customValue>
         <fullName>04 BIS - Richiesta di prescrizione biennale</fullName>
