@@ -138,7 +138,7 @@
     <customValue>
         <fullName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</fullName>
         <default>false</default>
-        <label>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</label>
+        <label>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</label>
     </customValue>
     <customValue>
         <fullName>25 - Reclami relativi aspetti legati alla gestione CDR (comportamenti degli operatori dei CDR, errori nelle registrazioni, mancata emissione scontrino, elenco dei conferimenti effettuati per eventuali verifiche da parte dei contribuenti …)</fullName>
