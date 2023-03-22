@@ -200,6 +200,27 @@ public class HDT_UTL_SalesTst {
     }
 
     @IsTest
+    static void getAgentNameAndCodeInvocable(){
+        ServicePoint__c sp=[SELECT Id,SupplyCity__c,CommoditySector__c,Distributor__r.code__c FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255' LIMIT 1];
+        Test.startTest();
+        List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs> inputs = new List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs>{new HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs() };
+        inputs[0].servicePoint = sp;
+        inputs[0].customerMarking = '';
+
+
+        List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs> outputs = 
+            new List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs>
+        {  
+                new HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs()
+        };
+        outputs = HDT_UTL_RimozioneAgevolazione.getSalesCompany(inputs);
+
+        System.assert(STRING.isBlank(outputs[0].salesCompany), 'Agent and code shoud be empty');//because there are no custom metadatas
+        System.assert(STRING.isBlank(outputs[0].salesCompanyCode), 'Agent and code shoud be empty');//because there are no custom metadatas
+        Test.stopTest();
+    }
+
+    @IsTest
     static void validationActivityPhaseTransition(){
 
         List<String> ordIds = new List<String>();

@@ -211,7 +211,14 @@
 
     handleTableRefreshEvent : function(component,event,helper){
         var tableCmp = component.find("hdtOrderDossierWizardTable");
+        console.log('handleTableRefreshEvent ' + tableCmp);
         tableCmp.setTableData();
+    },
+
+    handleDocumentalRefreshEvent : function(component,event,helper){
+        var tableCmp = component.find("hdtOrderDossierWizardActions");
+        console.log('handleDocumentalRefreshEvent ' + tableCmp);
+        tableCmp.disableSendButton();
     },
 
     redirectToOrderRecordPage : function(component, event, helper){
