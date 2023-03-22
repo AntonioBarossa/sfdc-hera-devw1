@@ -67,6 +67,16 @@ public with sharing class HDT_UTL_ExpSieRavvTst {
 
         HDT_UTL_ExpSieRavv.createExportSobjectsInvocable(new List<HDT_UTL_ExpSieRavv.HDT_WRP_InvocableInput>{invInput});
         System.assertEquals(caso.BillingCategory__c,'C','Test OK');
+        
+        caso.Subprocess__c = 'Superficie';
+        caso.DeclaredArea__c = 100;
+        caso.NotResidentMembers__c = 2;
+        HDT_UTL_ExpSieRavv.createExportSobjectsInvocable(new List<HDT_UTL_ExpSieRavv.HDT_WRP_InvocableInput>{invInput});
+        System.assertEquals(caso.BillingCategory__c,'C','Test OK');
+        
+        caso.Subprocess__c = 'DOM_Componenti non residenti';
+        HDT_UTL_ExpSieRavv.createExportSobjectsInvocable(new List<HDT_UTL_ExpSieRavv.HDT_WRP_InvocableInput>{invInput});
+        System.assertEquals(caso.BillingCategory__c,'C','Test OK');
         Test.stopTest();
     }
 
