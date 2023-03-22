@@ -6974,7 +6974,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <!-- <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Pagamento Online</fullName>
