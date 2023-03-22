@@ -643,6 +643,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 newOrder.EffectiveDate__c = System.today();
                                 if( 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
                                     newOrdersListReadingDate.add(newOrder);
+                                    newOrder.ReadingCustomerDate__c = System.today();
                                 }
                             }else{
                                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
