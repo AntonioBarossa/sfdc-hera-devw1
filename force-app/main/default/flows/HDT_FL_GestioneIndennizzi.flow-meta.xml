@@ -116,6 +116,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Variables_0</name>
+        <label>Assign Variables</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignCausalCode</name>
         <label>AssignCausalCode</label>
         <locationX>1370</locationX>
@@ -216,14 +232,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>GetFirstCausalCode</targetReference>
+            <targetReference>Assign_Variables_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>AssignPhase</name>
-        <label>AssignPhase</label>
-        <locationX>1590</locationX>
-        <locationY>2462</locationY>
+        <label>Da inviare</label>
+        <locationX>1854</locationX>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>UpdatePhase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -245,8 +261,8 @@
     <assignments>
         <name>AssignToCollection</name>
         <label>AssignToCollection</label>
-        <locationX>1590</locationX>
-        <locationY>2582</locationY>
+        <locationX>1722</locationX>
+        <locationY>2798</locationY>
         <assignmentItems>
             <assignToReference>UpdateCollection</assignToReference>
             <operator>Add</operator>
@@ -859,6 +875,29 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Copy_1_of_AssignPhase</name>
+        <label>Elaborazione manuale</label>
+        <locationX>1590</locationX>
+        <locationY>2582</locationY>
+        <assignmentItems>
+            <assignToReference>UpdatePhase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Elaborazione Manuale</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>UpdatePhase.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>AssignToCollection</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <description>Assegnazione delle date specifiche estratte dal metodo UTL</description>
         <name>Input_Case_Date_Assignment</name>
         <label>Input Case Date Assignment</label>
@@ -990,6 +1029,31 @@
                 <targetReference>AssignVariables_0_0_0_0_0_0_0_0</targetReference>
             </connector>
             <label>Invio risposta</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Reclamo_scritto_da_cittadino</name>
+        <label>Reclamo scritto da cittadino?</label>
+        <locationX>1722</locationX>
+        <locationY>2462</locationY>
+        <defaultConnector>
+            <targetReference>AssignPhase</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
+        <rules>
+            <name>Si</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_AssignPhase</targetReference>
+            </connector>
+            <label>Si</label>
         </rules>
     </decisions>
     <decisions>
@@ -1438,7 +1502,7 @@
         <collectionReference>getCreatedIndemnities</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
-            <targetReference>AssignPhase</targetReference>
+            <targetReference>Reclamo_scritto_da_cittadino</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
             <targetReference>UpdatePhaseCollection</targetReference>
@@ -1638,7 +1702,7 @@
         <name>UpdatePhaseCollection</name>
         <label>UpdatePhaseCollection</label>
         <locationX>1502</locationX>
-        <locationY>2798</locationY>
+        <locationY>3014</locationY>
         <inputReference>UpdateCollection</inputReference>
     </recordUpdates>
     <start>
