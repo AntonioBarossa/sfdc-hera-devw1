@@ -35388,7 +35388,7 @@
         <layout>GeneralTermsCondition__c-Condizioni Generali di Contratto Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Global-Global Layout</layout>
+        <layout>Global-One Shot Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>HDT_AccountDataEnrichment__mdt-Account data enrichment Layout</layout>
