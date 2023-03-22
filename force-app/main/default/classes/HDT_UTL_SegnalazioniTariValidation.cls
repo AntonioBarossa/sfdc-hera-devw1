@@ -58,6 +58,7 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
                 WHERE 
                 OperationGroup__c =:operationGroup
                 AND TypeOperation__c =:operationType 
+                WITH SECURITY_ENFORCED
                 Order By Material__c
         ];
 
