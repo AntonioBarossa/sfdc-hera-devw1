@@ -96,11 +96,10 @@ public with sharing class HDT_LC_MailSenderTst {
         HDT_WRP_MailSender.HDT_WRP_SendMailResult ret;
         //In the org there must be at least one record of OrgWideEmailAddress
         List<OrgWideEmailAddress> orgWideEmailAdress = [SELECT Id, Address FROM OrgWideEmailAddress];
-        List<Case> cases =  [SELECT Id,RecordTypeId FROM Case LIMIT 1];
+        List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
         String orgWideAddId = orgWideEmailAdress[0].Id;
         String toAddress = orgWideEmailAdress[0].Address;
         String caseId= cases[0].Id;
-        System.debug('Case id: '+cases[0].Id+' | RTid: '+cases[0].RecordTypeId);
         String emailMessageJson = '{"recordId": "'+ caseId +'", "isReminder": false,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
 
         Test.startTest();
