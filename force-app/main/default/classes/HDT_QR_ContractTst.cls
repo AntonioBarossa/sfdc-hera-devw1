@@ -31,6 +31,7 @@ public with sharing class HDT_QR_ContractTst {
 
             List<ServicePoint__c> spList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             spList[0].SAPContractCode__c = 'SAPCode';
+            spList[0].CommoditySector__c = 'Gas';
             insert spList;
             
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, accList[0].Id, 'Bozza');
