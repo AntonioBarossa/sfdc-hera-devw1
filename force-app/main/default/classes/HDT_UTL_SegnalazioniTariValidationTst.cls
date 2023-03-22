@@ -49,6 +49,16 @@ public with sharing class HDT_UTL_SegnalazioniTariValidationTst {
         String fields= '{"AlternativeAddress__c":null}';
         String result = tariValidation.validate(fields, caso.Id);
         System.assertEquals(result, '{"outcomeDescription":"Inserire Indirizzo!","outcomeCode":"Error"}', 'Inserire Indirizzo!');
+        
+        caso.InvoicingCity__c = 'testCity';
+        tariValidation.gestioneRifiutiValidate(caso, fields);
+        tariValidation.segnalazioniAmbienteValidate(caso, fields);
         Test.stopTest();
     }   
+
+    @isTest
+    public static void getMetadata() {
+        list<HDT_SegnalazioniAmbientali__mdt> metas = HDT_UTL_SegnalazioniTariValidation.getMaterialOptions('test1', 'test2');
+        system.assertEquals(metas.size(), 0, 'Unexpected metadata retrieved');
+    } 
 }

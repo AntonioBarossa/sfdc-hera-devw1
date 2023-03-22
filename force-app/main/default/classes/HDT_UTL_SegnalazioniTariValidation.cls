@@ -28,12 +28,14 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
         return result;
     }
 
+    @TestVisible
     private String segnalazioniAmbienteValidate(Case currCase, String fields){
         if(STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
         if(getFieldValue(fields, 'OperationGroup__c').equalsIgnoreCase('CONSULTA IL RIFIUTOLOGO')) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Valore Non Valido per Gruppo Operazione!'));
         return null;
     }
 
+    @TestVisible
     private String gestioneRifiutiValidate(Case currCase, String fields){
         if(STRING.isBlank(currCase.InvoicingCity__c) && STRING.isBlank(getFieldValue(fields, 'AlternativeAddress__c'))) return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo!'));
 
@@ -56,7 +58,7 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
                 WHERE 
                 OperationGroup__c =:operationGroup
                 AND TypeOperation__c =:operationType 
-                WITH SECURITY_ENFORCED 
+                WITH SECURITY_ENFORCED
                 Order By Material__c
         ];
 
