@@ -27,8 +27,11 @@ public with sharing class HDT_LC_MailSenderTst {
         
         Id recTypeId = utlConstants.CASE_RECORDTYPEID_MOROSITA;
         String recTypeName = utlConstants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
+        string recTypeInformativeDevName=utlConstants.CASE_RECORDTYPE_DEVELOPERNAME_INFORMATIVE;
+        Id informativeRtypeId=utlConstants.CASE_RECORDTYPEID_INFORMATIVE;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza', recTypeId, recTypeName);
-        
+        HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail','Bozza', recTypeId, recTypeName);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail','Bozza', informativeRtypeId, recTypeInformativeDevName);
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
@@ -47,7 +50,6 @@ public with sharing class HDT_LC_MailSenderTst {
         
         caseList.add(mySingleCase);
         insert caseList;
-
     }
 
     /**​
@@ -94,12 +96,12 @@ public with sharing class HDT_LC_MailSenderTst {
         HDT_WRP_MailSender.HDT_WRP_SendMailResult ret;
         //In the org there must be at least one record of OrgWideEmailAddress
         List<OrgWideEmailAddress> orgWideEmailAdress = [SELECT Id, Address FROM OrgWideEmailAddress];
-        List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
+        List<Case> cases =  [SELECT Id,RecordTypeId FROM Case LIMIT 1];
         String orgWideAddId = orgWideEmailAdress[0].Id;
         String toAddress = orgWideEmailAdress[0].Address;
         String caseId= cases[0].Id;
-        
-        String emailMessageJson = '{"caseId": "'+ caseId +'", "isReminder": false,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
+        System.debug('Case id: '+cases[0].Id+' | RTid: '+cases[0].RecordTypeId);
+        String emailMessageJson = '{"recordId": "'+ caseId +'", "isReminder": false,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
 
         Test.startTest();
         ret = HDT_LC_MailSender.sendMail(emailMessageJson);
