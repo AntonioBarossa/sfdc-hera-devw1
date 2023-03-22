@@ -136,7 +136,7 @@
         <label>22 - Richiesta lettura/verifica in campo</label>
     </customValue>
     <customValue>
-        <fullName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</fullName>
+        <fullName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</fullName>
         <default>false</default>
         <label>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</label>
     </customValue>
