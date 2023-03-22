@@ -66,10 +66,6 @@
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
     }, {
-        &quot;FieldName&quot;: &quot;PhoneNumber__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    }, {
         &quot;FieldName&quot;: &quot;BillingProfile__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
