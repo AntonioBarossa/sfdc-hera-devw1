@@ -253,7 +253,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             HDT_UTL_OrderProcess.checkSatisfationIndex(mapNew, mapOld);
 
-            Account acc = [SELECT SatisfactionIndexCtrl__c, PraxidiaUpdateDate__c FROM Account WHERE Name='test account bsn'];
+            Account acc = [SELECT SatisfactionIndexCtrl__c, PraxidiaUpdateDate__c FROM Account WHERE Name='test account bsn0'];
  
             Test.stopTest();
 
