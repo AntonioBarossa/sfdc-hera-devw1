@@ -24,7 +24,7 @@ public with sharing class HDT_TRH_WasteAdministrationTaxBreaksTst {
 		
 			records = [SELECT TextRequest__c,TextRemove__c FROM WasteAdministrationTaxBreaks__c];          
        
-			System.assertEquals('Test Record' , records[0].TextRequest__c);
-			System.assertEquals('Another Test Record', records[0].TextRemove__c);
+			System.assertEquals('TestRecord' , records[0].TextRequest__c);
+			System.assertEquals('AnotherTestRecord', records[0].TextRemove__c);
     }
 }
