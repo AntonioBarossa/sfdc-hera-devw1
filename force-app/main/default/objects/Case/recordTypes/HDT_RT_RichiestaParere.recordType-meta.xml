@@ -8935,10 +8935,6 @@
             <fullName>Bonus sociale Gas</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>07 - Bonus sociale H2o</fullName>
-            <default>false</default>
-        </values>
 	        <values>
             <fullName>Rimborsi</fullName>
             <default>false</default>
