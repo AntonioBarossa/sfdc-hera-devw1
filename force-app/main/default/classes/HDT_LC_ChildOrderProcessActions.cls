@@ -17,7 +17,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
     private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
-    private static String emptyPhoneDefault = '00112233';
+    private static String emptyPhoneDefault = '30112233';
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -281,14 +281,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                  */
                 if(currentOrder.Email__c == null || String.isEmpty(currentOrder.Email__c)){
                     orderToUpdate.Email__c = emptyEmailDefault;
-                }    
-                if(currentOrder.PhoneNumber__c == null || String.isEmpty(currentOrder.PhoneNumber__c))
-                {
-                    orderToUpdate.PhoneNumber__c = currentOrder.Contact__r.MobilePhone != null ||String.isNotBlank(currentOrder.Contact__r.MobilePhone) 
-                        ? currentOrder.Contact__r.MobilePhone  
-                        : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone)
-                            ? currentOrder.Contact__r.Phone
-                            : '123';
                 }
                 Map<String,Object> rates = voltureChangeUtils.checkRates(
                     (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
@@ -527,7 +519,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         if(String.isBlank(currentOrder.PhoneNumber__c) && String.isBlank(orderToUpdate.PhoneNumber__c))
         {
-            orderToUpdate.PhoneNumber__c = emptyPhoneDefault;
+            orderToUpdate.PhoneNumber__c = currentOrder.Contact__c != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? currentOrder.Contact__r.MobilePhone  
+                                            : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? 
+                                                currentOrder.Contact__r.Phone : emptyPhoneDefault;
         }
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
