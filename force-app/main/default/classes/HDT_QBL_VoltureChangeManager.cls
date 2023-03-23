@@ -99,7 +99,7 @@ public with sharing class HDT_QBL_VoltureChangeManager implements Queueable,Data
             newCase.WithdrawalClass__c = order.WithdrawalClass__c;
             newCase.ServiceEnergy__c = order.EnergyService__c;
             newCase.UseCategory__c = order.UseCategory__c;
-
+            newCase.Commodity__c = order.ServicePoint__r.CommoditySector__c;
             pod = order.ServicePointCode__c;
             sapContractCode = order.SapContractCode__c;
 
