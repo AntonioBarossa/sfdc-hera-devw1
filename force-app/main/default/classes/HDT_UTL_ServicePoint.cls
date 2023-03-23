@@ -470,6 +470,13 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('PADRE-FIGLIO')!=null && !String.isBlank(mapRes.get('PADRE-FIGLIO'))){
             spNew.MeterRelation__c = mapRes.get('PADRE-FIGLIO');
         }
+        if (mapRes.get('CATEGORIATARIFFA')!=null && !String.isBlank(mapRes.get('CATEGORIATARIFFA'))){
+            List<AllineamentoGAA__c> listAllineamentoGaa = [SELECT Frequenza__c FROM AllineamentoGAA__c WHERE Comune__c =: spNew.SupplyCity__c AND Rate_Category__c =: mapRes.get('CATEGORIATARIFFA') WITH SECURITY_ENFORCED];
+    
+            if(listAllineamentoGaa.size() > 0){
+                spNew.AlignmentFrequencyGAA__c = listAllineamentoGaa.get(0).Frequenza__c;
+            }
+        }
 
         //Reset flag di check creazione activity di "Modifica Indirizzo Fornitura", tale flag verrà impostato a true nel caso in cui si vada a modificare l'indirizzo sul form del service point.
         spNew.IsAddressChanged__c = false;
