@@ -321,16 +321,6 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.CustomerType__c</fieldItem>
-                <identifier>RecordCustomerType_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.SalesCompany__c</fieldItem>
                 <identifier>RecordSalesCompany_cField</identifier>
             </fieldInstance>
@@ -341,28 +331,18 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
-                <fieldItem>Record.FirstLevelComplaintClassification__c</fieldItem>
-                <identifier>RecordFirstLevelComplaintClassification_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.SecondLevelComplaintClassification__c</fieldItem>
-                <identifier>RecordSecondLevelComplaintClassification_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
                 <fieldItem>Record.Ato__c</fieldItem>
                 <identifier>RecordAto_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.CompanyOwner__c</fieldItem>
+                <identifier>RecordCompanyOwner_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <name>Facet-0c5c4f38-7bdd-4639-bace-342db57e6260</name>
@@ -387,16 +367,6 @@
                 </fieldInstanceProperties>
                 <fieldItem>Record.Process__c</fieldItem>
                 <identifier>RecordProcess_cField</identifier>
-            </fieldInstance>
-        </itemInstances>
-        <itemInstances>
-            <fieldInstance>
-                <fieldInstanceProperties>
-                    <name>uiBehavior</name>
-                    <value>none</value>
-                </fieldInstanceProperties>
-                <fieldItem>Record.CompanyOwner__c</fieldItem>
-                <identifier>RecordCompanyOwner_cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
