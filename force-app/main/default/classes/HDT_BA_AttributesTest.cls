@@ -14,7 +14,7 @@ public with sharing class HDT_BA_AttributesTest {
             tempLead.Rating='Hot';
             listLead.add(tempLead);
         }
-        for (Integer i = 0; i < 20; i++) {
+        for (Integer i = 30; i < 50; i++) {
             Lead tempLead=new Lead();
             tempLead.LastName='testLastName2'+String.valueOf(i);
             tempLead.FirstName='FirstNameName2'+String.valueOf(i);
