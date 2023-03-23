@@ -4249,7 +4249,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <formulas>
         <name>valorizzaCampoNoteConsumoAnnuoAcqua</name>
         <dataType>String</dataType>
-        <expression>IF(!ISBLANK({!GetCaseAggiornato_0_0_0_0_0.Note__c}), {!GetCaseAggiornato_0_0_0_0_0.Note__c} &amp; BR() &amp; &quot;Consumo Dichiarato: &quot; &amp; {!Consumo_Dichiarato_Virtual_Field}, &quot;Consumo Dichiarato: &quot; &amp;  {!Consumo_Dichiarato_Virtual_Field})</expression>
+        <expression>IF(!ISBLANK({!GetCaseAggiornato_0_0_0_0_0.Note__c}), {!GetCaseAggiornato_0_0_0_0_0.Note__c} &amp; BR() &amp; &quot;Consumo Dichiarato: &quot; &amp; TEXT({!Consumo_Dichiarato_Virtual_Field_1}), &quot;Consumo Dichiarato: &quot; &amp;  TEXT({!Consumo_Dichiarato_Virtual_Field_1}))</expression>
     </formulas>
     <formulas>
         <name>VariazioneFiscalePhase</name>
@@ -8332,11 +8332,12 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <name>ScreenInputFiscale_0_0_0_0_0_Section1_Column1</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>Consumo_Dichiarato_Virtual_Field</name>
-                    <dataType>String</dataType>
+                    <name>Consumo_Dichiarato_Virtual_Field_1</name>
+                    <dataType>Number</dataType>
                     <fieldText>Consumo Dichiarato</fieldText>
                     <fieldType>InputField</fieldType>
                     <isRequired>true</isRequired>
+                    <scale>0</scale>
                 </fields>
                 <inputParameters>
                     <name>width</name>

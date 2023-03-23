@@ -304,11 +304,11 @@ public inherited sharing class HDT_LC_SaleActions {
 
     }
 
-    /**
+/*
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale backup
      * @param sale
-     */
+     
     @AuraEnabled
     public static void saveBackup(Sale__c sale){
         
@@ -409,7 +409,7 @@ public inherited sharing class HDT_LC_SaleActions {
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
         quoteSrv.updateRecords(quoteList);
-    }
+    } */
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale
