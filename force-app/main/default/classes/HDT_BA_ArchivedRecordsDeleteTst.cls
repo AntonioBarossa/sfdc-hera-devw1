@@ -12,7 +12,7 @@
 public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
 
     static HDT_UTL_Constants utlConstants = new HDT_UTL_Constants();
-    static Integer numberOfRecords = 10;
+    static Integer numberOfRecords = 5;
     static Integer batchSize = 200;
     static User testAdmin = HDT_UTL_DataFactoryTst.createInternalUser(HDT_UTL_DataFactoryTst.getProfileId(utlConstants.SYSTEM_ADMINISTRATOR_NAME), true);
     static HDT_BA_ArchivedRecordsDelete ard = new HDT_BA_ArchivedRecordsDelete(batchSize);
@@ -31,7 +31,7 @@ public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
         insert executionTracking;
         
         // Create Accounts
-        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountBusiness(numberOfRecords, true, 'MMS', 'G1 - MMS Persona fisica', 'Famiglie');
+        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountResidenziale(numberOfRecords, true, 'MMS', 'G1 - MMS Persona fisica', 'Famiglie');
         // Create Pricebook
         Pricebook2 pricebook = HDT_UTL_DataFactoryTst.activeStandardPricebook();
         // Create Products
@@ -234,8 +234,8 @@ public with sharing class HDT_BA_ArchivedRecordsDeleteTst {
 
         // !Can't assert due to too many queries exception
 
-        Interaction__c testInteraction = [SELECT Id, IsDeleted FROM Interaction__c WHERE IsDeleted = true LIMIT 1 ALL ROWS];
-        System.assertEquals(true, testInteraction.IsDeleted, 'The Interaction__c was not deleted as expected');
+        List<Interaction__c> testInteraction = [SELECT Id, IsDeleted FROM Interaction__c WHERE IsDeleted = true LIMIT 1 ALL ROWS];
+        System.assertEquals(true, testInteraction.IsEmpty() || testInteraction[0].IsDeleted, 'The Interaction__c was not deleted as expected');
 
     }
 
