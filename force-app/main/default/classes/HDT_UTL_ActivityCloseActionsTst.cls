@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 20-03-2023
+ * @last modified on  : 22-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -21,19 +21,40 @@ public with sharing class HDT_UTL_ActivityCloseActionsTst {
         }
     }
     
+    static Case createCase(String recordType, String caseType){
+        Id rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(recordType).getRecordTypeId();
+        Case testCase = new Case();
+        testCase.Type = caseType;
+        testCase.RecordType = [SELECT Id, DeveloperName FROM RecordType WHERE Id=:rtId];
+        insert testCase;
+        return testCase;
+    }
+
     @isTest 
-    static void riduzioneSuperficieTest(){
+    static void getOnCloseActionsTest(){
 
         Case caso = new Case();
         caso.Type = 'Riduz. superficie rifiuti spec promiscui';
         caso.Phase__c = '';
         insert caso;
+
         wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
         activity.ActivityOutcome__c = 'Positivo';
         insert activity;
-        String activityType = 'Gestione Manuale SAP';
+        String activityType             = 'Gestione Manuale SAP';
+        String activityTypeAcqua        = 'Inviare Resoconto Verifica'; 
+        String activityTypeAnnullamento = 'CBS_ANN006__ELABORAZIONE_MANUALE'; 
+        String activityTypeErroreFatturazione = 'CBS_FAT004__ELABORAZIONE_MANUALE'; 
+        String activityTypeRimborsoPagamento = 'CBS_PAG003__ELABORAZIONE_MANUALE'; 
 
         Test.startTest();
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_VariazioniTari',''),activity, activityType);
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_VerificheAcqua',''),activity, activityTypeAcqua);
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_Annullamento','Annullamento Contratti'),activity, activityTypeAnnullamento);
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_ErroreFatturazione_TARI','Errore di Fatturazione'),activity, activityTypeErroreFatturazione);
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_Rimborso','Rimborso'),activity, activityTypeRimborsoPagamento);
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_ComunicazionePagamento','Comunicazione Pagamento'),activity, activityTypeRimborsoPagamento);
+        HDT_UTL_ActivityCloseActions.getOnCloseActions(HDT_UTL_ActivityCloseActionsTst.createCase('HDT_RT_ComunicazionePagamento','Doppi Pagamenti/Incassi'),activity, activityTypeRimborsoPagamento);
         HDT_UTL_ActivityCloseActions.HDT_WRP_Actions action = HDT_UTL_ActivityCloseActions.getOnCloseActions(caso,activity, activityType);
         System.assertEquals(action.phase, 'Completata', 'OK');
         activityType = '';
