@@ -55,7 +55,7 @@ public class HDT_LC_AccountDataEnrichmentTst {
 
         HDT_LC_AccountDataEnrichment controller = new HDT_LC_AccountDataEnrichment();
         // Invoke the continuation by calling the action method
-        Continuation conti = (Continuation)HDT_LC_AccountDataEnrichment.startRequest(account.Id, 'cmor');
+        Continuation conti = (Continuation)HDT_LC_AccountDataEnrichment.startRequest(account.Id, null,'cmor');
         
         // Verify that the continuation has the proper requests
         Map<String, HttpRequest> requests = conti.getRequests();
@@ -95,7 +95,7 @@ public class HDT_LC_AccountDataEnrichmentTst {
             
             HDT_LC_AccountDataEnrichment controller = new HDT_LC_AccountDataEnrichment();
             // Invoke the continuation by calling the action method
-            Continuation conti = (Continuation)HDT_LC_AccountDataEnrichment.startRequest(account.Id, 'null');
+            Continuation conti = (Continuation)HDT_LC_AccountDataEnrichment.startRequest(account.Id, null,'null');
             
             // Verify that the continuation has the proper requests
             Map<String, HttpRequest> requests = conti.getRequests();
@@ -134,7 +134,7 @@ public class HDT_LC_AccountDataEnrichmentTst {
 
         try {
             
-            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(null, 'cmor');
+            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(null,null, 'cmor');
 
         } catch (AuraHandledException e) {
             

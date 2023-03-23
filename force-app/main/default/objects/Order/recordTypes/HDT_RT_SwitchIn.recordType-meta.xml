@@ -571,6 +571,10 @@
             <default>false</default>
         </values>
         <values>
+                <fullName>Registrazione non conforme</fullName>
+                <default>false</default>
+        </values>
+        <values>
             <fullName>Reso %28Prodotto%29</fullName>
             <default>false</default>
         </values>

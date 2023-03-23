@@ -81,6 +81,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
                     result=oldTransitions.split('\\|\\|')[0].trim().substringBefore('@');
                     System.debug(LoggingLevel.DEBUG,'oldTransition -> ' + result);
                     currentCase.TecnicalPhase__c = result;
+                    currentCase.Description= 'Impossibile annullare l\'appuntamento';
                 }
             }
 

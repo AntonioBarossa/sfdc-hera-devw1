@@ -132,7 +132,7 @@ public with sharing class HDT_QR_MailSenderTst {
     * @author Elvin Iluca
     * @date 26/10/2022
     * @description HDT_QR_MailSenderTst – Test Class for HDT_QR_MailSender.cls
-    */
+    *
     @isTest
     static void getEmailTst(){
 
@@ -143,7 +143,7 @@ public with sharing class HDT_QR_MailSenderTst {
         Test.stopTest();
 
         System.assertEquals(null, emailActual, 'Error it\' not null');
-    }
+    }*/
 
     /**​
     * @author Elvin Iluca

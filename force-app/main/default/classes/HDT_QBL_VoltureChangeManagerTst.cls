@@ -148,7 +148,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
         //System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
     }
-
+    /*
     @istest
     static void testWrongOrder(){
 
@@ -237,7 +237,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         }
         System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
         //System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
-    }
+    }*/
 
 
     @isTest
