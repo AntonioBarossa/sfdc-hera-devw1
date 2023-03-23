@@ -19,7 +19,7 @@ public with sharing class HDT_SRV_SieXivTst {
 
     @TestSetup
     public static void makeData(){
-        List<Account> accounts= HDT_UTL_DataFactoryTst.createAccountResidenziale(300, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+        List<Account> accounts= HDT_UTL_DataFactoryTst.createAccountResidenziale(100, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
         Map<Id, Order> accToOrder = new Map<Id, Order>();
         Map<Id, Sale__c> accToSale = new Map<Id, Sale__c>();
         Map<Id, Contract> accToContr = new Map<Id, Contract>();

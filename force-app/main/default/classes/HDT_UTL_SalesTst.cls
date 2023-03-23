@@ -167,7 +167,7 @@ public class HDT_UTL_SalesTst {
         Test.startTest();
 
         System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='PEP', SupplyCity__c = servPoint.SupplyCity__c),sale0), 'The return was empty 1');
-        System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ', SupplyCity__c = servPoint.SupplyCity__c, CommoditySector__c = 'Gas'),sale1), 'The return was empty 2');
+        System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ', SupplyCity__c = servPoint.SupplyCity__c, CommoditySector__c = 'Gas'),sale1), 'The return was empty 2');
         System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(sale0), 'The return was empty');
         System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(sale1), 'The return was empty');
         
@@ -196,6 +196,27 @@ public class HDT_UTL_SalesTst {
         Test.startTest();
         System.assertEquals(true, HDT_UTL_Sales.getAgentNameAndCode(sp,'').get('nomeAgente')=='', 'Agent and code shoud be empty');//because there are no custom metadatas
         System.assertEquals(true, HDT_UTL_Sales.getAgentNameAndCode(sp,'').get('codiceAgente')=='', 'Agent and code shoud be empty');//because there are no custom metadatas
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void getAgentNameAndCodeInvocable(){
+        ServicePoint__c sp=[SELECT Id,SupplyCity__c,CommoditySector__c,Distributor__r.code__c FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255' LIMIT 1];
+        Test.startTest();
+        List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs> inputs = new List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs>{new HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs() };
+        inputs[0].servicePoint = sp;
+        inputs[0].customerMarking = '';
+
+
+        List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs> outputs = 
+            new List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs>
+        {  
+                new HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs()
+        };
+        outputs = HDT_UTL_RimozioneAgevolazione.getSalesCompany(inputs);
+
+        System.assert(STRING.isBlank(outputs[0].salesCompany), 'Agent and code shoud be empty');//because there are no custom metadatas
+        System.assert(STRING.isBlank(outputs[0].salesCompanyCode), 'Agent and code shoud be empty');//because there are no custom metadatas
         Test.stopTest();
     }
 

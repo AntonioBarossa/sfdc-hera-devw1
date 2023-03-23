@@ -29,6 +29,10 @@
     <picklistValues>
         <picklist>ControllingCommodity__c</picklist>
         <values>
+            <fullName>Acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Energia Elettrica</fullName>
             <default>false</default>
         </values>
@@ -88,19 +92,11 @@
     <picklistValues>
         <picklist>ProcessValue__c</picklist>
         <values>
+            <fullName>Adesione Rinuncia Fondo Fughe</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Autolettura da cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura con Autolettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subentro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prima Attivazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -116,126 +112,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiusura Contatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Connessione con Attivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consegna copia chiave GdM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Interruzione Fornitura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Modifica Impianto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Nuovo Impianto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prima Attivazione Ele</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prima Attivazione Fuori delibera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Prima Attivazione In delibera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Proroga Temporanea</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recesso per Altri Motivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riattivazione Fornitura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riattivazione Fornitura non morosa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta lettura cliente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rimozione Impianto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risoluzione NO Contatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risoluzione No Disalimentabile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risoluzione No Sospensione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risoluzione Punto Sospeso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospensione Fornitura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Spostamento Contatore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subentro Ele</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Subentro Gas</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Switch in Ele</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Switch in Gas</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Temporanea - Nuova Attivazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Variazione Potenza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica GDM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Voltura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Adesione Rinuncia Fondo Fughe</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Cambio contatore non registrato</fullName>
             <default>false</default>
         </values>
@@ -244,11 +120,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Cessazione Scarichi Produttivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Cessazione post accertamento</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione Scarichi Produttivi</fullName>
+            <fullName>Chiusura Contatore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -260,11 +140,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Connessione con Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consegna copia chiave GdM</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consumo Anomalo Idrico</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Doppi Pagamenti/Incassi</fullName>
+            <fullName>Doppi Pagamenti%2FIncassi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -277,6 +165,10 @@
         </values>
         <values>
             <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Interruzione Fornitura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -300,6 +192,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Modifica Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica Unita Immobiliari Componenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Modifica dati contrattuali</fullName>
             <default>false</default>
         </values>
@@ -308,11 +208,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Modifica Unita Immobiliari Componenti</fullName>
+            <fullName>Modifica%2FAzzeramento Consumo Annuo</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Modifica/Azzeramento Consumo Annuo</fullName>
+            <fullName>Nuovo Impianto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -332,15 +232,51 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Prima Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione Fuori delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prima Attivazione In delibera</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Proroga Temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recesso per Altri Motivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Reclamo Scritto Da Cittadino</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Reclamo Scritto/Rich. Info</fullName>
+            <fullName>Reclamo Scritto%2FRich%2E Info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riattivazione Fornitura non morosa</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiesta Domiciliazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta lettura cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -352,7 +288,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Rimozione Impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risoluzione Contrattuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione NO Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione No Sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risoluzione Punto Sospeso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -364,11 +320,47 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sospensione Fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Spostamento Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Storno Rateizzazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Unificazione/Separazione BP-CA-Bolletta</fullName>
+            <fullName>Subentro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Ele</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Switch in Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Temporanea - Nuova Attivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Unificazione%2FSeparazione BP-CA-Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Variazione Potenza</fullName>
             <default>false</default>
         </values>
         <values>
@@ -377,6 +369,10 @@
         </values>
         <values>
             <fullName>Verifica Fuga Idrica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica GDM</fullName>
             <default>false</default>
         </values>
         <values>
@@ -389,6 +385,14 @@
         </values>
         <values>
             <fullName>Verifica Tensione - Pressione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura con Autolettura</fullName>
             <default>false</default>
         </values>
     </picklistValues>

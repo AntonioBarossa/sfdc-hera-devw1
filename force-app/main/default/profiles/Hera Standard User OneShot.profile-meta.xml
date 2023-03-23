@@ -114,6 +114,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_SegnalazioniAmbientali__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_QServicesTranscode__mdt</name>
     </customMetadataTypeAccesses>
         <customMetadataTypeAccesses>
@@ -401,6 +405,10 @@
         <name>HDT_IndemnitiesDays__mdt</name>
     </customMetadataTypeAccesses>
     <custom>true</custom>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>CS_SprinklrSettings__c</name>
+    </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
@@ -10453,7 +10461,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12095,6 +12103,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_CaliberTranscode__mdt.SfdcFieldValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CaliberTranscode__mdt.IsSfdcManaged__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -35032,10 +35045,6 @@
         <layout>Case-Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_Indennizzo</layout>
-        <recordType>Case.HDT_RT_Indennizzo</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_AttivazionePODVariazionePDR</recordType>
     </layoutAssignments>
@@ -35172,6 +35181,10 @@
         <recordType>Case.HDT_RT_Informative</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_Indennizzo</layout>
+        <recordType>Case.HDT_RT_Indennizzo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_InversioneContatore</layout>
         <recordType>Case.HDT_RT_InversioneContatore</recordType>
     </layoutAssignments>
@@ -35236,20 +35249,20 @@
         <recordType>Case.HDT_RT_VerificheEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_VerificheAcqua</layout>
-        <recordType>Case.HDT_RT_VerificheAcqua</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-HDT_VariazioniGas</layout>
         <recordType>Case.HDT_RT_VariazioniGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_VariazioniGas</layout>
+        <layout>Case-HDT_VariazioniAcqua</layout>
         <recordType>Case.HDT_RT_VariazioniAcqua</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VerificheGas</layout>
         <recordType>Case.HDT_RT_VerificheGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheAcqua</layout>
+        <recordType>Case.HDT_RT_VerificheAcqua</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VotiveModena</layout>
@@ -35862,12 +35875,12 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_CCheckNew</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_HCPoint</layout>

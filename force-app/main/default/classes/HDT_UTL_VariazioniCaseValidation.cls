@@ -47,6 +47,10 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
-        return String.valueOf(fieldsMap.get(fieldToGet));
+        if(fieldsMap.get(fieldToGet) != null)
+            return String.valueOf(fieldsMap.get(fieldToGet));
+        else {
+            return '';
+        }
     }
 }

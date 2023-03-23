@@ -114,6 +114,10 @@
     </customMetadataTypeAccesses>
     <customMetadataTypeAccesses>
         <enabled>true</enabled>
+        <name>HDT_SegnalazioniAmbientali__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
         <name>HDT_QServicesTranscode__mdt</name>
     </customMetadataTypeAccesses>
         <customMetadataTypeAccesses>
@@ -405,6 +409,10 @@
         <name>HDT_IndemnitiesDays__mdt</name>
     </customMetadataTypeAccesses>
     <custom>true</custom>
+    <customSettingAccesses>
+        <enabled>true</enabled>
+        <name>CS_SprinklrSettings__c</name>
+    </customSettingAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
@@ -10576,7 +10584,7 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
+        <editable>true</editable>
         <field>DiscardAnnullmentRule__c.ControllingCommodity__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -12223,6 +12231,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>HDT_CaliberTranscode__mdt.SfdcFieldValue__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_CaliberTranscode__mdt.IsSfdcManaged__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

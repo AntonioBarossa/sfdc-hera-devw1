@@ -26,8 +26,117 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Amministrazione SLA</label>
     <navType>Standard</navType>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorPostSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera Standard User OneShot</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Small</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
+    <profileActionOverrides>
+        <actionName>View</actionName>
+        <content>SlaAdministratorSales</content>
+        <formFactor>Large</formFactor>
+        <pageOrSobjectType>SlaAdministration__c</pageOrSobjectType>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+        <type>Flexipage</type>
+        <profile>Hera System Administrator</profile>
+    </profileActionOverrides>
     <profileActionOverrides>
         <actionName>View</actionName>
         <content>SlaAdministratorSales</content>

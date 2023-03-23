@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 11-01-2023
+ * @last modified on  : 20-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @SuppressWarnings('PMD.UnusedLocalVariable, PMD.ExcessiveParameterList')
@@ -36,7 +36,7 @@ public with sharing class HDT_SRV_GarbageManTst {
 
 		insert new Wrts_prcgvr__PhaseTransition__c(Wrts_prcgvr__Code__c=Math.random()+'',wrts_prcgvr__ApexCalloutActions__c = 'HDT_WS_SegnalazioniTari(method="FacilityApproval");', wrts_prcgvr__CalloutTemplate__c = 'HDT_GestioneRifiuti', Wrts_prcgvr__DestinationPhase__c='Documentazione da validare', Wrts_prcgvr__OriginPhase__c='Bozza', Wrts_prcgvr__RecordTypeId__c=constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI, Wrts_prcgvr__RecordTypeName__c='HDT_GestioneRifiuti', Wrts_prcgvr__Type__c='A');
 
-        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G1 - MMS Persona fisica','Famiglie')[0];
+        Account acc = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'HERA COMM','Azienda','Aziende SME')[0];
 
         Case caso = HDT_UTL_DataFactoryTst.createCase(1, false, acc.id, null, null, null, null)[0];
         caso.WasterCode__c = '';

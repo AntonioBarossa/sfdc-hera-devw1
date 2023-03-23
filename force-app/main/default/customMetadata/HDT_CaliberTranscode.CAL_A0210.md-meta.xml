@@ -3,6 +3,10 @@
     <label>A0210</label>
     <protected>false</protected>
     <values>
+        <field>IsSfdcManaged__c</field>
+        <value xsi:type="xsd:boolean">true</value>
+    </values>
+    <values>
         <field>SapFieldValue__c</field>
         <value xsi:type="xsd:string">A0210</value>
     </values>

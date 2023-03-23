@@ -678,6 +678,13 @@
         <isOutput>false</isOutput>
     </variables>
     <variables>
+        <name>ParentRecordId</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
         <name>ProcessType</name>
         <dataType>String</dataType>
         <isCollection>false</isCollection>

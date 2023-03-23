@@ -3,6 +3,10 @@
     <label>CAL_A1220</label>
     <protected>false</protected>
     <values>
+        <field>IsSfdcManaged__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>SapFieldValue__c</field>
         <value xsi:type="xsd:string">A1220</value>
     </values>

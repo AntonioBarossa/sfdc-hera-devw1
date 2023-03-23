@@ -457,7 +457,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
             List<Order> ordersNonEnergy = new List<Order>();
-            List<Order> ordersCompletata = new List<Order>();
+            //List<Order> ordersCompletata = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
@@ -472,8 +472,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ordersNonEnergy.add(o);
                 }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
                     if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
-                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
-                    else{   ordersHeroku.add(o);    }
+                    //else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else if (o.IntegratedSAP__c){   ordersHeroku.add(o);    }
                 }
                 else{
                     ordersHeroku.add(o);
@@ -487,9 +487,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
             );
-            vasOrdersToUpdate.putAll(
+            /*vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersCompletata, 'Documentazione Validata', 'Completata','Documentazione Validata','Comunicazione Motore VAS')
-            );
+            );*/
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
             }
@@ -643,6 +643,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                                 newOrder.EffectiveDate__c = System.today();
                                 if( 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
                                     newOrdersListReadingDate.add(newOrder);
+                                    newOrder.ReadingCustomerDate__c = System.today();
                                 }
                             }else{
                                 newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
@@ -651,7 +652,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                         }
                     }else if(
                             (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 
-                            && ((newOrder.ConfirmCustomerContract__c == 'Comfort call' && !newOrder.isTransition__c) ||  newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
+                            && (/* (newOrder.ConfirmCustomerContract__c == 'Comfort call' && !newOrder.isTransition__c) ||  */ newOrder.ConfirmCustomerContract__c == 'Web' ||newOrder.ConfirmCustomerContract__c == 'IVR')
                         ){
                         newOrdersListComfort.add(newOrder);
                     }
@@ -1000,7 +1001,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 if ( String.isNotBlank(String.valueOf(temp.ServicePoint__c))) {
                     ServicePoint__c sp=new ServicePoint__c(id=temp.ServicePoint__c);
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
-                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;  
+                    sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;
+                    sp.RateCategory__c = temp.RateCategory__c;
                     if (String.isNotBlank(temp.SAPImplantCode__c)) {
                         sp.SAPImplantCode__c= temp.SapImplantCode__c; 
                     }  
