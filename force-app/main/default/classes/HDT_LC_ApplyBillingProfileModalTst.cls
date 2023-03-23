@@ -73,9 +73,31 @@ public with sharing class HDT_LC_ApplyBillingProfileModalTst {
         );
         insert bp;
 
-        List<SBQQ__QuoteLine__c> qline = [SELECT Id, BillingProfile__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID'];
+        List<SBQQ__QuoteLine__c> qline = [SELECT Id,
+                                                SBQQ__ProductFamily__c,
+                                                BillingProfile__c,
+                                                SBQQ__RequiredBy__c,
+                                                Name,
+                                                SBQQ__RequiredBy__r.BillingProfile__c,
+                                                SBQQ__RequiredBy__r.BillingProfile__r.Name,
+                                                ServicePoint__r.ServicePointCode__c,
+                                                SBQQ__RequiredBy__r.SBQQ__Product__c,
+                                                SBQQ__RequiredBy__r.SBQQ__Product__r.Name,
+                                                SBQQ__Quote__r.ContractReference__c,
+                                                SBQQ__Quote__r.AllowChangeUse__c,
+                                                SBQQ__Quote__r.AmendmentAllowed__c,
+                                                SBQQ__Quote__r.ContractReference__r.BillingProfile__c,
+                                                SBQQ__Quote__r.ContractReference__r.BillingProfile__r.Name,
+                                                SBQQ__Product__r.Name 
+                                            FROM SBQQ__QuoteLine__c 
+                                            WHERE PaymentMode__c = 'RID'];
+        List<HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp> wrpList = new List<HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp>();
+        for(SBQQ__QuoteLine__c ql : qline){
+            HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp wrp = new HDT_LC_ApplyBillingProfileModal.HDT_WRP_QuoteLineWrp(ql);
+            wrpList.add(wrp);
+        }
 
-        HDT_LC_ApplyBillingProfileModal.updateQuoteLinesBillingProfile(qLine, bp.Id);
+        HDT_LC_ApplyBillingProfileModal.updateQuoteLinesBillingProfile(JSON.serialize(wrpList), bp.Id);
 
         qline = [SELECT Id, BillingProfile__c FROM SBQQ__QuoteLine__c WHERE PaymentMode__c = 'RID'];
 
