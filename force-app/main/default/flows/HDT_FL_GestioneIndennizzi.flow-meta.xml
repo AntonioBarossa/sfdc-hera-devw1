@@ -116,6 +116,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_Variables_0</name>
+        <label>Assign Variables</label>
+        <locationX>50</locationX>
+        <locationY>998</locationY>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>GetFirstCausalCode</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignCausalCode</name>
         <label>AssignCausalCode</label>
         <locationX>1370</locationX>
@@ -216,7 +232,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>GetFirstCausalCode</targetReference>
+            <targetReference>Assign_Variables_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -684,6 +700,20 @@
                 <elementReference>getInputCase.SupplyCountry__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CommodityFormula__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.DistributorName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorName__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssignVariablesSecond</targetReference>
         </connector>
@@ -852,6 +882,20 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getInputCase.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.CommodityFormula__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.DistributorName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>

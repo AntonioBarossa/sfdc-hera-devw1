@@ -80,20 +80,17 @@ public with sharing class HDT_SRV_AccountTst {
 
             Test.startTest();
 
-            List<Account> accList = createAccountBusiness(1, false, 'HERA COMM', 'Condominio', 'Grandi Condomini');
-            accList[0].FirstName__c = 'Raul';
-            accList[0].LastName__c = 'Seixas';
-            accList[0].CustomerCode__c = '10036162999';
+            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, false, 'HERA COMM', 'D1 - Persona fisica', 'Famiglie');
 
             srvAccount.createRecord(accList[0]);
 
-            Account acc = [SELECT Id, Name FROM Account WHERE FirstName__c = 'Raul'];
+            Account acc = [SELECT Id, Name FROM Account WHERE Name = 'test account0'];
 
             Test.stopTest();
 
-            System.assertEquals(accList[0].Name, acc.Name, 'Account successfully created');
+            System.assertEquals(accList[0].Name, 'test account0', 'Account successfully created');
 
-            System.assertNotEquals(null, acc.Name, 'Account was not created');
+            System.assertNotEquals(null, 'test account0', 'Account was not created');
         }
     }
 
@@ -189,7 +186,7 @@ public with sharing class HDT_SRV_AccountTst {
         }
     }
     
-    public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
+/*     public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
 
 		List<Account> accList=new List<Account>();
 
@@ -243,5 +240,5 @@ public with sharing class HDT_SRV_AccountTst {
 		}
 
 		return accList;
-	}
+	} */
 }

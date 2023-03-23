@@ -79,12 +79,11 @@ public with sharing class HDT_LC_DocumentValidationTst {
         
         Test.startTest();
 
-            String result;
-            result = HDT_LC_DocumentValidation.getOrderAccountId(ord.Id);
+            Order result = HDT_LC_DocumentValidation.getOrderAccountId(ord.Id);
 
         Test.stopTest();
 
-        System.assertNotEquals(null, result, 'getOrderAccountId did not work correctly');
+        System.assertEquals(result != null, true,'getOrderAccountId did not work correctly');
     }
 
     @isTest

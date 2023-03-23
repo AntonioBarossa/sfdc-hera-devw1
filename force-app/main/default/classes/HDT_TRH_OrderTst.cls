@@ -48,6 +48,7 @@ public with sharing class HDT_TRH_OrderTst {
 
             List<Order> orderList = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Bozza'];
             orderList[0].Phase__c = 'Documentazione validata';
+            orderList[0].Commodity__c = 'Gas';
             update orderList;
             System.debug('@@'+[SELECT Id, Phase__c, TecnicalPhase__c FROM Order]);
             List<Order> orders = [SELECT Id, Phase__c, TecnicalPhase__c FROM Order WHERE Phase__c = 'Comunicazione verso Heroku'];

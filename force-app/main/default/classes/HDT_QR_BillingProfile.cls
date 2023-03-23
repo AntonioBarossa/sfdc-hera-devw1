@@ -129,8 +129,7 @@ public inherited sharing class HDT_QR_BillingProfile {
         return null;
     }
 
-    public List<BillingProfile__c> getRecordByContractAccount(Set<String> contractAccounts) {
-
+    public BillingProfile__c getRecordByIdVolturaSol(Id billingProfileId) {
         return [
                 SELECT
                         Id,
@@ -139,14 +138,19 @@ public inherited sharing class HDT_QR_BillingProfile {
                         InvoicingCity__c,
                         InvoicingStreetNumber__c,
                         InvoicingCountry__c,
-                        //InvoicingStreetToponym__c,
                         InvoicingStreetName__c,
                         InvoicingStreetNumberExtension__c,
                         InvoicingProvince__c,
                         BankAccountSignatoryLastName__c,
-                        ContractAccountCode__c
+                        ContractAccountCode__c,
+                        BillSendingMethod__c,
+                        InvoiceEmailAddress__c,
+                        InvoiceCertifiedEmailAddress__c,
+                        SendCertifiedEmailConsentDate__c,
+                        DivergentSubject__c,
+                        InvoicingCityCode__c
                 FROM BillingProfile__c
-                WHERE ContractAccountCode__c IN :contractAccounts
+                WHERE Id=:billingProfileId
                 WITH SECURITY_ENFORCED
         ];
     }
