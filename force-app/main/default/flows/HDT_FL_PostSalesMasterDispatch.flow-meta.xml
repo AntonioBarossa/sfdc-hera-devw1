@@ -9475,6 +9475,13 @@
                 <elementReference>ManageDocumentsFatturazione_0.contractCode</elementReference>
             </value>
         </filters>
+        <filters>
+            <field>AccountId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>AccountId</elementReference>
+            </value>
+        </filters>
         <object>Contract</object>
         <outputAssignments>
             <assignToReference>billingProfile</assignToReference>
