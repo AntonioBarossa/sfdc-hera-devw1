@@ -169,6 +169,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.IntegrationId__c='';
         childOrder.Phase__c='Bozza';
         childOrder.Status='In Lavorazione';
+        childOrder.Cluster__c='Attivazioni';
         childOrder.Subprocess__c='Standard';
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
@@ -180,7 +181,6 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
-
         parentOrder.BillingProfile__c=contractList[0].BillingProfile__c;
         parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
