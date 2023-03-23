@@ -707,6 +707,13 @@
                 <elementReference>getInputCase.CommodityFormula__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>FirstIndemnityCase.DistributorName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorName__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>AssignVariablesSecond</targetReference>
         </connector>
@@ -882,6 +889,13 @@
             <operator>Assign</operator>
             <value>
                 <elementReference>getInputCase.CommodityFormula__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>SecondIndemnityCase.DistributorName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getInputCase.DistributorName__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
