@@ -223,7 +223,7 @@
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Da_gestore_1</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>Provenienza</leftValueReference>
                 <operator>EqualTo</operator>
@@ -240,6 +240,13 @@
             </conditions>
             <conditions>
                 <leftValueReference>Data_Lettura_Anomala</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Scostamento_2000mc_OnlyNo</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -418,7 +425,7 @@
             <dataType>String</dataType>
             <fieldText>Tipo Comunicazione</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -470,7 +477,7 @@
             <dataType>String</dataType>
             <fieldText>Scostamento &gt; 2000mc</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -517,7 +524,7 @@
             <defaultSelectedChoiceReference>Scostamento_2000mc_No</defaultSelectedChoiceReference>
             <fieldText>Scostamento &gt; 2000mc</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
@@ -570,13 +577,6 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>Data_Lettura_Anomala</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
@@ -592,30 +592,16 @@
                         <booleanValue>true</booleanValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>Lettura_Anomala</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Alert_entrambi_vuoti</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(231, 14, 14);&quot;&gt;Hai selezionato la provenienza &apos;Da gestore&apos;, sei sicuro di voler lasciare il campo &apos;Lettura Anomala&apos; e il campo &apos;Data Lettura Anomala&apos; vuoti?&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <name>Alert_Scostamento_null</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(231, 28, 28);&quot;&gt;Hai selezionato la provenienza &apos;Da gestore&apos;, sei sicuro di voler lasciare il campo &apos;Scostamento &lt;/strong&gt;&lt;strong style=&quot;color: rgb(231, 28, 28); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&amp;gt; 200 mc&apos;&lt;/strong&gt;&lt;strong style=&quot;color: rgb(231, 28, 28);&quot;&gt; vuoto?&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>Lettura_Anomala</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>Data_Lettura_Anomala</leftValueReference>
+                    <leftValueReference>Scostamento_2000mc_OnlyNo</leftValueReference>
                     <operator>IsNull</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
