@@ -54,6 +54,7 @@ public inherited sharing class HDT_UTL_Case {
                     output.salesCompany = 'Marche Multiservizi S.p.A';
                     output.vatPercentage = 'GENERICI 10%-01';
                     output.taxes = 'Imposta usi domestici';
+                    output.supplyUseType = 'ACQUEDOTTO CIVILE';
                     Date writtenReceiptRequestDate = date.newinstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
                     currentCase.WrittenReceiptRequestDate__c = writtenReceiptRequestDate;
                     output.currentCase = currentCase;
