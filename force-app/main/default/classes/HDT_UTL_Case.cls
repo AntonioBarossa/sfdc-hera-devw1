@@ -97,7 +97,8 @@ public inherited sharing class HDT_UTL_Case {
                         }
                     }
                 }
-            }else if ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) && !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            }else if ( ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) || 'Rimozione Impianto'.equalsIgnoreCase(currentCase.Type) ) &&
+                        !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
                 output.supplyUseType = 'ACQUEDOTTO CIVILE';
             }
         } 
