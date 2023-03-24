@@ -1,10 +1,7 @@
 <template>
-
     <div class="demo-only demo-only--sizing slds-grid slds-wrap">
-
         <!-- Aggiungiamo padding in alto con slds-p-top_xxx-small per allineare l'input al button Verifica Ultima Lettura -->
         <div class="slds-m-left_x-small slds-size_1-of-3 slds-p-top_xxx-small">
-
             <lightning-input class="input" 
             type="date" 
             label="Data Lettura Cliente" 
@@ -13,9 +10,7 @@
             disabled={disabledReadingDate}
             onchange={handleDateChange}>
             </lightning-input>
-
         </div>
-
         <div class="slds-m-left_small slds-m-top_large slds-size_1-of-3">
             <lightning-button-group>
                 <lightning-button label="Verifica Ultima Lettura" onclick={handleClick} disabled={buttonDisabled}></lightning-button>
@@ -24,28 +19,17 @@
                 </template>
             </lightning-button-group>
         </div>
-
     </div>
-
     <table class="slds-table slds-size_3-of-4">
-
         <tbody>
-
             <template for:each={rowObj} for:item="row">
-                
                 <td key={row.id} data-label="Column 1" scope="row">
-
                     <c-hdt-self-reading-register row-obj={row} commodity={commodity} is-visible="false" is-retroactive={isRetroactive} is-volture={isVolture} is-offer-change={isOfferChange} is-process-reading={isProcessReading} allow-smaller-reading={allowSmallerReading}>
                     </c-hdt-self-reading-register>
-
                 </td>
-
             </template>
-            
         </tbody>
-
     </table>
-
     <template if:true={showWindowsModal}>
         <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
             <div class="slds-modal__container">
@@ -80,19 +64,12 @@
         </section>
         <div class="slds-backdrop slds-backdrop_open"></div>
     </template>
-
-
     <div if:true={isLoading}>
         <lightning-spinner alternative-text="Loading" size="large"></lightning-spinner>
     </div>
-
-
     <div class="slds-card__footer  actionButtonBar slds-grid slds-grid_align-spread">
-        <div class="actionsLeft">
-
-        </div>
-        <div class="actionsRight"> 
-
+        <div class="actionsLeft"></div>
+        <div class="actionsRight">
             <c-hdt-flow-navigation-button if:false={isVolture} 
             next-label={nextLabel} 
             next-variant={nextVariant} 
@@ -101,8 +78,6 @@
             is-cancel={showCancelButton}
             onnavigation={handleNavigation}>
             </c-hdt-flow-navigation-button>
-
         </div>
     </div>
-
 </template>
