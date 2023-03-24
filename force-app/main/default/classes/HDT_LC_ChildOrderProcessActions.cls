@@ -74,7 +74,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 else{
                     orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                 }
-                orderToUpdate.DocumentLow80__c = law80(currentOrder);
+                orderToUpdate.DocumentLow80__c = lawEighty(currentOrder);
                 Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
                 orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
@@ -184,7 +184,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.Instance326__c = 'Richiesto';
                     }
                 }
-                orderToUpdate.DocumentLow80__c = law80(currentOrder);
+                orderToUpdate.DocumentLow80__c = lawEighty(currentOrder);
                 Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
                 orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
@@ -210,7 +210,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.Instance326__c = 'Richiesto';
                     }
                 }
-                orderToUpdate.DocumentLow80__c = law80(currentOrder);
+                orderToUpdate.DocumentLow80__c = lawEighty(currentOrder);
             }
             when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
@@ -242,7 +242,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             orderToUpdate.CILegalRepresentative__c = '';
                         }
                 }
-                orderToUpdate.DocumentLow80__c = law80(currentOrder);
+                orderToUpdate.DocumentLow80__c = lawEighty(currentOrder);
                 if(currentOrder.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3) || currentOrder.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
@@ -304,7 +304,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     }
                 }
-                orderToUpdate.DocumentLow80__c = law80(currentOrder);
+                orderToUpdate.DocumentLow80__c = lawEighty(currentOrder);
             }
             when 'HDT_RT_TemporaneaNuovaAtt' {
                 orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -531,7 +531,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
     }
 
-    private static String law80(Order currentOrder){
+    private static String lawEighty(Order currentOrder){
 
         if( currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
             {
