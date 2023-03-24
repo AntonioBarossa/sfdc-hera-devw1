@@ -297,7 +297,7 @@
     </values>
     <values>
         <field>Credential__c</field>
-        <value xsi:type="xsd:string">callout:meterReading_ele</value>
+        <value xsi:type="xsd:string">callout:ElencoLettureTrb</value>
     </values>
     <values>
         <field>UseMock__c</field>
