@@ -541,6 +541,13 @@
                 <elementReference>Predefault_Campi_Nuovo_Impianto.taxes</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.SupplyUseType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Predefault_Campi_Nuovo_Impianto.supplyUseType</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>GetRecordTypePreventivi</targetReference>
         </connector>
