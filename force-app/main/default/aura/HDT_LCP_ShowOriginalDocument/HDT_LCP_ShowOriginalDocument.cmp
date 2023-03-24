@@ -1,0 +1,4 @@
+<aura:component implements="force:lightningQuickActionWithoutHeader,lightning:availableForFlowScreens,flexipage:availableForAllPageTypes,force:hasRecordId,force:hasSObjectName" access="global">
+    <aura:attribute name="recordId" type="String" />
+    <c:hdtShowOriginalDocument recordId="{!v.recordId}" onclose="{!c.closeAction}"/>
+</aura:component>
