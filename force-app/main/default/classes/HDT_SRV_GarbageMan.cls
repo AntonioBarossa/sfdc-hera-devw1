@@ -39,7 +39,7 @@ public with sharing class HDT_SRV_GarbageMan {
         @TestVisible
         private HDT_WRP_GarbageManRequest(Case currentCase) {
             this.idSap = null;
-            this.codiceRDS = currentCase.Id;
+            this.codiceRDS = currentCase.CaseNumber;
             this.dataOraIniziale = utlGarbage.outputDateEsito(currentCase.StartAppointment__c);
             this.dataOraFinale = utlGarbage.outputDateEsito(currentCase.EndAppointment__c);
             this.codiceIdRichiesta = currentCase.WasterCode__c;
@@ -50,7 +50,7 @@ public with sharing class HDT_SRV_GarbageMan {
         @TestVisible
         private HDT_WRP_GarbageManRequest(Case currentCase, String codiceEsito) {
             this.idSap = null;
-            this.codiceRDS = currentCase.Id;
+            this.codiceRDS = currentCase.CaseNumber;
             this.dataOraIniziale = utlGarbage.outputDateEsito(currentCase.StartAppointment__c);
             this.dataOraFinale = utlGarbage.outputDateEsito(currentCase.EndAppointment__c);
             this.codiceIdRichiesta = currentCase.WasterCode__c;
