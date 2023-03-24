@@ -150,13 +150,6 @@
                 <stringValue>Chiusura Contatore Acqua</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.NotPerformedBefore__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Get_Input_Case.CreatedDate</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>Aggiorna_Default_Processo_Acqua</targetReference>
         </connector>

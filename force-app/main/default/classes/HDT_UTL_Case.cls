@@ -97,7 +97,8 @@ public inherited sharing class HDT_UTL_Case {
                         }
                     }
                 }
-            }else if ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) && !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            }else if ( ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) || 'Rimozione Impianto'.equalsIgnoreCase(currentCase.Type) ) &&
+                        !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
                 output.supplyUseType = 'ACQUEDOTTO CIVILE';
             }
         } 
@@ -174,8 +175,9 @@ public inherited sharing class HDT_UTL_Case {
 
             if (!String.isBlank(newCurrentCase.RateCategory__c) && 'ACDOMRESP0'.equalsIgnoreCase(newCurrentCase.RateCategory__c)) {
                 output.customerChangeDate = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+                currentCase.Cohabitation__c = 'No';
+                output.currentCase = currentCase;
             }
-
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
