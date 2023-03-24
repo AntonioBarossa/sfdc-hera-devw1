@@ -41,16 +41,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
             }
         }
 
-        //CustomerType__c
-        //SalesCompany__c
-        //FirstLevelComplaintClassification__c	
-        //SecondLevelComplaintClassification__c
-        //Ato__c
-        //Cluster__c
-        //Process__c
-        //CompanyOwner__c
-        //Commodity__c
-
     }
 
     public static Set<String> getGapEventSet(){
@@ -431,16 +421,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
         if(String.isNotEmpty(slaAdmin.SalesCompany__c)){
             slaMgmt.objectCriteria.put('SalesCompany__c', slaAdmin.SalesCompany__c);
         }
-
-        //CustomerType__c
-        //SalesCompany__c
-        //FirstLevelComplaintClassification__c	
-        //SecondLevelComplaintClassification__c
-        //Ato__c
-        //Cluster__c
-        //Process__c
-        //CompanyOwner__c
-        //Commodity__c
 
         switch on slaAdmin.RecordType.DeveloperName {
             when 'HDT_RT_PostSales' {
