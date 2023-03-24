@@ -36093,6 +36093,14 @@
     <layoutAssignments>
         <layout>SalesforceWrtsActivity__x-Attivita Salesforce Layout</layout>
     </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-HDT_PostSales</layout>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-HDT_Sales</layout>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
+    </layoutAssignments>
     <loginFlows>
         <flow>HDT_FL_UserLoginFlow</flow>
         <flowType>UI</flowType>
