@@ -183,5 +183,9 @@ export default class HdtFlowNavigationButton extends LightningElement {
         this.dispatchEvent(navigateBackEvent);
     }
 
+    @api clickAbort(){
+        this.template.querySelector('[data-id="abortBtn"]').click();
+    }
+
 
 }

@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;SoldBy__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;CausalIncorrectBehavior__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;ContractSubscriptionDate__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;CommercialContactPhoneNumber__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;SoldBy__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;CausalIncorrectBehavior__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;ContractSubscriptionDate__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},{&quot;FieldName&quot;:&quot;CommercialContactPhoneNumber__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>

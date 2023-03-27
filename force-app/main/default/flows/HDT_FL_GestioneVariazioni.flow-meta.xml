@@ -4307,10 +4307,9 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
     <formulas>
         <name>Valorizza_Campo_Note</name>
         <dataType>String</dataType>
-        <expression>{!GetCaseAggiornatoModificaUnitaImmobiliari_0_0.Note__c} &amp; BR() 
-&amp; IF(!ISBLANK(TEXT({!Community_Beds})),&quot;Comunità Posti Letto: &quot; &amp; TEXT({!Community_Beds}) &amp; BR(), &quot;&quot;)  
+        <expression>IF(!ISBLANK(TEXT({!Community_Beds})),&quot;Comunità Posti Letto: &quot; &amp; TEXT({!Community_Beds}) &amp; BR(), &quot;&quot;)  
 &amp; IF(!ISBLANK({!FormInserimentoAnagraficaComponenti.resultString}),{!FormInserimentoAnagraficaComponenti.resultString} &amp; BR(),&quot;&quot;)
-&amp; IF(!ISBLANK({!frequenzaAllineamentoGAA}),&quot;Frequenza: &quot; &amp; {!frequenzaAllineamentoGAA},&quot;&quot;)</expression>
+&amp; IF(!ISBLANK({!frequenzaAllineamentoGAA}),&quot;Frequenza GAA: &quot; &amp; {!frequenzaAllineamentoGAA},&quot;&quot;)</expression>
     </formulas>
     <formulas>
         <name>valorizzaCampoNoteConsumoAnnuoAcqua</name>
@@ -7079,7 +7078,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Frequency</name>
-                    <fieldText>&lt;p&gt;Frequenza: &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!frequenzaAllineamentoGAA}&lt;/span&gt;&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;Frequenza GAA: &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!frequenzaAllineamentoGAA}&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                 </fields>
                 <inputParameters>

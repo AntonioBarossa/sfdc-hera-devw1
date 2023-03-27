@@ -2,8 +2,8 @@
  * @description       : 
  * @author            : Andrei Necsulesc
  * @group             : 
- * @last modified on  : 12-14-2022
- * @last modified by  : Andrei Necsulescu
+ * @last modified on  : 24-03-2023
+ * @last modified by  : Giacinto Florio
 **/
 @isTest
 public with sharing class HDT_UTL_LandRegistryTst {
@@ -50,6 +50,21 @@ public with sharing class HDT_UTL_LandRegistryTst {
 
     }
 
+    @isTest 
+    public static void getCadastralRecordTest(){
+
+        CityTechnicalData__c city = new CityTechnicalData__c();
+        city.CadastralCity__c = 'ROMA';
+        city.CityCode__c = 'A000';
+        city.Province__c = 'RO';
+        insert city;
+
+        Test.startTest();
+        CityTechnicalData__c results = HDT_UTL_LandRegistry.getCadastralRecord(city.Id)[0];
+        System.assertNotEquals(null, results, 'results not null');
+        Test.stopTest();
+
+    }
 
     @isTest 
     public static void getCitiesTest(){
@@ -72,7 +87,7 @@ public with sharing class HDT_UTL_LandRegistryTst {
     }
 
     @IsTest
-    static void getVistaDatiCatastaliTest(){
+    static void getVistaDatiCatastaliSpTest(){
         
         ServicePoint__c sp = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
 
@@ -80,6 +95,21 @@ public with sharing class HDT_UTL_LandRegistryTst {
 
             Object res = HDT_UTL_LandRegistry.getVistaDatiCatastali(sp.Id);
             System.assertEquals(res != null, true, 'The object returned by getVistaDatiCatastali is null');
+
+        Test.stopTest();
+        
+    }
+
+    @IsTest
+    static void getVistaDatiCatastaliContractTest(){
+        
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        Contract contract = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].Id)[0];
+
+        Test.startTest();
+
+            Object result = HDT_UTL_LandRegistry.getVistaDatiCatastali(contract.Id);
+            System.assertEquals(result != null, true, 'result is not null');
 
         Test.stopTest();
         
