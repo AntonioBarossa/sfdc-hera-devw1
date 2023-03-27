@@ -315,6 +315,7 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         var fields = record[this.recordId].fields;
         this.installmentsLogic();
         this.handleReadOnlyOnFields();
+        this.handleQcDate();
         console.log('Edit Form Loaded ' + fields);
         
         }
@@ -762,6 +763,18 @@ export default class HdtRecordEditFormFlow extends LightningElement {
         }else if (commodity && commodity.value === 'Acqua' && this.type === 'Nuovo Impianto' && useSubCategory && useSubCategory.value !== 'Uso pubblico non disalimentabile' && intendedUse){
             intendedUse.disabled = true;
             intendedUse.value = '';
+        }
+    }
+
+    handleQcDate(){
+        let commodity = this.selector('Commodity__c');
+        let writtenReceiptRequestDate = this.selector('WrittenReceiptRequestDate__c');
+        if(commodity && commodity.value === 'Acqua' && this.type === 'Riattivazione Fornitura' && writtenReceiptRequestDate){
+            writtenReceiptRequestDate.disabled = false;
+            writtenReceiptRequestDate.required = true;
+        }else if (commodity && commodity.value !== 'Acqua' && this.type === 'Riattivazione Fornitura' && writtenReceiptRequestDate){
+            writtenReceiptRequestDate.disabled = true;
+            writtenReceiptRequestDate.required = false;
         }
     }
 }
