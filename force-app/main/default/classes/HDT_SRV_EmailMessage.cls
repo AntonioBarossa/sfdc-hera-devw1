@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_EmailMessage {
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c, CompanyOwner__c FROM Case WHERE Id in (\''+ idString +'\')';
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c, CompanyOwner__c, Status FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         List<Case> caseList = (List<Case>) recordList;
         
@@ -140,6 +140,7 @@ public with sharing class HDT_SRV_EmailMessage {
                         if(CASE_TYPE3.equals(caseRecord.Type)){
                             System.debug(LoggingLevel.DEBUG, debugString + ' - ### Inside Parere Condition ###');
                             caseRecord.Phase__c = 'Completata';
+                            caseRecord.Status = 'Closed';
                             if(parentRecord != null){
                                 System.debug(LoggingLevel.DEBUG, debugString + ' - ### Inside Parent Condition ###');
                                 parentRecord.Phase__c = 'Risposta Parere Ricevuta';
