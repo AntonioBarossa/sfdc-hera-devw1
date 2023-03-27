@@ -130,11 +130,18 @@ public class HDT_LC_AccountDataEnrichmentTst {
     @IsTest
     static void startRequestHelperHandleThrownError(){
         
+        Account account = [
+            SELECT Id, CustomerCode__c
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
         Test.startTest();
 
         try {
             
-            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(null,null, 'cmor');
+            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(account.Id,null, 'cmor');
 
         } catch (AuraHandledException e) {
             
