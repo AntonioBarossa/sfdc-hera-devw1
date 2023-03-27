@@ -265,6 +265,45 @@
         </value>
     </choices>
     <decisions>
+        <name>Activity_Type_Gestione_Agenzia</name>
+        <label>Activity Type = &quot;Gestione Agenzia&quot;?</label>
+        <locationX>688</locationX>
+        <locationY>1886</locationY>
+        <defaultConnector>
+            <targetReference>Check_Esito_Attivit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>Activity_Type_Gestione_Agenzia_SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gestione Agenzia</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity_Padre.Type__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Validazione Documentale</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Activity_Padre.wrts_prcgvr__Status__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Sospesa</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Riapri_Activity_Validazione_Documentale</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ActivityType_0</name>
         <label>ActivityType</label>
         <locationX>842</locationX>
@@ -414,7 +453,7 @@
         <name>Check_Esito_Attivit</name>
         <label>Check Esito Attività</label>
         <locationX>842</locationX>
-        <locationY>1646</locationY>
+        <locationY>2318</locationY>
         <defaultConnector>
             <targetReference>Completa_processo</targetReference>
         </defaultConnector>
@@ -532,6 +571,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>L_activity_ha_un_padre</name>
+        <label>L&apos;activity ha un padre?</label>
+        <locationX>842</locationX>
+        <locationY>1646</locationY>
+        <defaultConnector>
+            <targetReference>Check_Esito_Attivit</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>NO</defaultConnectorLabel>
+        <rules>
+            <name>L_activity_ha_un_padre_SI</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Activity.ParentActivity__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Activity_Padre</targetReference>
+            </connector>
+            <label>SI</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Tipo_Completa_Attivit</name>
         <label>Tipo Completa Attività</label>
         <locationX>842</locationX>
@@ -571,6 +635,7 @@
             <label>RT_HDT_CloseDistributorComunication</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>ConfermaDataDecorrenzaCancellation</name>
         <dataType>String</dataType>
@@ -633,11 +698,32 @@
         <object>wrts_prcgvr__Activity__c</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>Get_Activity_Padre</name>
+        <label>Get Activity Padre</label>
+        <locationX>688</locationX>
+        <locationY>1766</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Activity_Type_Gestione_Agenzia</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Activity.ParentActivity__r.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Order_Dati_Discordanti</name>
         <label>Aggiorna Order (Dati Discordanti)</label>
         <locationX>358</locationX>
-        <locationY>1766</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -661,7 +747,7 @@
         <name>Aggiorna_Order_Gestione_contratto_colonnetta</name>
         <label>Aggiorna Order (Gestione contratto colonnetta)</label>
         <locationX>886</locationX>
-        <locationY>1766</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -700,7 +786,7 @@
         <locationX>842</locationX>
         <locationY>1526</locationY>
         <connector>
-            <targetReference>Check_Esito_Attivit</targetReference>
+            <targetReference>L_activity_ha_un_padre</targetReference>
         </connector>
         <inputReference>activity</inputReference>
     </recordUpdates>
@@ -708,7 +794,7 @@
         <name>Copy_1_of_Aggiorna_Order_Dati_Discordanti</name>
         <label>Copy 1 of Aggiorna Order (Dati Discordanti)</label>
         <locationX>622</locationX>
-        <locationY>1766</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -738,7 +824,7 @@
         <name>Copy_2_of_Aggiorna_Order_Dati_Discordanti</name>
         <label>Copy 2 of Aggiorna Order (Dati Discordanti)</label>
         <locationX>1326</locationX>
-        <locationY>1766</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -763,6 +849,30 @@
             </value>
         </inputAssignments>
         <object>Order</object>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Riapri_Activity_Validazione_Documentale</name>
+        <label>Riapri Activity &quot;Validazione Documentale&quot;</label>
+        <locationX>556</locationX>
+        <locationY>2006</locationY>
+        <connector>
+            <targetReference>Check_Esito_Attivit</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Activity_Padre.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
     </recordUpdates>
     <screens>
         <name>Copy_1_of_Set_Note</name>
@@ -791,7 +901,7 @@
         <name>Screen_Finale</name>
         <label>Screen Finale</label>
         <locationX>842</locationX>
-        <locationY>1982</locationY>
+        <locationY>2654</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -852,6 +962,7 @@
         </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <objectFieldReference>activity.ClosingNote__c</objectFieldReference>
             <visibilityRule>
@@ -881,6 +992,7 @@
         </fields>
         <fields>
             <fieldType>ObjectProvided</fieldType>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>false</isRequired>
             <objectFieldReference>activity.Note__c</objectFieldReference>
             <visibilityRule>
@@ -977,7 +1089,7 @@
         <name>Annulla_Order</name>
         <label>Annulla Order</label>
         <locationX>94</locationX>
-        <locationY>1766</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
@@ -1005,7 +1117,7 @@
         <name>Completa_processo</name>
         <label>Completa processo</label>
         <locationX>1590</locationX>
-        <locationY>1766</locationY>
+        <locationY>2438</locationY>
         <connector>
             <targetReference>Screen_Finale</targetReference>
         </connector>
