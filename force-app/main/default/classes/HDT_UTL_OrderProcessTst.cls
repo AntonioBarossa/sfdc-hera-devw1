@@ -753,6 +753,18 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].Instance326__c = 'Validato';
             orderList[0].DocumentLow80__c = 'Validato';
 
+            orderList[1].ProcessType__c = 'Modifica Tariffa';
+            orderList[1].ApprovalType__c ='2 - Attività';
+            orderList[1].Commodity__c ='Ambiente';
+            orderList[1].Phase__c ='Documentazione Validata';
+            orderList[1].ParentOrder__c = ordersOld[0].Id;
+            orderList[1].RecordTypeId = constants.ORDER_RECORDTYPEID_MODIFICATARI;
+            orderList[1].AutorizationVolturaThirdTrader__c = 'Validato';
+            orderList[1].CIAccoutn__c = 'Validato';
+            orderList[1].QuickQuote__c = 'Validato';
+            orderList[1].ChamberCommerceRegistration__c = 'Validato';
+            orderList[1].Instance326__c = 'Validato';
+            orderList[1].DocumentLow80__c = 'Validato';
 
             insert orderList;
 
