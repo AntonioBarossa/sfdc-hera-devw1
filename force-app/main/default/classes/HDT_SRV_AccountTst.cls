@@ -218,7 +218,7 @@ public with sharing class HDT_SRV_AccountTst {
 			acc.BillingIsAddressVerified__c=true;
 			
 			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
-				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
+				acc.FiscalCode__c='12345678' + String.valueOf(100 + i);
 			} else {
 				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
 			}
