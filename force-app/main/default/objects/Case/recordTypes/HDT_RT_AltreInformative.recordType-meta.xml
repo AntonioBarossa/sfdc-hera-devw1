@@ -7824,6 +7824,14 @@
             <fullName>Risposta ricevuta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Risposta</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PowerLimitation__c</picklist>

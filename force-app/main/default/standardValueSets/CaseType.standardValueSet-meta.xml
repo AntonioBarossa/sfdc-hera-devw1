@@ -713,4 +713,9 @@
         <default>false</default>
         <label>Promessa di Pagamento Ente</label>
     </standardValue>
+    <standardValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
+    </standardValue>
 </StandardValueSet>
