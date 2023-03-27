@@ -46,7 +46,7 @@ public with sharing class HDT_UTL_SegnalazioniTariValidationTst {
         update caso;
         HDT_UTL_SegnalazioniTariValidation tariValidation = new HDT_UTL_SegnalazioniTariValidation();
         Test.startTest();
-        String fields= '{"AlternativeAddress__c":null}';
+        String fields = '{"OperationGroup__c": "null"}';
         String result = tariValidation.validate(fields, caso.Id);
         System.assertEquals(result, '{"outcomeDescription":"Inserire Indirizzo!","outcomeCode":"Error"}', 'Inserire Indirizzo!');
         
