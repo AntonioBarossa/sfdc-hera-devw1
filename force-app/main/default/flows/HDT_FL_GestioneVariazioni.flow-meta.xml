@@ -540,7 +540,7 @@
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>6650</locationX>
-        <locationY>1718</locationY>
+        <locationY>2174</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -701,7 +701,7 @@
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>6914</locationX>
-        <locationY>1478</locationY>
+        <locationY>1934</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -887,7 +887,7 @@
         <name>Assegna_Codice_Causale_0_0</name>
         <label>Assegna Codice Causale</label>
         <locationX>6650</locationX>
-        <locationY>1598</locationY>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -1764,6 +1764,22 @@
             <targetReference>Aggiorna_Case_00_0_0_0_0</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Valorizza_Campo_Note_2</name>
+        <label>Valorizza Campo Note</label>
+        <locationX>6782</locationX>
+        <locationY>1358</locationY>
+        <assignmentItems>
+            <assignToReference>GetInputCase.Note__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>valorizzaCampoNoteCambioContatore</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Cambio_Contatore</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>Modifica_Fognatura_e_Depurazione</name>
         <choiceText>•	Modifica Fognatura e Depurazione</choiceText>
@@ -2059,7 +2075,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetCaseAggiornato</targetReference>
+                <targetReference>Check_Servizio_2</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -2385,6 +2401,31 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Check_Servizio_2</name>
+        <label>Check Servizio</label>
+        <locationX>6914</locationX>
+        <locationY>1238</locationY>
+        <defaultConnector>
+            <targetReference>GetCaseAggiornato</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Commodity_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCase.CommodityFormula__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Valorizza_Campo_Note_2</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Coabitazione</name>
         <label>Coabitazione</label>
         <locationX>17034</locationX>
@@ -2672,7 +2713,7 @@
         <name>InRete_o_ExtraRete</name>
         <label>InRete o ExtraRete?</label>
         <locationX>6914</locationX>
-        <locationY>1358</locationY>
+        <locationY>1814</locationY>
         <defaultConnectorLabel>ExtraRete</defaultConnectorLabel>
         <rules>
             <name>InRete</name>
@@ -4312,6 +4353,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
 &amp; IF(!ISBLANK({!frequenzaAllineamentoGAA}),&quot;Frequenza GAA: &quot; &amp; {!frequenzaAllineamentoGAA},&quot;&quot;)</expression>
     </formulas>
     <formulas>
+        <name>valorizzaCampoNoteCambioContatore</name>
+        <dataType>String</dataType>
+        <expression>IF(NOT(ISBLANK(TEXT({!Lettura_di_smontaggio}))), &quot;Lettura di smontaggio: &quot; &amp; TEXT({!Lettura_di_smontaggio}), &quot;&quot;)</expression>
+    </formulas>
+    <formulas>
         <name>valorizzaCampoNoteConsumoAnnuoAcqua</name>
         <dataType>String</dataType>
         <expression>IF(!ISBLANK({!GetCaseAggiornato_0_0_0_0_0.Note__c}), {!GetCaseAggiornato_0_0_0_0_0.Note__c} &amp; BR() &amp; &quot;Consumo Dichiarato: &quot; &amp; TEXT({!Consumo_Dichiarato_Virtual_Field_1}), &quot;Consumo Dichiarato: &quot; &amp;  TEXT({!Consumo_Dichiarato_Virtual_Field_1}))</expression>
@@ -4653,7 +4699,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Calcolo_Codice_Causale_0_0</name>
         <label>Calcolo Codice Causale</label>
         <locationX>6650</locationX>
-        <locationY>1478</locationY>
+        <locationY>1934</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Codice_Causale_0_0</targetReference>
@@ -5075,7 +5121,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>6914</locationX>
-        <locationY>1238</locationY>
+        <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>InRete_o_ExtraRete</targetReference>
@@ -5624,7 +5670,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>6914</locationX>
-        <locationY>1598</locationY>
+        <locationY>2054</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -5655,7 +5701,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>6650</locationX>
-        <locationY>1838</locationY>
+        <locationY>2294</locationY>
         <connector>
             <targetReference>Loading_Spinner_0</targetReference>
         </connector>
@@ -5772,6 +5818,16 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>998</locationY>
         <connector>
             <targetReference>Screen_Selezione_Indirizzo_0</targetReference>
+        </connector>
+        <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_Cambio_Contatore</name>
+        <label>Aggiorna Case Cambio Contatore</label>
+        <locationX>6782</locationX>
+        <locationY>1478</locationY>
+        <connector>
+            <targetReference>GetCaseAggiornato</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
@@ -6215,7 +6271,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Loading_Spinner_0</name>
         <label>Loading Spinner</label>
         <locationX>6650</locationX>
-        <locationY>1958</locationY>
+        <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -8611,6 +8667,81 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
+            <name>ScreenInputFiscale_0_0_0_0_0_0_Section1</name>
+            <fieldType>RegionContainer</fieldType>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_0_Section1_Column1</name>
+                <fieldType>Region</fieldType>
+                <fields>
+                    <name>Lettura_di_smontaggio</name>
+                    <dataType>Number</dataType>
+                    <fieldText>Lettura di smontaggio</fieldText>
+                    <fieldType>InputField</fieldType>
+                    <isRequired>false</isRequired>
+                    <scale>0</scale>
+                </fields>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_0_Section1_Column2</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_0_Section1_Column3</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <fields>
+                <name>ScreenInputFiscale_0_0_0_0_0_0_Section1_Column4</name>
+                <fieldType>Region</fieldType>
+                <inputParameters>
+                    <name>width</name>
+                    <value>
+                        <stringValue>3</stringValue>
+                    </value>
+                </inputParameters>
+                <isRequired>false</isRequired>
+            </fields>
+            <isRequired>false</isRequired>
+            <regionContainerType>SectionWithoutHeader</regionContainerType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetInputCase.CommodityFormula__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Acqua</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetInputCase.Type</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Cambio contatore non registrato</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>hdtRecordEditForm_0_0_0_0_0_0_0</name>
             <extensionName>c:hdtRecordEditFormFlow</extensionName>
             <fieldType>ComponentInstance</fieldType>
@@ -9191,7 +9322,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Annulla_Prestazione_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>7178</locationX>
-        <locationY>2486</locationY>
+        <locationY>2942</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
