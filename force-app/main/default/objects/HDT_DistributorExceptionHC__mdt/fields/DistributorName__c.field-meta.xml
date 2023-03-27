@@ -30,6 +30,16 @@
                 <default>false</default>
                 <label>A.S.SE.M SPA-10R0000068</label>
             </value>
+            <value>
+                <fullName>ITALGAS RETI SPA -10R0000013</fullName>
+                <default>false</default>
+                <label>ITALGAS RETI SPA -10R0000013</label>
+            </value>
+            <value>
+                <fullName>EDMA RETI GAS-10R0000015</fullName>
+                <default>false</default>
+                <label>EDMA RETI GAS-10R0000015</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
