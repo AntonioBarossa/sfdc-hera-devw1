@@ -1,5 +1,6 @@
 public inherited sharing class HDT_QBL_SelfReadingsOutcome implements Queueable, Database.AllowsCallouts {
-    public HDT_QBL_SelfReadingsOutcome(){}
+
+    public void execute(QueueableContext context) {}
 //    private List<Case> casesToUpdate;
 //    private List<wrts_prcgvr__Activity__c> activitiesToCreate;
 //    private Map<Id,Boolean> isAutomaticDiscardMap;
