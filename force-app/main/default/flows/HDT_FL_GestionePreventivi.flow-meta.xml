@@ -541,6 +541,13 @@
                 <elementReference>Predefault_Campi_Nuovo_Impianto.taxes</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetCaseNuovoImpianto.SupplyUseType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Predefault_Campi_Nuovo_Impianto.supplyUseType</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>GetRecordTypePreventivi</targetReference>
         </connector>
@@ -2167,7 +2174,7 @@
         <defaultConnectorLabel>Altri</defaultConnectorLabel>
         <rules>
             <name>Modifica_Impianto</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2175,10 +2182,17 @@
                     <stringValue>Modifica Impianto</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rimozione Impianto</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Predefault_Campi_Modifica_Impianto</targetReference>
             </connector>
-            <label>Modifica Impianto</label>
+            <label>Modifica Impianto O Rimozione Impianto</label>
         </rules>
     </decisions>
     <decisions>
@@ -2464,12 +2478,19 @@
         <defaultConnectorLabel>NO</defaultConnectorLabel>
         <rules>
             <name>Tipo_Processo_Nuovo_Impianto_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetCaseNuovoImpianto.Type</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Nuovo Impianto</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetCaseNuovoImpianto.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rimozione Impianto</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2863,7 +2884,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     </recordLookups>
     <recordLookups>
         <name>GetCaseNuovoImpianto</name>
-        <label>GetCaseNuovoImpianto</label>
+        <label>GetCaseNuovoImpiantoOrRimozioneImpianto</label>
         <locationX>2853</locationX>
         <locationY>1790</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>

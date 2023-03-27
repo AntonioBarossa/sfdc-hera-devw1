@@ -7917,7 +7917,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -8725,7 +8725,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -8760,7 +8760,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -8830,7 +8830,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>

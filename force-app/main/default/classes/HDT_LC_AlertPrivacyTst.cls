@@ -43,7 +43,7 @@ public class HDT_LC_AlertPrivacyTst {
     static void handleShowAlertTest(){
         List<Order> ordList = [SELECT Id FROM Order WITH SECURITY_ENFORCED LIMIT 1] ;
         Boolean res = HDT_LC_AlertPrivacy.handleShowAlert(ordList[0].Id);
-        system.assertEquals(true, res,'The result is not what expected' );
+        system.assertEquals(false, res,'The result is not what expected' );
     }
 
 

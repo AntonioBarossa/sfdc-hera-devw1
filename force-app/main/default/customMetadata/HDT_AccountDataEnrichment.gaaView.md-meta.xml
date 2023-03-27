@@ -56,13 +56,13 @@
         &quot;fieldName&quot;: &quot;numeroComp&quot;
       },
       {
-        &quot;label&quot;: &quot;Data var F&quot;,
+        &quot;label&quot;: &quot;Prima data agg.to caricato&quot;,
         &quot;fieldName&quot;: &quot;dataVarF&quot;,
         &quot;initialWidth&quot;: 220,
         &quot;sortable&quot;: true
       },
       {
-        &quot;label&quot;: &quot;Data var L&quot;,
+        &quot;label&quot;: &quot;Ultima data agg.to caricato&quot;,
         &quot;fieldName&quot;: &quot;dataVarL&quot;,
         &quot;initialWidth&quot;: 220,
         &quot;sortable&quot;: true

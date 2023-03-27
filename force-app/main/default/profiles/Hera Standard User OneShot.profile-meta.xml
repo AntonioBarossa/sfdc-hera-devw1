@@ -30041,6 +30041,16 @@
         <field>TechnicalOffer__c.WeeklyContribution__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.AccountPartner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.ProfileName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
         <fieldPermissions>
             <editable>true</editable>
@@ -34074,6 +34084,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Account_Partner_Matching__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
         <readable>true</readable>
@@ -35045,10 +35060,6 @@
         <layout>Case-Case Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_Indennizzo</layout>
-        <recordType>Case.HDT_RT_Indennizzo</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-Case Layout</layout>
         <recordType>Case.HDT_RT_AttivazionePODVariazionePDR</recordType>
     </layoutAssignments>
@@ -35185,6 +35196,10 @@
         <recordType>Case.HDT_RT_Informative</recordType>
     </layoutAssignments>
     <layoutAssignments>
+        <layout>Case-HDT_Indennizzo</layout>
+        <recordType>Case.HDT_RT_Indennizzo</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
         <layout>Case-HDT_InversioneContatore</layout>
         <recordType>Case.HDT_RT_InversioneContatore</recordType>
     </layoutAssignments>
@@ -35249,20 +35264,20 @@
         <recordType>Case.HDT_RT_VerificheEle</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_VerificheAcqua</layout>
-        <recordType>Case.HDT_RT_VerificheAcqua</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>Case-HDT_VariazioniGas</layout>
         <recordType>Case.HDT_RT_VariazioniGas</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_VariazioniGas</layout>
+        <layout>Case-HDT_VariazioniAcqua</layout>
         <recordType>Case.HDT_RT_VariazioniAcqua</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VerificheGas</layout>
         <recordType>Case.HDT_RT_VerificheGas</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>Case-HDT_VerificheAcqua</layout>
+        <recordType>Case.HDT_RT_VerificheAcqua</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>Case-HDT_VotiveModena</layout>
@@ -35875,12 +35890,12 @@
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_Call</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
-        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
-    </layoutAssignments>
-    <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_CCheckNew</layout>
         <recordType>wrts_prcgvr__Activity__c.HDT_RT_CreditCheckKO</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>wrts_prcgvr__Activity__c-HDT_ChiamataOutbound</layout>
+        <recordType>wrts_prcgvr__Activity__c.HDT_RT_ChiamataOutbound</recordType>
     </layoutAssignments>
     <layoutAssignments>
         <layout>wrts_prcgvr__Activity__c-HDT_HCPoint</layout>
@@ -36039,6 +36054,14 @@
     </layoutAssignments>
     <layoutAssignments>
         <layout>SalesforceWrtsActivity__x-Attivita Salesforce Layout</layout>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-HDT_PostSales</layout>
+        <recordType>SlaAdministration__c.HDT_RT_PostSales</recordType>
+    </layoutAssignments>
+    <layoutAssignments>
+        <layout>SlaAdministration__c-HDT_Sales</layout>
+        <recordType>SlaAdministration__c.HDT_RT_Sales</recordType>
     </layoutAssignments>
     <loginFlows>
         <flow>HDT_FL_UserLoginFlow</flow>
