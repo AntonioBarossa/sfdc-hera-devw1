@@ -75,7 +75,7 @@ public with sharing class HDT_UTL_CaseProcess {
                         singleCaseToUpdate.LastName__c = String.isBlank(singleCaseToUpdate.LastName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.LastName__c:singleCaseToUpdate.LastName__c;
                     }
                     if('Acqua'.equalsIgnoreCase(singleCaseToUpdate.Commodity__c)){
-                        singleCaseToUpdate.WrittenReceiptRequestDate__c = date.today();
+                        singleCaseToUpdate.WrittenReceiptRequestDate__c = singleCaseToUpdate.WrittenReceiptRequestDate__c == null ? date.today() : singleCaseToUpdate.WrittenReceiptRequestDate__c;
                     }
                 }
             }
