@@ -1414,7 +1414,7 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id,SBQQ__Quote__c, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id,SBQQ__Quote__c, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c,ProcessCode__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getAllOrdersForComfort(String id){
