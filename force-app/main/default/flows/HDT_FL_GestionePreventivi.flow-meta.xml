@@ -2174,7 +2174,7 @@
         <defaultConnectorLabel>Altri</defaultConnectorLabel>
         <rules>
             <name>Modifica_Impianto</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Get_Input_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
@@ -2182,10 +2182,17 @@
                     <stringValue>Modifica Impianto</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Rimozione Impianto</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Predefault_Campi_Modifica_Impianto</targetReference>
             </connector>
-            <label>Modifica Impianto</label>
+            <label>Modifica Impianto O Rimozione Impianto</label>
         </rules>
     </decisions>
     <decisions>
