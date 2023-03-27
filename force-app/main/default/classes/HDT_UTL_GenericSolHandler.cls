@@ -299,36 +299,6 @@ public with sharing class HDT_UTL_GenericSolHandler {
     }
 
     public static List<OrderItem> generateOrderItem(Contract outCustomerContract,Order childOrder,Map<String,Object>params ){
-        /*
-        HDT_QR_Contract qrContract = new HDT_QR_Contract();
-        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(outCustomerContract.Id);
-        if(subscription != null){
-            childOrder.CommercialProduct__c = subscription.SBQQ__ProductName__c;
-            childOrder.CommercialProductCode__c = subscription.ProductCode__c;
-            childOrder.CommercialProductVersion__c = subscription.VersionFormula__c;
-        }
-        childOrder.EffectiveDate = Date.today();
-        childOrder.Status = 'In Lavorazione';
-        Map<String,String> mapParams = getProductInfo(subscription.SBQQ__Product__c,false);
-        childOrder.Pricebook2Id = mapParams.get('priceBookId');
-        HDT_UTL_DatabaseService.insertSObject(childOrder);
-        OrderItem oi = new OrderItem();
-        oi.Product2Id = mapParams.get('productId');
-        oi.PriceBookEntryId = mapParams.get('priceBookEntryId');
-
-        oi.UnitPrice = 0;
-        oi.Quantity = 1;
-        oi.OrderId = childOrder.Id;
-        oi.OccupantsNumber__c = params.containsKey('numeroOccupanti') ? Integer.valueOf(params.get('numeroOccupanti')) : null;
-        oi.Surface__c = params.containsKey('superficie') ? Integer.valueOf(params.get('superficie')) : null;
-        if(params.containsKey('tipologiaAbitazione')){
-            oi.DwellingType__c = (String)params.get('tipologiaAbitazione') == 'Appartamento'?'Appartamento':'Casa Indipendente';
-        }else{
-            oi.DwellingType__c='';
-        }
-        oi.OwnerAC__c =  params.containsKey('proprietario') ? (String)params.get('proprietario') : '';
-        return oi;
-        */
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
         List<SBQQ__Subscription__c> subscriptions = new List<SBQQ__Subscription__c>();
         Set<Id> productIds=new Set<Id>();
