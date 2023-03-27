@@ -1248,6 +1248,12 @@ TODO: Formula da adeguare in Wave 2.</description>
                     <elementReference>Cerca_Processi_di_vendita_elegibili.isProcessReading</elementReference>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>processType</name>
+                <value>
+                    <elementReference>Refresh_Case.Type</elementReference>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>

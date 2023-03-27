@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 20-03-2023
+ * @last modified on  : 22-03-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -66,6 +66,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         Case theCase = [SELECT Id, CreatedDate, WithdrawalFee__c, ServicePoint__c, AccountCode__c FROM Case LIMIT 1];
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse  appConfirm = new HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse();
+        appConfirm.errorDetails = new List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails>();
         appConfirm.status='';
         appConfirm.correlationId='';
         appConfirm.timestamp='';
@@ -98,6 +99,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         Test.startTest();
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentViewResponse  appView = new HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentViewResponse();
+        appView.errorDetails = new List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails>();
         appView.status='';
         appView.correlationId='';
         appView.timestamp='';
@@ -127,6 +129,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
         Test.startTest();
 
         HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse  appSearch = new HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentSearchResponse();
+        appSearch.errorDetails = new List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails>();
         appSearch.status='';
         appSearch.correlationId='';
         appSearch.timestamp='';
@@ -174,6 +177,7 @@ public with sharing class HDT_LC_AppointmentTariAgendaTst {
 
         List<String> fields = new List<String>();
         fields.add('Id');
+        HDT_LC_AppointmentTariAgenda.updateCase(caso);
         Case response = HDT_LC_AppointmentTariAgenda.getCase(caso.Id,fields);
         System.assertEquals(response!= null, true, 'OK');
         

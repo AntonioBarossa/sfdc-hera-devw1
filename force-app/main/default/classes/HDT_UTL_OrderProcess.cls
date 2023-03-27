@@ -550,7 +550,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         Set<Id> activityValoriNonCorrispondentiSet = new Set<Id>();
         List<Order> newOrdersListRecalc = new List<Order>();
         List<Order> newOrdersListComfort = new List<Order>();
-        List<Order> newOrdersListReadingDate = new List<Order>();
         for(Order oldOrder : oldOrdersList) {
             mapOldOrder.put(oldOrder.id,oldOrder);
         }
@@ -638,17 +637,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                             if(newOrder.RecessNotice__c == null ||newOrder.RecessNotice__c == 0){
                                 newOrdersListRecalc.add(newOrder);
                             }
-                        }else {
-                            if(String.isNotBlank(newOrder.CommodityFormula__c) && 'Acqua'.equalsIgnoreCase(newOrder.CommodityFormula__c)){
-                                newOrder.EffectiveDate__c = System.today();
-                                if( 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
-                                    newOrdersListReadingDate.add(newOrder);
-                                    newOrder.ReadingCustomerDate__c = System.today();
-                                }
-                            }else{
-                                newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
-                            }
-                            
+                        }else { //Voltura no Acqua
+                            newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                         }
                     }else if(
                             (oldOrder.ConfirmCustomerContract__c == null || (oldOrder.ConfirmCustomerContract__c != null && oldOrder.ConfirmCustomerContract__c != newOrder.ConfirmCustomerContract__c)) 
@@ -665,9 +655,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         if(!newOrdersListComfort.isEmpty()){
             HDT_UTL_ProcessDateManager.calculateOrderProcessDate(newOrdersListComfort);
         }
-        if(!newOrdersListReadingDate.isEmpty()){
-            HDT_UTL_ProcessDateManager.updateReadingDate(newOrdersListReadingDate);
-        }
     }
 
     /**
@@ -677,16 +664,28 @@ public inherited sharing  class HDT_UTL_OrderProcess {
      * an effective date in the past will generate an Ammissibilità KO
      * **/
     private static void handleNoEnergyEffectiveDate(Order newOrder, Order oldOrder){
+
+        List<Order> newOrdersListReadingDate = new List<Order>();
+
         Set<String> newPhaseSet = new Set<String>();
         newPhaseSet.add('Comunicazione verso Heroku');
         newPhaseSet.add('Documentazione Validata');
+
         String newPhase = newOrder.Phase__c;
         String oldPhase = oldOrder.Phase__c;
+
         if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
-            if((newOrder.EffectiveDate__c != null && newOrder.EffectiveDate__c < System.today()) || newOrder.EffectiveDate__c == null){
-                newOrder.EffectiveDate__c = System.today();
+            newOrder.EffectiveDate__c = System.today();
+            if( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
+                newOrdersListReadingDate.add(newOrder);
+                newOrder.ReadingCustomerDate__c = System.today();
             }
         }
+        
+        if(!newOrdersListReadingDate.isEmpty()){
+            HDT_UTL_ProcessDateManager.updateReadingDate(newOrdersListReadingDate);
+        }
+        
     }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     /**
@@ -1003,6 +1002,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
                     sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;
                     sp.RateCategory__c = temp.RateCategory__c;
+                    sp.AgriculturalHousingUnit__c = temp.AgriculturalHousingUnit__c;
+                    sp.CommercialHousingUnit__c = temp.CommercialHousingUnit__c;
+                    sp.IndustrialHousingUnit__c = temp.IndustrialHousingUnit__c;
+                    sp.NotDomesticHousingUnit__c = temp.NotDomesticHousingUnit__c;
+                    sp.NotResidentDomesticHousingUnit__c = temp.NotResidentDomesticHousingUnit__c;
+                    sp.ResidentDomesticHousingUnit__c = temp.ResidentDomesticHousingUnit__c;
+                    sp.ZootechnicalHousingUnit__c = temp.ZootechnicalHousingUnit__c;
                     if (String.isNotBlank(temp.SAPImplantCode__c)) {
                         sp.SAPImplantCode__c= temp.SapImplantCode__c; 
                     }  

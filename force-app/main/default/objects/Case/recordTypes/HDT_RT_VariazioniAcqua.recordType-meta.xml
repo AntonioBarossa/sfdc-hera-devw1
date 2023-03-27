@@ -8427,10 +8427,6 @@
             <fullName>Si - Paga</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Si - Ridotta</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>

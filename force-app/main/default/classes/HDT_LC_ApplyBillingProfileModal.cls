@@ -243,7 +243,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         return paymentForCitiesMap;
     }
 
-    class HDT_WRP_QuoteLineWrp
+    public class HDT_WRP_QuoteLineWrp
     {
         public HDT_WRP_QuoteLineWrp(SBQQ__QuoteLine__c quoteLine)
         {

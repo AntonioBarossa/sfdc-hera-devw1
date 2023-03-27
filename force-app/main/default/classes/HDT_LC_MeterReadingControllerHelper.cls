@@ -123,12 +123,15 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         try{
 
             String code;
+            String baseServiceUrl = '';
             Boolean trbEnable = enableTurbobilling(contractService);
 
             if(trbEnable){
                 if(contractService.equalsIgnoreCase('Energia Elettrica')){
+                    baseServiceUrl = '/ele/letture';
                     code = 'meterReading_ele';
                 } else if(contractService.equalsIgnoreCase('Gas')){
+                    baseServiceUrl = '/gas/letture';
                     code = 'meterReading_gas';
                 }else {
                     code = 'meterReading';
@@ -152,7 +155,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
 
             if(trbEnable){
-                httpObj.endPoint += body;
+                httpObj.endPoint += baseServiceUrl + body;
                 body = null;
                 System.debug(LoggingLevel.DEBUG, '>>> httpObj.endPoint > ' + httpObj.endPoint);
             }
@@ -260,8 +263,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             if(trbEnable && trbCode.contains(code)){
                 httpObj.httpMethod = 'GET';
                 httpObj.headersMap.put('Accept', 'application/json');
-                httpObj.headersMap.put('CLIENT_ID', 'clientid');
-                httpObj.headersMap.put('CLIENT_SECRET', 'clientsecret');
+                httpObj.headersMap.put('CLIENT_ID', '{!$Credential.UserName}');
+                httpObj.headersMap.put('CLIENT_SECRET', '{!$Credential.Password}');
             } else {
                 httpObj.httpMethod = 'POST';
                 httpObj.headersMap.put('Content-Type', 'application/json');

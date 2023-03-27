@@ -708,10 +708,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>FirstIndemnityCase.DistributorName__c</assignToReference>
+            <assignToReference>FirstIndemnityCase.Distributor__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.DistributorName__c</elementReference>
+                <elementReference>getInputCase.Distributor__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -892,10 +892,10 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>SecondIndemnityCase.DistributorName__c</assignToReference>
+            <assignToReference>SecondIndemnityCase.Distributor__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>getInputCase.DistributorName__c</elementReference>
+                <elementReference>getInputCase.Distributor__r.Id</elementReference>
             </value>
         </assignmentItems>
         <connector>

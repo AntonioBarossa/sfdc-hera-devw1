@@ -6,6 +6,10 @@ import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId
 import checkLastReadings from '@salesforce/apex/HDT_LC_SelfReading.checkLastReadings';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import gasCommodity from '@salesforce/label/c.gasCommodity';
+import processTypeAutoletturaCliente from '@salesforce/label/c.processTypeAutoletturaCliente';
+import autoletturaSmartMeterError from '@salesforce/label/c.autoletturaSmartMeterError';
+
 
 const columns = [
     {
@@ -23,7 +27,6 @@ const columns = [
         cellAttributes: { class: { fieldName: 'windowClass' } }
     }
 ];
-
 export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
@@ -55,6 +58,7 @@ export default class HdtSelfReading extends LightningElement {
     @api tipizzazioneRettificaConsumi;
     @api showReadingWindows;
     @api isMono;
+    @api processType
 
     @track isLoading = false;
     @track windowColumns;
@@ -177,6 +181,7 @@ export default class HdtSelfReading extends LightningElement {
 
         checkLastReadings({servicePointId:this.servicePointId})
         .then(result =>{
+            let forceAbort=false;
             let lastReadings = [];
             console.log('checkLastReadings results: ' + result);
             if (result == null) {
@@ -189,7 +194,7 @@ export default class HdtSelfReading extends LightningElement {
             if (result === 'ERROR_NO_ASSET_NUMBER') {
                 lastReadings = this.emptyArrayAutoletturaDaProcesso();
             } else {
-                const parsedResult = JSON.parse(result);
+                const parsedResult = JSON.parse( result);
                 // Verifichiamo se la response contiene un errore da SAP.
                 if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
                     this.isLoading = false;
@@ -199,6 +204,10 @@ export default class HdtSelfReading extends LightningElement {
                     return;
                 }
                 lastReadings = this.fillLastReadingsArray(parsedResult);
+                if(this.commodity.toLowerCase()===gasCommodity && this.processType.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.GB_TELELETT && parsedResult.data.GB_TELELETT.toLowerCase()==='y'){
+                    this.showToastMessage(autoletturaSmartMeterError);
+                    forceAbort=true;
+                }
             }
             this.isLoading = false;
             console.log('isLoading?: ' + this.isLoading);
@@ -216,7 +225,7 @@ export default class HdtSelfReading extends LightningElement {
                     //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
                 });
             }
-
+            if(forceAbort) this.template.querySelector('c-hdt-flow-navigation-button').clickAbort();
         }).catch(error =>{
             this.isLoading = false;
             this.buttonDisabled = false;
@@ -787,7 +796,6 @@ export default class HdtSelfReading extends LightningElement {
 
 
     }
-
 
 
 

@@ -219,6 +219,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLoginTst {
         accResidenziale[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         accResidenziale[0].Category__c = 'Famiglie';
         accResidenziale[0].CustomerMarking__c = 'Persona fisica';
+        accResidenziale[0].FiscalCode__c = 'MTTRRT61A20G479C';
         accResidenziale[0].BirthDate__c = Date.newInstance(1975, 12, 04);
         update accResidenziale;
         List<Sale__c> salesList = [SELECT Id, Channel__c FROM Sale__c WITH SECURITY_ENFORCED];
