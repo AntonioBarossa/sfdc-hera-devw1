@@ -19,6 +19,11 @@
                 <label>Reclamo Scritto</label>
             </value>
             <value>
+                <fullName>Rettifica di fatturazione</fullName>
+                <default>false</default>
+                <label>Rettifica di fatturazione</label>
+            </value>
+            <value>
                 <fullName>Rettifica Doppia Fatturazione</fullName>
                 <default>false</default>
                 <label>Rettifica Doppia Fatturazione</label>
@@ -40,13 +45,14 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <valueName>Rettifica di fatturazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <valueName>Rettifica Doppia Fatturazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <valueName>Richiesta di Rettifica di fatturazione</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Richiesta Info</controllingFieldValue>
             <valueName>Richiesta di informazioni</valueName>
         </valueSettings>

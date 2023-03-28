@@ -6245,6 +6245,10 @@
             <fullName>Richiesta di informazioni</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Rettifica di fatturazione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FirstLevelOpinion__c</picklist>
