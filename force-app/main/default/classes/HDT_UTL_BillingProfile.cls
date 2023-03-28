@@ -24,7 +24,7 @@ public with sharing class HDT_UTL_BillingProfile {
         if (bpSubscriber.containsKey(bp.Account__c)){
             Account acc = bpSubscriber.get(bp.Account__c);
             String fiscalcode = acc.FiscalCode__c;
-            fiscalcode = String.isNotBlank(fiscalcode) && fiscalcode.isAlphanumeric()?fiscalcode:'';
+            fiscalcode = String.isNotBlank(fiscalcode) && fiscalcode.isNumeric()?'':fiscalcode;
             bp.BankAccountSignatoryFirstName__c = acc.FirstName__c;
             bp.BankAccountSignatoryLastName__c = acc.LastName__c;
             bp.BankAccountSignatoryFiscalCode__c = fiscalcode;
