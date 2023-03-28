@@ -3,7 +3,6 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
     @InvocableMethod(label = 'Check Conferma Indennizzo')
     public static List<HDT_UTL_FlowOutputs> checkIndemnityConfirmation(List<HDT_UTL_FlowInputs> inputs){
 
-
         HDT_QR_IndemnityConfirmation indemnityQr = new HDT_QR_IndemnityConfirmation();
         HDT_QR_Case caseQr = new HDT_QR_Case();
 
@@ -22,7 +21,6 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
         String secondLevel = inputs[0].secondLevel;
         String note = inputs[0].note;
         Boolean isContainer = inputs[0].isContainer;
-        System.debug(caseType);
         // do not run check if Reclamo Scritto Da Cittadino
         if(caseType.equalsIgnoreCase('Reclamo Scritto Da Cittadino') )
         {
