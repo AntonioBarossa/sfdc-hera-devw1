@@ -415,6 +415,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         EffectiveDate,
         EffectiveDate__c,
         RecessNotice__c,
+        AnnualConsumption__c,
         AccountId,
         EstimateAmount__c,
         PowerQuote__c,
