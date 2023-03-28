@@ -62,10 +62,6 @@
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
     }, {
-        &quot;FieldName&quot;: &quot;CommodityFormula__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    }, {
         &quot;FieldName&quot;: &quot;SupplyType__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
