@@ -58,7 +58,7 @@ public with sharing class HDT_UTL_GarbageMan {
         return callout.execute(argsMap);
     }
 
-    private static String getCompanyOwnerFromCityData(String comune){
+    public static String getCompanyOwnerFromCityData(String comune){
         String companyOwner;
         List<CityTechnicalData__c> tecs = 
         [
