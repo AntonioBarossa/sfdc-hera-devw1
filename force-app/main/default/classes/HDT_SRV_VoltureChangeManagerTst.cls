@@ -112,6 +112,7 @@ public with sharing class HDT_SRV_VoltureChangeManagerTst {
         DocSendingMethod__c,
         Sale__c,
         Pricebook2Id,
+        SupplyType__c,
         Contact__c,
         Email__c 
         FROM Order WHERE ParentOrder__c != null];
