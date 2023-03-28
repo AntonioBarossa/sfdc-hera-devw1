@@ -27,7 +27,7 @@
         &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
-        &quot;Required&quot;: false,
+        &quot;Required&quot;: true,
         &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;IntendedUse__c&quot;,
