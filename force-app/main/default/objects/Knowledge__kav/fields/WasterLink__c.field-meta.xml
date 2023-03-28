@@ -4,7 +4,7 @@
     <externalId>false</externalId>
     <formula>$Setup.CS_LinkRifiutologoKnowledge__c.BaseLink__c</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
-    <label>Rifiutologo</label>
+    <label>Link Rifiutologo</label>
     <required>false</required>
     <type>Text</type>
     <unique>false</unique>
