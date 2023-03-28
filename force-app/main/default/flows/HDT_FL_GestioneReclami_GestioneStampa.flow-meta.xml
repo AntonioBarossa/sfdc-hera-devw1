@@ -18,6 +18,12 @@
             </value>
         </inputParameters>
         <inputParameters>
+            <name>caseType</name>
+            <value>
+                <elementReference>GetInputCase.Type</elementReference>
+            </value>
+        </inputParameters>
+        <inputParameters>
             <name>firstLevel</name>
             <value>
                 <elementReference>GetInputCase.FirstLevelComplaintClassification__c</elementReference>
@@ -614,12 +620,19 @@
         <defaultConnectorLabel>Non Confermato</defaultConnectorLabel>
         <rules>
             <name>Confermato</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>Conferma_Indennizzo.indemnityNotConfirmed</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCase.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto Da Cittadino</stringValue>
                 </rightValue>
             </conditions>
             <connector>
