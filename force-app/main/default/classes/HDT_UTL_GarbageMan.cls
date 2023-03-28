@@ -58,6 +58,20 @@ public with sharing class HDT_UTL_GarbageMan {
         return callout.execute(argsMap);
     }
 
+    private static String getCompanyOwnerFromCityData(String comune){
+        String companyOwner;
+        List<CityTechnicalData__c> tecs = 
+        [
+            SELECT CompanyOwner__c 
+            FROM CityTechnicalData__c 
+            WHERE Name =:comune
+            WITH SECURITY_ENFORCED
+        ];
+        if(!tecs.isEmpty()) companyOwner = tecs[0].CompanyOwner__c;
+        return companyOwner;
+    }
+
+
     public List<Case> getCurrentCase(Id caseId){
         return [  
                     SELECT Id, WasterCode__c, StartAppointment__c, 
