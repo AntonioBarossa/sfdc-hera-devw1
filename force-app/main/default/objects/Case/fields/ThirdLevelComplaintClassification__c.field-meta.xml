@@ -14,6 +14,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Addebito contatore rotto dal gelo</fullName>
+                <default>false</default>
+                <label>Addebito contatore rotto dal gelo</label>
+            </value>
+            <value>
                 <fullName>Altro</fullName>
                 <default>false</default>
                 <label>Altro</label>
@@ -39,9 +44,24 @@
                 <label>Avviso/Bolletta</label>
             </value>
             <value>
+                <fullName>Bolletta</fullName>
+                <default>false</default>
+                <label>Bolletta</label>
+            </value>
+            <value>
                 <fullName>Calcolo</fullName>
                 <default>false</default>
                 <label>Calcolo</label>
+            </value>
+            <value>
+                <fullName>Calcolo consumo</fullName>
+                <default>false</default>
+                <label>Calcolo consumo</label>
+            </value>
+            <value>
+                <fullName>Call Center</fullName>
+                <default>false</default>
+                <label>Call Center</label>
             </value>
             <value>
                 <fullName>Cambio fornitore</fullName>
@@ -69,6 +89,16 @@
                 <label>Cmor (Corrispettivo morosità pregresse)</label>
             </value>
             <value>
+                <fullName>Componente economica tariffa</fullName>
+                <default>false</default>
+                <label>Componente economica tariffa</label>
+            </value>
+            <value>
+                <fullName>Comportamento operatore</fullName>
+                <default>false</default>
+                <label>Comportamento operatore</label>
+            </value>
+            <value>
                 <fullName>Condizioni economiche nuovi contratti</fullName>
                 <default>false</default>
                 <label>Condizioni economiche nuovi contratti</label>
@@ -77,6 +107,11 @@
                 <fullName>Consumi stimati errati</fullName>
                 <default>false</default>
                 <label>Consumi stimati errati</label>
+            </value>
+            <value>
+                <fullName>Contatore</fullName>
+                <default>false</default>
+                <label>Contatore</label>
             </value>
             <value>
                 <fullName>Contestazioni</fullName>
@@ -94,6 +129,16 @@
                 <label>Contratto</label>
             </value>
             <value>
+                <fullName>Costo del lavoro/prestazione</fullName>
+                <default>false</default>
+                <label>Costo del lavoro/prestazione</label>
+            </value>
+            <value>
+                <fullName>Difficoltà contatto</fullName>
+                <default>false</default>
+                <label>Difficoltà contatto</label>
+            </value>
+            <value>
                 <fullName>Doppia Fatturazione</fullName>
                 <default>false</default>
                 <label>Doppia Fatturazione</label>
@@ -107,6 +152,16 @@
                 <fullName>Erogazioni</fullName>
                 <default>false</default>
                 <label>Erogazioni</label>
+            </value>
+            <value>
+                <fullName>Fondo fughe</fullName>
+                <default>false</default>
+                <label>Fondo fughe</label>
+            </value>
+            <value>
+                <fullName>Fornitura servizio</fullName>
+                <default>false</default>
+                <label>Fornitura servizio</label>
             </value>
             <value>
                 <fullName>Fotovoltaico</fullName>
@@ -133,6 +188,11 @@
                 <fullName>Indennizzi</fullName>
                 <default>false</default>
                 <label>Indennizzi</label>
+            </value>
+            <value>
+                <fullName>Letture</fullName>
+                <default>false</default>
+                <label>Letture</label>
             </value>
             <value>
                 <fullName>Mancate letture</fullName>
@@ -180,6 +240,11 @@
                 <label>Periodicità e fattura di chiusura</label>
             </value>
             <value>
+                <fullName>Prelievi irregolari</fullName>
+                <default>false</default>
+                <label>Prelievi irregolari</label>
+            </value>
+            <value>
                 <fullName>Presunti Contratti non Richiesti</fullName>
                 <default>false</default>
                 <label>Presunti Contratti non Richiesti</label>
@@ -198,6 +263,21 @@
                 <fullName>Problemi di fatturazione</fullName>
                 <default>false</default>
                 <label>Problemi di fatturazione</label>
+            </value>
+            <value>
+                <fullName>Pronto Intervento</fullName>
+                <default>false</default>
+                <label>Pronto Intervento</label>
+            </value>
+            <value>
+                <fullName>Qualità acqua potabile</fullName>
+                <default>false</default>
+                <label>Qualità acqua potabile</label>
+            </value>
+            <value>
+                <fullName>Qualità dell&apos;intervento</fullName>
+                <default>false</default>
+                <label>Qualità dell&apos;intervento</label>
             </value>
             <value>
                 <fullName>Recapito</fullName>
@@ -220,6 +300,26 @@
                 <label>Richiamo animali/insetti</label>
             </value>
             <value>
+                <fullName>Rifiuti</fullName>
+                <default>false</default>
+                <label>Rifiuti</label>
+            </value>
+            <value>
+                <fullName>Risposta a reclamo</fullName>
+                <default>false</default>
+                <label>Risposta a reclamo</label>
+            </value>
+            <value>
+                <fullName>Rumore</fullName>
+                <default>false</default>
+                <label>Rumore</label>
+            </value>
+            <value>
+                <fullName>Scarichi</fullName>
+                <default>false</default>
+                <label>Scarichi</label>
+            </value>
+            <value>
                 <fullName>Servizi a chiamata</fullName>
                 <default>false</default>
                 <label>Servizi a chiamata</label>
@@ -233,6 +333,11 @@
                 <fullName>Servizio clienti (call center, sportelli, altri servizi)</fullName>
                 <default>false</default>
                 <label>Servizio clienti (call center, sportelli, altri servizi)</label>
+            </value>
+            <value>
+                <fullName>Servizio fognatura e depurazione</fullName>
+                <default>false</default>
+                <label>Servizio fognatura e depurazione</label>
             </value>
             <value>
                 <fullName>Sicurezza</fullName>
@@ -255,9 +360,19 @@
                 <label>Spazzamento</label>
             </value>
             <value>
+                <fullName>Sportello</fullName>
+                <default>false</default>
+                <label>Sportello</label>
+            </value>
+            <value>
                 <fullName>Subentro/Voltura</fullName>
                 <default>false</default>
                 <label>Subentro/Voltura</label>
+            </value>
+            <value>
+                <fullName>Traffico</fullName>
+                <default>false</default>
+                <label>Traffico</label>
             </value>
             <value>
                 <fullName>Traffico/cantieri</fullName>
@@ -278,6 +393,16 @@
                 <fullName>Verifica e ricostruzioni</fullName>
                 <default>false</default>
                 <label>Verifica e ricostruzioni</label>
+            </value>
+            <value>
+                <fullName>Vibrazioni</fullName>
+                <default>false</default>
+                <label>Vibrazioni</label>
+            </value>
+            <value>
+                <fullName>Visivo</fullName>
+                <default>false</default>
+                <label>Visivo</label>
             </value>
             <value>
                 <fullName>Volture e subentri</fullName>
