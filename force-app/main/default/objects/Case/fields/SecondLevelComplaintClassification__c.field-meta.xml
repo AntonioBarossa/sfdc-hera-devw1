@@ -89,11 +89,6 @@
                 <label>Qualità del Servizio</label>
             </value>
             <value>
-                <fullName>Qualità e continuità servizio</fullName>
-                <default>false</default>
-                <label>Qualità e continuità servizio</label>
-            </value>
-            <value>
                 <fullName>Servizio Clienti</fullName>
                 <default>false</default>
                 <label>Servizio Clienti</label>
