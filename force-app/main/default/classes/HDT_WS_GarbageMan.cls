@@ -88,6 +88,10 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.InvoicingStreetNumber__c = request.streetNumber;
             theCase.InvoicingStreetCode__c = request.streetCode;
             theCase.InvoicingCountry__c = 'Italia';
+            if(theCase.AccountId == null){
+                theCase.CallingCallsign__c = request.contactName;
+                //theCase.FiscalCode__c = request.fiscalCode;
+            }
             theCase.PhoneNumber__c = getPhoneNumber(request, account);
 
             Database.SaveResult isCaseInserted = Database.insert(theCase, false);
