@@ -1299,7 +1299,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
     public static void updateServiceRequest(List<Order> newOrdersList, List<Order> oldOrdersList){
         Map<String,Order> mapOrder = new Map<String,Order>();
         Map<String,String> orderStatuses= new Map<String,String>();
-        Map<String,String> orderPhases= new Map<String,String>();
         List<ServiceRequest__c> sReqToUpdate= new List<ServiceRequest__c>();
         Set<Id> orderIds= new Set<Id>();
         for(Order o: oldOrdersList){
@@ -1312,7 +1311,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                 orderIds.add(ord.Id);
                 orderStatuses.put(ord.Id, ord.Status);
             }
-            orderPhases.put(ord.Id,ord.Phase__c);
         }
         if(!orderIds.isEmpty()){
             List<ServiceRequest__c> srvRequests = HDT_QR_ServiceRequest.getServiceRequestByOrderCaseIds(orderIds, 'Order__c');
@@ -1320,8 +1318,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             for(ServiceRequest__c s: srvRequests){
                 // ServiceRequest__c sReq = new ServiceRequest__c(Id= s.Id);
                 s.Status__c= HDT_UTL_MatrixCompatibility.getStatus(orderStatuses.get(s.Order__c), 'Order');
-                Boolean orderCompleted = orderPhases.get(s.Order__c) != null && 'Completata'.equalsIgnoreCase(orderPhases.get(s.Order__c))?true:false;
-                if( (s.Status__c.equalsIgnoreCase('Chiuso') && orderCompleted) || s.Status__c.equalsIgnoreCase('Annullato') ){
+                if(s.Status__c.equalsIgnoreCase('Chiuso') || s.Status__c.equalsIgnoreCase('Annullato') ){
                     s.OwnerId = UserInfo.getUserId();
                     srvRequestsToDelete.add(s);
                 } else {
