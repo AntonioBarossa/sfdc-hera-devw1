@@ -39,7 +39,8 @@ public with sharing class HDT_QR_InformativeManager {
 
         return [SELECT InformativeCluster__c, 
         InformativeType__c,
-        CommodityFormula__c
+        CommodityFormula__c,
+        SalesCompany__c
         FROM Case
         WHERE Id = :recordId
         WITH SECURITY_ENFORCED

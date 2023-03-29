@@ -25,7 +25,8 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         for(SBQQ__Subscription__c sub : subsToMove){
             Order ord = itemsMap.get(sub.SBQQ__OrderProduct__c)?.Order;
             if(checkConditions(ord, ord?.SapContractCode__c)){
-                List<SBQQ__Subscription__c> oldSubs = oldContractWithSubs.get(ord.ContractReference__r.Id)?.SBQQ__Subscriptions__r;
+                Contract oldContract = oldContractWithSubs.get(ord.ContractReference__r.Id);
+                List<SBQQ__Subscription__c> oldSubs = oldContract?.SBQQ__Subscriptions__r;
                 for(SBQQ__Subscription__c oldSub : oldSubs){
                     if(ord.EffectiveDate__c != null){
                         oldSub.SBQQ__SubscriptionEndDate__c = ord.EffectiveDate__c.addDays(-1);
