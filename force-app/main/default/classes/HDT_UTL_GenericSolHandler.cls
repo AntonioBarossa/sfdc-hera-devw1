@@ -181,6 +181,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
+        childOrder.CausalCode__c='MA1';
         parentOrder.BillingProfile__c=contractList[0].BillingProfile__c;
         parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
