@@ -10,6 +10,8 @@ public inherited sharing class HDT_UTL_SecurityAccess {
     private String fieldNames;
     private String operation;
 
+    private static final Map <String, Schema.SObjectType> SCHEMA_MAP = Schema.getGlobalDescribe();
+
     /**
      * @description Initialize attributes on object creation
      * @param objNameParam ex.'ServicePoint__c'
@@ -26,10 +28,10 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      * @description Check if user has permissions to access the object
      * @return Boolean
      */
-    private boolean isSafeObject(){
+    private boolean isSafeObject(SObjectType myObj){
 
-        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        SObjectType myObj = schemaMap.get(objName);
+        //Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        //SObjectType myObj = schemaMap.get(objName);
 
         Boolean isOperationAllowed = true;
 
@@ -59,28 +61,29 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      * @param fieldName ex.'Name'
      * @return Boolean
      */
-    private boolean isSafeField(String fieldName){
+    private boolean isSafeField(SObjectField myField){
 
-        Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-        SObjectType myObj = schemaMap.get(objName);
+        //Map <String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+        //SObjectType myObj = schemaMap.get(objName);
 
-        SObjectField myField = myObj.getDescribe().fields.getMap().get(fieldName);
+        //SObjectField myField = myObj.getDescribe().fields.getMap().get(fieldName);
 
         Boolean isOperationAllowed = true;
 
         if(myField != null){
+            Schema.DescribeFieldResult fieldDescribe = myField.getDescribe();
             switch on operation {
                 when  'read' {
-                    isOperationAllowed = myField.getDescribe().isAccessible();
+                    isOperationAllowed = fieldDescribe.isAccessible();
                 }
                 when 'create' {
-                    isOperationAllowed = myField.getDescribe().isCreateable();
+                    isOperationAllowed = fieldDescribe.isCreateable();
                 }
                 when 'update' {
-                    isOperationAllowed = myField.getDescribe().isUpdateable();
+                    isOperationAllowed = fieldDescribe.isUpdateable();
                 }
                 when else {
-                    isOperationAllowed = myField.getDescribe().isAccessible();
+                    isOperationAllowed = fieldDescribe.isAccessible();
                 }
             }
         }
@@ -93,22 +96,25 @@ public inherited sharing class HDT_UTL_SecurityAccess {
      */
     public void checkSecurityAccess(){
 
-        if (!isSafeObject()) {
+        SObjectType mySObject = SCHEMA_MAP.get(objName);
+
+        if (!isSafeObject(mySObject)) {
             throw new AuraHandledException('Non hai permessi per accedere al oggetto ' + objName);
         }
 
         List<String> fieldsList = fieldNames.split(',');
         List<String> fieldsWithoutAccess = new List<String>{};
+        Map<String, SObjectField> fieldsMap = mySObject.getDescribe().fields.getMap();
         
         for (String field : fieldsList) {
-            if (!isSafeField(field)) {
+            if (!isSafeField(fieldsMap.get(field))) {
                 fieldsWithoutAccess.add(field);
             }
         } 
 
         if (!fieldsWithoutAccess.isEmpty()) {
             String excMessage = 'Non hai permessi per accedere ai campi ' + String.join(fieldsWithoutAccess, ',');
-            system.debug(excMessage);
+            //system.debug(excMessage);
             throw new AuraHandledException(excMessage);
         }
 
