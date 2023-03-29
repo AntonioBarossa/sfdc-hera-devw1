@@ -41,6 +41,11 @@
                 <default>false</default>
                 <label>Tutele Graduali</label>
             </value>
+            <value>
+                <fullName>Tutele graduali Microimprese</fullName>
+                <default>false</default>
+                <label>Tutele Graduali</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>
