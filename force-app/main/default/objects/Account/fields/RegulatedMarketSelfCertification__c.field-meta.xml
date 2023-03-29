@@ -44,7 +44,7 @@
             <value>
                 <fullName>Tutele graduali Microimprese</fullName>
                 <default>false</default>
-                <label>Tutele Graduali</label>
+                <label>Tutele graduali Microimprese</label>
             </value>
         </valueSetDefinition>
     </valueSet>
