@@ -1,7 +1,25 @@
 public inherited sharing class HDT_UTL_SubscriptionProcess {
 
     private static List<Contract> contractToDelete = new List<Contract>();
-    
+    private static Boolean isFinalizerAttached = false;
+
+    public class HDT_QBL_Finalizer implements Finalizer {
+        List<Contract> contrsToDelete;
+
+        @TestVisible
+        HDT_QBL_Finalizer(List<Contract> contrsToDelete){
+            this.contrsToDelete = contrsToDelete;
+        }
+
+        public void execute(FinalizerContext ctx){
+            //se queueable success chiamare servizio deda con case
+            if(!this.contrsToDelete.isEmpty()){
+                Map<Id, Contract> removeDuplicates = new Map<Id, Contract>(this.contrsToDelete);
+                HDT_UTL_DatabaseService.deleteSObject(removeDuplicates.values());
+            }
+        }
+    }
+
     public static void adjustVasContractBeforeInsert(List<SBQQ__Subscription__c> newSubs){
         system.debug(LoggingLevel.DEBUG ,'******* adjustVasContractBeforeInsert');
         Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
@@ -125,7 +143,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             }
         }  
         if(!itemToServicePoint.isEmpty()){//bonusSconti
-            List<Contract> servicePointContracts = [Select id, SBQQ__Order__r.ServicePoint__c, ContractNumber from Contract where SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet() AND SBQQ__Order__r.ServicePoint__c!=NULL WITH Security_Enforced];
+            List<Contract> servicePointContracts = [Select id, AccountId, SBQQ__Order__r.ServicePoint__c, ContractNumber from Contract where Status NOT IN ('Cessato','Annullato') AND SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet() AND SBQQ__Order__r.ServicePoint__c!=NULL WITH Security_Enforced];
             system.debug(LoggingLevel.DEBUG ,servicePointContracts);
             for(Contract c : servicePointContracts)
             {
@@ -133,7 +151,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 for(Id itemId : itemIds)
                 {
                     SBQQ__Subscription__c sub = itemToSub.get(itemId);
-                    if(sub!=null && c.Id!= sub.SBQQ__Contract__c){
+                    if(sub!=null && c.Id!= sub.SBQQ__Contract__c && c.AccountId == sub.SBQQ__Account__c){
                         system.debug(LoggingLevel.DEBUG ,c.ContractNumber);
                         //don't delete "old contract" if it's BonusSconti
                         sub.SBQQ__Contract__c=c.Id;
@@ -229,6 +247,20 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     public static void deleteContractsOnAfterInsert(){
         if(!contractToDelete.isEmpty()){
             HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+        }
+    }
+
+    public static void dmlOnAfterInsert(){
+        if(!contractToDelete.isEmpty()){
+            if(System.isQueueable() && !isFinalizerAttached && !Test.isRunningTest()){
+                System.attachFinalizer(new HDT_QBL_Finalizer(contractToDelete));
+                //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
+                //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione
+                isFinalizerAttached = true;
+            }else if(!(System.isQueueable() || isFinalizerAttached)){
+                HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+                contractToDelete.clear();
+            }
         }
     }
 

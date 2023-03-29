@@ -12,6 +12,6 @@ public inherited sharing class HDT_TRH_Subscription extends HDT_TRH_TriggerHandl
     }
 
     public override void afterInsert(){
-        HDT_UTL_SubscriptionProcess.deleteContractsOnAfterInsert();
+        HDT_UTL_SubscriptionProcess.dmlOnAfterInsert();
     }
 }
