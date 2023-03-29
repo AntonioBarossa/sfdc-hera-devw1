@@ -74,7 +74,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
-            <valueName>04 -  Contestazioni/modifiche cat. Contrattuali (retroattività)</valueName>
+            <valueName>04 - Contestazioni/modifiche cat. Contrattuali (retroattività)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
@@ -144,10 +144,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti  (no preventivi)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
             <valueName>87 - Sostituzione massiva contatori (programmata)</valueName>
         </valueSettings>
         <valueSettings>
@@ -184,6 +180,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>25 - Reclami relativi aspetti legati alla gestione CDR (comportamenti degli operatori dei CDR, errori nelle registrazioni, mancata emissione scontrino, elenco dei conferimenti effettuati per eventuali verifiche da parte dei contribuenti …)</valueName>
         </valueSettings>
         <valueSettings>
@@ -209,6 +209,10 @@
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
             <valueName>Acqua</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
+            <valueName>Ambiente</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia letture e contatori</controllingFieldValue>
@@ -309,11 +313,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
-            <valueName>Bonus sociale Gas</valueName>
+            <valueName>Bonus Sociale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
-            <valueName>Bonus Sociale</valueName>
+            <valueName>Bonus sociale Gas</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Canone RAI e bonus sociale</controllingFieldValue>
