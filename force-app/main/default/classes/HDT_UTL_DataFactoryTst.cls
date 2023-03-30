@@ -3721,13 +3721,13 @@ public with sharing class HDT_UTL_DataFactoryTst{
 
 	}
 
-	public static List<LandRegistry__c> createLandRegistries(List<String> legalCities, Id recordtypeId, ServicePoint__c servicePoint, Boolean doInsert) {
+	public static List<LandRegistry__c> createLandRegistries(List<String> legalCities, ServicePoint__c servicePoint, Boolean doInsert) {
 
 		List<LandRegistry__c> landRegistries = new List<LandRegistry__c>();
 
 		for(String city : legalCities) {
 
-			landRegistries.add(new LandRegistry__c(LegalCity__c = city, RecordTypeId = recordtypeId, ServicePoint__c = servicePoint.Id));
+			landRegistries.add(new LandRegistry__c(LegalCity__c = city, ServicePoint__c = servicePoint.Id));
 
 		}
 
