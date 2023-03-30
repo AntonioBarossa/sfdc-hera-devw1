@@ -191,7 +191,7 @@ export default class HdtAttachmentManager extends LightningElement {
         this.unsubscribeToMessageChannel();
         let message, isValid=true;
 
-        if('cancel' != this.eventButton){
+        if('cancel' != this.eventButton && 'draft' != this.eventButton){
             
             if(this.numberOfFiles == 0){    //se non ci sono allegati, quale messaggio mostrare
                 var checkCustomValidate = this.specificValidate();
