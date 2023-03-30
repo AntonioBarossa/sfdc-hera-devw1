@@ -56,6 +56,11 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
             quotes[0].SBQQ__Status__c = 'Accepted';
             insert quotes;
 
+            TownATOTable__c atoTable = new TownATOTable__c();
+            atoTable.ATO__c = 'Ato 8';
+            atoTable.Town__c = city.Name;
+            insert atoTable;
+
             HDT_UTL_DataFactoryTst.createSaleServiceItem(1, true, oppList[0].Id, quotes[0].Id, spList[0].Id);
         }
     }
@@ -125,6 +130,40 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
                 MeterStatus__c = 'Bozza',
                 SupplyCity__c = city.Name,
                 CommoditySector__c = 'Gas'
+            );
+
+            String serializedServicePoint = JSON.serialize(testSp, true);
+
+            ServicePoint__c targetTest = HDT_LC_TargetObjectCreateForm.createServicePoinString(serializedServicePoint, sale);
+            
+            System.assertEquals(testSp.Name, targetTest.Name, 'ServicePoint matches');
+
+            System.assertNotEquals(null, targetTest.Name, 'ServicePoint does not match');
+
+            Test.stopTest();
+        }
+    }
+
+    @isTest
+    public static void testCreateServicePointString1() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+
+        System.runAs(u){
+
+            Test.startTest();
+
+            Sale__c sale = [SELECT Id, Account__c FROM Sale__c WHERE Status__c = 'Bozza'];
+
+            City__c city = [SELECT Name, Province__c FROM City__c WITH SECURITY_ENFORCED LIMIT 1];
+
+            ServicePoint__c testSp = new ServicePoint__c(
+                Name='ServicePointName',
+			    ServicePointCode__c='KING',
+                MeterStatus__c = 'Bozza',
+                SupplyCity__c = city.Name,
+                CommoditySector__c = 'Acqua',
+                SAPImplantCode__c = '4012179083'
             );
 
             String serializedServicePoint = JSON.serialize(testSp, true);
@@ -324,4 +363,35 @@ public with sharing class HDT_LC_TargetObjectCreateFormTst {
         Test.stopTest();
         System.assertEquals(true, String.isNotBlank(result), 'Check non eseguito correttamente');
     }
+
+    @isTest
+    static void checkFieldCoerenceSpGasTst()
+    {
+        Map<String, Object> inputFieldMap = new Map<String, Object>
+        {
+            'CategoriaCliente' => 'Famiglie',
+            'TipoFornitura' => 'A-Domestico',
+            'TipoImpianto' => 'Tipo Impianto errato',
+            'Servizio' => 'Gas',
+            'ProfiloPrelievo' => '001 - 7 giorni',
+            'CategoriaUso' => '001-Uso cottura cibi',
+            'Imposta' => 'G_ICD'
+        };
+        Test.startTest();
+            Boolean result = HDT_LC_TargetObjectCreateForm.checkFieldCoerenceSpGas(inputFieldMap);
+        Test.stopTest();
+        System.assertEquals(false, result, 'Check non eseguito correttamente');
+    }
+
+    @isTest
+    static void getAtoTst()
+    {
+        City__c city = [SELECT Name FROM City__c WITH SECURITY_ENFORCED LIMIT 1];
+
+        Test.startTest();
+            String result = HDT_LC_TargetObjectCreateForm.getAto(city.Name);
+        Test.stopTest();
+        System.assertEquals(true, String.isNotBlank(result), 'Ato calcolato');
+    }
+
 }
