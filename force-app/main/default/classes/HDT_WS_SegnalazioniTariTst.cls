@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 12-06-2022
+ * @last modified on  : 03-30-2023
  * @last modified by  : Giacinto Florio
 **/
 @isTest
@@ -18,6 +18,8 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
 
         System.runAs(internalUser){
 
+            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('MulesoftHergoNotice', 'Callout:MulesoftHergoPath/notice', 'POST', 'MulesoftSalesforceUser');
+
             wrts_prcgvr.InstallIntegration.install();
             wrts_prcgvr.VersionManager.newClassInstance('CalloutTemplateMng');
             wrts_prcgvr.VersionManager.newClassInstance('EndpointRulesIntegration');
@@ -28,7 +30,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             
             HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza',constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI,constants.CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI);
-            HDT_UTL_DataFactoryTst.newPhaseTransition('Inviata a SAP', 'Bozza', constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI, constants.CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI);
+            // HDT_UTL_DataFactoryTst.newPhaseTransition('Inviata a SAP', 'Bozza', constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI, constants.CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI);
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             
@@ -52,6 +54,8 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
     
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(2, false, accs[0].Id, contacts[0].Id, points[0].id, contracts[0].id, orders[0].id);
             cases[0].DiscardDescription__c = 'zero';
+            cases[0].Origin = 'Rifiutologo';
+            cases[0].RecordTypeId=constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI;
             cases[1].RecordTypeId=constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI;
             insert cases;
             
@@ -64,7 +68,10 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
             HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders[0].Id, points[0].Id, products[0].id, entries[0].id);
             
             List<ContentVersion> contentVersionList = HDT_UTL_DataFactoryTst.createContentVersion(1, true, 'Callout_Template', '{"name":"Case","label":"Case","sObjectType":"Case","queryable":true,"fields":[{"name":"AccountId","label":"Account ID"},{"name":"CaseNumber","label":"Case Number"}],"objects":[{"name":"AccountId","label":"Account ID","sObjectType":"Account","relationshipName":"Account","queryable":true,"fields":[{"name":"Name","label":"Account Name"}],"objects":[]}]}', 'Callout_Template.json');
-            List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates=HDT_UTL_DataFactoryTst.createCalloutTemplate(1, true, 'Callout_Prova', 'prova', true, 'Case', 'Flat', contentVersionList[0].ContentDocumentId);
+            List<wrts_prcgvr__CalloutTemplate__c> calloutTemplates=HDT_UTL_DataFactoryTst.createCalloutTemplate(1, false, 'Callout_Prova', 'prova', true, 'Case', 'Flat', contentVersionList[0].ContentDocumentId);
+            calloutTemplates.addAll(HDT_UTL_DataFactoryTst.createCalloutTemplate(1, false, 'Callout_Prova', 'prova2', true, 'Case', 'Flat', contentVersionList[0].ContentDocumentId));
+            insert calloutTemplates;
+
             id calloutTemplateid = calloutTemplates[0].id;
             
             ContentDocumentLink cDe = new ContentDocumentLink();
@@ -76,6 +83,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
             HDT_UTL_DataFactoryTst.createEndpointRule(1,true,'endpname');
             
             HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', 'test', 'test', 'C', 'prova', 'calloutParameters', 'apexCalloutAction');
+            HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Inviata a SAP', 'Bozza', constants.CASE_RECORDTYPEID_GENERICHE_ATTIVAZIONI, constants.CASE_RECORDTYPE_DEVELOPERNAME_GENERICHE_ATTIVAZIONI, 'A', 'prova2', '', '');
         }
     }
 
@@ -90,15 +98,15 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
-        Case myCase = [Select id, DiscardDescription__c, Phase__c, RecordTypeId from Case WHERE DiscardDescription__c = 'zero' LIMIT 1];
+        Case myCase = [Select id, DiscardDescription__c, Phase__c, RecordTypeId, AccountId, NoticeId__c, Origin from Case WHERE DiscardDescription__c = 'zero' LIMIT 1];
         
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
-                                                        From wrts_prcgvr__CalloutTemplate__c];
+                                                        From wrts_prcgvr__CalloutTemplate__c where wrts_prcgvr__Code__c = 'prova2'];
         
         wrts_prcgvr__PhaseTransition__c myTransition = [Select id, wrts_prcgvr__RecordTypeId__c, wrts_prcgvr__CalloutTemplate__c, wrts_prcgvr__Code__c,
                                                         wrts_prcgvr__DestinationPhase__c, wrts_prcgvr__OriginPhase__c, wrts_prcgvr__Type__c, wrts_prcgvr__RecordTypeName__c
-                                                        From wrts_prcgvr__PhaseTransition__c where wrts_prcgvr__CalloutTemplate__c = 'prova'];
+                                                        From wrts_prcgvr__PhaseTransition__c where wrts_prcgvr__CalloutTemplate__c = 'prova2'];
         
         Map<String,String> params = new Map<String,String>();
         params.put('requestType', 'Callout_Template.json');
@@ -132,7 +140,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         res2.errorMessage='errMsg';
         res2.noticeId='ntcId';
 
-        System.assertEquals('KO', responseReturn.message, 'The call was not successful');
+        System.assertEquals('OK', responseReturn.message, 'The call was not successful');
         Test.stopTest();
     }
 
@@ -147,13 +155,13 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
-        Case myCase = [Select id, DiscardDescription__c, AccountId, CaseNumber, Phase__c, NoticeId__c, Outcome__c, RecordType.DeveloperName from case WHERE DiscardDescription__c <> 'zero' LIMIT 1];
+        Case myCase = [Select id, DiscardDescription__c, AccountId, CaseNumber, Phase__c, NoticeId__c, Outcome__c, RecordType.DeveloperName, Origin from case WHERE DiscardDescription__c <> 'zero' LIMIT 1];
         myCase.NoticeId__c = 'fakeid12345';
         myCase.AccountId = null;
         
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
-                                                        From wrts_prcgvr__CalloutTemplate__c];
+                                                        From wrts_prcgvr__CalloutTemplate__c where wrts_prcgvr__Code__c = 'prova'];
         
         wrts_prcgvr__PhaseTransition__c myTransition = [Select id, wrts_prcgvr__RecordTypeId__c, wrts_prcgvr__CalloutTemplate__c, wrts_prcgvr__Code__c,
                                                         wrts_prcgvr__DestinationPhase__c, wrts_prcgvr__OriginPhase__c, wrts_prcgvr__Type__c, wrts_prcgvr__RecordTypeName__c
@@ -179,7 +187,21 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
 
         Test.startTest(); 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse res = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)segnalazione.execute(args);
-        System.assertEquals('KO', res.message, 'The call was not successful');
+        System.assertEquals('OK', res.message, 'The call was not successful');
         Test.stopTest();
+    }
+
+    @IsTest
+    static void testExecuteException(){
+        
+        Test.startTest();
+        HDT_WS_SegnalazioniTari segnalazione = new HDT_WS_SegnalazioniTari();
+
+        Map<String, Object> args=new Map<String, Object>();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse res = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)segnalazione.execute(args);
+
+        System.assertEquals('KO', res.message, 'There should be an exception running this method');
+        Test.stopTest();
+        
     }
 }
