@@ -1,7 +1,30 @@
 public inherited sharing class HDT_UTL_SubscriptionProcess {
 
     private static List<Contract> contractToDelete = new List<Contract>();
+    private static Boolean isFinalizerAttached = false;
+
+    public class HDT_QBL_Finalizer implements Finalizer {
+        List<Contract> contrsToDelete;
+
+        @TestVisible
+        HDT_QBL_Finalizer(List<Contract> contrsToDelete){
+            this.contrsToDelete = contrsToDelete;
+        }
+
+        public void execute(FinalizerContext ctx){
+            //se queueable success chiamare servizio deda con case
+            if(!this.contrsToDelete.isEmpty()){
+                Map<Id, Contract> removeDuplicates = new Map<Id, Contract>(this.contrsToDelete);
+                HDT_UTL_DatabaseService.deleteSObject(removeDuplicates.values());
+            }
+        }
+    }
     
+    /**
+     * Questo metodo serve solo per i VAS venduti su Contratti Attivi
+     * In Caso di Amend o Contratti generati da una quote comune a piu order (Cambio Offerta + Analisi Consumi), 
+     * il CPQ non genera un contratto e associa automaticamente le subscriptions sotto il contratto corretto
+     * **/
     public static void adjustVasContractBeforeInsert(List<SBQQ__Subscription__c> newSubs){
         system.debug(LoggingLevel.DEBUG ,'******* adjustVasContractBeforeInsert');
         Map<Id, SBQQ__Subscription__c> itemToSub = new Map<Id, SBQQ__Subscription__c>();
@@ -14,16 +37,18 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             Order.OrderReference__c, 
             Order.ContractReference__c, 
             Order.ServicePoint__c, 
-            Order.RecordType.DeveloperName 
+            Order.RecordType.DeveloperName,
+            Order.SBQQ__Quote__r.IsFromVasSection__c 
             FROM OrderItem 
             WHERE Id IN :itemToSub.keySet() 
-            AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' 
-                OR 
-                    (
-                    Order.RecordType.DeveloperName='HDT_RT_VAS' 
-                    AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.VasSubtype__c = 'Analisi Consumi')
-                    ) 
-                ) 
+            //AND (Order.RecordType.DeveloperName='HDT_RT_ScontiBonus' 
+            //    OR 
+            //        (
+            //        Order.RecordType.DeveloperName='HDT_RT_VAS' 
+            //        AND (Order.OrderReference__c!=null OR Order.ContractReference__c!=null OR Order.VasSubtype__c = 'Analisi Consumi')
+            //        ) 
+            //    )
+            AND Order.SBQQ__Quote__r.IsFromVasSection__c = true
             WITH Security_Enforced ]);
         list<OrderItem> items = itemsMap.values();
         
@@ -32,9 +57,9 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
          * Per la ricostruzione della subscription
          */
 
-        Map<Id, List<Id>> itemToOrderOffer = new Map<Id, List<Id>>();
-        Map<Id, List<Id>> itemToContract = new Map<Id, List<Id>>();
-        Map<Id, List<Id>> itemToServicePoint = new Map<Id, List<Id>>();
+        Map<Id, Set<Id>> itemToOrderOffer = new Map<Id, Set<Id>>();
+        Map<Id, Set<Id>> itemToContract = new Map<Id, Set<Id>>();
+        Map<Id, Set<Id>> itemToServicePoint = new Map<Id, Set<Id>>();
         
         /**@frpanico 22/12/2021
          * Dichiarata Map<String, Map<Id, Id>>
@@ -44,13 +69,13 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         * Trovato bug per cui se due OrderItem creano Subscription
         * Si sovrascrivono se riferiti allo stesso order, contrac o service point
         */
-        Map<String, Map<Id, List<Id>>> itemsMapToSub = new Map<String, Map<Id,List<Id>>>();
+        Map<String, Map<Id, Set<Id>>> itemsMapToSub = new Map<String, Map<Id,Set<Id>>>();
 
         for(OrderItem item : items){
             if(item.Order.OrderReference__c!=null){
                 if(itemToOrderOffer.isEmpty() || !itemToOrderOffer.containsKey(item.Order.OrderReference__c))
                 {
-                    itemToOrderOffer.put(item.Order.OrderReference__c, new List<Id>());
+                    itemToOrderOffer.put(item.Order.OrderReference__c, new Set<Id>());
                 }
                 itemToOrderOffer.get(item.Order.OrderReference__c).add(item.Id);
             }
@@ -58,7 +83,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             {
                 if(itemToContract.isEmpty() || !itemToContract.containsKey(item.Order.ContractReference__c))
                 {
-                    itemToContract.put(item.Order.ContractReference__c, new List<Id>());
+                    itemToContract.put(item.Order.ContractReference__c, new Set<Id>());
                 }
                 itemToContract.get(item.Order.ContractReference__c).add(item.Id);
             }
@@ -67,7 +92,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 /* bonus e sconti */
                 if(itemToServicePoint.isEmpty() || !itemToServicePoint.containsKey(item.Order.ServicePoint__c))
                 {
-                    itemToServicePoint.put(item.Order.ServicePoint__c, new List<Id>());
+                    itemToServicePoint.put(item.Order.ServicePoint__c, new Set<Id>());
                 }
                 itemToServicePoint.get(item.Order.ServicePoint__c).add(item.Id);
             }
@@ -92,48 +117,58 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         System.debug(LoggingLevel.DEBUG,itemToOrderOffer.keySet());
         if(!itemToOrderOffer.isEmpty())
         {
-            List<Contract> orderOfferContracts = [Select id, SBQQ__Order__c, ContractNumber from Contract where SBQQ__Order__c IN :itemToOrderOffer.keySet() WITH Security_Enforced];
+            List<Contract> orderOfferContracts = [Select id, AccountId, SBQQ__Order__c, ContractNumber from Contract where Status NOT IN ('Cessato','Annullato') AND SBQQ__Order__c IN :itemToOrderOffer.keySet() WITH Security_Enforced];
 
             system.debug(LoggingLevel.DEBUG, orderOfferContracts);
             for(Contract c : orderOfferContracts)
-            {
-                List<Id> itemIds = itemToOrderOffer.get(c.SBQQ__Order__c);
+            {   
+                Set<Id> contractToDeleteSet = new Set<Id>();
+                Set<Id> itemIds = itemToOrderOffer.get(c.SBQQ__Order__c);
                 for(Id itemId : itemIds)
                 {
                     SBQQ__Subscription__c sub = itemToSub.get(itemId);
-                    if(sub != null && c.Id != sub.SBQQ__Contract__c)
+                    if(sub != null && c.Id != sub.SBQQ__Contract__c && c.AccountId == sub.SBQQ__Account__c)
                     {
-                        System.debug(LoggingLevel.DEBUG ,'Contract Number ' + c.ContractNumber);
-                        contractToDelete.add(new Contract(Id = sub.SBQQ__Contract__c));
+                        contractToDeleteSet.add(sub.SBQQ__Contract__c);
+                        //contractToDelete.add(new Contract(Id = sub.SBQQ__Contract__c));
                         sub.SBQQ__Contract__c = c.Id;
                     }
+                }
+                for(Id contrId : contractToDeleteSet){
+                    contractToDelete.add(new Contract(Id=contrId));
                 }
             }
         }
         if(!itemToContract.isEmpty())
         {
             for(id contractId : itemToContract.keySet())
-            {
+            {   
+                Set<Id> contractToDeleteSet = new Set<Id>();
                 for(Id itemId : itemToContract.get(contractId))
                 {
                     SBQQ__Subscription__c sub = itemToSub.get(itemId);
                     if(sub!=null && contractId != sub.SBQQ__Contract__c){
-                        contractToDelete.add(new Contract(Id=sub.SBQQ__Contract__c));
+                        //contractToDelete.add(new Contract(Id=sub.SBQQ__Contract__c));
+                        contractToDeleteSet.add(sub.SBQQ__Contract__c);
                         sub.SBQQ__Contract__c=contractId;
+                        
                     }
+                }
+                for(Id contrId : contractToDeleteSet){
+                    contractToDelete.add(new Contract(Id=contrId));
                 }
             }
         }  
         if(!itemToServicePoint.isEmpty()){//bonusSconti
-            List<Contract> servicePointContracts = [Select id, SBQQ__Order__r.ServicePoint__c, ContractNumber from Contract where SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet() AND SBQQ__Order__r.ServicePoint__c!=NULL WITH Security_Enforced];
+            List<Contract> servicePointContracts = [Select id, AccountId, SBQQ__Order__r.ServicePoint__c, ContractNumber from Contract where Status NOT IN ('Cessato','Annullato') AND SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet() AND SBQQ__Order__r.ServicePoint__c!=NULL WITH Security_Enforced];
             system.debug(LoggingLevel.DEBUG ,servicePointContracts);
             for(Contract c : servicePointContracts)
             {
-                List<Id> itemIds = itemToServicePoint.get(c.SBQQ__Order__r.ServicePoint__c);
+                Set<Id> itemIds = itemToServicePoint.get(c.SBQQ__Order__r.ServicePoint__c);
                 for(Id itemId : itemIds)
                 {
                     SBQQ__Subscription__c sub = itemToSub.get(itemId);
-                    if(sub!=null && c.Id!= sub.SBQQ__Contract__c){
+                    if(sub!=null && c.Id!= sub.SBQQ__Contract__c && c.AccountId == sub.SBQQ__Account__c){
                         system.debug(LoggingLevel.DEBUG ,c.ContractNumber);
                         //don't delete "old contract" if it's BonusSconti
                         sub.SBQQ__Contract__c=c.Id;
@@ -149,7 +184,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     * Ricostruisce la struttura della subscription 
     * nel caso di: "Cambio Offerta"
     */
-    private static void recreateSubscriptionStructure(Map<Id, SBQQ__Subscription__c> itemToSub, Map<String, Map<id, List<id>>> itemsMapToSub)
+    private static void recreateSubscriptionStructure(Map<Id, SBQQ__Subscription__c> itemToSub, Map<String, Map<id, Set<id>>> itemsMapToSub)
     {
         /* Get "Parent" subscription
         * Al momento viene gestito il caso di
@@ -158,9 +193,9 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
 
         //Set<String> allowedProcess = new Set<String>{'HDT_RT_CambioOfferta'};        
 
-        Map<Id, List<Id>> itemToServicePoint = itemsMapToSub.get('servicePoint');
-        Map<Id, List<Id>> itemToContract = itemsMapToSub.get('contract');
-        Map<Id, List<Id>> itemToOrderOffer = itemsMapToSub.get('order');
+        Map<Id, Set<Id>> itemToServicePoint = itemsMapToSub.get('servicePoint');
+        Map<Id, Set<Id>> itemToContract = itemsMapToSub.get('contract');
+        Map<Id, Set<Id>> itemToOrderOffer = itemsMapToSub.get('order');
 
         SObjectAccessDecision securityDecision = 
             Security.stripInaccessible(accessType.READABLE, 
@@ -229,6 +264,20 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
     public static void deleteContractsOnAfterInsert(){
         if(!contractToDelete.isEmpty()){
             HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+        }
+    }
+
+    public static void dmlOnAfterInsert(){
+        if(!contractToDelete.isEmpty()){
+            if(System.isQueueable() && !isFinalizerAttached && !Test.isRunningTest()){
+                System.attachFinalizer(new HDT_QBL_Finalizer(contractToDelete));
+                //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
+                //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione
+                isFinalizerAttached = true;
+            }else if(!(System.isQueueable() || isFinalizerAttached)){
+                HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
+                contractToDelete.clear();
+            }
         }
     }
 
