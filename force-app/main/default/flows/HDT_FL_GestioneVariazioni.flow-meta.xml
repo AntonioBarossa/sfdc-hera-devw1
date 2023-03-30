@@ -540,7 +540,7 @@
         <name>Aggiorna_Fase_in_Da_Inviare_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>6650</locationX>
-        <locationY>2174</locationY>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -701,7 +701,7 @@
         <name>Aggiorna_Fase_in_Elaborazione_Manuale_ExtraSistema</name>
         <label>Aggiorna Fase in Elaborazione Manuale</label>
         <locationX>6914</locationX>
-        <locationY>1934</locationY>
+        <locationY>2054</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -887,7 +887,7 @@
         <name>Assegna_Codice_Causale_0_0</name>
         <label>Assegna Codice Causale</label>
         <locationX>6650</locationX>
-        <locationY>2054</locationY>
+        <locationY>2174</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CausalCode__c</assignToReference>
             <operator>Assign</operator>
@@ -1768,9 +1768,9 @@
         <name>Valorizza_Campo_Note_2</name>
         <label>Valorizza Campo Note</label>
         <locationX>6782</locationX>
-        <locationY>1358</locationY>
+        <locationY>1478</locationY>
         <assignmentItems>
-            <assignToReference>GetInputCase.Note__c</assignToReference>
+            <assignToReference>getCaseAggiornatoCambioContatore.Note__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>valorizzaCampoNoteCambioContatore</elementReference>
@@ -2420,7 +2420,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Valorizza_Campo_Note_2</targetReference>
+                <targetReference>getCaseAggiornatoCambioContatore</targetReference>
             </connector>
             <label>Acqua</label>
         </rules>
@@ -2713,7 +2713,7 @@
         <name>InRete_o_ExtraRete</name>
         <label>InRete o ExtraRete?</label>
         <locationX>6914</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <defaultConnectorLabel>ExtraRete</defaultConnectorLabel>
         <rules>
             <name>InRete</name>
@@ -4699,7 +4699,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Calcolo_Codice_Causale_0_0</name>
         <label>Calcolo Codice Causale</label>
         <locationX>6650</locationX>
-        <locationY>1934</locationY>
+        <locationY>2054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Codice_Causale_0_0</targetReference>
@@ -5121,7 +5121,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>6914</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>InRete_o_ExtraRete</targetReference>
@@ -5293,6 +5293,27 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Aggiorna_Fase_in_Da_Inviare_0_0_0_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getCaseAggiornatoCambioContatore</name>
+        <label>getCaseAggiornatoCambioContatore</label>
+        <locationX>6782</locationX>
+        <locationY>1358</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Valorizza_Campo_Note_2</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -5670,7 +5691,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>6914</locationX>
-        <locationY>2054</locationY>
+        <locationY>2174</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -5701,7 +5722,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_0_0_0_0_0_0_0_0_0_0</name>
         <label>Aggiorna Case</label>
         <locationX>6650</locationX>
-        <locationY>2294</locationY>
+        <locationY>2414</locationY>
         <connector>
             <targetReference>Loading_Spinner_0</targetReference>
         </connector>
@@ -5825,11 +5846,11 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Aggiorna_Case_Cambio_Contatore</name>
         <label>Aggiorna Case Cambio Contatore</label>
         <locationX>6782</locationX>
-        <locationY>1478</locationY>
+        <locationY>1598</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
         </connector>
-        <inputReference>GetInputCase</inputReference>
+        <inputReference>getCaseAggiornatoCambioContatore</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_Esenzione_Modifica_Fognatura_Depurazione</name>
@@ -6271,7 +6292,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Loading_Spinner_0</name>
         <label>Loading Spinner</label>
         <locationX>6650</locationX>
-        <locationY>2414</locationY>
+        <locationY>2534</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -9322,7 +9343,7 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <name>Annulla_Prestazione_0_0_0_0_0_0_0</name>
         <label>Annulla Prestazione</label>
         <locationX>7178</locationX>
-        <locationY>2942</locationY>
+        <locationY>3062</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>

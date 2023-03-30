@@ -57,6 +57,8 @@ public inherited sharing class HDT_QR_MailSender {
             WHERE ParentId = :parentId
             AND Type = 'Comunicazione con il Gestore'
             AND Cluster__c = 'Informative'
+            AND Phase__c <> 'Completata'
+            AND Status <> 'Closed'
             WITH SECURITY_ENFORCED
         ];
     }

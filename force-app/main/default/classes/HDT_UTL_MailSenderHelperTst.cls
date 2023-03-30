@@ -82,7 +82,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         mailSenderResultActual = HDT_UTL_MailSenderHelper.getReminderMetadataHelper(emailMessageList[0].RelatedToId);
         Test.stopTest();
        
-        System.assertEquals('Non ci sono template', mailSenderResultActual.message, 'Error message of mail sender result');
+        System.assertEquals(null, mailSenderResultActual.message, 'Error message of mail sender result');
     }
 
      /**​

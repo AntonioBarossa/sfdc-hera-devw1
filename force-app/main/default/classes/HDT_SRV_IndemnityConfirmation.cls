@@ -14,12 +14,21 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
         
 
         String recordId = inputs[0].recordId;
+        String caseType = inputs[0].caseType;
         String accountId = inputs[0].accountId;
         String servicePointId = inputs[0].servicePointId;
         String firstLevel = inputs[0].firstLevel;
         String secondLevel = inputs[0].secondLevel;
         String note = inputs[0].note;
         Boolean isContainer = inputs[0].isContainer;
+        // do not run check if Reclamo Scritto Da Cittadino
+        if(caseType.equalsIgnoreCase('Reclamo Scritto Da Cittadino') )
+        {
+            output.indemnityNotConfirmed = false;
+            outputs.add(output);
+            return outputs;
+        }
+
 
         if(isContainer != null && isContainer)
         {
@@ -122,6 +131,9 @@ public inherited sharing class HDT_SRV_IndemnityConfirmation {
 
         @InvocableVariable
         public String recordId;
+
+        @InvocableVariable
+        public String caseType;
 
         @InvocableVariable
         public String accountId;
