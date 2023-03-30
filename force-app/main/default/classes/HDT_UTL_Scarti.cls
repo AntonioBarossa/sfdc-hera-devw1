@@ -1309,6 +1309,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     String phase = HDT_UTL_Utils.beforeSapPhase(oldPhase,phaseStoryOld);
                     if (phase.containsIgnoreCase('KO')){
                         obj.put('Phase__c',phase);
+                        obj.put('Status',oldObj.get('Status'));
                         DateTime nowDateTime = DateTime.now();
                         String phaseStrory = oldPhase+'@@'+phase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
                         obj.put('PhaseStory__c',phaseStrory);
