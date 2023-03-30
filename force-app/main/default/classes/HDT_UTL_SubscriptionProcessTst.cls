@@ -45,7 +45,13 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         orderList[3].VasSubType__c = 'Analisi Consumi';
         orderListTwo.add(orderList[3]);
         insert orderListTwo;
-
+        List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, false, orderList[0].Id, null, saleList[0].Id, 'Quote');
+        quoteList[0].IsFromVasSection__c = true;
+        insert quoteList;
+        for (Integer i = 1; i<4; i++){
+            orderList[i].SBQQ__Quote__c = quoteList[0].Id;
+        }
+        update orderList;
         List<OrderItem> orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(4, false, orderList[0].Id, spList[0].Id, prodList[0].Id, pbEntry.Id);
         orderItemList[0].OrderId = orderList[0].Id;
         orderItemList[0].Product2Id = prodList[0].Id;
