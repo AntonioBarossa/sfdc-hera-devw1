@@ -212,6 +212,29 @@ public with sharing class HDT_WS_HTTPServiceCallMock implements HttpCalloutMock 
 
                         }
 
+                    } when 'MulesoftHergoNotice' {
+
+                        HDT_WS_SegnalazioniTari.HDT_WRP_SegnalazioniTariResponse customRes = new HDT_WS_SegnalazioniTari.HDT_WRP_SegnalazioniTariResponse();
+
+                        if (successfullReturn) {
+                            customRes.status = 'success';
+                            customRes.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
+                            customRes.data.noticeId = String.valueOf(System.now().getTime());
+                            customRes.data.outcome = 'OK';
+
+                            res.setStatus('success');
+                            res.setStatusCode(200);
+                        } else {
+                            customRes.status = 'error';
+                            customRes.data.outcome = 'KO';
+                            customRes.data.errorMessage = 'Error message';
+
+                            res.setStatus('error');
+                            res.setStatusCode(500);
+                        }
+
+                        res.setBody(JSON.serialize(customRes));
+                        
                     } when 'Archive' {
 
                         res.setHeader('Content-Length', '69420');

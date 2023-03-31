@@ -1255,4 +1255,11 @@
         <shortDescription>autoletturaSmartMeterError</shortDescription>
         <value>Smart meter lettura non acquisibile</value>
     </labels>
+    <labels>
+        <fullName>phaseInAutorizzazioneSap</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>phaseInAutorizzazioneSap</shortDescription>
+        <value>In Attesa Di Autorizzazione SAP</value>
+    </labels>
 </CustomLabels>
