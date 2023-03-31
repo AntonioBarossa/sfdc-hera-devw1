@@ -267,20 +267,22 @@ export default class HdtAttachmentManager extends LightningElement {
                 });
         }
 
-        getRequiredAttachment({
-            recordId: this.recordId,
-            paramsWrap: this.paramsWrap
-            })
-            .then(result => {
-                console.log(JSON.stringify(result));
-                if(result.length > 0 )
-                    this.required = result;
-                else
-                    this.required = '';
-            })
-            .catch(error => {
-                this.error = error;
-            });
+        if(!this.required){
+            getRequiredAttachment({
+                recordId: this.recordId,
+                paramsWrap: this.paramsWrap
+                })
+                .then(result => {
+                    console.log(JSON.stringify(result));
+                    if(result.length > 0 )
+                        this.required = result;
+                    else
+                        this.required = '';
+                })
+                .catch(error => {
+                    this.error = error;
+                });
+        }
             //chiamare la tabella degli allegati e chiamare i campi del case
             
     }
