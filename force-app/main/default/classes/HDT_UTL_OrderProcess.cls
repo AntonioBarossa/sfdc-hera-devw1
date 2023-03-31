@@ -676,7 +676,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
             newOrder.EffectiveDate__c = System.today();
-            if( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
+            if( ( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ) || 
+                ( newOrder.DocumentalProcessType__c.containsIgnoreCase('Cambio offerta') && String.isBlank(newOrder.MeterSN__c) ) )
+            {
                 newOrdersListReadingDate.add(newOrder);
                 newOrder.ReadingCustomerDate__c = System.today();
             }
@@ -1002,6 +1004,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     sp.supplytype__c = temp.ServicePoint__r.supplytypeTemp__c;
                     sp.implantType__c = temp.ServicePoint__r.implantTypeTemp__c;
                     sp.RateCategory__c = temp.RateCategory__c;
+                    sp.AgriculturalHousingUnit__c = temp.AgriculturalHousingUnit__c;
+                    sp.CommercialHousingUnit__c = temp.CommercialHousingUnit__c;
+                    sp.IndustrialHousingUnit__c = temp.IndustrialHousingUnit__c;
+                    sp.NotDomesticHousingUnit__c = temp.NotDomesticHousingUnit__c;
+                    sp.NotResidentDomesticHousingUnit__c = temp.NotResidentDomesticHousingUnit__c;
+                    sp.ResidentDomesticHousingUnit__c = temp.ResidentDomesticHousingUnit__c;
+                    sp.ZootechnicalHousingUnit__c = temp.ZootechnicalHousingUnit__c;
                     if (String.isNotBlank(temp.SAPImplantCode__c)) {
                         sp.SAPImplantCode__c= temp.SapImplantCode__c; 
                     }  

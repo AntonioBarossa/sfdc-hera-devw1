@@ -181,6 +181,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
+        childOrder.CausalCode__c='MA1';
         parentOrder.BillingProfile__c=contractList[0].BillingProfile__c;
         parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
@@ -231,8 +232,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.BillingPostalCode__c=bp.InvoicingPostalCode__c;
             childOrder.BillingCityCode__c=bp.InvoicingCityCode__c;
             childOrder.VAT__c='Iva 10% (Cod. 01)';
-            OrderItem oi=generateOrderItem(contractList[0],childOrder,params);
-            HDT_UTL_DatabaseService.insertSObject(oi);
+            List<OrderItem> ois=generateOrderItem(contractList[0],childOrder,params);
+            HDT_UTL_DatabaseService.insertSObject(ois);
         }
         HDT_UTL_DatabaseService.upsertSObject(new List<Order>{childOrder,parentOrder});
         return childOrder;
@@ -298,35 +299,45 @@ public with sharing class HDT_UTL_GenericSolHandler {
         return childOrder;
     }
 
-    public static OrderItem generateOrderItem(Contract outCustomerContract,Order childOrder,Map<String,Object>params ){
+    public static List<OrderItem> generateOrderItem(Contract outCustomerContract,Order childOrder,Map<String,Object>params ){
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
-        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(outCustomerContract.Id);
-        if(subscription != null){
-            childOrder.CommercialProduct__c = subscription.SBQQ__ProductName__c;
-            childOrder.CommercialProductCode__c = subscription.ProductCode__c;
-            childOrder.CommercialProductVersion__c = subscription.VersionFormula__c;
+        List<SBQQ__Subscription__c> subscriptions = new List<SBQQ__Subscription__c>();
+        Set<Id> productIds=new Set<Id>();
+        List<OrderItem>ois=new List<OrderItem>();
+        for(SBQQ__Subscription__c subscription : qrContract.getSubscriptionsFromContract(outCustomerContract.Id)){
+            subscriptions.add(subscription);
+            productIds.add(subscription.SBQQ__Product__c);
         }
-        childOrder.EffectiveDate = Date.today();
-        childOrder.Status = 'In Lavorazione';
-        Map<String,String> mapParams = getProductInfo(subscription.SBQQ__Product__c,false);
-        childOrder.Pricebook2Id = mapParams.get('priceBookId');
-        HDT_UTL_DatabaseService.insertSObject(childOrder);
-        OrderItem oi = new OrderItem();
-        oi.Product2Id = mapParams.get('productId');
-        oi.PriceBookEntryId = mapParams.get('priceBookEntryId');
+        if(subscriptions.size()>0){
+            childOrder.CommercialProduct__c = subscriptions[0].SBQQ__ProductName__c;
+            childOrder.CommercialProductCode__c = subscriptions[0].ProductCode__c;
+            childOrder.CommercialProductVersion__c = subscriptions[0].VersionFormula__c;
+        }
+        if(productIds.size()>0){
+            Map<String,PricebookEntry> peMap=getProductInfoVoltura(productIds);
+            List<String> idList=new List<String>(peMap.keySet());
+            childOrder.Pricebook2Id=peMap.get(idList[0]).Pricebook2Id;
+            HDT_UTL_DatabaseService.insertSObject(childOrder);
+            for(Id productId:peMap.keySet()){
+                ois.add(new OrderItem(
+                        Product2Id=productId,
+                        PriceBookEntryId=peMap.get(productId).Id,
+                        UnitPrice=peMap.get(productId).UnitPrice,
+                        Quantity=1,
+                        OrderId=childOrder.Id
+                    )
+                );
+            }
+        }
+        return ois;
+    }
 
-        oi.UnitPrice = 0;
-        oi.Quantity = 1;
-        oi.OrderId = childOrder.Id;
-        oi.OccupantsNumber__c = params.containsKey('numeroOccupanti') ? Integer.valueOf(params.get('numeroOccupanti')) : null;
-        oi.Surface__c = params.containsKey('superficie') ? Integer.valueOf(params.get('superficie')) : null;
-        if(params.containsKey('tipologiaAbitazione')){
-            oi.DwellingType__c = (String)params.get('tipologiaAbitazione') == 'Appartamento'?'Appartamento':'Casa Indipendente';
-        }else{
-            oi.DwellingType__c='';
+    private static Map<String,PriceBookEntry> getProductInfoVoltura(Set<Id> productIds){
+        Map<String,PriceBookEntry> retmap=new Map<String,PriceBookEntry>();
+        for(PriceBookEntry pe: [SELECT Id,Name,Pricebook2Id,Product2Id,UnitPrice FROM PriceBookEntry WHERE Product2Id IN:productIds AND Pricebook2.IsStandard=false WITH SECURITY_ENFORCED]) {
+            retMap.put(pe.Id,pe);
         }
-        oi.OwnerAC__c =  params.containsKey('proprietario') ? (String)params.get('proprietario') : '';
-        return oi;
+        return retMap;
     }
 
     public static List<Contract> getContractByNumber(String contractNumber){

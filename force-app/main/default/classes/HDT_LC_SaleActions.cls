@@ -71,7 +71,10 @@ public inherited sharing class HDT_LC_SaleActions {
      */
     @AuraEnabled
     public static void save(Sale__c sale, String campaignMemberId){
-
+        List<Sale__c> sList = HDT_QR_GenericQuery.getGenericRecords('Id','Sale__c','Id = \''+sale.Id+'\' AND CommercialId__c = null');
+        if(!sList.isEmpty()){
+            throw new AuraHandledException('Attenzione! Non è stato selezionato il campo "Venduto Da".');
+        }
         Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
         String campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
         

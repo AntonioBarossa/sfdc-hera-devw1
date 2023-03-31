@@ -234,6 +234,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mailCase.PhaseStory__c = null;
             mailCase.FirstName__c = acc.FirstName__c;
             mailCase.LastName__c = acc.LastName__c;
+            mailCase.NotCancellable__c = true;
 
             SObjectType objtype = Schema.getGlobalDescribe().get('Case');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();

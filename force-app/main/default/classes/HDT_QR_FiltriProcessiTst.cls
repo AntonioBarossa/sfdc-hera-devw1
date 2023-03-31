@@ -34,4 +34,19 @@ public with sharing class HDT_QR_FiltriProcessiTst {
             Test.stopTest();
         }
     }
+
+    @isTest
+    static void testGetCustomMetadataList() {
+        User tUser = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1]; 
+        System.runAs(tUser){
+            Test.startTest();    
+
+            new HDT_QR_FiltriProcessi();
+            List<HDT_FiltriProcessiSelFornitura__mdt> filtriProcess = HDT_QR_FiltriProcessi.getCustomMetadataList('Gestione Bonus Sociale');
+            System.assertNotEquals(0, filtriProcess.size(), 'value of parameter is not matching');
+            
+            Test.stopTest();
+        }
+    }
+    
 }

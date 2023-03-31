@@ -8796,6 +8796,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratto Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Costing e Forecasting</fullName>
             <default>false</default>
         </values>
@@ -9041,6 +9045,10 @@
         </values>
         <values>
             <fullName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</fullName>
             <default>false</default>
         </values>
         <values>

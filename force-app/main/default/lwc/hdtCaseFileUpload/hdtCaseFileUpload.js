@@ -21,9 +21,6 @@ export default class FileUploadExample extends LightningElement {
     urls = [];
     cardTitle;
     relatedUrl;    
-    get acceptedFormats() {
-        return ['.pdf', '.png', '.txt'];
-    }
 
     @track caseRecord;
     @wire(getRecord, { recordId: '$recordId', fields: FIELDS })
