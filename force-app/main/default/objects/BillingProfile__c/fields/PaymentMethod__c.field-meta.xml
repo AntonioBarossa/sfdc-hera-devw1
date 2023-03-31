@@ -30,14 +30,16 @@ RID</description>
                 <label>RID</label>
             </value>
             <value>
-                <fullName>PAGOPA</fullName>
-                <default>false</default>
-                <label>PAGOPA</label>
-            </value>
-            <value>
                 <fullName>F24</fullName>
                 <default>false</default>
+                <isActive>false</isActive>
                 <label>F24</label>
+            </value>
+            <value>
+                <fullName>PAGOPA</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>PAGOPA</label>
             </value>
         </valueSetDefinition>
     </valueSet>

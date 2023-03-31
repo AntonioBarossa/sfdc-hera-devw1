@@ -11,47 +11,7 @@ public inherited sharing class HDT_UTL_Order {
     private static HDT_SRV_Case caseSrv = new HDT_SRV_Case();
     private static HDT_SRV_ActivityCustom activityCustomSrv = new HDT_SRV_ActivityCustom();
     private static HDT_SRV_Order ordSrv = new HDT_SRV_Order();
-    /*public Order enrichOrder(Order newOrder){
-
-        String servicePointFields = 'AnnualConsumption__c, SupplyType__c, WithdrawalClass__c, MarketOrigin__c';
-        
-        //List<ServicePoint__c> servicePointList = new List<ServicePoint__c>();
-        List<Contract> contractList = new List<Contract>();
-        //BillingProfile__c billingProfileList = new BillingProfile__c();
-        //List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
-
-        System.debug('ServicePointId-->'+newOrder.ServicePoint__c);
-        //System.debug('ContractId-->'+newOrder.ContractId);
-        //System.debug('AccountId-->'+newOrder.AccountId);
-
-        //String billingProfileId;
-
-        //servicePointList = servicePointQr.getRecordById(newOrder.ServicePoint__c, servicePointFields);
-        //contractList = contractQr.getRecordById(newOrder.ContractId);
-
-        //billingProfileId = String.valueOf(contractList[0].BillingProfile__c);
-
-        System.debug('BillingProfileId--> '+billingProfileId);
-
-        billingProfileList = billingProfileQr.getRecordById(billingProfileId);
-        accountContactRelList = accountContactRelQr.getRecordByAccountId(newOrder.AccountId);
-
-        newOrder.AnnualConsumption__c	= servicePointList[0].AnnualConsumption__c;
-        newOrder.SupplyType__c = servicePointList[0].SupplyType__c;
-        newOrder.WithdrawalClass__c = servicePointList[0].WithdrawalClass__c;
-        newOrder.Market__c = servicePointList[0].MarketOrigin__c;
-        //newOrder.PaymentMode__c = billingProfileList.PaymentMethod__c;
-        newOrder.BillingProfile__c = billingProfileId;
-        newOrder.BillSendMode__c  = billingProfileList.BillSendingMethod__c;
-        newOrder.BillToContactId = accountContactRelList[0].ContactId;
-        newOrder.PhoneNumber__c = accountContactRelList[0].Contact.MobilePhone;
-        newOrder.Email__c = accountContactRelList[0].contact.Email;
-        newOrder.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
-
-        return newOrder;
-
-
-    }*/
+    
     private static Map<String,Object> rateCategoryAlgo(List<RateCategory__c> listRate, Order o)
     {
         boolean res = false;
@@ -126,26 +86,6 @@ public inherited sharing class HDT_UTL_Order {
         Order oUp = new Order();
         oUp.id = o.id;
         oUp.rateCategory__c = code;
-        /*if(listRate != null && !listRate.isEmpty()){
-            for(RateCategory__c r: listRate){
-                if(mapCal.get(r.operatore__c) != null){
-                    mapCal.put(r.operatore__c,r.CalculatedValue__c);
-                }
-            }
-            if(mapCal.get('Diverso') != null){
-                oUp.rateCategory__c = mapCal.get('Diverso');
-                res = true;
-            }
-            else if(mapCal.get('N/A') != null){
-                oUp.rateCategory__c = mapCal.get('N/A');
-                res = true;
-            }
-            else if(mapCal.get('Uguale') != null){
-                oUp.rateCategory__c = mapCal.get('Uguale');
-                res =  true;
-            }
-
-        }*/
 
         if(res){
             ordSrv.updateRecord(oUp);
