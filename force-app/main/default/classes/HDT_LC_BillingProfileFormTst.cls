@@ -43,6 +43,7 @@ public static void testCreateBillingProfile() {
     List<Account> accList = [SELECT Id FROM Account LIMIT 1];
     List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accList[0].Id);
 
+
     Test.startTest();
     HDT_LC_BillingProfileForm.createBillingProfile(billingProfileList[0]);
     List<BillingProfile__c> listBillingProfile = [SELECT Id FROM BillingProfile__c LIMIT 1];
@@ -51,6 +52,41 @@ public static void testCreateBillingProfile() {
     Test.stopTest();
 }
 
+@isTest
+public static void testCreateBillingProfile1() {
+    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
+    List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accList[0].Id);
+    billingProfileList[0].PaymentMethod__c = 'RID';
+    billingProfileList[0].IbanIsForeign__c = false;
+    billingProfileList[0].IBAN__c = 'IT66C0100503382000000218020';
+
+    Test.startTest();
+    HDT_LC_BillingProfileForm.createBillingProfile(billingProfileList[0]);
+
+    List<BillingProfile__c> listBillingProfile = [SELECT Id FROM BillingProfile__c LIMIT 1];
+
+    System.assertEquals(listBillingProfile[0].Id, listBillingProfile[0].Id, 'Created Billing Profile');
+    System.assertNotEquals(null,  listBillingProfile[0].Id, 'Billing Profile Created in the ORG');
+    Test.stopTest();
+}
+
+@isTest
+public static void testCreateBillingProfile2() {
+    List<Account> accList = [SELECT Id FROM Account LIMIT 1];
+    List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accList[0].Id);
+    billingProfileList[0].PaymentMethod__c = 'F24';
+    billingProfileList[0].IbanIsForeign__c = false;
+    billingProfileList[0].IBAN__c = 'IT66C0100503382000000218020';
+
+    Test.startTest();
+    HDT_LC_BillingProfileForm.createBillingProfile(billingProfileList[0]);
+
+    List<BillingProfile__c> listBillingProfile = [SELECT Id FROM BillingProfile__c LIMIT 1];
+
+    System.assertEquals(listBillingProfile[0].Id, listBillingProfile[0].Id, 'Created Billing Profile');
+    System.assertNotEquals(null,  listBillingProfile[0].Id, 'Billing Profile Created in the ORG');
+    Test.stopTest();
+}
 
 @isTest
 public static void testGetAccountOwnerInfo() {

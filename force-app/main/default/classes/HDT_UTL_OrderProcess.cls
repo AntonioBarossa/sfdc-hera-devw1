@@ -676,7 +676,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
             newOrder.EffectiveDate__c = System.today();
-            if( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
+            if( ( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ) || 
+                ( newOrder.DocumentalProcessType__c.containsIgnoreCase('Cambio offerta') && String.isBlank(newOrder.MeterSN__c) ) )
+            {
                 newOrdersListReadingDate.add(newOrder);
                 newOrder.ReadingCustomerDate__c = System.today();
             }

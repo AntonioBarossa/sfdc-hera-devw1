@@ -1171,7 +1171,7 @@
             <inputParameters>
                 <name>options</name>
                 <value>
-                    <stringValue>[{&quot;label&quot;: &quot;Hera Comm S.p.A.&quot;,&quot;value&quot;: &quot;Hera Comm S.p.A.&quot;},{&quot;label&quot;: &quot;Hera Comm Marche&quot;,&quot;value&quot;: &quot;Hera Comm Marche&quot;},{&quot;label&quot;: &quot;Marche Multiservizi S.p.a.&quot;,&quot;value&quot;: &quot;Marche Multiservizi S.p.a.&quot;}]</stringValue>
+                    <stringValue>[{&quot;label&quot;: &quot;Hera Comm S.p.A.&quot;,&quot;value&quot;: &quot;Hera Comm S.p.A.&quot;},{&quot;label&quot;: &quot;Hera Comm Marche&quot;,&quot;value&quot;: &quot;Hera Comm Marche&quot;},{&quot;label&quot;: &quot;Marche Multiservizi S.p.a.&quot;,&quot;value&quot;: &quot;Marche Multiservizi S.p.A&quot;}]</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>

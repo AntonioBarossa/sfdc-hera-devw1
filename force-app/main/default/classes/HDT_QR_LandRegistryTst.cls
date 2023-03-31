@@ -2,7 +2,7 @@
  * @description       : 
  * @author            : Giacinto Florio
  * @group             : 
- * @last modified on  : 11-17-2022
+ * @last modified on  : 03-30-2023
  * @last modified by  : Andrei Necsulescu
 **/
 @isTest
@@ -20,9 +20,10 @@ public with sharing class HDT_QR_LandRegistryTst {
 
         ServicePoint__c sp = HDT_UTL_DataFactoryTst.createServicePoint(1, true)[0];
 
-        List<LandRegistry__c> landRegistries = HDT_UTL_DataFactoryTst.createLandRegistries(new List<String> {'Roma', 'Roma'}, landRegistryRecordtypePratica, sp, false);
+        List<LandRegistry__c> landRegistries = HDT_UTL_DataFactoryTst.createLandRegistries(new List<String> {'Roma', 'Roma'}, sp, false);
         landRegistries[0].Order__c = ord.Id;
         landRegistries[0].Case__c = cas.Id;
+        landRegistries[0].RecordTypeId = landRegistryRecordtypePratica;
 
         landRegistries[1].Order__c = ord.Id;
         landRegistries[1].Case__c = cas.Id;

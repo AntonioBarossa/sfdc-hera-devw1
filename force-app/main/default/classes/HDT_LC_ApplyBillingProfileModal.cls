@@ -145,7 +145,6 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         String paymentCondition = selectedBillingProfile.get('PaymentConditions__c') != null ? (String) selectedBillingProfile.get('PaymentConditions__c') : '';
         String sendingBillMode  = selectedBillingProfile.get('BillSendingMethod__c') != null ? (String) selectedBillingProfile.get('BillSendingMethod__c') : '';
         String invoicingCity    = selectedBillingProfile.get('InvoicingCity__c') != null ? (String) selectedBillingProfile.get('InvoicingCity__c') : '';
-        Boolean isDueThirtyDays = '30 GG - IS02'.equalsIgnoreCase(paymentCondition);
         
         List<SBQQ__QuoteLine__c> quoteLineWater = new List<SBQQ__QuoteLine__c>();
         //List<SBQQ__QuoteLine__c> quoteLineWaste = new List<SBQQ__QuoteLine__c>();
@@ -201,15 +200,9 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     continue;
                 }
 
-                // DA CAMBIARE--> Regola del BP su Ato1 e Ato9 che deve avere termini a 30 GG obbligatoriamente
-                String ato = quoteLine.ServicePoint__r.ATO__c != null ? quoteLine.ServicePoint__r.ATO__c : '';
-                Boolean isAtoOneAtoNine = ato.containsIgnoreCase('AATO 1 MARCHE NORD') || ato.containsIgnoreCase('ATO9');
-                if(isAtoOneAtoNine && isDueThirtyDays)
-                {
-                    HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
-                    singleApply.isDueThirtyDays = 'Si';
-                    quoteLineToApply.add(singleApply);
-                }
+                HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
+                singleApply.isDueThirtyDays = 'Si';
+                quoteLineToApply.add(singleApply);
                 
             } else if( quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Ambiente'))
             {
