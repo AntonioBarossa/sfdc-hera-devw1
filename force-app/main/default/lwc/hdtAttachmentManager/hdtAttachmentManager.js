@@ -128,8 +128,6 @@ export default class HdtAttachmentManager extends LightningElement {
                         };  
                     }
                     break;
-
-                /*
                 case 'PIANO RATEIZZAZIONE':
                     if(!String.isBlank(this.currObject.MandatoryAttachments__c)){
                         objectToReturn = { 
@@ -138,7 +136,7 @@ export default class HdtAttachmentManager extends LightningElement {
                         };
                     }
                     break;
-                
+                /*
                     if( 'SUPERFICIE' == this.currObject.Subprocess__c?.toUpperCase() && 
                         'NON DOMESTICO' == this.currObject.ServicePoint__r?.SupplyType__c.toUpperCase() && 
                         this.currObject.DeclaredArea__c < this.currObject.Surface__c){
