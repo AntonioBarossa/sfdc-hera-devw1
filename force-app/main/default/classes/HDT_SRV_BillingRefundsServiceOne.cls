@@ -13,7 +13,12 @@ global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgv
                 HDT_WS_ArrichmentDataEntityResponse resp=callServiceOne(new Map<String,Object>{'processCase'=>caseToSend,'api'=>method,'account'=>acc,'contract'=>contr[0]});
                 responseReturn.success = true;
                 responseReturn.message = resp.statusCode==200 ? 'OK':'KO';
-                caseToSend.TecnicalPhase__c = resp.statusCode==200 ? Label.phaseInviataASap:Label.phaseNonInviataASap;
+                Id recordTypeIdConsumoAnomalo = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConsumoAnomaloIdrico').getRecordTypeId();
+                if(caseToSend.recordTypeId==recordTypeIdConsumoAnomalo){
+                    caseToSend.TecnicalPhase__c = resp.statusCode==200 ? Label.phaseInAutorizzazioneSap:Label.phaseNonInviataASap;
+                } else {
+                    caseToSend.TecnicalPhase__c = resp.statusCode==200 ? Label.phaseInviataASap:Label.phaseNonInviataASap;
+                }
                 update caseToSend;
             }catch (Exception e){
                 responseReturn.success=true;

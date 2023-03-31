@@ -44,6 +44,7 @@ public with sharing class HDT_UTL_ProcessDateManager {
 		if(!readingList.isEmpty()){
 			for( Reading__c reading : readingList ){
 				reading.ReadingDate__c = System.today();
+				reading.ReadingValueMeter__c = String.isBlank(reading.OrderAcqua__r.MeterSN__c)? 0 : reading.ReadingValueMeter__c;
 			}
 			HDT_UTL_DatabaseService.updateSObject(readingList);
         }

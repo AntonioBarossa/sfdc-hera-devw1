@@ -241,7 +241,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 /**@frpanico 2022-27-05
                  * Gestione campi mancanti integrazione
                  */
-                if(currentOrder.Email__c == null || String.isEmpty(currentOrder.Email__c)){
+                if( ( currentOrder.Email__c == null || String.isEmpty(currentOrder.Email__c) ) && 
+                    !currentOrder.CommodityFormula__c.equalsIgnoreCase('Acqua') ){
                     orderToUpdate.Email__c = emptyEmailDefault;
                 }
                 Map<String,Object> rates = voltureChangeUtils.checkRates(
