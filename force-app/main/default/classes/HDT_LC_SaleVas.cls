@@ -467,6 +467,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__PricebookId__c = checkCommodityOrder(order.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
             CommercialId__c = sale.CommercialId__c,
+            //aggiunto per gestire la riconciliazione delle Subscriptions
+            IsFromVasSection__c = true,
             CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null 
 
         );
@@ -689,6 +691,8 @@ public inherited sharing class HDT_LC_SaleVas {
             SBQQ__PricebookId__c = checkCommodityContract(contract.Id) == 'HDT_RT_Ele' ? getPricebookId('VAS ELE') : getPricebookId('VAS GAS'),
             AgencyCode__c = sale.AgencyCode__c,
             CommercialId__c = sale.CommercialId__c,
+            //aggiunto per gestire la riconciliazione delle Subscriptions
+            IsFromVasSection__c = true,
             CampaignEleggibilityGroup__c = sale.Campaign__r.CampaignEligibilityGroup__c != null ? sale.Campaign__r.CampaignEligibilityGroup__c : null
         ));
 
