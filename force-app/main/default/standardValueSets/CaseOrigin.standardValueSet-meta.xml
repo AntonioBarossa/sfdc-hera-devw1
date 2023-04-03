@@ -176,4 +176,9 @@
         <default>false</default>
         <label>Rifiutologo</label>
     </standardValue>
+    <standardValue>
+        <fullName>Web-MMS</fullName>
+        <default>false</default>
+        <label>Web-MMS</label>
+    </standardValue>
 </StandardValueSet>
