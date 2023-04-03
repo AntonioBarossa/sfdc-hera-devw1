@@ -6331,6 +6331,246 @@
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>CT01 - Tariffa al metro cubo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT02 - Deposito cauzionale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT03 - Errata attribuzione tariffa/tipologia utenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CF01 - Errato inserimento nel contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CP01 - Prelievi irregolari</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CD01 - Esenzione per mancanza servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CD02 - Contestazione addebito/accredito retroattivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CD03 - Rifiuto di allaccio fognatura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CD04 - Scarichi produttivi-attribuzione tariffa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CV01 - Voltura non richiesta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CV02 - Voltura su contratto errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FG01 - Addebito contatore rotto dal gelo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB02 - Recapito bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB04 - Bolletta elettronica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC01 - Stima consumo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC02 - Conguaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC03 - Ricostruzione consumi da contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC04 - Applicazione procapite</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC05 - Bonus sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC06 - Incassi misti da divisionali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FF01 - Richiesta revisione conteggi/diniego rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FP01 - Modalità di pagamento/rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FP02 - Domiciliazione bancaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FP03 - Rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE01 - Cattivi odori da fognatura/depuratore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR01 - Rifiuti gestiti male in cantieri/impianti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IU01 - Eccessivi rumori da cantiere/impianti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IS01 - Scarichi da depuratore visibilmente alterati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT01 - Cantieri prolungati in zona trafficata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IB01 - Eccessive vibrazioni da cantiere</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IV01 - Cantieri non completati o in stato di abbandono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LO01 - Comportamento tecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LC01 - Costo lavori allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LC02 - Costo prestazioni attività contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA01 - Acquedotto - modalità e prestazioni allacciamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LA02 - Acquedotto - modalità e prestazioni contatori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LD03 - Fognatura - modalità e prestazioni allacciamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MO01 - Comportamento letturista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MC01 - Contatore malfunzionante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ML01 - Modalità letture periodiche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ML02 - Autolettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ML03 - Autolettura errata (voltura)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MM01 - Sospensione per morosità/sezionamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MM02 - Riattivazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS01 - Problemi erogazione servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS03 - Problemi pressione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS04 - Fognatura - allagamenti/infiltrazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS05 - Fognatura - avvallamenti/botole</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS06 - Fognatura - caditoie otturate/ristagni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QP01 - Ritardi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC01 - Call Center Tempi di attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC02 - Call Center Comportamento operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC03 - Call Center Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SD01 - Difficoltà contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SR01 - Risposta a reclamo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SS01 - Sportello Tempi di attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SS02 - Sportello Comportamento operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SS03 - Sportello Risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SW01 - ServiziOnLine</fullName>
+            <default>false</default>
+        </values>       
+        <values>
             <fullName>Rinnovo condizioni economiche</fullName>
             <default>false</default>
         </values>
@@ -8777,6 +9017,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Lavori e prestazioni accessorie su cliente</fullName>
+            <default>false</default>
+        </values>     
+        <values>
             <fullName>Mercato</fullName>
             <default>false</default>
         </values>
@@ -8785,7 +9029,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Qualità e continuità servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Morosità e sospensione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio clienti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11196,6 +11452,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Emissioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fotovoltaico</fullName>
             <default>false</default>
         </values>
@@ -11209,6 +11469,10 @@
         </values>
         <values>
             <fullName>Mancate letture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modalità di pagamento/rimborso</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11260,6 +11524,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Solleciti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sospensione e riattivazione</fullName>
             <default>false</default>
         </values>
@@ -11276,7 +11544,111 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Volture e subentri</fullName>
+            <fullName>Subentro/Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Addebito contatore rotto dal gelo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calcolo consumo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call Center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Componente economica tariffa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comportamento operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costo del lavoro/prestazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Difficoltà contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fondo fughe</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fornitura servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Letture</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prelievi irregolari</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pronto Intervento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualità acqua potabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualità dell'intervento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risposta a reclamo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rumore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Scarichi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio fognatura e depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traffico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traffico/cantieri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Vibrazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Visivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
