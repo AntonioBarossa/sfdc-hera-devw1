@@ -112,7 +112,6 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
             mapObj.putAll(new Map<String, String>
                 {
                     'source' => 'APP_RIF',
-                    'origine' => 'APP_RIF',
                     'hercontactLastName' => caso.DifferentNameFromTheApplicant__c
                 }
             );
