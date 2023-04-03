@@ -57,6 +57,14 @@
             <valueName>Gestione Sportello</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
             <valueName>02A - Determinazione volumi da fermi</valueName>
         </valueSettings>
@@ -70,11 +78,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
-            <valueName>04 BIS - Richiesta di prescrizione biennale</valueName>
+            <valueName>04 - Contestazioni/modifiche cat. Contrattuali (retroattività)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
-            <valueName>04 - Contestazioni/modifiche cat. Contrattuali (retroattività)</valueName>
+            <valueName>04 BIS - Richiesta di prescrizione biennale</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
@@ -102,9 +110,8 @@
             <valueName>12 - problemi di mancata lettura</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>54 – Recupero Letture su Contatori non Letti</valueName>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 - Problematiche tecniche Rete Fognaria</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
@@ -112,7 +119,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 - Problematiche tecniche Rete Fognaria</valueName>
+            <valueName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
@@ -120,19 +127,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
             <valueName>19 - Cattivi odori o scarichi post depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
@@ -145,14 +140,6 @@
         <valueSettings>
             <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
             <valueName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>87 - Sostituzione massiva contatori (programmata)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
-            <valueName>132 - Risposte da Call Center Tecnico</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
@@ -168,19 +155,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
-            <valueName>16bis - Temi Qualità Acqua - Richieste info</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>16 - Temi Qualità Acqua - Reclami</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
-            <valueName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</valueName>
+            <valueName>16bis - Temi Qualità Acqua - Richieste info</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
@@ -191,12 +178,25 @@
             <valueName>26 - Pulizia strade, rumorosità mezzi, ubicazione cassonetti, metodologia di raccolta</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>54 – Recupero Letture su Contatori non Letti</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>59 - AMBIENTE - verifica indennizzo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Risarcimento danni</controllingFieldValue>
             <valueName>74- richiesta risarcimento danni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>87 - Sostituzione massiva contatori (programmata)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
+            <valueName>132 - Risposte da Call Center Tecnico</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Anomalia contratto</controllingFieldValue>
