@@ -12249,10 +12249,6 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
-		<values>
-            <fullName>Web-MMS</fullName>
-            <default>false</default>
-        </values>
         <values>
             <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
