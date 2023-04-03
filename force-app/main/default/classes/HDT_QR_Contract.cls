@@ -275,7 +275,8 @@ public inherited sharing class HDT_QR_Contract {
                 SBQQ__ProductName__c,
                 CategoryFamily__c,
                 VersionFormula__c,
-                SBQQ__Product__r.Family
+                SBQQ__Product__r.Family,
+                SBQQ__Product__r.ProductCode
         FROM SBQQ__Subscription__c
         WHERE SBQQ__Contract__c =:contractId
         WITH SECURITY_ENFORCED];
