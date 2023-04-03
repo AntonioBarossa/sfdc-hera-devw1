@@ -328,6 +328,22 @@
     </actionCalls>
     <apiVersion>50.0</apiVersion>
     <assignments>
+        <name>Assegna_ValoriParere_2</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>1766</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaCollection</name>
         <label>AssegnaCollection</label>
         <locationX>974</locationX>
@@ -626,7 +642,7 @@
     <assignments>
         <name>AssegnaValoriParere_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>842</locationX>
+        <locationX>446</locationX>
         <locationY>2366</locationY>
         <assignmentItems>
             <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
@@ -835,7 +851,7 @@
     <assignments>
         <name>AssegnaValoriParere_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>1106</locationX>
+        <locationX>710</locationX>
         <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
@@ -858,7 +874,7 @@
     <assignments>
         <name>AssegnaValoriParere_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>1370</locationX>
+        <locationX>974</locationX>
         <locationY>3422</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
@@ -874,7 +890,7 @@
     <assignments>
         <name>AssegnaValoriParere_0_0_0_0_0_0_0</name>
         <label>AssegnaValoriParere</label>
-        <locationX>1634</locationX>
+        <locationX>1238</locationX>
         <locationY>3182</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
@@ -1102,6 +1118,38 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssegnaValoriParere_3</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>2294</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>AssegnaValoriParere_4</name>
+        <label>AssegnaValoriParere</label>
+        <locationX>2822</locationX>
+        <locationY>3422</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Parere_Aggiornato.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Aggiorna_Case_Richiesta_Parere</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssegnaValoriParere_5</name>
         <label>AssegnaValoriParere</label>
         <locationX>1634</locationX>
@@ -1204,8 +1252,8 @@
     <assignments>
         <name>AssegnaValoriParere_6</name>
         <label>AssegnaValoriParere</label>
-        <locationX>2426</locationX>
-        <locationY>3422</locationY>
+        <locationX>2558</locationX>
+        <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1594,8 +1642,8 @@
     <assignments>
         <name>Copy_2_of_AssegnaValoriParere</name>
         <label>AssegnaValoriParere</label>
-        <locationX>1898</locationX>
-        <locationY>3422</locationY>
+        <locationX>1502</locationX>
+        <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1717,8 +1765,8 @@
     <assignments>
         <name>Copy_4_of_AssegnaValoriParere</name>
         <label>AssegnaValoriParere</label>
-        <locationX>2162</locationX>
-        <locationY>3422</locationY>
+        <locationX>2030</locationX>
+        <locationY>3662</locationY>
         <assignmentItems>
             <assignToReference>Get_Parere_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1889,7 +1937,7 @@
     <decisions>
         <name>Modalit_Comunicazione</name>
         <label>Modalità Comunicazione</label>
-        <locationX>1238</locationX>
+        <locationX>842</locationX>
         <locationY>3302</locationY>
         <defaultConnector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0_0</targetReference>
@@ -1907,6 +1955,81 @@
             </conditions>
             <connector>
                 <targetReference>Get_Template</targetReference>
+            </connector>
+            <label>Assegnazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Modalit_Comunicazione_2</name>
+        <label>Modalità Comunicazione</label>
+        <locationX>1634</locationX>
+        <locationY>3302</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_ValoriParere_2</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OneShot</defaultConnectorLabel>
+        <rules>
+            <name>Assegnazione_2</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getOpinionTableRequest_2.Azione__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Activity</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Get_Template</targetReference>
+            </connector>
+            <label>Assegnazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Modalit_Comunicazione_3</name>
+        <label>Modalità Comunicazione</label>
+        <locationX>2162</locationX>
+        <locationY>3302</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValoriParere_3</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OneShot</defaultConnectorLabel>
+        <rules>
+            <name>Assegnazione_3</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getOpinionTableRequest_3.Azione__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Activity</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Get_Template</targetReference>
+            </connector>
+            <label>Assegnazione</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Modalit_Comunicazione_4</name>
+        <label>Modalità Comunicazione</label>
+        <locationX>2690</locationX>
+        <locationY>3302</locationY>
+        <defaultConnector>
+            <targetReference>AssegnaValoriParere_4</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>OneShot</defaultConnectorLabel>
+        <rules>
+            <name>Assegnazione_4</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getOpinionTableRequest_4.Azione__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Activity</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_Template_3</targetReference>
             </connector>
             <label>Assegnazione</label>
         </rules>
@@ -2311,7 +2434,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_1_of_Get_Template</targetReference>
+                <targetReference>getOpinionTableRequest_2</targetReference>
             </connector>
             <label>Esenzione Modifica Fognatura Depurazione</label>
         </rules>
@@ -2326,7 +2449,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Copy_2_of_Get_Template</targetReference>
+                <targetReference>getOpinionTableRequest_3</targetReference>
             </connector>
             <label>Errore di Fatturazione</label>
         </rules>
@@ -2348,7 +2471,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Template_3</targetReference>
+                <targetReference>getOpinionTableRequest_4</targetReference>
             </connector>
             <label>Ricostruzione Consumi Acqua</label>
         </rules>
@@ -2414,8 +2537,8 @@
     <recordCreates>
         <name>Copy_1_of_Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
-        <locationX>1898</locationX>
-        <locationY>3302</locationY>
+        <locationX>1502</locationX>
+        <locationY>3542</locationY>
         <connector>
             <targetReference>Copy_2_of_AssegnaValoriParere</targetReference>
         </connector>
@@ -2449,8 +2572,8 @@
     <recordCreates>
         <name>Copy_2_of_Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
-        <locationX>2162</locationX>
-        <locationY>3302</locationY>
+        <locationX>2030</locationX>
+        <locationY>3542</locationY>
         <connector>
             <targetReference>Copy_4_of_AssegnaValoriParere</targetReference>
         </connector>
@@ -2484,7 +2607,7 @@
     <recordCreates>
         <name>Crea_Activity_Richiesta_Parere</name>
         <label>Crea Activity Richiesta Parere</label>
-        <locationX>1106</locationX>
+        <locationX>710</locationX>
         <locationY>3542</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_0_0_0_0_0</targetReference>
@@ -2525,8 +2648,8 @@
     <recordCreates>
         <name>Crea_Activity_Richiesta_Parere_3</name>
         <label>Crea Activity Richiesta Parere</label>
-        <locationX>2426</locationX>
-        <locationY>3302</locationY>
+        <locationX>2558</locationX>
+        <locationY>3542</locationY>
         <connector>
             <targetReference>AssegnaValoriParere_6</targetReference>
         </connector>
@@ -2560,8 +2683,8 @@
     <recordLookups>
         <name>Copy_1_of_Get_Template</name>
         <label>Get Template</label>
-        <locationX>1898</locationX>
-        <locationY>3182</locationY>
+        <locationX>1502</locationX>
+        <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_1_of_Crea_Activity_Richiesta_Parere</targetReference>
@@ -2581,8 +2704,8 @@
     <recordLookups>
         <name>Copy_2_of_Get_Template</name>
         <label>Get Template</label>
-        <locationX>2162</locationX>
-        <locationY>3182</locationY>
+        <locationX>2030</locationX>
+        <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Copy_2_of_Crea_Activity_Richiesta_Parere</targetReference>
@@ -2644,7 +2767,7 @@
     <recordLookups>
         <name>Get_Template</name>
         <label>Get Template</label>
-        <locationX>1106</locationX>
+        <locationX>710</locationX>
         <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -2665,8 +2788,8 @@
     <recordLookups>
         <name>Get_Template_3</name>
         <label>Get Template</label>
-        <locationX>2426</locationX>
-        <locationY>3182</locationY>
+        <locationX>2558</locationX>
+        <locationY>3422</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Richiesta_Parere_3</targetReference>
@@ -2686,11 +2809,116 @@
     <recordLookups>
         <name>getOpinionTableRequest</name>
         <label>getOpinionTableRequest</label>
-        <locationX>1238</locationX>
+        <locationX>842</locationX>
         <locationY>3182</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Modalit_Comunicazione</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parere_1_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.FirstLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parere_2_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Company_Owner__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.CompanyOwner__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_OpionionTableRequestSetting__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOpinionTableRequest_2</name>
+        <label>getOpinionTableRequest</label>
+        <locationX>1634</locationX>
+        <locationY>3182</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Modalit_Comunicazione_2</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parere_1_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.FirstLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parere_2_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Company_Owner__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.CompanyOwner__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_OpionionTableRequestSetting__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOpinionTableRequest_3</name>
+        <label>getOpinionTableRequest</label>
+        <locationX>2162</locationX>
+        <locationY>3182</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Modalit_Comunicazione_3</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Parere_1_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.FirstLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Parere_2_livello__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.SecondLevelOpinion__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Company_Owner__c</field>
+            <operator>Contains</operator>
+            <value>
+                <elementReference>Get_Parere_Aggiornato.CompanyOwner__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_OpionionTableRequestSetting__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOpinionTableRequest_4</name>
+        <label>getOpinionTableRequest</label>
+        <locationX>2690</locationX>
+        <locationY>3182</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Modalit_Comunicazione_4</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2825,7 +3053,7 @@
     <recordUpdates>
         <name>AggiornaParere</name>
         <label>AggiornaParere</label>
-        <locationX>842</locationX>
+        <locationX>446</locationX>
         <locationY>2486</locationY>
         <inputReference>GetRichiestaParere</inputReference>
     </recordUpdates>

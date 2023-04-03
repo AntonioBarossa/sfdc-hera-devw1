@@ -27,6 +27,51 @@ public with sharing class HDT_QR_AccountTst {
     }
 
     @isTest
+    public static void testGetAccountByCustomerCodeSet() {
+
+        Test.startTest();
+
+        Account acc = [SELECT Id, CustomerCode__c FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
+
+        List<Account> accList = qrAcc.getAccountByCustomerCodeSet( new Set<String>{acc.CustomerCode__c} );
+
+        System.assertEquals(acc.Id, accList[0].Id, 'Account Id match.');
+        System.assertNotEquals(null, accList[0].Id, 'Account Id does not match.');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testGetAccountByCustomerCode() {
+
+        Test.startTest();
+
+        Account acc = [SELECT Id, CustomerCode__c FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
+
+        List<Account> accList = qrAcc.getAccountByCustomerCode(acc.CustomerCode__c);
+
+        System.assertEquals(acc.Id, accList[0].Id, 'Account Id match.');
+        System.assertNotEquals(null, accList[0].Id, 'Account Id does not match.');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testGetAccountByName() {
+
+        Test.startTest();
+
+        Account acc = [SELECT Id, Name FROM Account WHERE CompanyOwner__c = 'HERA COMM' LIMIT 1];
+
+        Account accQrTest = qrAcc.getAccountByName(acc.Name);
+
+        System.assertEquals(acc.Id, accQRTest.Id, 'Account Id match.');
+        System.assertNotEquals(null, accQRTest.Id, 'Account Id does not match.');
+
+        Test.stopTest();
+    }
+
+    @isTest
     public static void testGetRecordById() {
 
         Test.startTest();
@@ -42,7 +87,7 @@ public with sharing class HDT_QR_AccountTst {
     }
 
     @isTest
-    public static void testgetRecordsById() {
+    public static void testGetRecordsById1() {
         
         Test.startTest();
 

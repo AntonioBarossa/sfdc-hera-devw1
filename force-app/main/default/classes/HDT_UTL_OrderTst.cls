@@ -314,7 +314,7 @@ public with sharing class HDT_UTL_OrderTst {
         
     }
 
-    /*@IsTest
+    @IsTest
     static void travasaOrderTest(){
 
         List<Order> myOrderList = [SELECT Id, ExciseGas__c, ExciseEle__c, Vat__c, AnnualConsumption__c, MarketOrigin__c, ConnectionMandate__c,
@@ -332,7 +332,7 @@ public with sharing class HDT_UTL_OrderTst {
         BankAccountSignatoryFirstName__c, BankAccountSignatoryLastName__c, BillSendMode__c, PaymentMode__c, InvoiceEmailAddress__c,
         BillingCity__c, BillingCountry__c, BillingProvince__c, BillingStreetName__c, BillingStreetNumber__c, BillingStreetNumberExtension__c,
         BillingPostalCode__c, BillingCityCode__c, SignatoryType__c, SendCertifiedEmailConsentDate__c, CreateContractAccount__c,
-        IbanCountry__c, isDatoDiscordante__c, Contact__c, OrderReference__c, AggregateBilling__c  FROM Order];
+        IbanCountry__c, isDatoDiscordante__c, Contact__c, OrderReference__c, AggregateBilling__c, SignedDate__c, DateSentToSII__c, EffectiveDate__c FROM Order];
 
         Test.startTest();
         HDT_UTL_Order.travasaOrder(myOrderList[0], myOrderList[1]);
@@ -340,7 +340,7 @@ public with sharing class HDT_UTL_OrderTst {
 
         System.assertNotEquals(0, myOrderList.size(), 'la lista non ha record');
         
-    }*/
+    }
 
     @IsTest
     static void annullaContrattiTest(){
