@@ -49,7 +49,6 @@
         </rules>
     </decisions>
     <description>Gestione attivività legata al Case Social</description>
-    <environments>Default</environments>
     <formulas>
         <name>isNewRecord</name>
         <dataType>Boolean</dataType>
@@ -176,6 +175,13 @@
             <operator>EqualTo</operator>
             <value>
                 <stringValue>Social</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>spr_sf__Sprinklr_Case_Number__c</field>
+            <operator>IsNull</operator>
+            <value>
+                <booleanValue>false</booleanValue>
             </value>
         </filters>
         <filters>
