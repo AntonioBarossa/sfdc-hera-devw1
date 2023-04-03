@@ -92,6 +92,10 @@ public with sharing class HDT_UTL_ContractSubsRelocationTest {
         subList[0].SBQQ__Contract__c = contractList[2].Id;
         subList[0].SBQQ__Product__c = prodList[1].Id;   
         subList[0].SBQQ__OrderProduct__c = orderItemList[2].Id;
+        
+        /*subList[1].SBQQ__Contract__c = contractList[2].Id;
+        subList[1].SBQQ__Product__c = prodList[0].Id;   
+        subList[1].SBQQ__OrderProduct__c = orderItemList[2].Id;*/
         insert subList;
         
     }
