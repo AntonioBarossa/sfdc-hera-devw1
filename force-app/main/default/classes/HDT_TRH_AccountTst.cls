@@ -30,7 +30,7 @@ public class HDT_TRH_AccountTst {
             accs[1].VATNumber__c='13288870150';
             accs[1].FiscalCode__c='13288870150';
             insert accs;
-            System.assertEquals(2, [Select id from Account].size(), 'One Account not inserted');
+            System.assertEquals(2, [SELECT id FROM Account].size(), 'One Account not inserted');
             
             accs[0].BirthDate__c = System.today();
             accs[0].isPartner = true;
@@ -41,4 +41,36 @@ public class HDT_TRH_AccountTst {
             
         }
      }
+
+     @isTest
+     static void test2(){
+         
+         Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+         User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+         internalUser.UserPermissionsMarketingUser=true;
+         insert internalUser;
+         
+         User internalUser2=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, true);
+ 
+         System.runAs(internalUser){
+             
+             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'HERA COMM','Azienda','Aziende SME');
+             accs[0].VATNumber__c='13288870150';
+             accs[0].FiscalCode__c='KNMKST92D20Z100D';
+             accs[1].VATNumber__c='13288870150';
+             accs[1].FiscalCode__c='13288870150';
+             insert accs;
+             System.assertEquals(2, [Select id from Account].size(), 'One Account not inserted');
+             
+             accs[0].BirthDate__c = System.today();
+             accs[0].isPartner = true;
+             accs[0].Published__c = true;
+             accs[0].OwnerId = internalUser2.Id;
+             update accs;
+             
+             System.assertEquals(internalUser2.Id, [SELECT id, OwnerId FROM Account][0].OwnerId, 'Account not updated');
+             
+         }
+      }
+
 }
