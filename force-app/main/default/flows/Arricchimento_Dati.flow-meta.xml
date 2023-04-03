@@ -163,7 +163,7 @@
         <defaultConnectorLabel>default</defaultConnectorLabel>
         <rules>
             <name>myRule_5</name>
-            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
             <conditions>
                 <processMetadataValues>
                     <name>inputDataType</name>
@@ -257,6 +257,37 @@
                     <stringValue>APP</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <processMetadataValues>
+                    <name>inputDataType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>leftHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>operatorDataType</name>
+                    <value>
+                        <stringValue>String</stringValue>
+                    </value>
+                </processMetadataValues>
+                <processMetadataValues>
+                    <name>rightHandSideType</name>
+                    <value>
+                        <stringValue>Picklist</stringValue>
+                    </value>
+                </processMetadataValues>
+                <leftValueReference>myVariable_current.Origin</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Web-MMS</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>myRule_5_A1</targetReference>
             </connector>
@@ -271,7 +302,7 @@
                 <stringValue>IF(ISBLANK([Case].Account.CustomerCode__c) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_2_myRule_1_A2_8429508118</name>
+        <name>formula_2_myRule_1_A2_9011165735</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Account.CustomerCode__c}) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</expression>
     </formulas>
@@ -282,7 +313,7 @@
                 <stringValue>IF(ISBLANK([Case].Account.CustomerCode__c) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_3_myRule_1_A1_0300844163</name>
+        <name>formula_3_myRule_1_A1_6799706300</name>
         <dataType>String</dataType>
         <expression>IF(ISBLANK({!myVariable_current.Account.CustomerCode__c}) , &apos;Completata&apos;, &apos;Da Inviare&apos;)</expression>
     </formulas>
@@ -293,11 +324,11 @@
                 <stringValue>[Case].CreatedDate + 19</stringValue>
             </value>
         </processMetadataValues>
-        <name>formula_6_myRule_5_A1_3521067438</name>
+        <name>formula_6_myRule_5_A1_2513278998</name>
         <dataType>Date</dataType>
         <expression>{!myVariable_current.CreatedDate} + 19</expression>
     </formulas>
-    <interviewLabel>Arricchimento_Dati-13_InterviewLabel</interviewLabel>
+    <interviewLabel>Arricchimento_Dati-14_InterviewLabel</interviewLabel>
     <label>Arricchimento Dati</label>
     <processMetadataValues>
         <name>ObjectType</name>
@@ -861,7 +892,7 @@
             </processMetadataValues>
             <field>TecnicalPhase__c</field>
             <value>
-                <elementReference>formula_3_myRule_1_A1_0300844163</elementReference>
+                <elementReference>formula_3_myRule_1_A1_6799706300</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1043,7 +1074,7 @@
             </processMetadataValues>
             <field>TecnicalPhase__c</field>
             <value>
-                <elementReference>formula_2_myRule_1_A2_8429508118</elementReference>
+                <elementReference>formula_2_myRule_1_A2_9011165735</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -1591,7 +1622,7 @@
             </processMetadataValues>
             <field>ExpirationDate__c</field>
             <value>
-                <elementReference>formula_6_myRule_5_A1_3521067438</elementReference>
+                <elementReference>formula_6_myRule_5_A1_2513278998</elementReference>
             </value>
         </inputAssignments>
         <object>Case</object>
