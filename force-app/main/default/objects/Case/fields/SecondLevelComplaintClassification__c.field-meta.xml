@@ -44,11 +44,6 @@
                 <label>Doppia Fatturazione</label>
             </value>
             <value>
-                <fullName>Qualità e continuità servizio</fullName>
-                <default>false</default>
-                <label>Qualità e continuità servizio</label>
-            </value>
-            <value>
                 <fullName>Fatturazione</fullName>
                 <default>false</default>
                 <label>Fatturazione</label>
@@ -94,6 +89,11 @@
                 <label>Qualità del Servizio</label>
             </value>
             <value>
+                <fullName>Qualità e continuità servizio</fullName>
+                <default>false</default>
+                <label>Qualità e continuità servizio</label>
+            </value>
+            <value>
                 <fullName>Servizio Clienti</fullName>
                 <default>false</default>
                 <label>Servizio Clienti</label>
@@ -129,7 +129,14 @@
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
             <valueName>Impatti Ambientali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Lavori e prestazioni accessorie su cliente</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
@@ -166,6 +173,13 @@
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
+            <valueName>Qualità e continuità servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
+            <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
             <valueName>Servizio Clienti</valueName>
         </valueSettings>
         <valueSettings>
