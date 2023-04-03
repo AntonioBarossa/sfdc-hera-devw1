@@ -175,10 +175,10 @@ public inherited sharing class HDT_UTL_Case {
             }
 
             if (!String.isBlank(newCurrentCase.RateCategory__c) && 'ACDOMRESP0'.equalsIgnoreCase(newCurrentCase.RateCategory__c)) {
-                output.customerChangeDate = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
                 currentCase.Cohabitation__c = 'No';
-                output.currentCase = currentCase;
             }
+            currentCase.CustomerChangeDate__c = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+            output.currentCase = currentCase;
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
