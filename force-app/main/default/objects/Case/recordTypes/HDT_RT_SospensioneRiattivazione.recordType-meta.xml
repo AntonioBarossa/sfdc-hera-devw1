@@ -7912,6 +7912,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Alexa</fullName>
             <default>false</default>
