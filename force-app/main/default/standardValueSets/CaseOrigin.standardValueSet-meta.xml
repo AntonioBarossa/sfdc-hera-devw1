@@ -181,4 +181,9 @@
         <default>false</default>
         <label>Web-MMS</label>
     </standardValue>
+    <standardValue>
+        <fullName>Facebook</fullName>
+        <default>false</default>
+        <label>Facebook</label>
+    </standardValue>
 </StandardValueSet>
