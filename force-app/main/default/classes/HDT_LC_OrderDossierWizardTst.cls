@@ -137,4 +137,32 @@ public with sharing class HDT_LC_OrderDossierWizardTst {
 
         Test.stopTest();
     }
+
+    @isTest
+    public static void testInitWihoutSale() {
+
+        Test.startTest();
+
+        Order testOrder = [SELECT Id FROM Order WHERE Name Like 'testOrderName%' LIMIT 1];
+
+        Map<String,Object> check = HDT_LC_OrderDossierWizard.initWihoutSale(testOrder.Id);
+
+        System.assertEquals(true, check.get('check'), 'InitWihoutSale did not work correctly');
+        System.assertNotEquals(false, check.get('check'), 'InitWihoutSale did not work correctly');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testIsCommunity() {
+
+        Test.startTest();
+
+        Map<String, Object> check = HDT_LC_OrderDossierWizard.isCommunity();
+
+        System.assertEquals(false, check.get('isCommunity'), 'isCommunity did not work correctly');
+        System.assertNotEquals(true, check.get('isCommunity'), 'isCommunity did not work correctly');
+
+        Test.stopTest();
+    }
 }

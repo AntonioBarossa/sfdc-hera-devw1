@@ -40,10 +40,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
     }
 
     public static void updateReadingDate(List<Order> orderList){
-		List<Reading__c> readingList = [ SELECT ReadingDate__c FROM Reading__c WHERE OrderAcqua__c IN :orderList WITH SECURITY_ENFORCED ];
+		List<Reading__c> readingList = [ SELECT ReadingDate__c, ReadingValueMeter__c, OrderAcqua__r.MeterSN__c FROM Reading__c WHERE OrderAcqua__c IN :orderList WITH SECURITY_ENFORCED ];
 		if(!readingList.isEmpty()){
 			for( Reading__c reading : readingList ){
 				reading.ReadingDate__c = System.today();
+				reading.ReadingValueMeter__c = String.isBlank(reading.OrderAcqua__r.MeterSN__c)? 0 : reading.ReadingValueMeter__c;
 			}
 			HDT_UTL_DatabaseService.updateSObject(readingList);
         }
