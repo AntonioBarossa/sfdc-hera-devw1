@@ -7754,7 +7754,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Phone</fullName>
+            <fullName>Heroku</fullName>
             <default>false</default>
         </values>
         <values>
@@ -7763,6 +7763,10 @@
         </values>
         <values>
             <fullName>Alexa</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
         <values>
