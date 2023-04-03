@@ -32,7 +32,7 @@
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>InputCase</elementReference>
+                <elementReference>CaseInput.Id</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -2144,7 +2144,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputCase</elementReference>
+                <elementReference>CaseInput.Id</elementReference>
             </value>
         </filters>
         <getFirstRecordOnly>true</getFirstRecordOnly>
@@ -2309,7 +2309,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputCase</elementReference>
+                <elementReference>CaseInput.Id</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -2340,7 +2340,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputCase</elementReference>
+                <elementReference>CaseInput.Id</elementReference>
             </value>
         </filters>
         <inputAssignments>
@@ -2382,7 +2382,7 @@
             <field>Id</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>InputCase</elementReference>
+                <elementReference>CaseInput.Id</elementReference>
             </value>
         </filters>
         <inputAssignments>
