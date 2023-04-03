@@ -302,17 +302,22 @@ public with sharing class HDT_UTL_GenericSolHandler {
 
     public static List<OrderItem> generateOrderItem(Contract outCustomerContract,Order childOrder,Map<String,Object>params ){
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
-        List<SBQQ__Subscription__c> subscriptions = new List<SBQQ__Subscription__c>();
+        List<SBQQ__Subscription__c> subscriptions = qrContract.getSubscriptionsFromContract(outCustomerContract.Id);
         Set<Id> productIds=new Set<Id>();
         List<OrderItem>ois=new List<OrderItem>();
-        for(SBQQ__Subscription__c subscription : qrContract.getSubscriptionsFromContract(outCustomerContract.Id)){
-            subscriptions.add(subscription);
+        Integer offertaCommercialeIndex=0;
+        String offertaCommercialeCode='';
+        for(SBQQ__Subscription__c subscription : subscriptions){
+            if(subscription.SBQQ__Product__r.Family == 'Offerta commerciale'){
+                offertaCommercialeIndex=subscriptions.indexOf(subscription);
+                offertaCommercialeCode=subscription.SBQQ__Product__r.ProductCode;
+            }
             productIds.add(subscription.SBQQ__Product__c);
         }
         if(subscriptions.size()>0){
-            childOrder.CommercialProduct__c = subscriptions[0].SBQQ__ProductName__c;
-            childOrder.CommercialProductCode__c = subscriptions[0].ProductCode__c;
-            childOrder.CommercialProductVersion__c = subscriptions[0].VersionFormula__c;
+            childOrder.CommercialProduct__c = subscriptions[offertaCommercialeIndex].SBQQ__ProductName__c;
+            childOrder.CommercialProductCode__c = subscriptions[offertaCommercialeIndex].ProductCode__c;
+            childOrder.CommercialProductVersion__c = subscriptions[offertaCommercialeIndex].VersionFormula__c;
         }
         if(productIds.size()>0){
             Map<String,PricebookEntry> peMap=getProductInfoVoltura(productIds);
@@ -329,6 +334,12 @@ public with sharing class HDT_UTL_GenericSolHandler {
                     )
                 );
             }
+            if(String.isNotBlank(childOrder.SalesCompany__c) && String.isNotBlank(offertaCommercialeCode)){
+                AmministrazioneSottotipologiaUso__c sottoTipologia=HDT_SRV_DataEnrichmentPostSales.handleSubType(childOrder.SalesCompany__c,offertaCommercialeCode);
+                childOrder.IntendedUse__c=sottoTipologia.IntendedUse__c;
+                childOrder.UseSubCategory__c=sottoTipologia.SottotipologiaUso__c;
+            }
+
         }
         return ois;
     }
