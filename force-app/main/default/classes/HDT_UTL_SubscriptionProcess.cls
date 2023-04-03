@@ -19,6 +19,43 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
             }
         }
     }
+    /**
+     * Il Metodo si occupa di estrarre l'Id della Subscription di tipo Offerta commerciale e la applica alle Subscriptions
+     * di tipo Related Product che hanno il RequiredBy null
+     */
+    public static void adjustLookup(List<SBQQ__Subscription__c> newSubs,Map<Id,SObject> oldSubMap){
+        Set<Id> contractSet = new Set<Id>();
+        List<SBQQ__Subscription__c> subsToAdjustList = new List<SBQQ__Subscription__c>();
+        for(SBQQ__Subscription__c sub : newSubs){
+            SBQQ__Subscription__c oldSub = (SBQQ__Subscription__c)oldSubMap.get(sub.Id);
+            Id oldRootId = oldSub.SBQQ__RootId__c;
+            Id newRootId = sub.SBQQ__RootId__c;
+            if(String.isBlank(oldRootId) && String.isNotBlank(newRootId)){
+                Boolean isOption = 'Related Product'.equalsIgnoreCase(sub.SBQQ__OptionType__c)? true : false;
+                Boolean isRequiredBlank = String.isBlank(sub.SBQQ__RequiredById__c);
+                if(isOption && isRequiredBlank){
+                    subsToAdjustList.add(sub);
+                    contractSet.add(sub.SBQQ__Contract__c);
+                }
+            }
+        }
+        if(!contractSet.isEmpty()){
+            List<SBQQ__Subscription__c> subOfferList = [SELECT Id,SBQQ__Product__c,SBQQ__Contract__c FROM SBQQ__Subscription__c WHERE SBQQ__Contract__c IN:contractSet  AND SBQQ__Product__r.Family = 'Offerta commerciale'];
+            Map<Id,RootLookup> contractRootLookupMap = new Map<Id,RootLookup>();
+            for(SBQQ__Subscription__c singleSub : subOfferList){
+                RootLookup rootLookup = new RootLookup(singleSub.Id, singleSub.SBQQ__Product__c);
+                contractRootLookupMap.put(singleSub.SBQQ__Contract__c, rootLookup);
+            }
+            for(SBQQ__Subscription__c sub : subsToAdjustList){
+                RootLookup rootLookup = contractRootLookupMap.get(sub.SBQQ__Contract__c);
+                if(rootLookup != null){
+                    sub.SBQQ__RootId__c = rootLookup.rootId;
+                    sub.SBQQ__RequiredById__c = rootLookup.rootId;
+                    sub.SBQQ__RequiredByProduct__c  = rootLookup.productId;
+                }
+            }
+        }
+    }
     
     /**
      * Questo metodo serve solo per i VAS venduti su Contratti Attivi
@@ -196,69 +233,68 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
         Map<Id, Set<Id>> itemToServicePoint = itemsMapToSub.get('servicePoint');
         Map<Id, Set<Id>> itemToContract = itemsMapToSub.get('contract');
         Map<Id, Set<Id>> itemToOrderOffer = itemsMapToSub.get('order');
+        if(!itemToServicePoint.isEmpty() || !itemToContract.isEmpty() || !itemToOrderOffer.isEmpty() ){
+            SObjectAccessDecision securityDecision = 
+                Security.stripInaccessible(accessType.READABLE, 
+                [SELECT Id,
+                SBQQ__Product__c,
+                SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c,
+                SBQQ__Contract__c,
+                SBQQ__Contract__r.SBQQ__Order__c
+                FROM SBQQ__Subscription__c
+                WHERE SBQQ__Product__r.Family = 'Offerta commerciale' 
+                AND(
+                    SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet()
+                    OR SBQQ__Contract__c IN :itemToContract.keySet()
+                    OR SBQQ__Contract__r.SBQQ__Order__c IN :itemToOrderOffer.keySet()
+                    )
+                ]);
+            for(SBQQ__Subscription__c parentSub : (List<SBQQ__Subscription__c>)securityDecision.getRecords())
+            {
+                List<SBQQ__Subscription__c> childSubs = new List<SBQQ__Subscription__c>();
 
-        SObjectAccessDecision securityDecision = 
-            Security.stripInaccessible(accessType.READABLE, 
-            [SELECT Id,
-            SBQQ__Product__c,
-            SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c,
-            SBQQ__Contract__c,
-            SBQQ__Contract__r.SBQQ__Order__c
-            FROM SBQQ__Subscription__c
-            WHERE SBQQ__Product__r.Family = 'Offerta commerciale' 
-            AND(
-                SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c IN :itemToServicePoint.keySet()
-                OR SBQQ__Contract__c IN :itemToContract.keySet()
-                OR SBQQ__Contract__r.SBQQ__Order__c IN :itemToOrderOffer.keySet()
-                )
-            ]);
-        for(SBQQ__Subscription__c parentSub : (List<SBQQ__Subscription__c>)securityDecision.getRecords())
-        {
-            List<SBQQ__Subscription__c> childSubs = new List<SBQQ__Subscription__c>();
-
-            
-            if(!itemToServicePoint.isEmpty())
-            {   
-                for(Id itemId : itemToServicePoint.get(parentSub.SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c))
-                {
-                    if(itemToSub.get(itemId) != null)
+                
+                if(!itemToServicePoint.isEmpty())
+                {   
+                    for(Id itemId : itemToServicePoint.get(parentSub.SBQQ__Contract__r.SBQQ__Order__r.ServicePoint__c))
                     {
-                        childSubs.add(itemToSub.get(itemId));
+                        if(itemToSub.get(itemId) != null)
+                        {
+                            childSubs.add(itemToSub.get(itemId));
+                        }
                     }
                 }
-            }
-            else if(!itemToContract.isEmpty())
-            {
-                for(Id itemId : itemToContract.get(parentSub.SBQQ__Contract__c))
+                else if(!itemToContract.isEmpty())
                 {
-                    if(itemToSub.get(itemId) != null)
+                    for(Id itemId : itemToContract.get(parentSub.SBQQ__Contract__c))
                     {
-                        childSubs.add(itemToSub.get(itemId));
-                    }
-                }
-            }
-
-            else if(!itemToOrderOffer.isEmpty())
-            {
-                for(Id itemId : itemToOrderOffer.get(parentSub.SBQQ__Contract__r.SBQQ__Order__c))
-                {
-                    if(itemToSub.get(itemId) != null)
-                    {
-                        childSubs.add(itemToSub.get(itemId));
+                        if(itemToSub.get(itemId) != null)
+                        {
+                            childSubs.add(itemToSub.get(itemId));
+                        }
                     }
                 }
 
-            }
-            
-            for(SBQQ__Subscription__c sub : childSubs)
-            {
-                sub.SBQQ__RequiredByProduct__c = parentSub.SBQQ__Product__c;
-                sub.SBQQ__RequiredById__c = parentSub.Id;
-                sub.SBQQ__RootId__c = parentSub.Id;
-            }
+                else if(!itemToOrderOffer.isEmpty())
+                {
+                    for(Id itemId : itemToOrderOffer.get(parentSub.SBQQ__Contract__r.SBQQ__Order__c))
+                    {
+                        if(itemToSub.get(itemId) != null)
+                        {
+                            childSubs.add(itemToSub.get(itemId));
+                        }
+                    }
 
+                }
+                
+                for(SBQQ__Subscription__c sub : childSubs)
+                {
+                    sub.SBQQ__RequiredByProduct__c = parentSub.SBQQ__Product__c;
+                    sub.SBQQ__RequiredById__c = parentSub.Id;
+                    sub.SBQQ__RootId__c = parentSub.Id;
+                }
+            }
         }
-        
     }
 
     public static void deleteContractsOnAfterInsert(){
@@ -279,6 +315,16 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 contractToDelete.clear();
             }
         }
+    }
+
+    public class RootLookup{
+        public Id rootId;
+        public Id productId;
+        public RootLookup(Id rootId, Id productId){
+            this.rootId = rootId;
+            this.productId = productId;
+        }
+        public RootLookup(){}
     }
 
 }
