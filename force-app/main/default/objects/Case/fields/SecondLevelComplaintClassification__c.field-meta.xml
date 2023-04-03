@@ -44,6 +44,11 @@
                 <label>Doppia Fatturazione</label>
             </value>
             <value>
+                <fullName>Qualità e continuità servizio</fullName>
+                <default>false</default>
+                <label>Qualità e continuità servizio</label>
+            </value>
+            <value>
                 <fullName>Fatturazione</fullName>
                 <default>false</default>
                 <label>Fatturazione</label>

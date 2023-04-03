@@ -210,6 +210,11 @@
                 <label>Modalità di pagamento</label>
             </value>
             <value>
+                <fullName>Modalità di pagamento/rimborso</fullName>
+                <default>false</default>
+                <label>Modalità di pagamento/rimborso</label>
+            </value>
+            <value>
                 <fullName>Modifiche unilaterali</fullName>
                 <default>false</default>
                 <label>Modifiche unilaterali</label>
