@@ -10143,6 +10143,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PayPurification__c</picklist>
