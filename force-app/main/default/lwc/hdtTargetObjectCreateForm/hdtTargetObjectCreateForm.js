@@ -1076,6 +1076,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         }
         if (event.target.fieldName == 'ServicePointCode__c') {
+            this.allSubmitedFields[event.target.fieldName] = event.target.value?.toUpperCase();
             this.spCodeChanged = true;
         }
         if (event.target.fieldName == 'PlugPresence__c') {

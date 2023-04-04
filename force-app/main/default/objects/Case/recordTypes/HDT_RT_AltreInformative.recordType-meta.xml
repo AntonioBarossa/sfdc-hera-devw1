@@ -7895,6 +7895,10 @@
             <fullName>Facebook</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>

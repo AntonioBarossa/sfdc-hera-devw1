@@ -1237,6 +1237,7 @@
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
                 <identifier>knowledgeTab</identifier>
+                <identifier>knowledgeTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -1299,6 +1300,7 @@
                     <name>recordId</name>
                 </componentInstanceProperties>
                 <componentName>hdtActivityTrace</componentName>
+                <identifier>hdtActivityTrace</identifier>
                 <identifier>hdtActivityTrace</identifier>
             </componentInstance>
         </itemInstances>
