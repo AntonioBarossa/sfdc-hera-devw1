@@ -2595,73 +2595,73 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>totaleAcquistoKit1HeraLedNoPromo</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedPromo</name>
         <dataType>Number</dataType>
         <expression>72*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedSmart</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedSmartNoPromo</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedSmartPromo</name>
         <dataType>Number</dataType>
         <expression>112*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLed</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedNoPromo</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedPromo</name>
         <dataType>Number</dataType>
         <expression>72*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedSmart</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedSmartNoPromo</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedSmartPromo</name>
         <dataType>Number</dataType>
         <expression>112*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquitoKit1HeraLed</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleCostoMonopattiniElettrici</name>
@@ -3146,7 +3146,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(112€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -3175,7 +3175,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartNoPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartNoPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -3219,7 +3219,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_2_TOTALE_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(112€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -3248,7 +3248,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_2_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartNoPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartNoPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -5871,7 +5871,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_LED_Generico_0</name>
-            <fieldText>&lt;p&gt;[&lt;b&gt;HERA LED&lt;/b&gt;]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5881,7 +5881,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_Generico_2</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;﻿[Condizioni economiche e di acquisto Hera LED]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;﻿Condizioni economiche e di acquisto Hera LED&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5916,7 +5916,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquitoKit1HeraLed} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquitoKit1HeraLed}&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€ (90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5938,7 +5938,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLed} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLed}&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€ (90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6005,7 +6005,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_Generico_3</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -6024,7 +6024,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_LED_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA LED]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera LED]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera LED&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6160,7 +6160,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_TOTALE_NO_PROMO_1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(72€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -6189,7 +6189,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo}€ &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;(90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -6233,7 +6233,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_TOTALE_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedPromo}€ &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;(72€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -6262,7 +6262,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedNoPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -6336,7 +6336,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -6400,7 +6400,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmart} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmart}&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€ (140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6422,7 +6422,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmart} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmart}&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;€ (140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione).&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -7020,7 +7020,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_NP_Luce_Intro</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA NO PROBLEM LUCE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo di aderire alla polizza AXA Partners Italia “Hera No Problem Luce” che le offre copertura assicurativa in caso di guasto all’impianto elettrico, al quadro elettrico, alle prese o portalampada e agli interruttori, anche in caso di fulmine, come ampiamente illustrato in corso di proposizione commerciale precedente a questa registrazione e in aggiunta prevede il vetraio, il fabbro, il riparatore di elettrodomestici e di caldaia.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA NO PROBLEM LUCE&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo di aderire alla polizza AXA Partners Italia “Hera No Problem Luce” che le offre copertura assicurativa in caso di guasto all’impianto elettrico, al quadro elettrico, alle prese o portalampada e agli interruttori, anche in caso di fulmine, come ampiamente illustrato in corso di proposizione commerciale precedente a questa registrazione e in aggiunta prevede il vetraio, il fabbro, il riparatore di elettrodomestici e di caldaia.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>

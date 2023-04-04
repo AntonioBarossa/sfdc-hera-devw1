@@ -129,7 +129,7 @@ export default class HdtAttachmentManager extends LightningElement {
                     }
                     break;
                 case 'PIANO RATEIZZAZIONE':
-                    if(!String.isBlank(this.currObject.MandatoryAttachments__c)){
+                    if(this.currObject.MandatoryAttachments__c){
                         objectToReturn = { 
                             isValid: false, 
                             errorMessage: 'È obbligatorio inserire almeno un allegato' 
