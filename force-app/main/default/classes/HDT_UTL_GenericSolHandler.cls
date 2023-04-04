@@ -163,7 +163,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         String contractNumber = (String)params.get('contractNumber');
         List<Contract> contractList = getContractByNumber(contractNumber);
         HDT_QR_BillingProfile qrBilling = new HDT_QR_BillingProfile();
-        BillingProfile__c bp=qrBilling.getRecordByIdVolturaSol(contractList[0].BillingProfile__c);
+        BillingProfile__c bp=qrBilling.getNewestByAccountId(parentOrder.AccountId);
         Order childOrder=parentOrder.clone(false,true,false,false);
         childOrder.ParentOrder__c=parentOrder.Id;
         childOrder.IntegrationId__c='';
@@ -177,13 +177,13 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
         childOrder.Channel__c='Web';
-        childOrder.BillingProfile__c=contractList[0].BillingProfile__c;
+        childOrder.BillingProfile__c=bp.Id;
         childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
         childOrder.CausalCode__c='MA1';
         childOrder.ProcessCode__c='MA1';
-        parentOrder.BillingProfile__c=contractList[0].BillingProfile__c;
+        parentOrder.BillingProfile__c=bp.Id;
         parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         parentOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
@@ -216,6 +216,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.SapContractCode__c=contractList[0].SAPContractCode__c;
             childOrder.ATO__c=contractList[0].ServicePoint__r.ATO__c;
             childOrder.Disconnectable__c=contractList[0].ServicePoint__r.Disconnectable__c;
+            childOrder.NotDisconnectabilityCustomer__c= contractList[0].ServicePoint__r.Disconnectable__c == 'Si' ? 'No' : 'Si';
+            childOrder.AggregateBilling__c='No';
             childOrder.DisconnectibilityType__c=contractList[0].ServicePoint__r.DisconnectibilityType__c;
             childOrder.MarketOrigin__c=contractList[0].ServicePoint__r.MarketOrigin__c;
 
