@@ -52,6 +52,16 @@
                 <label>ESTENERGY_Credit_Check_Target</label>
             </value>
             <value>
+                <fullName>ESTENERGY_CVMBO_Fiscale</fullName>
+                <default>false</default>
+                <label>ESTENERGY_CVMBO_Fiscale</label>
+            </value>
+            <value>
+                <fullName>ESTENERGY_CVMBO_Processo_Volture_NC</fullName>
+                <default>false</default>
+                <label>ESTENERGY_CVMBO_Processo_Volture_NC</label>
+            </value>
+            <value>
                 <fullName>ESTENERGY_ESCALATION</fullName>
                 <default>false</default>
                 <label>ESTENERGY_ESCALATION</label>
@@ -592,9 +602,69 @@
                 <label>HC_CVMBO_CORPMUI_PTA_SD singola_HC</label>
             </value>
             <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Annullamento contratti_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Annullamento contratti_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Comportamento Venditori_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Comportamento Venditori_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Contratto non richiesto_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Contratto non richiesto_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_M01_M02 Esiti KO_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_M01_M02 Esiti KO_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Protocollo_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Protocollo_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Reclami_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Reclami_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_C_Verifica titolarità POD/PDR_Target</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Contratto non richiesto_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Contratto non richiesto_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_Escalation_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_Escalation_HC</label>
+            </value>
+            <value>
                 <fullName>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_CSRCVME_CVME_Protocollo_Reclami_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_PV_M01_M02 Esiti KO_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_PV_M01_M02 Esiti KO_NC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_CSRCVME_CVME_PV_Reclami_NC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_CSRCVME_CVME_PV_Reclami_NC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_CSREG_Bonus Sociale Energy</fullName>
@@ -670,6 +740,16 @@
                 <fullName>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CFBS_Copia bolletta/bollettino_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Credit Check_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Credit Check_HC</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CFBS_Credit Check_Target</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CFBS_Credit Check_Target</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CFBS_Disattivazioni_HC</fullName>
@@ -950,6 +1030,11 @@
                 <fullName>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</fullName>
                 <default>false</default>
                 <label>HC_CVMBO_MMSME_CRBO_Richiesta domiciliazione_Linetech</label>
+            </value>
+            <value>
+                <fullName>HC_CVMBO_MMSME_CRGC_Escalation Legge 80_HC</fullName>
+                <default>false</default>
+                <label>HC_CVMBO_MMSME_CRGC_Escalation Legge 80_HC</label>
             </value>
             <value>
                 <fullName>HC_CVMBO_MMSME_CVMC_Annullamento contratti_HC</fullName>
@@ -1255,6 +1340,11 @@
                 <fullName>HC_VenditaMM</fullName>
                 <default>false</default>
                 <label>HC_VenditaMM</label>
+            </value>
+            <value>
+                <fullName>HCM_BACK_Annullamento Contratti</fullName>
+                <default>false</default>
+                <label>HCM_BACK_Annullamento Contratti</label>
             </value>
             <value>
                 <fullName>HCM_BACK_Approvazione</fullName>

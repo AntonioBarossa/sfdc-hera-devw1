@@ -27,7 +27,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         String confirmText = type == 'Comfort' ? 'Comfort call' : 'Quality call';
         String causalQuality = '';
-        List<Order> upList = new List<Order>();
+        //List<Order> upList = new List<Order>();
         String qualityMessage = 'Attività lavorata da ' + UserInfo.getUserId()+ ' il ' +Date.today()+ '. Esito Contatto: ' + confirmText +' OK.';
         Order orderUpdate = new Order(
             Id = ordId,
@@ -58,9 +58,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             causalQuality = 'Comfort Call OK';
             //orderUpdate.SignedDate__c = Date.today();
             orderUpdate.Phase__c = phase;
-            //upList.add(orderUpdate);
-            upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
-            upList.add(orderUpdate);
+            /* upList.add(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
+            upList.add(orderUpdate); */
+            //Divisione update order padre rispetto al figlio per il calcolo delle date.
+            orderSrv.updateRecord(new Order(Id = ordComf[0].ParentOrder__c, SignedDate__c = Date.today()));
         }
         else {
             List<Order> orderActiveMonitoring = orderQr.getOrderForActiveMonitoringCheck(ordId);
@@ -74,10 +75,10 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 
             }
             causalQuality = 'Quality Call OK';
-            upList.add(orderUpdate);
+            //upList.add(orderUpdate);
         }
-        HDT_UTL_DatabaseService.updateSObject(upList);
-        //orderSrv.updateRecord(orderUpdate);
+        //HDT_UTL_DatabaseService.updateSObject(upList);
+        
 
         wrts_prcgvr__Activity__c act = createActivityToClose(activityId);
         act.wrts_prcgvr__Status__c = 'Esitata';
@@ -91,6 +92,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
             }
         }
         campMembSrv.updateRecords(campMembList);
+        //Cambio fase con date già calcolate.
+        orderSrv.updateRecord(orderUpdate);
         if (campMembList!=null && campMembList.size()>0) {
             return campMembList[0];
         }
@@ -138,9 +141,14 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
 
         List<Order> allOrders = orderQr.getAllOrdersForComfort(ordToCheck[0].ParentOrder__c);
 
+        Set<Id> allOrdersVas  = new Set<Id>(); 
+        if(ordToCheck[0].Recordtype.Developername !='HDT_RT_VAS'){
+            allOrdersVas = orderQr.getAllOrdersVasForComfort(ordId ,ordToCheck[0].SBQQ__Quote__c);
+        }
+
         if (allOrders!=null && allOrders.size()>0) {
             for (Order currOrd:allOrders){
-                if (currOrd.Id!=ordToCheck[0].Id) {
+                if (currOrd.Id!=ordToCheck[0].Id && (!allOrdersVas.contains(currOrd.Id))) {
                     if (!String.isBlank(currOrd.ConfirmCustomerContract__c) ||
                     (String.isBlank(currOrd.ConfirmCustomerContract__c) && String.isBlank(currOrd.CancellationReason__c) && String.isBlank(currOrd.WorkedQualityCall__c))) {
                         checkOk=true;
@@ -193,6 +201,7 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         }
         else
         {
+            Map<String,String> cancelCode = getCancelCode(ordToCheck[0].ProcessCode__c,causal);
             String phase = (HDT_UTL_Order.checkCancellationPhase(new Set<String>{ordId})).get(ordId);
             String status = phase.equalsIgnoreCase('Annullato') ? 'Annullato' : 'In Lavorazione';
             wrts_prcgvr__Activity__c act = new wrts_prcgvr__Activity__c(Id = activityId);
@@ -214,6 +223,8 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
                 CancellationReason__c = causal,
                 CancellationRequestDate__c = System.today(),
                 Status = status,
+                CancellationReasonCode__c = cancelCode.get('cCode'),
+                CancellationReasonDescription__c = cancelCode.get('cReason'),
                 WorkedQualityCall__c = qualityMessage
             ));
 
@@ -234,6 +245,19 @@ public inherited sharing class HDT_LC_OrdersForComfortQualityList {
         else {
             return null;
         }
+    }
+
+    private static Map<String,String> getCancelCode(String cCode, String cReason){
+        Map<String,String> cc = new Map<String,String>();
+        HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason rcrIn = new HDT_UTL_CaseCancellation.HDT_UTL_RequestCancellationReason();
+        rcrIn.causalCode = cCode;
+        rcrIn.processCancellationReason = cReason;
+        HDT_UTL_CaseCancellation.HDT_UTL_ResponseCancellationReason rcrOut = HDT_UTL_CaseCancellation.getCancellationReason(rcrIn);
+        if ('OK'.equalsIgnoreCase(rcrOut.outcome)){
+            cc.put('cCode', rcrOut.causalCode);
+            cc.put('cReason', rcrOut.cancellationReason);
+        }
+        return cc;
     }
 
     @AuraEnabled

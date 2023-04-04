@@ -9,6 +9,7 @@
 global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction{
     
     private static final String REQUEST_PATH = '/notice';
+    private static final String NOTA_ANNULLAMENTO = 'Appuntamento cancellato da Call Center';
 
     public class HDT_WS_AnnullamentoSegnalazioneResponse extends HDT_WS_Response{
         @AuraEnabled public List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails> errorDetails {get;set;}
@@ -50,7 +51,9 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
 
                 currentCase.TecnicalPhase__c = 'Annullato';
                 currentCase.Status= 'Closed';
-
+                //currentCase.Description= STRING.valueOf(obj.get(Case.Description))+'\n\nNota Cancellazione App.to da Call Center';
+                currentCase.Description= NOTA_ANNULLAMENTO;
+                
                 if(!currentCase.WithdrawalFee__c && currentCase.ServicePoint__c != null){ //Se Ritiro Gratuito
             
                     Datetime createdDate = currentCase.CreatedDate;
@@ -79,6 +82,7 @@ global inherited sharing class HDT_WS_AnnullamentoSegnalazione implements wrts_p
                     result=oldTransitions.split('\\|\\|')[0].trim().substringBefore('@');
                     System.debug(LoggingLevel.DEBUG,'oldTransition -> ' + result);
                     currentCase.TecnicalPhase__c = result;
+                    currentCase.Description= 'Impossibile annullare l\'appuntamento';
                 }
             }
 

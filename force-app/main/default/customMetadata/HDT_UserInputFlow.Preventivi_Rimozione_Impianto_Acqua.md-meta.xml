@@ -8,15 +8,32 @@
     </values>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;Type&quot;,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;Commodity__c&quot;,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;Subprocess__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;IntendedUse__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;SupplyUseType__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;UseSubCategory__c&quot;,&quot;Required&quot;:true,&quot;Column&quot;:2},
-{&quot;FieldName&quot;:&quot;DistributorNote__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
-  {
-        &quot;FieldName&quot;: &quot;AlternativeEmail__c&quot;,
+        <value xsi:type="xsd:string">[{
+        &quot;FieldName&quot;: &quot;Type&quot;,
+        &quot;ReadOnly&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;Commodity__c&quot;,
+        &quot;ReadOnly&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;Subprocess__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;WrittenReceiptRequestDate__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;DistributorNote__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;PhoneNumber__c&quot;,
+        &quot;Required&quot;: true,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;Email__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 2
     }
@@ -37,10 +54,6 @@
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
     }, {
-        &quot;FieldName&quot;: &quot;PhoneNumber__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    }, {
         &quot;FieldName&quot;: &quot;BillingProfile__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
@@ -49,19 +62,51 @@
         &quot;Required&quot;: false,
         &quot;Column&quot;: 1
     }, {
-        &quot;FieldName&quot;: &quot;CommodityFormula__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 2
-    }, {
         &quot;FieldName&quot;: &quot;SupplyType__c&quot;,
         &quot;Required&quot;: false,
-        &quot;Column&quot;: 2
+        &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;Market__c&quot;,
         &quot;Required&quot;: false,
-        &quot;Column&quot;: 2
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;SupplyUseType__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 1
     }, {
         &quot;FieldName&quot;: &quot;MeterRelation__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 1
+    }, {
+        &quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;CaliberAvailable__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;MeterCode__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;AnnualConsumption__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;UseSubCategory__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;IntendedUse__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;AddressFormula__c&quot;,
+        &quot;Required&quot;: false,
+        &quot;Column&quot;: 2
+    }, {
+        &quot;FieldName&quot;: &quot;MeterCode__c&quot;,
         &quot;Required&quot;: false,
         &quot;Column&quot;: 2
     }

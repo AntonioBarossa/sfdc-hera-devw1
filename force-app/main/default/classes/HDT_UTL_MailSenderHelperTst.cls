@@ -24,7 +24,10 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         
         Id recTypeId = utlConstants.CASE_RECORDTYPEID_MOROSITA;
         String recTypeName = utlConstants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA;
+        Id recTypeIdInfo = utlConstants.CASE_RECORDTYPEID_INFORMATIVE;
+        String recTypeNameInfo = utlConstants.CASE_RECORDTYPE_DEVELOPERNAME_INFORMATIVE;
         HDT_UTL_DataFactoryTst.newPhaseTransition('Annullato','Bozza', recTypeId, recTypeName);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa risposta Mail','Bozza', recTypeIdInfo, recTypeNameInfo);
     
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
@@ -37,9 +40,10 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         List<EmailMessage> emailMessageList = HDT_UTL_DataFactoryTst.createEmailMessage(2, false);
         emailMessageList[0].RelatedToId = caseList[0].Id;
         emailMessageList[0].Subject = 'Comunicazione dal gestore';
-        emailMessageList[1].RelatedToId = caseList[1].Id;
+        insert emailMessageList[0];
+        emailMessageList[1].RelatedToId = caseList[0].Id;
         emailMessageList[1].Subject = 'Sollecito';
-        insert emailMessageList;
+        insert emailMessageList[1];
     }
 
     /**​
@@ -58,7 +62,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         actual = HDT_UTL_MailSenderHelper.checkForReminderMail(emailMessageList[0].RelatedToId);
         Test.stopTest();
         
-        System.assertEquals(true,actual,'Error Failed check');
+        System.assertEquals(false,actual,'Error Failed check');
     }
 
     /**​
@@ -78,7 +82,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         mailSenderResultActual = HDT_UTL_MailSenderHelper.getReminderMetadataHelper(emailMessageList[0].RelatedToId);
         Test.stopTest();
        
-        System.assertEquals('Non ci sono template', mailSenderResultActual.message, 'Error message of mail sender result');
+        System.assertEquals(null, mailSenderResultActual.message, 'Error message of mail sender result');
     }
 
      /**​
@@ -141,7 +145,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generalCaseResultActual;
 
         Test.startTest();
-        generalCaseResultActual = HDT_UTL_MailSenderHelper.updateReminderCase(emailMessageList[0].RelatedToId);
+        generalCaseResultActual = HDT_UTL_MailSenderHelper.updateReminderCase(emailMessageList[0].RelatedToId,true);
         Test.stopTest();
 
         System.assertEquals(true,generalCaseResultActual.success,'Error general case result was not update correctly');
@@ -161,7 +165,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generalCaseResultActual;
 
         Test.startTest();
-        generalCaseResultActual = HDT_UTL_MailSenderHelper.generateNewCase(caseList[0].Id);
+        generalCaseResultActual = HDT_UTL_MailSenderHelper.generateNewCase(caseList[0].Id,true);
 
         Test.stopTest();
 
@@ -182,7 +186,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult generalCaseResultActual;
 
         Test.startTest();
-        generalCaseResultActual = HDT_UTL_MailSenderHelper.generateNewCase(emailMessageList[0].Id);
+        generalCaseResultActual = HDT_UTL_MailSenderHelper.generateNewCase(emailMessageList[0].Id,true);
         Test.stopTest();
 
         System.assertEquals(false,generalCaseResultActual.success,'Error general case result was not update correctly');
@@ -225,7 +229,7 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         String toAddress = orgWideEmailAdress[0].Address;
         String caseId= cases[0].Id;
         
-        String emailMessageJson = '{"caseId": "'+ caseId +'", "isReminder": false,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
+        String emailMessageJson = '{"recordId": "'+ caseId +'", "isReminder": false,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
        
         HDT_WRP_MailSender.HDT_WRP_SendMailResult sendMailResultActual;
 

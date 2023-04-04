@@ -84,13 +84,13 @@ public with sharing class HDT_WS_AgevolazioneTst{
 
 
     @isTest 
-    public static void testExecuteObjectNull() {		
+    public static void testExecuteObjectOk() {		
 
         HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
         HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
         Test.setMock(HttpCalloutMock.class, mock);
     
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c, CommercialProduct__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -132,6 +132,115 @@ public with sharing class HDT_WS_AgevolazioneTst{
         res.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
 
         System.assertEquals('OK', responseReturn.message, 'The call was not successful');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testException() {		
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
+        Test.setMock(HttpCalloutMock.class, mock);
+    
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c, CommercialProduct__c FROM Order];
+        myOrder.CommercialProduct__c = 'Istruttoria DL116';
+        
+        OrderItem myOrderItem = [SELECT Id FROM OrderItem];
+        
+        Case myCase = [Select id, DiscardDescription__c from case];
+
+        wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
+                                                        wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
+                                                        From wrts_prcgvr__CalloutTemplate__c];
+        
+        wrts_prcgvr__PhaseTransition__c myTransition = [Select id, wrts_prcgvr__RecordTypeId__c, wrts_prcgvr__CalloutTemplate__c, wrts_prcgvr__Code__c,
+                                                        wrts_prcgvr__DestinationPhase__c, wrts_prcgvr__OriginPhase__c, wrts_prcgvr__Type__c, wrts_prcgvr__RecordTypeName__c
+                                                        From wrts_prcgvr__PhaseTransition__c where wrts_prcgvr__CalloutTemplate__c = 'prova'];
+        
+        Map<String,String> params = new Map<String,String>();
+        params.put('requestType', 'Callout_Template.json');
+        
+        Map<String,Object> paramsCallOut = new Map<String,Object>();
+        paramsCallOut.put('object', myTemplate);
+        paramsCallOut.put('multirequest', myOrderItem);   
+                        
+        Map<String, Object> args=new Map<String, Object>();
+
+        myCase.Order__c = null;
+        update myCase;
+        
+        args.put('action', myCase);
+        args.put('sender', myOrder);
+        args.put('wrts_prcgvr__CalloutTemplate__c', 'prova');
+        args.put('transition', myTransition);
+        args.put('templateMap', paramsCallOut);
+        args.put('method', 'TemporaneaNuovaAttivazioneCreaRich');
+        args.put('parameters', params);
+        args.put('multirequest', myOrderItem);
+        
+        Test.startTest();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)agevolazione.execute(args);
+
+        HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse res = new  HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse();
+        res.status='';
+        res.correlationId='';
+        res.timestamp='';
+        res.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
+
+        System.assertEquals('KO', responseReturn.message, 'The call was unexpectedly Success');
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testIstruttoria() {		
+
+        HDT_WS_HTTPServiceCallMock mock = new HDT_WS_HTTPServiceCallMock();
+        HDT_WS_Agevolazione agevolazione = new HDT_WS_Agevolazione();
+        Test.setMock(HttpCalloutMock.class, mock);
+    
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c, CommercialProduct__c FROM Order];
+        myOrder.CommercialProduct__c = 'Istruttoria DL116';
+        
+        OrderItem myOrderItem = [SELECT Id FROM OrderItem];
+        
+        Case myCase = [Select id, DiscardDescription__c from case];
+
+        wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
+                                                        wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
+                                                        From wrts_prcgvr__CalloutTemplate__c];
+        
+        wrts_prcgvr__PhaseTransition__c myTransition = [Select id, wrts_prcgvr__RecordTypeId__c, wrts_prcgvr__CalloutTemplate__c, wrts_prcgvr__Code__c,
+                                                        wrts_prcgvr__DestinationPhase__c, wrts_prcgvr__OriginPhase__c, wrts_prcgvr__Type__c, wrts_prcgvr__RecordTypeName__c
+                                                        From wrts_prcgvr__PhaseTransition__c where wrts_prcgvr__CalloutTemplate__c = 'prova'];
+        
+        Map<String,String> params = new Map<String,String>();
+        params.put('requestType', 'Callout_Template.json');
+        
+        Map<String,Object> paramsCallOut = new Map<String,Object>();
+        paramsCallOut.put('object', myTemplate);
+        paramsCallOut.put('multirequest', myOrderItem);   
+                        
+        Map<String, Object> args=new Map<String, Object>();
+        
+        args.put('action', myCase);
+        args.put('sender', myOrder);
+        args.put('wrts_prcgvr__CalloutTemplate__c', 'prova');
+        args.put('transition', myTransition);
+        args.put('templateMap', paramsCallOut);
+        args.put('method', 'TemporaneaNuovaAttivazioneCreaRich');
+        args.put('parameters', params);
+        args.put('multirequest', myOrderItem);
+        
+        Test.startTest();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)agevolazione.execute(args);
+
+        HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse res = new  HDT_WS_Agevolazione.HDT_WS_AgevolazioneResponse();
+        res.status='';
+        res.correlationId='';
+        res.timestamp='';
+        res.data = new HDT_WS_SegnalazioniTari.HDT_WRP_ResponseData();
+
+        System.assertEquals('KO', responseReturn.message, 'The call was unexpectedly Success');
         Test.stopTest();
     }
 

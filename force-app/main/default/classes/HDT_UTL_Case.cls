@@ -54,6 +54,25 @@ public inherited sharing class HDT_UTL_Case {
                     output.salesCompany = 'Marche Multiservizi S.p.A';
                     output.vatPercentage = 'GENERICI 10%-01';
                     output.taxes = 'Imposta usi domestici';
+                    output.supplyUseType = 'ACQUEDOTTO CIVILE';
+                    Date writtenReceiptRequestDate = date.newinstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+                    currentCase.WrittenReceiptRequestDate__c = writtenReceiptRequestDate;
+                    output.currentCase = currentCase;
+
+                    if(!String.isBlank(currentCase.UseSubCategory__c) && !'Uso pubblico non disalimentabile'.equalsIgnoreCase(currentCase.UseSubCategory__c)){
+                        
+                        List <HDT_HeraCompany__mdt> compCodeList = [SELECT CompanyCode__c FROM HDT_HeraCompany__mdt  WHERE MasterLabel =: output.salesCompany WITH SECURITY_ENFORCED];
+
+                        String campCode = null;
+
+                        if(compCodeList.size() > 0){
+                            campCode = compCodeList[0].CompanyCode__c;
+                            String intendedUse = [SELECT IntendedUse__c FROM AmministrazioneSottotipologiaUso__c WHERE Societa__c =: campCode AND SottotipologiaUso__c =: currentCase.UseSubCategory__c WITH SECURITY_ENFORCED LIMIT 1]?.IntendedUse__c;
+                            output.intendedUse = intendedUse;
+                        }
+                    }else if (!String.isBlank(currentCase.UseSubCategory__c) && 'Uso pubblico non disalimentabile'.equalsIgnoreCase(currentCase.UseSubCategory__c)){
+                        output.intendedUse = currentCase.IntendedUse__c;
+                    }
                 }else {
                     switch on city.SDV__c {
                         when 'HCM' {
@@ -79,7 +98,8 @@ public inherited sharing class HDT_UTL_Case {
                         }
                     }
                 }
-            }else if ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) && !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            }else if ( ('Modifica Impianto'.equalsIgnoreCase(currentCase.Type) || 'Rimozione Impianto'.equalsIgnoreCase(currentCase.Type) ) &&
+                        !String.isBlank(currentCase.Commodity__c) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
                 output.supplyUseType = 'ACQUEDOTTO CIVILE';
             }
         } 
@@ -155,9 +175,10 @@ public inherited sharing class HDT_UTL_Case {
             }
 
             if (!String.isBlank(newCurrentCase.RateCategory__c) && 'ACDOMRESP0'.equalsIgnoreCase(newCurrentCase.RateCategory__c)) {
-                output.customerChangeDate = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+                currentCase.Cohabitation__c = 'No';
             }
-
+            currentCase.CustomerChangeDate__c = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+            output.currentCase = currentCase;
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
@@ -298,6 +319,8 @@ public inherited sharing class HDT_UTL_Case {
         public Date customerChangeDate;
         @InvocableVariable
         public String supplyUseType;
+        @InvocableVariable
+        public String intendedUse;
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){
@@ -342,7 +365,7 @@ public inherited sharing class HDT_UTL_Case {
             }
             when '13CB-Non domestici in BT'{
 
-                if(powerRequested > 0 && powerRequested <= 1.5) {
+                if(powerRequested >= 0 && powerRequested <= 1.5) {
                     result = 'AEEG Opz BTA1 <= 1,5 kW-E_BTA1';
                 } else if(powerRequested > 1.5 && powerRequested <= 3) {
                     result = 'AEEG Op BTA2 >1,5<=3 kW-E_BTA2';

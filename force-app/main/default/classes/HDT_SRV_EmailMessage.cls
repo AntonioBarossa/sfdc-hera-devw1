@@ -10,6 +10,7 @@ public with sharing class HDT_SRV_EmailMessage {
     public static final String CASE_TYPE3 = 'Richiesta Parere';
     // public static final String CASE_TYPE4 = 'Gestione Rifiuti'; // HRAWRM-1941 (3 Riadattamento Processo)
     // public static final String CASE_TYPE5 = 'Ambiente annullo richiesta senza appuntamento'; // HRAWRM-1941 (3 Riadattamento Processo)
+    public static final String CASE_TYPE6 = 'Comunicazione con il Gestore';
     
     public static void insertEmailMessage(EmailMessage m){
         HDT_UTL_DatabaseService.insertSObject(m);
@@ -109,7 +110,7 @@ public with sharing class HDT_SRV_EmailMessage {
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c FROM Case WHERE Id in (\''+ idString +'\')';
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c, CompanyOwner__c, Status FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         List<Case> caseList = (List<Case>) recordList;
         
@@ -132,18 +133,44 @@ public with sharing class HDT_SRV_EmailMessage {
                 Case caseRecord = mapIdCase.get(email.ParentId);
                 System.debug(LoggingLevel.DEBUG, debugString + ' - Incoming Mail, case type: ' + caseRecord.Type);
                 
-                if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type) /* || CASE_TYPE4.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE5.equalsIgnoreCase(caseRecord.Type) */ ){ // HRAWRM-1941 (3 Riadattamento Processo)
-                        caseRecord.Phase__c = 'Risposta Ricevuta';
+                if(CASE_TYPE1.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE2.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE3.equalsIgnoreCase(caseRecord.Type) /* || CASE_TYPE4.equalsIgnoreCase(caseRecord.Type) || CASE_TYPE5.equalsIgnoreCase(caseRecord.Type) */ || CASE_TYPE6.equalsIgnoreCase(caseRecord.Type)){ // HRAWRM-1941 (3 Riadattamento Processo)
+                        String oldPhase = caseRecord.Phase__c;
+                        caseRecord.Phase__c = 'Risposta ricevuta';
                         //Gestione avanzamento ParentCase di Reclamo
                         if(CASE_TYPE3.equals(caseRecord.Type)){
                             System.debug(LoggingLevel.DEBUG, debugString + ' - ### Inside Parere Condition ###');
+                            DateTime nowDateTime = DateTime.now();
                             caseRecord.Phase__c = 'Completata';
+                            caseRecord.Status = 'Closed';
+                            if(!'Completata'.equalsIgnoreCase(oldPhase)){
+                                caseRecord.PhaseStory__c = oldPhase+'@@Completata@@'+nowDateTime.getTime()+'@@A||'+caseRecord.PhaseStory__c;
+                            }
                             if(parentRecord != null){
+                                String oldPhaseParent = parentRecord.Phase__c;
                                 System.debug(LoggingLevel.DEBUG, debugString + ' - ### Inside Parent Condition ###');
                                 parentRecord.Phase__c = 'Risposta Parere Ricevuta';
+                                if(!'Risposta Parere Ricevuta'.equalsIgnoreCase(oldPhaseParent)){
+                                    parentRecord.PhaseStory__c = oldPhaseParent+'@@Risposta Parere Ricevuta@@'+nowDateTime.getTime()+'@@A||'+parentRecord.PhaseStory__c;
+                                }
                                 caseToUpdate.add(parentRecord);
                                 System.debug(LoggingLevel.DEBUG, debugString + ' - ### adding parentRecord --> ' + parentRecord);
                             }
+                        }else if (CASE_TYPE6.equals(caseRecord.Type) && !'Risposta ricevuta'.equalsIgnoreCase(oldPhase)){
+                            DateTime nowDateTime = DateTime.now();
+                            caseRecord.PhaseStory__c = oldPhase+'@@Risposta ricevuta@@'+nowDateTime.getTime()+'@@A||'+caseRecord.PhaseStory__c;
+                            
+                            try {
+                                wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+                                activity.Case__c = caseRecord.Id;
+                                activity.CausalError__c = '';
+                                activity.wrts_prcgvr__Description__c = '';
+                                activity.Type__c = 'Risposta Ricevuta';
+                                activity.CompanyOwner__c = caseRecord.CompanyOwner__c;
+                                HDT_UTL_DatabaseService.insertSObject(activity);
+                            } catch (Exception e) {
+                                System.debug(LoggingLevel.DEBUG, 'Error: ' + e.getStackTraceString());
+                            }
+                            
                         }
                 }
                 caseToUpdate.add(caseRecord);

@@ -30,7 +30,7 @@ public class HDT_LC_CompleteCaseTst {
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'Bozza', constants.CASE_RECORDTYPEID_MOROSITA, constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
             HDT_UTL_DataFactoryTst.newPhaseTransition('Completata', 'In Lavorazione', constants.CASE_RECORDTYPEID_MOROSITA, constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;
             
             List<Case> cases = HDT_UTL_DataFactoryTst.createCase(1,false,accId,null,null,null,null);

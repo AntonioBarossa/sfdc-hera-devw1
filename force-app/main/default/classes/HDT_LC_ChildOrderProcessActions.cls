@@ -17,7 +17,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
     private static HDT_QR_Contract contractQr = new HDT_QR_Contract();
     private static HDT_UTL_VoltureChangeUtilities voltureChangeUtils = new HDT_UTL_VoltureChangeUtilities();
     private static String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
-    private static String emptyPhoneDefault = '00112233';
+    private static String emptyPhoneDefault = '30112233';
 
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
@@ -41,7 +41,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         orderToUpdate.Phase__c = 'Da Inviare'; 
         orderToUpdate.Step__c = 20;
         orderToUpdate.WizardCompletedDate__c = Date.today();
-        Set<String> rateCategoryLeggeOttantaSet = new Set<String>{'ACDOMRESP0','ACDOMNR000'};
 
         /**@frpanico 25/10/2021
          * Spostato in alto la sezione di codice in cui vengono inseriti i dati dell'ultimo step
@@ -91,19 +90,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
-                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
-                            orderToUpdate.DocumentLow80__c = 'Richiesto';
-                        }
-                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
-                    {
-                        orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    }
-                    //orderToUpdate.DocumentLow80__c = 'Richiesto';
                 }
                 else{
                     orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                 }
+                orderToUpdate.DocumentLow80__c = law80(currentOrder);
                 Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
                 orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
@@ -176,14 +167,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_Attivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
-                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
-                            orderToUpdate.DocumentLow80__c = 'Richiesto';
-                        }
-                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
-                    {
-                        orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    }
                     if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
                     {
                         orderToUpdate.Instance326__c = 'Richiesto';
@@ -196,17 +179,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.Instance326__c = 'Richiesto';
                     }
                 }
+                orderToUpdate.DocumentLow80__c = law80(currentOrder);
                 Decimal serCost = getFixedFee(order.id, order.RecordType.DeveloperName);
                 orderToUpdate.ServiceCost__c = serCost != null ? serCost.setScale(2) : null;
             }
             when 'HDT_RT_AttivazioneConModifica' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
-                    {
-                        orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    }
-                    //orderToUpdate.DocumentLow80__c = 'Richiesto';
                     if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
                     {
                         orderToUpdate.Instance326__c = 'Richiesto';
@@ -226,15 +205,11 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.Instance326__c = 'Richiesto';
                     }
                 }
+                orderToUpdate.DocumentLow80__c = law80(currentOrder);
             }
             when 'HDT_RT_Voltura', 'HDT_RT_VolturaConSwitch'{
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
-                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
-                            orderToUpdate.DocumentLow80__c = 'Richiesto';
-                        }
-                    }
                     if(order.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch' && 
                         !currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') && 
                         !currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico') && 
@@ -242,20 +217,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     {
                         orderToUpdate.CIAccoutn__c = '';
                     }
-                    // else{
-                    //     orderToUpdate.CIAccoutn__c = 'Richiesto';
-                    // }
-
-                    /**@frpanico 2022-04-27
-                     * Il documento di legge 80 va richiesto
-                     * Solo per forniture domestiche
-                     */
-                    if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
-                    {
-                        orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    }
-
-
                 }
                 else if (order.Account.RecordType.DeveloperName == 'HDT_RT_Business') {
                         orderToUpdate.CILegalRepresentative__c = 'Richiesto';
@@ -265,6 +226,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             orderToUpdate.CILegalRepresentative__c = '';
                         }
                 }
+                orderToUpdate.DocumentLow80__c = law80(currentOrder);
                 if((!currentOrder.CommodityFormula__c.equalsIgnoreCase('Acqua') && currentOrder.EffectiveDate__c < orderSrv.addBusinessDay(System.today(), 3)) || currentOrder.EffectiveDate__c == null){
                     orderToUpdate.EffectiveDate__c = orderSrv.addBusinessDay(System.today(), 3);
                 }
@@ -279,16 +241,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 /**@frpanico 2022-27-05
                  * Gestione campi mancanti integrazione
                  */
-                if(currentOrder.Email__c == null || String.isEmpty(currentOrder.Email__c)){
+                if( ( currentOrder.Email__c == null || String.isEmpty(currentOrder.Email__c) ) && 
+                    !currentOrder.CommodityFormula__c.equalsIgnoreCase('Acqua') ){
                     orderToUpdate.Email__c = emptyEmailDefault;
-                }    
-                if(currentOrder.PhoneNumber__c == null || String.isEmpty(currentOrder.PhoneNumber__c))
-                {
-                    orderToUpdate.PhoneNumber__c = currentOrder.Contact__r.MobilePhone != null ||String.isNotBlank(currentOrder.Contact__r.MobilePhone) 
-                        ? currentOrder.Contact__r.MobilePhone  
-                        : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone)
-                            ? currentOrder.Contact__r.Phone
-                            : '123';
                 }
                 Map<String,Object> rates = voltureChangeUtils.checkRates(
                     (Map<String, Object>)JSON.deserializeUntyped(JSON.serialize(currentOrder)), 
@@ -313,15 +268,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             }
             when 'HDT_RT_ConnessioneConAttivazione' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
-                    if(currentOrder.Commodity__c.equalsIgnoreCase('Acqua')){
-                        if(String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)){
-                            orderToUpdate.DocumentLow80__c = 'Richiesto';
-                        }
-                    }else if(currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico'))
-                    {
-                        orderToUpdate.DocumentLow80__c = 'Richiesto';
-                    }
-                    //orderToUpdate.DocumentLow80__c = 'Richiesto';
                     if(((String)currentOrder.get('Commodity__c')).equalsIgnoreCase('Energia Elettrica'))
                     {
                         orderToUpdate.Instance326__c = 'Richiesto';
@@ -335,6 +281,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         orderToUpdate.CILegalRepresentative__c = 'Richiesto';
                     }
                 }
+                orderToUpdate.DocumentLow80__c = law80(currentOrder);
             }
             when 'HDT_RT_TemporaneaNuovaAtt' {
                 orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -527,7 +474,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         }
         if(String.isBlank(currentOrder.PhoneNumber__c) && String.isBlank(orderToUpdate.PhoneNumber__c))
         {
-            orderToUpdate.PhoneNumber__c = emptyPhoneDefault;
+            orderToUpdate.PhoneNumber__c = currentOrder.Contact__c != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? currentOrder.Contact__r.MobilePhone  
+                                            : currentOrder.Contact__r.Phone != null || String.isNotBlank(currentOrder.Contact__r.MobilePhone) ? 
+                                                currentOrder.Contact__r.Phone : emptyPhoneDefault;
         }
         orderSrv.updateRecord(orderToUpdate);
         if(orderToUpdate.FacilitationExcise__c == true || orderToUpdate.VATfacilitationFlag__c == true){
@@ -552,6 +501,19 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
 
             orderSrv.updateRecord(orderParentToUpdate);
         }
+    }
+
+    private static String law80(Order currentOrder){
+
+        Set<String> rateCategoryLeggeOttantaSet = new Set<String>{'ACDOMRESP0','ACDOMNR000'}; // ratecategory acqua
+
+        if( (String.isNotBlank(currentOrder.RateCategory__c) && rateCategoryLeggeOttantaSet.contains(currentOrder.RateCategory__c)) ||
+            ( currentOrder.SupplyType__c.equalsIgnoreCase('Domestico') || currentOrder.SupplyType__c.equalsIgnoreCase('A-Domestico')) )
+            {
+                return 'Richiesto';
+            }
+
+        return '';
     }
 
     /**

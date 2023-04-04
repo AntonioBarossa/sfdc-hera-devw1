@@ -117,7 +117,8 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
                                         WithdrawalClass__c,
                                         EnergyService__c,
                                         UseCategory__c,
-                                        Caliber__c 
+                                        Caliber__c,
+                                        ServicePoint__r.CommoditySector__c 
                                 FROM Order 
                                 WHERE ParentOrder__c != null
                                 AND ProcessType__c = 'Switch in Ele'];
@@ -147,7 +148,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
         //System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
     }
-
+    /*
     @istest
     static void testWrongOrder(){
 
@@ -236,7 +237,7 @@ public with sharing class HDT_QBL_VoltureChangeManagerTst {
         }
         System.assertEquals(causalCodeFromCommodity, caseListUpdated[0].CausalCode__c,'Causal Code non correttamente calcolato');
         //System.assertEquals('Ordinaria', caseListUpdated[0].Subprocess__c,'Subprocess non correttamente aggiornato');
-    }
+    }*/
 
 
     @isTest

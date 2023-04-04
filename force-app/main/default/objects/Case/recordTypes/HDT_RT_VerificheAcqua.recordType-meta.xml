@@ -6923,7 +6923,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -7731,7 +7731,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -7788,7 +7788,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -7858,7 +7858,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -8326,14 +8326,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>SOLLEC_Amianto%2FEtern-IURD0026</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLEC_Verde-IURD0043</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Scarichi abusivi-IUPS0000</fullName>
             <default>false</default>
         </values>
@@ -8395,6 +8387,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Email</fullName>
             <default>false</default>
         </values>
@@ -8404,6 +8400,10 @@
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -11839,10 +11839,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazione_RestituzContenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Chiavetta elettronica_consegna</fullName>
             <default>false</default>
         </values>
@@ -11867,19 +11863,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Contenitore danneggiato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Diserbo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Dismissione compostiera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FE - MO - Spazzamento meccaniz</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11900,10 +11888,6 @@
         </values>
         <values>
             <fullName>Lavaggio contenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Lavaggio strade</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11944,10 +11928,6 @@
         </values>
         <values>
             <fullName>Raccolta siringhe</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RestituzContenitore</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12035,15 +12015,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Spazzamento meccaniz</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Spostamento Cassonetto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Svuotamento cestini%2Fcestoni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12099,23 +12071,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>raccolta porta a porta</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>rifiuti attorno al contenitore</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>rimozione Cassonetto</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>spostamento contenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>svuotamento contenitore</fullName>
             <default>false</default>
         </values>
     </picklistValues>

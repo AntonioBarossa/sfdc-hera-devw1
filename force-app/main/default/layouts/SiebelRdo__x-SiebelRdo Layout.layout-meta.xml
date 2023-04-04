@@ -1609,6 +1609,10 @@
                 <behavior>Readonly</behavior>
                 <field>X_PROVENIENZA_RICHIESTA_TARI__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>ATTRIB_37__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>

@@ -6300,6 +6300,34 @@
             <fullName>Verifica Gestione Front</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Supporto recupero credito legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fognatura e Depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualità e Continuità di servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risarcimento danni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatturazione consumi/contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivi/Lavori/Prestazioni </fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica posizione contributiva</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>FithLevelComplaintClassification__c</picklist>
@@ -6965,7 +6993,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -7773,7 +7801,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -7808,7 +7836,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -7878,7 +7906,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -8101,11 +8129,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8764,6 +8800,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Contratto Salesforce</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Costing e Forecasting</fullName>
             <default>false</default>
         </values>
@@ -8860,10 +8900,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto Pratiche legali</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto Responsabile HC</fullName>
             <default>false</default>
         </values>
@@ -8893,6 +8929,186 @@
         </values>
         <values>
             <fullName>Post Vendita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Anomalie solleciti</fullName>
+            <default>false</default>
+        </values>
+	        <values>
+            <fullName>Supporto Pratiche legali</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Bonus sociale Gas</fullName>
+            <default>false</default>
+        </values>
+	        <values>
+            <fullName>Rimborsi</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Mancato recapito</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02A - Determinazione volumi da fermi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02B - Determinazione volumi da illeggibili</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>02C - Determinazione volumi da verifiche metriche</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>04 - Contestazioni/modifiche cat. Contrattuali (retroattività)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>04 BIS - Richiesta di prescrizione biennale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>05 - Consumi su contatori non contrattualizzati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>06 - Applicazione procapite, aggiornamenti da anagrafe comunale, SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>07 - Bonus sociale H2o</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>09 - Richiesta ulteriore sgravio per fuga acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 - Cambio contatore non registrato in bolletta e rotti dal gelo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>11 - Fatturazione insediamenti produttivi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>12 - problemi di mancata lettura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>13 - Comportamento Letturista</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>14 - Interruzione fornitura a seguito di problemi su impianti/risorsa idrica - Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>15 - Pressione, perdite su rete stradale, interruzione fornitura o alterazione qualitativa a seguito riparazione rete, manutenzione reti.</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16 - Temi Qualità Acqua - Reclami</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>16bis - Temi Qualità Acqua - Richieste info</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18 - Problematiche tecniche Rete Fognaria</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>18 QUATER - Problematiche scarichi industriali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>19 - Cattivi odori o scarichi post depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>21 - Rich. Info e Reclami su Contatore: ordini di apertura, chiusura, att. Morosi - chiusura morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>22 - Richiesta lettura/verifica in campo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>25 - Reclami relativi aspetti legati alla gestione CDR (comportamenti degli operatori dei CDR, errori nelle registrazioni, mancata emissione scontrino, elenco dei conferimenti effettuati per eventuali verifiche da parte dei contribuenti …)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>26 - Pulizia strade, rumorosità mezzi, ubicazione cassonetti, metodologia di raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>27 - TARI - retroattività domestica e non domestica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>27 - TIA recupero evasione elusione NON DOMESTICO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>51 - Reclami/chiarimenti scontistiche relative a raccolte differenziate (pap, sacchi carta IF, …) e sconti da CdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>56 - Applicazione componenti TARI, verifica aggiornamenti anagrafici, TARI evasione domestico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>59 - AMBIENTE - verifica indennizzo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>74- richiesta risarcimento danni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>87 - Sostituzione massiva contatori (programmata)</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>132 - Risposte da Call Center Tecnico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

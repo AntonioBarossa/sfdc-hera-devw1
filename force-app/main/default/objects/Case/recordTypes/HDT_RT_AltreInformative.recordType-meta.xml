@@ -6736,7 +6736,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -7102,8 +7102,8 @@
             <fullName>Verifiche cambio contatore pre attivazione</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
+    </picklistValues>-->
+    <!--<picklistValues>
         <picklist>InformativeCluster__c</picklist>
         <values>
             <fullName>Ambiente</fullName>
@@ -7544,7 +7544,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
         <values>
@@ -7579,7 +7579,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -7649,7 +7649,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -7872,6 +7872,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Heroku</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Phone</fullName>
             <default>false</default>
         </values>
@@ -7879,8 +7883,16 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Alexa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7941,6 +7953,14 @@
         </values>
         <values>
             <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Risposta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10895,6 +10915,10 @@
 		</values>
         <values>
             <fullName>Errore Chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social</fullName>
             <default>false</default>
         </values>
 		<values>

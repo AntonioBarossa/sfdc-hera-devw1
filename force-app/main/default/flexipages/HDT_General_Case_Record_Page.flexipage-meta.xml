@@ -942,7 +942,7 @@
                         <valueListItems>
                             <value>Case.HDT_CreateDistributorApointment</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3 OR 4) AND 5</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4)  AND 5 AND 6 AND 7</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Cluster__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -968,12 +968,22 @@
                                     <operator>NE</operator>
                                     <rightValue>Gas</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completata</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
                             <visibilityRule>
-                                <booleanFilter>1 OR 2</booleanFilter>
+                                <booleanFilter>3 AND (1 OR 2)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -983,6 +993,11 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>In Lavorazione</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Contenitore Morosità</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -999,10 +1014,26 @@
                         <valueListItems>
                             <value>Case.HDT_ManagerCommunications</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND ((2 AND 3) OR 4)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.CommodityFormula__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Acqua</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Completata</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Status}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Closed</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Informative</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

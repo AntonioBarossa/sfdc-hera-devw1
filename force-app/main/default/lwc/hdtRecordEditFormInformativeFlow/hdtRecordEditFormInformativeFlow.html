@@ -23,49 +23,27 @@
                         <div aria-hidden="false" class="slds-section__content">
                             <div class="slds-grid">
                                 <div class="slds-col slds-size_1-of-3">
-                                    <c-hdt-custom-picklist id="cluster" 
-                                    label="Cluster" 
-                                    value={selectedCluster} 
-                                    placeholder="Inserisci il cluster" 
-                                    options={cluster} 
-                                    required="true" 
-                                    onselected={getProcess}
-                                    disabled={disabledCluster}></c-hdt-custom-picklist>
-                                    
-                                    <template if:true={showServizio}>
-                                        <c-hdt-custom-picklist id="servizio" 
-                                        options={commodity} 
-                                        value={selectedCommodity} 
-                                        label="Servizio" 
-                                        placeholder="Inserisci il servizio" 
-                                        onselected={getTopic} 
-                                        required="true"
-                                        disabled={disabledCommodity}></c-hdt-custom-picklist>
-                                    </template>
-                                    <template if:true={showDettaglioInfo}>
-                                        <c-hdt-custom-picklist id="info" 
-                                        label='Dettaglio informazioni' 
-                                        value={selectedDettaglioInfo} 
-                                        options={dettaglioInfo} 
-                                        placeholder="Inserisci il dettaglio informazioni" 
-                                        required="true" 
-                                        onselected={checkSubject}
-                                        disabled={disabledDettaglioInfo}></c-hdt-custom-picklist>
-                                    </template>
-                                </div>
-                                <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
-                                </div>
-                                <div class="slds-col slds-size_1-of-3">
+
+                                    <c-hdt-custom-picklist id="societa" 
+                                    label="Società" 
+                                    value={selectedSalesCompany} 
+                                    placeholder="Inserisci Società" 
+                                    options={salesCompanies} 
+                                    required="true"
+                                    onselected={getSalesCompany} 
+                                    disabled={disabledSalesCompany}></c-hdt-custom-picklist>
+
                                     <template if:true={showProcess}>    
-                                    <c-hdt-custom-picklist id="processo" 
-                                    label="Processo" 
-                                    placeholder="Inserisci il processo" 
-                                    value={selectedProcess} 
-                                    options={process} 
-                                    required="true" 
-                                    onselected={getServizio}
-                                    disabled={disabledProcess}></c-hdt-custom-picklist>
+                                        <c-hdt-custom-picklist id="processo" 
+                                        label="Processo" 
+                                        placeholder="Inserisci il processo" 
+                                        value={selectedProcess} 
+                                        options={process} 
+                                        required="true" 
+                                        onselected={getServizio}
+                                        disabled={disabledProcess}></c-hdt-custom-picklist>
                                     </template>
+
                                     <template if:true={showTopic}>
                                         <c-hdt-custom-picklist 
                                         id="argomento" 
@@ -77,14 +55,50 @@
                                         onselected={getInfo}
                                         disabled={disabledTopic}></c-hdt-custom-picklist>  
                                     </template>
-                            
-                                <template if:true={showTitolo}>
-                                    <lightning-input-field 
-                                    field-name="Subject" 
-                                    id="titolo"
-                                    required={requiredTitolo}
-                                    disabled={disabledTitolo}></lightning-input-field>
-                                </template>
+                                    
+                                    <template if:true={showTitolo}>
+                                        <lightning-input-field 
+                                        field-name="Subject" 
+                                        id="titolo"
+                                        required={requiredTitolo}
+                                        disabled={disabledTitolo}></lightning-input-field>
+                                    </template>
+
+                                </div>
+                                <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
+                                </div>
+                                <div class="slds-col slds-size_1-of-3">
+
+                                    <c-hdt-custom-picklist id="cluster" 
+                                    label="Cluster" 
+                                    value={selectedCluster} 
+                                    placeholder="Inserisci il cluster" 
+                                    options={cluster} 
+                                    required="true" 
+                                    onselected={getProcess}
+                                    disabled={disabledCluster}></c-hdt-custom-picklist>
+
+                                    <template if:true={showServizio}>
+                                        <c-hdt-custom-picklist id="servizio" 
+                                        options={commodity} 
+                                        value={selectedCommodity} 
+                                        label="Servizio" 
+                                        placeholder="Inserisci il servizio" 
+                                        onselected={getTopic} 
+                                        required="true"
+                                        disabled={disabledCommodity}></c-hdt-custom-picklist>
+                                    </template>
+
+                                    <template if:true={showDettaglioInfo}>
+                                        <c-hdt-custom-picklist id="info" 
+                                        label='Dettaglio informazioni' 
+                                        value={selectedDettaglioInfo} 
+                                        options={dettaglioInfo} 
+                                        placeholder="Inserisci il dettaglio informazioni" 
+                                        required="true" 
+                                        onselected={checkSubject}
+                                        disabled={disabledDettaglioInfo}></c-hdt-custom-picklist>
+                                    </template>
                                 </div>
                             </div>
                         </div>

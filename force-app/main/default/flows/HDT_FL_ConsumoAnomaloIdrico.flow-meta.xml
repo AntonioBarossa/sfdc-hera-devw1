@@ -5,7 +5,7 @@
         <name>Assegna_Campi_Case_Aggiornati</name>
         <label>Assegna Campi Case Aggiornati</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>734</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.RequestSource__c</assignToReference>
             <operator>Assign</operator>
@@ -42,7 +42,7 @@
         <name>Assegna_Scostamento_HERA</name>
         <label>Assegna Scostamento HERA</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.DeviationOver2000mc__c</assignToReference>
             <operator>Assign</operator>
@@ -58,7 +58,7 @@
         <name>Assegna_Scostamento_MMS_o_AAA</name>
         <label>Assegna Scostamento MMS o AAA</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.DeviationOver2000mc__c</assignToReference>
             <operator>Assign</operator>
@@ -74,7 +74,7 @@
         <name>Settaggio_Fase_Case_Attesa_Risposta_Cliente_0_0_0</name>
         <label>Settaggio Fase Case &quot;Attesa Risposta Cliente&quot;</label>
         <locationX>50</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -97,7 +97,7 @@
         <name>Settaggio_Fase_Case_Risposta_ricevuta</name>
         <label>Settaggio Fase Case &quot;Risposta ricevuta&quot;</label>
         <locationX>314</locationX>
-        <locationY>1094</locationY>
+        <locationY>1430</locationY>
         <assignmentItems>
             <assignToReference>Get_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -213,10 +213,56 @@
         </value>
     </choices>
     <decisions>
+        <name>Check_Provenienza</name>
+        <label>Check Provenienza</label>
+        <locationX>182</locationX>
+        <locationY>398</locationY>
+        <defaultConnector>
+            <targetReference>Assegna_Campi_Case_Aggiornati</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Da_gestore_1</name>
+            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
+            <conditions>
+                <leftValueReference>Provenienza</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <elementReference>Da_gestore</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Lettura_Anomala</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Data_Lettura_Anomala</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Scostamento_2000mc_OnlyNo</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Warning</targetReference>
+            </connector>
+            <label>Da gestore</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Company_Owner_per_Scostamento</name>
         <label>Company Owner per Scostamento?</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>854</locationY>
         <defaultConnector>
             <targetReference>Assegna_Scostamento_MMS_o_AAA</targetReference>
         </defaultConnector>
@@ -248,7 +294,7 @@
         <name>Provenienza_da_Gestore</name>
         <label>Provenienza da Gestore?</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>1310</locationY>
         <defaultConnector>
             <targetReference>Settaggio_Fase_Case_Risposta_ricevuta</targetReference>
         </defaultConnector>
@@ -324,7 +370,7 @@
         <name>Aggiornamento_Case</name>
         <label>Aggiornamento Case</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>1190</locationY>
         <connector>
             <targetReference>Provenienza_da_Gestore</targetReference>
         </connector>
@@ -334,14 +380,14 @@
         <name>Aggiornamento_Record_Case_0_0_0</name>
         <label>Aggiornamento Record Case</label>
         <locationX>314</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiornamento_Record_Case_0_0_0_0</name>
         <label>Aggiornamento Record Case</label>
         <locationX>50</locationX>
-        <locationY>1214</locationY>
+        <locationY>1550</locationY>
         <inputReference>Get_Case</inputReference>
     </recordUpdates>
     <screens>
@@ -353,7 +399,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Campi_Case_Aggiornati</targetReference>
+            <targetReference>Check_Provenienza</targetReference>
         </connector>
         <fields>
             <name>GestioneConsumoAnomaloIdrico_Title</name>
@@ -379,7 +425,7 @@
             <dataType>String</dataType>
             <fieldText>Tipo Comunicazione</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>false</isRequired>
+            <isRequired>true</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -396,7 +442,7 @@
             <dataType>String</dataType>
             <fieldText>Lettura Anomala</fieldText>
             <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -413,7 +459,7 @@
             <dataType>Date</dataType>
             <fieldText>Data Lettura Anomala</fieldText>
             <fieldType>InputField</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -431,7 +477,7 @@
             <dataType>String</dataType>
             <fieldText>Scostamento &gt; 2000mc</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
@@ -478,7 +524,7 @@
             <defaultSelectedChoiceReference>Scostamento_2000mc_No</defaultSelectedChoiceReference>
             <fieldText>Scostamento &gt; 2000mc</fieldText>
             <fieldType>DropdownBox</fieldType>
-            <isRequired>true</isRequired>
+            <isRequired>false</isRequired>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
                 <conditions>
@@ -506,6 +552,65 @@
         </fields>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
+    </screens>
+    <screens>
+        <name>Warning</name>
+        <label>Warning Campi blank</label>
+        <locationX>50</locationX>
+        <locationY>518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <connector>
+            <targetReference>Assegna_Campi_Case_Aggiornati</targetReference>
+        </connector>
+        <fields>
+            <name>Alert_Lettura_Anomala</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(228, 14, 14);&quot;&gt;Hai selezionato la provenienza &apos;Da gestore&apos;, sei sicuro di voler lasciare il campo &apos;Lettura Anomala&apos; vuoto?&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Lettura_Anomala</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Alert_DataLettura_Blank</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(234, 17, 17);&quot;&gt;Hai selezionato provenienza &apos;Da gestore&apos;, sei sicuro di voler lasciare il campo &apos;Data Lettura Anomala&apos; vuoto?&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Data_Lettura_Anomala</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Alert_Scostamento_null</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(231, 28, 28);&quot;&gt;Hai selezionato la provenienza &apos;Da gestore&apos;, sei sicuro di voler lasciare il campo &apos;Scostamento &lt;/strong&gt;&lt;strong style=&quot;color: rgb(231, 28, 28); font-size: 12px; background-color: rgb(255, 255, 255);&quot;&gt;&amp;nbsp;&amp;gt; 200 mc&apos;&lt;/strong&gt;&lt;strong style=&quot;color: rgb(231, 28, 28);&quot;&gt; vuoto?&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Scostamento_2000mc_OnlyNo</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
     </screens>
     <start>
         <locationX>56</locationX>

@@ -990,6 +990,21 @@
                 <label>SMS Non Inviato</label>
             </value>
             <value>
+                <fullName>Sollecito 1</fullName>
+                <default>false</default>
+                <label>Sollecito 1</label>
+            </value>
+            <value>
+                <fullName>Sollecito 2</fullName>
+                <default>false</default>
+                <label>Sollecito 2</label>
+            </value>
+            <value>
+                <fullName>Sollecito 3</fullName>
+                <default>false</default>
+                <label>Sollecito 3</label>
+            </value>
+            <value>
                 <fullName>Sospesa</fullName>
                 <default>false</default>
                 <label>Sospesa</label>
@@ -1048,6 +1063,41 @@
                 <fullName>Verifica in laboratorio</fullName>
                 <default>false</default>
                 <label>Verifica in laboratorio</label>
+            </value>
+            <value>
+                <fullName>Annullata SAP</fullName>
+                <default>false</default>
+                <label>Annullata SAP</label>
+            </value>
+			<value>
+                <fullName>Autorizzata SAP</fullName>
+                <default>false</default>
+                <label>Autorizzata SAP</label>
+            </value>
+			<value>
+                <fullName>In Attesa Di Autorizzazione SAP</fullName>
+                <default>false</default>
+                <label>In Attesa Di Autorizzazione SAP</label>
+            </value>
+			<value>
+                <fullName>Pratica Elaborata SAP</fullName>
+                <default>false</default>
+                <label>Pratica Elaborata SAP</label>
+            </value>
+			<value>
+                <fullName>Ricalcolata SAP</fullName>
+                <default>false</default>
+                <label>Ricalcolata SAP</label>
+            </value>
+			<value>
+                <fullName>Sospesa SAP</fullName>
+                <default>false</default>
+                <label>Sospesa SAP</label>
+            </value>
+			<value>
+                <fullName>Stornata SAP</fullName>
+                <default>false</default>
+                <label>Stornata SAP</label>
             </value>
         </valueSetDefinition>
     </valueSet>

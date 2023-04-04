@@ -22,7 +22,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
 		insert internalUser;
 
-		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false)};
+		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager', false)};
 
 		insert permissionSetAssignments;
 
@@ -94,11 +94,11 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			Id rt=utlConstants.ACCOUNT_RECORDTYPEID_RESINDEZIALE;
 
 
-            List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'HERA COMM','Condominio','Grandi Condomini');
+            List<Account> accounts=HDT_UTL_DataFactoryTst.createAccountResidenziale(2,false,'HERA COMM','Persona fisica','Famiglie');
 			accounts[0].ActiveMonitoring__c=false;
 			accounts[0].Name='INRETE DIST. ENER.-13R0000000';
 			accounts[0].LastName__c='INRETE DIST. ENER.-13R0000000';
-
+            accounts[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Distributore').getRecordTypeId();
             
             accounts[1].ActiveMonitoring__c=false;
 			accounts[1].Name='MARCO ROSSI';
@@ -110,7 +110,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 			accounts[1].Category__C='Famiglie';
 			insert accounts;
 
-            accounts[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Distributore').getRecordTypeId();
+            
 
             update accounts;
 
@@ -120,7 +120,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             myAccountResidenziale.RecordTypeId = accountResidenziale;
             myAccountResidenziale.Name = 'Test Residenziale';
             myAccountResidenziale.CompanyOwner__c = 'MMS';
-            myAccountResidenziale.CustomerMarking__c = 'MMS Persona fisica';
+            myAccountResidenziale.CustomerMarking__c = 'G1 - MMS Persona fisica';
             myAccountResidenziale.Category__c = 'Famiglie';
             myAccountResidenziale.BillingCityCode__c='Roma';
 			myAccountResidenziale.BillingStreetName__c='via roma';
@@ -132,15 +132,15 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             insert myAccountResidenzialeList;
             
             HDT_UTL_DataFactoryTst.createComfortQualityCall(2,true);
-            List<BillingProfile__c> billing =HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accounts[0].Id);
+            List<BillingProfile__c> billing =HDT_UTL_DataFactoryTst.createBillingProfile(1,true,accounts[1].Id);
 			List<Opportunity> opps=HDT_UTL_DataFactoryTst.createOpportunity(1, true);
-			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(9, true, accounts[0].Id, 'Attiva');
+			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(9, true, accounts[1].Id, 'Attiva');
 			List<Pricebook2> pricebook=HDT_UTL_DataFactoryTst.createPricebook(1, true);
             List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
             sp[0].RecordTypeId = utlConstants.SERVICEPOINT_RECORDTYPEID_GAS;
             sp[0].CommoditySector__c = 'Gas';
             insert sp;
-			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(9, false, accounts[0].Id, sales, pricebook[0].Id);
+			List<Order> orders=HDT_UTL_DataFactoryTst.createOrderWithPricebook(9, false, accounts[1].Id, sales, pricebook[0].Id);
             Integer index = 0;
             for(order ord : orders){
                 if(index < 4){
@@ -159,7 +159,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             Id orderVas = utlConstants.ORDER_RECORDTYPEID_VAS;
             
             
-            Id accId = accounts[0].id;
+            Id accId = accounts[1].id;
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(2,false,accId);
 
@@ -195,8 +195,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             orders[0].IsActivationDeferred__c=true;
 			orders[0].VATfacilitationFlag__c=true;
             orders[0].SupplyType__c = 'Domestico';
+            orders[0].Commodity__c = 'Gas';
 
-            
 			orders[1].RecordTypeId=orderVoltura;
 			orders[1].CreditCheckDescription__c='test2Voltura';
 			orders[1].ProcessCode__c='PN1';
@@ -308,7 +308,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
             insert testObject;
             
 
-			List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, false, accounts[0].Id, sales, orders[0].Id, contacts[0].Id);
+			List<Order> childOrders=HDT_UTL_DataFactoryTst.createChildOrder(1, false, accounts[1].Id, sales, orders[0].Id, contacts[0].Id);
 			childOrders[0].QualityCall__c=true;
 			insert childOrders;
 
@@ -373,8 +373,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
 			update orders;
 
-			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
-			List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, false, accounts[0].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
+			List<Contract> contracts=HDT_UTL_DataFactoryTst.createContract(1, true, accounts[1].Id);
+			List<Case> cases=HDT_UTL_DataFactoryTst.createCase(1, false, accounts[1].Id, contacts[0].Id, servPoints[0].Id, contracts[0].Id, orders[0].Id);
 			cases[0].Type='Cambio Contatore Non Registrato';
 			cases[0].Phase__c='Completata';
             cases[0].ServicePoint__c = servPoints[0].Id;//HRADTR_GV
@@ -658,8 +658,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Test AttivazioneConModifica
       // system.debug('Test AttivazioneConModifica');
         Map<String,Object> m3 = new Map<String,Object>();
-        accountList.get(0).Id=tOrder2.get(0).AccountId;
-        update accountList;
+        //accountList.get(0).Id=tOrder2.get(0).AccountId;
+        //update accountList;
         m3.put('EffectiveDate__c', Date.today().addDays(11));
         tOrder2[0].VATfacilitationFlag__c=true;
         tOrder2[0].QuotationType__c='Rapido';
@@ -698,8 +698,8 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         //Test AttivazioneConModifica
       // system.debug('Test AttivazioneConModifica');
         Map<String,Object> m3 = new Map<String,Object>();
-        accountList.get(0).Id=tOrder2.get(0).AccountId;
-        update accountList;
+        //accountList.get(0).Id=tOrder2.get(0).AccountId;
+        //update accountList;
         m3.put('EffectiveDate__c', Date.today().addDays(11));
         tOrder2[0].VATfacilitationFlag__c=true;
         Id recordTypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA).getRecordTypeId();
@@ -1246,10 +1246,9 @@ public class HDT_LC_ChildOrderProcessActionsTst {
     static void testSaveDraftAccount(){
         
         Test.startTest();
-
             List<Account> tAccount=[SELECT Id,Name, PrimaryEmail__c
                                 FROM Account
-                                WHERE Name='INRETE DIST. ENER.-13R0000000'
+                                WHERE Name='MARCO ROSSI'
                                 LIMIT 1];
 
 
@@ -1259,7 +1258,6 @@ public class HDT_LC_ChildOrderProcessActionsTst {
 
             String updatedEmail = [SELECT PrimaryEmail__c FROM Account WHERE Id =: tAccount[0].Id].PrimaryEmail__c;
             System.assertEquals(tAccount[0].PrimaryEmail__c, updatedEmail, 'test.primary@email.com');
-        
         Test.stopTest();
 
     }
@@ -1360,7 +1358,7 @@ public class HDT_LC_ChildOrderProcessActionsTst {
         
         List<Account> tAccount=[SELECT Id,Name, PrimaryEmail__c
                                 FROM Account
-                                WHERE Name='INRETE DIST. ENER.-13R0000000'
+                                WHERE Name='MARCO ROSSI'
                                 LIMIT 1];
 
         tAccount[0].PrimaryEmail__c = 'test.primary@email.com';

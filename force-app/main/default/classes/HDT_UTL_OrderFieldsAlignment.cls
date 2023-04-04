@@ -260,7 +260,13 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
          * Aggiunta valorizzazione
          * ContractAccountCode__c
          */
-        orderToUpdate.ContractAccountCode__c = String.isBlank(orderToUpdate.ContractAccountCode__c) ? (servicePoint.Account__c == orderToUpdate.AccountId ? servicePoint.SAPContractAccountCode__c : null) : orderToUpdate.ContractAccountCode__c; 
+        if( String.isBlank(orderToUpdate.ContractAccountCode__c) &&
+            !'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) && 
+            !'Teleriscaldamento'.equalsIgnoreCase(servicePoint.CommoditySector__c) &&
+            servicePoint.Account__c == orderToUpdate.AccountId )
+        {
+            orderToUpdate.ContractAccountCode__c = servicePoint.SAPContractAccountCode__c;
+        }
         orderToUpdate.surface__c= servicePoint.AreaDeclaredTARI__c;
         orderToUpdate.ATO__c = 'Acqua'.equalsIgnoreCase(servicePoint.CommoditySector__c) ? servicePoint.ATO__c : '';
         List<String> ratecategoryResident = new List<String>{'ACDOMRESP0','TATUDRES01'};
@@ -348,10 +354,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CampaignName__c = sale.Campaign__r?.Name;
         orderToUpdate.CommissioningCampaignName__c = sale.CommissioningCampaign__r?.Name;
 
-        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.MobilePhone != null ? sale.SalesContact__r.MobilePhone : sale.SalesContact__r.Phone) : null;
         orderToUpdate.Contact__c = sale.SalesContact__c;
         orderToUpdate.SalesContact__c = sale.SalesContact__c;
-        orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.MobilePhone != null ? sale.SalesContact__r.MobilePhone : sale.SalesContact__r.Phone) : null;
         orderToUpdate.MarketingPrivacy__c = sale.SalesContact__r?.Individual?.MarketingPrivacy__c;
         orderToUpdate.ProfilingPrivacy__c = sale.SalesContact__r?.Individual?.ProfilingPrivacy__c;
         orderToUpdate.LowerChannelAgency__c = sale.LowerChannelAgency__c;

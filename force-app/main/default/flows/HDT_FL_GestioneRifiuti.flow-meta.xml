@@ -4,7 +4,7 @@
         <name>Redirect</name>
         <label>Redirect</label>
         <locationX>1942</locationX>
-        <locationY>2126</locationY>
+        <locationY>2462</locationY>
         <actionName>c:HDT_LCP_FlowRedirectAdvanced</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -517,8 +517,8 @@
     <assignments>
         <name>putIndirizzi</name>
         <label>putIndirizzi</label>
-        <locationX>1744</locationX>
-        <locationY>878</locationY>
+        <locationX>1876</locationX>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>theCaseIndirizzi.Id</assignToReference>
             <operator>Assign</operator>
@@ -530,11 +530,34 @@
             <targetReference>Update_Indirizzi</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>putIndirizziAndCompanyOwner</name>
+        <label>putIndirizziAndCompanyOwner</label>
+        <locationX>1612</locationX>
+        <locationY>1118</locationY>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.Id</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>theCase.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCaseIndirizzi.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getCityTecnicalData.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Update_Indirizzi</targetReference>
+        </connector>
+    </assignments>
     <decisions>
         <name>CB_Appuntamenti</name>
         <label>CB Appuntamenti</label>
         <locationX>2030</locationX>
-        <locationY>1598</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>DaInviare</targetReference>
         </defaultConnector>
@@ -553,6 +576,38 @@
                 <targetReference>InAttAppuntamento</targetReference>
             </connector>
             <label>Gestione Appuntamento</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>checkContext</name>
+        <label>checkContext</label>
+        <locationX>1744</locationX>
+        <locationY>878</locationY>
+        <defaultConnector>
+            <targetReference>putIndirizzi</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default</defaultConnectorLabel>
+        <rules>
+            <name>isGlobal</name>
+            <conditionLogic>or</conditionLogic>
+            <conditions>
+                <leftValueReference>theCase.AccountId</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>theCase.AccountId</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>getCityTecnicalData</targetReference>
+            </connector>
+            <label>isGlobal</label>
         </rules>
     </decisions>
     <decisions>
@@ -823,7 +878,7 @@
         <name>NextStep</name>
         <label>Next Step</label>
         <locationX>1744</locationX>
-        <locationY>1238</locationY>
+        <locationY>1574</locationY>
         <defaultConnector>
             <targetReference>getUpdatedFields</targetReference>
         </defaultConnector>
@@ -983,6 +1038,27 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>getCityTecnicalData</name>
+        <label>getCityTecnicalData</label>
+        <locationX>1612</locationX>
+        <locationY>998</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>putIndirizziAndCompanyOwner</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>theCaseIndirizzi.InvoicingCity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CityTechnicalData__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getOldCase</name>
         <label>getOldCase</label>
         <locationX>1942</locationX>
@@ -1112,7 +1188,7 @@
         <name>getTabellaAppuntamento</name>
         <label>getTabellaAppuntamento</label>
         <locationX>2030</locationX>
-        <locationY>1478</locationY>
+        <locationY>1814</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CB_Appuntamenti</targetReference>
@@ -1140,7 +1216,7 @@
         <name>getUpdatedFields</name>
         <label>getUpdatedFields</label>
         <locationX>2030</locationX>
-        <locationY>1358</locationY>
+        <locationY>1694</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getTabellaAppuntamento</targetReference>
@@ -1166,7 +1242,7 @@
         <name>DaInviare</name>
         <label>Da Inviare</label>
         <locationX>2162</locationX>
-        <locationY>1718</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1196,7 +1272,7 @@
         <name>InAttAppuntamento</name>
         <label>In Att Appuntamento</label>
         <locationX>1898</locationX>
-        <locationY>1718</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>
@@ -1298,7 +1374,7 @@
         <name>Update_Indirizzi</name>
         <label>Update Indirizzi</label>
         <locationX>1744</locationX>
-        <locationY>998</locationY>
+        <locationY>1334</locationY>
         <connector>
             <targetReference>WizardScreen</targetReference>
         </connector>
@@ -1424,7 +1500,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>putIndirizzi</targetReference>
+            <targetReference>checkContext</targetReference>
         </connector>
         <fields>
             <name>getAddress_0</name>
@@ -1456,7 +1532,7 @@
         <name>WizardScreen</name>
         <label>Wizard Screen</label>
         <locationX>1744</locationX>
-        <locationY>1118</locationY>
+        <locationY>1454</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1581,7 +1657,7 @@
         <name>Gestione_Annullamento_Subflow</name>
         <label>Gestione Annullamento Subflow</label>
         <locationX>1458</locationX>
-        <locationY>1358</locationY>
+        <locationY>1694</locationY>
         <connector>
             <targetReference>Redirect</targetReference>
         </connector>

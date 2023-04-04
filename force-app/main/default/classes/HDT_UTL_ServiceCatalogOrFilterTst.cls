@@ -28,7 +28,7 @@ public class HDT_UTL_ServiceCatalogOrFilterTst {
             HDT_UTL_DataFactoryTst.pClickCasePhase();
             HDT_UTL_DataFactoryTst.newPhaseTransition('DestinationPhase','OriginPhase',constants.CASE_RECORDTYPEID_MOROSITA,constants.CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA);
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
 			Id accId = accs[0].id;
             
             HDT_UTL_DataFactoryTst.createCase(1,true,accId,null,null,null,null);

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CheckMarcatura</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(
+	OR(
+		ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;),
+		AND(
+			ISPICKVAL(Category__c, &quot;Aziende Soho&quot;),
+			OR(
+				ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;),
+				ISPICKVAL(CustomerMarking__c, &quot;Ditta individuale&quot;)
+			)
+		),
+		AND(
+			ISPICKVAL(CustomerMarking__c, &quot;Condominio&quot;), 
+			OR(
+				ISPICKVAL(Category__c, &quot;Piccoli Condomini&quot;),
+				ISPICKVAL(Category__c, &quot;Grandi Condomini&quot;)
+			)
+		)
+	),
+	NOT
+	(
+		OR
+		(
+			AND
+			( 
+				ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;), 
+				ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), 
+				OR(
+					AND(
+						FiscalCode__c != &quot;&quot;, 
+						ISNUMBER(FiscalCode__c)
+					), 
+					ISBLANK(FiscalCode__c)
+				), 
+				NOT(ISBLANK(VATNumber__c)) 
+			),
+			AND
+			( 
+				ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;), 
+				NOT(ISPICKVAL(Category__c, &quot;Aziende Soho&quot;)), 
+				NOT(ISBLANK(FiscalCode__c)), 
+				ISNUMBER(FiscalCode__c) 
+			),
+			AND( 
+				ISPICKVAL(CustomerMarking__c, &quot;Azienda&quot;), 
+				ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), 
+				OR(
+					AND(
+						FiscalCode__c != &quot;&quot;, 
+						ISNUMBER(FiscalCode__c)
+					), 
+					ISBLANK(FiscalCode__c)
+				), 
+				NOT(ISBLANK(VATNumber__c)) 
+			),
+			AND( 
+				ISPICKVAL(CustomerMarking__c, &quot;Ditta individuale&quot;), 
+				ISPICKVAL(Category__c, &quot;Aziende Soho&quot;), 
+				FiscalCode__c != &quot;&quot;, 
+				NOT(ISNUMBER(FiscalCode__c)), 
+				NOT(ISBLANK(VATNumber__c)) 
+			),
+			AND(
+				ISPICKVAL(CustomerMarking__c, &quot;Condominio&quot;), 
+				OR(
+					ISPICKVAL(Category__c, &quot;Piccoli Condomini&quot;),
+					ISPICKVAL(Category__c, &quot;Grandi Condomini&quot;)
+				), 
+				FiscalCode__c != &quot;&quot;, 
+				ISNUMBER(FiscalCode__c), 
+				ISBLANK(VATNumber__c) 
+			)
+		)
+	)
+)</errorConditionFormula>
+    <errorMessage>Errori sulle corrispondenze della Marcatura Cliente. Verificare e riprovare</errorMessage>
+</ValidationRule>

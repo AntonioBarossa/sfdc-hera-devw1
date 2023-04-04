@@ -119,16 +119,12 @@ public with sharing class HDT_UTL_GenericSolHandler {
     }
 
     public static void createBaseOrderVoltura(Map<String,Object> params,String saleId){
-
         /*
         IntegrationId__c = payload.integrationId AND ProcessType__c = payload.insProduct AND OrderNumber = payload.serviceRequestNumber AND Contact__c = payload.contactId
          */
         String accountId = (String)params.get('accountId');
         AccountContactRelation accContRel = getTitolare(accountId);
         Contact cont = accContRel.Contact;
-        String contractAccount = (String) params.get('contractAccount');
-        HDT_QR_BillingProfile qrBilling = new HDT_QR_BillingProfile();
-        BillingProfile__c bp = qrBilling.getRecordByContractAccount(contractAccount);
         Account acc = accContRel.Account;
         Order placeholderOrder = new Order(
                 IntegrationId__c= params.containsKey('integrationId') ?  (String) params.get('integrationId'):'',
@@ -137,7 +133,6 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId(),
                 Sale__c=saleId,
                 EffectiveDate__c=Date.today(),
-                ContractAccountCode__c=contractAccount,
                 CustomerLastName__c=acc.LastName__c,
                 CustomerName__c=acc.FirstName__c,
                 CustomerType__c=acc.CustomerType__c,
@@ -146,11 +141,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 EffectiveDate = Date.today(),
                 Status = 'Draft',
                 Phase__c='Bozza',
-                BillingProfile__c = bp.Id,
                 PaymentMode__c=params.containsKey('paymentMode') ? (String) params.get('paymentMode'):'',
-                Note__c=params.containsKey('note') ? (String) params.get('note'):'',
-                PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '',
                 Email__c= String.isNotBlank(cont.Email) ? cont.Email : accContRel.Account.PrimaryEmail__c,
+                Channel__c='Web',
                 Step__c=1.0
         );
         //System.Label.statusInLavorazione
@@ -167,24 +160,38 @@ public with sharing class HDT_UTL_GenericSolHandler {
     }
 
     private static Order createChildOrderVoltura(Order parentOrder, Map<String,Object> params){
+        HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
         String contractNumber = (String)params.get('contractNumber');
         List<Contract> contractList = getContractByNumber(contractNumber);
+        HDT_QR_BillingProfile qrBilling = new HDT_QR_BillingProfile();
+        BillingProfile__c bp=qrBilling.getNewestByAccountId(parentOrder.AccountId);
         Order childOrder=parentOrder.clone(false,true,false,false);
         childOrder.ParentOrder__c=parentOrder.Id;
         childOrder.IntegrationId__c='';
         childOrder.Phase__c='Bozza';
         childOrder.Status='In Lavorazione';
+        childOrder.Cluster__c='Attivazioni';
         childOrder.Subprocess__c='Standard';
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
         childOrder.Type='New';
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
-        if( parentOrder.Note__c == null && params.containsKey('note')){
-            childOrder.Note__c=(String) params.get('note');
-        }
-        if(parentOrder.PhoneNumber__c == null && params.containsKey('phoneNumber')){
-            childOrder.PhoneNumber__c=(String) params.get('phoneNumber');
+        childOrder.Channel__c='Web';
+        childOrder.BillingProfile__c=bp.Id;
+        childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
+        childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
+        childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
+        childOrder.CausalCode__c='MA1';
+        childOrder.ProcessCode__c='MA1';
+        parentOrder.BillingProfile__c=bp.Id;
+        parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
+        parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
+        parentOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
+        List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contractList[0].AccountId);
+        if(!exitingContacts.isEmpty())
+        {
+            childOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
         }
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
@@ -214,34 +221,32 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.SapContractCode__c=contractList[0].SAPContractCode__c;
             childOrder.ATO__c=contractList[0].ServicePoint__r.ATO__c;
             childOrder.Disconnectable__c=contractList[0].ServicePoint__r.Disconnectable__c;
+            childOrder.NotDisconnectabilityCustomer__c= contractList[0].ServicePoint__r.Disconnectable__c == 'Si' ? 'No' : 'Si';
+            childOrder.AggregateBilling__c='No';
+            childOrder.SecurityDepositExcluded__c='N';
+            childOrder.SeasonUse__c = 'Nessuna stagionalita';
+            childOrder.ContractExpenses__c='Nessuno Sconto';
             childOrder.DisconnectibilityType__c=contractList[0].ServicePoint__r.DisconnectibilityType__c;
             childOrder.MarketOrigin__c=contractList[0].ServicePoint__r.MarketOrigin__c;
 
-            childOrder.BillSendMode__c=parentOrder.BillingProfile__r.BillSendingMethod__c;
-            childOrder.InvoiceEmailAddress__c=parentOrder.BillingProfile__r.InvoiceEmailAddress__c;
-            childOrder.InvoiceCertifiedEmailAddress__c=parentOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c;
-            childOrder.SendCertifiedEmailConsentDate__c=parentOrder.BillingProfile__r.SendCertifiedEmailConsentDate__c;
-            childOrder.DivergentSubject__c=parentOrder.BillingProfile__r.DivergentSubject__c;
-            childOrder.BillingCity__c=parentOrder.BillingProfile__r.InvoicingCity__c;
-            childOrder.BillingCountry__c=parentOrder.BillingProfile__r.InvoicingCountry__c;
-            childOrder.BillingPlace__c=parentOrder.BillingProfile__r.InvoicingPlace__c;
-            childOrder.BillingProvince__c=parentOrder.BillingProfile__r.InvoicingProvince__c;
-            childOrder.BillingStreetName__c=parentOrder.BillingProfile__r.InvoicingStreetName__c;
-            childOrder.BillingStreetNumber__c=parentOrder.BillingProfile__r.InvoicingStreetNumber__c;
-            childOrder.BillingPostalCode__c=parentOrder.BillingProfile__r.InvoicingPostalCode__c;
-            childOrder.BillingCityCode__c=parentOrder.BillingProfile__r.InvoicingCityCode__c;
-
+            childOrder.BillSendMode__c=bp.BillSendingMethod__c;
+            childOrder.InvoiceEmailAddress__c=bp.InvoiceEmailAddress__c;
+            childOrder.InvoiceCertifiedEmailAddress__c=bp.InvoiceCertifiedEmailAddress__c;
+            childOrder.SendCertifiedEmailConsentDate__c=bp.SendCertifiedEmailConsentDate__c;
+            childOrder.DivergentSubject__c=bp.DivergentSubject__c;
+            childOrder.BillingCity__c=bp.InvoicingCity__c;
+            childOrder.BillingCountry__c=bp.InvoicingCountry__c;
+            childOrder.BillingPlace__c=bp.InvoicingPlace__c;
+            childOrder.BillingProvince__c=bp.InvoicingProvince__c;
+            childOrder.BillingStreetName__c=bp.InvoicingStreetName__c;
+            childOrder.BillingStreetNumber__c=bp.InvoicingStreetNumber__c;
+            childOrder.BillingPostalCode__c=bp.InvoicingPostalCode__c;
+            childOrder.BillingCityCode__c=bp.InvoicingCityCode__c;
             childOrder.VAT__c='Iva 10% (Cod. 01)';
-
-            /*
-            childOrder.FacilitationExcise__c=
-            childOrder.VATfacilitationFlag__c=contractList[0].Exc
-             */
-            //end
-            OrderItem oi=generateOrderItem(contractList[0],childOrder,params);
-            HDT_UTL_DatabaseService.insertSObject(oi);
+            List<OrderItem> ois=generateOrderItem(contractList[0],childOrder,params);
+            HDT_UTL_DatabaseService.insertSObject(ois);
         }
-        HDT_UTL_DatabaseService.upsertSObject(childOrder);
+        HDT_UTL_DatabaseService.upsertSObject(new List<Order>{childOrder,parentOrder});
         return childOrder;
     }
 
@@ -305,35 +310,56 @@ public with sharing class HDT_UTL_GenericSolHandler {
         return childOrder;
     }
 
-    public static OrderItem generateOrderItem(Contract outCustomerContract,Order childOrder,Map<String,Object>params ){
+    public static List<OrderItem> generateOrderItem(Contract outCustomerContract,Order childOrder,Map<String,Object>params ){
         HDT_QR_Contract qrContract = new HDT_QR_Contract();
-        SBQQ__Subscription__c subscription = qrContract.getSubscriptionFromContract(outCustomerContract.Id);
-        if(subscription != null){
-            childOrder.CommercialProduct__c = subscription.SBQQ__ProductName__c;
-            childOrder.CommercialProductCode__c = subscription.ProductCode__c;
-            childOrder.CommercialProductVersion__c = subscription.VersionFormula__c;
+        List<SBQQ__Subscription__c> subscriptions = qrContract.getSubscriptionsFromContract(outCustomerContract.Id);
+        Set<Id> productIds=new Set<Id>();
+        List<OrderItem>ois=new List<OrderItem>();
+        Integer offertaCommercialeIndex=0;
+        String offertaCommercialeCode='';
+        for(SBQQ__Subscription__c subscription : subscriptions){
+            if(subscription.SBQQ__Product__r.Family == 'Offerta commerciale'){
+                offertaCommercialeIndex=subscriptions.indexOf(subscription);
+                offertaCommercialeCode=subscription.SBQQ__Product__r.ProductCode;
+            }
+            productIds.add(subscription.SBQQ__Product__c);
         }
-        childOrder.EffectiveDate = Date.today();
-        childOrder.Status = 'In Lavorazione';
-        Map<String,String> mapParams = getProductInfo(subscription.SBQQ__Product__c,false);
-        childOrder.Pricebook2Id = mapParams.get('priceBookId');
-        HDT_UTL_DatabaseService.insertSObject(childOrder);
-        OrderItem oi = new OrderItem();
-        oi.Product2Id = mapParams.get('productId');
-        oi.PriceBookEntryId = mapParams.get('priceBookEntryId');
+        if(subscriptions.size()>0){
+            childOrder.CommercialProduct__c = subscriptions[offertaCommercialeIndex].SBQQ__ProductName__c;
+            childOrder.CommercialProductCode__c = subscriptions[offertaCommercialeIndex].ProductCode__c;
+            childOrder.CommercialProductVersion__c = subscriptions[offertaCommercialeIndex].VersionFormula__c;
+        }
+        if(productIds.size()>0){
+            Map<String,PricebookEntry> peMap=getProductInfoVoltura(productIds);
+            List<String> idList=new List<String>(peMap.keySet());
+            childOrder.Pricebook2Id=peMap.get(idList[0]).Pricebook2Id;
+            HDT_UTL_DatabaseService.insertSObject(childOrder);
+            for(Id productId:peMap.keySet()){
+                ois.add(new OrderItem(
+                        Product2Id=productId,
+                        PriceBookEntryId=peMap.get(productId).Id,
+                        UnitPrice=peMap.get(productId).UnitPrice,
+                        Quantity=1,
+                        OrderId=childOrder.Id
+                    )
+                );
+            }
+            if(String.isNotBlank(childOrder.SalesCompany__c) && String.isNotBlank(offertaCommercialeCode)){
+                AmministrazioneSottotipologiaUso__c sottoTipologia=HDT_SRV_DataEnrichmentPostSales.handleSubType(childOrder.SalesCompany__c,offertaCommercialeCode);
+                childOrder.IntendedUse__c=sottoTipologia.IntendedUse__c;
+                childOrder.UseSubCategory__c=sottoTipologia.SottotipologiaUso__c;
+            }
 
-        oi.UnitPrice = 0;
-        oi.Quantity = 1;
-        oi.OrderId = childOrder.Id;
-        oi.OccupantsNumber__c = params.containsKey('numeroOccupanti') ? Integer.valueOf(params.get('numeroOccupanti')) : null;
-        oi.Surface__c = params.containsKey('superficie') ? Integer.valueOf(params.get('superficie')) : null;
-        if(params.containsKey('tipologiaAbitazione')){
-            oi.DwellingType__c = (String)params.get('tipologiaAbitazione') == 'Appartamento'?'Appartamento':'Casa Indipendente';
-        }else{
-            oi.DwellingType__c='';
         }
-        oi.OwnerAC__c =  params.containsKey('proprietario') ? (String)params.get('proprietario') : '';
-        return oi;
+        return ois;
+    }
+
+    private static Map<String,PriceBookEntry> getProductInfoVoltura(Set<Id> productIds){
+        Map<String,PriceBookEntry> retmap=new Map<String,PriceBookEntry>();
+        for(PriceBookEntry pe: [SELECT Id,Name,Pricebook2Id,Product2Id,UnitPrice FROM PriceBookEntry WHERE Product2Id IN:productIds AND Pricebook2.IsStandard=false WITH SECURITY_ENFORCED]) {
+            retMap.put(pe.Id,pe);
+        }
+        return retMap;
     }
 
     public static List<Contract> getContractByNumber(String contractNumber){
@@ -364,7 +390,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
                                         ServicePoint__r.ATO__c,
                                         ServicePoint__r.Disconnectable__c,
                                         ServicePoint__r.DisconnectibilityType__c,
-                                        VAT__c
+                                        VAT__c,
+                                        BillingProfile__c,
+                                        AccountId
                                     FROM Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
         return returnList;
     }

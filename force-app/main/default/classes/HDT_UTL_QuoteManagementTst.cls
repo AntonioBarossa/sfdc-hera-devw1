@@ -145,8 +145,8 @@ public with sharing class HDT_UTL_QuoteManagementTst {
         //TESTING
         Test.startTest();
 
-        QuoteManagement__c qm = HDT_QR_QuoteManagement.queryAddInformation('Energia Elettrica', 'Verifica GdM','Verifica elettrica');
-
+        QuoteManagement__c qm = HDT_QR_QuoteManagement.queryAddInformation('Energia Elettrica', 'Verifica GdM','Verifica elettrica','');
+        
         //ASSERTS
         System.assertNotEquals(null, qm, 'QuoteManagement__c = null');
 

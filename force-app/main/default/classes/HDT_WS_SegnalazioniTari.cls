@@ -108,6 +108,14 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                 }
             );
         }
+        if('Rifiutologo'.equalsIgnoreCase(caso.Origin)){
+            mapObj.putAll(new Map<String, String>
+                {
+                    'source' => 'APP_RIF',
+                    'hercontactLastName' => caso.DifferentNameFromTheApplicant__c
+                }
+            );
+        }
         /*  HANDLE APP DATA     */
     }
 }

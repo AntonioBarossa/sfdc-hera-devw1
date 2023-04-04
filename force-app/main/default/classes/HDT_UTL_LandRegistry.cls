@@ -34,8 +34,8 @@ public with sharing class HDT_UTL_LandRegistry {
             resultLR.CodeMissingRegistryData__c = 
                 new Set<String>{'1', '2'}.contains(resultLR.CodeMissingRegistryData__c) ? 
                 resultLR.CodeMissingRegistryData__c : null;
-            resultLR.RegistryCityLookup__c = cityData.get(resultLR.RegistryCity__c.toLowerCase());
-            resultLR.LegalCityLookup__c = cityData.get(resultLR.LegalCity__c.toLowerCase());
+            resultLR.RegistryCityLookup__c = !String.isBlank(curOriginRecord.RegistryCity__c) ? cityData.get(curOriginRecord.RegistryCity__c.toLowerCase()) : null;
+            resultLR.LegalCityLookup__c = !String.isBlank(curOriginRecord.LegalCity__c) ? cityData.get(curOriginRecord.LegalCity__c.toLowerCase()) : null;
             if(caseId != null) resultLR.Case__c = caseId;
             if(orderId != null) resultLR.Order__c = orderId;
             system.debug('pratica record: ' + JSON.serialize(resultLR));

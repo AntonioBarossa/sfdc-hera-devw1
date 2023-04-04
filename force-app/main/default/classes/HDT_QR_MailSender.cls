@@ -57,6 +57,8 @@ public inherited sharing class HDT_QR_MailSender {
             WHERE ParentId = :parentId
             AND Type = 'Comunicazione con il Gestore'
             AND Cluster__c = 'Informative'
+            AND Phase__c <> 'Completata'
+            AND Status <> 'Closed'
             WITH SECURITY_ENFORCED
         ];
     }
@@ -72,11 +74,12 @@ public inherited sharing class HDT_QR_MailSender {
     //}
 
     public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){
+        String subj = Subject + '%';
         return [
             SELECT EmailTemplateId, ParentId, RelatedToId, Status, Subject, ToAddress
             FROM EmailMessage
             WHERE RelatedToId = :caseId
-            AND Subject = :Subject
+            AND Subject LIKE :subj
             WITH SECURITY_ENFORCED
         ];
     }
@@ -125,6 +128,15 @@ public inherited sharing class HDT_QR_MailSender {
             WITH SECURITY_ENFORCED
             LIMIT 1
         ];
+    }
+
+    public static List<Case> getCaseById(Id caseId){
+        return [
+            SELECT Id, Type, Phase__c
+            FROM Case
+            WHERE Id =: caseId
+            WITH SECURITY_ENFORCED
+            LIMIT 1 ];
     }
 
 }

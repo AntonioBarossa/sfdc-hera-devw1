@@ -6,7 +6,7 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     
     private static HDT_UTL_VoltureChangeManager voltureChangeUtl = new HDT_UTL_VoltureChangeManager();
     private static HDT_QR_VoltureChangeManager voltureChangeQr = new HDT_QR_VoltureChangeManager();
-
+    
     @TestSetup
     static void setup()
     {
@@ -582,7 +582,16 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
     static void processCheckTst()
     {
         Order newOrder = new Order();
-        Order currentOrder = new Order();
+        Order currentOrder = [SELECT Id,ServicePoint__r.CommoditySector__c,
+                                Phase__c,RetroactiveDate__c,
+                                NotRegisteredMeterCase__c,
+                                VoltureType__c,
+                                EffectiveDate__c,
+                                Subprocess__c,
+                                PreviousCustomer__r.Account.CustomerMarking__c,
+                                Account.CustomerMarking__c,
+                                PreviousCustomer__r.Account.RecordType.DeveloperName,
+                                Account.RecordType.DeveloperName FROM Order LIMIT 1];
 
         newOrder.NotRegisteredMeterCase__c = false;
         newOrder.VoltureType__c = 'Ordinaria';

@@ -27,7 +27,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
 
         String result;
 
-        if(caseType == 'Reclamo Scritto/Rich. Info' || caseType == 'Richiesta Parere'){
+        if(caseType == 'Reclamo Scritto/Rich. Info' || caseType == 'Richiesta Parere' || caseType == 'Reclamo Scritto Da Cittadino'){
 
             result = validateReclamoScritto(fields, recordId, currentCase);
 
@@ -1240,9 +1240,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String supplyType = getFieldValue(fields, 'SupplyType__c');
         String taxes = getFieldValue(fields, 'Taxes__c');
         String servicePointType = getFieldValue(fields, 'ServicePointType__c');
+        String subprocessPreventivi = getFieldValue(fields, 'Subprocess__c');
+        String commodity = String.isNotBlank(getFieldValue(fields, 'Commodity__c'))?getFieldValue(fields, 'Commodity__c'):currentCase.Commodity__c;
         
         if(currentCase.Type.equalsIgnoreCase('Nuovo Impianto') || currentCase.Type.equalsIgnoreCase('Aggiunta Attacco') || currentCase.Type.equalsIgnoreCase('Istruttoria')){
-            String commodity = String.isNotBlank(getFieldValue(fields, 'Commodity__c'))?getFieldValue(fields, 'Commodity__c'):currentCase.Commodity__c;
 
             if(currentCase.ShipmentAddressAssign__c == null){
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura'));
@@ -1251,9 +1252,7 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Servizio mancante'));
             }
             else if(String.isNotBlank(commodity)){
-                if(commodity.equalsIgnoreCase('Gas') && 
-                (String.isNotBlank(supplyType))
-                ){
+                if(commodity.equalsIgnoreCase('Gas') && (String.isNotBlank(supplyType))){
                     String taxesFormatted = taxes.substringBetween('(Cod. ',')');
                     List<FieldCoerenceServicePoint__c> coerenceList = [SELECT Id, 
                                                                               AccountCategory__c, 
@@ -1276,12 +1275,40 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     else{
                         result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                     }
+                }else if ('Acqua'.equalsIgnoreCase(commodity) && 'Nuovo Impianto'.equalsIgnoreCase(currentCase.Type)){
+                    String useSubCategory = getFieldValue(fields, 'UseSubCategory__c');
+                    String intendedUse = getFieldValue(fields, 'IntendedUse__c');
+                    Set<String> setValidIntendedUses = new Set<String>{'Antincendio', 'Ospedali/case di cura/'};
+                    String caliber = getFieldValue(fields, 'Caliber__c');
+                    List<HDT_CaliberTranscode__mdt > managedCaliberList = [SELECT Id FROM HDT_CaliberTranscode__mdt  WHERE SfdcFieldValue__c =: caliber AND IsSfdcManaged__c = True LIMIT 1];
+        
+                    if('Uso pubblico non disalimentabile'.equalsIgnoreCase(useSubCategory) && !setValidIntendedUses.contains(intendedUse)){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Errore di coerenza tra Sottotipologia e Destinazione D\'Uso. Per la Sottotipologia selezionata, inserire Antincendio o Ospedali/case di cura come Destinazione D\'Uso.'));
+                    }else if (!String.isBlank(caliber) && managedCaliberList.size() == 0){
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il calibro selezionato non può essere utilizzato per il servizio Acqua.'));
+                    }else{
+                        result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+                    }
                 }else{
                     result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
                 }
             }else {
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
             }
+        }else if('Acqua'.equalsIgnoreCase(commodity) && 'Modifica Impianto'.equalsIgnoreCase(currentCase.Type)){
+            String caliber = getFieldValue(fields, 'Caliber__c');
+            List<HDT_CaliberTranscode__mdt > managedCaliberList = [SELECT Id FROM HDT_CaliberTranscode__mdt  WHERE SfdcFieldValue__c =: caliber AND IsSfdcManaged__c = True LIMIT 1];
+            if(!String.isBlank(caliber) && 'Variazione Portata'.equalsIgnoreCase(subprocessPreventivi) && managedCaliberList.size() == 0){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il calibro selezionato non può essere utilizzato per il servizio Acqua.'));
+            }else if (!String.isBlank(caliber) && 'Variazione Portata'.equalsIgnoreCase(subprocessPreventivi) && caliber.equalsIgnoreCase(currentCase.CaliberAvailable__c)){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il calibro selezionato corrisponde alla Classe Contatore Disponibile; per procedere, inserire un valore differente.'));
+            }else if (!String.isBlank(caliber) && 'Spostamento Impianto'.equalsIgnoreCase(subprocessPreventivi) && !caliber.equalsIgnoreCase(currentCase.CaliberAvailable__c)) {
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Per Spostamento Impianto il calibro deve corrispondere alla Classe Contatore Disponibile.'));
+            }else{
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
+            }
+        }else{
+            result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('OK', 'Success'));
         }
 
         return result;

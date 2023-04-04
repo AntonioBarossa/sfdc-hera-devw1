@@ -35,6 +35,10 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
                 result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 
                         'Attenzione! La somma delle unità abitative deve essere maggiore o uguale a 2.'));
             }
+        }else if ('Variazione indirizzo di fornitura'.equals(caseType) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            if(String.isBlank(currentCase.ShipmentAddressAssign__c)){
+                result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Inserire Indirizzo di Fornitura.'));
+            } 
         }
 
         return result;
@@ -43,6 +47,10 @@ public with sharing class HDT_UTL_VariazioniCaseValidation implements HDT_UTL_Ca
 
     public String getFieldValue(String fields, String fieldToGet){
         Map<String, Object> fieldsMap = (Map<String, Object>) JSON.deserializeUntyped(fields);
-        return String.valueOf(fieldsMap.get(fieldToGet));
+        if(fieldsMap.get(fieldToGet) != null)
+            return String.valueOf(fieldsMap.get(fieldToGet));
+        else {
+            return '';
+        }
     }
 }

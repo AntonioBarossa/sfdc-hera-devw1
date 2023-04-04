@@ -19,6 +19,9 @@ public with sharing class HDT_UTL_VariazioniCaseValidationTst {
         myCaseModUnitImm.RateCategory__c = 'ACPROMIBI0';
         myCaseModUnitImm.ResidentDomesticHousingUnit__c = 3;
         myCaseModUnitImm.ResidentMembers__c = 0;
+        myCaseModUnitImm.Unita_Abitative__c = 0;
+        myCaseModUnitImm.CommercialHousingUnit__c = 0;
+        myCaseModUnitImm.NotResidentDomesticHousingUnit__c =0;
         insert myCaseModUnitImm;
 
         AmministrazioneSottotipologiaUso__c newTypology = new AmministrazioneSottotipologiaUso__c();
@@ -71,12 +74,12 @@ public with sharing class HDT_UTL_VariazioniCaseValidationTst {
         //SETUP
         mySetup();
 
-        Case myCase1 = [Select Id, Type, ResidentDomesticHousingUnit__c, ResidentMembers__c from Case where Type = 'Modifica Unita Immobiliari Componenti'];
+        Case myCase1 = [SELECT Id, Type, Unita_Abitative__c,CommercialHousingUnit__c,ResidentDomesticHousingUnit__c, ResidentMembers__c,NotResidentDomesticHousingUnit__c from Case where Type = 'Modifica Unita Immobiliari Componenti'];
 
         String recordId1 = myCase1.Id;
         HDT_UTL_VariazioniCaseValidation validation = new HDT_UTL_VariazioniCaseValidation();
         String fields = JSON.serialize(myCase1);
-
+        System.debug('fields ' + fields);
         String result = validation.validate(fields, recordId1);
         
         System.assertNotEquals(null, result, 'Si è verificato un errore in fase di validazione.');

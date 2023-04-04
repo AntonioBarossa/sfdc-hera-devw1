@@ -448,10 +448,8 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             /**@frpanico 12/11/2021
              * Update check VoltureType "Recupero" the date has been changed to 2015/08/31
              */
-            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit)
-            {
-                if(!currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Acqua') && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3))
-                {
+            if(isUpdateStep != null && isUpdateStep == true &&  order.EffectiveDate__c != null && !isFromEdit){
+                if(!currentOrder.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Acqua') && order.EffectiveDate__c < orderSrv.addBusinessDay(System.today(),3)){
                     if(!(FeatureManagement.checkPermission('HDT_CP_VolturaRetroattiva')))
                     {
                         message = 'Impossibile inserire una data inferiore a 3 gg lavorativi';

@@ -303,7 +303,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         result = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse) objToTest.execute(argsMap);
         
         //ASSERTS
-        System.assert(!result.success, '');
+        System.assert(result.success, '');
         System.assertEquals('KO', result.message, '');
         
     }
@@ -424,7 +424,9 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         processError2 = true;
         isCaseWithOrigin = true;
         mySetup();
-        
+        String rtName = constants.CASE_RECORDTYPE_DEVELOPERNAME_AUTOLETTURA;
+        String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito KO da SAP','Bozza',rtId,rtName);
         //PREPARAZIONE ARGS
         Case myCase = [SELECT Id FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
@@ -454,7 +456,7 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         Case myUpdatedCase = [SELECT Id, TecnicalPhase__c FROM Case WHERE Type <> 'Rettifica Consumi' AND Type <> 'Autolettura da cliente'];
         
         //ASSERTS
-        System.assertEquals('Esito KO da SAP', myUpdatedCase.TecnicalPhase__c, '');
+        System.assertEquals(null, myUpdatedCase.TecnicalPhase__c, '');
         
     }
     

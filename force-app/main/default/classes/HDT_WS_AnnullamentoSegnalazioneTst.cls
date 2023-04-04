@@ -73,7 +73,7 @@ public with sharing class HDT_WS_AnnullamentoSegnalazioneTst{
             
             HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Comunicazione verso Heroku', 'Bozza', 'test', 'test', 'C', 'prova', 'calloutParameters', 'apexCalloutAction');
 
-            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('MulesoftHergoPath', 'Callout:MulesoftHergoPath/notice', 'DELTE', 'testUser');
+            HDT_UTL_DataFactoryTst.createWebServiceConfiguration('MulesoftHergoPath', 'Callout:MulesoftHergoPath/notice', 'DELETE', 'testUser');
 
             HDT_UTL_DatafactoryTst.createFreeWithdraws(points.get(0).Id, Date.today(), 1, true);
 		}
@@ -87,11 +87,11 @@ public with sharing class HDT_WS_AnnullamentoSegnalazioneTst{
         HDT_WS_AnnullamentoSegnalazione segnalazione = new HDT_WS_AnnullamentoSegnalazione();
         Test.setMock(HttpCalloutMock.class, mock);
     
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c, PhaseStory__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
-        Case myCase = [Select id, DiscardDescription__c, NoticeId__c, WithdrawalFee__c, CreatedDate, ServicePoint__c from case];
+        Case myCase = [Select id, DiscardDescription__c, NoticeId__c, WithdrawalFee__c, CreatedDate, ServicePoint__c, PhaseStory__c from case];
 
         wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
                                                         wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
@@ -134,7 +134,7 @@ public with sharing class HDT_WS_AnnullamentoSegnalazioneTst{
         HDT_WS_AnnullamentoSegnalazione segnalazione = new HDT_WS_AnnullamentoSegnalazione();
         Test.setMock(HttpCalloutMock.class, mock);
     
-        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c FROM Order];
+        Order myOrder = [SELECT Id, Name, BillingProfile__c, VASType__c, PrecheckResultSII__c, ProcessType__c, Phase__c, AccountId, ServicePoint__c, PhaseStory__c FROM Order];
         
         OrderItem myOrderItem = [SELECT Id FROM OrderItem];
         
@@ -182,5 +182,56 @@ public with sharing class HDT_WS_AnnullamentoSegnalazioneTst{
         System.assertEquals('OK', responseReturn.message, 'The call was not successful');
         Test.stopTest();
     }
+
+    @isTest 
+    public static void testExecuteObjectException() {	
+        HDT_WS_AnnullamentoSegnalazione segnalazione = new HDT_WS_AnnullamentoSegnalazione();
+        Case myCase = [Select id, DiscardDescription__c, NoticeId__c, WithdrawalFee__c, CreatedDate, ServicePoint__c from case];
+
+        wrts_prcgvr__CalloutTemplate__c myTemplate = [Select id, name, wrts_prcgvr__Code__c, wrts_prcgvr__ConfigurationFile__c,
+                                                        wrts_prcgvr__IncludeNullFields__c, wrts_prcgvr__ObjectType__c, wrts_prcgvr__Structure__c 
+                                                        From wrts_prcgvr__CalloutTemplate__c];
+        
+        wrts_prcgvr__PhaseTransition__c myTransition = [Select id, wrts_prcgvr__RecordTypeId__c, wrts_prcgvr__CalloutTemplate__c, wrts_prcgvr__Code__c,
+                                                        wrts_prcgvr__DestinationPhase__c, wrts_prcgvr__OriginPhase__c, wrts_prcgvr__Type__c, wrts_prcgvr__RecordTypeName__c
+                                                        From wrts_prcgvr__PhaseTransition__c where wrts_prcgvr__CalloutTemplate__c = 'prova'];
+        
+        Map<String,String> params = new Map<String,String>();
+        params.put('requestType', 'Callout_Template.json');
+        
+        Map<String,Object> paramsCallOut = new Map<String,Object>();
+        paramsCallOut.put('object', myTemplate);
+        //paramsCallOut.put('multirequest', myOrderItem);   
+                        
+        Map<String, Object> args=new Map<String, Object>();
+        
+        args.put('action', myCase);
+        args.put('sender', myCase);
+        args.put('wrts_prcgvr__CalloutTemplate__c', 'prova');
+        args.put('transition', myTransition);
+        args.put('templateMap', paramsCallOut);
+        args.put('method', 'TemporaneaNuovaAttivazioneCreaRich');
+        args.put('parameters', params);
+        //args.put('multirequest', myOrderItem);
+        HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse resErr = new  HDT_WS_AnnullamentoSegnalazione.HDT_WS_AnnullamentoSegnalazioneResponse();
+        resErr.errorDetails = new List<HDT_WRP_MulesoftResponse.HDT_WRP_ErrorDetails>();
+        
+        Test.startTest();
+        wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse responseReturn = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)segnalazione.execute(args);
+
+        System.assertEquals('KO', responseReturn.message, 'Unexpected success');
+        Test.stopTest();
+    }
+
+    /*public class HDT_WS_AnnullamentoSegnalazioneMock implements HTTPCalloutMock{
+        public HTTPResponse respond(HTTPRequest request){
+         
+            HttpResponse res = new HttpResponse();
+            res.setHeader('Content-Type', 'application/json');
+            res.setBody('{"data":{"esito":"success"}}');
+            res.setStatusCode(200);
+            return res;
+        }
+    }*/
 
 }

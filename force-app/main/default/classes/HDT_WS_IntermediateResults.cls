@@ -31,6 +31,7 @@ global with sharing class HDT_WS_IntermediateResults {
 
         private List<String> errorLog = new List<String>{'caseId\tnoticeId\terror'};
 
+        @TestVisible
         HDT_QBL_IntermediateResultsJob(HDT_WRP_Request request){
             this.request=request;
         }
@@ -127,10 +128,10 @@ global with sharing class HDT_WS_IntermediateResults {
         @TestVisible
         private String getIstruttoriaFaseByCode(String noteCode){
             switch on noteCode {
-                when  '0050'{
+                when  '0050', '0080'{
                     return 'Approvata';
                 }
-                when '0007' {
+                when '0007','0081' {
                     return 'Rifiutata';
                 }
                 when '0060', '0040' {
@@ -144,12 +145,13 @@ global with sharing class HDT_WS_IntermediateResults {
 
     global class HDT_WRP_Response{
         String status {get;set;}
-        String errorMsg {get;set;}
+        @TestVisible String errorMsg {get;set;}
         String timestamp {get;set;}
         HDT_WRP_Response(String status){
             this.status=status;
             this.timestamp = String.valueOf(DateTime.now());
         }
+        @TestVisible 
         HDT_WRP_Response(String status, String error){
             this.status=status;
             this.errorMsg=error;

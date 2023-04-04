@@ -28,11 +28,11 @@ public with sharing class HDT_UTL_ProcessMorositaTst {
         request.ProcessType__c = 'Morosita';
         request.Status__c = 'In attesa di lavorazione';
         insert request;
-
+        /*
         List<MassiveLoaderRequestItem__c> itemsList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item;
     
-        for(Integer n=0; n<20; n++){
+        for(Integer n=0; n<2; n++){
             item = new MassiveLoaderRequestItem__c();
             item.MassiveLoaderRequest__c = request.Id;
             item.Status__c = 'In attesa di lavorazione';
@@ -40,25 +40,63 @@ public with sharing class HDT_UTL_ProcessMorositaTst {
             //PROCESSO,ACCOUNTID,POD,CONTRATTO,UFFICIO_COMPETENTE,DATA_PAGAMENTO
             //Riattivazione Fornitura,0011X00000jcKXUQA2,IT001E00032928,3019602323,HCM,2021-12-23
 
-            if(n>=0 && n<= 10){
+            if(n>=0 && n<= 3){
                 // errore arricchimento dati
                 item.Data__c = 'Riattivazione Fornitura|' + acc[0].Id + '|IT001E32452366|3019602323|HCM|2021-12-23';
-            } else if(n>10 && n<=15){
+            } else if(n>3 && n<=6){
                 //success
                 item.Data__c = 'Riattivazione Fornitura|' + acc[0].Id + '|IT001E00032928|3019602323|HCM|2021-12-23';
             
-            } else if(n>15){
+            } else if(n>6){
                 //custom error
                 item.Data__c = 'Riattivazione Fornitura|' + acc[0].Id + '|IT001E00032928|3019602323|HCM|2021-12-23';
             }
             itemsList.add(item);
         }
         insert itemsList;
-
+         */
     }
 
+
     @isTest
-    public static void testDisattivazioni(){
+    private static void testDisattivazioniErroreArricchimento(){
+        MassiveLoaderRequest__c mainLoader=[SELECT Id FROM MassiveLoaderRequest__c LIMIT 1 ];
+        List<Account> acc=[SELECT Id FROM Account LIMIT 1];
+        MassiveLoaderRequestItem__c item = new MassiveLoaderRequestItem__c();
+        item.MassiveLoaderRequest__c = mainLoader.Id;
+        item.Status__c = 'In attesa di lavorazione';
+        item.Data__c = 'Riattivazione Fornitura|' + acc[0].Id + '|IT001E32452366|3019602323|HCM|2021-12-23';
+        insert item;
+        Test.startTest();
+        HDT_SRV_ProcessRequestItem r = new HDT_SRV_ProcessRequestItem();
+        r.execute();
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testDisattivazioniSuccess(){
+        MassiveLoaderRequest__c mainLoader=[SELECT Id FROM MassiveLoaderRequest__c LIMIT 1 ];
+        List<Account> acc=[SELECT Id FROM Account LIMIT 1];
+        MassiveLoaderRequestItem__c item = new MassiveLoaderRequestItem__c();
+        item.MassiveLoaderRequest__c = mainLoader.Id;
+        item.Status__c = 'In attesa di lavorazione';
+        item.Data__c = 'Riattivazione Fornitura|' + acc[0].Id + '|IT001E00032928|3019602323|HCM|2021-12-23';
+        insert item;
+        Test.startTest();
+        HDT_SRV_ProcessRequestItem r = new HDT_SRV_ProcessRequestItem();
+        r.execute();
+        Test.stopTest();
+    }
+
+    @IsTest
+    private static void testDisattivazioniCustomError(){
+        MassiveLoaderRequest__c mainLoader=[SELECT Id FROM MassiveLoaderRequest__c LIMIT 1 ];
+        List<Account> acc=[SELECT Id FROM Account LIMIT 1];
+        MassiveLoaderRequestItem__c item = new MassiveLoaderRequestItem__c();
+        item.MassiveLoaderRequest__c = mainLoader.Id;
+        item.Status__c = 'In attesa di lavorazione';
+        item.Data__c = 'Riattivazione Fornitura|' + acc[0].Id + '|IT001E00032928|3019602323|HCM|2021-12-23';
+        insert item;
         Test.startTest();
         HDT_SRV_ProcessRequestItem r = new HDT_SRV_ProcessRequestItem();
         r.execute();

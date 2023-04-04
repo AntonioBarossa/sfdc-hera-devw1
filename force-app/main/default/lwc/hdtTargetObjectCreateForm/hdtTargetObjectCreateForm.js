@@ -753,8 +753,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 this.fieldsDataReqRaw = this.customSettings.FieldRequiredWater__c;
                                 break;
                             case 'Ambiente':
-                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
-                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                this.fieldsDataRaw = (this.customSettings.FieldWaste__c !== null && this.customSettings.FieldWaste__c !== undefined ? this.customSettings.FieldWaste__c : null);
+                                this.fieldsDataReqRaw = (this.customSettings.FieldRequiredWaste__c !== null && this.customSettings.FieldRequiredWaste__c !== undefined ? this.customSettings.FieldRequiredWaste__c : null);
                                 break;
                         }
 
@@ -787,8 +787,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 this.fieldsDataReqRaw = this.customSettings.FieldRequiredWater__c;
                                 break;
                             case 'Ambiente':
-                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
-                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                this.fieldsDataRaw = (this.customSettings.FieldWaste__c !== null && this.customSettings.FieldWaste__c !== undefined ? this.customSettings.FieldWaste__c : null);
+                                this.fieldsDataReqRaw = (this.customSettings.FieldRequiredWaste__c !== null && this.customSettings.FieldRequiredWaste__c !== undefined ? this.customSettings.FieldRequiredWaste__c : null);
                                 break;
                         }
 
@@ -1076,6 +1076,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         }
         if (event.target.fieldName == 'ServicePointCode__c') {
+            this.allSubmitedFields[event.target.fieldName] = event.target.value?.toUpperCase();
             this.spCodeChanged = true;
         }
         if (event.target.fieldName == 'PlugPresence__c') {
@@ -1148,6 +1149,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             if (this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']) {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
                 this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
+                this.servicePointRetrievedData['SupplyStreetName__c'] = this.theRecord['Via'];
             }
             if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune'] && this.theRecord['Comune']) {
                 this.allSubmitedFields['IsAddressChanged__c'] = true;
@@ -1700,8 +1702,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
     async populateDistributor(){
 
         //W2 blocco per classe contatore non gestita
-        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' &&  this.allSubmitedFields['MeterStatus__c'] === 'Bozza' && !this.managedMeterClass.includes(this.allSubmitedFields['MeterClass__c'])){
-            this.alert('Errore', 'La classe contatore selezionata non può essere utilizzata per Stato Apparecchiatura = Bozza e Servizio = Acqua.', 'error');
+        if(this.allSubmitedFields['CommoditySector__c'] === 'Acqua' &&  !this.allSubmitedFields['MeterSN__c'] && !this.managedMeterClass.includes(this.allSubmitedFields['MeterClass__c'])){
+            this.alert('Errore', 'La classe contatore selezionata non può essere utilizzata per il servizio Acqua.', 'error');
         }else{
 
             this.loading = true;

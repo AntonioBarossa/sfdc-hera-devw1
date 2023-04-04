@@ -66,12 +66,12 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 	@isTest static void testSave1(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c,CommodityFormula__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
 		HDT_LC_OrderDossierWizardActions.save(ord);
         
-        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order WHERE Id =: ordId];
+        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c,CommodityFormula__c FROM Order WHERE Id =: ordId];
         
         System.assertEquals('Documentazione da validare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
@@ -79,14 +79,14 @@ public class HDT_LC_OrderDossierWizardActionsTst{
     
     @isTest static void testSave1False(){
 
-		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order LIMIT 1];
+		Order ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c,CommodityFormula__c FROM Order LIMIT 1];
         Id ordId = ord.id;
         
         ord.ContractSigned__c = false;
         
 		HDT_LC_OrderDossierWizardActions.save(ord);
         
-        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c FROM Order WHERE Id =: ordId];
+        ord = [SELECT Id, Phase__c, ContractSigned__c, SignatureMethod__c,CommodityFormula__c FROM Order WHERE Id =: ordId];
         
         System.assertEquals('Documentazione da inviare', ord.Phase__c, 'save did not work correctly');
 		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
@@ -177,7 +177,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 		Test.startTest();
 
-		List<Order> torderList=[SELECT Id, Phase__c, ContractSigned__c, AutorizationVolturaThirdTrader__c, CILegalRepresentative__c, CIAccoutn__c, QuickQuote__c, ChamberCommerceRegistration__c, Instance326__c, DocumentLow80__c, DocumentPackage__c
+		List<Order> torderList=[SELECT Id, CommodityFormula__c,Phase__c, ContractSigned__c, AutorizationVolturaThirdTrader__c, CILegalRepresentative__c, CIAccoutn__c, QuickQuote__c, ChamberCommerceRegistration__c, Instance326__c, DocumentLow80__c, DocumentPackage__c
 		                        FROM Order
 		                        WHERE Phase__c='Bozza'
 		                        LIMIT 1];
@@ -201,7 +201,7 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 
 		Test.startTest();
 
-		List<Order> torderList=[SELECT Id, Phase__c, ContractSigned__c, AutorizationVolturaThirdTrader__c, CILegalRepresentative__c, CIAccoutn__c, QuickQuote__c, ChamberCommerceRegistration__c, Instance326__c, DocumentLow80__c, DocumentPackage__c
+		List<Order> torderList=[SELECT Id, Phase__c,CommodityFormula__c, ContractSigned__c, AutorizationVolturaThirdTrader__c, CILegalRepresentative__c, CIAccoutn__c, QuickQuote__c, ChamberCommerceRegistration__c, Instance326__c, DocumentLow80__c, DocumentPackage__c
 		                        FROM Order
 		                        WHERE Phase__c='Bozza'
 		                        LIMIT 1];

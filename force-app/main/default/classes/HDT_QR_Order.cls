@@ -160,6 +160,7 @@ public inherited sharing class HDT_QR_Order {
             ServicePoint__r.isReseller__c,
             ServicePoint__r.distributor__r.code__c,
             ServicePoint__r.MeterClass__c,
+            ServicePoint__r.MeterSN__c,
             ServicePoint__r.MeterStatus__c,
             ServicePoint__r.PlugPresence__c,
             ServicePoint__r.UseTypeEnergy__c,
@@ -625,7 +626,8 @@ public inherited sharing class HDT_QR_Order {
             MarketOrigin__c,
             Type,
             ShippingMail__c,
-            PhoneNumber__c
+            PhoneNumber__c,
+            CommodityFormula__c
             FROM
             Order
             WHERE ParentOrder__c = :parentOrderId
@@ -1412,14 +1414,23 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id,SBQQ__Quote__c, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c,ProcessCode__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getAllOrdersForComfort(String id){
         return [SELECT Id, Phase__c, WorkedQualityCall__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
     }
 
-
+    public Set<Id> getAllOrdersVasForComfort(String ordId, String quoteId){
+        List<Order> ordersToWork = new List<Order>();
+        ordersToWork = [SELECT Id, isBillableVas__c, Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE RecordType.DeveloperName ='HDT_RT_VAS' AND QualityCall__c =true AND Phase__c != 'Annullato' AND (OrderReference__c = :ordId OR SBQQ__Quote__c = :quoteId) WITH SECURITY_ENFORCED];
+    	Set<Id> orderVasId = new Set<Id>();
+	    for (Order orderId : ordersToWork) {
+		    orderVasId.add(orderId.Id);
+         }
+         return orderVasId;
+    }
+    
     public List<Order> getOrdersList(List<String> ordIdList){
         return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];
     }

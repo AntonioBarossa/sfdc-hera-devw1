@@ -253,7 +253,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             HDT_UTL_OrderProcess.checkSatisfationIndex(mapNew, mapOld);
 
-            Account acc = [SELECT SatisfactionIndexCtrl__c, PraxidiaUpdateDate__c FROM Account WHERE Name='test account0'];
+            Account acc = [SELECT SatisfactionIndexCtrl__c, PraxidiaUpdateDate__c FROM Account WHERE Name='test account bsn0'];
  
             Test.stopTest();
 
@@ -360,7 +360,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             Test.startTest();
 
-            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersOld = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                         Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
@@ -368,7 +368,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersOld[0].Phase__c = 'In attesa di quality call';
             update ordersOld;
 
-            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersNew = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order 
@@ -720,6 +720,58 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             System.assertEquals(false, assertList.isEmpty(), 'Something done');
             System.assertNotEquals(true, assertList.isEmpty(), 'Something not done.');
+        }
+    }
+
+    @isTest
+    public static void testModificaTariffaChildPhase() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+ 
+            Test.startTest();
+            HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Da Inviare', constants.ORDER_RECORDTYPEID_MODIFICATARI, constants.ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI);
+
+            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+                                            QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
+                                            Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
+                                            IsSequanzialized__c, TecnicalPhase__c, (Select sale__c from Orders__r)
+                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+ 
+
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, ordersOld[0].AccountId, 'Da Inviare');
+            orderList[0].ProcessType__c = 'Modifica Tariffa';
+            orderList[0].ApprovalType__c ='2 - Attività';
+            orderList[0].Commodity__c ='Ambiente';
+            orderList[0].ParentOrder__c = ordersOld[0].Id;
+            orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_MODIFICATARI;
+            orderList[0].AutorizationVolturaThirdTrader__c = 'Validato';
+            orderList[0].CIAccoutn__c = 'Validato';
+            orderList[0].QuickQuote__c = 'Validato';
+            orderList[0].ChamberCommerceRegistration__c = 'Validato';
+            orderList[0].Instance326__c = 'Validato';
+            orderList[0].DocumentLow80__c = 'Validato';
+
+            orderList[1].ProcessType__c = 'Modifica Tariffa';
+            orderList[1].ApprovalType__c ='2 - Attività';
+            orderList[1].Commodity__c ='Ambiente';
+            orderList[1].Phase__c ='Documentazione Validata';
+            orderList[1].ParentOrder__c = ordersOld[0].Id;
+            orderList[1].RecordTypeId = constants.ORDER_RECORDTYPEID_MODIFICATARI;
+            orderList[1].AutorizationVolturaThirdTrader__c = 'Validato';
+            orderList[1].CIAccoutn__c = 'Validato';
+            orderList[1].QuickQuote__c = 'Validato';
+            orderList[1].ChamberCommerceRegistration__c = 'Validato';
+            orderList[1].Instance326__c = 'Validato';
+            orderList[1].DocumentLow80__c = 'Validato';
+
+            insert orderList;
+
+            ordersOld[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            ordersOld[0].Phase__c = 'Documentazione Gestita';
+            update ordersOld; 
+            Test.stopTest();
         }
     }
 
