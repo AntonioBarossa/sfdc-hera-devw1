@@ -229,7 +229,7 @@ public inherited sharing class HDT_UTL_Case {
             httpObj.endPoint = 'callout:MulesoftHergoPath/reminder';
             body = JSON.serialize(new Map<String, Object>{
                 'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
-                'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
+                'reminder'=>'X','text'=>String.isNotBlank(inputString)? inputString:''
             });
             output.effectiveDate = Date.today();
             HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);

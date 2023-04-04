@@ -3,8 +3,8 @@
     <actionCalls>
         <name>HDT_UTL_Case_caseFlowPredefaults_sollecito</name>
         <label>HDT_UTL_Case caseFlowPredefaults</label>
-        <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationX>182</locationX>
+        <locationY>758</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -35,8 +35,8 @@
     <assignments>
         <name>Parent_case_variable_assignment</name>
         <label>Parent case variable assignment</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
+        <locationX>182</locationX>
+        <locationY>878</locationY>
         <assignmentItems>
             <assignToReference>Get_case.NoticeNumber__c</assignToReference>
             <operator>Add</operator>
@@ -65,7 +65,7 @@
     <decisions>
         <name>filter_on_Sobject_and_process_type</name>
         <label>filter on Sobject and process type</label>
-        <locationX>182</locationX>
+        <locationX>248</locationX>
         <locationY>158</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
@@ -105,18 +105,50 @@
             <label>Case &amp; Gestione Rifiuti or Segnalazioni Ambientali  or Agevolazione: Sconto Fuori Zona</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>Note_Field_Check</name>
+        <label>Note Field Check</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <defaultConnector>
+            <targetReference>HDT_UTL_Case_caseFlowPredefaults_sollecito</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Screen_Note_Too_Long</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>note_field_too_long</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <isGoTo>true</isGoTo>
+                <targetReference>Get_Note</targetReference>
+            </connector>
+            <label>Screen Note Too Long</label>
+        </rules>
+    </decisions>
     <environments>Default</environments>
     <formulas>
         <name>CaseDescription</name>
         <dataType>String</dataType>
-        <expression>IF( AND(LEN({!Get_case.Description})&gt;0,LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0 ), 
-{!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},
- IF( LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0, {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},{!Get_case.Description}))</expression>
+        <expression>IF( AND(LEN({!Get_case.Description})&gt;0,LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0 ),
+            {!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},
+            IF( LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0, {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},{!Get_case.Description}))</expression>
     </formulas>
     <formulas>
         <name>CaseNote</name>
         <dataType>String</dataType>
         <expression>IF(LEN({!Get_case.Note__c})&gt;0, {!Get_case.Note__c}&amp;BR()&amp;{!$Label.Note_Ultimo_Sollecito} &amp; &quot; &quot; &amp; {!Note}, {!$Label.Note_Ultimo_Sollecito} &amp; &quot; &quot; &amp; {!Note})</expression>
+    </formulas>
+    <formulas>
+        <description>checks if the Note Long area is &gt;132 chars</description>
+        <name>note_field_too_long</name>
+        <dataType>Boolean</dataType>
+        <expression>LEN({!Note})&gt;132</expression>
     </formulas>
     <interviewLabel>HDT_FL_WizardRecordAction {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDT_FL_WizardRecordAction</label>
@@ -142,8 +174,8 @@
     <recordCreates>
         <name>create_informativa_case</name>
         <label>create informativa case</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
+        <locationX>182</locationX>
+        <locationY>1118</locationY>
         <inputAssignments>
             <field>AccountId</field>
             <value>
@@ -284,8 +316,8 @@
     <recordUpdates>
         <name>update_parent_case</name>
         <label>update parent case</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
+        <locationX>182</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>create_informativa_case</targetReference>
         </connector>
@@ -300,7 +332,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>HDT_UTL_Case_caseFlowPredefaults_sollecito</targetReference>
+            <targetReference>Note_Field_Check</targetReference>
         </connector>
         <fields>
             <name>Text_Invia_Sollecito</name>
@@ -313,12 +345,27 @@
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
         </fields>
+        <fields>
+            <name>ErrorMessage</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(218, 14, 14);&quot;&gt;La lunghezza del testo inserito supera i 132 caratteri&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>Screen_Note_Too_Long</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <nextOrFinishButtonLabel>Invia</nextOrFinishButtonLabel>
         <showFooter>true</showFooter>
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>56</locationX>
+        <locationX>122</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>filter_on_Sobject_and_process_type</targetReference>
