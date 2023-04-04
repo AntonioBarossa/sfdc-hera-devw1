@@ -160,6 +160,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
     }
 
     private static Order createChildOrderVoltura(Order parentOrder, Map<String,Object> params){
+        HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
         String contractNumber = (String)params.get('contractNumber');
         List<Contract> contractList = getContractByNumber(contractNumber);
         HDT_QR_BillingProfile qrBilling = new HDT_QR_BillingProfile();
@@ -187,7 +188,11 @@ public with sharing class HDT_UTL_GenericSolHandler {
         parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         parentOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
-
+        List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contractList[0].AccountId);
+        if(!exitingContacts.isEmpty())
+        {
+            childOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+        }
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;
@@ -218,6 +223,9 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.Disconnectable__c=contractList[0].ServicePoint__r.Disconnectable__c;
             childOrder.NotDisconnectabilityCustomer__c= contractList[0].ServicePoint__r.Disconnectable__c == 'Si' ? 'No' : 'Si';
             childOrder.AggregateBilling__c='No';
+            childOrder.SecurityDepositExcluded__c='N';
+            childOrder.SeasonUse__c = 'Nessuna stagionalita';
+            childOrder.ContractExpenses__c='Nessuno Sconto';
             childOrder.DisconnectibilityType__c=contractList[0].ServicePoint__r.DisconnectibilityType__c;
             childOrder.MarketOrigin__c=contractList[0].ServicePoint__r.MarketOrigin__c;
 
@@ -383,7 +391,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
                                         ServicePoint__r.Disconnectable__c,
                                         ServicePoint__r.DisconnectibilityType__c,
                                         VAT__c,
-                                        BillingProfile__c
+                                        BillingProfile__c,
+                                        AccountId
                                     FROM Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
         return returnList;
     }
