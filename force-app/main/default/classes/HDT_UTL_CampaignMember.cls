@@ -327,7 +327,7 @@ public with sharing class HDT_UTL_CampaignMember {
                     actToCreateList.add(actNew);
                 }
                 else {
-                    Order ordToCancel = new Order(Id = ordId, Phase__c = 'Annullato', CancellationReason__c = 'Contatto Quality Fallito', Status = 'Activated');
+                    Order ordToCancel = new Order(Id = ordId, Phase__c = 'Annullato', CancellationReason__c = 'Contatto Quality Fallito', Status = 'Annullato');
                     ordToCloseList.add(ordToCancel);
                 }
             }
