@@ -57,10 +57,6 @@
             <valueName>Gestione Sportello</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
             <valueName>01 - Importo errato/tempistica Preventivazione allacciamenti/spostamenti</valueName>
         </valueSettings>
@@ -110,38 +106,6 @@
             <valueName>12 - problemi di mancata lettura</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 - Problematiche tecniche Rete Fognaria</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 QUATER - Problematiche scarichi industriali</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>19 - Cattivi odori o scarichi post depurazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>21 - Rich. Info e Reclami su Contatore: ordini di apertura, chiusura, att. Morosi - chiusura morosità</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>22 - Richiesta lettura/verifica in campo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>13 - Comportamento Letturista</valueName>
         </valueSettings>
@@ -162,12 +126,48 @@
             <valueName>16bis - Temi Qualità Acqua - Richieste info</valueName>
         </valueSettings>
         <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 - Problematiche tecniche Rete Fognaria</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>18 QUATER - Problematiche scarichi industriali</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>19 - Cattivi odori o scarichi post depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
+            <valueName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
             <valueName>20 BIS - Contestazioni prestazioni effettuate in pronto intervento Fognatura e Depurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>21 - Rich. Info e Reclami su Contatore: ordini di apertura, chiusura, att. Morosi - chiusura morosità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>22 - Richiesta lettura/verifica in campo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
+            <valueName>23 - Rich. Info e reclami su Esecuzione Lavori Allacciamenti (no preventivi)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>

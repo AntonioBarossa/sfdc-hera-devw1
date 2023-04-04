@@ -1130,15 +1130,8 @@
                 <stringValue>Domestico Residente</stringValue>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetInputCase.CustomerChangeDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>HDT_UTL_Case_ModUnitImm.customerChangeDate</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
-            <targetReference>Aggiorna_Data_Variazione_Cliente</targetReference>
+            <targetReference>Screen_Input_Fiscale_Fondo_Fughe_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -5889,16 +5882,6 @@ TEXT({!GetInputCase.Type}) = &quot;BP/CA - errata categoria&quot;,
         <locationY>758</locationY>
         <connector>
             <targetReference>Sottotipologia_Processo_0</targetReference>
-        </connector>
-        <inputReference>GetInputCase</inputReference>
-    </recordUpdates>
-    <recordUpdates>
-        <name>Aggiorna_Data_Variazione_Cliente</name>
-        <label>Aggiorna Data Variazione Cliente</label>
-        <locationX>17694</locationX>
-        <locationY>1118</locationY>
-        <connector>
-            <targetReference>Screen_Input_Fiscale_Fondo_Fughe_0</targetReference>
         </connector>
         <inputReference>GetInputCase</inputReference>
     </recordUpdates>
