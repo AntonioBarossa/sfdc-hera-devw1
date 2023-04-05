@@ -645,6 +645,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
     }
 
+    @TestVisible
     private static void handleTariOrder(Order orderParentRetreived){
         Order parentOrderToUpdate = new Order();
         parentOrderToUpdate.Id = orderParentRetreived.Id;
