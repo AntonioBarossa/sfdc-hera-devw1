@@ -2621,7 +2621,7 @@
         <inputAssignments>
             <field>DueDate__c</field>
             <value>
-                <elementReference>GetParentCase.EndDate__c</elementReference>
+                <elementReference>Get_Parere_Aggiornato.EndDate__c</elementReference>
             </value>
         </inputAssignments>
         <inputAssignments>
