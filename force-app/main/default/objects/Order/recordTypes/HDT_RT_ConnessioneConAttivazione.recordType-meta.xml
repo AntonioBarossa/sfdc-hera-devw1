@@ -606,6 +606,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FEDELTA'</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lampadine kit doppio</fullName>
             <default>false</default>
         </values>
