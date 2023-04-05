@@ -753,8 +753,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 this.fieldsDataReqRaw = this.customSettings.FieldRequiredWater__c;
                                 break;
                             case 'Ambiente':
-                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
-                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                this.fieldsDataRaw = (this.customSettings.FieldWaste__c !== null && this.customSettings.FieldWaste__c !== undefined ? this.customSettings.FieldWaste__c : null);
+                                this.fieldsDataReqRaw = (this.customSettings.FieldRequiredWaste__c !== null && this.customSettings.FieldRequiredWaste__c !== undefined ? this.customSettings.FieldRequiredWaste__c : null);
                                 break;
                         }
 
@@ -787,8 +787,8 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                                 this.fieldsDataReqRaw = this.customSettings.FieldRequiredWater__c;
                                 break;
                             case 'Ambiente':
-                                this.fieldsDataRaw = (data.FieldWaste__c !== null && data.FieldWaste__c !== undefined ? data.FieldWaste__c:null);
-                                this.fieldsDataReqRaw = (data.FieldRequiredWaste__c !== null && data.FieldRequiredWaste__c !== undefined ? data.FieldRequiredWaste__c:null);
+                                this.fieldsDataRaw = (this.customSettings.FieldWaste__c !== null && this.customSettings.FieldWaste__c !== undefined ? this.customSettings.FieldWaste__c : null);
+                                this.fieldsDataReqRaw = (this.customSettings.FieldRequiredWaste__c !== null && this.customSettings.FieldRequiredWaste__c !== undefined ? this.customSettings.FieldRequiredWaste__c : null);
                                 break;
                         }
 

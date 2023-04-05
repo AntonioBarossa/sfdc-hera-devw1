@@ -2,8 +2,8 @@
  * @description       : 
  * @author            : Andrei Necsulesc
  * @group             : 
- * @last modified on  : 24-03-2023
- * @last modified by  : Giacinto Florio
+ * @last modified on  : 04-04-2023
+ * @last modified by  : Andrei Necsulescu
 **/
 @isTest
 public with sharing class HDT_UTL_LandRegistryTst {
@@ -16,7 +16,9 @@ public with sharing class HDT_UTL_LandRegistryTst {
 
         HDT_UTL_DataFactoryTst.createCityTechnicalData(1, true, 'Roma', Date.today(), Date.today().addDays(31), Date.today().addDays(365), 'Error message');
 
-        HDT_UTL_DataFactoryTst.createLandRegistries(new List<String> {'Roma', 'Milano'}, landRegistryRecordtypeId, sp, true);
+        List<LandRegistry__c> lr = HDT_UTL_DataFactoryTst.createLandRegistries(new List<String> {'Roma', 'Milano'}, sp, false); 
+        lr[0].RecordTypeId = landRegistryRecordtypeId;
+        insert lr;
 
         HDT_UTL_DataFactoryTst.createCase(1, true, null, null, sp.Id, null, null);
         

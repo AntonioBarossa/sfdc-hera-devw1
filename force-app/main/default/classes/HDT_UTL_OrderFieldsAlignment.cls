@@ -70,7 +70,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BankAccountSignatoryFirstName__c = billingProfile.BankAccountSignatoryFirstName__c;
         orderToUpdate.BankAccountSignatoryLastName__c = billingProfile.BankAccountSignatoryLastName__c;
         orderToUpdate.BillSendMode__c = billingProfile.BillSendingMethod__c;
-        orderToUpdate.PaymentMode__c = billingProfile.PaymentMethod__c;
+        orderToUpdate.PaymentMode__c = 'Bonifico bancario'.equalsIgnoreCase(billingProfile.PaymentMethod__c)? 'Bonifico' : billingProfile.PaymentMethod__c ;
         orderToUpdate.InvoiceEmailAddress__c = billingProfile.InvoiceEmailAddress__c;
         orderToUpdate.BillingCity__c = billingProfile.InvoicingCity__c;
         orderToUpdate.BillingCountry__c = billingProfile.InvoicingCountry__c;

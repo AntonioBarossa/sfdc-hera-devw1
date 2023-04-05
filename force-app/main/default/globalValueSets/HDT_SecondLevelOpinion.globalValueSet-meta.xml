@@ -116,6 +116,11 @@
         <label>19 - Cattivi odori o scarichi post depurazione</label>
     </customValue>
     <customValue>
+        <fullName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</fullName>
+        <default>false</default>
+        <label>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</label>
+    </customValue>
+    <customValue>
         <fullName>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</fullName>
         <default>false</default>
         <label>20 - Contestazioni prestazioni effettuate in pronto intervento Acquedotto</label>
@@ -359,11 +364,6 @@
         <fullName>Post Vendita</fullName>
         <default>false</default>
         <label>Post Vendita</label>
-    </customValue>
-    <customValue>
-        <fullName>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</fullName>
-        <default>false</default>
-        <label>prima richiesta esenzione retroattiva fogna e depurazione (fittizio)</label>
     </customValue>
     <customValue>
         <fullName>Privacy</fullName>

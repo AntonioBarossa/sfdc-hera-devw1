@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
                     if(numberDaysDue <= 100){
                         System.debug(LoggingLevel.DEBUG, '>>> siamo andati in errore');
                         processObj.requestItem.Status__c = 'Errore';
-                        processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta negli utilimi 100 giorni';
+                        processObj.requestItem.StatusDescription__c = 'E\' presente un cambio offerta negli ultimi 100 giorni';
                         //itemsToUpdate.add(processObj.requestItem);
                         continue;     
                     }
