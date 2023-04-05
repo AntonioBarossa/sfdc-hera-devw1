@@ -70,8 +70,7 @@
 					ISPICKVAL(Category__c, &quot;Grandi Condomini&quot;)
 				), 
 				FiscalCode__c != &quot;&quot;, 
-				ISNUMBER(FiscalCode__c), 
-				ISBLANK(VATNumber__c) 
+				ISNUMBER(FiscalCode__c)
 			)
 		)
 	)
