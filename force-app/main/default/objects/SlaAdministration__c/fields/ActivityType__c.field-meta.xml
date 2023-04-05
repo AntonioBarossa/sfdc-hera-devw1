@@ -501,6 +501,11 @@
                 <label>Protocollo - Voltura</label>
             </value>
             <value>
+                <fullName>Protocollo - TARI da Ufficio</fullName>
+                <default>false</default>
+                <label>Protocollo - TARI da Ufficio</label>
+            </value>
+            <value>
                 <fullName>Rapporti con i distributori e SII</fullName>
                 <default>false</default>
                 <label>Rapporti con i distributori e SII</label>
