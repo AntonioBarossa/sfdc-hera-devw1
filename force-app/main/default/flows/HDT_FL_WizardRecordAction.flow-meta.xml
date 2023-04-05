@@ -4,7 +4,7 @@
         <name>HDT_UTL_Case_caseFlowPredefaults_sollecito</name>
         <label>HDT_UTL_Case caseFlowPredefaults</label>
         <locationX>182</locationX>
-        <locationY>758</locationY>
+        <locationY>878</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -33,10 +33,26 @@
     </actionCalls>
     <apiVersion>56.0</apiVersion>
     <assignments>
+        <name>AssignNoteTemp</name>
+        <label>AssignNoteTemp</label>
+        <locationX>50</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>CaseNoteTemp</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Note</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Note_Field_Check</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Parent_case_variable_assignment</name>
         <label>Parent case variable assignment</label>
         <locationX>182</locationX>
-        <locationY>878</locationY>
+        <locationY>998</locationY>
         <assignmentItems>
             <assignToReference>Get_case.NoticeNumber__c</assignToReference>
             <operator>Add</operator>
@@ -109,7 +125,7 @@
         <name>Note_Field_Check</name>
         <label>Note Field Check</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>758</locationY>
         <defaultConnector>
             <targetReference>HDT_UTL_Case_caseFlowPredefaults_sollecito</targetReference>
         </defaultConnector>
@@ -135,9 +151,9 @@
     <formulas>
         <name>CaseDescription</name>
         <dataType>String</dataType>
-        <expression>IF( AND(LEN({!Get_case.Description})&gt;0,LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0 ),
-            {!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},
-            IF( LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0, {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},{!Get_case.Description}))</expression>
+        <expression>IF( AND(LEN({!Get_case.Description})&gt;0,LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0 ), 
+{!Get_case.Description} &amp; BR() &amp; {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},
+ IF( LEN({!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote})&gt;0, {!HDT_UTL_Case_caseFlowPredefaults_sollecito.cancellationNote},{!Get_case.Description}))</expression>
     </formulas>
     <formulas>
         <name>CaseNote</name>
@@ -175,7 +191,7 @@
         <name>create_informativa_case</name>
         <label>create informativa case</label>
         <locationX>182</locationX>
-        <locationY>1118</locationY>
+        <locationY>1238</locationY>
         <inputAssignments>
             <field>AccountId</field>
             <value>
@@ -317,7 +333,7 @@
         <name>update_parent_case</name>
         <label>update parent case</label>
         <locationX>182</locationX>
-        <locationY>998</locationY>
+        <locationY>1118</locationY>
         <connector>
             <targetReference>create_informativa_case</targetReference>
         </connector>
@@ -332,7 +348,7 @@
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
         <connector>
-            <targetReference>Note_Field_Check</targetReference>
+            <targetReference>AssignNoteTemp</targetReference>
         </connector>
         <fields>
             <name>Text_Invia_Sollecito</name>
@@ -341,6 +357,9 @@
         </fields>
         <fields>
             <name>Note</name>
+            <defaultValue>
+                <stringValue>{!CaseNoteTemp}</stringValue>
+            </defaultValue>
             <fieldText>Note</fieldText>
             <fieldType>LargeTextArea</fieldType>
             <isRequired>true</isRequired>
@@ -372,6 +391,13 @@
         </connector>
     </start>
     <status>Active</status>
+    <variables>
+        <name>CaseNoteTemp</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>InputCase</name>
         <dataType>String</dataType>
