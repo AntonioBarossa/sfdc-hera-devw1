@@ -686,7 +686,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         
         if(!newOrdersListReadingDate.isEmpty()){
             HDT_UTL_ProcessDateManager.updateReadingDate(newOrdersListReadingDate);
-            orderSrv.updateRecords(newOrdersListReadingDate);
         }
     }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
