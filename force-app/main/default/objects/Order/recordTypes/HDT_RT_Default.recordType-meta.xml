@@ -2244,6 +2244,10 @@
             <fullName>F24</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Bonifico</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Phase__c</picklist>
