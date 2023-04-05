@@ -181,6 +181,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         // aggiunta campi per CR005
         String numDocCalcolo ='';
         String importoDocCalcolo = '';
+        String billNumber = '';
         // fine aggiunta campi per CR005
         String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
         // String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
@@ -232,9 +233,14 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             //recupero valori campi per CR005
             numDocCalcolo = reqWrp.requestMap.get('MAN_BILL_NUM')!=null ? reqWrp.requestMap.get('MAN_BILL_NUM') : '';
             importoDocCalcolo = reqWrp.requestMap.get('CALC_AMOUNT')!=null ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
+            billNumber = reqWrp.requestMap.get('BILL_NUM')!=null ? reqWrp.requestMap.get('BILL_NUM') : '';
 
             if(!numDocCalcolo.equalsIgnoreCase('')){
                 currentCase.DocumentNumber__c =numDocCalcolo;
+            }
+
+            if(!billNumber.equalsIgnoreCase('')){
+                currentCase.BillNumber__c =billNumber;
             }
             
             if(!importoDocCalcolo.equalsIgnoreCase('')){
