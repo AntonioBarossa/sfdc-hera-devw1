@@ -76,11 +76,6 @@
                 <label>12 - problemi di mancata lettura</label>
             </value>
             <value>
-                <fullName>132 - Risposte da Call Center Tecnico</fullName>
-                <default>false</default>
-                <label>132 - Risposte da Call Center Tecnico</label>
-            </value>
-            <value>
                 <fullName>13 - Comportamento Letturista</fullName>
                 <default>false</default>
                 <label>13 - Comportamento Letturista</label>
@@ -96,19 +91,14 @@
                 <label>15 - Pressione, perdite su rete stradale, interruzione fornitura o alterazione qualitativa a seguito riparazione rete, manutenzione reti.</label>
             </value>
             <value>
-                <fullName>16bis - Temi Qualità Acqua - Richieste info</fullName>
-                <default>false</default>
-                <label>16bis - Temi Qualità Acqua - Richieste info</label>
-            </value>
-            <value>
                 <fullName>16 - Temi Qualità Acqua - Reclami</fullName>
                 <default>false</default>
                 <label>16 - Temi Qualità Acqua - Reclami</label>
             </value>
             <value>
-                <fullName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
+                <fullName>16bis - Temi Qualità Acqua - Richieste info</fullName>
                 <default>false</default>
-                <label>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</label>
+                <label>16bis - Temi Qualità Acqua - Richieste info</label>
             </value>
             <value>
                 <fullName>18 - Problematiche tecniche Rete Fognaria</fullName>
@@ -116,14 +106,19 @@
                 <label>18 - Problematiche tecniche Rete Fognaria</label>
             </value>
             <value>
+                <fullName>18 BIS - Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
+                <default>false</default>
+                <label>18 BIS - Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</label>
+            </value>
+            <value>
                 <fullName>18 QUATER - Problematiche scarichi industriali</fullName>
                 <default>false</default>
                 <label>18 QUATER - Problematiche scarichi industriali</label>
             </value>
             <value>
-                <fullName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
+                <fullName>18 TER - Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
                 <default>false</default>
-                <label>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</label>
+                <label>18 TER - Richieste reiterate esenzione retroattiva fognatura e depurazione</label>
             </value>
             <value>
                 <fullName>19 - Cattivi odori o scarichi post depurazione</fullName>
@@ -181,9 +176,9 @@
                 <label>51 - Reclami/chiarimenti scontistiche relative a raccolte differenziate (pap, sacchi carta IF, …) e sconti da CdR</label>
             </value>
             <value>
-                <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
+                <fullName>54 - Recupero Letture su Contatori non Letti</fullName>
                 <default>false</default>
-                <label>54 – Recupero Letture su Contatori non Letti</label>
+                <label>54 - Recupero Letture su Contatori non Letti</label>
             </value>
             <value>
                 <fullName>56 - Applicazione componenti TARI, verifica aggiornamenti anagrafici, TARI evasione domestico</fullName>
@@ -204,6 +199,11 @@
                 <fullName>87 - Sostituzione massiva contatori (programmata)</fullName>
                 <default>false</default>
                 <label>87 - Sostituzione massiva contatori (programmata)</label>
+            </value>
+            <value>
+                <fullName>132 - Risposte da Call Center Tecnico</fullName>
+                <default>false</default>
+                <label>132 - Risposte da Call Center Tecnico</label>
             </value>
             <value>
                 <fullName>Acqua</fullName>

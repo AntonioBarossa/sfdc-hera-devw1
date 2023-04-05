@@ -131,11 +131,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</valueName>
+            <valueName>18 BIS - Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
-            <valueName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
+            <valueName>18 TER - Richieste reiterate esenzione retroattiva fognatura e depurazione</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Fognatura e Depurazione</controllingFieldValue>
@@ -180,7 +180,7 @@
         <valueSettings>
             <controllingFieldValue>Fatturazione consumi/contratti</controllingFieldValue>
             <controllingFieldValue>Preventivi/Lavori/Prestazioni</controllingFieldValue>
-            <valueName>54 – Recupero Letture su Contatori non Letti</valueName>
+            <valueName>54 - Recupero Letture su Contatori non Letti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità e Continuità di servizio</controllingFieldValue>
