@@ -203,6 +203,16 @@ public with sharing class HDT_UTL_ServicePointTst {
             position.valore = 'IT';
             positions.add(position);
 
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'BP';
+            position.valore = '1003616210';
+            positions.add(position);
+
+            position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
+            position.campo = 'VENDITORE';
+            position.valore = '13V0000000';
+            positions.add(position);
+
             response.data.posizioni = positions;
 
             List<ServicePoint__c> spList = [SELECT Id, MeterStatus__c, Distributor__c, Account__c FROM ServicePoint__c WHERE Name='testServicePoint0' LIMIT 1];
