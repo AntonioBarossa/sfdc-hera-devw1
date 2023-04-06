@@ -393,7 +393,7 @@ public inherited sharing class HDT_UTL_SubscriptionProcess {
                 //anche dopo aver attaccato il finalizer, è possibile continuare ad agganciare oggetti alla lista.
                 //la lista è passata per riferimento e l'oggetto finalizer viene serializzato e accodato solo a fine transazione
                 isFinalizerAttached = true;
-            }else if(!(System.isQueueable() || isFinalizerAttached)){
+            }else if(!System.isQueueable()){
                 HDT_UTL_DatabaseService.deleteSObject(contractToDelete);
                 contractToDelete.clear();
             }

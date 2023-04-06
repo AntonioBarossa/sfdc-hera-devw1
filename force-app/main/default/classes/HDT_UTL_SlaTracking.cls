@@ -143,4 +143,15 @@ public inherited sharing class HDT_UTL_SlaTracking {
         return slaValue;
     }
 
+    //DateTime startDt = DateTime.newInstance(2023, 03, 01, 10, 20 , 00);
+    //DateTime endDt = DateTime.newInstance(2023, 03, 02, 10, 20 , 00);
+    //System.debug('>>>>>>>>> SLA ' + calculateSlaValue(startDt, endDt));
+    public static Integer calculateSlaValue(DateTime startDatetime, DateTime endDatetime){
+        Decimal timeStart = startDatetime.getTime();
+        Decimal timeEnd = endDatetime.getTime();
+        Decimal hours = (timeEnd - timeStart) / 3600000;
+        Decimal days = hours / 24;
+        return (days < 1) ? 0 : (Integer)days.round(System.RoundingMode.UP);
+    }
+
 }

@@ -1276,7 +1276,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
     public static String calculateIndemnityBox(String complaintClassification, Boolean indemnityConfirmed, String indemnityMotivation, String correctionRight, Boolean expiredCorrection, String correctionDocumentEmissionDate, Decimal indemnityDueSendResponse) {
         String boxType = '';
         Boolean isReclamoScritto = complaintClassification.equalsIgnoreCase('Reclamo Scritto');
-        Boolean isRettificaDoppia = complaintClassification.equalsIgnoreCase('Rettifica Doppia Fatturazione');
+        Boolean isRettificaDoppia = complaintClassification.equalsIgnoreCase('Rettifica Doppia Fatturazione') || complaintClassification.equalsIgnoreCase('Richiesta di Rettifica di fatturazione');
         Boolean isRichiestaInformazioni = complaintClassification.equalsIgnoreCase('Richiesta di Informazioni');
         Boolean isIndemnityResponseGtZero = indemnityDueSendResponse > 0;
         Boolean isCorrectionRight = correctionRight.equalsIgnoreCase('Si');

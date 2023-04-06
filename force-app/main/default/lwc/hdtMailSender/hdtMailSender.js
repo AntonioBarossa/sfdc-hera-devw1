@@ -6,7 +6,6 @@ import { NavigationMixin } from 'lightning/navigation';
 import getMetadata from '@salesforce/apex/HDT_LC_MailSender.getMetadata';
 import getBodyMailMerged from '@salesforce/apex/HDT_LC_MailSender.getBodyMailMerged';
 import sendMailToApex from '@salesforce/apex/HDT_LC_MailSender.sendMail';
-
 export default class HdtMailSender extends NavigationMixin(LightningElement) {
     
     @api recordIdFromAura;
@@ -25,10 +24,12 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
         isReminder: false,
         orgWideAddId: '',
         bodyMail: '',
-        toAddress: ''
+        toAddress: '',
+        templateName: ''
     };
     newCaseId;
     reminderMailCounter;
+    templateName;
 
     @wire(CurrentPageReference)
     getStateParameters(currentPageReference) {
@@ -107,8 +108,10 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
         this.spinner = true;
 
         console.log('# getBodyMailMerged #');
-
-        getBodyMailMerged({templateId: event.detail.value, recordId: this.recordId})
+        console.log('# event.detail.value: ' + event.detail.value);
+        this.templateName = event.target.options.find(opt => opt.value === event.detail.value).label;
+        console.log('# templateName #: ' + this.templateName);
+        getBodyMailMerged({templateName: this.templateName, templateId: event.detail.value, recordId: this.recordId})
         .then(result => {
             console.log('# getBodyMailMerged #');
             console.log('>>> ' + JSON.stringify(result));
@@ -210,6 +213,7 @@ export default class HdtMailSender extends NavigationMixin(LightningElement) {
 
         this.mailStructure.bodyMail = this.bodyMail;
         this.mailStructure.toAddress = this.mailReceiver;
+        this.mailStructure.templateName = this.templateName;
         console.log('>>> send this: ' + JSON.stringify(this.mailStructure));
 
         sendMailToApex({mailStructure: JSON.stringify(this.mailStructure)})
