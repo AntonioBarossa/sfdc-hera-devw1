@@ -9017,9 +9017,13 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Impatti ambientali</fullName>
+            <default>false</default>
+        </values> 
+        <values>
             <fullName>Lavori e prestazioni accessorie su cliente</fullName>
             <default>false</default>
-        </values>     
+        </values>  
         <values>
             <fullName>Mercato</fullName>
             <default>false</default>
@@ -11649,6 +11653,14 @@
         </values>
         <values>
             <fullName>Visivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
             <default>false</default>
         </values>
     </picklistValues>
