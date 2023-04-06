@@ -35,9 +35,10 @@ public inherited sharing class HDT_UTL_SlaTracking {
         Date endDate;
         for(SlaTracking__c track : slaTrackingToElaborate){
 
-            startDate = convertDateTime(track.StartDateTime__c);
-            endDate = convertDateTime(track.EndDateTime__c);
-            track.SlaValue__c = startDate.daysBetween(endDate);//+1;
+            //startDate = convertDateTime(track.StartDateTime__c);
+            //endDate = convertDateTime(track.EndDateTime__c);
+            //track.SlaValue__c = startDate.daysBetween(endDate);//+1;
+            track.SlaValue__c = calculateSlaValue(track.StartDateTime__c, track.EndDateTime__c);
 
             if(adminRuleMap.containsKey(track.SlaAdministration__c)){
                 rangeType = adminRuleMap.get(track.SlaAdministration__c).RangeType__c;
@@ -143,14 +144,15 @@ public inherited sharing class HDT_UTL_SlaTracking {
         return slaValue;
     }
 
-    //DateTime startDt = DateTime.newInstance(2023, 03, 01, 10, 20 , 00);
-    //DateTime endDt = DateTime.newInstance(2023, 03, 02, 10, 20 , 00);
+    //DateTime startDt = DateTime.newInstance(2023, 04, 06, 12, 00 , 00);
+    //DateTime endDt = DateTime.newInstance(2023, 04, 07, 12, 00 , 01);
     //System.debug('>>>>>>>>> SLA ' + calculateSlaValue(startDt, endDt));
     public static Integer calculateSlaValue(DateTime startDatetime, DateTime endDatetime){
         Decimal timeStart = startDatetime.getTime();
         Decimal timeEnd = endDatetime.getTime();
         Decimal hours = (timeEnd - timeStart) / 3600000;
         Decimal days = hours / 24;
+        System.debug('>>>>>>>>> days ' + days + ' - hours ' + hours);
         return (days < 1) ? 0 : (Integer)days.round(System.RoundingMode.UP);
     }
 
