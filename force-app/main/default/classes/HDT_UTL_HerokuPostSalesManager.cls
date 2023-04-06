@@ -247,10 +247,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.BillNumber__c =billNumber;
             }
 
-            if(!noteSap.equalsIgnoreCase('') && recordCase.Id!=null){
-                HDT_QR_Case caseHelp=new HDT_QR_Case();
-                Case c=caseHelp.getRecordById(recordCase.Id);
-                String noteToCase=c.Note__c+'\n--------\nSAP:'+noteSap;
+            if(!noteSap.equalsIgnoreCase('')){
+               
+                String noteToCase=recordCase.Note__c+'\n--------\nSAP:'+noteSap;
                 if(noteToCase.length()>=32768){
                     noteToCase=noteToCase.abbreviate(32767);
                 }
