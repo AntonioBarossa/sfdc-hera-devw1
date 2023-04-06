@@ -202,12 +202,12 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
     static void getBodyMailMergedTst(){
        
         List<Account> accountList = [SELECT Id FROM Account LIMIT 1];
-        List<EmailTemplate> emailTemplateList = [SELECT Id FROM EmailTemplate LIMIT 1];
+        List<EmailTemplate> emailTemplateList = [SELECT Id, Name FROM EmailTemplate LIMIT 1];
 
         HDT_WRP_MailSender.HDT_WRP_BodyMail bodyMailActual;
 
         Test.startTest();
-        bodyMailActual = HDT_UTL_MailSenderHelper.getBodyMailMerged(emailTemplateList[0].Id, accountList[0].Id);
+        bodyMailActual = HDT_UTL_MailSenderHelper.getBodyMailMerged(emailTemplateList[0].Name, emailTemplateList[0].Id, accountList[0].Id);
         Test.stopTest();
 
         System.assertEquals(true,bodyMailActual.success,'Error general case result was not update correctly');

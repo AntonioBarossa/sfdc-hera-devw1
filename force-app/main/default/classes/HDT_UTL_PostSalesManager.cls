@@ -775,9 +775,10 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public void handleChiusuraActivitiesPending(SObject inputCase){
         Case currentCase = (Case) inputCase;
+        Set<String> processTypeSet = new Set<String>{'Ricostruzione Consumi', 'Comunicazione con il Gestore'};
 
         try {
-            if ('Ricostruzione Consumi'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+            if (processTypeSet.contains(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
                 List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
                 List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
                 if(actToCloseList.size() > 0){
