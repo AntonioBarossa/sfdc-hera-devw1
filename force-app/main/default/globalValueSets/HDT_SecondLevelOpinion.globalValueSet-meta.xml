@@ -436,5 +436,5 @@
         <label>Verifiche portali</label>
     </customValue>
     <masterLabel>Pareri 2° Livello</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>
