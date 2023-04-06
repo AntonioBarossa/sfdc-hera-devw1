@@ -3,8 +3,8 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
 {
     private static HDT_UTL_Constants constants = new HDT_UTL_Constants();
 
-    @TestSetup
-    static void setup()
+    
+    static void firstSetup()
     {
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
@@ -45,7 +45,13 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         orderList[3].VasSubType__c = 'Analisi Consumi';
         orderListTwo.add(orderList[3]);
         insert orderListTwo;
-
+        List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, false, orderList[0].Id, null, saleList[0].Id, 'Quote');
+        quoteList[0].IsFromVasSection__c = true;
+        insert quoteList;
+        for (Integer i = 1; i<4; i++){
+            orderList[i].SBQQ__Quote__c = quoteList[0].Id;
+        }
+        update orderList;
         List<OrderItem> orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(4, false, orderList[0].Id, spList[0].Id, prodList[0].Id, pbEntry.Id);
         orderItemList[0].OrderId = orderList[0].Id;
         orderItemList[0].Product2Id = prodList[0].Id;
@@ -93,10 +99,70 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         insert subListTest;
     }
 
+    static void secondSetup(){
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
+        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+        //List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(2, true, accList[0].id);
+        List<AccountContactRelation> accContRelations = new List<AccountContactRelation>();
+        for (AccountContactRelation accContRelation : [SELECT id FROM AccountContactRelation WITH SECURITY_ENFORCED]){
+            accContRelation.Roles = 'Other';
+            accContRelations.add(accContRelation);
+        }
+        accContRelations[1].Roles = 'Titolare';
+        update accContRelations;
+        List<Pricebook2> pb = HDT_UTL_DataFactoryTst.createPricebook(1,true);
+        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(2, false);
+        productList[0].Name = 'Analisi Consumi';
+        productList[0].Family = 'VAS Fatturabili';
+        productList[0].ProductCode = 'VAS_AS_HERA';
+
+        productList[1].Name = 'Prezzo Netto';
+        productList[1].Family = 'Offerta commerciale';
+        productList[1].ProductCode = 'PRZ_NTT';
+        insert productList;
+
+
+        productList  = [SELECT Id FROM Product2];
+        Product2 prodOffer = [SELECT Id FROM Product2 where Family = 'Offerta commerciale'];
+        Product2 prodAnaCons = [SELECT Id FROM Product2 where Family = 'VAS Fatturabili'];
+        pb = [SELECT Id from Pricebook2 WHERE isStandard = false LIMIT 1];
+        Pricebook2 pbStandard = [SELECT Id from Pricebook2 WHERE isStandard = true LIMIT 1];
+        List<PricebookEntry> pbe = HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pb[0].Id,pbStandard.Id);
+        SBQQ__ProductOption__c po = HDT_UTL_DataFactoryTst.createProductOption(productList[0].Id,productList[1].Id,true);
+        List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false, accList[0].Id);
+        billingProfileList[0].InvoicingStreetName__c = 'Roma';
+        billingProfileList[0].InvoicingStreetNumber__c = '15';
+        billingProfileList[0].InvoicingStreetNumberExtension__c = '20100 ITALIA';
+        billingProfileList[0].InvoicingCity__c = 'ROMA';
+        billingProfileList[0].InvoicingProvince__c = 'RM';
+        billingProfileList[0].InvoicingPostalCode__c = '10190';
+        billingProfileList[0].InvoicingCountry__c = 'ITALIA';
+
+        insert billingProfileList;
+
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
+        contractList[0].Status = 'Attivo';
+        insert contractList;
+
+        Contract contr = [SELECT Id FROM Contract LIMIT 1];
+
+        SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
+            SBQQ__Contract__c = contr.Id, 
+            SBQQ__Product__c = prodOffer.Id, 
+            SBQQ__Quantity__c = 1, 
+            SBQQ__Account__c = accList[0].Id,
+            SBQQ__NetPrice__c = 100.2,
+            SBQQ__SubscriptionEndDate__c = Date.Today());
+        insert subs;
+    }
 
     @isTest
     static void adjustVasContractBeforeInsertTst()
     {
+        firstSetup();
         Test.startTest();
             Boolean testResult = true;
             List<SBQQ__Subscription__c> subList = [SELECT Id, SBQQ__RequiredById__c FROM SBQQ__Subscription__c WHERE SBQQ__Product__r.Family != 'Offerta commerciale'];
@@ -110,6 +176,29 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
             }
         Test.stopTest();
         System.assertEquals(true, testResult, 'Subscription non riconciliate');
+    }
+
+    @isTest
+    static void adjustLookup()
+    {
+        secondSetup();
+        Test.startTest();
+        Product2 prodAnaCons = [SELECT Id FROM Product2 where Family = 'VAS Fatturabili'];
+        Contract contr = [SELECT Id FROM Contract LIMIT 1];
+        Account acc = [SELECT Id FROM Account LIMIT 1];
+        SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
+            SBQQ__Contract__c = contr.Id, 
+            SBQQ__Product__c = prodAnaCons.Id, 
+            SBQQ__Quantity__c = 1, 
+            SBQQ__Account__c = acc.Id,
+            SBQQ__NetPrice__c = 100.2,
+            SBQQ__SubscriptionEndDate__c = Date.Today(),
+            SBQQ__OptionType__c = 'Related Product');
+        insert subs;
+        subs.SBQQ__RootId__c = subs.Id;
+        update subs;
+        Test.stopTest();
+        //System.assertEquals(true, testResult, 'Subscription non riconciliate');
     }
 
 }

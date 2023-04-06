@@ -1027,12 +1027,19 @@
         </rules>
         <rules>
             <name>Rettifica_Doppia_Fatturazione</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>or</conditionLogic>
             <conditions>
                 <leftValueReference>GetInputCaseAggiornato.FirstLevelComplaintClassification__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <stringValue>Rettifica Doppia Fatturazione</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Richiesta di Rettifica di fatturazione</stringValue>
                 </rightValue>
             </conditions>
             <connector>

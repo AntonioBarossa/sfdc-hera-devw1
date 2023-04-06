@@ -1382,7 +1382,6 @@
             <label>HERA FOTOVOLTAICO</label>
         </rules>
     </decisions>
-    <environments>Default</environments>
     <formulas>
         <name>FormulaPriceF0</name>
         <dataType>Number</dataType>
@@ -1467,7 +1466,7 @@
         <label>Order Items Vas Loop</label>
         <locationX>182</locationX>
         <locationY>6278</locationY>
-        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVasOutput</collectionReference>
+        <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>

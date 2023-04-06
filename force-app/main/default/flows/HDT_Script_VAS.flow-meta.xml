@@ -1979,7 +1979,7 @@
         <locationY>1454</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>HERA_LED_SMART</name>
+            <name>Hera_Led_Smart</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
                 <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
@@ -2303,7 +2303,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>HERA_LED_SMART_Outbound</targetReference>
+                <targetReference>Screen_HERA_LED_SMART_Outbound</targetReference>
             </connector>
             <label>HERA LED SMART</label>
         </rules>
@@ -2595,73 +2595,73 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <name>totaleAcquistoKit1HeraLedNoPromo</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedPromo</name>
         <dataType>Number</dataType>
         <expression>72*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedSmart</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedSmartNoPromo</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit1HeraLedSmartPromo</name>
         <dataType>Number</dataType>
         <expression>112*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLed</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedNoPromo</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedPromo</name>
         <dataType>Number</dataType>
         <expression>72*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>2</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedSmart</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedSmartNoPromo</name>
         <dataType>Number</dataType>
         <expression>140*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquistoKit2HeraLedSmartPromo</name>
         <dataType>Number</dataType>
         <expression>112*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleAcquitoKit1HeraLed</name>
         <dataType>Number</dataType>
         <expression>90*{!GetVasOrderItem.Quantity}+9</expression>
-        <scale>3</scale>
+        <scale>0</scale>
     </formulas>
     <formulas>
         <name>totaleCostoMonopattiniElettrici</name>
@@ -2997,337 +2997,6 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
-    <screens>
-        <name>HERA_LED_SMART_Outbound</name>
-        <label>HERA LED SMART Outbound</label>
-        <locationX>9994</locationX>
-        <locationY>1574</locationY>
-        <allowBack>true</allowBack>
-        <allowFinish>true</allowFinish>
-        <allowPause>true</allowPause>
-        <connector>
-            <targetReference>isVas</targetReference>
-        </connector>
-        <fields>
-            <name>HERA_LED_SMART_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED SMART&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED SMART.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_1_PROMO_DIP_0</name>
-            <fieldText>&lt;p&gt;Grazie alla “Promozione dipendenti Gruppo Hera”, riservata ai dipendenti del Gruppo, amici e familiari, il prezzo di acquisto di 1 KIT, scontato del 20%, è pari a 112 € IVA inclusa più il costo della spedizione di 9 € IVA inclusa.&lt;/p&gt;&lt;p&gt;Il prezzo scontato è valido se mantiene attiva la fornitura associata per almeno 24 mesi. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero pari a 152€&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 1</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_2_PROMO_DIP_0</name>
-            <fieldText>&lt;p&gt;Grazie alla “Promozione dipendenti Gruppo Hera”, riservata ai dipendenti del Gruppo, amici e familiari, il prezzo di acquisto di 1 KIT, scontato del 20%, è pari a 112 € IVA inclusa più il costo della spedizione di 9 € IVA inclusa.&lt;/p&gt;&lt;p&gt;Il prezzo scontato è valido se mantiene attiva la fornitura associata per almeno 24 mesi. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero pari a 152 €&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 2</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_1_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA compresa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 1</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_2_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA compresa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 2</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_1_ACQUISTO_MULTIPLO_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 1</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 1</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartNoPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 1</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_2_ACQUISTO_MULTIPLO_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 2</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_2_TOTALE_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 2</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_2_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartNoPromo}€.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 2</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIP</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>DIPENDENTI</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_1_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 1</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_2_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>HERA LED SMART 2</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_CON_POD_0</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
-                    <operator>IsNull</operator>
-                    <rightValue>
-                        <booleanValue>false</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>HERA_LED_SMART_KIT_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <showFooter>true</showFooter>
-        <showHeader>true</showHeader>
-    </screens>
     <screens>
         <name>Screen_Conferma_Adesione_Aziende</name>
         <label>Screen Conferma Adesione Aziende</label>
@@ -3786,6 +3455,21 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>VAS_HERA_LED_SMART_0</name>
+            <fieldText>&lt;p&gt;•	Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Led Smart&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;       CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>VAS_HERA_NOPROBLEM_LUCEGAS_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere da AXA Partners la comunicazione sull’accettazione o mancata accettazione dell’adesione alla polizza, la data di effetto della copertura assicurativa e la data di cessazione dell’adesione mediante email?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -3836,7 +3520,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CALDAIA_SICURA_1</name>
-            <fieldText>&lt;p&gt;Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3851,7 +3535,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_RICARICA_PUBBLICA_1</name>
-            <fieldText>&lt;p&gt;Per Hera Ricarica Pubblica, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;, lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3917,7 +3601,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_LUCE_1</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3932,7 +3616,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_GAS_0</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3947,7 +3631,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_ACQUA_1</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3962,7 +3646,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>recessoMonopIn</name>
-            <fieldText>&lt;p&gt;Per Hera Monopattino, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Monopattino&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3977,7 +3661,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_EBIKE_1</name>
-            <fieldText>&lt;p&gt;Per Hera E-Bike, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera E-Bike&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3992,7 +3676,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_SANIFICA_ARIA_1</name>
-            <fieldText>&lt;p&gt;Per Hera Sanifica Aria, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4007,7 +3691,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_FOTOVOLTAICO_1</name>
-            <fieldText>&lt;p&gt;Per Hera Fotovoltaico Kit Fai da Te, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4016,6 +3700,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA FV KIT FAIDATE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_LED_SMART_1</name>
+            <fieldText>&lt;p&gt;Il recesso può inoltre essere esercitato su tutti i KIT acquistati e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.Quantity</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -4207,6 +3913,21 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
             </visibilityRule>
         </fields>
         <fields>
+            <name>VAS_HERA_LED_SMART_1_0</name>
+            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Led Smart&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
             <name>VAS_Generico_1_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere la documentazione contrattuale presso il suo indirizzo di comunicazione postale?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -4363,7 +4084,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CONTAWATT_1_1</name>
-            <fieldText>&lt;p&gt;Per Hera ContaWatt, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera ContaWatt&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna per il dispositivo e con un preavviso di almeno 30 giorni per il servizio.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4378,7 +4099,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_LUCE_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Luce, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Luce&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4393,7 +4114,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_GAS_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera NoProblem Gas, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera NoProblem Gas&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nel set informativo della polizza, entro 30 giorni dall’adesione al contratto di polizza.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4408,7 +4129,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_CALDAIA_SICURA_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera Caldaia Sicura, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Caldaia Sicura&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4423,7 +4144,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_NOPROBLEM_ACQUA_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera No Problem Acqua, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera No Problem Acqua&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla data di conclusione del Contratto.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4438,7 +4159,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>recessoSanifica</name>
-            <fieldText>&lt;p&gt;Per Hera Sanifica Aria, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4453,7 +4174,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>recessoMonopat</name>
-            <fieldText>&lt;p&gt;Per Hera Monopattino, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Monopattino&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4468,7 +4189,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_EBIKE_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera E-Bike, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera E-Bike&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4483,7 +4204,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>VAS_HERA_FOTOVOLTAICO_1_2</name>
-            <fieldText>&lt;p&gt;Per Hera Fotovoltaico Kit Fai da Te, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4492,6 +4213,28 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>HERA FV KIT FAIDATE</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>VAS_HERA_LED_SMART_1_2</name>
+            <fieldText>&lt;p&gt;Il recesso può inoltre essere esercitato su tutti i KIT acquistati e non solo su una parte di essi.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.Quantity</leftValueReference>
+                    <operator>LessThanOrEqualTo</operator>
+                    <rightValue>
+                        <numberValue>2.0</numberValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -5871,7 +5614,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_LED_Generico_0</name>
-            <fieldText>&lt;p&gt;[&lt;b&gt;HERA LED&lt;/b&gt;]&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5881,7 +5624,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_Generico_2</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;﻿[Condizioni economiche e di acquisto Hera LED]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;﻿Condizioni economiche e di acquisto Hera LED&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -5916,7 +5659,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquitoKit1HeraLed} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquitoKit1HeraLed}€ (90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;€ di spese di spedizione&lt;/span&gt;).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -5938,7 +5681,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLed} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLed}€ &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6005,7 +5748,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_Generico_3</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -6024,7 +5767,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_LED_Generico_1_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[HERA LED]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;b&gt;[Condizioni economiche e di acquisto Hera LED]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera LED&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6160,7 +5903,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_TOTALE_NO_PROMO_1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(72€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -6189,7 +5932,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_1_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedNoPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -6233,7 +5976,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_TOTALE_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(72€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -6262,7 +6005,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_2_TOTALE_NO_PROMO_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedNoPromo} €.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedNoPromo}€ &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;(90€ per {!GetVasOrderItem.Quantity} KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
@@ -6336,7 +6079,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_KIT_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[Garanzia del prodotto]&lt;/b&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -6355,7 +6098,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_LED_SMART_Generico_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;HERA LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6365,12 +6108,12 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_Generico_2</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;﻿Condizioni economiche e di acquisto Hera LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;﻿Condizioni economiche e di acquisto Hera LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA inclusa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p class=&quot;ql-indent-1&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA inclusa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6385,7 +6128,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA inclusa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p class=&quot;ql-indent-1&quot;&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA inclusa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6400,7 +6143,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_1_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmart} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmart}€ (140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione).&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6422,7 +6165,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_KIT_2_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmart} €.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmart}€ &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;(140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6489,6 +6232,337 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_LED_SMART_Generico_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Screen_HERA_LED_SMART_Outbound</name>
+        <label>HERA LED SMART Outbound</label>
+        <locationX>9994</locationX>
+        <locationY>1574</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>isVas</targetReference>
+        </connector>
+        <fields>
+            <name>HERA_LED_SMART_Generico_1_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA LED SMART&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo l’offerta Hera Led, che prevede la vendita di KIT di lampadine LED SMART.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;strong&gt;Condizioni economiche e di acquisto Hera LED SMART&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_PROMO_DIP_0</name>
+            <fieldText>&lt;p&gt;Grazie alla “Promozione dipendenti Gruppo Hera”, riservata ai dipendenti del Gruppo, amici e familiari, il prezzo di acquisto di 1 KIT, scontato del 20%, è pari a 112 € IVA inclusa più il costo della spedizione di 9 € IVA inclusa.&lt;/p&gt;&lt;p&gt;Il prezzo scontato è valido se mantiene attiva la fornitura associata per almeno 24 mesi. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero pari a 152€&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_PROMO_DIP_0</name>
+            <fieldText>&lt;p&gt;Grazie alla “Promozione dipendenti Gruppo Hera”, riservata ai dipendenti del Gruppo, amici e familiari, il prezzo di acquisto di 1 KIT, scontato del 20%, è pari a 112 € IVA inclusa più il costo della spedizione di 9 € IVA inclusa.&lt;/p&gt;&lt;p&gt;Il prezzo scontato è valido se mantiene attiva la fornitura associata per almeno 24 mesi. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero pari a 152 €&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA compresa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;Il costo di acquisto di 1 KIT è di 190 € IVA inclusa. Grazie allo sconto fedeltà Hera Comm le applica subito il prezzo scontato di 140 € IVA compresa, valido se mantiene attiva la fornitura associata per almeno 24 mesi. Il costo della Spedizione è di 9 € IVA inclusa. In caso di recesso anticipato della fornitura le verrà addebitato il prezzo intero.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_ACQUISTO_MULTIPLO_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 1 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_1</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartPromo}€ &lt;/span&gt;(112€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_TOTALE_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit1HeraLedSmartNoPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_ACQUISTO_MULTIPLO_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che acquista {!GetVasOrderItem.Quantity} KIT Tipo 2 abbinati alla fornitura {!LuceAndGasFormula}?&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_TOTALE_PROMO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartPromo}€ &lt;/span&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;(112€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;color: rgb(62, 62, 60); background-color: rgb(255, 255, 255);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_TOTALE_NO_PROMO_0</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;Il corrispettivo totale scontato abbinato al contratto {!LuceAndGasFormula} è quindi di {!totaleAcquistoKit2HeraLedSmartNoPromo}€ &lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;(140€ per {!GetVasOrderItem.Quantity}&amp;nbsp;KIT acquistati + 9€ di spese di spedizione)&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(62, 62, 60);&quot;&gt;.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>1 AND NOT(2 OR 3)</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIP</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>DIPENDENTI</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_1_Generico_1_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 1</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_2_Generico_1_1</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che l’indirizzo di recapito del prodotto è {!GetOrder.ShippingAddressFormula__c}?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le lampadine verranno consegnate tramite corriere entro 45 giorni lavorativi dalla conclusione del Contratto. Al momento della consegna dovrà esaminare e verificare l’integrità del prodotto, specificando per iscritto allo spedizioniere eventuali vizi evidenti o non corrispondenza rispetto all’ordine effettuato.&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Riceverà una fattura [una per ogni Contratto] che però non dovrà pagare, in quanto l’’importo sarà suddiviso in 24 rate mensili, addebitate nelle bollette della fornitura associata, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima le rate e poi la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Se il Contratto di fornitura cessa prima del saldo delle 24 rate, nella bolletta finale verranno addebitate in un’unica soluzione le rate residue, assieme allo “sconto fedeltà” applicato al momento dell’acquisto.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetVasOrderItem.ProductName__c</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>HERA LED SMART 2</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_CON_POD_0</name>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che il codice {!PodPdrFormula} del contratto di fornitura al quale è associato il presente contratto è {!GetOrder.ServicePointCodeFormula__c} ?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>GetOrder.ServicePointCodeFormula__c</leftValueReference>
+                    <operator>IsNull</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>HERA_LED_SMART_KIT_Generico_0</name>
             <fieldText>&lt;p&gt;&lt;strong&gt;Garanzia del prodotto&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Ogni lampadina ha una garanzia di 24 mesi.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
@@ -6947,7 +7021,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_GAS_Generico_1_1</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;In caso di sinistro potrà richiedere l’intervento di un tecnico al numero 800.218303 che provvederà a ripristinare il danno ed effettuerà, al termine, un checkup dell’impianto, senza alcun limite di interventi/anno e 2.000 €/intervento per uscita del tecnico, manodopera e pezzi di ricambio. Se la sua abitazione risulterà inagibile verranno coperte le spese di albergo, entro il massimale di 1.000 €/intervento. Inoltre la polizza prevede anche l’invio del vetraio e fabbro fino a 200€, il termoidraulico con massimale di 150€, il riparatore di elettrodomestici fino a 200€ e il ripristino dell’abitabilità per &lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il premio della polizza le verrà addebitato in rate mensili nelle bollette della fornitura di gas, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di morosità, di cessazione del Contratto di fornitura o di recesso dalla polizza, l’addebito delle rate e la copertura assicurativa verranno sospesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;La invitiamo a prendere visione del set informativo che riceverà e che può scaricare dal sito web www.heracomm.com.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;In caso di sinistro potrà richiedere l’intervento di un tecnico al numero 800.218303 che provvederà a ripristinare il danno ed effettuerà, al termine, un checkup dell’impianto, senza alcun limite di interventi/anno e 2.000 €/intervento per uscita del tecnico, manodopera e pezzi di ricambio. Se la sua abitazione risulterà inagibile verranno coperte le spese di albergo, entro il massimale di 1.000 €/intervento. . Inoltre la polizza prevede anche l’invio del vetraio e fabbro fino a 200€, il termoidraulico con massimale di 150€, il riparatore di elettrodomestici fino a 200€ e il ripristino dell’abitabilità per 250€.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il premio della polizza le verrà addebitato in rate mensili nelle bollette della fornitura di gas, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di morosità, di cessazione del Contratto di fornitura o di recesso dalla polizza, l’addebito delle rate e la copertura assicurativa verranno sospesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;La invitiamo a prendere visione del set informativo che riceverà e che può scaricare dal sito web www.heracomm.com.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -7020,7 +7094,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </connector>
         <fields>
             <name>HERA_NP_Luce_Intro</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;[HERA NO PROBLEM LUCE]&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo di aderire alla polizza AXA Partners Italia “Hera No Problem Luce” che le offre copertura assicurativa in caso di guasto all’impianto elettrico, al quadro elettrico, alle prese o portalampada e agli interruttori, anche in caso di fulmine, come ampiamente illustrato in corso di proposizione commerciale precedente a questa registrazione e in aggiunta prevede il vetraio, il fabbro, il riparatore di elettrodomestici e di caldaia.&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;HERA NO PROBLEM LUCE&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le proponiamo di aderire alla polizza AXA Partners Italia “Hera No Problem Luce” che le offre copertura assicurativa in caso di guasto all’impianto elettrico, al quadro elettrico, alle prese o portalampada e agli interruttori, anche in caso di fulmine, come ampiamente illustrato in corso di proposizione commerciale precedente a questa registrazione e in aggiunta prevede il vetraio, il fabbro, il riparatore di elettrodomestici e di caldaia.&amp;nbsp;.&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -7060,7 +7134,7 @@ IF({!ebikeEsleekCounter_1} &gt; 0, &quot;E-Sleek Motore Centrale&quot;, &quot;&q
         </fields>
         <fields>
             <name>HERA_NO_PROBLEM_LUCE_Generico_2</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;In caso di sinistro potrà richiedere l’intervento di un tecnico al numero 800.218303 che provvederà a ripristinare il danno ed effettuerà, al termine, un checkup dell’impianto, senza alcun limite di interventi/anno e 2.000 €/intervento per uscita del tecnico, manodopera e pezzi di ricambio. Se la sua abitazione risulterà inagibile verranno coperte le spese di albergo, entro il massimale di 1.000 €/intervento. Inoltre la polizza prevede anche l’invio del vetraio e fabbro fino a 200€, il termoidraulico con massimale di 150€, il riparatore di elettrodomestici fino a 200€ e il ripristino dell’abitabilità per 250€.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il premio della polizza le verrà addebitato in rate mensili nelle bollette della fornitura di energia elettrica, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di morosità, di cessazione del Contratto di fornitura o di recesso dalla polizza, l’addebito delle rate e la copertura assicurativa verranno sospesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;La invitiamo a prendere visione del set informativo che riceverà e che può scaricare dal sito web www.heracomm.com.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;In caso di sinistro potrà richiedere l’intervento di un tecnico al numero 800.218303 che provvederà a ripristinare il danno ed effettuerà, al termine, un checkup dell’impianto, senza alcun limite di interventi/anno e 2.000 €/intervento per uscita del tecnico, manodopera e pezzi di ricambio. Se la sua abitazione risulterà inagibile verranno coperte le spese di albergo, entro il massimale di 1.000 €/intervento. . Inoltre la polizza prevede anche l’invio del vetraio e fabbro fino a 200€, il termoidraulico con massimale di 150€, il riparatore di elettrodomestici fino a 200€ e il ripristino dell’abitabilità per 250€.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Il premio della polizza le verrà addebitato in rate mensili nelle bollette della fornitura di energia elettrica, con la stessa periodicità di fatturazione. In caso di pagamenti parziali, gli importi versati copriranno prima la fornitura e poi le rate. In caso di morosità, di cessazione del Contratto di fornitura o di recesso dalla polizza, l’addebito delle rate e la copertura assicurativa verranno sospesi.&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;La invitiamo a prendere visione del set informativo che riceverà e che può scaricare dal sito web www.heracomm.com.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>

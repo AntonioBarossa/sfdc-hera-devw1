@@ -175,10 +175,10 @@ public inherited sharing class HDT_UTL_Case {
             }
 
             if (!String.isBlank(newCurrentCase.RateCategory__c) && 'ACDOMRESP0'.equalsIgnoreCase(newCurrentCase.RateCategory__c)) {
-                output.customerChangeDate = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
                 currentCase.Cohabitation__c = 'No';
-                output.currentCase = currentCase;
             }
+            currentCase.CustomerChangeDate__c = Date.newInstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day());
+            output.currentCase = currentCase;
         }
         else if('Reclami'.equalsIgnoreCase(cluster) && 'calculateExpirationDate'.equalsIgnoreCase(process)){
             HDT_UTL_Reclami utlReclami = new HDT_UTL_Reclami();
@@ -229,7 +229,7 @@ public inherited sharing class HDT_UTL_Case {
             httpObj.endPoint = 'callout:MulesoftHergoPath/reminder';
             body = JSON.serialize(new Map<String, Object>{
                 'requestId'=>currentCase.Id,'dataRequest'=>Date.today(),'caseId'=>currentCase.CaseNumber,'noticeId'=>String.isNotBlank(currentCase.NoticeId__c)?currentCase.NoticeId__c:'',
-                'reminder'=>'X','text'=>String.isNotBlank(currentCase.Note__c)?currentCase.Note__c:''
+                'reminder'=>'X','text'=>String.isNotBlank(inputString)? inputString:''
             });
             output.effectiveDate = Date.today();
             HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse respWrp=(HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse)JSON.deserialize(HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj).body,HDT_UTL_BpCaCreate.HDT_WRP_BpCaCreateResponse.class);

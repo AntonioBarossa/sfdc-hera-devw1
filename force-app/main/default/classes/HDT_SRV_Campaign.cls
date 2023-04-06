@@ -25,6 +25,7 @@ public with sharing class HDT_SRV_Campaign {
         return lCamp;
     }
 
+    @testVisible
     private static void unableToLockRowManagement(List<SObject> sObjectList, Integer updateNumber) {
         try{
             Database.update(sObjectList, false);

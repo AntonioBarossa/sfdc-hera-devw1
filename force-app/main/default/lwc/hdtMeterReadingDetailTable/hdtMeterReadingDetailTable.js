@@ -25,6 +25,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     defaultSortDirection = 'asc';
     sortDirection = 'asc';
     modality = 'DEFAULT';
+    @api isFromFlow = false;
 
     connectedCallback(){
         console.log('HdtMeterReadingDetailTable loaded.');
@@ -34,7 +35,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     }
 
     configurationData(){
-        getConfigurationDetailTable({contractService: this.contractService})
+        getConfigurationDetailTable({contractService: this.contractService, isFromFlow: this.isFromFlow})
         .then(result => {
 
             if(result.success){
@@ -55,8 +56,8 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
     }
 
     detailBackendCall(){
-
-        getMeterReadingRecords({contractCode : this.contractNumber, modality: this.modality, contractService: this.contractService})
+        console.log("--> isFromFlow --> " + this.isFromFlow);
+        getMeterReadingRecords({contractCode : this.contractNumber, modality: this.modality, contractService: this.contractService, isFromFlow: this.isFromFlow})
         .then(result => {
 
             if(result) {
