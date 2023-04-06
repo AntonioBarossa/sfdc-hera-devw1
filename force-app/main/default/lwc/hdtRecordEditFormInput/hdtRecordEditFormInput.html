@@ -1,0 +1,5 @@
+<template>
+    <template if:true={dataLoaded}>
+        <lightning-combobox message-when-value-missing={labels.recordEditFormReqField} id="customcombobox" value={customFieldValue} placeholder="Selezionare un opzione" options={options} onchange={handleChangeField} data-id="combobox" required={field.Required} label={field.Label}></lightning-combobox>
+    </template>
+</template>
