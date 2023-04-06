@@ -142,6 +142,7 @@ public with sharing class HDT_SRV_EmailMessage {
                             DateTime nowDateTime = DateTime.now();
                             caseRecord.Phase__c = 'Completata';
                             caseRecord.Status = 'Closed';
+                            caseRecord.OpinionRequestResponse__c = email.TextBody;
                             if(!'Completata'.equalsIgnoreCase(oldPhase)){
                                 caseRecord.PhaseStory__c = oldPhase+'@@Completata@@'+nowDateTime.getTime()+'@@A||'+caseRecord.PhaseStory__c;
                             }
