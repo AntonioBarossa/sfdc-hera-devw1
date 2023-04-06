@@ -963,7 +963,7 @@ public class HDT_UTL_ScartiTst {
                 update new Order (Id = o.Id, Phase__c = 'Da Inviare');
             }catch(Exception e){
                 error = true;
-                System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
+                System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
             System.assert(error,'Non è stata lanciata l\'eccezione attesa');
             o.Phase__c = 'Errore Lavorazione SAP';
@@ -1001,7 +1001,7 @@ public class HDT_UTL_ScartiTst {
                 update new Case (Id = c.Id, Phase__c = 'Da Inviare');
             }catch(Exception e){
                 error = true;
-                System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
+                System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
             System.assert(error,'Non è stata lanciata l\'eccezione attesa');
             c.Phase__c = 'Errore Lavorazione SAP';
