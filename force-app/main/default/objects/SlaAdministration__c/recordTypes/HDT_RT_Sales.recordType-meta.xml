@@ -1856,12 +1856,16 @@
             <fullName>Reclamo Scritto</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Rettifica Doppia Fatturazione</fullName>
             <default>false</default>
-        </values>-->
+        </values>
         <values>
             <fullName>Richiesta di informazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di Rettifica di fatturazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>
