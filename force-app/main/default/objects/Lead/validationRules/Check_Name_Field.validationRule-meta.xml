@@ -9,7 +9,7 @@
 			OR(ISBLANK($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipDueDateTime__c),DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipDueDateTime__c))
 		)
 	),
-	ISBLANK(FirstName)
+	AND(ISBLANK(FirstName),  NOT(ISPICKVAL(CustomerMarking__c, &apos;Azienda&apos;)))
 )</errorConditionFormula>
     <errorDisplayField>FirstName</errorDisplayField>
     <errorMessage>Inserire il nome</errorMessage>
