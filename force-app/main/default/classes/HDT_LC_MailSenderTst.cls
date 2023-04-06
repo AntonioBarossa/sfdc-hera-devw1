@@ -78,10 +78,10 @@ public with sharing class HDT_LC_MailSenderTst {
     static void getBodyMailMergedTst(){
         HDT_WRP_MailSender.HDT_WRP_BodyMail ret;
         EmailMessage emailMessage =  [SELECT Id FROM EmailMessage LIMIT 1];
-        EmailTemplate emailTemplate =  [SELECT Id FROM EmailTemplate LIMIT 1];
+        EmailTemplate emailTemplate =  [SELECT Id, Name FROM EmailTemplate LIMIT 1];
 
         Test.startTest();
-        ret = HDT_LC_MailSender.getBodyMailMerged(emailTemplate.Id, emailMessage.Id);
+        ret = HDT_LC_MailSender.getBodyMailMerged(emailTemplate.Name, emailTemplate.Id, emailMessage.Id);
         Test.stopTest();
         System.assertEquals(true, ret.success, 'body mail was succsesfully merged');
     }
