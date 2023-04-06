@@ -25,6 +25,11 @@
         <default>false</default>
         <label>Salvaguardia</label>
     </customValue>
+    <customValue>
+        <fullName>STGM</fullName>
+        <default>false</default>
+        <label>STGM</label>
+    </customValue>
     <masterLabel>Mercato</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>
