@@ -355,7 +355,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.MobilePhone,
             Subprocess__c,
             VASType__c,
-            DateSentToSII__c
+            DateSentToSII__c,
+            OperationCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
