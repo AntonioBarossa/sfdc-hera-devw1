@@ -378,18 +378,21 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             event.preventDefault();       // stop the form from submitting
             this.saveInDraft = false;
             this.cancelCase = false;
-            const fields = event.detail.fields;
-            console.log('fields ' + JSON.stringify(fields));
+            let fieldsControl =this.getCustomComboboxes(event.detail.fields);
+            if(!fieldsControl.comboBoxesValid){
+                this.showMessage('Errore','testerror','error');
+                return;
+            }
             if(this.validateClass){
                 validateRecord({
                     validateClass: this.validateClass,
-                    fields: JSON.stringify(fields),
+                    fields: JSON.stringify(fieldsControl.fields),
                     recordId: this.recordId
                 })
                     .then(result => {
                         var resultWrapper = JSON.parse(result);
                         if(resultWrapper.outcomeCode === "OK"){
-                            this.template.querySelector('lightning-record-edit-form').submit(fields);
+                            this.template.querySelector('lightning-record-edit-form').submit(fieldsControl.fields);
                         }else{
                             console.log('ErrorMessage: ' +resultWrapper.outcomeDescription);
                             this.showMessage('Errore',resultWrapper.outcomeDescription,'error');
@@ -399,11 +402,18 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
                         this.error = true;
                     });
             }else{
-                this.template.querySelector('lightning-record-edit-form').submit(fields);
+                this.template.querySelector('lightning-record-edit-form').submit(fieldsControl.fields);
             }
         }
     }
 
+    getCustomComboboxes(formFields){
+        let retObj={comboBoxesValid:true,fields:formFields};
+        this.template.querySelectorAll('[data-id="inputcomponent"]').forEach(element=>{
+            element.checkValidityCombo() ? retObj.fields[element.getFieldApi()]=element.getFieldValue() : retObj.comboBoxesValid=false;
+        });
+        return retObj;
+    }
     handleAttributeChange() {
         // notify the flow of the new value
         const attributeChangeEvent = new FlowAttributeChangeEvent('varName', 'value');
@@ -432,11 +442,9 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     }
 
     selector(fieldName){
-
-        return this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]') != null
-            ?this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]')
-            :null;
-
+        return this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]') != null ?
+            this.template.querySelector('lightning-input-field[data-id="'+ fieldName + '"]') : this.template.querySelector('[data-field="'+ fieldName + '"]') != null ?
+            this.template.querySelector('[data-field="'+ fieldName + '"]').getComboboxElement() : null;
     }
 
     objSelector(fieldName){
