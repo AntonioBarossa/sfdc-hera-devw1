@@ -14,12 +14,10 @@ export default class HdtRecordEditFormInput extends LightningElement {
     customFieldValue;
     customPicklistOptions=[];
     dataLoaded=false;
-    comboBoxClass='';
     
     @wire(getRecord, { recordId: '$recordId', fields: '$retrieveFields' })
     wiredRecord({ error, data }) {
         console.log('debug me');
-        if(this.index !=null && this.index != 0) this.comboBoxClass='slds-m-top_x-small';
         if(data && data.fields[this.field.FieldName].value != null) {
             if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fields[this.field.FieldName].value))){
                 this.customPicklistOptions.push({label:data.fields[this.field.FieldName].displayValue,value:data.fields[this.field.FieldName].value});
@@ -41,7 +39,33 @@ export default class HdtRecordEditFormInput extends LightningElement {
 
     handleChangeField(event){
         this.customFieldValue=event.detail.value;
-        this.checkValidityCombo ? this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value} })) : this.customFieldValue=''; 
+        if(this.checkValidityCombo()){
+            this.removeErrorClass()
+            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value} }))
+        } else {
+            this.customFieldValue='';
+            this.addErrorClass();
+        }
+    }
+
+    @api checkValidityCombo(){
+        console.log('check validity combo started');
+        if(this.field.Required && !this.template.querySelector('[data-id="combobox"]').value){
+            this.addErrorClass();
+            return false;
+        }
+        this.removeErrorClass();
+        return true;
+    }
+
+    addErrorClass(){
+        this.template.querySelector('[data-id="combobox"]').classList.add('slds-has-error');
+        this.template.querySelector('[data-id="errorHelpText"]').classList.add('slds-hidden');
+    }
+
+    removeErrorClass(){
+        this.template.querySelector('[data-id="combobox"]').classList.remove('slds-has-error');
+        this.template.querySelector('[data-id="errorHelpText"]').classList.remove('slds-hidden');
     }
 
     @api getFieldValue(){
@@ -52,9 +76,8 @@ export default class HdtRecordEditFormInput extends LightningElement {
         return this.field.FieldName;
     }
 
-    @api checkValidityCombo(){
-        if(this.field.Required && !this.template.querySelector('[data-id="combobox"]').reportValidity()) return false;
-        return true;
+    get idCalculator(){
+        return 'customcombobox'+this.index;
     }
 
     @api getComboboxElement(){
