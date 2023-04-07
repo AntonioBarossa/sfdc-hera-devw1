@@ -8,23 +8,28 @@ export default class HdtRecordEditFormInput extends LightningElement {
     @api density;
     @api recordId;
     @api objectName;
+    @api index;
     @track retrieveFields=[];
     labels={recordEditFormReqField};
     customFieldValue;
     customPicklistOptions=[];
     dataLoaded=false;
+    comboBoxClass='';
     
     @wire(getRecord, { recordId: '$recordId', fields: '$retrieveFields' })
     wiredRecord({ error, data }) {
+        console.log('debug me');
+        if(this.index !=null && this.index != 0) this.comboBoxClass='slds-m-top_x-small';
         if(data && data.fields[this.field.FieldName].value != null) {
-            this.customPicklistOptions.push({label:data.fields[this.field.FieldName].displayValue,value:data.fields[this.field.FieldName].value});
+            if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fields[this.field.FieldName].value))){
+                this.customPicklistOptions.push({label:data.fields[this.field.FieldName].displayValue,value:data.fields[this.field.FieldName].value});
+            }
             this.customFieldValue=data.fields[this.field.FieldName].value;
             this.dataLoaded=true; 
         }
         if(data && data.fields[this.field.FieldName].value == null) this.dataLoaded=true;
         if(error) this.dataLoaded=true;
     }
-
     connectedCallback(){
         if(this.retrieveFields.length==0) this.retrieveFields.push(this.objectName+'.'+this.field.FieldName);
         if(this.customPicklistOptions.length<JSON.parse(JSON.stringify(this.field.PicklistOptions)).length) this.customPicklistOptions=this.customPicklistOptions.concat(JSON.parse(JSON.stringify(this.field.PicklistOptions)));
