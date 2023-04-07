@@ -288,6 +288,10 @@ public with sharing class HDT_UTL_ServicePoint {
             if (!accBp.isEmpty()) {
                 spNew.Account__c = accBp[0].Id;
                 accBpMap.put(accBp[0].Id, accBp[0]);
+                spNew.CustomerCodeSAP__c = null;
+            }
+            else {
+                spNew.CustomerCodeSAP__c = mapRes.get('BP');
             }
         }
         Map<String, String> inputFields = new Map<String, String>();
