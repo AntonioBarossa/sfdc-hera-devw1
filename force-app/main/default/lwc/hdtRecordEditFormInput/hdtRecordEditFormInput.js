@@ -16,7 +16,8 @@ export default class HdtRecordEditFormInput extends LightningElement {
     customFieldValue;
     customPicklistOptions=[];
     dataLoaded=false;
-    
+
+    /*
     @wire(getRecord, { recordId: '$recordId', fields: '$retrieveFields' })
     wiredRecord({ error, data }) {
         if(data && data.fields[this.field.FieldName].value != null) {
@@ -28,6 +29,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
         if(data && data.fields[this.field.FieldName].value == null) this.dataLoaded=true;
         if(error) this.dataLoaded=true;
     }
+    */
     connectedCallback(){
         if(this.retrieveFields.length==0) this.retrieveFields.push(this.objectName+'.'+this.field.FieldName);
         if(this.customPicklistOptions.length<JSON.parse(JSON.stringify(this.field.PicklistOptions)).length) this.customPicklistOptions=this.customPicklistOptions.concat(JSON.parse(JSON.stringify(this.field.PicklistOptions)));
@@ -40,9 +42,10 @@ export default class HdtRecordEditFormInput extends LightningElement {
         debugger;
         init({params:paramsObj})
         .then(data=>{
-            if(data && !this.controllingField && data.fieldValue ){
-                this.customPicklistOptions.push({label:this.field.Label,value:data.fieldValue});
-                this.customFieldValue=data.fields[this.field.FieldName].value;
+            console.log('init method start');
+            if(data && !this.controllingField && data.fieldValue && data.fieldLabel){
+                if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fieldValue))) this.customPicklistOptions.push({label:data.fieldLabel,value:data.fieldValue});
+                this.customFieldValue=data.fieldValue;
             }
             this.dataLoaded=true;
         })

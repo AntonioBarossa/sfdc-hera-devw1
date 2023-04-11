@@ -21,11 +21,13 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             if(objectList.size()==0){
                 throw new AuraHandledException('Record not found');
             }
-
-            Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
-            Schema.SObjectType leadSchema = schemaMap.get(objectName);
-            Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
-            String picklistLabel=fieldMap.get(fieldName).getDescribe().getLabel();
+            String picklistLabel='';
+            for(PicklistEntry ple:Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName).getDescribe().picklistValues){
+                if(ple.isActive()==true && ple.value==objectList[0].get(fieldName)){
+                    picklistLabel=ple.getLabel();
+                }
+            }
+            params.put('fieldLabel',String.isNotBlank(picklistLabel) ? picklistLabel:objectList[0].get(fieldName));
             params.put('fieldValue',objectList[0].get(fieldName));
         }else{
             List<HDT_RecordFormFieldDependency__mdt> rffd=HDT_QR_RecordEditFormFlowController.getDependencyConfigurations(controllingField,fieldName,process,objectName);
