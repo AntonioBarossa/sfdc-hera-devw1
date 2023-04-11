@@ -6351,6 +6351,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FB03 - Periodicità bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CD01 - Esenzione per mancanza servizio</fullName>
             <default>false</default>
         </values>
