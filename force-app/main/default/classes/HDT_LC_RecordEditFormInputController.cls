@@ -23,8 +23,11 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             }
             params.put(objectName+'.'+fieldName,objectList[0].get(fieldName));
         }else{
-            //new mdt logic
-            //HDT_RecordFormFieldDependency__mdt rffd=HDT_RecordFormFieldDependency__mdt.getIstance(process+')
+            List<HDT_RecordFormFieldDependency__mdt> rffd=HDT_QR_RecordEditFormFlowController.getDependencyConfigurations(controllingField,fieldName,process,objectName);
+            if(rffd.size()==0){
+                throw new QueryException('No configuration record found');
+            }
+            params.put('dependencySchema',rffd[0].DependecyJSON__c);
         }
         return params;
     }

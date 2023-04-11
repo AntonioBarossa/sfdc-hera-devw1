@@ -53,12 +53,14 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
     }
 
     public static List<HDT_RecordFormFieldDependency__mdt> getDependencyConfigurations(String controllingField,String controlledField,String processType, String objectDevName){
-        HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess('HDT_RecordFormFieldDependency__mdt','ControlledField__c, ControllingField__c, DependecyJSON__c, ProcessType__c','read');
+        HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess('HDT_RecordFormFieldDependency__mdt','ControlledField__c, ControllingField__c, DependecyJSON__c, ProcessType__c, ObjectDeveloperName__c','read');
         securityClass.checkSecurityAccess();
         return [
                 SELECT ControlledField__c, ControllingField__c, DependecyJSON__c, ProcessType__c
                 FROM HDT_RecordFormFieldDependency__mdt
                 WHERE ControlledField__c=:controlledField AND ControllingField__c=:controllingField AND ProcessType__c=:processType AND ObjectDeveloperName__c=:objectDevName
+                WITH SECURITY_ENFORCED
+                LIMIT 1
         ];
     }
     
