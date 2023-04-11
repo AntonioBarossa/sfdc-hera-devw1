@@ -19,13 +19,18 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             securityClass.checkSecurityAccess();
             List<SObject> objectList=Database.query('SELECT Id, '+fieldName+' FROM '+ objectName+' WHERE Id=:objectId');
             if(objectList.size()==0){
-                throw new QueryException('Record not found');
+                throw new AuraHandledException('Record not found');
             }
-            params.put(objectName+'.'+fieldName,objectList[0].get(fieldName));
+
+            Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
+            Schema.SObjectType leadSchema = schemaMap.get(objectName);
+            Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
+            String picklistLabel=fieldMap.get(fieldName).getDescribe().getLabel();
+            params.put('fieldValue',objectList[0].get(fieldName));
         }else{
             List<HDT_RecordFormFieldDependency__mdt> rffd=HDT_QR_RecordEditFormFlowController.getDependencyConfigurations(controllingField,fieldName,process,objectName);
             if(rffd.size()==0){
-                throw new QueryException('No configuration record found');
+                throw new AuraHandledException('No configuration record found');
             }
             params.put('dependencySchema',rffd[0].DependecyJSON__c);
         }
