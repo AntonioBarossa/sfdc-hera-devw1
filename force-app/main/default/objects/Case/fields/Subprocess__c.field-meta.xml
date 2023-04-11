@@ -224,6 +224,16 @@
                 <label>Nuovo Allaccio</label>
             </value>
             <value>
+                <fullName>Nuovo allaccio (impianto non esistente)</fullName>
+                <default>false</default>
+                <label>Nuovo allaccio (impianto non esistente)</label>
+            </value>
+            <value>
+                <fullName>Nuovo allaccio (solo aggiunta attacco)</fullName>
+                <default>false</default>
+                <label>Nuovo allaccio (solo aggiunta attacco)</label>
+            </value>
+            <value>
                 <fullName>Ordinaria</fullName>
                 <default>false</default>
                 <label>Ordinaria</label>
@@ -282,6 +292,11 @@
                 <fullName>Sezionamento Allacciamento</fullName>
                 <default>false</default>
                 <label>Sezionamento Allacciamento</label>
+            </value>
+            <value>
+                <fullName>Solo aggiunta attacco senza sopralluogo</fullName>
+                <default>false</default>
+                <label>Solo aggiunta attacco senza sopralluogo</label>
             </value>
             <value>
                 <fullName>Soppressione Attacco</fullName>
@@ -407,18 +422,15 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
-            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
-            <valueName>Aggiunta Attacco</valueName>
+            <valueName>Nuovo allaccio (impianto non esistente)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
-            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
-            <valueName>Aggiunta Attacco senza Attivazione</valueName>
+            <valueName>Nuovo allaccio (solo aggiunta attacco)</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Nuovo Impianto</controllingFieldValue>
-            <controllingFieldValue>Nuovo Impianto - Aggiunta Attacco</controllingFieldValue>
-            <valueName>Nuovo Allaccio</valueName>
+            <valueName>Solo aggiunta attacco senza sopralluogo</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Modifica Impianto</controllingFieldValue>
