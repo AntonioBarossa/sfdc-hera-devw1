@@ -52,6 +52,7 @@ public inherited sharing class HDT_QR_BillingProfile {
             InvoicingStreetNumber__c,
             InvoicingCityCode__c,
             IbanCountry__c,
+            AccountClass__c,
             ContractAccountCode__c
             FROM BillingProfile__c
             WHERE Id = :billingProfileId
