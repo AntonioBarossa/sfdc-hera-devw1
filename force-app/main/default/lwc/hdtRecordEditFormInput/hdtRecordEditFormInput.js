@@ -60,12 +60,12 @@ export default class HdtRecordEditFormInput extends LightningElement {
 
     addErrorClass(){
         this.template.querySelector('[data-id="combobox"]').classList.add('slds-has-error');
-        this.template.querySelector('[data-id="errorHelpText"]').classList.add('slds-hidden');
+        this.template.querySelector('[data-id="errorHelpText"]').classList.remove('slds-hidden');
     }
 
     removeErrorClass(){
         this.template.querySelector('[data-id="combobox"]').classList.remove('slds-has-error');
-        this.template.querySelector('[data-id="errorHelpText"]').classList.remove('slds-hidden');
+        this.template.querySelector('[data-id="errorHelpText"]').classList.add('slds-hidden');
     }
 
     @api getFieldValue(){
