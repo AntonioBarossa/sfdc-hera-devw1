@@ -1,5 +1,6 @@
 import { LightningElement,api,track,wire } from 'lwc';
 import recordEditFormReqField from '@salesforce/label/c.recordEditFormReqField';
+import init from '@salesforce/apex/HDT_LC_RecordEditFormInputController.init';
 import { getRecord } from 'lightning/uiRecordApi';
 
 export default class HdtRecordEditFormInput extends LightningElement {
@@ -9,6 +10,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     @api recordId;
     @api objectName;
     @api index;
+    @api controllingField;
     @track retrieveFields=[];
     labels={recordEditFormReqField};
     customFieldValue;
@@ -17,13 +19,11 @@ export default class HdtRecordEditFormInput extends LightningElement {
     
     @wire(getRecord, { recordId: '$recordId', fields: '$retrieveFields' })
     wiredRecord({ error, data }) {
-        console.log('debug me');
         if(data && data.fields[this.field.FieldName].value != null) {
             if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fields[this.field.FieldName].value))){
                 this.customPicklistOptions.push({label:data.fields[this.field.FieldName].displayValue,value:data.fields[this.field.FieldName].value});
             }
-            this.customFieldValue=data.fields[this.field.FieldName].value;
-            this.dataLoaded=true; 
+
         }
         if(data && data.fields[this.field.FieldName].value == null) this.dataLoaded=true;
         if(error) this.dataLoaded=true;
@@ -31,6 +31,24 @@ export default class HdtRecordEditFormInput extends LightningElement {
     connectedCallback(){
         if(this.retrieveFields.length==0) this.retrieveFields.push(this.objectName+'.'+this.field.FieldName);
         if(this.customPicklistOptions.length<JSON.parse(JSON.stringify(this.field.PicklistOptions)).length) this.customPicklistOptions=this.customPicklistOptions.concat(JSON.parse(JSON.stringify(this.field.PicklistOptions)));
+        let paramsObj={
+            'fieldName':this.field.FieldName,
+            'objectId':this.recordId,
+            'controllingField':this.controllingField ? this.controllingField:'',
+            'process':'test'
+        }
+        debugger;
+        init({params:paramsObj})
+        .then(data=>{
+            if(data && !this.controllingField && data.fieldValue ){
+                this.customPicklistOptions.push({label:this.field.Label,value:data.fieldValue});
+                this.customFieldValue=data.fields[this.field.FieldName].value;
+            }
+            this.dataLoaded=true;
+        })
+        .catch(error => {
+            console.log('error');
+        });
     }
 
     get options() {
