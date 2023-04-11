@@ -679,7 +679,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']")? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
                     let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
                     console.log('sumUnit: ' + sumUnit + ' = ' + noResDom + ' + ' + resDom + ' + ' + noDom + ' + ' + indUnit + ' + ' + zooUnit + ' + ' + commUnit + ' + ' + agrUnit + ' = ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value + '(UnitaImmobiliari)' );
-                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
+                    if ( sumUnit === 0 || this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;
@@ -793,7 +793,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']")? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
                     let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
                     console.log('sumUnit: ' + sumUnit + ' = ' + noResDom + ' + ' + resDom + ' + ' + noDom + ' + ' + indUnit + ' + ' + zooUnit + ' + ' + commUnit + ' + ' + agrUnit + ' = ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value + '(UnitaImmobiliari)' );
-                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
+                    if ( sumUnit === 0 || this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;

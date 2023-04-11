@@ -27,6 +27,7 @@ public class HDT_WRP_MailSender {
         @AuraEnabled public String message;
         @AuraEnabled public String bodyMail;
         @AuraEnabled public String receiver;
+        @AuraEnabled public String templateName;
     }
 
     public class HDT_WRP_SendMailResult {
@@ -41,12 +42,14 @@ public class HDT_WRP_MailSender {
         public String orgWideAddId;
         public String bodyMail;
         public String toAddress;
+        public String templateName;
     }
 
     public class HDT_WRP_GenerateCaseResult {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
         @AuraEnabled public Id caseId;
+        @AuraEnabled public String caseNumber;
     }
 
 }

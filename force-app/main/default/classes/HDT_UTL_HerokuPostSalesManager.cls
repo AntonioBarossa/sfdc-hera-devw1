@@ -190,6 +190,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String numPrev = reqWrp.requestMap.get('NUMPREV');
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         String codErrAeeg = reqWrp.requestMap.get('CODERR_AEEG');
+        String noteSap = reqWrp.requestMap.get('NOTE_SAP');
         verificaLaboratorio = reqWrp.requestMap.get('VER_LABO');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
@@ -234,6 +235,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             numDocCalcolo = reqWrp.requestMap.get('MAN_BILL_NUM')!=null ? reqWrp.requestMap.get('MAN_BILL_NUM') : '';
             importoDocCalcolo = reqWrp.requestMap.get('CALC_AMOUNT')!=null ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
             billNumber = reqWrp.requestMap.get('BILL_NUM')!=null ? reqWrp.requestMap.get('BILL_NUM') : '';
+            
+            noteSap = reqWrp.requestMap.get('NOTE_SAP')!=null ? reqWrp.requestMap.get('NOTE_SAP') : '';
+
 
             if(!numDocCalcolo.equalsIgnoreCase('')){
                 currentCase.DocumentNumber__c =numDocCalcolo;
@@ -241,6 +245,15 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
             if(!billNumber.equalsIgnoreCase('')){
                 currentCase.BillNumber__c =billNumber;
+            }
+
+            if(!noteSap.equalsIgnoreCase('')){
+               
+                String noteToCase=recordCase.Note__c+'\n--------\nSAP:'+noteSap;
+                if(noteToCase.length()>=32768){
+                    noteToCase=noteToCase.abbreviate(32767);
+                }
+                currentCase.Note__c = noteToCase;
             }
             
             if(!importoDocCalcolo.equalsIgnoreCase('')){
@@ -441,7 +454,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         }else if(method.equalsIgnoreCase('esito_finale')){
             //HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
-            String noteSap = reqWrp.requestMap.get('NOTA_HK');
+            noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
             //String contractCode = reqWrp.requestMap.get('VERTRAG');

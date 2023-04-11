@@ -53,10 +53,11 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst
         HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs input = new HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs();
         
 
-        List<Case> caseList = [SELECT Id, AccountId, Note__c, IsContainer__c FROM Case WHERE Type = 'Contenitore Reclami'];
+        List<Case> caseList = [SELECT Id, Type, AccountId, Note__c, IsContainer__c FROM Case WHERE Type = 'Contenitore Reclami'];
 
         input.recordId = caseList[0].Id;
         input.accountId = caseList[0].AccountId;
+        input.caseType = caseList[0].Type;
         input.servicePointId = '';
         input.firstLevel = '';
         input.note = caseList[0].Note__c;
@@ -79,10 +80,37 @@ public with sharing class HDT_SRV_IndemnityConfirmationTst
         List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs> inputs = new List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs>();
         HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs input = new HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs();
 
-        List<Case> caseList = [SELECT Id, AccountId, ServicePoint__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c, IsContainer__c FROM Case WHERE ParentId != NULL AND Cluster__c = 'Reclami'];
+        List<Case> caseList = [SELECT Id, Type, AccountId, ServicePoint__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c, IsContainer__c FROM Case WHERE ParentId != NULL AND Cluster__c = 'Reclami'];
         input.recordId = caseList[0].Id;
         input.accountId = caseList[0].AccountId;
         input.servicePointId = caseList[0].ServicePoint__c;
+        input.caseType = caseList[0].Type;
+        input.firstLevel = caseList[0].FirstLevelComplaintClassification__c;
+        input.secondLevel = caseList[0].SecondLevelComplaintClassification__c;
+        input.note = '';
+        input.isContainer = caseList[0].IsContainer__c;
+        
+        inputs.add(input);
+        List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowOutputs> outputs;
+
+        Test.startTest();
+            outputs = HDT_SRV_IndemnityConfirmation.checkIndemnityConfirmation(inputs);
+        Test.stopTest();
+
+        System.assertEquals(true, !outputs.isEmpty(), 'Conferma Indennizzo non calcolata');
+    }
+
+    @isTest
+    private static void checkIndemnityConfirmationTestNonContainer1()
+    {
+        List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs> inputs = new List<HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs>();
+        HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs input = new HDT_SRV_IndemnityConfirmation.HDT_UTL_FlowInputs();
+
+        List<Case> caseList = [SELECT Id, Type, AccountId, ServicePoint__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c, IsContainer__c FROM Case WHERE ParentId != NULL AND Cluster__c = 'Reclami'];
+        input.recordId = caseList[0].Id;
+        input.accountId = caseList[0].AccountId;
+        input.servicePointId = caseList[0].ServicePoint__c;
+        input.caseType = 'Reclamo Scritto Da Cittadino';
         input.firstLevel = caseList[0].FirstLevelComplaintClassification__c;
         input.secondLevel = caseList[0].SecondLevelComplaintClassification__c;
         input.note = '';
