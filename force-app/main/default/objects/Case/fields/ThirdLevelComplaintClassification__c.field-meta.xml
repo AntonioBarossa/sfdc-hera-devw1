@@ -470,33 +470,13 @@
             <valueName>Visivo</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Qualità e continuità servizio</controllingFieldValue>
-            <valueName>Fornitura servizio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Qualità e continuità servizio</controllingFieldValue>
-            <valueName>Pronto Intervento</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Qualità e continuità servizio</controllingFieldValue>
-            <valueName>Qualità acqua potabile</valueName>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
+            <valueName>Morosità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
             <valueName>Solleciti</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lavori e prestazioni accessorie su cliente</controllingFieldValue>
-            <controllingFieldValue>Misura</controllingFieldValue>
-            <valueName>Comportamento operatore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lavori e prestazioni accessorie su cliente</controllingFieldValue>
-            <valueName>Costo del lavoro/prestazione</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Lavori e prestazioni accessorie su cliente</controllingFieldValue>
-            <valueName>Qualità dell&apos;intervento</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità del Servizio</controllingFieldValue>
@@ -542,6 +522,31 @@
         <valueSettings>
             <controllingFieldValue>Servizio Clienti</controllingFieldValue>
             <valueName>Web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lavori e prestazioni accessorie su cliente</controllingFieldValue>
+            <controllingFieldValue>Misura</controllingFieldValue>
+            <valueName>Comportamento operatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lavori e prestazioni accessorie su cliente</controllingFieldValue>
+            <valueName>Costo del lavoro/prestazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Lavori e prestazioni accessorie su cliente</controllingFieldValue>
+            <valueName>Qualità dell&apos;intervento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e continuità servizio</controllingFieldValue>
+            <valueName>Fornitura servizio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e continuità servizio</controllingFieldValue>
+            <valueName>Pronto Intervento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Qualità e continuità servizio</controllingFieldValue>
+            <valueName>Qualità acqua potabile</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Misura</controllingFieldValue>
@@ -715,6 +720,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Contratti</controllingFieldValue>
+            <valueName>Voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Contratti</controllingFieldValue>
             <valueName>Volture e subentri</valueName>
         </valueSettings>
         <valueSettings>
@@ -748,10 +757,6 @@
         <valueSettings>
             <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
             <valueName>Cmor (Corrispettivo morosità pregresse)</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Morosità e sospensione</controllingFieldValue>
-            <valueName>Morosità</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Morosità e sospensione</controllingFieldValue>

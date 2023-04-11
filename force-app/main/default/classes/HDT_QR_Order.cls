@@ -373,7 +373,8 @@ public inherited sharing class HDT_QR_Order {
             AdditionalAttachments__c,
             WasteCommodityType__c,
             VASType__c,
-            DateSentToSII__c
+            DateSentToSII__c,
+            OperationCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED

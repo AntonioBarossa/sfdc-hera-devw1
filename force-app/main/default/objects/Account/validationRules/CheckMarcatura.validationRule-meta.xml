@@ -3,6 +3,12 @@
     <fullName>CheckMarcatura</fullName>
     <active>true</active>
     <errorConditionFormula>AND(
+	NOT(
+		AND(
+			CONTAINS($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c,$User.Username),
+			OR(ISBLANK($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c),DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c))
+		)
+	),
 	OR(
 		ISPICKVAL(CustomerMarking__c, &quot;Associazione&quot;),
 		AND(
@@ -70,8 +76,7 @@
 					ISPICKVAL(Category__c, &quot;Grandi Condomini&quot;)
 				), 
 				FiscalCode__c != &quot;&quot;, 
-				ISNUMBER(FiscalCode__c), 
-				ISBLANK(VATNumber__c) 
+				ISNUMBER(FiscalCode__c)
 			)
 		)
 	)
