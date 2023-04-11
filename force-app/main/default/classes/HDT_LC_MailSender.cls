@@ -12,8 +12,8 @@ public inherited sharing class HDT_LC_MailSender {
     }
 
     @AuraEnabled
-    public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(Id templateId, Id recordId){
-        return HDT_UTL_MailSenderHelper.getBodyMailMerged(templateId, recordId);
+    public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(String templateName, Id templateId, Id recordId){
+        return HDT_UTL_MailSenderHelper.getBodyMailMerged(templateName, templateId, recordId);
     }
 
     @AuraEnabled

@@ -936,6 +936,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.CustomerCodeSAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.JointBottomAdhesion__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1031,7 +1036,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>ServicePoint__c.SalesCompanyCode__c</field>
+        <field>ServicePoint__c.CustomerCodeSAP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

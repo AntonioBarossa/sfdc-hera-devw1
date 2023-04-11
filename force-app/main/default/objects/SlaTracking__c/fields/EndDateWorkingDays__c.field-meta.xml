@@ -3,7 +3,7 @@
     <fullName>EndDateWorkingDays__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Previsione della data di fine lavorazione calcolata in giorni lavorativi</inlineHelpText>
-    <label>Data fine [gg lavorativi]</label>
+    <label>Data fine prevista [gg lavorativi]</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Date</type>

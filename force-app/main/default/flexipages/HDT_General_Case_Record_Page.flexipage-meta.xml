@@ -203,6 +203,20 @@
                 <identifier>c_hdtCaseFileUpload</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AttachedContentDocuments</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer6</identifier>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>leftsidebar</name>
         <type>Region</type>
@@ -983,7 +997,7 @@
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
                             <visibilityRule>
-                                <booleanFilter>3 AND (1 OR 2)</booleanFilter>
+                                <booleanFilter>4 AND (1 OR 2 OR 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -993,6 +1007,11 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>In Lavorazione</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Completata</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type}</leftValue>
