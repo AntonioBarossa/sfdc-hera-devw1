@@ -233,7 +233,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity = reqWrp.requestMap.get('ATTIVITA');
             //recupero valori campi per CR005
             numDocCalcolo = reqWrp.requestMap.get('MAN_BILL_NUM')!=null ? reqWrp.requestMap.get('MAN_BILL_NUM') : '';
-            importoDocCalcolo = reqWrp.requestMap.get('CALC_AMOUNT')!=null ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
+            importoDocCalcolo = reqWrp.requestMap.containsKey('CALC_AMOUNT') ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
             billNumber = reqWrp.requestMap.get('BILL_NUM')!=null ? reqWrp.requestMap.get('BILL_NUM') : '';
             
             noteSap = reqWrp.requestMap.get('NOTE_SAP')!=null ? reqWrp.requestMap.get('NOTE_SAP') : '';
@@ -256,8 +256,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 currentCase.Note__c = noteToCase;
             }
             
-            if(!importoDocCalcolo.equalsIgnoreCase('')){
-                Decimal d = Decimal.valueOf(!String.isEmpty(importoDocCalcolo) ? importoDocCalcolo : '0');
+            if(String.isNotBlank(importoDocCalcolo)){
+                Decimal d = Decimal.valueOf(importoDocCalcolo);
                 d = d.setScale(2, RoundingMode.HALF_EVEN);
                 currentCase.DocumentAmount__c =d;
             }
