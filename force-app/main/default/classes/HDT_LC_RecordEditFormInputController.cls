@@ -25,6 +25,7 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             for(PicklistEntry ple:Schema.getGlobalDescribe().get(objectName).getDescribe().fields.getMap().get(fieldName).getDescribe().picklistValues){
                 if(ple.isActive()==true && ple.value==objectList[0].get(fieldName)){
                     picklistLabel=ple.getLabel();
+                    break;
                 }
             }
             params.put('fieldLabel',String.isNotBlank(picklistLabel) ? picklistLabel:objectList[0].get(fieldName));
