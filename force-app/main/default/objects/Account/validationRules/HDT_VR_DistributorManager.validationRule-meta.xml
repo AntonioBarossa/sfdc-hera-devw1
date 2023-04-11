@@ -4,6 +4,12 @@
     <active>true</active>
     <description>La regola da errore se l&apos;account che si sta tentando di modificare è di tipo Distributore e l&apos;utente non ha il permesso HDT_CP_DistributorManager</description>
     <errorConditionFormula>AND(
+                NOT(
+                    AND(
+                        CONTAINS($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipUsernames__c,$User.Username), 
+                        OR(ISBLANK($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c),DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Account.SkipDueDateTime__c))
+                    )
+                ),
 				NOT(ISNEW()),
 				RecordType.DeveloperName = &quot;HDT_RT_Distributore&quot;,
 				$Permission.HDT_CP_DistributorManager= false

@@ -61,6 +61,11 @@
                 <label>CORE PL AZ</label>
             </value>
             <value>
+                <fullName>FEDELTA'</fullName>
+                <default>false</default>
+                <label>FEDELTA'</label>
+            </value>
+            <value>
                 <fullName>Lampadine kit doppio</fullName>
                 <default>false</default>
                 <label>Lampadine kit doppio</label>
