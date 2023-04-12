@@ -101,6 +101,7 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             console.log('### Object Name ' + this.objectName);
             console.log('### RecordId ' + this.recordId);
             console.log('### RecordType ' + this.recordType);
+            console.log('### processType '+this.processType);
             this.wiredResponse = JSON.parse(data);
             this.validateClass = this.wiredResponse[0].ValidateClass__c;
             if(this.wiredResponse[0].hasOwnProperty("FieldsJSON__c")){

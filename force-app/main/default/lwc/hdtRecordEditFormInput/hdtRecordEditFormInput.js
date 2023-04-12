@@ -12,34 +12,22 @@ export default class HdtRecordEditFormInput extends LightningElement {
     @api index;
     @api controllingField;
     @api processType;
-    @track retrieveFields=[];
     labels={recordEditFormReqField};
     customFieldValue;
     customPicklistOptions=[];
+    picklistOptionsDependencyObject={};
+    controllingFieldValue='';
     dataLoaded=false;
 
-    /*
-    @wire(getRecord, { recordId: '$recordId', fields: '$retrieveFields' })
-    wiredRecord({ error, data }) {
-        if(data && data.fields[this.field.FieldName].value != null) {
-            if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fields[this.field.FieldName].value))){
-                this.customPicklistOptions.push({label:data.fields[this.field.FieldName].displayValue,value:data.fields[this.field.FieldName].value});
-            }
-
-        }
-        if(data && data.fields[this.field.FieldName].value == null) this.dataLoaded=true;
-        if(error) this.dataLoaded=true;
-    }
-    */
     connectedCallback(){
-        if(this.retrieveFields.length==0) this.retrieveFields.push(this.objectName+'.'+this.field.FieldName);
-        if(this.customPicklistOptions.length<JSON.parse(JSON.stringify(this.field.PicklistOptions)).length) this.customPicklistOptions=this.customPicklistOptions.concat(JSON.parse(JSON.stringify(this.field.PicklistOptions)));
+        this.controllingField = this.field?.ControllingField ? this.field.ControllingField : '';
+        if(!this.controllingField &&this.customPicklistOptions.length<JSON.parse(JSON.stringify(this.field.PicklistOptions)).length) this.customPicklistOptions=this.customPicklistOptions.concat(JSON.parse(JSON.stringify(this.field.PicklistOptions)));
         let paramsObj={
             'fieldName':this.field.FieldName,
             'objectId':this.recordId,
             'controllingField':this.controllingField ? this.controllingField:'',
-            'process':'test'
-        }
+            'process':this.processType
+        };
         debugger;
         init({params:paramsObj})
         .then(data=>{
@@ -48,22 +36,29 @@ export default class HdtRecordEditFormInput extends LightningElement {
                 if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fieldValue))) this.customPicklistOptions.push({label:data.fieldLabel,value:data.fieldValue});
                 this.customFieldValue=data.fieldValue;
             }
+            if(data && this.controllingField && data.dependencySchema){
+                this.picklistOptionsDependencyObject=JSON.parse(data.dependencySchema);
+            }
             this.dataLoaded=true;
         })
         .catch(error => {
-            console.log('error');
+            console.log('error init');
+            this.dataLoaded=true;
         });
     }
 
     get options() {
+        if(this.controllingField && this.controllingFieldValue){
+            return picklistOptionsDependencyObject[this.controllingFieldValue];
+        }
         return this.customPicklistOptions;
     }
 
     handleChangeField(event){
         this.customFieldValue=event.detail.value;
         if(this.checkValidityCombo()){
-            this.removeErrorClass()
-            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value} }))
+            this.removeErrorClass();
+            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value} }));
         } else {
             this.customFieldValue='';
             this.addErrorClass();
@@ -104,5 +99,10 @@ export default class HdtRecordEditFormInput extends LightningElement {
 
     @api getComboboxElement(){
         return this.template.querySelector('[data-id="combobox"]');
+    }
+
+    get disabledStatusCalculation(){
+        if(this.controllingField && !this.controllingFieldValue) return true;
+        return false;
     }
 }
