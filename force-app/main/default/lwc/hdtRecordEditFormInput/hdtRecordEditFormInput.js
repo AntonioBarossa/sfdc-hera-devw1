@@ -11,6 +11,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     @api objectName;
     @api index;
     @api controllingField;
+    @api processType;
     @track retrieveFields=[];
     labels={recordEditFormReqField};
     customFieldValue;
