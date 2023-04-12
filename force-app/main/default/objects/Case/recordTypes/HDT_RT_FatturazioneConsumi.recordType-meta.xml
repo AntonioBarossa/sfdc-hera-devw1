@@ -8237,11 +8237,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito KO da DBO</fullName>
+            <fullName>Esito KO da SAP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito KO da SAP</fullName>
+            <fullName>Esito KO da DBO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8249,11 +8249,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito OK da DBO</fullName>
+            <fullName>Esito OK da SAP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Esito OK da SAP</fullName>
+            <fullName>Esito OK da DBO</fullName>
             <default>false</default>
         </values>
         <values>
