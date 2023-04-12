@@ -63,6 +63,12 @@ public inherited sharing class HDT_QR_RecordEditFormFlowController {
                 LIMIT 1
         ];
     }
+
+    public static List<SObject> getRecordFromIdQueryString(String fieldName, String objectName, String objectId){
+        HDT_UTL_SecurityAccess securityClass = new HDT_UTL_SecurityAccess(objectName,'Id, '+fieldName,'read');
+        securityClass.checkSecurityAccess();
+        return Database.query('SELECT Id, '+fieldName+' FROM '+ objectName+' WHERE Id=:objectId');
+    }
     
     
 }

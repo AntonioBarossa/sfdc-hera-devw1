@@ -17,7 +17,7 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             securityClass.setOperation('read');
             securityClass.setFieldNamesParam('Id, '+fieldName);
             securityClass.checkSecurityAccess();
-            List<SObject> objectList=Database.query('SELECT Id, '+fieldName+' FROM '+ objectName+' WHERE Id=:objectId');
+            List<SObject> objectList=HDT_QR_RecordEditFormFlowController.getRecordFromIdQueryString(fieldName, objectName, objectId);
             if(objectList.size()==0){
                 throw new AuraHandledException('Record not found');
             }
