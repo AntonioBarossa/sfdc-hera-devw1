@@ -481,6 +481,10 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.AggregateBilling__c = mapRes.get('FATTURACOLLETTIVA');
         }
 
+        if(mapRes.get('DATAULTIMAGAA')!=null && !String.isBlank(mapRes.get('DATAULTIMAGAA'))){
+            spNew.DateOfLastAlignmentGAA__c = dataEnrich.alignGaaDate(String.valueOf(spNew.DateOfLastAlignmentGAA__c), mapRes.get('DATAULTIMAGAA'));
+        }
+
         //Reset flag di check creazione activity di "Modifica Indirizzo Fornitura", tale flag verrà impostato a true nel caso in cui si vada a modificare l'indirizzo sul form del service point.
         spNew.IsAddressChanged__c = false;
 
