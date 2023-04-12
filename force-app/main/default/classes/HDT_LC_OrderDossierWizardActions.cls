@@ -645,6 +645,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
     }
 
+    @TestVisible
     private static void handleTariOrder(Order orderParentRetreived){
         Order parentOrderToUpdate = new Order();
         parentOrderToUpdate.Id = orderParentRetreived.Id;
@@ -663,10 +664,12 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     Id=childOrd.Id,
                     Surface__c = childOrd.OrderReference__r.Surface__c
                 );
+
+                ordersToUpdate.add(new Order(Id=childOrd.OrderReference__c, BlockOnComputation__c = 'Y'));
                 ordersToUpdate.add( o );
             }
         }
-        orderSrv.updateRecords(ordersToUpdate);
+        map<id, Order> ordersToUpdateMap = new map<id, Order>(ordersToUpdate);
+        orderSrv.updateRecords(ordersToUpdateMap.values());
     }
-
 }

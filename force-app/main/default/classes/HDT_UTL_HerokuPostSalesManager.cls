@@ -181,6 +181,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         // aggiunta campi per CR005
         String numDocCalcolo ='';
         String importoDocCalcolo = '';
+        String billNumber = '';
         // fine aggiunta campi per CR005
         String codServizio = reqWrp.requestMap.get('COD_SERVIZIO');
         // String codPrestazione = reqWrp.requestMap.get('COD_PRESTAZIONE');
@@ -189,6 +190,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         String numPrev = reqWrp.requestMap.get('NUMPREV');
         String expectedExec = reqWrp.requestMap.get('TEMP_ES_PREV');
         String codErrAeeg = reqWrp.requestMap.get('CODERR_AEEG');
+        String noteSap = reqWrp.requestMap.get('NOTE_SAP');
         verificaLaboratorio = reqWrp.requestMap.get('VER_LABO');
         HDT_QR_HerokuPostSalesManager qrClass = new HDT_QR_HerokuPostSalesManager();
         //CHECK CROSS MINIMUM FIELD
@@ -231,14 +233,31 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             activity = reqWrp.requestMap.get('ATTIVITA');
             //recupero valori campi per CR005
             numDocCalcolo = reqWrp.requestMap.get('MAN_BILL_NUM')!=null ? reqWrp.requestMap.get('MAN_BILL_NUM') : '';
-            importoDocCalcolo = reqWrp.requestMap.get('CALC_AMOUNT')!=null ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
+            importoDocCalcolo = reqWrp.requestMap.containsKey('CALC_AMOUNT') ? reqWrp.requestMap.get('CALC_AMOUNT') : '';
+            billNumber = reqWrp.requestMap.get('BILL_NUM')!=null ? reqWrp.requestMap.get('BILL_NUM') : '';
+            
+            noteSap = reqWrp.requestMap.get('NOTE_SAP')!=null ? reqWrp.requestMap.get('NOTE_SAP') : '';
+
 
             if(!numDocCalcolo.equalsIgnoreCase('')){
                 currentCase.DocumentNumber__c =numDocCalcolo;
             }
+
+            if(!billNumber.equalsIgnoreCase('')){
+                currentCase.BillNumber__c =billNumber;
+            }
+
+            if(!noteSap.equalsIgnoreCase('')){
+               
+                String noteToCase=recordCase.Note__c+'\n--------\nSAP:'+noteSap;
+                if(noteToCase.length()>=32768){
+                    noteToCase=noteToCase.abbreviate(32767);
+                }
+                currentCase.Note__c = noteToCase;
+            }
             
-            if(!importoDocCalcolo.equalsIgnoreCase('')){
-                Decimal d = Decimal.valueOf(!String.isEmpty(importoDocCalcolo) ? importoDocCalcolo : '0');
+            if(String.isNotBlank(importoDocCalcolo)){
+                Decimal d = Decimal.valueOf(importoDocCalcolo);
                 d = d.setScale(2, RoundingMode.HALF_EVEN);
                 currentCase.DocumentAmount__c =d;
             }
@@ -435,7 +454,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
 
         }else if(method.equalsIgnoreCase('esito_finale')){
             //HDT_SRV_DataEnrichmentPostSales enrichSrv = new HDT_SRV_DataEnrichmentPostSales();
-            String noteSap = reqWrp.requestMap.get('NOTA_HK');
+            noteSap = reqWrp.requestMap.get('NOTA_HK');
             String odv = reqWrp.requestMap.get('VBELN');
             String fatturaSap = reqWrp.requestMap.get('FATTURA');
             //String contractCode = reqWrp.requestMap.get('VERTRAG');

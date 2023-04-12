@@ -16,6 +16,6 @@
     </values>
     <values>
         <field>Parere_2_livello__c</field>
-        <value xsi:type="xsd:string">54 – Recupero Letture su Contatori non Letti</value>
+        <value xsi:type="xsd:string">54 - Recupero Letture su Contatori non Letti</value>
     </values>
 </CustomMetadata>

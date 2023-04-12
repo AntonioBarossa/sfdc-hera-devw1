@@ -398,6 +398,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Protocollo - TARI da Ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rapporti con i distributori e SII</fullName>
             <default>false</default>
         </values>
@@ -1936,6 +1940,10 @@
             <fullName>Richiesta di informazioni</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Richiesta di Rettifica di fatturazione</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>OrderField__c</picklist>
@@ -2523,22 +2531,22 @@
             <fullName>Hera Comm Marche</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Hera Comm NordEst</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
-        <values>
+        <!--<values>
             <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
-        </values>
+        </values>-->
     </picklistValues>
     <picklistValues>
         <picklist>SecondLevelComplaintClassification__c</picklist>

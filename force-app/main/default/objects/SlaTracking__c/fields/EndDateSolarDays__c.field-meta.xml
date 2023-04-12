@@ -3,7 +3,7 @@
     <fullName>EndDateSolarDays__c</fullName>
     <externalId>false</externalId>
     <inlineHelpText>Previsione della data di fine lavorazione calcolata in giorni solari</inlineHelpText>
-    <label>Data fine [gg solari]</label>
+    <label>Data fine prevista [gg solari]</label>
     <required>false</required>
     <trackTrending>false</trackTrending>
     <type>Date</type>

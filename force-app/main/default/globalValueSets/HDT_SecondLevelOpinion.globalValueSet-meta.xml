@@ -96,14 +96,14 @@
         <label>18 - Problematiche tecniche Rete Fognaria</label>
     </customValue>
     <customValue>
-        <fullName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
+        <fullName>18 BIS - Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
         <default>false</default>
-        <label>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</label>
+        <label>18 BIS - Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</label>
     </customValue>
     <customValue>
-        <fullName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
+        <fullName>18 TER - Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
         <default>false</default>
-        <label>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</label>
+        <label>18 TER - Richieste reiterate esenzione retroattiva fognatura e depurazione</label>
     </customValue>
     <customValue>
         <fullName>18 QUATER - Problematiche scarichi industriali</fullName>
@@ -171,9 +171,9 @@
         <label>51 - Reclami/chiarimenti scontistiche relative a raccolte differenziate (pap, sacchi carta IF, …) e sconti da CdR</label>
     </customValue>
     <customValue>
-        <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
+        <fullName>54 - Recupero Letture su Contatori non Letti</fullName>
         <default>false</default>
-        <label>54 – Recupero Letture su Contatori non Letti</label>
+        <label>54 - Recupero Letture su Contatori non Letti</label>
     </customValue>
     <customValue>
         <fullName>56 - Applicazione componenti TARI, verifica aggiornamenti anagrafici, TARI evasione domestico</fullName>
@@ -436,5 +436,5 @@
         <label>Verifiche portali</label>
     </customValue>
     <masterLabel>Pareri 2° Livello</masterLabel>
-    <sorted>true</sorted>
+    <sorted>false</sorted>
 </GlobalValueSet>

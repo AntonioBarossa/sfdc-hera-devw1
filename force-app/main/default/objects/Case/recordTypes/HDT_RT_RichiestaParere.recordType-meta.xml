@@ -7929,6 +7929,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -9032,11 +9036,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>18 BIS – Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
+            <fullName>18 BIS - Tariffe Fognatura e Depurazione (Utenze domestiche e assimilate)</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>18 TER – Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
+            <fullName>18 TER - Richieste reiterate esenzione retroattiva fognatura e depurazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9088,7 +9092,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>54 – Recupero Letture su Contatori non Letti</fullName>
+            <fullName>54 - Recupero Letture su Contatori non Letti</fullName>
             <default>false</default>
         </values>
         <values>

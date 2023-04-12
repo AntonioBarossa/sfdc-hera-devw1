@@ -195,7 +195,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                    StartOrderPhase__c, EndOrderPhase__c, FirstLevelComplaintClassification__c, SecondLevelComplaintClassification__c
             FROM SlaAdministration__c
             WHERE RecordType.DeveloperName = :slaRuleType
-            AND EndDate__c >= today AND StartDate__c <= today
+            //AND EndDate__c >= today AND StartDate__c <= today
             //AND IsActive__c = true
         ];
 
@@ -299,12 +299,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
             currentTrack.EndDateTime__c = Datetime.valueOf(dt);
             currentTrack.Status__c = 'Chiuso';
 
-            if(ruleDateIsValid(currentTrack.EndDateTime__c, singleRule)){
-                System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
-                return currentTrack;
-            } else {
-                return null;
-            }
+            //if(ruleDateIsValid(currentTrack.EndDateTime__c, singleRule)){
+            //    System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
+            //    return currentTrack;
+            //} else {
+            //    return null;
+            //}
+            return currentTrack;
 
         } else {
             return null;

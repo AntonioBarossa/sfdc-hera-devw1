@@ -145,14 +145,17 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateCaseResult = new HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult();
 
+        String csNumber = '';
+        
         try {
-
+            
             Case reminderCase = new Case();
             reminderCase.Id = caseId;
             
             List<Case> detailedCases = HDT_QR_MailSender.getCaseById(caseId);
             String newPhase = '';
             if(detailedCases.size() >0){
+                csNumber = detailedCases[0].Parent?.CaseNumber;
                 String oldPhase = detailedCases[0].Phase__c;
                 switch on oldPhase {
                     when 'In attesa risposta Mail'{
@@ -190,6 +193,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
         updateCaseResult.caseId = caseId;
         updateCaseResult.success = true;
+        updateCaseResult.caseNumber = csNumber;
         return updateCaseResult;
 
     }
@@ -246,10 +250,11 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 generateCaseResult.message = 'No access to Case';
                 return generateCaseResult;
             }
-
+            
             generateCaseResult.success = true;
             generateCaseResult.message = 'Case created';
             generateCaseResult.caseId = mailCase.Id;
+            generateCaseResult.caseNumber = caseToClone?.CaseNumber;
 
         } catch (Exception e){
             generateCaseResult.success = false;
@@ -259,9 +264,9 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         return generateCaseResult;
     }
 
-    public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(Id templateId, Id recordId){
+    public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(String templateName, Id templateId, Id recordId){
         
-        System.debug('>>> templateId: ' + templateId + ' - recordId: ' + recordId);
+        System.debug('>>> templateName: ' + templateName + ' - ' + 'templateId: ' + templateId + ' - recordId: ' + recordId);
 
         HDT_WRP_MailSender.HDT_WRP_BodyMail bodyMailResult = new HDT_WRP_MailSender.HDT_WRP_BodyMail();
         Messaging.SingleEmailMessage singleEmailMessage;
@@ -272,6 +277,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             bodyMailResult.message = '';
             bodyMailResult.bodyMail = singleEmailMessage.getHtmlBody();
             bodyMailResult.receiver = '###';///getReceiverMail(templateId);
+            bodyMailResult.templateName = templateName;
         } catch(Exception e){
             bodyMailResult.success = false;
             bodyMailResult.message = e.getMessage() + ' - linea [' + String.valueOf(e.getLineNumber()) + ']';
@@ -324,7 +330,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 //mail.setReferences('<OZCJB000000000000000000000000000000000000000000000ROQDLZ0048utoRPnQK2LnoiL9jyV4A@sfdc.net>');
                 //mail.setBccAddresses(new List<String>{''});
             } else {
-                subjectString = comGestore;
+                subjectString = comGestore + ' - ' + mailStructure.templateName;
                 List<Case> detailedCaseList = HDT_QR_MailSender.getCaseById(mailStructure.recordId);
                 if(detailedCaseList.size() > 0 && 'Comunicazione con il Gestore'.equalsIgnoreCase(detailedCaseList[0].Type)){
                     caseResult = updateReminderCase(mailStructure.recordId, isCaseObj);
@@ -340,12 +346,15 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             }
 
             String messageId = Cases.generateThreadingMessageId(caseResult.caseId);
+            String stringCaseLink = '<br><br><a href="'+ URL.getSalesforceBaseUrl().toExternalForm()+ '/'+caseResult.caseId +'">Link Pratica Salesforce</a>';
             mail.setReferences(messageId);
-            mail.setHtmlBody(mailStructure.bodyMail);
+            mail.setHtmlBody(mailStructure.bodyMail + '\n' + stringCaseLink);
             mail.setToAddresses(new String[]{mailStructure.toAddress});
             //mail.setCcAddresses(new String[]{'antonino.fugazzotto@2hy53hdpybee3yyzu1pnnhfr9jl2twp6abttuei499hjwqdemq.3n-8mj0uaa.cs128.case.sandbox.salesforce.com'});
             mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
-            mail.setSubject(subjectString + '[ thread::' + caseResult.caseId + ':: ]');
+            //DA GESTIRE MEGLIO SELEZIONE SUBJECT, SU CASE COM AL GESTORE il CASENUMBER RISULTA NULL
+            String subjectStringExtend = !String.isBlank(caseResult.caseNumber) ? ' - Case Controllante: ' + caseResult.caseNumber + ' ' + '[ thread::' + caseResult.caseId + ':: ]' : ' [ thread::' + caseResult.caseId + ':: ]';
+            mail.setSubject(subjectString + subjectStringExtend);
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 

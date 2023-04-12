@@ -669,10 +669,10 @@ export default class hdtBillingProfileForm extends LightningElement {
         console.log('hdtBillingProfileForm_js - validFields');
 
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-        && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
-        && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7
-        && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
-            this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
+            && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
+            && !( this.template.querySelector("[data-id='SubjectCode__c']").value.length === 7 || this.template.querySelector("[data-id='SubjectCode__c']").value.length === 6 )
+            && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
+            this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri oppure 6 caratteri per le Pubbliche Amministrazioni');
         }
 
         if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
