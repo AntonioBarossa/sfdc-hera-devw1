@@ -1,43 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <actionCalls>
-        <name>Calculate_Expiration_Date</name>
-        <label>Calculate Expiration Date</label>
-        <locationX>50</locationX>
-        <locationY>758</locationY>
-        <actionName>HDT_UTL_Case</actionName>
-        <actionType>apex</actionType>
-        <connector>
-            <targetReference>AssignExpirationDate</targetReference>
-        </connector>
-        <flowTransactionModel>Automatic</flowTransactionModel>
-        <inputParameters>
-            <name>cluster</name>
-            <value>
-                <stringValue>Reclami</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>currentCase</name>
-            <value>
-                <elementReference>getInputCase</elementReference>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>process</name>
-            <value>
-                <stringValue>calculateExpirationDate</stringValue>
-            </value>
-        </inputParameters>
-        <inputParameters>
-            <name>salesCompany</name>
-            <value>
-                <elementReference>SupplyCityFormula</elementReference>
-            </value>
-        </inputParameters>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </actionCalls>
-    <actionCalls>
         <description>Calcolo delle date per case di indennizzo Relaclami Invo Acqua</description>
         <name>Calculate_Expiration_Date_Water</name>
         <label>Calculate Expiration Date Acqua</label>
@@ -116,22 +79,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assign_Variables_0</name>
-        <label>Assign Variables</label>
-        <locationX>50</locationX>
-        <locationY>998</locationY>
-        <assignmentItems>
-            <assignToReference>FirstIndemnityCase.Amount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>getInputCase.IndemnityDueSendResponse__c</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>GetFirstCausalCode</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssignCausalCode</name>
         <label>AssignCausalCode</label>
         <locationX>1370</locationX>
@@ -189,50 +136,6 @@
         </assignmentItems>
         <connector>
             <targetReference>AddToCollection_0_0_0_0_0_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>AssignExpirationDate</name>
-        <label>AssignExpirationDate</label>
-        <locationX>50</locationX>
-        <locationY>878</locationY>
-        <assignmentItems>
-            <assignToReference>getInputCase.AmountToPayInInstallments__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calculate_Expiration_Date.amountToPayInInstallments</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getInputCase.EndDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calculate_Expiration_Date.endDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getInputCase.CompletedDocumentationDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calculate_Expiration_Date.completedDocumentationDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getInputCase.DepositExpirationDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calculate_Expiration_Date.depositExpirationDate</elementReference>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>getInputCase.DepositAmount__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>Calculate_Expiration_Date.depositAmount</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Assign_Variables_0</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1122,7 +1025,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Calculate_Expiration_Date</targetReference>
+                <targetReference>GetActivityTemplate</targetReference>
             </connector>
             <label>0 - Reclamo da Cittadino</label>
         </rules>
@@ -1563,6 +1466,44 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordCreates>
+        <name>CreaActivty</name>
+        <label>CreaActivty</label>
+        <locationX>50</locationX>
+        <locationY>878</locationY>
+        <inputAssignments>
+            <field>Case__c</field>
+            <value>
+                <elementReference>getInputCase.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Type__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Name</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__ActivityTemplate__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.Id</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Description__c</field>
+            <value>
+                <elementReference>GetActivityTemplate.wrts_prcgvr__Subject__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>wrts_prcgvr__Status__c</field>
+            <value>
+                <stringValue>Aperta</stringValue>
+            </value>
+        </inputAssignments>
+        <object>wrts_prcgvr__Activity__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordCreates>
+    <recordCreates>
         <name>CreateIndemnityRecords</name>
         <label>CreateIndemnityRecords</label>
         <locationX>1502</locationX>
@@ -1572,6 +1513,27 @@
         </connector>
         <inputReference>IndemnityCollection</inputReference>
     </recordCreates>
+    <recordLookups>
+        <name>GetActivityTemplate</name>
+        <label>GetActivityTemplate</label>
+        <locationX>50</locationX>
+        <locationY>758</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>CreaActivty</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Name</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>CBS_CIT001__ELABORAZIONE_MANUALE</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>wrts_prcgvr__ActivityTemplate__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordLookups>
         <name>getCreatedIndemnities</name>
         <label>getCreatedIndemnities</label>

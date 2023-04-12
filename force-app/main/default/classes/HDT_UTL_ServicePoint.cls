@@ -480,6 +480,7 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('FATTURACOLLETTIVA')!=null && !String.isBlank(mapRes.get('FATTURACOLLETTIVA'))){
             spNew.AggregateBilling__c = mapRes.get('FATTURACOLLETTIVA');
         }
+
         if(mapRes.get('DATAULTIMAGAA')!=null && !String.isBlank(mapRes.get('DATAULTIMAGAA'))){
             spNew.DateOfLastAlignmentGAA__c = dataEnrich.alignGaaDate(String.valueOf(spNew.DateOfLastAlignmentGAA__c), mapRes.get('DATAULTIMAGAA'));
         }
