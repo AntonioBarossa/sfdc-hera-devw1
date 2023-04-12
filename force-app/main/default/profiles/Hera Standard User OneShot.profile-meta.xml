@@ -1079,6 +1079,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>ServicePoint__c.AggregateBilling__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
