@@ -161,17 +161,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>AnnualUnicInstallment__c</picklist>
-        <values>
-            <fullName>Attiva</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Disattiva</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Beneficiary__c</picklist>
         <values>
             <fullName>Beneficiario Alternativo</fullName>
@@ -215,6 +204,11 @@
             <fullName>CMOR</fullName>
             <default>false</default>
         </values>
+        <!-- TK 939502C -->
+        <!--<values>
+            <fullName>Commissioni</fullName>
+            <default>false</default>
+        </values>-->
         <values>
             <fullName>Deposito cauzionale</fullName>
             <default>false</default>
@@ -236,14 +230,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiesta di ricalcolo fuga acqua</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rimborso retroattivo importo fognatura e depurazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Spese Accessorie</fullName>
             <default>false</default>
         </values>
@@ -257,6 +243,14 @@
         </values>
         <values>
             <fullName>Storno per dati fiscali errati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di ricalcolo fuga acqua</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborso retroattivo importo fognatura e depurazione</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -283,17 +277,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>BlockOnComputation__c</picklist>
-        <values>
-            <fullName>N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Y</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>BlockType__c</picklist>
         <values>
             <fullName>1 - Partite da chiarire%2Ffatture errate o contestate</fullName>
@@ -307,34 +290,6 @@
     <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
-            <fullName>10 x 30 - 10 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20 x 40 - 16 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3 x 15 - 2%2E5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30X50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5 x 20 - 4 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>60X100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7 x 25 - 6%2E3 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
@@ -407,11 +362,31 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV 100 - 100 mc</fullName>
+            <fullName>3 x 15 - 2.5 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WV 50 - 25 mc</fullName>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
             <default>false</default>
         </values>
         <values>
@@ -419,11 +394,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV125</fullName>
+            <fullName>WV 100 - 100 mc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
             <default>false</default>
         </values>
         <values>
@@ -443,49 +434,13 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV40</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WV400</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV65</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
         <values>
-            <fullName>10 x 30 - 10 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20 x 40 - 16 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3 x 15 - 2%2E5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30X50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5 x 20 - 4 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>60X100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7 x 25 - 6%2E3 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
@@ -558,11 +513,31 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV 100 - 100 mc</fullName>
+            <fullName>3 x 15 - 2.5 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WV 50 - 25 mc</fullName>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
             <default>false</default>
         </values>
         <values>
@@ -570,11 +545,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV125</fullName>
+            <fullName>WV 100 - 100 mc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
             <default>false</default>
         </values>
         <values>
@@ -594,49 +585,13 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV40</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WV400</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV65</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
-            <fullName>10 x 30 - 10 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20 x 40 - 16 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>3 x 15 - 2%2E5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30X50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5 x 20 - 4 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>60X100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7 x 25 - 6%2E3 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>G1%2C6</fullName>
             <default>false</default>
         </values>
@@ -709,11 +664,31 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV 100 - 100 mc</fullName>
+            <fullName>3 x 15 - 2.5 mc</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>WV 50 - 25 mc</fullName>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6.3 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
             <default>false</default>
         </values>
         <values>
@@ -721,11 +696,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV125</fullName>
+            <fullName>WV 100 - 100 mc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WV150 - 300 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV 50 - 25 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV125</fullName>
             <default>false</default>
         </values>
         <values>
@@ -745,15 +736,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV40</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WV400</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV65</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -819,15 +802,19 @@
     <picklistValues>
         <picklist>CancellationReason__c</picklist>
         <values>
+            <fullName>Registrazione non conforme</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Ammissibilità KO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullamento da cliente</fullName>
+            <fullName>Annullato per no conferma cliente</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullato per no conferma cliente</fullName>
+            <fullName>Annullamento da cliente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -919,10 +906,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Registrazione non conforme</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Reso %28Prodotto%29</fullName>
             <default>false</default>
         </values>
@@ -960,36 +943,6 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CartographyDetail__c</picklist>
-        <values>
-            <fullName>Accesso agli atti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Certificazione esistenza%2Finesistenza fogna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risanamento Ambientale nulla osta NO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Risanamento Ambientale nulla osta SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1178,45 +1131,45 @@
     </picklistValues>
     <picklistValues>
         <picklist>ClientType__c</picklist>
-        <values>
-            <fullName>Alberghi Bar Ristoranti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bagnini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente privato in suolo privato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cliente privato in suolo pubblico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ditte</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Enti Associazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Scuole</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Alberghi Bar Ristoranti</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Bagnini</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo privato</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Cliente privato in suolo pubblico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Ditte</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Enti Associazioni</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Scuole</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>ClientTypology__c</picklist>
-        <values>
-            <fullName>Domestico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non Domestico</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Domestico</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Non Domestico</fullName>
+			<default>false</default>
+		</values>
     </picklistValues>
     <picklistValues>
         <picklist>Cluster__c</picklist>
@@ -1294,17 +1247,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Cohabitation__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Commodity__c</picklist>
         <values>
             <fullName>Acqua</fullName>
@@ -1324,29 +1266,6 @@
         </values>
         <values>
             <fullName>Teleriscaldamento</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>CommunicationType__c</picklist>
-        <values>
-            <fullName>Forte Consumo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fuga Accertata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fuga Presunta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pozzetto Allagato con Lettura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pozzetto Allagato senza Lettura</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1543,7 +1462,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata Picklist esclusa da CI/CD -->
+    <!--<picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1551,126 +1471,6 @@
         </values>
         <values>
             <fullName>AA SPORT TS OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_ASSISTITI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CDO_OM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CDO_OM_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CDO_RECL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CDO_RECL_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CONDOMINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CRM_SIND_SOSEL</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CRM_SPORT_PD</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CRM_SPORT_REG_ TS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CRM_SPORT_TS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CRM_SPORT_UD</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CVMBO_BACKARANCIO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CVMBO_BACKARANCIO_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CVMBO_BACKGIALLO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CVMBO_BACKGIALLO_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_CVMBO_TOP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_PROTOCOLLO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT_CON</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT_TRG</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT_TRG_BONUS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_BACK_OUT_TRG_RECLAMI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CORR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_CRE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_DISCO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_RECLAMI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SCORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_SPORT_OUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1730,10 +1530,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_COSTING E FORECASTING</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_CREDITO</fullName>
             <default>false</default>
         </values>
@@ -1742,19 +1538,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CRELEG</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_CRM_AGGOP_STAFF</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HC_CRM_CC_OUT_CMDGRP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_CC_OUT_CV</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1854,23 +1642,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CRM_SIND_LAMI</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_CRM_SIND_LAMONT</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>HC_CRM_SIND_LAPRAT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEMURA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CRM_SIND_LEONI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1990,6 +1766,22 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_CVMBO_SREG_EBT</fullName>
             <default>false</default>
         </values>
@@ -2034,27 +1826,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_CVMBO_SREG_EB_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_QC_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_CVMBO_SREG_EB_SPORT_OUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_LOYALTY E CAMPAIGN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HC_MARKETING</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2082,15 +1854,47 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>HC_Vendita Condomini</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>HC_VenditaBusiness</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>HC_Vendita Condomini</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HC_VenditaMM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CORR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_CRE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_DISCO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SCORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_SPORT_OUT</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2105,7 +1909,123 @@
             <fullName>HSPA_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>HC_CRM_SIND_LAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEMURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_SIND_LEONI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRM_CC_OUT_CV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_REG_ TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SIND_SOSEL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_PD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CRM_SPORT_UD</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_COSTING E FORECASTING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_CRELEG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HC_MARKETING</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_OM_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CDO_RECL_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CONDOMINI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_ASSISTITI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_TOP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKGIALLO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_CVMBO_BACKARANCIO_OUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PROTOCOLLO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_RECLAMI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_TRG_BONUS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_BACK_OUT_CON</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -2520,17 +2440,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CustomerRepentanceRefusal__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>true</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>CustomerRequestAccomplished__c</picklist>
         <values>
             <fullName>NO</fullName>
@@ -2595,17 +2504,6 @@
         </values>
         <values>
             <fullName>S - Dettaglio 2</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>DeviationOver2000mc__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2718,6 +2616,17 @@
             <default>false</default>
         </values>
     </picklistValues>
+    <!-- <picklistValues>
+        <picklist>EnergyService__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues> -->
     <picklistValues>
         <picklist>ErrorType__c</picklist>
         <values>
@@ -7048,7 +6957,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -7856,85 +7765,9 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>InquiryOutcome__c</picklist>
-        <values>
-            <fullName>Accolta depurazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Accolta fognatura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Non accolta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta accolta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>IntendedUse__c</picklist>
-        <values>
-            <fullName>Alberghi%2Fpensioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Antincendio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attività di intratten%2E e altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Completamento allacciamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ospedali%2Fcase di cura%2F</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>JointBottomAdhesion__c</picklist>
-        <values>
-            <fullName>No</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Lettura_inserita_in_SAP__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -7967,7 +7800,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!--<picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Consulenza offerte</fullName>
@@ -8037,7 +7870,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -8057,10 +7890,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>STGM</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
@@ -8077,280 +7906,6 @@
         </values>
         <values>
             <fullName>SI</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>Material__c</picklist>
-        <values>
-            <fullName>ABITI USATI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AMIANTO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>AMIANTO%2FETHERNIT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ANIMALI D%27AFFEZIONE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>BUCHE SU STRADA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CADUTA CALCINACCI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CARCASSE ANIMALI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CARTA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CARTA%2FCARTONE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CARTONE_SOLOAZIENDE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CESTINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CON RIMOZIONE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DISTANZACASSONDADOMICILIOUT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ECOSELF %28CARTA E PLASTICA%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FANGOSI NON PERICOLOSI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FANGOSI PERICOLOSI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FARMACI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FITOFARMACI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>INGOMBRANTI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>INGOMBRANTI%2BRAEE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LATTINE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LAVAGGIO%2FPULIZIA SEDE STRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LEGNO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LEGNO_SOLOAZIENDE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LIQUIDI NON PERICOLOSI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LIQUIDI PERICOLOSI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MACERIE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MARCIAPIEDE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MULTIMATERIALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NESSUN MATERIALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OLIO SU STRADA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OLIO VEGETALE%2FALIMENTARE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ORGANICO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ORGANICO_SOLOUTNONDOM</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PANNOLINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PANNOLINI%2FPANNOLONI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PILE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PILE%2FBATTERIE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PISTA CICLABILE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PLASTICA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PLASTICA%2FLATTINE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PORTICO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>POTATURE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PSEUDOEDILI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RAEE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RD</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIFIUTI SPECIALI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIMOZIONE%2FROVESCIAMENTO CASSON</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RSU</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RSU_SOLOAZIENDE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SEDE STRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SFALCI E POTATURE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SIRINGHE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLIDI NON PERICOLOSI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLIDI PERICOLOSI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TONER</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UTENZA INSERITA IN PAP_CENTRO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>UTENZA INSERITA IN PAP_ZAI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VERDE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VERDE%2FSFALCI%2FPOTATURE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VETRI A TERRA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VETRO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VETRO%2BLATTINE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VETRO%2FPLASTICA%2FLATTINE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VETRO%2FVETRO %2B LATTINE</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>MissingDue__c</picklist>
-        <values>
-            <fullName>N</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Y</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8486,69 +8041,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>OperationGroup__c</picklist>
-        <values>
-            <fullName>ALTRI SERVIZI-IUAS0001</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ALTRI SERVIZI-IUAS0002</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CIMITERIALI-IUIN0023</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONSULTA IL RIFIUTOLOGO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DLGS_116%2F2020-IUAS0003</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MOVIM%2ECONTENITORI TARIP-TARIG</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MOVIMENTAZIONE CONTENITORI TCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA AREE PUBBLIC-IUPS0000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA AREE PUBBLIC-IUPS0002</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA AREE PUBBLIC-IUPS0007</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RACCOLTA DIFFERENZIAT-IURD0023</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RACCOLTA INDIFFERENZ-IUIN0021</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SCARICHI ABUSIVI-IUPS0000</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SERVIZI A PAG%2ECARCASS-IUAS0001</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SERVIZI A PAGAMENTO-IUAS0002</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>OperationSubType__c</picklist>
         <values>
             <fullName>Prezzo energia negoziato</fullName>
@@ -8569,10 +8061,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>OperationType__c</picklist>
-        <values>
-            <fullName>Modifica dati contr%2E stesso Cli</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Modifica dati contr. stesso Cli</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Separazione CA</fullName>
             <default>false</default>
@@ -8593,10 +8085,6 @@
     <picklistValues>
         <picklist>Origin</picklist>
         <values>
-            <fullName>Alexa</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Email</fullName>
             <default>false</default>
         </values>
@@ -8612,38 +8100,12 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
-        <values>
+		<values>
             <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PayPurification__c</picklist>
         <values>
-            <fullName>No - Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Paga</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Ridotta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PaySewer__c</picklist>
-        <values>
-            <fullName>No - Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Paga</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Ridotta</fullName>
+            <fullName>Alexa</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8974,40 +8436,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PurificationInfoOnTheInvoice__c</picklist>
-        <values>
-            <fullName>Utenza non servita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utenza non servita con progettazione in corso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utenza servita</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utenza temporaneamente non servita</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>RateReversalReason__c</picklist>
-        <values>
-            <fullName>Piano Rate errato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Plico Rate non ricevute</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Rinuncia piano rate</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ReadType__c</picklist>
         <values>
             <fullName>Reale</fullName>
@@ -9222,11 +8650,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RIFIUTATO preventivamente</fullName>
+            <fullName>Ricalcolo consumi</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ricalcolo consumi</fullName>
+            <fullName>RIFIUTATO preventivamente</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9352,13 +8780,6 @@
         </values>
         <values>
             <fullName>Compensazione</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>RequestSource__c</picklist>
-        <values>
-            <fullName>Da contribuente</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10136,7 +9557,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata Picklist esclusa da CI/CD -->
+    <!--<picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -10191,147 +9613,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CC_CV_Gruppo_Back</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_MT</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_Supporti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_Team_Online</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_coach</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_staff</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team10</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team11</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team12</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team13</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team14</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team15</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team16</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team17</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team18</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team19</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team20</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team21</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team22</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team23</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team24</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team25</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team26</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team27</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team28</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team30</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team6</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team7</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team8</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_CV_team9</fullName>
+            <fullName>CC_KN_coach</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10343,75 +9625,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CC_KN_Staff</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>CC_KN_Supporti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>CC_KN_Team17</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team20</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team22</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team23</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team24</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team25</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team26</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team27</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team28</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team30</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_Team9</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>CC_KN_Team_Online</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_coach</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_KN_team 16</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10440,6 +9658,10 @@
         </values>
         <values>
             <fullName>CC_KN_team15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_team 16</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10575,71 +9797,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CC_VK_Staff</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team11</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team12</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team13</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team14</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team15</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team16</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team17</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team18</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team19</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team20</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team6</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_Team8</fullName>
+            <fullName>CC_VK_team10</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10652,10 +9810,6 @@
         </values>
         <values>
             <fullName>CC_VK_team 23</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CC_VK_team10</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10679,62 +9833,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>CH_CD_Team1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_PD_SP_Abano</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_PD_SP_Padova</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_PD_SP_Padova_Accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_PD_SP_Piove di Sacco</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_TS_SP_Gorizia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_TS_SP_Muggia</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_TS_SP_S Dorligo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_TS_SP_TS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_TS_SP_Trieste</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_TS_SP_Trieste_Accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_UD_SP_S%2EMartino al Tagliamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_UD_SP_Top</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>EE_UD_SP_Top_Accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>FC_SP_CNT</fullName>
             <default>false</default>
         </values>
@@ -10747,19 +9845,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>FE_SP_CENTRO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FE_SP_CENTRO_Accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>FE_SP_CentoGuercino</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>FE_SP_CentoMalamini</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FE_SP_CENTRO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FE_SP_CENTRO_Accoglienza</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10796,6 +9894,10 @@
         </values>
         <values>
             <fullName>FO_SP_Top_accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_sp_Atessa</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10851,6 +9953,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_sp_Macerata</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_Mondolfo</fullName>
             <default>false</default>
         </values>
@@ -10867,6 +9973,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_sp_Paglieta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_Pergola</fullName>
             <default>false</default>
         </values>
@@ -10876,6 +9986,10 @@
         </values>
         <values>
             <fullName>HCM_SP_Pesaro_accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_sp_Pescara</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10903,11 +10017,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_SP_San_Michele</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_San Demetrio ne Vestin</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>HCM_SP_San_Michele</fullName>
+            <fullName>HCM_sp_San Vito Chietino</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10935,6 +10053,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>HCM_sp_Tortoreto Lido</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>HCM_sp_Trodica</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>HCM_SP_Urbania</fullName>
             <default>false</default>
         </values>
@@ -10944,38 +10070,6 @@
         </values>
         <values>
             <fullName>HCM_SP_Urbino_accoglienza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Atessa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Macerata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Paglieta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Pescara</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_San Vito Chietino</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Tortoreto Lido</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>HCM_sp_Trodica</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Helpdesk</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11067,6 +10161,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MO_SP_Pavullo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MO_SP_PH_Fanano</fullName>
             <default>false</default>
         </values>
@@ -11088,10 +10186,6 @@
         </values>
         <values>
             <fullName>MO_SP_PH_Sestola</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MO_SP_Pavullo</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11179,11 +10273,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>RN_SP_Top</fullName>
+            <fullName>RN_Sp_Novafeltria</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RN_Sp_Novafeltria</fullName>
+            <fullName>RN_SP_Top</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11194,9 +10288,345 @@
             <fullName>Team 1</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+        <values>
+            <fullName>CC_CV_staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_coach</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_Gruppo_Back</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_MT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_Supporti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team9</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team10</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team18</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team21</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team26</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team28</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_team30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_CV_Team_Online</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team11</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team12</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team13</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team14</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team15</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team16</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team18</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team19</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_VK_Team20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CH_CD_Team1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Staff</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team9</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team17</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team20</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team22</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team23</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team24</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team25</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team26</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team28</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CC_KN_Team30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Helpdesk</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Trieste</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Trieste_Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Muggia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_S Dorligo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Abano</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Piove di Sacco</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Padova</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_PD_SP_Padova_Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_UD_SP_S%2EMartino al Tagliamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_UD_SP_Top</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_UD_SP_Top_Accoglienza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_TS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>EE_TS_SP_Gorizia</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
+        <values>
+            <fullName>In Continuità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Recupero</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Accise - Agevolazione cliente</fullName>
             <default>false</default>
@@ -11258,10 +10688,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>In Continuità</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Incorporazione societaria</fullName>
             <default>false</default>
         </values>
@@ -11290,10 +10716,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Recupero</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Report disaggregato</fullName>
             <default>false</default>
         </values>
@@ -11307,25 +10729,6 @@
         </values>
         <values>
             <fullName>Variazione Gruppo IVA</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SubscriberType__c</picklist>
-        <values>
-            <fullName>Amministratore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Delegato del soggetto passivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Legale Rappresentante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Soggetto passivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -11353,25 +10756,6 @@
         </values>
         <values>
             <fullName>Non Domestico</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>SupplyUseType__c</picklist>
-        <values>
-            <fullName>ACQUEDOTTO CIVILE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ACQUEDOTTO INDUSTRIALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>FOGNATURA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>TELERISCALDAMENTO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -11635,21 +11019,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>TerminationReason__c</picklist>
-        <values>
-            <fullName>Cessazione del presupposto da verifica interna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cessazione del presupposto di applicazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Richiesta da ente creditore</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>ThirdLevelComplaintClassification__c</picklist>
         <values>
             <fullName>Altro</fullName>
@@ -11697,6 +11066,10 @@
         </values>
         <values>
             <fullName>Fotovoltaico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -11775,10 +11148,6 @@
             <fullName>Volture e subentri</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
-            <default>false</default>
-        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
@@ -11798,10 +11167,10 @@
             <fullName>Altre Verifiche</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Annullamento Contratti</fullName>
             <default>false</default>
@@ -11866,10 +11235,10 @@
             <fullName>Condizioni Contrattuali Errate</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Conferimento Centri di Raccolta</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Conferimento Centri di Raccolta</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Consegna copia chiave GdM</fullName>
             <default>false</default>
@@ -11930,10 +11299,10 @@
             <fullName>Fiscale</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Formulari Richiesta Sconto</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Formulari Richiesta Sconto</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Gestione Bonus Sociale</fullName>
             <default>false</default>
@@ -11946,10 +11315,10 @@
             <fullName>Gestione Disalimentabilità</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Gestione Rifiuti</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Gestione Rifiuti</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>HVAC</fullName>
             <default>false</default>
@@ -12034,10 +11403,10 @@
             <fullName>Pagamento Online</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Pagamento Unico Annuale TARI</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Pagamento Unico Annuale TARI</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Paperless</fullName>
             <default>false</default>
@@ -12110,14 +11479,14 @@
             <fullName>Ricostruzione Consumi</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Riduz%2E superficie rifiuti spec promiscui</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Rimborso</fullName>
             <default>false</default>
@@ -12154,14 +11523,14 @@
             <fullName>Ritorno a Fatturazione Bimestrale%2FMensile</fullName>
             <default>false</default>
         </values>
-        <values>
-            <fullName>Sconti Collettivi Pap</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazioni Ambientali</fullName>
-            <default>false</default>
-        </values>
+		<values>
+			<fullName>Sconti Collettivi Pap</fullName>
+			<default>false</default>
+		</values>
+		<values>
+			<fullName>Segnalazioni Ambientali</fullName>
+			<default>false</default>
+		</values>
         <values>
             <fullName>Segnalazioni VAS</fullName>
             <default>false</default>
@@ -12315,297 +11684,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>TypeOperation__c</picklist>
-        <values>
-            <fullName>APERTURAELETTRONICANONFUNZIONA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CALOTTA_MANUTENZIONE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CAMBIO VOLUMETRIA PAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CANCELLAZIONE SCRITTE MURARIE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CHIAVETTA ELETTRONICA_CONSEGNA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CHIAVETTA ELETTRONICA_MANUTENZ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CIMITERIALI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONSEGNA KIT PANNOLINI ECO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONSEGNA KIT PORTA A PORTA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONSEGNA PANNOLINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONSEGNA%2FRITIRO CASSONE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONSEGNA%2FRITIRO TUTTI I CONTEN</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>CONTENITORE ROTTO STRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DISERBO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>DISMISSIONE COMPOSTIERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GUASTOCHEIMPEDISCECONFERIMENTO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LAMENTELE COMPORTAM OPERATORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LAVAGGIO CONTENITORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>LAVAGGIO PORTICI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MANCATA RACCOLTA PAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MANUTENZIONE CESTINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MANUTENZIONE CONTENITORE PAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MANUTENZIONECONTENITOREPAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MUSCHIO_ERBA MURELLA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>NOLEGGIO CASSONI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>ODORI MEZZI%2FDOTAZIONE%2FIMPIANTI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PRELIEVO CARCASSE ANIMALI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PRONTO INTERVENTO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PSEUDOEDILI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA ARENILE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA CADITOIE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA GIARDINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>PULIZIA SUOLO PUBBLICO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RACCOLTA SIRINGHE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RESTITUZCONTENITORE PAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RESTITUZCONTENITOREPAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICH%2E VERIFICA SCONTI RACC%2EDIF</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTA COMPOSTIERA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTA CONTENITORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTA CONTENITORE STRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTA INFORMAZIONI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTA INFORMAZIONI PAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTA SACCHI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RICHIESTACONTENITAGGIUNTIVOPAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIFIUTI ATTORNO AL CONTENITORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIMOZIONE CASSONETTO STRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIMOZIONE CONTENITORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIMOZIONE CONTENITORE PAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RIMOZIONE CONTENITORE STRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RITIRO A PAGAMENTO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RITIRO ANIMALI MORTI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>RUMORI DI MEZZI%2FIMPIANTI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SCARICHI ABUSIVI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SEGNALAZ COMPORTAMEN CITTADINI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SEGNALAZIONE SU CDR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SERVIZI A FESTE E MANIFESTAZ</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SERVIZI DEIEZIONI CANINE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SERVIZIO BORA</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SERVIZIO NEVE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SE_SEGNALAZIONE DISSERVIZI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SMALTIMENTO RIFIUTI SPECIALI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLEC RITIROGRATUITO CONAPP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLEC RITIROGRATUITO SENZAAPP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLECITO RITIRO A PAGAMENTO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLECIT_CONSEGNA_CONT_PAP_IND</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOLLECIT_CONSEGNA_CONT_PAP_RD</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SOSTITUZIONE CONTENITORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SPOSTAMENTO CASSONETTO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SPOSTAMENTO CONTENITORE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SVUOTAMENTO CESTINI STRADALI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SVUOTAMENTOCONTENITORESTRADALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VERIFICA TARIFFA</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>UseCategory__c</picklist>
         <values>
             <fullName>001-Uso cottura cibi</fullName>
@@ -12657,45 +11735,6 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>UseSubCategory__c</picklist>
-        <values>
-            <fullName>Altri usi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso agricolo e zootecnico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso artigianale e commerciale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso condominiale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico non residente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso domestico residente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso industriale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso pubblico disalimentabile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -12809,6 +11848,10 @@
     <picklistValues>
         <picklist>VATPercentage__c</picklist>
         <values>
+            <fullName>GENERICI 20%25-02</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>AUTOFATT%2E F%2ECAMPO IVA ART%2E2-13</fullName>
             <default>false</default>
         </values>
@@ -12822,10 +11865,6 @@
         </values>
         <values>
             <fullName>GENERICI 10%25-01</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GENERICI 20%25-02</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13078,29 +12117,6 @@
         </values>
         <values>
             <fullName>MT</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>VoltureType__c</picklist>
-        <values>
-            <fullName>In Continuità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Incorporazione societaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mortis Causa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ordinaria</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recupero</fullName>
             <default>false</default>
         </values>
     </picklistValues>
