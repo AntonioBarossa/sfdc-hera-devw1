@@ -1699,7 +1699,7 @@
             <assignToReference>GetRichiestaParere.Phase__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>In attesa risposta parere</stringValue>
+                <stringValue>Bozza</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
