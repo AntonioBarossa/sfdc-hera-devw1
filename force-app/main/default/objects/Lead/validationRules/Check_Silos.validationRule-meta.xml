@@ -3,7 +3,8 @@
     <fullName>Check_Silos</fullName>
     <active>true</active>
     <description>Controlla che l&apos;utente inserisca il corretto silos di apparteneza</description>
-    <errorConditionFormula>IF( OR( AND( $UserRole.DeveloperName = &apos;HDT_FrontOffice_AAAEBT&apos;  , NOT( ISPICKVAL(CompanyOwner__c, &apos;AAA-EBT&apos;) ) ), AND($UserRole.DeveloperName = &apos;HDT_FrontOffice_MMS&apos; ,NOT( ISPICKVAL(CompanyOwner__c, &apos;MMS&apos;) ) ) , AND( OR($UserRole.DeveloperName = &apos;HDT_FrontOffice_HERA_COMM&apos;, ISPICKVAL($User.UserType, &apos;PowerPartner&apos;) ), NOT( ISPICKVAL(CompanyOwner__c, &apos;HERA COMM&apos;) ) ) ), true, false)</errorConditionFormula>
+    <errorConditionFormula>IF(AND(CONTAINS($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipUsernames__c,$User.Username), OR(ISBLANK($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipDueDateTime__c),DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipDueDateTime__c))),false,
+    IF( OR( AND( $UserRole.DeveloperName = &apos;HDT_FrontOffice_AAAEBT&apos;  , NOT( ISPICKVAL(CompanyOwner__c, &apos;AAA-EBT&apos;) ) ), AND($UserRole.DeveloperName = &apos;HDT_FrontOffice_MMS&apos; ,NOT( ISPICKVAL(CompanyOwner__c, &apos;MMS&apos;) ) ) , AND( OR($UserRole.DeveloperName = &apos;HDT_FrontOffice_HERA_COMM&apos;, ISPICKVAL($User.UserType, &apos;PowerPartner&apos;) ), NOT( ISPICKVAL(CompanyOwner__c, &apos;HERA COMM&apos;) ) ) ), true, false))</errorConditionFormula>
     <errorDisplayField>CompanyOwner__c</errorDisplayField>
     <errorMessage>Inserire il Silos di appartenenza</errorMessage>
 </ValidationRule>

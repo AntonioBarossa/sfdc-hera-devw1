@@ -133,7 +133,6 @@
             <controllingFieldValue>Fotovoltaico</controllingFieldValue>
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
             <controllingFieldValue>Consumi stimati errati</controllingFieldValue>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <controllingFieldValue>Ricalcoli</controllingFieldValue>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
             <controllingFieldValue>Cambio fornitore</controllingFieldValue>
@@ -142,6 +141,7 @@
             <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
             <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>Altro</valueName>
         </valueSettings>
         <valueSettings>
@@ -165,7 +165,6 @@
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
             <controllingFieldValue>Consumi stimati errati</controllingFieldValue>
             <controllingFieldValue>Modulistica</controllingFieldValue>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <controllingFieldValue>Privacy</controllingFieldValue>
             <controllingFieldValue>Ricalcoli</controllingFieldValue>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
@@ -180,6 +179,7 @@
             <controllingFieldValue>Sicurezza</controllingFieldValue>
             <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
             <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>Rinnovo condizioni economiche</valueName>
         </valueSettings>
         <valueSettings>
@@ -276,6 +276,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
+            <controllingFieldValue>Fondo fughe</controllingFieldValue>
             <valueName>CF01 - Errato inserimento nel contratto</valueName>
         </valueSettings>
         <valueSettings>
@@ -327,6 +328,36 @@
         <valueSettings>
             <controllingFieldValue>Validazioni</controllingFieldValue>
             <valueName>Ritardo/KO Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo consumo</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC01 - Stima consumo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo consumo</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC02 - Conguaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo consumo</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC03 - Ricostruzione consumi da contatore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo consumo</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC04 - Applicazione procapite</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo consumo</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC05 - Bonus sociale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Calcolo consumo</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <valueName>FC06 - Incassi misti da divisionali</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
@@ -667,50 +698,6 @@
             <valueName>Informazioni su compilazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Decorrenza voltura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Diniego</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Diritti fissi e costi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Documentazione mancante</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Lettura contestata</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Non richiesto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>PdR errato sui sistemi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>PdR errato sulla fornitura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>POD errato sui sistemi</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>POD errato sulla fornitura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Volture e subentri</controllingFieldValue>
-            <valueName>Voltura con richiesta accessoria</valueName>
-        </valueSettings>
-        <valueSettings>
             <controllingFieldValue>Privacy</controllingFieldValue>
             <valueName>Accesso ai dati</valueName>
         </valueSettings>
@@ -753,6 +740,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Componente economica tariffa</controllingFieldValue>
+            <valueName>CT03 - Errata attribuzione tariffa/tipologia utenza</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Componente economica tariffa</controllingFieldValue>
+            <controllingFieldValue>Comportamento operatore</controllingFieldValue>
             <valueName>MO01 - Comportamento letturista</valueName>
         </valueSettings>
         <valueSettings>
@@ -913,14 +905,17 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità acqua potabile</controllingFieldValue>
+            <controllingFieldValue>Qualità dell&apos;intervento</controllingFieldValue>
             <valueName>LA01 - Acquedotto - modalità e prestazioni allacciamenti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità acqua potabile</controllingFieldValue>
+            <controllingFieldValue>Qualità dell&apos;intervento</controllingFieldValue>
             <valueName>LA02 - Acquedotto - modalità e prestazioni contatori</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Qualità acqua potabile</controllingFieldValue>
+            <controllingFieldValue>Qualità dell&apos;intervento</controllingFieldValue>
             <valueName>LD03 - Fognatura - modalità e prestazioni allacciamenti</valueName>
         </valueSettings>
         <valueSettings>
@@ -933,6 +928,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Rifiuti</controllingFieldValue>
+            <controllingFieldValue>Risposta a reclamo</controllingFieldValue>
             <valueName>SR01 - Risposta a reclamo</valueName>
         </valueSettings>
         <valueSettings>
@@ -1091,15 +1087,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Calcolo</controllingFieldValue>
-            <valueName>FC01 - Stima consumo</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Calcolo</controllingFieldValue>
             <valueName>FC02 - acconto</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Calcolo</controllingFieldValue>
-            <valueName>FC02 - Conguaglio</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Calcolo</controllingFieldValue>
@@ -1107,27 +1095,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Calcolo</controllingFieldValue>
-            <valueName>FC03 - Ricostruzione consumi da contatore</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Calcolo</controllingFieldValue>
-            <valueName>FC04 - Applicazione procapite</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Calcolo</controllingFieldValue>
             <valueName>FC04 - riduzioni/sconti</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Calcolo</controllingFieldValue>
-            <valueName>FC05 - Bonus sociale</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Calcolo</controllingFieldValue>
             <valueName>FC05 - metratura</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Calcolo</controllingFieldValue>
-            <valueName>FC06 - Incassi misti da divisionali</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Calcolo</controllingFieldValue>
@@ -1172,6 +1144,50 @@
         <valueSettings>
             <controllingFieldValue>Modalità di pagamento/rimborso</controllingFieldValue>
             <valueName>FP03 - Rateizzazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Decorrenza voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Diniego</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Diritti fissi e costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Documentazione mancante</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Lettura contestata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Non richiesto</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>PdR errato sui sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>PdR errato sulla fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>POD errato sui sistemi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>POD errato sulla fornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Voltura con richiesta accessoria</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Voltura</controllingFieldValue>

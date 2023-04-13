@@ -33,6 +33,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
          * Get Current Order to perform cross check with the "orderToUpdate"
          */
         Order currentOrder = orderQr.getRecordById(order.Id);
+        // Fix TK 967817C per bloccare ordini con Tipo preventivo vuoto
+        if ((currentOrder.RecordType.DeveloperName == 'HDT_RT_AttivazioneConModifica' && currentOrder.ProcessCode__c =='A10')
+        || (currentOrder.RecordType.DeveloperName == 'HDT_RT_ConnessioneConAttivazione' && currentOrder.ProcessCode__c =='PN1')
+        || (currentOrder.RecordType.DeveloperName == 'HDT_RT_TemporaneaNuovaAtt' && (currentOrder.ProcessCode__c =='PN1' || currentOrder.ProcessCode__c =='E02' ))) {
+            if (currentOrder.OperationCode__c == null || String.isEmpty(currentOrder.OperationCode__c )) {
+                throw new AuraHandledException('Non esiste alcun tipo di preventivo configurato, tornare indietro per modificare i dati o annullare la pratica');
+            }            
+        }
+
         Order orderToUpdate = new Order();
         Contract contractReference = new Contract();
         orderToUpdate.Id = order.Id;

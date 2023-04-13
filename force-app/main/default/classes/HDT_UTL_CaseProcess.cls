@@ -32,6 +32,10 @@ public with sharing class HDT_UTL_CaseProcess {
         Map<Id,String> spCommodityMap = new Map<Id,String>();
         List<Id> spIds = new List<Id>();
         Map<Id,Boolean> needUpdate = new Map<Id,Boolean>();
+        Set<Id> accountIdSet = new Set<Id>();
+        String accountId;
+        String oldAccountId;
+        Map<Id,Account> mapIdAccount = new Map<Id,Account>();
         //First check if is from Insert or Update
         //1. Is From insert
         if(caseList != null && !caseList.isEmpty() && caseOldMap == null){
@@ -39,6 +43,7 @@ public with sharing class HDT_UTL_CaseProcess {
             for(Case singleNewCase : caseList){
                 servicePoint = singleNewCase.ServicePoint__c;
                 commodity = singleNewCase.Commodity__c;
+                accountId = singleNewCase.AccountId;
                 if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
                     spIds.add(servicePoint);
                     needUpdate.put(servicePoint, true);
@@ -46,6 +51,10 @@ public with sharing class HDT_UTL_CaseProcess {
                 singleNewCase.Email__c = String.isBlank(singleNewCase.Email__c) && !String.isBlank(singleNewCase.SuppliedEmail) ? singleNewCase.SuppliedEmail : singleNewCase.Email__c;
                 if('Acqua'.equalsIgnoreCase(commodity)){
                     singleNewCase.WrittenReceiptRequestDate__c = date.today();
+                }
+                if(String.isNotBlank(accountId) && String.isBlank(singleNewCase.FirstName__c) && String.isBlank(singleNewCase.LastName__c)){
+                    accountIdSet.add(accountId);
+                    //caseAccountSet.add(singleNewCase.Id);
                 }
             }
         }
@@ -55,14 +64,20 @@ public with sharing class HDT_UTL_CaseProcess {
             for(Case singleCase : caseList){
                 Case caseNew = singleCase;
                 Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                accountId = singleCase.AccountId;
+                oldAccountId = caseOld.AccountId;
                 servicePoint = caseNew.ServicePoint__c;
                 servicePointOld = caseOld.ServicePoint__c;
                 if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
                     spIds.add(servicePoint);
                     needUpdate.put(servicePoint, true);
                 }
+                if(String.isNotBlank(accountId) && String.isNotBlank(oldAccountId) && accountId != oldAccountId){
+                    accountIdSet.add(accountId);
+                }
             }
         }
+        
         if(spIds!=null && !spIds.isEmpty()){
             HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
             List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c,Account__r.FirstName__c, Account__r.LastName__c');
@@ -77,6 +92,16 @@ public with sharing class HDT_UTL_CaseProcess {
                     if('Acqua'.equalsIgnoreCase(singleCaseToUpdate.Commodity__c)){
                         singleCaseToUpdate.WrittenReceiptRequestDate__c = singleCaseToUpdate.WrittenReceiptRequestDate__c == null ? date.today() : singleCaseToUpdate.WrittenReceiptRequestDate__c;
                     }
+                    
+                }
+            }
+        }else if(!accountIdSet.isEmpty()){
+            mapIdAccount = new Map<Id,Account>([SELECT Id,FirstName__c,LastName__c FROM Account WHERE Id IN:accountIdSet WITH SECURITY_ENFORCED]);
+            for(Case singleCaseToUpdate : caseList){
+                if(accountIdSet.contains(singleCaseToUpdate.AccountId) && mapIdAccount != null){
+                    Account acc = mapIdAccount.get(singleCaseToUpdate.AccountId);
+                    singleCaseToUpdate.FirstName__c = acc.FirstName__c;
+                    singleCaseToUpdate.LastName__c = acc.LastName__c;
                 }
             }
         }
