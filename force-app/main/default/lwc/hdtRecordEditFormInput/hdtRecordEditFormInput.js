@@ -17,6 +17,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     customPicklistOptions=[];
     picklistOptionsDependencyObject={};
     @track controllingFieldValue='';
+    ancestorValue;
     dataLoaded=false;
 
     connectedCallback(){
@@ -28,10 +29,8 @@ export default class HdtRecordEditFormInput extends LightningElement {
             'controllingField':this.controllingField ? this.controllingField:'',
             'process':this.processType
         };
-        debugger;
         init({params:paramsObj})
         .then(data=>{
-            console.log('init method start');
             if(data && !this.controllingField && data.fieldValue && data.fieldLabel){
                 if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fieldValue))) this.customPicklistOptions.push({label:data.fieldLabel,value:data.fieldValue});
                 this.customFieldValue=data.fieldValue;
@@ -42,14 +41,25 @@ export default class HdtRecordEditFormInput extends LightningElement {
             this.dataLoaded=true;
         })
         .catch(error => {
-            console.log('error init');
             this.dataLoaded=true;
         });
     }
 
     get options() {
         if(this.controllingField && this.controllingFieldValue){
-            return this.picklistOptionsDependencyObject[this.controllingFieldValue];
+            if(!this.picklistOptionsDependencyObject.hasOwnProperty("ValueCollisionGroup") || (this.picklistOptionsDependencyObject?.ValueCollisionGroup && !this.picklistOptionsDependencyObject.ValueCollisionGroup.includes(this.controllingFieldValue))){
+                return this.picklistOptionsDependencyObject[this.controllingFieldValue];
+            }else if(this.ancestorValue){
+                let trimmedArr=[];
+                this.picklistOptionsDependencyObject[this.controllingFieldValue].forEach(element=>{
+                    if(element.AncestorValueGroup.includes(this.ancestorValue)) trimmedArr.push(element)
+                });
+                this.ancestorValue='';
+                return trimmedArr;
+            }else{
+                this.dispatchEvent(new CustomEvent('findancestor',{ detail: {parent:this.controllingField}}));
+                return this.customPicklistOptions;
+            }
         }
         return this.customPicklistOptions;
     }
@@ -58,7 +68,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
         this.customFieldValue=event.detail.value;
         if(this.checkValidityCombo()){
             this.removeErrorClass();
-            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value,isChain:false} }));
+            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value,isChain:false}}));
         } else {
             this.customFieldValue='';
             this.addErrorClass();
@@ -66,7 +76,6 @@ export default class HdtRecordEditFormInput extends LightningElement {
     }
 
     @api checkValidityCombo(){
-        console.log('check validity combo started');
         if(this.field.Required && !this.template.querySelector('[data-id="combobox"]').value){
             this.addErrorClass();
             return false;
@@ -111,8 +120,14 @@ export default class HdtRecordEditFormInput extends LightningElement {
         this.customFieldValue='';
         this.controllingFieldValue=parentValue;
         if(oldFiledValue) this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:'',isChain:true}}));
-
     }
 
-    //TODO: gestire meglio il caso non dependency a livello di parent component onchange
+    @api getControllingField(){
+        return this.controllingField;
+    }
+
+    @api setAncestorValue(ancestorValue){
+        this.ancestorValue=ancestorValue;
+        this.template.querySelector('[data-id="combobox"]').options=this.options;
+    }
 }

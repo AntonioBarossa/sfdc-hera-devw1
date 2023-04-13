@@ -480,6 +480,13 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
 
     }
 
+    searchAncestor(event){
+        let parentAPI=event.detail.parent;
+        let parent=this.template.querySelector('[data-field="'+parentAPI+'"]');
+        let ancestor=this.template.querySelector('[data-field="'+parent.getControllingField()+'"]');
+        event.target.setAncestorValue(ancestor.getComboboxElement().value)
+    }
+
     disconnectedCallback(){
         if(this.subscription) unsubscribe(this.subscription);
         this.subscription = null;
