@@ -706,7 +706,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Phase__c = 'Annullato';
             currentCase.Status = 'Closed';
             if(currentCase.Type == 'Autolettura da cliente' && currentCase.Commodity__c == 'Acqua'){
-                List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da DL' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c =: discardReason WITH SECURITY_ENFORCED]; 
+                String likeDiscardReason = '%' + discardReason + '%';
+                List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da Gestore' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
                 if(!discRuleAutoletList.isEmpty()){
                     currentCase.abnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
                 }     
