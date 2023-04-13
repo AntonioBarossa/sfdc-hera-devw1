@@ -4,8 +4,6 @@
 
 public with sharing class HDT_LC_RecordEditFormInputController {
 
-    //TODO: aggiustare copertura HDT_UTL_SecurityAccess
-
     @AuraEnabled
     public static Map<String,Object> init(Map<String,Object>params){
         String fieldName=String.valueOf(params.get('fieldName'));
