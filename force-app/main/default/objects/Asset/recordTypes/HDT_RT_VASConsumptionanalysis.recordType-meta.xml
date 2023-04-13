@@ -727,6 +727,10 @@
             <fullName>Regolamentato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>OwnerAC__c</picklist>
