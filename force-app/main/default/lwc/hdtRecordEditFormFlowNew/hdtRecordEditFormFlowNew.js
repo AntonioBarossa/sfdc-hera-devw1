@@ -459,26 +459,38 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     }
 
     handleChange(event){
-        this.virtualChange(event);
-        //Reclami customizations
-        this.complaintsLogic();
-        //PianoRata customizations
-        this.installmentsLogic();
-        //Comunicazione pagamenti customizations
-        this.paymentLogic();
-        //RimborsoCustomization
-        this.reimbursmentLogic();
-        //DisconnectableLogic
-        this.disconnectableLogic();
-        //Variazioni customLogic
-        this.variationsTerminationsLogic();     //MODIFICA 27/01/23 marco.arci@webresults.it Logica form compilazione Variazioni/Cessazioni
-        //Preventivi - Nuovo Impianto W2
-        this.handleReadOnlyOnFields();
+        if(event?.detail?.api && (event?.detail?.value != null || event?.detai?.value != undefined)) this.populateChildValue(event.detail.api, event.detail.value);
+        if(!event?.detail?.isChain){
+            this.virtualChange(event);
+            //Reclami customizations
+            this.complaintsLogic();
+            //PianoRata customizations
+            this.installmentsLogic();
+            //Comunicazione pagamenti customizations
+            this.paymentLogic();
+            //RimborsoCustomization
+            this.reimbursmentLogic();
+            //DisconnectableLogic
+            this.disconnectableLogic();
+            //Variazioni customLogic
+            this.variationsTerminationsLogic();     //MODIFICA 27/01/23 marco.arci@webresults.it Logica form compilazione Variazioni/Cessazioni
+            //Preventivi - Nuovo Impianto W2
+            this.handleReadOnlyOnFields();
+        }
+
     }
 
     disconnectedCallback(){
         if(this.subscription) unsubscribe(this.subscription);
         this.subscription = null;
+    }
+
+    populateChildValue(fieldApi, fieldValue){
+        let dependentFields=this.template.querySelectorAll('[data-controlling-field="'+fieldApi+'"]');
+        if(dependentFields.length==0) return;
+        dependentFields.forEach(child=>{
+            child.setParentValue(fieldValue);
+        });
     }
 
     variationsTerminationsLogic(){

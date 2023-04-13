@@ -16,7 +16,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     customFieldValue;
     customPicklistOptions=[];
     picklistOptionsDependencyObject={};
-    controllingFieldValue='';
+    @track controllingFieldValue='';
     dataLoaded=false;
 
     connectedCallback(){
@@ -49,7 +49,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
 
     get options() {
         if(this.controllingField && this.controllingFieldValue){
-            return picklistOptionsDependencyObject[this.controllingFieldValue];
+            return this.picklistOptionsDependencyObject[this.controllingFieldValue];
         }
         return this.customPicklistOptions;
     }
@@ -58,7 +58,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
         this.customFieldValue=event.detail.value;
         if(this.checkValidityCombo()){
             this.removeErrorClass();
-            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value} }));
+            this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:event.detail.value,isChain:false} }));
         } else {
             this.customFieldValue='';
             this.addErrorClass();
@@ -105,4 +105,14 @@ export default class HdtRecordEditFormInput extends LightningElement {
         if(this.controllingField && !this.controllingFieldValue) return true;
         return false;
     }
+
+    @api setParentValue(parentValue){
+        let oldFiledValue=this.customFieldValue;
+        this.customFieldValue='';
+        this.controllingFieldValue=parentValue;
+        if(oldFiledValue) this.dispatchEvent(new CustomEvent('fieldchanged',{ detail: {api:this.field.FieldName,value:'',isChain:true}}));
+
+    }
+
+    //TODO: gestire meglio il caso non dependency a livello di parent component onchange
 }
