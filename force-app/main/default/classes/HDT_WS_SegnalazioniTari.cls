@@ -9,9 +9,9 @@
 global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     private static final String REQUEST_PATH = '/notice';
+    private static HDT_QR_Account qrAccount = new HDT_QR_Account();
     //private final static String PHASE = 'Documentazione Validata';
     HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
-    HDT_QR_Account qrAccount = new HDT_QR_Account();
 
     global HDT_WS_SegnalazioniTari() {
         return;
