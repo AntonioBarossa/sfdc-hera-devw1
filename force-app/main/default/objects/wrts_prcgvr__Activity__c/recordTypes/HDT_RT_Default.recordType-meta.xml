@@ -1998,6 +1998,10 @@
             <fullName>Saldo pagato</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Documentazione Incompleta</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SAPStep__c</picklist>
