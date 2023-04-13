@@ -270,6 +270,27 @@ static void setup() {
     } )); 
     orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
       'AccountId'=>accountList[0].id,
+      'Phase__c'=>'Amm. Precheck OK SII',     
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ProcessType__c' =>'Switch In Ele',
+      'ServicePoint__c'=>servicePointList[0].Id
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Phase__c'=>'Esito KO da SII',     
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ProcessType__c' =>'Switch In Ele',
+      'ServicePoint__c'=>servicePointList[0].Id
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
+      'Phase__c'=>'Esito OK da SII',     
+      'BillingProfile__c'=>billingProfileList[0].Id,
+      'ProcessType__c' =>'Switch In Ele',
+      'ServicePoint__c'=>servicePointList[0].Id
+    } )); 
+    orders.addAll(HDT_UTL_DataFactoryTst.createOrderWithParams(1, false, salesList,'HDT_RT_SwitchIn',new Map<String,Object>{
+      'AccountId'=>accountList[0].id,
       'Phase__c'=>'Amm. Precheck KO SII',
       'BillingProfile__c'=>billingProfileList[0].Id,
       'ServicePoint__c'=>servicePointList[0].Id
@@ -403,6 +424,19 @@ static void testHandleSalesProcessCategory4() {
   Test.stopTest();
 }
 
+@isTest
+static void testHandleSalesProcessCategoryAmmPre() {
+
+  Order orderDocValid=[ SELECT Id,Phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck OK SII' LIMIT 1];
+  Order orderEsKo=[ SELECT Id,Phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito KO da SII' LIMIT 1];
+  Order orderEsOk=[ SELECT Id,Phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Esito OK da SII' LIMIT 1];
+  //Order orderAmmPrecheckOkS=[ SELECT  id,phase__c,PrecheckResultSII__c,ProcessType__c,BillingProfile__c, Vat__c  FROM Order  WHERE Phase__c='Amm. Precheck OK SII' LIMIT 1];
+  Test.startTest();
+    new TestBuilderCallManageSalesProcessCategory(orderDocValid,'Amm. Precheck OK SII','NOTIF_ES',null);
+    new TestBuilderCallManageSalesProcessCategory(orderEsKo,'Esito KO da SII','NOTIF_ES',null);
+    new TestBuilderCallManageSalesProcessCategory(orderEsOk,'Esito OK da SII','NOTIF_ES',null);
+  Test.stopTest();
+}
 
 /* @isTest
 static void testHandleSalesProcessCategory6() {
