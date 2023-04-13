@@ -24,6 +24,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
         //scope.addAll(postsalesQr.getRifiutiBozzaCase());
         scope.addAll(postsalesQr.getActivitiesRicConsumi());
+        scope.addAll(postsalesQr.getPianoRateizzazioneTariCase());
         return scope;
 
 
@@ -54,7 +55,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                     when Case currentCase{
                         
                         //ANNULLAMENTO CASE BOZZA AUTOLETTURA OLTRE SCADENZA
-                        if(currentCase.Phase__c.equalsIgnoreCase('Bozza')){
+                        if(currentCase.Phase__c.equalsIgnoreCase('Bozza') && !('Ambiente'.equalsIgnoreCase(currentCase.Commodity__c) && 'HDT_RT_PianoRateizzazione'.equalsIgnoreCase(currentCase.RecordType.DeveloperName))){
                             currentCase.Phase__c = 'Bozza Annullata';
                             currentCase.Status = 'Closed';
                             myCurrentCaseList.add(currentCase);
@@ -91,8 +92,22 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                         }else if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
                             currentCase.Phase__c = 'Da Inviare';
                             myCurrentCaseList.add(currentCase);
-
-                        }else if( currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
+                        //START MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
+                        }else if('Piano Rateizzazione'.equalsIgnoreCase(currentCase.Type) && 
+                                 currentCase.MandatoryAttachments__c != null && 
+                                 'Ambiente'.equalsIgnoreCase(currentCase.Commodity__c) &&
+                                 'HDT_RT_PianoRateizzazione'.equalsIgnoreCase(currentCase.RecordType.DeveloperName) &&
+                                 'Bozza'.equalsIgnoreCase(currentCase.Phase__c) &&
+                                 Date.newinstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day()) < System.Today()-30){
+                            //Controllo allegati
+                            //Integer index = myCurrentCaseList.size()-1;
+                            currentCase.Phase__c = 'Bozza Annullata';
+                            currentCase.CancellationRequestDate__c = Date.today();
+                            currentCase.Status = 'Closed';
+                            currentCase.CancellationReason__c = 'Gestione Scarto';
+                            myCurrentCaseList.add(currentCase);
+                        //END MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
+                    }else if( currentCase.Type.equalsIgnoreCase('Blocco Sollecito/Interessi') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
 
                             currentCase.Phase__c = 'In Lavorazione';
                             myCurrentCaseList.add(currentCase);

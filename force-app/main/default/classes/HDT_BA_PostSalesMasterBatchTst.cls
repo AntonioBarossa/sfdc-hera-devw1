@@ -25,6 +25,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         String rtIdBloccoSollecitoInteressi = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNameBloccoSollecitoInteressi).getRecordTypeId();
         String rtNamePrev = 'HDT_RT_PreventiviEle';
         String rtIdPrev = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtNamePrev).getRecordTypeId();
+        String rtNameVar = 'HDT_RT_VariazioniTari';
+        String rtIdVar = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniTari').getRecordTypeId();
         
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Attesa conferma preventivo cliente', 'Bozza', rtIdPrev, rtNamePrev,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Preventivo scaduto','Attesa conferma preventivo cliente', rtIdPrev, rtNamePrev,'A','','','');
@@ -46,23 +48,37 @@ public class HDT_BA_PostSalesMasterBatchTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Data Decorrenza', 'Da Inviare', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
 
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdBloccoSollecitoInteressi, rtNameBloccoSollecitoInteressi, 'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPianRat, rtNamePianoRat, 'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In Lavorazione', 'Bozza', rtIdVar, rtNameVar, 'A','','','');
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].id, 'Bozza');
         ordList[0].EffectiveDate__c = Date.today()-5;
         ordList[1].EffectiveDate__c = Date.today().addMonths(1);
         insert ordList;
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(2, true);
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(10, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(2, true, accList[0].id);        
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(12, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
 
         Datetime oneDayAgo = Datetime.now().addDays(-5);
         Test.setCreatedDate(caseList[3].Id, oneDayAgo);
 
         Datetime oneMonthAgo = Datetime.now().addDays(-40);
         Test.setCreatedDate(caseList[4].Id, oneMonthAgo);
+        Test.setCreatedDate(caseList[10].Id, oneMonthAgo);
+
+        servPointList[1].SupplyCity__c = 'SupplyCity__c';
+        servPointList[1].SupplyStreetName__c = 'SupplyStreetName__c';
+        servPointList[1].CommoditySector__c = 'Ambiente';
+
+        update servPointList;
+
+        contractList[1].ServicePoint__c = servPointList[1].id;
+        contractList[1].Status = 'Attivo';
+
+        update contractList;
 
         caseList[0].BillingProfile__c = billingProfileList[0].Id;
         caseList[0].Phase__c = 'Attesa conferma preventivo cliente';
@@ -128,6 +144,20 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[9].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VerificheGas').getRecordTypeId();
         caseList[9].PhaseStory__c = 'Bozza@@Attesa';
 
+        caseList[10].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        caseList[10].Type = 'Piano Rateizzazione';
+        caseList[10].Phase__c = 'Bozza';
+        caseList[10].Commodity__c = 'Ambiente';
+        caseList[10].MandatoryAttachments__c = 'Test';
+
+        caseList[11].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VariazioniTari').getRecordTypeId();
+        caseList[11].Type = 'Modifica post accertamento';
+        caseList[11].Phase__c = 'In Lavorazione';
+        caseList[11].SupplyCity__c = 'SupplyCity__c';
+        caseList[11].SupplyStreetName__c = 'SupplyStreetName__c';
+        caseList[11].Contract__c = null;
+        caseList[11].ServicePoint__c = null;
+
         update caseList;        
 
         wrts_prcgvr__Activity__c actOne = new wrts_prcgvr__Activity__c();
@@ -138,10 +168,21 @@ public class HDT_BA_PostSalesMasterBatchTst {
         actOne.ActivityStartTime__c = activityDatetime;
         update actOne;
 
+        List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = new List<wrts_prcgvr__ActivityTemplate__c>();
+
         wrts_prcgvr__ActivityTemplate__c elabTemplate = new wrts_prcgvr__ActivityTemplate__c();
         elabTemplate.Name = 'Elaborazione Manuale';
         elabTemplate.wrts_prcgvr__Subject__c = 'Elaborazione Manuale';
-        insert elabTemplate;
+        activityTemplates.add(elabTemplate);
+
+        wrts_prcgvr__ActivityTemplate__c varTemplate = new wrts_prcgvr__ActivityTemplate__c();
+        varTemplate.Name = 'CBS_VAR005__GESTIONE_MANUALE';
+        varTemplate.wrts_prcgvr__Code__c = '0aa1d286-4c0b-4678-8d44-faa6c4bd5d09';
+        varTemplate.wrts_prcgvr__Subject__c = 'CBS_VAR005__GESTIONE_MANUALE';
+        varTemplate.wrts_prcgvr__ObjectType__c = 'Case';
+        activityTemplates.add(varTemplate);
+
+        insert activityTemplates;
 
         Knowledge__kav kArt = new Knowledge__kav();
         kArt.Title = 'Test Original Title';
@@ -176,6 +217,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
 		Case myCase7 = [SELECT Id, Type FROM Case WHERE Type = 'Ricostruzione Consumi'];
         Case myCase8 = [SELECT Id, Phase__c, Type, EffectiveDate__c  FROM Case WHERE Type = 'Voltura Tecnica' AND Subject = 'Test ricalcolo' LIMIT 1];
         Case myCase9 = [SELECT Id, Phase__c FROM Case WHERE QuotationType__c = 'Predeterminabile' LIMIT 1];
+        Case myCase10 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName, CreatedDate FROM Case WHERE Phase__c = 'Bozza' AND Type = 'Piano Rateizzazione' AND Commodity__c = 'Ambiente' AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione' LIMIT 1];
+        Case myCase11 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName FROM Case WHERE Phase__c = 'In Lavorazione' AND Type = 'Modifica post accertamento' AND RecordType.DeveloperName = 'HDT_RT_VariazioniTari' LIMIT 1];
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -245,6 +288,19 @@ public class HDT_BA_PostSalesMasterBatchTst {
 
         Case updateCase9 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase9.Id LIMIT 1];
         System.assertEquals('Preventivo scaduto', updateCase9.Phase__c, 'Preventivo non scaduto');
+
+        Case updateCase10 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase10.Id LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase10: ' + updateCase10.Phase__c);
+        System.assertEquals('Bozza Annullata', updateCase10.Phase__c, 'Aggiornamento Non Effettuato');
+
+        Case updateCase11 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase11.Id LIMIT 1];
+        list<wrts_prcgvr__Activity__c> act = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, wrts_prcgvr__ActivityTemplate__r.Name, Case__r.AccountId, CreatedDate 
+                                              FROM wrts_prcgvr__Activity__c 
+                                              WHERE Case__c = :updateCase11.Id
+                                              AND wrts_prcgvr__ActivityTemplate__r.Name = 'CBS_VAR005__GESTIONE_MANUALE'
+                                              AND Type__c = 'Aprire Variazione'];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase11: ' + updateCase11.Phase__c);
+        System.assertEquals(1, act.size(), 'Attenzione, la lista deve trovare una sola activity');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
         // System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');

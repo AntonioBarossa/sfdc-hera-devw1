@@ -171,7 +171,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
 
     public List<Case> getPostSalesBozzaCase(){
         Id segnalazioniRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_Segnalazioni').getRecordTypeId();
-
+        Id pianoRateizzazioneRtId = (new Case()).getSObjectType().getDescribe().getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        List<Id> recordTypeToEsclude = new List<Id>{segnalazioniRtId, pianoRateizzazioneRtId};
         String whereConditionFieldValue2 = 'PostSales';
         String queryString = 'SELECT id, Type__c, NumberOfDays__c FROM CS_DaysToExpiration__c where Type__c = \'' + String.escapeSingleQuotes(whereConditionFieldValue2) + '\'';
         SObject mySobj = database.query(queryString);
@@ -198,7 +199,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
-        AND RecordTypeId != :segnalazioniRtId
+        AND (RecordTypeId NOT IN :recordTypeToEsclude 
+            OR (RecordTypeId = :pianoRateizzazioneRtId AND Commodity__c != 'Ambiente')) 
         AND Type != 'Contenitore Morosità'
         AND CreatedDate < :limitDate
         WITH SECURITY_ENFORCED
@@ -291,4 +293,52 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     public List<wrts_prcgvr__Activity__c> getActivitiesRicConsumi(){
         return [SELECT ActivityStartTime__c, Case__c FROM wrts_prcgvr__Activity__c WHERE Type__c = 'In attesa risposta cliente' AND wrts_prcgvr__Status__c = 'Aperta' AND Case__r.Type = 'Ricostruzione Consumi' AND Case__r.Reason__c = 'Ricalcolo consumi' AND Case__r.Commodity__c = 'Acqua'];
     }
+    
+    //START MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
+    public List<Case> getPianoRateizzazioneTariCase(){
+
+		List<Case> caseList = [SELECT Id,
+        Type,
+        Phase__c,
+        Cluster__c,
+        Commodity__c,
+        RecordTypeId,
+        RecordType.DeveloperName,
+        AccountId,
+        SupplyCity__c,
+		MandatoryAttachments__c,
+        SupplyStreetName__c,
+        ServicePoint__c,
+        CreatedDate,
+        CancellationReason__c,
+        CancellationRequestDate__c,
+        Status
+        FROM Case
+        WHERE Phase__c =: this.bozzaCase
+        AND MandatoryAttachments__c != null
+        AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione'
+        AND Type = 'Piano Rateizzazione'
+        AND CreatedDate  <  N_DAYS_AGO:30
+        AND Commodity__c = 'Ambiente'
+        WITH SECURITY_ENFORCED
+        ];
+
+        Map<Id,Case> caseMap = new Map<Id,Case>(caseList);
+
+        List<AggregateResult> cdLs = [SELECT LinkedEntityId 
+        FROM ContentDocumentLink 
+        WHERE LinkedEntityId IN :caseMap.keySet()
+        WITH SECURITY_ENFORCED
+        GROUP BY LinkedEntityId];
+
+        for(AggregateResult currDocument : cdLs){
+            caseMap.remove((Id)currDocument.get('LinkedEntityId'));
+        }
+
+        List<Case> caseToReturn = caseMap.values();
+
+        return caseToReturn;
+		
+	}
+    //END MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
 }
