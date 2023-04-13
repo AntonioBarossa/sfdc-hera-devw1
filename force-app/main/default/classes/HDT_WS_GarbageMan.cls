@@ -88,7 +88,7 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.InvoicingStreetNumber__c = request.streetNumber;
             theCase.InvoicingStreetCode__c = request.streetCode;
             theCase.InvoicingCountry__c = 'Italia';
-            if(theCase.AccountId == null){
+            if(STRING.isBlank(account?.CustomerCode__c)){
                 theCase.DifferentNameFromTheApplicant__c = request.contactName;
                 //theCase.FiscalCode__c = request.fiscalCode;
             }
