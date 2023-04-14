@@ -593,6 +593,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 setSalesCompanyAndCode(wrpChildOrder.childOrder, commodity);
                 //handleCustomFieldLogic(wrpChildOrder.childOrder, commodity); 
 
+                if(wrpChildOrder.childOrder.VasSubtype__c != null && wrpChildOrder.childOrder.VasSubtype__c == 'Analisi Consumi'){
+                    //no rate
+                }else{
+                    calculateRateCategory(wrpChildOrder.childOrder);
+                }
+
                 if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
                     orderPreDefault.setMetadataLists(wrpChildOrder.childOrder);
                 }
@@ -1217,20 +1223,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         
     }
 
-    private class HDT_WRP_ProcessObjects {
-        private Opportunity opportunity;
-        private Sale__c sale;
-        private SaleServiceItem__c saleServiceItem;
-        private Order parentOrder;
-        private List<HDT_WRP_ChildOrder> childOrderList;
-        private MassiveLoaderRequestItem__c requestItem;
+    public class HDT_WRP_ProcessObjects {
+        public Opportunity opportunity;
+        public Sale__c sale;
+        public SaleServiceItem__c saleServiceItem;
+        public Order parentOrder;
+        public List<HDT_WRP_ChildOrder> childOrderList;
+        public MassiveLoaderRequestItem__c requestItem;
         //private Id accountId;
         //private Id contactId;
         //private Id billProfId;
         //private Id servPointId;
-        private HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
+        public HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
 
-        private HDT_WRP_ProcessObjects(){
+        public HDT_WRP_ProcessObjects(){
             opportunity = new Opportunity();
             sale = new Sale__c();
             saleServiceItem = new SaleServiceItem__c();
@@ -1296,16 +1302,17 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         order.RateCategory__c = code;
     }
 
-    private class HDT_WRP_ChildOrder {
-        private String orderType;
-        private Order childOrder;
-        private List<HDT_WRP_OrderItem> orderItemList;
+    public class HDT_WRP_ChildOrder {
+        public String orderType;
+        public Order childOrder;
+        public String sapContractCode;
+        public List<HDT_WRP_OrderItem> orderItemList;
     }
 
-    private class HDT_WRP_OrderItem {
-        private String itemType;
-        private OrderItem orderItem;
-        private Product2 product;
+    public class HDT_WRP_OrderItem {
+        public String itemType;
+        public OrderItem orderItem;
+        public Product2 product;
     }
 
 }
