@@ -81,7 +81,7 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.ClientTypology__c = request.clientTypology;
             theCase.MaterialDescription__c = request.materialDescription;
             theCase.Description = request.materialDescription;
-            theCase.AlternativeAddress__c = request.city + request.street + request.streetNumber + request.streetCode;
+            theCase.AlternativeAddress__c = request.city + ' ' + request.street + ' ' + request.streetNumber + ' ' + request.streetCode;
             theCase.InvoicingCity__c = request.city;
             theCase.CompanyOwner__c = utlGarbage.getCompanyOwnerFromCityData(request.city);
             theCase.InvoicingStreetName__c =request.street;
