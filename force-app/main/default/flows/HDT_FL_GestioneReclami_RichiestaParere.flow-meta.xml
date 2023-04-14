@@ -1714,7 +1714,7 @@
             <assignToReference>Get_Input_Case_0.EndDate__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <elementReference>Calculate_Expiration_Date_6.endDate</elementReference>
+                <elementReference>Calculate_Expiration_Date_9.endDate</elementReference>
             </value>
         </assignmentItems>
         <connector>
