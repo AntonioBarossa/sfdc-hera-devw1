@@ -721,6 +721,11 @@
         <label>Protocollo - Voltura</label>
     </customValue>
     <customValue>
+        <fullName>Protocollo - TARI da Ufficio</fullName>
+        <default>false</default>
+        <label>Protocollo - TARI da Ufficio</label>
+    </customValue>
+    <customValue>
         <fullName>Quality Call</fullName>
         <default>false</default>
         <label>Quality Call</label>

@@ -52,6 +52,7 @@ public inherited sharing class HDT_QR_BillingProfile {
             InvoicingStreetNumber__c,
             InvoicingCityCode__c,
             IbanCountry__c,
+            AccountClass__c,
             ContractAccountCode__c
             FROM BillingProfile__c
             WHERE Id = :billingProfileId
@@ -152,6 +153,34 @@ public inherited sharing class HDT_QR_BillingProfile {
                 FROM BillingProfile__c
                 WHERE Id=:billingProfileId
                 WITH SECURITY_ENFORCED
+        ];
+    }
+
+    public BillingProfile__c getNewestByAccountId(String accountId){
+        return [
+                SELECT
+                        Id,
+                        InvoicingPlace__c,
+                        InvoicingPostalCode__c,
+                        InvoicingCity__c,
+                        InvoicingStreetNumber__c,
+                        InvoicingCountry__c,
+                        InvoicingStreetName__c,
+                        InvoicingStreetNumberExtension__c,
+                        InvoicingProvince__c,
+                        BankAccountSignatoryLastName__c,
+                        ContractAccountCode__c,
+                        BillSendingMethod__c,
+                        InvoiceEmailAddress__c,
+                        InvoiceCertifiedEmailAddress__c,
+                        SendCertifiedEmailConsentDate__c,
+                        DivergentSubject__c,
+                        InvoicingCityCode__c
+                FROM BillingProfile__c
+                WHERE Account__c=:accountId
+                WITH SECURITY_ENFORCED
+                ORDER BY CreatedDate DESC
+                LIMIT 1
         ];
     }
 

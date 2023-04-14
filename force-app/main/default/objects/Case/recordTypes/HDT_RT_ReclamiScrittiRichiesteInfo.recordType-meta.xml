@@ -6351,6 +6351,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FB03 - Periodicità bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>CD01 - Esenzione per mancanza servizio</fullName>
             <default>false</default>
         </values>
@@ -8173,6 +8177,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -9017,9 +9025,13 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Impatti ambientali</fullName>
+            <default>false</default>
+        </values> 
+        <values>
             <fullName>Lavori e prestazioni accessorie su cliente</fullName>
             <default>false</default>
-        </values>     
+        </values>  
         <values>
             <fullName>Mercato</fullName>
             <default>false</default>
@@ -11649,6 +11661,14 @@
         </values>
         <values>
             <fullName>Visivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Web</fullName>
             <default>false</default>
         </values>
     </picklistValues>

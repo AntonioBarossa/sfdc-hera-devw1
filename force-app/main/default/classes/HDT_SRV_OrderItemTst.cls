@@ -37,6 +37,31 @@ public class HDT_SRV_OrderItemTst{
 	}
 
 	@isTest
+	static void testUpdateRecords(){
+
+		Boolean finished = false;
+
+		Test.startTest();
+
+		List<OrderItem> tOrdItemList=[SELECT Id, UnitPrice, Quantity
+		                              FROM OrderItem
+		                              WHERE UnitPrice=0
+		                              LIMIT 1];
+
+		System.debug('tOrdItemList = '+tOrdItemList);
+
+		HDT_SRV_OrderItem orderItemsrv=new HDT_SRV_OrderItem();
+
+		orderItemsrv.updateRecords(tOrdItemList);
+
+		finished = true;
+
+		Test.stopTest();
+
+		System.assertEquals(true, finished, 'Test is not Ended');
+	}
+
+	@isTest
 	static void testcheckAccessInit(){
 
 		Boolean finished = false;

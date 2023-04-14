@@ -102,7 +102,7 @@
         <name>Submit_Request</name>
         <label>Submit Request</label>
         <locationX>3625</locationX>
-        <locationY>3062</locationY>
+        <locationY>3302</locationY>
         <actionName>HDT_SRV_BpCaVariationFacade</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -428,7 +428,7 @@
     <assignments>
         <name>Assegna_FT_0</name>
         <label>Assegna FT</label>
-        <locationX>3647</locationX>
+        <locationX>3779</locationX>
         <locationY>2726</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.OperationCode__c</assignToReference>
@@ -484,7 +484,7 @@
         <name>Assegna_Phase_KO_SAP</name>
         <label>Assegna Phase KO SAP</label>
         <locationX>3493</locationX>
-        <locationY>3662</locationY>
+        <locationY>3902</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -661,7 +661,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>3482</locationX>
-        <locationY>4334</locationY>
+        <locationY>4574</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -684,7 +684,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>4076</locationX>
-        <locationY>5006</locationY>
+        <locationY>5246</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato_1.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1259,7 +1259,7 @@
         <name>NotPerformedBeforeDate_equal_last_day_current_month</name>
         <label>NotPerformedBeforeDate = ultimo giorno mese corrente</label>
         <locationX>3746</locationX>
-        <locationY>4694</locationY>
+        <locationY>4934</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato_1.NotPerformedBefore__c</assignToReference>
             <operator>Assign</operator>
@@ -1276,7 +1276,7 @@
         <name>NotPerformedBeforeDate_equal_last_day_next_month</name>
         <label>NotPerformedBeforeDate = ultimo giorno mese successivo</label>
         <locationX>4010</locationX>
-        <locationY>4694</locationY>
+        <locationY>4934</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato_1.NotPerformedBefore__c</assignToReference>
             <operator>Assign</operator>
@@ -1854,7 +1854,7 @@
         <name>Current_Process_Recesso_Ripensamento</name>
         <label>Current Process Recesso Ripensamento?</label>
         <locationX>4076</locationX>
-        <locationY>4454</locationY>
+        <locationY>4694</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0</targetReference>
         </defaultConnector>
@@ -1879,7 +1879,7 @@
         <name>Data_Inserimento_Richiesta_minore_uguale_10_mese_corrente</name>
         <label>Data Ricezione Richiesta &lt;= 10 del mese corrente?</label>
         <locationX>3878</locationX>
-        <locationY>4574</locationY>
+        <locationY>4814</locationY>
         <defaultConnector>
             <targetReference>NotPerformedBeforeDate_equal_last_day_next_month</targetReference>
         </defaultConnector>
@@ -1904,7 +1904,7 @@
         <name>Esito_Callout</name>
         <label>Esito Callout</label>
         <locationX>3625</locationX>
-        <locationY>3182</locationY>
+        <locationY>3422</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -1959,6 +1959,28 @@
             <targetReference>inviaMA3</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contratto_Cessato</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.EndDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Type</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Chiusura Contatore</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Close_Process</targetReference>
+            </connector>
+            <label>Contratto Cessato</label>
+        </rules>
         <rules>
             <name>FT_0_0</name>
             <conditionLogic>and</conditionLogic>
@@ -2018,7 +2040,7 @@
         <name>inviaMA3</name>
         <label>inviaMA3?</label>
         <locationX>3779</locationX>
-        <locationY>2942</locationY>
+        <locationY>3182</locationY>
         <defaultConnector>
             <targetReference>Votive</targetReference>
         </defaultConnector>
@@ -2665,7 +2687,7 @@
         <name>Votive</name>
         <label>Votive?</label>
         <locationX>3779</locationX>
-        <locationY>4214</locationY>
+        <locationY>4454</locationY>
         <defaultConnector>
             <targetReference>Get_Case_Aggiornato_1</targetReference>
         </defaultConnector>
@@ -2885,7 +2907,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>CreaActivityScarto</name>
         <label>CreaActivityScarto</label>
         <locationX>3493</locationX>
-        <locationY>3542</locationY>
+        <locationY>3782</locationY>
         <connector>
             <targetReference>Assegna_Phase_KO_SAP</targetReference>
         </connector>
@@ -3002,7 +3024,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Get_Case_Aggiornato_1</name>
         <label>Get_Case_Aggiornato_1</label>
         <locationX>4076</locationX>
-        <locationY>4334</locationY>
+        <locationY>4574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Current_Process_Recesso_Ripensamento</targetReference>
@@ -3086,7 +3108,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>GetCaseAggiornatoForUpdate</name>
         <label>GetCaseAggiornatoForUpdate</label>
         <locationX>3493</locationX>
-        <locationY>3302</locationY>
+        <locationY>3542</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetRecordTypeScarto</targetReference>
@@ -3219,7 +3241,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>GetRecordTypeScarto</name>
         <label>GetRecordTypeScarto</label>
         <locationX>3493</locationX>
-        <locationY>3422</locationY>
+        <locationY>3662</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CreaActivityScarto</targetReference>
@@ -3331,7 +3353,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>3482</locationX>
-        <locationY>4454</locationY>
+        <locationY>4694</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3365,10 +3387,40 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
+        <name>Close_Process</name>
+        <label>Close Process</label>
+        <locationX>3515</locationX>
+        <locationY>2726</locationY>
+        <connector>
+            <targetReference>Close_Error</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Bozza Annullata</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>Closed</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
+    </recordUpdates>
+    <recordUpdates>
         <name>Update_Status_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>4076</locationX>
-        <locationY>5126</locationY>
+        <locationY>5366</locationY>
         <connector>
             <targetReference>Loading_Spinner_screen</targetReference>
         </connector>
@@ -3388,7 +3440,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Update_Status_0_0_0_0_0</name>
         <label>Aggiorna Fase in Da Inviare</label>
         <locationX>3493</locationX>
-        <locationY>3782</locationY>
+        <locationY>4022</locationY>
         <inputReference>Get_Input_Case</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3953,6 +4005,48 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <showHeader>false</showHeader>
     </screens>
     <screens>
+        <name>Close_Error</name>
+        <label>Close Error</label>
+        <locationX>3515</locationX>
+        <locationY>2846</locationY>
+        <allowBack>false</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>false</allowPause>
+        <fields>
+            <name>Title</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 18px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Processo di {!Get_Input_Case.Type}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;font-size: 12px; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Il contratto risulta già cessato. Al &quot;Conferma Pratica&quot;, la prestazione verrà annullata.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>naviagationButton</name>
+            <extensionName>c:hdtFlowNavigationButton</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>standAlone</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextVariant</name>
+                <value>
+                    <stringValue>brand</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>nextLabel</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
+    <screens>
         <name>Copy_1_of_Case_Layout</name>
         <label>Copy 1 of Case Layout</label>
         <locationX>5217</locationX>
@@ -4118,7 +4212,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
         <name>Loading_Spinner_screen</name>
         <label>Loading Spinner screen</label>
         <locationX>4076</locationX>
-        <locationY>5246</locationY>
+        <locationY>5486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>

@@ -14,7 +14,9 @@ global with sharing class HDT_SRV_BillingRefundsServiceOne implements wrts_prcgv
                 responseReturn.success = true;
                 responseReturn.message = resp.statusCode==200 ? 'OK':'KO';
                 Id recordTypeIdConsumoAnomalo = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConsumoAnomaloIdrico').getRecordTypeId();
-                if(caseToSend.recordTypeId==recordTypeIdConsumoAnomalo){
+                Id recordTypeIdFatturazioneConsumi = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_FatturazioneConsumi').getRecordTypeId();
+
+                if(caseToSend.recordTypeId==recordTypeIdConsumoAnomalo ||caseToSend.recordTypeId==recordTypeIdFatturazioneConsumi){
                     caseToSend.TecnicalPhase__c = resp.statusCode==200 ? Label.phaseInAutorizzazioneSap:Label.phaseNonInviataASap;
                 } else {
                     caseToSend.TecnicalPhase__c = resp.statusCode==200 ? Label.phaseInviataASap:Label.phaseNonInviataASap;

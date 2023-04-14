@@ -451,11 +451,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         {
             this.sectionDataToSubmit["RealEstateUnit__c"] = this.template.querySelector("[data-id='RealEstateUnit__c']").value;
         }
-        if( this.currentSection.name === 'processVariables' &&
+/*         if( this.currentSection.name === 'processVariables' &&
             this.template.querySelector("[data-id='Subprocess__c']") && this.template.querySelector("[data-id='Subprocess__c']").value )
         {
             this.sectionDataToSubmit["Subprocess__c"] = this.template.querySelector("[data-id='Subprocess__c']").value;
-        }
+        } */
         updateProcessStep(
             {order: {Id: orderId, Step__c: nextSectionStep, 
             ...this.sectionDataToSubmit,
@@ -591,7 +591,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         ? this.availableSteps[currentSectionIndex + 1].step
         : this.availableSteps[currentSectionIndex + 2].step) 
         : this.availableSteps[currentSectionIndex + 1].step;
-        this.isReading = currentSectionName === 'reading';
+        this.isReading = ( this.isReading || currentSectionName === 'reading' || this.order.Subprocess__c === 'Con Autolettura' );
 
         const sectionNextActions = this.pendingSteps[event.target.getAttribute('data-section-index')]?.nextActions;
         if(sectionNextActions && sectionNextActions instanceof Function ){
@@ -679,7 +679,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']")? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
                     let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
                     console.log('sumUnit: ' + sumUnit + ' = ' + noResDom + ' + ' + resDom + ' + ' + noDom + ' + ' + indUnit + ' + ' + zooUnit + ' + ' + commUnit + ' + ' + agrUnit + ' = ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value + '(UnitaImmobiliari)' );
-                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
+                    if ( sumUnit === 0 || this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;
@@ -793,7 +793,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     let agrUnit = this.template.querySelector("[data-id='AgriculturalHousingUnit__c']")? Number(this.template.querySelector("[data-id='AgriculturalHousingUnit__c']").value) : 0;
                     let sumUnit = noResDom + resDom + noDom + indUnit + zooUnit + commUnit + agrUnit;
                     console.log('sumUnit: ' + sumUnit + ' = ' + noResDom + ' + ' + resDom + ' + ' + noDom + ' + ' + indUnit + ' + ' + zooUnit + ' + ' + commUnit + ' + ' + agrUnit + ' = ' + this.template.querySelector("[data-id='RealEstateUnit__c']").value + '(UnitaImmobiliari)' );
-                    if ( sumUnit != 0 && this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
+                    if ( sumUnit === 0 || this.template.querySelector("[data-id='RealEstateUnit__c']").value != sumUnit )
                     {
                         this.showMessage('Errore', 'Il campo Unità Immobiliari deve essere uguale alla somma delle altre Unità Abitative', 'error');
                         return;

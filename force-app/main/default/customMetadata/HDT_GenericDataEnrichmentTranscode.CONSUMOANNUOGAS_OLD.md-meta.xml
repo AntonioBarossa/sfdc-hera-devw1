@@ -28,10 +28,10 @@
     </values>
     <values>
         <field>SapField__c</field>
-        <value xsi:type="xsd:string">CONSUMOANNUOGAS</value>
+        <value xsi:type="xsd:string">CONSUMOANNUOGAS_OLD</value>
     </values>
     <values>
         <field>SfdcField__c</field>
-        <value xsi:type="xsd:string">AnnualConsumption__c</value>
+        <value xsi:type="xsd:string">AnnualConsumption_OLD__c</value>
     </values>
 </CustomMetadata>

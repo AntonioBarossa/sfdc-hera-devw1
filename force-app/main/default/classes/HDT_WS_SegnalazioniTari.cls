@@ -9,6 +9,7 @@
 global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.Interfaces_1_0.IApexCalloutAction {
 
     private static final String REQUEST_PATH = '/notice';
+    private static HDT_QR_Account qrAccount = new HDT_QR_Account();
     //private final static String PHASE = 'Documentazione Validata';
     HDT_WS_SalesApexCalloutAction calloutUtl = new HDT_WS_SalesApexCalloutAction();
 
@@ -89,12 +90,22 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
     }
 
     private static void handleModifyRequest(Case caso, Map<String, String> mapObj){
+
+        Account acc;
+        if(caso.AccountId != null){  acc = qrAccount.getRecordById(caso.AccountId, 'Name, CustomerCode__c');    }
+
         /*  HANDLE BP FITTIZIO  */
         if(caso.AccountId == null){
             mapObj.putAll(new Map<String, String>
                 {
                     'accountIntegrationId' => '1000000000',
                     'csn' => '1000000000'                    
+                }
+            );
+        }else if(STRING.isBlank(acc?.CustomerCode__c)){
+            mapObj.putAll(new Map<String, String>
+                {
+                    'hercontactLastName' => caso.DifferentNameFromTheApplicant__c
                 }
             );
         }
@@ -111,8 +122,7 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
         if('Rifiutologo'.equalsIgnoreCase(caso.Origin)){
             mapObj.putAll(new Map<String, String>
                 {
-                    'source' => 'APP_RIF',
-                    'hercontactLastName' => caso.DifferentNameFromTheApplicant__c
+                    'source' => 'APP_RIF'
                 }
             );
         }

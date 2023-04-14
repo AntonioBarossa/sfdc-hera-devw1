@@ -775,14 +775,38 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public void handleChiusuraActivitiesPending(SObject inputCase){
         Case currentCase = (Case) inputCase;
+        Set<String> processTypeSet = new Set<String>{'Ricostruzione Consumi', 'Comunicazione con il Gestore'};
 
         try {
-            if ('Ricostruzione Consumi'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+            if (processTypeSet.contains(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
                 List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
                 List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
                 if(actToCloseList.size() > 0){
                     for (wrts_prcgvr__Activity__c act : actToCloseList){
                         act.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+        
+    }
+
+    @SuppressWarnings('PMD.ApexCRUDViolation')
+    public void handleUpdateValueActivity(SObject inputCase){
+        Case currentCase = (Case) inputCase;
+
+        try {
+            if ('Consumo Anomalo Idrico'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+                List<wrts_prcgvr__Activity__c> actGestBackList = [SELECT Id, Reason__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Gestione Back Office'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actGestBackList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actGestBackList){
+                        act.Reason__c = 'Documentazione Incompleta';
                         actToUpdate.add(act);
                     }
     

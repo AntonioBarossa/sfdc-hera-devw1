@@ -402,7 +402,7 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('TFRS000000')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
-            String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+            String mercato =  mapRes.get('MERCATO').equalsIgnoreCase('STGM') ? 'STGM' : mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
             Boolean isStg = mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_')? true:false;
             mercato = mercato.containsIgnoreCase('Tutela')?'Regolamentato':mercato;
             mercato = isStg ? 'Regolamentato':mercato;
@@ -477,6 +477,13 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.AlignmentFrequencyGAA__c = listAllineamentoGaa.get(0).Frequenza__c;
             }
         }
+        if(mapRes.get('FATTURACOLLETTIVA')!=null && !String.isBlank(mapRes.get('FATTURACOLLETTIVA'))){
+            spNew.AggregateBilling__c = mapRes.get('FATTURACOLLETTIVA');
+        }
+
+        if(mapRes.get('DATAULTIMAGAA')!=null && !String.isBlank(mapRes.get('DATAULTIMAGAA'))){
+            spNew.DateOfLastAlignmentGAA__c = dataEnrich.alignGaaDate(String.valueOf(spNew.DateOfLastAlignmentGAA__c), mapRes.get('DATAULTIMAGAA'));
+        }
 
         //Reset flag di check creazione activity di "Modifica Indirizzo Fornitura", tale flag verrà impostato a true nel caso in cui si vada a modificare l'indirizzo sul form del service point.
         spNew.IsAddressChanged__c = false;
@@ -493,6 +500,10 @@ public with sharing class HDT_UTL_ServicePoint {
             if (!accBp.isEmpty()) {
                 spNew.Account__c = accBp[0].Id;
                 accBpMap.put(accBp[0].Id, accBp[0]);
+                spNew.CustomerCodeSAP__c = null;
+            }
+            else {
+                spNew.CustomerCodeSAP__c = mapRes.get('BP');
             }
         }
         Map<String, String> inputFields = new Map<String, String>();

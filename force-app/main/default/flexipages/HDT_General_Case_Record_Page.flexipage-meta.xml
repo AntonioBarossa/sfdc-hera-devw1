@@ -203,6 +203,20 @@
                 <identifier>c_hdtCaseFileUpload</identifier>
             </componentInstance>
         </itemInstances>
+        <itemInstances>
+            <componentInstance>
+                <componentInstanceProperties>
+                    <name>parentFieldApiName</name>
+                    <value>Case.Id</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>relatedListApiName</name>
+                    <value>AttachedContentDocuments</value>
+                </componentInstanceProperties>
+                <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer6</identifier>
+            </componentInstance>
+        </itemInstances>
         <mode>Replace</mode>
         <name>leftsidebar</name>
         <type>Region</type>
@@ -942,7 +956,7 @@
                         <valueListItems>
                             <value>Case.HDT_CreateDistributorApointment</value>
                             <visibilityRule>
-                                <booleanFilter>(1 OR 2 OR 3 OR 4)  AND 5 AND 6 AND 7</booleanFilter>
+                                <booleanFilter>(1 OR 2 OR 3 OR 4)  AND 5 AND 6 AND 7 AND 8</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Cluster__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -978,12 +992,17 @@
                                     <operator>NE</operator>
                                     <rightValue>Completata</rightValue>
                                 </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.CommodityFormula__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Acqua</rightValue>
+                                </criteria>
                             </visibilityRule>
                         </valueListItems>
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
                             <visibilityRule>
-                                <booleanFilter>3 AND (1 OR 2)</booleanFilter>
+                                <booleanFilter>4 AND (1 OR 2 OR 3)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -993,6 +1012,11 @@
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>In Lavorazione</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Completata</rightValue>
                                 </criteria>
                                 <criteria>
                                     <leftValue>{!Record.Type}</leftValue>
@@ -1061,6 +1085,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>displayPhaseLabel</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>sortField</name>
                     <value>--None--</value>
@@ -1132,6 +1160,10 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
+                    <name>handleOpenActivities</name>
+                    <value>false</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
                     <name>whiteBackground</name>
                     <value>true</value>
                 </componentInstanceProperties>
@@ -1176,6 +1208,10 @@
                 <componentInstanceProperties>
                     <name>displayTitle</name>
                     <value>true</value>
+                </componentInstanceProperties>
+                <componentInstanceProperties>
+                    <name>handleOpenActivities</name>
+                    <value>false</value>
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>whiteBackground</name>

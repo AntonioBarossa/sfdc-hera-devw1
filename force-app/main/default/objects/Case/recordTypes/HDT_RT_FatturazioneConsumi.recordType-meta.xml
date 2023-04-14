@@ -7893,6 +7893,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -8157,6 +8161,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Annullato</fullName>
             <default>false</default>
         </values>
@@ -8166,6 +8174,10 @@
         </values>
         <values>
             <fullName>Attesa Monitoraggio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autorizzata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8257,7 +8269,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In Attesa Di Autorizzazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8281,6 +8301,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Pratica Elaborata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Pratica In Attesa</fullName>
             <default>false</default>
         </values>
@@ -8290,6 +8314,10 @@
         </values>
         <values>
             <fullName>Prescrizione non concessa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricalcolata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8309,7 +8337,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sospesa SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Sospeso parere interno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stornata SAP</fullName>
             <default>false</default>
         </values>
     </picklistValues>

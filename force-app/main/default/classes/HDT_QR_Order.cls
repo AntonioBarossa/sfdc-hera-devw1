@@ -373,7 +373,8 @@ public inherited sharing class HDT_QR_Order {
             AdditionalAttachments__c,
             WasteCommodityType__c,
             VASType__c,
-            DateSentToSII__c
+            DateSentToSII__c,
+            OperationCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -1150,6 +1151,8 @@ public inherited sharing class HDT_QR_Order {
         PowerAvailable__c,
         VoltageLevel__c,
         IsTechnicalTransfer__c,
+        RecordTypeId,
+        RecordType.DeveloperName,
         QuotationNumber__c
         FROM Order where Ordernumber IN :orderNumbers WITH SECURITY_ENFORCED];
     }
@@ -1189,6 +1192,7 @@ public inherited sharing class HDT_QR_Order {
         AccountId,
         IsTechnicalTransfer__c,
         RecordTypeId,
+        RecordType.DeveloperName,
         ParentOrder__c,
         ImplantType__c,
         SalesCompany__c,

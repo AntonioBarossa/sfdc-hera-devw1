@@ -160,10 +160,11 @@ public with sharing class HDT_UTL_GenericSolHandler {
     }
 
     private static Order createChildOrderVoltura(Order parentOrder, Map<String,Object> params){
+        HDT_QR_VoltureChangeManager  voltureChangeQr = new HDT_QR_VoltureChangeManager();
         String contractNumber = (String)params.get('contractNumber');
         List<Contract> contractList = getContractByNumber(contractNumber);
         HDT_QR_BillingProfile qrBilling = new HDT_QR_BillingProfile();
-        BillingProfile__c bp=qrBilling.getRecordByIdVolturaSol(contractList[0].BillingProfile__c);
+        BillingProfile__c bp=qrBilling.getNewestByAccountId(parentOrder.AccountId);
         Order childOrder=parentOrder.clone(false,true,false,false);
         childOrder.ParentOrder__c=parentOrder.Id;
         childOrder.IntegrationId__c='';
@@ -177,17 +178,21 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
         childOrder.Channel__c='Web';
-        childOrder.BillingProfile__c=contractList[0].BillingProfile__c;
+        childOrder.BillingProfile__c=bp.Id;
         childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
         childOrder.CausalCode__c='MA1';
         childOrder.ProcessCode__c='MA1';
-        parentOrder.BillingProfile__c=contractList[0].BillingProfile__c;
+        parentOrder.BillingProfile__c=bp.Id;
         parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         parentOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
-
+        List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contractList[0].AccountId);
+        if(!exitingContacts.isEmpty())
+        {
+            childOrder.PreviousCustomer__c = exitingContacts[0]?.ContactId;
+        }
         if(contractList.size()>0){
             childOrder.ServicePoint__c = contractList[0].ServicePoint__c;
             childOrder.ContractReference__c = contractList[0].Id;
@@ -216,6 +221,11 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.SapContractCode__c=contractList[0].SAPContractCode__c;
             childOrder.ATO__c=contractList[0].ServicePoint__r.ATO__c;
             childOrder.Disconnectable__c=contractList[0].ServicePoint__r.Disconnectable__c;
+            childOrder.NotDisconnectabilityCustomer__c= contractList[0].ServicePoint__r.Disconnectable__c == 'Si' ? 'No' : 'Si';
+            childOrder.AggregateBilling__c='No';
+            childOrder.SecurityDepositExcluded__c='N';
+            childOrder.SeasonUse__c = 'Nessuna stagionalita';
+            childOrder.ContractExpenses__c='Nessuno Sconto';
             childOrder.DisconnectibilityType__c=contractList[0].ServicePoint__r.DisconnectibilityType__c;
             childOrder.MarketOrigin__c=contractList[0].ServicePoint__r.MarketOrigin__c;
 
@@ -381,7 +391,8 @@ public with sharing class HDT_UTL_GenericSolHandler {
                                         ServicePoint__r.Disconnectable__c,
                                         ServicePoint__r.DisconnectibilityType__c,
                                         VAT__c,
-                                        BillingProfile__c
+                                        BillingProfile__c,
+                                        AccountId
                                     FROM Contract WHERE SAPContractCode__c =: contractNumber WITH SECURITY_ENFORCED];
         return returnList;
     }

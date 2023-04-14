@@ -398,6 +398,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Protocollo - TARI da Ufficio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Rapporti con i distributori e SII</fullName>
             <default>false</default>
         </values>
