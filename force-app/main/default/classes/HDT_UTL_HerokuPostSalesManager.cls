@@ -678,7 +678,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         HDT_UTL_UTils.setFieldsSize(currentCase);
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
-        handleAfterNotify(currentCase,storno,activity,reqWrp.requestMap.get('ANNOTAZIONI_ANN'));
+        //W2 - Per la Validazione KO da Gestore, l'errore viene inviato sul tag heroku TESTO_ERRR, per questo motivo nel caso in cui ANNOTAZIONI_ANN sia vuoto, prendiamo il valore dell'altro campo.
+        String discardReason = !String.isBlank(reqWrp.requestMap.get('ANNOTAZIONI_ANN')) ? reqWrp.requestMap.get('ANNOTAZIONI_ANN') : reqWrp.requestMap.get('TESTO_ERRR');
+        handleAfterNotify(currentCase,storno,activity,discardReason);
         return caseUpdate;
     }
     private void handleAfterNotify(Case currentCase, String storno, String activity,String discardReason){
@@ -709,7 +711,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 String likeDiscardReason = '%' + discardReason + '%';
                 List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da Gestore' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
                 if(!discRuleAutoletList.isEmpty()){
-                    currentCase.abnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
+                    currentCase.AbnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
                 }     
             }
             updateFuture(JSON.serialize(currentCase));

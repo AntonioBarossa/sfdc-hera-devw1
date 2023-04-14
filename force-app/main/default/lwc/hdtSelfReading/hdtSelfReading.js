@@ -204,7 +204,7 @@ export default class HdtSelfReading extends LightningElement {
                     return;
                 }
                 lastReadings = this.fillLastReadingsArray(parsedResult);
-                if(this.commodity.toLowerCase()===gasCommodity && this.processType.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.gbTeleLett && parsedResult.data.gbTeleLett.toLowerCase()==='y'){
+                if(this.commodity?.toLowerCase()===gasCommodity && this.processType?.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.gbTeleLett && parsedResult.data.gbTeleLett.toLowerCase()==='y'){
                     this.showToastMessage(autoletturaSmartMeterError);
                     forceAbort=true;
                 }
