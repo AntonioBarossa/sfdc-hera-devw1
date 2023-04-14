@@ -29,7 +29,7 @@ public inherited sharing class HDT_UTL_ProcessDiscountAndBonus {
 
     public HDT_UTL_ProcessOrderCreation.HDT_WRP_ChildOrder handleDiscountAndBonus(HDT_UTL_ProcessOrderCreation.HDT_WRP_ChildOrder wrpChildOrder, List<String> csvValues){
 
-        wrpChildOrder.sapContractCode = csvValues[mapHeaderForWrapper.get('CONTRATTO')];
+        wrpChildOrder.sapContractCode = csvValues[mapHeaderForWrapper.get('Contratto')];
         sapContractCodeList.add(wrpChildOrder.sapContractCode);
         String codiceBonus = '';
         HDT_UTL_ProcessOrderCreation.HDT_WRP_OrderItem wrpOrderItem;
@@ -111,11 +111,11 @@ public inherited sharing class HDT_UTL_ProcessDiscountAndBonus {
                             checkFamilyMap.put(sub.SBQQ__Product__r.Family, 1);
                         }
                     }
-                } else {
+                }// else {
                     //processObj.requestItem.Status__c = 'Errore';
                     //processObj.requestItem.StatusDescription__c = 'Contratto ' + wrpChildOrder.sapContractCode + ' non presente a sistema';
                     //return processObj;
-                }
+                //}
 
                 for(HDT_UTL_ProcessOrderCreation.HDT_WRP_OrderItem orderItem : wrpChildOrder.orderItemList){
                     if(subscriptionSet != null && subscriptionSet.size() > 0 && subscriptionSet.contains(orderItem.product.ProductCode)){

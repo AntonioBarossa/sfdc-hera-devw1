@@ -34,11 +34,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<HDT_RegionalAdditional__mdt> regionalAddList;
     private List<RateCategory__c> rateCategoryList;
     private HDT_UTL_CarMassPredefaultValues orderPreDefault;
+    private HDT_UTL_ProcessDiscountAndBonus processDiscountBonus;
     private Set<String> activationItemTypes;
 
     public override void checks(){
 
         mapFieldsObject();
+
+        if(isDiscountAndBonusProcess){
+            processDiscountBonus = new HDT_UTL_ProcessDiscountAndBonus(mapHeaderForWrapper);
+        }
 
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         commOfferForRetrieve = new List<Product2>();
@@ -130,6 +135,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         }
         //getLimitDetails('convertionEnd');
+
     }
 
     public override void getRecords(){
@@ -282,6 +288,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             FROM HDT_RegionalAdditional__mdt
         ];
         
+        if(isDiscountAndBonusProcess){
+            processDiscountBonus.getDataForDiscountAndBonus();
+        }
+
     }
 
     public override void registryCreation(){
@@ -299,6 +309,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         String errorFieldCheck;
         // STEP 2: check Sale__c required fields and save
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
+            if(isDiscountAndBonusProcess){
+                processObj = processDiscountBonus.checkDiscountAndBonus(processObj);
+            }
 
             if(processObj.requestItem.Status__c == 'Errore'){
                 continue;
@@ -1148,7 +1166,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 additionalProduct2.add(wrpOrderItem.product);
             }*/
 
-            if(!processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura')){
+            if(isDiscountAndBonusProcess){
+                processDiscountBonus.handleDiscountAndBonus(wrpChildOrder, csvValues);
+            }
+
+            if(!processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura') && !isDiscountAndBonusProcess){
                 wrpChildOrder = handleBonus(wrpChildOrder,csvValues);
             }
 
