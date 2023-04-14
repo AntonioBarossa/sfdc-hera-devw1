@@ -1889,6 +1889,12 @@
         <sortField>CREATED__c</sortField>
         <sortOrder>Desc</sortOrder>
     </relatedLists>
+    <relatedLists>
+        <fields>ExternalId</fields>
+        <fields>ROW_ID__c</fields>
+        <fields>COMUNE_AMMINISTRATIVO__c</fields>
+        <relatedList>SiebelDatiCatastali__x.ID_LINE_ITEM__c</relatedList>
+    </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
     <showHighlightsPanel>false</showHighlightsPanel>
     <showInteractionLogPanel>false</showInteractionLogPanel>

@@ -566,6 +566,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                             if(moveOutProcesses.contains(ordRetrieved.ProcessType__c) && !new HDT_UTL_ContractSubscriptionRelocation().checkConditions(ordRetrieved, mapRequestFields.get('VERTRAG')))
                                             {
                                                 HDT_UTL_ContractProcess.moveOut(ordRetrieved.Id, 'ContractReference__c');
+                                            }else if(ordRetrieved.RecordType.DeveloperName == 'HDT_RT_SubentroAmbiente'){
+                                                HDT_UTL_ContractProcess.moveOutFromServicePoint(ordRetrieved.ServicePoint__c);
                                             }
                                             ord.Description =writeDescription(mapRequestFields.get('NOTA_HK'), oldDescription);
                                             /**@frpanico 2022-05-04

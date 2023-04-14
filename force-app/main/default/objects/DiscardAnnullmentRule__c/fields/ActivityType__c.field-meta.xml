@@ -42,6 +42,11 @@
                 <default>false</default>
                 <label>Esito KO da DBO</label>
             </value>
+            <value>
+                <fullName>Validazione KO da Gestore</fullName>
+                <default>false</default>
+                <label>Validazione KO da Gestore</label>
+            </value>
         </valueSetDefinition>
         <valueSettings>
             <controllingFieldValue>Sospensione Fornitura</controllingFieldValue>
@@ -153,6 +158,10 @@
         <valueSettings>
             <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
             <valueName>Validazione KO da DL</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Autolettura da cliente</controllingFieldValue>
+            <valueName>Validazione KO da Gestore</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>
