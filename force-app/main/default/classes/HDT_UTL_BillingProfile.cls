@@ -27,7 +27,9 @@ public with sharing class HDT_UTL_BillingProfile {
             fiscalcode = String.isNotBlank(fiscalcode) && fiscalcode.isNumeric()?'':fiscalcode;
             bp.BankAccountSignatoryFirstName__c = acc.FirstName__c;
             bp.BankAccountSignatoryLastName__c = acc.LastName__c;
-            bp.BankAccountSignatoryFiscalCode__c = fiscalcode;
+            if(String.isNotBlank(fiscalcode)){
+                bp.BankAccountSignatoryFiscalCode__c = fiscalcode;
+            }
         }
     }
 }
