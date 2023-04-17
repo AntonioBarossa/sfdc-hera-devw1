@@ -85,11 +85,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                 }
                             }*/
                         }
-
-                        if(currentCase.Type.equalsIgnoreCase('Gestione Rifiuti') && currentCase.Phase__c.equalsIgnoreCase('Inviata a SAP') ){
-                            currentCase.Phase__c = 'Completata';
-                            myCurrentCaseList.add(currentCase);
-                        }else if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
+                        if( currentCase.Type.equalsIgnoreCase('Piano Rateizzazione') && currentCase.Phase__c.equalsIgnoreCase('Pratica In Attesa') ){
                             currentCase.Phase__c = 'Da Inviare';
                             myCurrentCaseList.add(currentCase);
                         //START MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
@@ -97,8 +93,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                                  currentCase.MandatoryAttachments__c != null && 
                                  'Ambiente'.equalsIgnoreCase(currentCase.Commodity__c) &&
                                  'HDT_RT_PianoRateizzazione'.equalsIgnoreCase(currentCase.RecordType.DeveloperName) &&
-                                 'Bozza'.equalsIgnoreCase(currentCase.Phase__c) &&
-                                 Date.newinstance(currentCase.CreatedDate.year(), currentCase.CreatedDate.month(), currentCase.CreatedDate.day()) < System.Today()-30){
+                                 'Bozza'.equalsIgnoreCase(currentCase.Phase__c)){
                             //Controllo allegati
                             //Integer index = myCurrentCaseList.size()-1;
                             currentCase.Phase__c = 'Bozza Annullata';

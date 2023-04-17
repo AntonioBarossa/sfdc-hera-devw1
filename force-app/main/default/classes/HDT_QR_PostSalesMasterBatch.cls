@@ -297,6 +297,12 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     //START MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
     public List<Case> getPianoRateizzazioneTariCase(){
 
+        CS_DaysToExpiration__c DaysToExpiration = CS_DaysToExpiration__c.getInstance('PianoRateizzazioneTari');
+        Date limitDateWithAttachment = (System.today()).addDays(- DaysToExpiration.NumberOfDays__c);//90
+
+        DaysToExpiration = CS_DaysToExpiration__c.getInstance('PostSales');
+        Date limitDateWithoutAttachment = (System.today()).addDays(- DaysToExpiration.NumberOfDays__c);//30
+
 		List<Case> caseList = [SELECT Id,
         Type,
         Phase__c,
@@ -318,7 +324,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         AND MandatoryAttachments__c != null
         AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione'
         AND Type = 'Piano Rateizzazione'
-        AND CreatedDate  <  N_DAYS_AGO:30
+        AND CreatedDate  <  :limitDateWithoutAttachment
         AND Commodity__c = 'Ambiente'
         WITH SECURITY_ENFORCED
         ];
@@ -331,8 +337,14 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         WITH SECURITY_ENFORCED
         GROUP BY LinkedEntityId];
 
+        Case currCase = null;
         for(AggregateResult currDocument : cdLs){
-            caseMap.remove((Id)currDocument.get('LinkedEntityId'));
+            currCase = caseMap.get((Id)currDocument.get('LinkedEntityId'));
+            if(currCase){
+                if(Date.newinstance(currCase.CreatedDate.year(), currCase.CreatedDate.month(), currCase.CreatedDate.day()) > limitDateWithAttachment){
+                    caseMap.remove((Id)currDocument.get('LinkedEntityId'));
+                }
+            }
         }
 
         List<Case> caseToReturn = caseMap.values();
