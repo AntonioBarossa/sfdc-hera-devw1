@@ -25,6 +25,10 @@
             <fullName>Esito KO pre-MDM</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Validazione KO da Gestore</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>ControllingCommodity__c</picklist>

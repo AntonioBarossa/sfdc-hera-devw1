@@ -318,31 +318,11 @@ public with sharing class HDT_SRV_DataEnrichmentPostSales {
         return doubleOutStr;
     }
 
-    public Date alignGaaDate(String inpDaOne, String InpDaTwo){
-
-        HDT_SRV_DataEnrichmentPostSales forAlign = new HDT_SRV_DataEnrichmentPostSales();
-
-        Date gaaOut= null;
-        Date convOne=null;
-
-        System.debug(LoggingLevel.DEBUG, 'DAONE: '  + inpDaOne);
-        System.debug(LoggingLevel.DEBUG, 'DATWO: '  + InpDaTwo);
-
-
-        Date convTwo = forAlign.getDateFromString(inpDaTwo);
-        
-        if(inpDaOne!=null){
-            convOne = Date.valueOf(inpDaOne);
-        } else {
-            convOne=null;
-        }
-
-        gaaOut = convOne > convTwo ? convOne : convTwo;
-
-        System.debug(LoggingLevel.DEBUG, 'L\' allineamento GAA risulta: ' + gaaOut);    
-        return gaaOut;
-        
-}
-
-
+    public Date alignGaaDate(String oldDateString, String newDateString){
+        Date newDate = getDateFromString(newDateString);
+        Date oldDate = String.isNotBlank(oldDateString) ? Date.valueOf(oldDateString) : null;
+        oldDate = (oldDate == null) ? newDate : oldDate;
+        newDate = (newDate == null) ? oldDate : newDate;
+        return newDate > oldDate ? newDate : oldDate;
+    }
 }

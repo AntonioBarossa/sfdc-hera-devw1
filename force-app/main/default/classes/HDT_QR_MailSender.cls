@@ -133,7 +133,7 @@ public inherited sharing class HDT_QR_MailSender {
 
     public static List<Case> getCaseById(Id caseId){
         return [
-            SELECT Id, Type, Phase__c, CaseNumber
+            SELECT Id, Type, Phase__c, CaseNumber, Parent.CaseNumber
             FROM Case
             WHERE Id =: caseId
             WITH SECURITY_ENFORCED

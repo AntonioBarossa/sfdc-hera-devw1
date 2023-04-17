@@ -109,6 +109,10 @@ global inherited sharing class HDT_SRV_PostSalesManager implements wrts_prcgvr.I
             {
                 psmUtl.recalculateVoltureEffectiveDate(sender);
             }
+            when 'handleUpdateValueActivity'
+            {
+                psmUtl.handleUpdateValueActivity(sender);
+            }
         }
 
         return null;

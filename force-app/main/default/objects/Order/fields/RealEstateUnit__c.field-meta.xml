@@ -3,7 +3,7 @@
     <fullName>RealEstateUnit__c</fullName>
     <externalId>false</externalId>
     <label>Unita Immobiliari</label>
-    <precision>2</precision>
+    <precision>4</precision>
     <required>false</required>
     <scale>0</scale>
     <trackHistory>false</trackHistory>
