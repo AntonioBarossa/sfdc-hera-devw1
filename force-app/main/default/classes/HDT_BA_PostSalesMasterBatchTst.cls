@@ -119,6 +119,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[6].Type = 'Ricostruzione Consumi';
         caseList[6].Phase__c = 'Bozza';
         caseList[6].Reason__c = 'Ricalcolo consumi';
+        caseList[6].Commodity__c = 'Acqua';
         caseList[6].BillingProfile__c = billingProfileList[0].Id;
 
         caseList[7].RecordTypeId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_AltriProcessiPagamenti').getRecordTypeId();
@@ -163,6 +164,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         wrts_prcgvr__Activity__c actOne = new wrts_prcgvr__Activity__c();
         actOne.Case__c = caseList[6].Id;
         actOne.Type__c = 'In attesa risposta cliente';
+        actOne.wrts_prcgvr__Status__c = 'Aperta';
+  
         Datetime activityDatetime = Datetime.newInstance(2021, 10, 10);
         insert actOne;
         actOne.ActivityStartTime__c = activityDatetime;

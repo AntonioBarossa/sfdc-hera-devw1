@@ -1262,4 +1262,11 @@
         <shortDescription>phaseInAutorizzazioneSap</shortDescription>
         <value>In Attesa Di Autorizzazione SAP</value>
     </labels>
+    <labels>
+        <fullName>recordEditFormReqField</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>recordEditFormReqField</shortDescription>
+        <value>Completare questo campo.</value>
+    </labels>
 </CustomLabels>

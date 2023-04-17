@@ -105,6 +105,20 @@ public class HDT_LC_MeterReadingControllerTst {
     }
 
     @isTest
+    public static void getConfigurationDetailTableTest(){
+
+        HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata meterReadingObj;
+        Contract contr = [SELECT Id,SAPContractCode__c FROM Contract LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMock());
+        Test.startTest();
+        meterReadingObj = HDT_LC_MeterReadingController.getConfigurationDetailTable(contr.SapContractCode__c, false);
+
+        System.assertEquals(true, meterReadingObj.success, 'Si è verificato un errore non previsto');
+        
+        Test.stopTest();
+    }
+
+    @isTest
     public static void getMeterReadingRecordsFail(){
 
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj;

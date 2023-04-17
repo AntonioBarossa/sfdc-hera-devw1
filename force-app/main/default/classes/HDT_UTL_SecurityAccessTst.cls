@@ -67,4 +67,23 @@ public with sharing class HDT_UTL_SecurityAccessTst {
             System.assertNotEquals(null, saDelete, 'HDT_UTL_SecurityAccess did not work correctly');
         }
     }
+
+    @IsTest
+    static void testSecurityAccessEmpty(){
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+        Test.startTest();
+        String msg='';
+        System.runAs(u){
+            try{
+                HDT_UTL_SecurityAccess saRead = new HDT_UTL_SecurityAccess();
+                saRead.setObjName('Account');
+                saRead.setFieldNamesParam('BillingCityCode__c');
+                saRead.setOperation('read');
+            }catch (Exception e) {
+                msg = e.getMessage();
+            }
+        }
+        Test.stopTest();
+        System.assertEquals('', msg, 'HDT_UTL_SecurityAccess did not work correctly');
+    }
 }

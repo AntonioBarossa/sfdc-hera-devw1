@@ -46,6 +46,23 @@ public with sharing class HDT_UTL_SieXivTst {
     }
 
     @isTest
+    static void testCheckIndexes() {
+        
+        Test.startTest();
+
+        List<Contract> contracts =  [SELECT Id, ContractSalesCompany__c FROM Contract WHERE ContractSalesCompany__c='EstEnergy S.p.A.'];
+        List<String> indexes = new List<String>();
+        indexes.add('1');
+
+        HDT_UTL_SieXiv.HDT_WRP_SieXivRule testWPSieXiv = new HDT_UTL_SieXiv.HDT_WRP_SieXivRule('Corporate_IC', new List<String>{'ContractSalesCompany__c == EstEnergy S.p.A.'},'', '');
+        Boolean result = testWPSieXiv.checkIndexes( contracts[0], indexes, true);
+
+        Test.stopTest();
+        
+        system.assertEquals(true, result, 'Unexpected Behaviour');
+    }
+
+    @isTest
     static void testSieXivWithSale() {
         
         List<Contract> contracts =  [SELECT Id, AccountId, SBQQ__Order__c, SBQQ__Order__r.CommercialId__c FROM Contract where ContractSalesCompany__c='EstEnergy S.p.A.'];
