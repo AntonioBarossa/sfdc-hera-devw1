@@ -347,7 +347,8 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 if(!eventObj.fieldMap.containsKey(singleRule.startRule.field)){
                     return null;  
                 }
-                dt = eventObj.fieldMap.get(singleRule.startRule.field);
+                //dt = eventObj.fieldMap.get(singleRule.startRule.field);
+                dt = eventObj.fieldMap.get('LastModifiedDate');
             } else {
                 System.debug(logginglevel.DEBUG, '>>> isNotDate -> ' + singleRule.startRule.field);
                 String startField = String.valueOf(eventObj.fieldMap.get(singleRule.startRule.field));
@@ -360,8 +361,6 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
             currentTrack.StartDateTime__c = Datetime.valueOf(dt);
             
-
-
             if(!ruleDateIsValid(currentTrack.StartDateTime__c, singleRule)){
                 System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
                 return null;
