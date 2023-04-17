@@ -6,10 +6,8 @@
 @isTest
 public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
 
-    
     //DEBUG
     public static final String TEST_NAME = 'HDT_UTL_PostSalesCriteriaManagerTst';
-    
     
     //TEST SETUP
     
@@ -38,6 +36,37 @@ public with sharing class HDT_UTL_PostSalesCriteriaManagerTst {
     }
     
     //TESTS
+
+    @isTest
+    private static void isNotDistributorInReteTest(){
+
+        //TESTING
+        Test.startTest();
+        List<Case> caseList = [SELECT Id, DistributorCode__c, Type FROM Case LIMIT 1];
+        caseList[0].DistributorCode__c = '10D8060000';
+        HDT_UTL_PostSalesCriteriaManager myClass = new HDT_UTL_PostSalesCriteriaManager();
+        Boolean result = myClass.isNotDistributorInRete(caseList[0]);
+        Test.stopTest();
+        
+        System.assertEquals( false, result, 'Test isSuspendedMeter Failed!');
+        
+    }
+
+    @isTest
+    private static void isSuspendedMeterTest(){
+
+        //TESTING
+        Test.startTest();
+        List<Order> ordList = [SELECT Id, ServicePoint__c FROM Order LIMIT 1];
+        List<ServicePoint__c> spList = [SELECT Id FROM ServicePoint__c LIMIT 1];
+        ordList[0].ServicePoint__c = spList[0].Id;
+        HDT_UTL_PostSalesCriteriaManager myClass = new HDT_UTL_PostSalesCriteriaManager();
+        Boolean result = myClass.isSuspendedMeter(ordList[0]);
+        Test.stopTest();
+        
+        System.assertEquals( false, result, 'Test isSuspendedMeter Failed!');
+        
+    }
 
     @isTest
     private static void distributorManagementTest(){

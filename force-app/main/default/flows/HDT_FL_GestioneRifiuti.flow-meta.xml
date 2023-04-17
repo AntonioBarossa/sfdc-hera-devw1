@@ -295,6 +295,13 @@
                 <elementReference>getOldCase.ServicePoint__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.DifferentNameFromTheApplicant__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
@@ -507,6 +514,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>CONSULTA IL RIFIUTOLOGO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAccount.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>

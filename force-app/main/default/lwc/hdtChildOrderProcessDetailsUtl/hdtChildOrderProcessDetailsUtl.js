@@ -265,13 +265,12 @@ import * as rateCategories from './hdtRateCategories.js';
                 hasDatiCatastali: true,
                 processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName),
                 nextActions : () => {
-                    if(this.template.querySelector("c-hdt-land-registry")?.validate()?.isValid === false){
-                        //this.showMessage('Errore', 'Salvare il dato catastale', 'error');
+                    const landRegistryValidation = this.template.querySelector("c-hdt-land-registry")?.validate();
+                    if(landRegistryValidation.isValid === false){
+                        this.showMessage('Errore', landRegistryValidation.errorMessage, 'error');
                         this.loading = false;
                         return true;
                     }
-                    
-                    
                 },
                 data:[
                 ]
