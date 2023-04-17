@@ -60,6 +60,30 @@ public with sharing class HDT_UTL_SwtichInProcessTst{
 	}
 
 	@isTest
+	public static void test(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			Order tOrder=[SELECT Id, Name, AccountId, SignedDate__c, EffectiveDate__c, IsActivationDeferred__c
+			                    FROM Order
+			                    WHERE Name='testOrderName1' LIMIT 1];
+
+			HDT_UTL_SwtichInProcess.calculateSwitchDate(tOrder);
+			HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(tOrder);
+
+			test.stopTest();
+
+		}
+	}
+
+	@isTest
 	public static void testCheckAccountOrderIsResidential(){
 
 		User tUser=[SELECT Id
