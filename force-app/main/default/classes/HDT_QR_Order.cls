@@ -1087,6 +1087,7 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         Commodity__c,
         RecordTypeId,
+        RecordType.DeveloperName,
         ParentOrder__c,
         ImplantType__c,
         SalesCompany__c,
@@ -1158,7 +1159,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     /**
-    * @description getRecordByOrderNumber
+    * @description getRecordByOrderId
     * @param recordId - String
     * @return List<Order>
     */
