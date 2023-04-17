@@ -36,6 +36,11 @@
                 <default>false</default>
                 <label>Salvaguardia</label>
             </value>
+            <value>
+                <fullName>STGM</fullName>
+                <default>false</default>
+                <label>STGM</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

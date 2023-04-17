@@ -8,7 +8,7 @@ public inherited sharing class HDT_TRH_BillingProfile extends HDT_TRH_TriggerHan
 
     public override void beforeInsert(){
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
-        Map<Id,Account> subData = HDT_UTL_BillingProfile.getSubscriberData(Trigger.new);
+        Map<Id,SObject> subData = HDT_UTL_BillingProfile.getSubscriberData(Trigger.new);
         for(SObject obj : trigger.new){
             BillingProfile__c bp = (BillingProfile__c)obj;
             HDT_UTL_BillingProfile.setSubscriberData(bp, subData);
@@ -32,7 +32,7 @@ public inherited sharing class HDT_TRH_BillingProfile extends HDT_TRH_TriggerHan
 
     public override void beforeUpdate(){
         HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
-        Map<Id,Account> subData = HDT_UTL_BillingProfile.getSubscriberData(Trigger.new);
+        Map<Id,SObject> subData = HDT_UTL_BillingProfile.getSubscriberData(Trigger.new);
         for(Id bpId : trigger.newMap.keySet()){
             BillingProfile__c bpNew = (BillingProfile__c)Trigger.newMap.get(bpId);
             BillingProfile__c bpOld = (BillingProfile__c)Trigger.oldMap.get(bpId);

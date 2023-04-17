@@ -1518,4 +1518,8 @@ public inherited sharing class HDT_QR_Order {
                 BillingProfile__r.InvoicingCityCode__c,Account.PrimaryEmail__c,Email__c
         FROM Order WHERE OrderNumber=:orderNumber WITH SECURITY_ENFORCED ];
     }
+    
+    public List<Order> getAllChildOrdersFromParentId(String parentId){
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,BillingProfile__c,ContractAccountCode__c,ServicePoint__c FROM Order WHERE ParentOrder__c =:parentId WITH SECURITY_ENFORCED];
+    }
 }
