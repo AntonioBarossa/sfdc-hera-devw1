@@ -298,10 +298,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
     public List<Case> getPianoRateizzazioneTariCase(){
 
         CS_DaysToExpiration__c DaysToExpiration = CS_DaysToExpiration__c.getInstance('PianoRateizzazioneTari');
-        Date limitDateWithAttachment = (System.today()).addDays(- DaysToExpiration.NumberOfDays__c);//90
+        Date limitDateWithAttachment = (System.today()).addDays(- Integer.valueOf(DaysToExpiration.NumberOfDays__c));//90
 
         DaysToExpiration = CS_DaysToExpiration__c.getInstance('PostSales');
-        Date limitDateWithoutAttachment = (System.today()).addDays(- DaysToExpiration.NumberOfDays__c);//30
+        Date limitDateWithoutAttachment = (System.today()).addDays(- Integer.valueOf(DaysToExpiration.NumberOfDays__c));//30
 
 		List<Case> caseList = [SELECT Id,
         Type,
@@ -340,7 +340,7 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Case currCase = null;
         for(AggregateResult currDocument : cdLs){
             currCase = caseMap.get((Id)currDocument.get('LinkedEntityId'));
-            if(currCase){
+            if(currCase != null){
                 if(Date.newinstance(currCase.CreatedDate.year(), currCase.CreatedDate.month(), currCase.CreatedDate.day()) > limitDateWithAttachment){
                     caseMap.remove((Id)currDocument.get('LinkedEntityId'));
                 }
