@@ -1,0 +1,8 @@
+<template>
+    <template if:true={dataLoaded}>
+        <label class="slds-form-element__label" for={idCalculator}><abbr if:true={field.Required} class="slds-required" title="required">*</abbr> {field.Label}</label>
+        <lightning-combobox id={idCalculator} disabled={disabledStatusCalculation} value={customFieldValue} placeholder="Selezionare un opzione" options={options} onchange={handleChangeField} data-id="combobox" label={field.Label} variant="label-hidden"></lightning-combobox>
+        <div class="slds-form-element__help error-text slds-hidden" data-id="errorHelpText">{labels.recordEditFormReqField}</div>
+    </template>
+    <!--  -->
+</template>
