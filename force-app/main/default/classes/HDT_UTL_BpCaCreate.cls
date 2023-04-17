@@ -231,6 +231,8 @@ public with sharing class HDT_UTL_BpCaCreate
         request.emailInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceEmailAddress__c);
         //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
         request.creaNuovoCA = infoOrder.BillingProfile__r.CreateContractAccount__c?'Y':'';
+        request.cup = tryParse(infoOrder.BillingProfile__r.CUP__c);
+        request.cig = tryParse(infoOrder.BillingProfile__r.CIG__c);
         request.pecInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(infoOrder.BillingProfile__r.BillSendingMethod__c);
         request.emailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
@@ -251,6 +253,8 @@ public with sharing class HDT_UTL_BpCaCreate
         request.emailInvioBolletta = tryParse(billing.InvoiceEmailAddress__c);
         //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
         request.creaNuovoCA = billing.CreateContractAccount__c?'Y':'';
+        request.cup = tryParse(billing.CUP__c);
+        request.cig = tryParse(billing.CIG__c);
         request.pecInvioBolletta = tryParse(billing.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(billing.BillSendingMethod__c);
         request.emailPec = tryParse(billing.ElectronicInvoiceCertifiedEmailAddress__c);
