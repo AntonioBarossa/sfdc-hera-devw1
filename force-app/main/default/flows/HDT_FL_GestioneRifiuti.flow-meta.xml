@@ -75,6 +75,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.OperationGroup__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -289,6 +296,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.ServicePoint__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -425,6 +439,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.MaterialDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -500,6 +521,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
