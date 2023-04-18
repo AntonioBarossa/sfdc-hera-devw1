@@ -114,18 +114,16 @@ public with sharing class HDT_UTL_ProcessDateManager {
     }
 	public static void setEffectiveDateBusiness(List<Order> orderList){
 		for(Order order : orderList){
-			Date signDate = order.SignedDate__c;
-			Date sendDateToSii = order.DateSentToSII__c;
-			if(!order.IsActivationDeferred__c){
-				if(order.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && order.ClientCategoryFormula__c != 'Famiglie'){
-					if (order.RecessNotice__c == null) {
-						order.RecessNotice__c = 0;
-					}
-					/**TK 940864C -- Per il calcolo della data decorrenza viene ora utilizzata la data invio SII invece della data firma (qualora data invio sii non nulla) */
-					Date dateDecorrenzaTmp = sendDateToSii != null ? sendDateToSii.addMonths((Integer)order.RecessNotice__c) : signDate.addMonths((Integer)order.RecessNotice__c);
-					Date effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
-					order.EffectiveDate__c = effectiveDateTmp;
+			if(!order.IsActivationDeferred__c && order.DocumentalProcessType__c.equalsIgnoreCase('Switch In') && order.ClientCategoryFormula__c != 'Famiglie'){
+				//da bbp deve essere calcolata la effective date a partire da DateSentToSII__c che se l'ordine non è IsActivationDeferred__c equivale alla seguente formula
+				Date sendDateToSii = order.WizardCompletedDate__c != null? order.WizardCompletedDate__c:Date.today();
+				if (order.RecessNotice__c == null) {
+					order.RecessNotice__c = 0;
 				}
+				/**TK 940864C -- Per il calcolo della data decorrenza viene ora utilizzata la data invio SII invece della data firma (qualora data invio sii non nulla) */
+				Date dateDecorrenzaTmp = sendDateToSii.addMonths((Integer)order.RecessNotice__c);
+				Date effectiveDateTmp = dateDecorrenzaTmp.addMonths(1).toStartofMonth();
+				order.EffectiveDate__c = effectiveDateTmp;
 			}
 		}
 	}
