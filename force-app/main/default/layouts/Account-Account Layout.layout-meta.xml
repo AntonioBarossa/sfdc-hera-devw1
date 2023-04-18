@@ -225,6 +225,7 @@
         <relatedList>RelatedCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SAPImplantCode__c</fields>
         <fields>ServicePointCode__c</fields>
