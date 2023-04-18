@@ -231,7 +231,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     	system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
-                                if(curField2.value.length() == 18 ){
+                                if(String.isNotBlank(curField2.value) && curField2.value.length() == 18 ){
                                     wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
                                     tempAct.wrts_prcgvr__ObjectId__c = curField2.value;   
                                     if(Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
@@ -242,7 +242,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                         dataForCheckEsitiIntermedi.add(tempAct);
                                     }
                                 }
-                                else if(curField2.value.startsWith('O-') ){
+                                else if(String.isNotBlank(curField2.value) && curField2.value.startsWith('O-') ){
                                     orderNameSet.add(curField2.value);
                                 }
                             }
