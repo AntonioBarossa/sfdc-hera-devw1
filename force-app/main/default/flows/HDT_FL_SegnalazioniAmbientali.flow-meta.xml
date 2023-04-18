@@ -42,6 +42,13 @@
                 <stringValue>Segnalazioni</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Insert_theCase_0</targetReference>
         </connector>
@@ -217,6 +224,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -237,6 +251,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>Segnalazioni</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
             </value>
         </assignmentItems>
         <assignmentItems>
