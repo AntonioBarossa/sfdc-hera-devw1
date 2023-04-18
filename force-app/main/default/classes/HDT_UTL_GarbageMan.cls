@@ -116,6 +116,7 @@ public with sharing class HDT_UTL_GarbageMan {
         theCase.Type = 'Gestione Rifiuti';
         theCase.OperationGroup__c = 'CONSULTA IL RIFIUTOLOGO';
         theCase.Origin = 'Rifiutologo';
+        theCase.Commodity__c = 'Ambiente';
         theCase.Phase__c = 'In Attesa Appuntamento';
         theCase.Status = 'In Lavorazione';
 
