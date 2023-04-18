@@ -44,7 +44,10 @@ public with sharing class HDT_UTL_BillingProfile {
             HDT_WRP_Subscriber sub = new HDT_WRP_Subscriber(bpSubscriber.get(keyMap));
             bp.BankAccountSignatoryFirstName__c = sub.getFirstName();
             bp.BankAccountSignatoryLastName__c = sub.getLastName();
-            bp.BankAccountSignatoryFiscalCode__c = sub.getFiscalCode();
+            String fiscalCode = sub.getFiscalCode();
+            if(String.isNotBlank(fiscalCode)){
+                bp.BankAccountSignatoryFiscalCode__c = fiscalCode;
+            }
         }
     }
 
