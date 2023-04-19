@@ -149,10 +149,7 @@ export default class HdtAdvancedSearch extends LightningElement {
         }else {
             this.maxRowSelected = this.originalData.length
         }
-
-        getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
-            console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
-            console.log('processType XXX'+ JSON.stringify(this.processtype));
+        getCustomMetadataTwo({processTypeIn:this.processtype,targetObjectIn:this.targetobject}).then(data =>{
             this.hiddenSearchBarMod=false;
             if(data==='List is populated'){
                 this.hiddenSearchBarMod=true;
