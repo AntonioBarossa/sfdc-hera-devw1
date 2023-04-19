@@ -19,6 +19,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     @track controllingFieldValue='';
     ancestorValue;
     dataLoaded=false;
+    firstLevelValue;
 
     connectedCallback(){
         this.controllingField = this.field?.ControllingField ? this.field.ControllingField : '';
@@ -31,11 +32,13 @@ export default class HdtRecordEditFormInput extends LightningElement {
         };
         init({params:paramsObj})
         .then(data=>{
+            debugger;
             if(data && !this.controllingField && data.fieldValue && data.fieldLabel){
                 if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fieldValue))) this.customPicklistOptions.push({label:data.fieldLabel,value:data.fieldValue});
                 this.customFieldValue=data.fieldValue;
             }
             if(data && this.controllingField && data.dependencySchema){
+                this.firstLevelValue= data?.firstLevelValue ? data.firstLevelValue : '';
                 this.picklistOptionsDependencyObject=JSON.parse(data.dependencySchema);
             }
             this.dataLoaded=true;
@@ -46,15 +49,19 @@ export default class HdtRecordEditFormInput extends LightningElement {
     }
 
     get options() {
+        debugger;
         if(this.controllingField && this.controllingFieldValue){
-            if(!this.picklistOptionsDependencyObject.hasOwnProperty("ValueCollisionGroup") || (this.picklistOptionsDependencyObject?.ValueCollisionGroup && !this.picklistOptionsDependencyObject.ValueCollisionGroup.includes(this.controllingFieldValue))){
+            //no collision
+            if(!this.picklistOptionsDependencyObject.hasOwnProperty("ValueCollisionGroup") || (this.picklistOptionsDependencyObject?.ValueCollisionGroup && !this.picklistOptionsDependencyObject.ValueCollisionGroup.includes(this.controllingFieldValue))) {
                 return this.picklistOptionsDependencyObject[this.controllingFieldValue];
             }else if(this.ancestorValue){
                 let trimmedArr=[];
                 this.picklistOptionsDependencyObject[this.controllingFieldValue].forEach(element=>{
-                    if(element.AncestorValueGroup.includes(this.ancestorValue)) trimmedArr.push(element)
+                    if(element.AncestorValueGroup.SimpleCollision && element.AncestorValueGroup.SimpleCollisionArray.includes(this.ancestorValue)) trimmedArr.push(element);
+                    if(!element.AncestorValueGroup.SimpleCollision && (element.AncestorValueGroup.SimpleCollisionArray.includes(this.ancestorValue) && element.AncestorValueGroup.UpstreamCollisionArray.includes(this.firstLevelValue))) trimmedArr.push(element);
                 });
                 this.ancestorValue='';
+                console.log('trimmed arr: ',trimmedArr);
                 return trimmedArr;
             }else{
                 this.dispatchEvent(new CustomEvent('findancestor',{ detail: {parent:this.controllingField}}));
