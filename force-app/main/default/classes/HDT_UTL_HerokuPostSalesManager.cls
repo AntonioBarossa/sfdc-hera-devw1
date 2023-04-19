@@ -719,6 +719,13 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
          * Aggiunto completamento automatico
          * per il processo di "Verifica dati al DL"
          */
+        }else if('Ammissibilità KO'.equalsIgnoreCase(currentCase.Phase__c) && 'Autolettura da cliente'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+            String likeDiscardReason = '%' + discardReason + '%';
+            List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Ammissibilità KO' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
+            if(!discRuleAutoletList.isEmpty()){
+                currentCase.AbnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
+            }
+            updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Type.equalsIgnoreCase('Verifica Dati al DL') && currentCase.Phase__c.equalsIgnoreCase('Esito OK da DL'))
         {
             currentCase.Phase__c = 'Completata';

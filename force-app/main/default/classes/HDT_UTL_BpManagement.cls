@@ -116,12 +116,10 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
                 }
                 count++;
             }
-
             if(String.isNotEmpty(fieldConversionError)){
                 itemsToSave.add(setErrorItem(currentObj.requestItem, fieldConversionError));
                 continue;
             }
-
             if(String.isBlank(currentObj.csvSplitted[definitiveCaIndex])){
                 try{
                     createBillingProfile(currentObj.newCase,currentObj.csvSplitted);
@@ -273,7 +271,7 @@ public with sharing class HDT_UTL_BpManagement extends HDT_UTL_ProcessExecution{
     }
 
     public String checkRequiredBillingProfileField(BillingProfile__c bp, String categoriaCliente){
-        bp.recalculateFormulas();
+        //bp.recalculateFormulas();
         Boolean contoContrattualeBool = String.isEmpty(bp.ContractAccountCode__c);
         //Boolean modPagamentoBool = String.isEmpty(bp.PaymentMethod__c);
         String modPagamentoStr = bp.PaymentMethod__c;
