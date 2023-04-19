@@ -1087,6 +1087,7 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         Commodity__c,
         RecordTypeId,
+        RecordType.DeveloperName,
         ParentOrder__c,
         ImplantType__c,
         SalesCompany__c,
@@ -1158,7 +1159,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     /**
-    * @description getRecordByOrderNumber
+    * @description getRecordByOrderId
     * @param recordId - String
     * @return List<Order>
     */
@@ -1517,5 +1518,9 @@ public inherited sharing class HDT_QR_Order {
                 BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c, BillingProfile__r.InvoicingPostalCode__c,
                 BillingProfile__r.InvoicingCityCode__c,Account.PrimaryEmail__c,Email__c
         FROM Order WHERE OrderNumber=:orderNumber WITH SECURITY_ENFORCED ];
+    }
+    
+    public List<Order> getAllChildOrdersFromParentId(String parentId){
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,BillingProfile__c,ContractAccountCode__c,ServicePoint__c FROM Order WHERE ParentOrder__c =:parentId WITH SECURITY_ENFORCED];
     }
 }

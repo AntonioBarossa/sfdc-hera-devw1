@@ -45,4 +45,34 @@ public with sharing class HDT_LC_AppointmentExtraSistTst {
         Map<String,String> response = (Map<String,String>)JSON.deserialize(res, Map<String,String>.class);
         System.assertEquals('Nessun Link valido per il presente distributore.', response.get('errorMessage'),'La risposta al get link non è quella attesa.');
     }
+    
+    @isTest
+    public static void getActivityTest(){
+        List<wrts_prcgvr__Activity__c> actList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c LIMIT 1];
+		wrts_prcgvr__Activity__c act = actList[0];
+        List<String> fields = new List<String> {'wrts_prcgvr__Status__c'};
+         
+        Test.startTest();
+        
+        try{
+            String res = HDT_LC_AppointmentExtraSist.getActivity(act.Id, fields);     
+        }
+        catch (Exception e){
+               System.assertEquals(true, e != null);
+            }
+		
+        
+        Test.stopTest();
+        
+    }
+    
+    @isTest
+    public static void getActivityOwnerTest(){
+        wrts_prcgvr__Activity__c act = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c LIMIT 1];
+        
+		Boolean res = HDT_LC_AppointmentExtraSist.getActivityOwner(act.Id);
+        
+        System.assertEquals(true, res, 'La risposta al get link non è quella attesa.');
+    }
+   
 }

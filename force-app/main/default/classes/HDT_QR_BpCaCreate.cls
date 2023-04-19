@@ -48,6 +48,8 @@ public with sharing class HDT_QR_BpCaCreate
             BillingProfile__r.BankAccountSignatoryFiscalCode__c,
             BillingProfile__r.IbanCIN__c,
             BillingProfile__r.IBAN__c,
+            BillingProfile__r.CUP__c,
+            BillingProfile__r.CIG__c,
             BillingProfile__r.BankAccountSignatoryLastName__c,
             BillingProfile__r.BankAccountSignatoryFirstName__c,
             BillingProfile__r.PaymentConditions__c,
