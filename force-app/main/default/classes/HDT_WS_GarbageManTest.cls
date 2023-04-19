@@ -61,6 +61,20 @@ public with sharing class HDT_WS_GarbageManTest {
         //test
         Test.startTest();
 
+        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
+        contacts[0].FiscalCode__c = 'BRRSMN81T22I459C';
+        insert contacts;
+
+        AccountContactRelation currAccConRel =[ SELECT Id, Roles
+                                                FROM AccountContactRelation 
+                                                WHERE AccountId = :accs[0].Id
+                                                AND ContactId = :contacts[0].Id
+                                                WITH SECURITY_ENFORCED 
+                                                LIMIT 1
+                                               ];
+        currAccConRel.roles = 'Titolare';
+        update currAccConRel;
+
         //setup for test
         RestRequest req = new RestRequest();
         RestResponse restResp = new RestResponse();
