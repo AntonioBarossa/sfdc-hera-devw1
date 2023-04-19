@@ -1080,6 +1080,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.AggregateBilling__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -13430,10 +13435,11 @@
         <field>Knowledge__kav.PublicLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <!-- W2 - Rimossa momentaneamente visibilità Link Rifiutologo, da gestire come CR per visualizzazione dinamica -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Knowledge__kav.WasterLink__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>

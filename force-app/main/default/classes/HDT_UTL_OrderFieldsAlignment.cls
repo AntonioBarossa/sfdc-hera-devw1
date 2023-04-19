@@ -318,8 +318,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
                 }
 
-                orderToUpdate.AtecoCode__c = '999999';
-                orderToUpdate.HerAteco__c = '999999';
+                if(!'Ambiente'.equalsIgnoreCase(orderOld.ServicePoint__r.CommoditySector__c) ){
+                    orderToUpdate.AtecoCode__c = '999999';
+                    orderToUpdate.HerAteco__c = '999999';
+                }
             }
         // }
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;

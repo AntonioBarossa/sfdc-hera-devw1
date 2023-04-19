@@ -21,12 +21,12 @@ public class HDT_LC_AlertPrivacyTst {
             
             insert inds;
             
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
             Id accId = accs[0].id;
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
             
             contacts[0].Email='email@test.it';
-            contacts[0].Company__c='MMS';
+            contacts[0].Company__c = 'HC';
             contacts[0].IndividualId=inds[0].Id;
             insert contacts;
 
@@ -42,8 +42,10 @@ public class HDT_LC_AlertPrivacyTst {
     @isTest
     static void handleShowAlertTest(){
         List<Order> ordList = [SELECT Id FROM Order WITH SECURITY_ENFORCED LIMIT 1] ;
+        
+        new HDT_LC_AlertPrivacy();
         Boolean res = HDT_LC_AlertPrivacy.handleShowAlert(ordList[0].Id);
-        system.assertEquals(false, res,'The result is not what expected' );
+        system.assertEquals(true, res,'The result is not what expected' );
     }
 
 

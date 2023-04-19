@@ -42,6 +42,13 @@
                 <stringValue>Segnalazioni</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Insert_theCase_0</targetReference>
         </connector>
@@ -216,6 +223,20 @@
                 <stringValue>Segnalazioni</stringValue>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.DifferentNameFromTheApplicant__c</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assign_Process_Type_0</targetReference>
         </connector>
@@ -233,10 +254,24 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.PhoneNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>phone_NonBlank</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAccount.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>

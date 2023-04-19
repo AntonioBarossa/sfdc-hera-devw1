@@ -81,14 +81,14 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.ClientTypology__c = request.clientTypology;
             theCase.MaterialDescription__c = request.materialDescription;
             theCase.Description = request.materialDescription;
-            theCase.AlternativeAddress__c = request.city + request.street + request.streetNumber + request.streetCode;
+            theCase.AlternativeAddress__c = request.city + ' ' + request.street + ' ' + request.streetNumber + ' ' + request.streetCode;
             theCase.InvoicingCity__c = request.city;
             theCase.CompanyOwner__c = utlGarbage.getCompanyOwnerFromCityData(request.city);
             theCase.InvoicingStreetName__c =request.street;
             theCase.InvoicingStreetNumber__c = request.streetNumber;
             theCase.InvoicingStreetCode__c = request.streetCode;
             theCase.InvoicingCountry__c = 'Italia';
-            if(theCase.AccountId == null){
+            if(STRING.isBlank(account?.CustomerCode__c)){
                 theCase.DifferentNameFromTheApplicant__c = request.contactName;
                 //theCase.FiscalCode__c = request.fiscalCode;
             }

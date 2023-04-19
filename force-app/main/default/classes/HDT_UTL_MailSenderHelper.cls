@@ -155,7 +155,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             List<Case> detailedCases = HDT_QR_MailSender.getCaseById(caseId);
             String newPhase = '';
             if(detailedCases.size() >0){
-                csNumber = detailedCases[0].CaseNumber;
+                csNumber = detailedCases[0].Parent?.CaseNumber;
                 String oldPhase = detailedCases[0].Phase__c;
                 switch on oldPhase {
                     when 'In attesa risposta Mail'{
@@ -248,13 +248,13 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             } else {
                 generateCaseResult.success = false;
                 generateCaseResult.message = 'No access to Case';
-                generateCaseResult.caseNumber = mailCase.CaseNumber;
                 return generateCaseResult;
             }
-
+            
             generateCaseResult.success = true;
             generateCaseResult.message = 'Case created';
             generateCaseResult.caseId = mailCase.Id;
+            generateCaseResult.caseNumber = caseToClone?.CaseNumber;
 
         } catch (Exception e){
             generateCaseResult.success = false;
@@ -353,7 +353,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             //mail.setCcAddresses(new String[]{'antonino.fugazzotto@2hy53hdpybee3yyzu1pnnhfr9jl2twp6abttuei499hjwqdemq.3n-8mj0uaa.cs128.case.sandbox.salesforce.com'});
             mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
             //DA GESTIRE MEGLIO SELEZIONE SUBJECT, SU CASE COM AL GESTORE il CASENUMBER RISULTA NULL
-            String subjectStringExtend = !String.isBlank(caseResult.caseNumber) ? ' Case: ' + caseResult.caseNumber + ' ' + '[ thread::' + caseResult.caseId + ':: ]' : ' [ thread::' + caseResult.caseId + ':: ]';
+            String subjectStringExtend = !String.isBlank(caseResult.caseNumber) ? ' - Case Controllante: ' + caseResult.caseNumber + ' ' + '[ thread::' + caseResult.caseId + ':: ]' : ' [ thread::' + caseResult.caseId + ':: ]';
             mail.setSubject(subjectString + subjectStringExtend);
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
