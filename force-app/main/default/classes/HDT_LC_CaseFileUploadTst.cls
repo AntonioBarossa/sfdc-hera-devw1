@@ -20,9 +20,15 @@ public class HDT_LC_CaseFileUploadTst {
 
         Test.startTest();
 
-        List<Case> cases = [SELECT Id FROM Case WITH SECURITY_ENFORCED];
+        List<Case> cases = [SELECT Id, Cluster__c, RecordTypeId FROM Case WITH SECURITY_ENFORCED];
 
         String recId = cases[0].Id;
+        
+        Id RecordTypeId = '0121w000000EAqqAAG';
+        cases[0].Cluster__c = 'Segnalazioni';
+        
+        
+        
 
         List<ContentDocument> cdList = HDT_LC_CaseFileUpload.getFiles(recId);
 
@@ -48,5 +54,24 @@ public class HDT_LC_CaseFileUploadTst {
         Test.stopTest();
 
     }
+    
+    
 
+    @isTest
+	static void testUpdatePhaseAllegatiRice(){
+
+        Test.startTest();
+
+        List<ContentDocument> cds = [SELECT Id FROM ContentDocument WITH SECURITY_ENFORCED];
+
+        String recId = cds[0].Id;
+
+        HDT_LC_CaseFileUpload.updatePhaseAllegatiRicevuti(recId);
+
+        System.assertEquals(true, cds != null && !cds.isEmpty(), 'NESSUN CONTENT DOCUMENT TROVATO.');
+
+        Test.stopTest();
+
+    }
+	
 }

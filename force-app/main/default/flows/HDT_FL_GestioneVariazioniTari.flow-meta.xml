@@ -949,6 +949,47 @@
         </connector>
     </assignments>
     <assignments>
+        <name>desassignmentPostForm</name>
+        <label>desassignmentPostForm</label>
+        <locationX>3222</locationX>
+        <locationY>7094</locationY>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.FirstName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.LastName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.Birthday__c</assignToReference>
+            <operator>Assign</operator>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.Birthcity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPreCheckTari.AlternativeAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>preAssignBillingNulls</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>preAssignBillingAccount</name>
         <label>preAssignBillingAccount</label>
         <locationX>2958</locationX>
@@ -1110,7 +1151,7 @@
         <name>preAssignBillingNulls</name>
         <label>preAssignBillingNulls</label>
         <locationX>3222</locationX>
-        <locationY>7094</locationY>
+        <locationY>7214</locationY>
         <assignmentItems>
             <assignToReference>getPreCheckTari.InvoicingCity__c</assignToReference>
             <operator>Assign</operator>
@@ -2653,7 +2694,7 @@
         <locationX>3090</locationX>
         <locationY>6974</locationY>
         <defaultConnector>
-            <targetReference>preAssignBillingNulls</targetReference>
+            <targetReference>desassignmentPostForm</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
