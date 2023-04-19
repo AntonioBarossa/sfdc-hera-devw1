@@ -32,7 +32,6 @@ export default class HdtRecordEditFormInput extends LightningElement {
         };
         init({params:paramsObj})
         .then(data=>{
-            debugger;
             if(data && !this.controllingField && data.fieldValue && data.fieldLabel){
                 if(!this.customPicklistOptions.find(elem=> (elem?.value!=null &&  elem.value == data.fieldValue))) this.customPicklistOptions.push({label:data.fieldLabel,value:data.fieldValue});
                 this.customFieldValue=data.fieldValue;
@@ -49,9 +48,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     }
 
     get options() {
-        debugger;
         if(this.controllingField && this.controllingFieldValue){
-            //no collision
             if(!this.picklistOptionsDependencyObject.hasOwnProperty("ValueCollisionGroup") || (this.picklistOptionsDependencyObject?.ValueCollisionGroup && !this.picklistOptionsDependencyObject.ValueCollisionGroup.includes(this.controllingFieldValue))) {
                 return this.picklistOptionsDependencyObject[this.controllingFieldValue];
             }else if(this.ancestorValue){
@@ -61,7 +58,6 @@ export default class HdtRecordEditFormInput extends LightningElement {
                     if(!element.AncestorValueGroup.SimpleCollision && (element.AncestorValueGroup.SimpleCollisionArray.includes(this.ancestorValue) && element.AncestorValueGroup.UpstreamCollisionArray.includes(this.firstLevelValue))) trimmedArr.push(element);
                 });
                 this.ancestorValue='';
-                console.log('trimmed arr: ',trimmedArr);
                 return trimmedArr;
             }else{
                 this.dispatchEvent(new CustomEvent('findancestor',{ detail: {parent:this.controllingField}}));

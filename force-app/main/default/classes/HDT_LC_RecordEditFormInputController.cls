@@ -12,7 +12,6 @@ public with sharing class HDT_LC_RecordEditFormInputController {
         String controllingField= params.containsKey('controllingField') ? String.valueOf(params.get('controllingField')):'';
         String process=params.containsKey('process') ? String.valueOf(params.get('process')):'';
         String objectName= String.valueOf(objectId.getSobjectType());
-        //se quarto livello, con la query recupare il primo
         if(fieldName.toLowerCase() == 'FourthLevelComplaintClassification__c'.toLowerCase()){
             tempFieldName+=' ,FirstLevelComplaintClassification__c';
             params.put('firstLevelValue','');
@@ -32,7 +31,6 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             params.put('fieldLabel',String.isNotBlank(picklistLabel) ? picklistLabel:objectList[0].get(fieldName));
             params.put('fieldValue',objectList[0].get(fieldName));
         }else{
-            System.debug('parameters: '+controllingField+' | '+fieldName+' | '+process+' | '+objectName);
             List<HDT_RecordFormFieldDependency__mdt> rffd=HDT_QR_RecordEditFormFlowController.getDependencyConfigurations(controllingField,fieldName,process,objectName);
             if(rffd.size()==0){
                 throw new AuraHandledException('No configuration record found');
