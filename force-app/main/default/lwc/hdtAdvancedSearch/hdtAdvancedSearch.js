@@ -433,7 +433,10 @@ export default class HdtAdvancedSearch extends LightningElement {
                 if(data.statusCode=='200' || this.postSales === true){
                     if(data.statusCode != '200')
                     {
-                        resolve();
+
+                        //resolve(); --> commentato per fix per TK 974255C
+                        this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                        this.preloading = false;
                         return;
                     }
                     this.responseArriccData = data;
