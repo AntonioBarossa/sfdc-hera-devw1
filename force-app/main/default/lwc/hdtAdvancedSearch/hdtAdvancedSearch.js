@@ -433,7 +433,12 @@ export default class HdtAdvancedSearch extends LightningElement {
                 if(data.statusCode=='200' || this.postSales === true){
                     if(data.statusCode != '200')
                     {
-                        resolve();
+                        if (isFrom != 'searchSap'){
+                            resolve();
+                        }else{
+                            this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                            this.preloading = false;
+                        }
                         return;
                     }
                     this.responseArriccData = data;
