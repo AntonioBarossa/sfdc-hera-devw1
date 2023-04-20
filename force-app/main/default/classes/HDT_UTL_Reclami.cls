@@ -148,7 +148,7 @@ public with sharing class HDT_UTL_Reclami
         return result;
     }
 
-    private Date addBusinsessDaysWithHolidays(Integer businessDayToAdd, Date startDate)
+    public Date addBusinsessDaysWithHolidays(Integer businessDayToAdd, Date startDate)
     {
         Set<Date> holidays = getHolidaysDate();
         Date finalDate = startDate;

@@ -183,7 +183,9 @@ public inherited sharing virtual class HDT_UTL_ProcessMorosita extends HDT_UTL_P
                         && ('Acqua'.equalsIgnoreCase(processObj.newCase.Commodity__c) ||'Teleriscaldamento'.equalsIgnoreCase(processObj.newCase.Commodity__c))){
                             
                             //W2 per la risoluzione contrattuale H2O da eseguire non prima del è Oggi + 6 gg lavorativi
-                            processObj.newCase.NotPerformedBefore__c = HDT_UTL_Case.addBusinessDay(System.today(),6);
+                            Date effectiveDate =  HDT_UTL_Case.addBusinessDay(System.today(),6);
+                            processObj.newCase.NotPerformedBefore__c = effectiveDate;
+                            processObj.newCase.EffectiveDate__c = effectiveDate;
                     }
                 } else {
                     //itemsToSave.add(setErrorItem(processObj.requestItem, 'Case di Sospensione fornitura non presente'));
