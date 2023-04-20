@@ -1509,10 +1509,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1545,6 +1545,13 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1580,10 +1587,10 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1603,7 +1610,7 @@
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_0_0_0</name>
-            <conditionLogic>(1 OR 2) AND 3</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -1619,10 +1626,17 @@
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -2839,28 +2853,6 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>NIZ12_EE_BONUS_3_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus Natura&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -3246,7 +3238,7 @@
         </fields>
         <fields>
             <name>NIZ12_CONDIZIONE_ECOMICHE_FAM_OUT_TEXTBOX_4</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3334,7 +3326,7 @@
         </fields>
         <fields>
             <name>NIZ12_CONDIZIONE_ECOMICHE_FAM_OUT_TEXTBOX_8</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,0% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’80% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 20% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,0% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3523,7 +3515,7 @@
         </fields>
         <fields>
             <name>NIZ12_EE_INB_TEXTBOX_4</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’81% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 19% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3545,7 +3537,7 @@
         </fields>
         <fields>
             <name>NIZ12_EE_INB_TEXTBOX_5</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,0% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’80% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 20% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,0% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’66% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 34% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3618,7 +3610,7 @@
         </fields>
         <fields>
             <name>NIZ12_GAS_OUT_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 2% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3693,7 +3685,7 @@
         </fields>
         <fields>
             <name>NIZ12_GAS_OUT_TEXTBOX_2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 98% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 2% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3702,13 +3694,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3766,7 +3751,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
@@ -3778,14 +3763,22 @@
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa </stringValue>
+                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_EE_PROMO_TEXTBOX_1_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                        <stringValue>Promo 50</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3811,7 +3804,7 @@
         </fields>
         <fields>
             <name>NIZ12_EE_PROMO_TEXTBOX_1</name>
-            <fieldText>&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3820,6 +3813,21 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Promo Hera</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_EE_PROMO_TEXTBOX_2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3848,26 +3856,12 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Promo Hera</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3890,6 +3884,21 @@
                     <operator>Contains</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_GAS_PROMO_TEXTBOX_2_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3918,7 +3927,7 @@
             <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
@@ -3927,17 +3936,10 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                        <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3956,10 +3958,32 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>NIZ12_GAS_PROMO_TEXTBOX_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6774,7 +6798,7 @@
         </fields>
         <fields>
             <name>NIZ12_DURATA_CONTRATTO_FAM_TEXTBOX_4</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
