@@ -79,14 +79,6 @@
                 <behavior>Readonly</behavior>
                 <field>WorkableFileNumberDay__c</field>
             </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>MandatoryAttachments__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>ReliefToApply__c</field>
-            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -139,22 +131,6 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>IndemnityDueSendResponse__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IndemnityConfirmed__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IndemnityDueBilllingCorrection__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>IndemnityMotivation__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Readonly</behavior>
                 <field>CustomerRequestAccomplished__c</field>
             </layoutItems>
             <layoutItems>
@@ -164,6 +140,14 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>ResponseTopic__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>ReliefToApply__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>MandatoryAttachments__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -379,11 +363,12 @@
         <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Type__c</fields>
-        <fields>wrts_prcgvr__Description__c</fields>
-        <fields>wrts_prcgvr__DueDate__c</fields>
+        <fields>DueDate__c</fields>
         <fields>wrts_prcgvr__Status__c</fields>
-        <fields>OWNER.LAST_NAME</fields>
+        <fields>wrts_prcgvr__ActivityTemplate__c</fields>
         <fields>UPDATEDBY_USER</fields>
+        <fields>wrts_prcgvr__Description__c</fields>
+        <fields>OWNER.LAST_NAME</fields>
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -447,7 +432,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000003dd8Y</masterLabel>
+        <masterLabel>00h1w000000Tlh0</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
