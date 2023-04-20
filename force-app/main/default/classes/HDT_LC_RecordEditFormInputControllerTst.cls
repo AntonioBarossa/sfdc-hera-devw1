@@ -92,4 +92,21 @@ private class HDT_LC_RecordEditFormInputControllerTst {
         System.assertEquals(true,params.containsKey('fieldValue'),'no fieldValue parameter');
         System.assertEquals(true,params.containsKey('fieldLabel'),'no fieldLabel parameter');
     }
+
+    @IsTest
+    static void notDependentFieldKoTest() {
+        Case myCase=[SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+        Map<String,Object>params=new Map<String,Object>{
+                'fieldName'=> 'FourthLevelComplaintClassification__c','objectId'=> '500', 'process' => 'Rich Info EE'
+        };
+        String errorMessage='';
+        Test.startTest();
+        try{
+            params=HDT_LC_RecordEditFormInputController.init(params);
+        }catch (Exception e){
+            errorMessage=e.getMessage();
+        }
+        Test.stopTest();
+        System.assertEquals(true,String.isNotBlank(errorMessage),'a record was found');
+    }
 }
