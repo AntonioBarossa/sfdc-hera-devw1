@@ -72,6 +72,25 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>DiscardReasonList__c</picklist>
+        <values>
+            <fullName>CONTRATTO NON ATTIVO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LETTURA INCONGRUENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LETTURA INFERIORE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RICHIESTA DOPPIA</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>ParentObject__c</picklist>
         <values>
             <fullName>Case</fullName>

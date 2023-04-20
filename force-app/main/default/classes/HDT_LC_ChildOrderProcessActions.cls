@@ -96,10 +96,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
             when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
                 //orderToUpdate.Phase__c = '1 - Avviso di servizio'.equalsIgnoreCase(currentOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'Documentazione Validata';
                 if(String.isBlank(currentOrder.IntegrationExclusion__c) 
-                    && String.isNotBlank(currentOrder.RateCategory__c) 
+                    && String.isNotBlank(currentOrder.CommercialProductCode__c) 
                     && String.isNotBlank(currentOrder.SupplyCity__c)){
                     String text = '';
-                    List<WasteAdministrationTaxBreaks__c> configList = HDT_UTL_AdministrationTaxBreaks.getTexTaxBreaks(currentOrder.SupplyCity__c,currentOrder.RateCategory__c);
+                    List<WasteAdministrationTaxBreaks__c> configList = HDT_UTL_AdministrationTaxBreaks.getTexTaxBreaks(currentOrder.SupplyCity__c,currentOrder.CommercialProductCode__c);
                     if(!configList.isEmpty()){
                         if('HDT_RT_ModificaTariffaRimozione'.equalsIgnoreCase(order.RecordType.DeveloperName)){
                             text = configList[0].TextRemove__c;
