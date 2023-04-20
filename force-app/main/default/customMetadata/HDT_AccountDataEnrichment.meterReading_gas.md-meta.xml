@@ -26,6 +26,12 @@
         &quot;fieldName&quot;: &quot;dataMisura&quot;
     }, {
         &quot;sortable&quot;: true,
+        &quot;label&quot;: &quot;Lettura mis&quot;,
+        &quot;initialWidth&quot;: 150,
+        &quot;fieldType&quot;: &quot;text&quot;,
+        &quot;fieldName&quot;: &quot;letturaMis&quot;
+    }, {
+        &quot;sortable&quot;: true,
         &quot;label&quot;: &quot;Data inizio&quot;,
         &quot;initialWidth&quot;: 150,
         &quot;fieldType&quot;: &quot;text&quot;,
@@ -162,12 +168,6 @@
         &quot;initialWidth&quot;: 150,
         &quot;fieldType&quot;: &quot;text&quot;,
         &quot;fieldName&quot;: &quot;tipoLettura&quot;
-    }, {
-        &quot;sortable&quot;: true,
-        &quot;label&quot;: &quot;Lettura mis&quot;,
-        &quot;initialWidth&quot;: 150,
-        &quot;fieldType&quot;: &quot;text&quot;,
-        &quot;fieldName&quot;: &quot;letturaMis&quot;
     }, {
         &quot;sortable&quot;: true,
         &quot;label&quot;: &quot;Lettura conv&quot;,
