@@ -4579,7 +4579,7 @@ DATE(YEAR(TODAY()), MONTH(TODAY()) +2 , 1) -1 )</expression>
             <inputParameters>
                 <name>required</name>
                 <value>
-                    <elementReference>getPreLandRegistry.ModuleFromContributor__c</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
