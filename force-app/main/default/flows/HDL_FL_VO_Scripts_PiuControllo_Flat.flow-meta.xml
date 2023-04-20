@@ -1552,7 +1552,7 @@
         </connector>
         <fields>
             <name>Bonus_Obb_FAM_OUT_EE_1</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1571,7 +1571,7 @@
         </connector>
         <fields>
             <name>Bonus_Obb_FAM_OUT_GAS_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1590,7 +1590,7 @@
         </connector>
         <fields>
             <name>Bonus_Obb_FAM_INB_EE</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1609,7 +1609,7 @@
         </connector>
         <fields>
             <name>Copy_1_of_Bonus_Obb_FAM_OUT_GAS</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1778,34 +1778,9 @@
             <targetReference>Bonus_Obbligatorio</targetReference>
         </connector>
         <fields>
-            <name>CONDIZIONI_ECONOMICHE_FAM_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 24 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_3</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 12 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_SL</name>
@@ -1853,7 +1828,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_1</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1868,7 +1843,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_2</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1931,7 +1906,7 @@
         </connector>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 24 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Energia elettrica per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;﻿Le condizioni economiche {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}, sono valide per un periodo di 12 mesi.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -1980,7 +1955,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1995,7 +1970,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_1</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2060,31 +2035,6 @@
             <name>PCFLAT_GAS_OUT_TEXTBOX_3_0</name>
             <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Special Flat Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>PCFLAT_GAS_OUT_TEXTBOX_4_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Flat Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_1_0</name>
@@ -2093,7 +2043,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 106% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante -6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2108,7 +2058,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_5_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 106% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante -6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2166,12 +2116,12 @@
         </connector>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_1_0</name>
-            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;﻿Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 24 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Le condizioni economiche di {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c} che le descrivo di seguito sono valide per un periodo di 12 mesi.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il prezzo applicato alla componente energia, per il periodo di fornitura da lei scelto, è pari a {!FormulaPriceF0} €/Smc, riferito ad un potere calorifico del gas di 38,52 Mega Joule/ metro cubo, ed in sede di fatturazione sarà adeguato al contenuto energetico del gas fornito.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 106% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante -6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2186,7 +2136,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_3_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 106% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante -6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -4542,7 +4492,7 @@
         </fields>
         <fields>
             <name>PCF_DURATA_CONTRATTO_FAM_TEXTBOX2_END2</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l&apos;indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	In deroga all&apos;articolo 8 delle condizioni generali di contratto, riceverà una bolletta con periodicità &lt;strong&gt;mensile&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l&apos;indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	In deroga all&apos;articolo 8 delle condizioni generali di contratto, riceverà una bolletta con periodicità &lt;strong&gt;mensile&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
