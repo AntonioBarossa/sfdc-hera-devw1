@@ -113,20 +113,6 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     serResp = HDT_WS_ArrichmentDataEntityInvoker.callService('', servPointFromWs.Name);
                     System.debug(serResp);
 
-                    //if(serResp.exceptionMessage != null){
-                    //    singleItem.Status__c = 'Errore';
-                    //    singleItem.StatusDescription__c = '[ServicePoint__c] ' + serResp.exceptionMessage;
-                    //    System.debug(LoggingLevel.DEBUG, '[ServicePoint__c] no reponse from ws...');
-                    //    continue;
-                    //}
-
-                    //if(serResp.statusCode != 200){
-                    //    System.debug('>>> != 200');
-                    //    singleItem.Status__c = 'Errore';
-                    //    singleItem.StatusDescription__c = '[ServicePoint__c] errore arrichimento dati';
-                    //    continue;
-                    //}
-
                     if(serResp.statusCode == 200){
                         servPointFromWs = HDT_UTL_ServicePoint.extractDataFromArriccDataServiceWithExistingSp(servPointFromWs, serResp)[0];
                         System.debug(LoggingLevel.DEBUG, '>>> update sp ' + servPointFromWs);
@@ -140,79 +126,13 @@ public inherited sharing class HDT_UTL_ProcessSalesOutboundWs {
                     } else {
                         System.debug(LoggingLevel.DEBUG, '>>> [ServicePoint__c] errore arrichimento dati');
                     }
-
                 }
-
-                //accountId = idsMap.get(singleItem.Id).accountId;
-
-                //if(String.isNotEmpty(accountId)){
-                //    account = new Account();
-                //    contact = new Contact();
-                //    
-                //    account = setAccountRecord(accRelMap.get(accountId), account);
-                //    contact = setContactRecord(accRelMap.get(accountId), contact);
-                //    HDT_WS_RicCreBpCaRequest req = HDT_UTL_Account.callBpCaCreate(account, contact);
-                //    HDT_WS_RichCreBpCaResponse res = HDT_WS_RicCreBpCaInvoker.invokeCall(req);
-
-                //    if(res.exceptionMessage != null){
-                //        singleItem.Status__c = 'Errore';
-                //        singleItem.StatusDescription__c = '[Account] ' + res.exceptionMessage;
-                //        System.debug(LoggingLevel.DEBUG, '[Account] no reponse from ws...');
-                //        continue;
-                //    }
-
-                //    if ('success'.equalsIgnoreCase(res.status)) {
-                //        if ('Errore'.equalsIgnoreCase(res.data.tipoAttivita)) {
-                //            System.debug(LoggingLevel.DEBUG, '>>> res.data.commenti: ' + res.data.commenti);
-                //            singleItem.Status__c = 'Errore';
-                //            singleItem.StatusDescription__c = '[Account] ' + res.data.commenti;
-                //        } else {
-                //            account.CustomerCode__c = res.data.codiceBP;
-                //            requestItemForUpsert.add(singleItem);
-                //            singleItem.Status__c = 'Chiuso';
-                //            accountToUpdate.add(account);
-                //            System.debug(LoggingLevel.DEBUG, 'CustomerCode__c > ' + account.CustomerCode__c);
-                //        }
-                //    } else {
-                //        System.debug(LoggingLevel.DEBUG, '>>> res.statusCode: ' + res.statusCode);
-                //        System.debug(LoggingLevel.DEBUG, '>>> res.body: ' + res.body);
-                //        System.debug(LoggingLevel.DEBUG, '>>> res.status: ' + res.status);
-                //        System.debug(LoggingLevel.DEBUG, '>>> res.errorDetails: ' + res.errorDetails);
-                //        System.debug(LoggingLevel.DEBUG, '>>> res.exceptionMessage: ' + res.exceptionMessage);
-                //        singleItem.Status__c = 'Errore';
-                //        singleItem.StatusDescription__c = '[Account] ' + res.exceptionMessage + ' - ' + res.errorDetails;
-                //    }
-
-                //}
-
             } catch (Exception e){
                 System.debug(LoggingLevel.DEBUG, 'Exception > HDT_UTL_ProcessSalesOutboundWs: ' + e.getMessage());
                 singleItem.Status__c = 'Errore';
                 singleItem.StatusDescription__c = e.getMessage().abbreviate(250);
             }
-
         }
-
-        // if(accountToUpdate.size() > 0){
-        //     Map<Id, MassiveLoaderRequestItem__c> errorItemMap = new Map<Id, MassiveLoaderRequestItem__c>();
-        //     HDT_UTL_ProcessCommonOperations.HDT_WRP_SaveResponse updateAccountResponse; //
-
-        //     updateAccountResponse = HDT_UTL_ProcessCommonOperations.databaseInsert(accountToUpdate, requestItemForUpsert, 'Account'); //
-
-        //     for(MassiveLoaderRequestItem__c errorItem : updateAccountResponse.reponseItemList){
-        //         if(errorItem.Status__c == 'Errore'){
-        //             errorItemMap.put(errorItem.Id, errorItem);
-        //         }
-        //     } //
-
-        //     for(MassiveLoaderRequestItem__c singleItem : requestItemList){
-        //         if(errorItemMap.containsKey(singleItem.Id)){
-        //             singleItem = errorItemMap.get(singleItem.Id);
-        //         }
-        //     } //
-
-        // }
-
     }
 
     public void updateItems(){
