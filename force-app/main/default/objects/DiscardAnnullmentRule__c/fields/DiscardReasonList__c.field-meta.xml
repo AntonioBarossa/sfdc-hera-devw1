@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>DiscardReasonList__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivazione dello scarto</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CONTRATTO NON ATTIVO</fullName>
+                <default>false</default>
+                <label>CONTRATTO NON ATTIVO</label>
+            </value>
+            <value>
+                <fullName>RICHIESTA DOPPIA</fullName>
+                <default>false</default>
+                <label>RICHIESTA DOPPIA</label>
+            </value>
+            <value>
+                <fullName>LETTURA INCONGRUENTE</fullName>
+                <default>false</default>
+                <label>LETTURA INCONGRUENTE</label>
+            </value>
+            <value>
+                <fullName>LETTURA INFERIORE</fullName>
+                <default>false</default>
+                <label>LETTURA INFERIORE</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>
