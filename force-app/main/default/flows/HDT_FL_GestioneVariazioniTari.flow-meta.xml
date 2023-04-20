@@ -4451,7 +4451,7 @@
             <inputParameters>
                 <name>required</name>
                 <value>
-                    <elementReference>getAfterForm_0.ModuleFromContributor__c</elementReference>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
