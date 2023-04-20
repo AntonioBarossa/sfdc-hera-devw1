@@ -37,9 +37,9 @@ public inherited sharing class HDT_UTL_Dependencies {
         }
         if(tipology.equalsIgnoreCase(TIPOLOGY_SALES)){
             for(Order order : (List<Order>)newSObjectMap.values()){
-                Order oldOrder = (Order)oldSObjectMap.get(order.ID);
-                if(!oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCs.contains(order.Phase__c)){
-                    orders.put(order.ID, order);
+                Order oldOrder = (Order)oldSObjectMap.get(order.Id);
+                if(String.isNotBlank(oldOrder.Phase__c) && !oldOrder.Phase__c.equalsIgnoreCase(order.Phase__c) && dependenciesCheckCs.contains(order.Phase__c)){
+                    orders.put(order.Id, order);
                 }
             }
             if(orders.size()>0){
