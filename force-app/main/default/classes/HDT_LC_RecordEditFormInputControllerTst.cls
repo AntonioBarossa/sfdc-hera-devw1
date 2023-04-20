@@ -95,7 +95,6 @@ private class HDT_LC_RecordEditFormInputControllerTst {
 
     @IsTest
     static void notDependentFieldKoTest() {
-        Case myCase=[SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
         Map<String,Object>params=new Map<String,Object>{
                 'fieldName'=> 'FourthLevelComplaintClassification__c','objectId'=> '500', 'process' => 'Rich Info EE'
         };
