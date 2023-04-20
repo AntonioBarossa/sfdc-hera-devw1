@@ -27,6 +27,8 @@ global with sharing class HDT_WS_GarbageMan {
         private String city {get;set;}
         private String street {get;set;}
         private String streetNumber {get;set;}
+        private String province {get;set;}
+        private String cap {get;set;}
         private String typeInt {get;set;}
         private String requestCode {get;set;}
         private String materialDescription {get;set;}
@@ -81,12 +83,14 @@ global with sharing class HDT_WS_GarbageMan {
             theCase.ClientTypology__c = request.clientTypology;
             theCase.MaterialDescription__c = request.materialDescription;
             theCase.Description = request.materialDescription;
-            theCase.AlternativeAddress__c = request.city + ' ' + request.street + ' ' + request.streetNumber + ' ' + request.streetCode;
+            //theCase.AlternativeAddress__c = request.city + ' ' + request.street + ' ' + request.streetNumber + ' ' + request.streetCode;
             theCase.InvoicingCity__c = request.city;
             theCase.CompanyOwner__c = utlGarbage.getCompanyOwnerFromCityData(request.city);
             theCase.InvoicingStreetName__c =request.street;
             theCase.InvoicingStreetNumber__c = request.streetNumber;
             theCase.InvoicingStreetCode__c = request.streetCode;
+            theCase.InvoicingProvince__c=request.province;
+            theCase.InvoicingPostalCode__c=request.cap;         
             theCase.InvoicingCountry__c = 'Italia';
             if(STRING.isBlank(account?.CustomerCode__c)){
                 theCase.DifferentNameFromTheApplicant__c = request.contactName;
