@@ -145,7 +145,7 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.MeterClass__c = cmdAfClass != null ? cmdAfClass.SfdcFieldValue__c : '';
         }
         if(mapRes.get('STATO_PUNTO')!=null && !String.isBlank(mapRes.get('STATO_PUNTO'))){
-            String metStatus = '';
+            String metStatus = spNew.MeterStatus__c;
             switch on mapRes.get('STATO_PUNTO') {
                 when 'H010', 'H030', 'H045', 'H050', 'H060' {
                     metStatus = 'Sospeso';
