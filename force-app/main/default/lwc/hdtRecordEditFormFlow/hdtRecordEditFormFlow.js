@@ -776,8 +776,5 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             writtenReceiptRequestDate.disabled = true;
             writtenReceiptRequestDate.required = false;
         }
-        if(writtenReceiptRequestDate){
-            writtenReceiptRequestDate.value = new Date();
-        }
     }
 }

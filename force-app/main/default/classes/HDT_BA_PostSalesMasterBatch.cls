@@ -22,7 +22,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
         scope.addAll(postsalesQr.getExpiredArticle());
         scope.addAll(postsalesQr.getPostAccertamentoCase());
         scope.addAll(postsalesQr.getSegnalazioniBozzaCase());
-        //scope.addAll(postsalesQr.getRifiutiBozzaCase());
+        scope.addAll(postsalesQr.getRifiutiBozzaCase());
         scope.addAll(postsalesQr.getActivitiesRicConsumi());
         scope.addAll(postsalesQr.getPianoRateizzazioneTariCase());
         return scope;
