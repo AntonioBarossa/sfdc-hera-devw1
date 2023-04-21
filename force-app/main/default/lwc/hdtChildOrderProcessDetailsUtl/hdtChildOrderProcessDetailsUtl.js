@@ -263,7 +263,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 label: 'Dati Catastali',
                 name: 'datiCatastali',
                 hasDatiCatastali: true,
-                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa"].includes(this.order.RecordType.DeveloperName),
+                processVisibility: ["HDT_RT_SubentroAmbiente", "HDT_RT_AttivazioneAmbiente", "HDT_RT_CambioTariffa", "HDT_RT_AgevolazioniAmbiente"].includes(this.order.RecordType.DeveloperName),
                 nextActions : () => {
                     const landRegistryValidation = this.template.querySelector("c-hdt-land-registry")?.validate();
                     if(landRegistryValidation.isValid === false){

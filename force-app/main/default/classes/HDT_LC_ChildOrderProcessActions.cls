@@ -93,9 +93,23 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.Phase__c='In attesa perfezionamento documentazione';
                 }*/
             }
-            //when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
+            when 'HDT_RT_ModificaTariffaRimozione', 'HDT_RT_AgevolazioniAmbiente'{
                 //orderToUpdate.Phase__c = '1 - Avviso di servizio'.equalsIgnoreCase(currentOrder.ApprovalType__c)? 'In Attesa Approvazione' : 'Documentazione Validata';
-            //}
+                if(String.isBlank(currentOrder.IntegrationExclusion__c) 
+                    && String.isNotBlank(currentOrder.CommercialProductCode__c) 
+                    && String.isNotBlank(currentOrder.SupplyCity__c)){
+                    String text = '';
+                    List<WasteAdministrationTaxBreaks__c> configList = HDT_UTL_AdministrationTaxBreaks.getTexTaxBreaks(currentOrder.SupplyCity__c,currentOrder.CommercialProductCode__c);
+                    if(!configList.isEmpty()){
+                        if('HDT_RT_ModificaTariffaRimozione'.equalsIgnoreCase(order.RecordType.DeveloperName)){
+                            text = configList[0].TextRemove__c;
+                        }else {
+                            text = configList[0].TextRequest__c;
+                        }
+                        orderToUpdate.IntegrationExclusion__c = text;
+                    }
+                }
+            }
             when 'HDT_RT_Subentro' {
                 if (order.Account.RecordType.DeveloperName == 'HDT_RT_Residenziale') {
                     orderToUpdate.CIAccoutn__c = 'Richiesto';
@@ -121,16 +135,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                             orderToUpdate.Status = 'In lavorazione';
                             orderToUpdate.Phase__c = 'Da Inviare' ;                        
                         }
-                        /*
-                        try {    
-                            if(order.SignedDate__c != null && !order.ProcessType__c.contains('Cambio Offerta')){                         
-                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order); 
-                            }
-                        }
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                        }                            
-                        */
                         
                         if(!currentOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order'))
                         {
@@ -141,24 +145,6 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                         }
                     }
                     else {
-                       /* 
-                        try {   
-                            if(order.SignedDate__c != null && !order.ProcessType__c.contains('Cambio Offerta')){                          
-                                orderToUpdate.DateSentToSII__c = HDT_UTL_SwtichInProcess.getDateSentToSii(order);
-                            }
-                        }
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di adempimento.');
-                        }
-                        try {
-                            if(order.SignedDate__c != null){
-                                orderToUpdate.EffectiveDate__c = HDT_UTL_SwtichInProcess.getEffectiveDate(order);
-                            }                                                             
-                        }
-                        catch (Exception e) { 
-                            throw new AuraHandledException('Dati incompleti o errati per la generazione della data di decorrenza.');
-                        }       */ 
-
                         if(!currentOrder.SignatureMethod__c.equalsIgnoreCase('Vocal Order'))
                         {
                             if (order.VolturaThirdTrader__c == true) {
@@ -337,7 +323,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 }
             }
         }
-
+        orderToUpdate.OrderRecordTypeName__c = order.RecordType.DeveloperName;
         List<ComfortQualityCall__c> comfortQualityList = new List<ComfortQualityCall__c>();
 
         /*if(order.SignatureMethod__c.containsIgnoreCase('OTP'))

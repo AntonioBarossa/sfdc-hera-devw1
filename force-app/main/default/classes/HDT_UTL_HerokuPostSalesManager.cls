@@ -709,9 +709,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
             currentCase.Status = 'Closed';
             if(currentCase.Type == 'Autolettura da cliente' && currentCase.Commodity__c == 'Acqua'){
                 String likeDiscardReason = '%' + discardReason + '%';
-                List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da Gestore' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
+                List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReasonList__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Validazione KO da Gestore' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
                 if(!discRuleAutoletList.isEmpty()){
-                    currentCase.AbnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
+                    currentCase.AbnormalReading__c = discRuleAutoletList[0].DiscardReasonList__c;
                 }     
             }
             updateFuture(JSON.serialize(currentCase));
@@ -721,9 +721,9 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
          */
         }else if('Ammissibilità KO'.equalsIgnoreCase(currentCase.Phase__c) && 'Autolettura da cliente'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
             String likeDiscardReason = '%' + discardReason + '%';
-            List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReason__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Ammissibilità KO' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
+            List<DiscardAnnullmentRule__c> discRuleAutoletList = [SELECT id, DiscardReasonList__c  FROM DiscardAnnullmentRule__c WHERE ActivityType__c = 'Ammissibilità KO' AND IsActive__c = true AND ProcessValue__c = 'Autolettura da cliente' AND RecordType.DeveloperName = 'HDT_RT_NotAutomatic' AND ControllingValue__c LIKE :likeDiscardReason WITH SECURITY_ENFORCED]; 
             if(!discRuleAutoletList.isEmpty()){
-                currentCase.AbnormalReading__c = discRuleAutoletList[0].DiscardReason__c;
+                currentCase.AbnormalReading__c = discRuleAutoletList[0].DiscardReasonList__c;
             }
             updateFuture(JSON.serialize(currentCase));
         }else if(currentCase.Type.equalsIgnoreCase('Verifica Dati al DL') && currentCase.Phase__c.equalsIgnoreCase('Esito OK da DL'))
