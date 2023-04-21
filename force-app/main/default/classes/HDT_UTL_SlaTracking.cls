@@ -79,6 +79,9 @@ public inherited sharing class HDT_UTL_SlaTracking {
         Date endDate;
         for(SlaTracking__c track : slaTrackingToElaborate){
             startDate = convertDateTime(track.StartDateTime__c);
+            if(!adminRuleMap.containsKey(track.SlaAdministration__c)){
+                continue;
+            }
             slaRange = Integer.valueOf(adminRuleMap.get(track.SlaAdministration__c).Range__c);
             track.EndDateSolarDays__c = startDate.addDays(slaRange);
             //slaRange = calculateWorkingDays(track.StartDateTime__c, slaRange, holidayList);
