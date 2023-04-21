@@ -48,7 +48,6 @@ public class HDT_BA_PostSalesMasterBatchTst {
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In attesa Data Decorrenza', 'Da Inviare', rtIdVolturaTecnica, rtNameVolturaTecnica, 'A','','','');
 
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Pratica In Attesa', 'Bozza', rtIdBloccoSollecitoInteressi, rtNameBloccoSollecitoInteressi, 'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Bozza Annullata', 'Bozza', rtIdPianRat, rtNamePianoRat, 'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'In Lavorazione', 'Bozza', rtIdVar, rtNameVar, 'A','','','');
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
@@ -60,7 +59,7 @@ public class HDT_BA_PostSalesMasterBatchTst {
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(2, true, accList[0].id);        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(12, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(14, true, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
 
         Datetime oneDayAgo = Datetime.now().addDays(-5);
         Test.setCreatedDate(caseList[3].Id, oneDayAgo);
@@ -68,6 +67,8 @@ public class HDT_BA_PostSalesMasterBatchTst {
         Datetime oneMonthAgo = Datetime.now().addDays(-40);
         Test.setCreatedDate(caseList[4].Id, oneMonthAgo);
         Test.setCreatedDate(caseList[10].Id, oneMonthAgo);
+        Test.setCreatedDate(caseList[12].Id, oneMonthAgo);
+        Test.setCreatedDate(caseList[13].Id, oneMonthAgo);
 
         servPointList[1].SupplyCity__c = 'SupplyCity__c';
         servPointList[1].SupplyStreetName__c = 'SupplyStreetName__c';
@@ -159,7 +160,26 @@ public class HDT_BA_PostSalesMasterBatchTst {
         caseList[11].Contract__c = null;
         caseList[11].ServicePoint__c = null;
 
-        update caseList;        
+        caseList[12].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        caseList[12].Phase__c = 'Bozza';
+        caseList[12].Commodity__c = 'Acqua';
+        caseList[12].Type = 'Piano Rateizzazione';
+
+        caseList[13].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        caseList[13].Type = 'Piano Rateizzazione';
+        caseList[13].Phase__c = 'Bozza';
+        caseList[13].Commodity__c = 'Ambiente';
+        caseList[13].MandatoryAttachments__c = 'Test_1';
+
+        update caseList; 
+        
+        List<ContentVersion> contentVersion = HDT_UTL_DataFactoryTst.createContentVers(1, false);
+        insert contentVersion;
+
+        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument WHERE LatestPublishedVersionId = :contentVersion[0].Id];
+
+        list<ContentDocumentLink> listDocumentLink = HDT_UTL_DataFactoryTst.createContentDocumentLink(1, false, caseList[13].Id, documents[0].Id);
+        insert listDocumentLink;
 
         wrts_prcgvr__Activity__c actOne = new wrts_prcgvr__Activity__c();
         actOne.Case__c = caseList[6].Id;
@@ -206,6 +226,12 @@ public class HDT_BA_PostSalesMasterBatchTst {
         postSalesCustomSetting.NumberOfDays__c = '30';
         insert postSalesCustomSetting;
 
+        CS_DaysToExpiration__c postPianoRatCustomSetting = new CS_DaysToExpiration__c();
+        postPianoRatCustomSetting.Name = 'PianoRateizzazioneTari';
+        postPianoRatCustomSetting.Type__c = 'PianoRateizzazioneTari';
+        postPianoRatCustomSetting.NumberOfDays__c = '90';
+        insert postPianoRatCustomSetting;
+
     }
 
     @IsTest
@@ -220,8 +246,10 @@ public class HDT_BA_PostSalesMasterBatchTst {
 		Case myCase7 = [SELECT Id, Type FROM Case WHERE Type = 'Ricostruzione Consumi'];
         Case myCase8 = [SELECT Id, Phase__c, Type, EffectiveDate__c  FROM Case WHERE Type = 'Voltura Tecnica' AND Subject = 'Test ricalcolo' LIMIT 1];
         Case myCase9 = [SELECT Id, Phase__c FROM Case WHERE QuotationType__c = 'Predeterminabile' LIMIT 1];
-        Case myCase10 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName, CreatedDate FROM Case WHERE Phase__c = 'Bozza' AND Type = 'Piano Rateizzazione' AND Commodity__c = 'Ambiente' AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione' LIMIT 1];
+        Case myCase10 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName, CreatedDate FROM Case WHERE Phase__c = 'Bozza' AND Type = 'Piano Rateizzazione' AND Commodity__c = 'Ambiente' AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione' AND MandatoryAttachments__c = 'Test' LIMIT 1];
         Case myCase11 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName FROM Case WHERE Phase__c = 'In Lavorazione' AND Type = 'Modifica post accertamento' AND RecordType.DeveloperName = 'HDT_RT_VariazioniTari' LIMIT 1];
+        Case myCase12 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName, CreatedDate FROM Case WHERE Phase__c = 'Bozza' AND Type = 'Piano Rateizzazione' AND Commodity__c <> 'Ambiente' AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione' LIMIT 1];
+        Case myCase13 = [SELECT Id, Type, Phase__c, RecordType.DeveloperName, CreatedDate FROM Case WHERE Phase__c = 'Bozza' AND Type = 'Piano Rateizzazione' AND Commodity__c = 'Ambiente' AND RecordType.DeveloperName = 'HDT_RT_PianoRateizzazione' AND MandatoryAttachments__c = 'Test_1' LIMIT 1];
         Knowledge__kav kArt = [SELECT Id, KnowledgeArticleId FROM Knowledge__kav LIMIT 1];
         
         String uniqueUserName = 'standarduser' + DateTime.now().getTime() + '@testorg.com';
@@ -304,6 +332,14 @@ public class HDT_BA_PostSalesMasterBatchTst {
                                               AND Type__c = 'Aprire Variazione'];
         System.debug(LoggingLevel.DEBUG, 'updatedCase11: ' + updateCase11.Phase__c);
         System.assertEquals(1, act.size(), 'Attenzione, la lista deve trovare una sola activity');
+
+        Case updateCase12 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase12.Id LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase12: ' + updateCase12.Phase__c);
+        System.assertEquals('Bozza Annullata', updateCase12.Phase__c, 'Aggiornamento Non Effettuato');
+
+        Case updateCase13 = [SELECT Id, Phase__c FROM Case WHERE Id = :myCase13.Id LIMIT 1];
+        System.debug(LoggingLevel.DEBUG, 'updatedCase10: ' + updateCase13.Phase__c);
+        System.assertEquals('Bozza', updateCase13.Phase__c, 'Aggiornamento Effettuato Erroneamente');
 
         Knowledge__kav myArticle = [Select Id, PublishStatus from Knowledge__kav where Id =: kArt.Id];
         // System.assertEquals('Archived', myArticle.PublishStatus, 'PublishStatus != Archived');
