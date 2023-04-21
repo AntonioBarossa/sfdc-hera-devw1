@@ -232,6 +232,12 @@ public class HDT_BA_PostSalesMasterBatchTst {
         postPianoRatCustomSetting.NumberOfDays__c = '90';
         insert postPianoRatCustomSetting;
 
+        CS_DaysToExpiration__c GestioneRifiutiCustomSetting = new CS_DaysToExpiration__c();
+        GestioneRifiutiCustomSetting.Name = 'Gestione_Rifiuti';
+        GestioneRifiutiCustomSetting.Type__c = 'Gestione_Rifiuti';
+        GestioneRifiutiCustomSetting.NumberOfDays__c = '30';
+        insert GestioneRifiutiCustomSetting;
+
     }
 
     @IsTest

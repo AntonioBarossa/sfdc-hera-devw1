@@ -954,7 +954,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <stringValue>RiclassificazioneDaCittadino</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
