@@ -22,6 +22,10 @@
                 <behavior>Edit</behavior>
                 <field>IsActive__c</field>
             </layoutItems>
+            <layoutItems>
+                <behavior>Edit</behavior>
+                <field>DiscardReasonList__c</field>
+            </layoutItems>
         </layoutColumns>
         <layoutColumns>
             <layoutItems>
@@ -35,10 +39,6 @@
             <layoutItems>
                 <behavior>Edit</behavior>
                 <field>DiscardCode__c</field>
-            </layoutItems>
-            <layoutItems>
-                <behavior>Edit</behavior>
-                <field>DiscardReason__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsTopToBottom</style>

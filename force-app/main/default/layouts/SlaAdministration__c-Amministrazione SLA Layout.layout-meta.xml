@@ -144,7 +144,6 @@
         <fields>StartDateTime__c</fields>
         <fields>EndDateTime__c</fields>
         <fields>Status__c</fields>
-        <fields>SlaValue__c</fields>
         <relatedList>SlaTracking__c.SlaAdministration__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>

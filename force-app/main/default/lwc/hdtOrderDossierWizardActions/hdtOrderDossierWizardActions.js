@@ -14,7 +14,8 @@ import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManage
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
-import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
+import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
+import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
 import RequestSource from '@salesforce/schema/Order.RequestSource__c';
 import WasteCommodityType from '@salesforce/schema/Order.WasteCommodityType__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
@@ -395,41 +396,76 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleSave(){
         this.loading = true;
-        save({orderParent: this.orderParentRecord}).then(data =>{
-            this.loading = false;
-
-            this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
-
-            const toastSuccessMessage = new ShowToastEvent({
-                title: 'Successo',
-                message: 'Order confermato con successo',
-                variant: 'success'
-            });
-            this.dispatchEvent(toastSuccessMessage);
-            //this.sendDocumentFile();
-
-        }).catch(error => {
-            this.loading = false;
-
-            let errorMessage = '';
-
-            if (error.body.message !== undefined) {
-                errorMessage = error.body.message;
-            } else if(error.message !== undefined){
-                errorMessage = error.message;
-            } else if(error.body.pageErrors !== undefined){
-                errorMessage = error.body.pageErrors[0].message;
+        try{
+            var sendMode = this.parentOrder.fields.DocSendingMethod__c.value;
+            var signMode = this.parentOrder.fields.SignatureMethod__c.value; 
+            var oldSignMode = this.parentOrder.fields.SignMode__c.value;
+            if(sendMode.localeCompare('Stampa Cartacea')===0){
+                sendMode = 'Sportello';
             }
-
-            console.log('Error: ', errorMessage);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: errorMessage,
-                variant: 'error',
-                mode: 'sticky'
+            var discardOldEnvelope = false;
+            if (signMode.localeCompare('OTP Remoto') === 0 && oldSignMode && oldSignMode.localeCompare('OTP Coopresenza') === 0){
+                discardOldEnvelope = true;
+            }
+            console.log('discardRework --> '+this.discardRework);
+            console.log('discardActivityId --> '+this.discardActivityId);
+            var formParams = {
+                sendMode : sendMode,
+                signMode : signMode,      
+                mode : 'Print',
+                Archiviato : 'Y',
+                DiscardOldEnvelope : discardOldEnvelope,
+                discardRework : this.discardRework,
+                discardActivityId : this.discardActivityId
+            }
+            console.log('formParams --> '+JSON.stringify(formParams));
+            sendDocument({
+                recordId: this.recordId,
+                context: 'Order',
+                formParams: JSON.stringify(formParams)
+            }).then(result => {
+                save({orderParent: this.orderParentRecord}).then(data =>{
+                    this.loading = false;
+        
+                    this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
+        
+                    const toastSuccessMessage = new ShowToastEvent({
+                        title: 'Successo',
+                        message: 'Order confermato con successo',
+                        variant: 'success'
+                    });
+                    this.dispatchEvent(toastSuccessMessage);
+                    //this.sendDocumentFile();
+        
+                }).catch(error => {
+                    this.loading = false;
+        
+                    let errorMessage = '';
+        
+                    if (error.body.message !== undefined) {
+                        errorMessage = error.body.message;
+                    } else if(error.message !== undefined){
+                        errorMessage = error.message;
+                    } else if(error.body.pageErrors !== undefined){
+                        errorMessage = error.body.pageErrors[0].message;
+                    }
+        
+                    console.log('Error: ', errorMessage);
+                    const toastErrorMessage = new ShowToastEvent({
+                        title: 'Errore',
+                        message: errorMessage,
+                        variant: 'error',
+                        mode: 'sticky'
+                    });
+                    this.dispatchEvent(toastErrorMessage);
+                });
+            }).catch(error => {
+                this.showToast('Errore nell\'invio del documento al cliente.');
+                console.error(error);
             });
-            this.dispatchEvent(toastErrorMessage);
-        });
+        }catch(error){
+            console.error(error);
+        }
     }
 
     handleSave2(){
