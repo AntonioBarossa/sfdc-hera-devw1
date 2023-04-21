@@ -736,13 +736,6 @@
                 <elementReference>Get_Input_Case.BillingProfile__r.BillSendingMethod__c</elementReference>
             </value>
         </assignmentItems>
-        <assignmentItems>
-            <assignToReference>Get_Input_Case.WrittenReceiptRequestDate__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DataRicezioneRichiesta</elementReference>
-            </value>
-        </assignmentItems>
         <connector>
             <targetReference>AggiornaCase</targetReference>
         </connector>
