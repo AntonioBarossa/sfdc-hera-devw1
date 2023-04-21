@@ -472,7 +472,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         
 
         //Gestione Scarti SAP tolti i campi parent Object process field e controlling field
-        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c, DiscardReason__c
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c, DiscardReasonList__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
                                                 AND IsActive__c = true
@@ -1222,7 +1222,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             //[DV - 15/12/22] 2022_2B02 - Del.609_2021 e Del.639_2021 - Qualità Tecnica SII: Se ho popolato la discardRecord vado a ribaltare la DiscardReason__c sul Case
             if(discardRecord != null){
-                objectToUpdate.put('AbnormalReading__c', discardRecord.DiscardReason__c);
+                objectToUpdate.put('AbnormalReading__c', discardRecord.DiscardReasonList__c);
             }
 
             updateObjectFuture(JSON.serialize(objectToUpdate));

@@ -14,7 +14,8 @@ import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManage
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
-import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
+import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
+import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
 import RequestSource from '@salesforce/schema/Order.RequestSource__c';
 import WasteCommodityType from '@salesforce/schema/Order.WasteCommodityType__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>Reclamo Cittadino ACQ	3-4</label>
+    <label>Reclamo Cittadino ACQ 3-4</label>
     <protected>false</protected>
     <values>
         <field>ControlledField__c</field>
@@ -12,7 +12,370 @@
     </values>
     <values>
         <field>DependecyJSON__c</field>
-        <value xsi:type="xsd:string">{&quot;ValueCollisionGroup&quot;:[&quot;Fondo fughe&quot;,&quot;Comportamento operatore&quot;],&quot;Call Center&quot;:[{&quot;label&quot;:&quot;SC01 - Call Center Tempi di attesa&quot;,&quot;value&quot;:&quot;SC01 - Call Center Tempi di attesa&quot;},{&quot;label&quot;:&quot;SC02 - Call Center Comportamento operatore&quot;,&quot;value&quot;:&quot;SC02 - Call Center Comportamento operatore&quot;},{&quot;label&quot;:&quot;SC03 - Call Center Risposta&quot;,&quot;value&quot;:&quot;SC03 - Call Center Risposta&quot;}],&quot;Addebito contatore rotto dal gelo&quot;:[{&quot;label&quot;:&quot;FG01 - Addebito contatore rotto dal gelo&quot;,&quot;value&quot;:&quot;FG01 - Addebito contatore rotto dal gelo&quot;}],&quot;Bolletta&quot;:[{&quot;label&quot;:&quot;FB01 - Chiarezza bolletta&quot;,&quot;value&quot;:&quot;FB01 - Chiarezza bolletta&quot;},{&quot;label&quot;:&quot;FB02 - Recapito bolletta&quot;,&quot;value&quot;:&quot;FB02 - Recapito bolletta&quot;},{&quot;label&quot;:&quot;FB03 - Periodicità bolletta&quot;,&quot;value&quot;:&quot;FB03 - Periodicità bolletta&quot;},{&quot;label&quot;:&quot;FB04 - Bolletta elettronica&quot;,&quot;value&quot;:&quot;FB04 - Bolletta elettronica&quot;}],&quot;Calcolo consumo&quot;:[{&quot;label&quot;:&quot;FC01 - Stima consumo&quot;,&quot;value&quot;:&quot;FC01 - Stima consumo&quot;},{&quot;label&quot;:&quot;FC02 - Conguaglio&quot;,&quot;value&quot;:&quot;FC02 - Conguaglio&quot;},{&quot;label&quot;:&quot;FC03 - Ricostruzione consumi da contatore&quot;,&quot;value&quot;:&quot;FC03 - Ricostruzione consumi da contatore&quot;},{&quot;label&quot;:&quot;FC04 - Applicazione procapite&quot;,&quot;value&quot;:&quot;FC04 - Applicazione procapite&quot;},{&quot;label&quot;:&quot;FC05 - Bonus sociale&quot;,&quot;value&quot;:&quot;FC05 - Bonus sociale&quot;},{&quot;label&quot;:&quot;FC06 - Incassi misti da divisionali&quot;,&quot;value&quot;:&quot;FC06 - Incassi misti da divisionali&quot;}],&quot;Componente economica tariffa&quot;:[{&quot;label&quot;:&quot;CT01 - Tariffa al metro cubo&quot;,&quot;value&quot;:&quot;CT01 - Tariffa al metro cubo&quot;},{&quot;label&quot;:&quot;CT02 - Deposito cauzionale&quot;,&quot;value&quot;:&quot;CT02 - Deposito cauzionale&quot;},{&quot;label&quot;:&quot;CT03 - Errata attribuzione tariffa/tipologia utenza&quot;,&quot;value&quot;:&quot;CT03 - Errata attribuzione tariffa/tipologia utenza&quot;}],&quot;Comportamento operatore&quot;:[{&quot;label&quot;:&quot;LO01 - Comportamento tecnico&quot;,&quot;value&quot;:&quot;LO01 - Comportamento tecnico&quot;,&quot;AncestorValueGroup&quot;:[&quot;Lavori e prestazioni accessorie su cliente&quot;]},{&quot;label&quot;:&quot;MO01 - Comportamento letturista&quot;,&quot;value&quot;:&quot;MO01 - Comportamento letturista&quot;,&quot;AncestorValueGroup&quot;:[&quot;Misura&quot;]}],&quot;Contatore&quot;:[{&quot;label&quot;:&quot;MC01 - Contatore malfunzionante&quot;,&quot;value&quot;:&quot;MC01 - Contatore malfunzionante&quot;}],&quot;Costo del lavoro/prestazione&quot;:[{&quot;label&quot;:&quot;LC01 - Costo lavori allacciamento&quot;,&quot;value&quot;:&quot;LC01 - Costo lavori allacciamento&quot;},{&quot;label&quot;:&quot;LC02 - Costo prestazioni attività contatore&quot;,&quot;value&quot;:&quot;LC02 - Costo prestazioni attività contatore&quot;}],&quot;Difficoltà contatto&quot;:[{&quot;label&quot;:&quot;SD01 - Difficoltà contatto&quot;,&quot;value&quot;:&quot;SD01 - Difficoltà contatto&quot;}],&quot;Emissioni&quot;:[{&quot;label&quot;:&quot;IE01 - Cattivi odori da fognatura/depuratore&quot;,&quot;value&quot;:&quot;IE01 - Cattivi odori da fognatura/depuratore&quot;}],&quot;Fondo fughe&quot;:[{&quot;label&quot;:&quot;CF01 - Errato inserimento nel contratto&quot;,&quot;value&quot;:&quot;CF01 - Errato inserimento nel contratto&quot;,&quot;AncestorValueGroup&quot;:[&quot;Contratti&quot;]},{&quot;label&quot;:&quot;FF01 - Richiesta revisione conteggi/diniego rimborso&quot;,&quot;value&quot;:&quot;FF01 - Richiesta revisione conteggi/diniego rimborso&quot;,&quot;AncestorValueGroup&quot;:[&quot;Fatturazione&quot;]}],&quot;Fornitura servizio&quot;:[{&quot;label&quot;:&quot;QS01 - Problemi erogazione servizio&quot;,&quot;value&quot;:&quot;QS01 - Problemi erogazione servizio&quot;},{&quot;label&quot;:&quot;QS03 - Problemi pressione&quot;,&quot;value&quot;:&quot;QS03 - Problemi pressione&quot;},{&quot;label&quot;:&quot;QS04 - Fognatura - allagamenti/infiltrazioni&quot;,&quot;value&quot;:&quot;QS04 - Fognatura - allagamenti/infiltrazioni&quot;},{&quot;label&quot;:&quot;QS05 - Fognatura - avvallamenti/botole&quot;,&quot;value&quot;:&quot;QS05 - Fognatura - avvallamenti/botole&quot;},{&quot;label&quot;:&quot;QS06 - Fognatura - caditoie otturate/ristagni&quot;,&quot;value&quot;:&quot;QS06 - Fognatura - caditoie otturate/ristagni&quot;}],&quot;Letture&quot;:[{&quot;label&quot;:&quot;ML01 - Modalità letture periodiche&quot;,&quot;value&quot;:&quot;ML01 - Modalità letture periodiche&quot;},{&quot;label&quot;:&quot;ML02 - Autolettura&quot;,&quot;value&quot;:&quot;ML02 - Autolettura&quot;},{&quot;label&quot;:&quot;ML03 - Autolettura errata (voltura)&quot;,&quot;value&quot;:&quot;ML03 - Autolettura errata (voltura)&quot;}],&quot;Modalità di pagamento/rimborso&quot;:[{&quot;label&quot;:&quot;FP01 - Modalità di pagamento/rimborso&quot;,&quot;value&quot;:&quot;FP01 - Modalità di pagamento/rimborso&quot;},{&quot;label&quot;:&quot;FP02 - Domiciliazione bancaria&quot;,&quot;value&quot;:&quot;FP02 - Domiciliazione bancaria&quot;},{&quot;label&quot;:&quot;FP03 - Rateizzazione&quot;,&quot;value&quot;:&quot;FP03 - Rateizzazione&quot;}],&quot;Morosità&quot;:[{&quot;label&quot;:&quot;MM01 - Sospensione per morosità/sezionamento&quot;,&quot;value&quot;:&quot;MM01 - Sospensione per morosità/sezionamento&quot;},{&quot;label&quot;:&quot;MM02 - Riattivazione&quot;,&quot;value&quot;:&quot;MM02 - Riattivazione&quot;}],&quot;Prelievi irregolari&quot;:[{&quot;label&quot;:&quot;CP01 - Prelievi irregolari&quot;,&quot;value&quot;:&quot;CP01 - Prelievi irregolari&quot;}],&quot;Pronto Intervento&quot;:[{&quot;label&quot;:&quot;QP01 - Ritardi&quot;,&quot;value&quot;:&quot;QP01 - Ritardi&quot;}],&quot;Qualità acqua potabile&quot;:[{&quot;label&quot;:&quot;QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore&quot;,&quot;value&quot;:&quot;QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore&quot;}],&quot;Qualità dell&apos;intervento&quot;:[{&quot;label&quot;:&quot;LA01 - Acquedotto - modalità e prestazioni allacciamenti&quot;,&quot;value&quot;:&quot;LA01 - Acquedotto - modalità e prestazioni allacciamenti&quot;},{&quot;label&quot;:&quot;LA02 - Acquedotto - modalità e prestazioni contatori&quot;,&quot;value&quot;:&quot;LA02 - Acquedotto - modalità e prestazioni contatori&quot;},{&quot;label&quot;:&quot;LD03 - Fognatura - modalità e prestazioni allacciamenti&quot;,&quot;value&quot;:&quot;LD03 - Fognatura - modalità e prestazioni allacciamenti&quot;}],&quot;Rifiuti&quot;:[{&quot;label&quot;:&quot;IR01 - Rifiuti gestiti male in cantieri/impianti&quot;,&quot;value&quot;:&quot;IR01 - Rifiuti gestiti male in cantieri/impianti&quot;}],&quot;Risposta a reclamo&quot;:[{&quot;label&quot;:&quot;SR01 - Risposta a reclamo&quot;,&quot;value&quot;:&quot;SR01 - Risposta a reclamo&quot;}],&quot;Rumore&quot;:[{&quot;label&quot;:&quot;IU01 - Eccessivi rumori da cantiere/impianti&quot;,&quot;value&quot;:&quot;IU01 - Eccessivi rumori da cantiere/impianti&quot;}],&quot;Scarichi&quot;:[{&quot;label&quot;:&quot;IS01 - Scarichi da depuratore visibilmente alterati&quot;,&quot;value&quot;:&quot;IS01 - Scarichi da depuratore visibilmente alterati&quot;}],&quot;Servizio fognatura e depurazione&quot;:[{&quot;label&quot;:&quot;CD01 - Esenzione per mancanza servizio&quot;,&quot;value&quot;:&quot;CD01 - Esenzione per mancanza servizio&quot;},{&quot;label&quot;:&quot;CD02 - Contestazione addebito/accredito retroattivo&quot;,&quot;value&quot;:&quot;CD02 - Contestazione addebito/accredito retroattivo&quot;},{&quot;label&quot;:&quot;CD03 - Rifiuto di allaccio fognatura&quot;,&quot;value&quot;:&quot;CD03 - Rifiuto di allaccio fognatura&quot;},{&quot;label&quot;:&quot;CD04 - Scarichi produttivi-attribuzione tariffa&quot;,&quot;value&quot;:&quot;CD04 - Scarichi produttivi-attribuzione tariffa&quot;}],&quot;Solleciti&quot;:[{&quot;label&quot;:&quot;MS01 - Sollecito non dovuto&quot;,&quot;value&quot;:&quot;MS01 - Sollecito non dovuto&quot;}],&quot;Sportello&quot;:[{&quot;label&quot;:&quot;SS01 - Sportello Tempi di attesa&quot;,&quot;value&quot;:&quot;SS01 - Sportello Tempi di attesa&quot;},{&quot;label&quot;:&quot;SS02 - Sportello Comportamento operatore&quot;,&quot;value&quot;:&quot;SS02 - Sportello Comportamento operatore&quot;},{&quot;label&quot;:&quot;SS03 - Sportello Risposta&quot;,&quot;value&quot;:&quot;SS03 - Sportello Risposta&quot;}],&quot;Traffico&quot;:[{&quot;label&quot;:&quot;IT01 - Cantieri prolungati in zona trafficata&quot;,&quot;value&quot;:&quot;IT01 - Cantieri prolungati in zona trafficata&quot;}],&quot;Vibrazioni&quot;:[{&quot;label&quot;:&quot;IB01 - Eccessive vibrazioni da cantiere&quot;,&quot;value&quot;:&quot;IB01 - Eccessive vibrazioni da cantiere&quot;}],&quot;Visivo&quot;:[{&quot;label&quot;:&quot;IV01 - Cantieri non completati o in stato di abbandono&quot;,&quot;value&quot;:&quot;IV01 - Cantieri non completati o in stato di abbandono&quot;}],&quot;Voltura&quot;:[{&quot;label&quot;:&quot;CV01 - Voltura non richiesta&quot;,&quot;value&quot;:&quot;CV01 - Voltura non richiesta&quot;},{&quot;label&quot;:&quot;CV02 - Voltura su contratto errato&quot;,&quot;value&quot;:&quot;CV02 - Voltura su contratto errato&quot;}],&quot;Web&quot;:[{&quot;label&quot;:&quot;SW01 - ServiziOnLine&quot;,&quot;value&quot;:&quot;SW01 - ServiziOnLine&quot;}]}</value>
+        <value xsi:type="xsd:string">{
+	&quot;ValueCollisionGroup&quot;: [
+		&quot;Fondo fughe&quot;,
+		&quot;Comportamento operatore&quot;
+	],
+	&quot;Componente economica tariffa&quot;: [
+		{
+			&quot;label&quot;: &quot;CT01 - Tariffa al metro cubo&quot;,
+			&quot;value&quot;: &quot;CT01 - Tariffa al metro cubo&quot;
+		},
+		{
+			&quot;label&quot;: &quot;CT02 - Deposito cauzionale&quot;,
+			&quot;value&quot;: &quot;CT02 - Deposito cauzionale&quot;
+		},
+		{
+			&quot;label&quot;: &quot;CT03 - Errata attribuzione tariffa/tipologia utenza&quot;,
+			&quot;value&quot;: &quot;CT03 - Errata attribuzione tariffa/tipologia utenza&quot;
+		}
+	],
+	&quot;Fondo fughe&quot;: [
+		{
+			&quot;label&quot;: &quot;CF01 - Errato inserimento nel contratto&quot;,
+			&quot;value&quot;: &quot;CF01 - Errato inserimento nel contratto&quot;,
+			&quot;AncestorValueGroup&quot;: {
+				&quot;SimpleCollision&quot;: false,
+				&quot;SimpleCollisionArray&quot;: [
+					&quot;Contratti&quot;
+				],
+				&quot;UpstreamCollisionArray&quot;: [
+					&quot;Reclamo Scritto&quot;,
+					&quot;Richiesta di informazioni&quot;,
+					&quot;Richiesta di Rettifica di fatturazione&quot;
+				]
+			}
+		},
+		{
+			&quot;label&quot;: &quot;FF01 - Richiesta revisione conteggi/diniego rimborso&quot;,
+			&quot;value&quot;: &quot;FF01 - Richiesta revisione conteggi/diniego rimborso&quot;,
+			&quot;AncestorValueGroup&quot;: {
+				&quot;SimpleCollision&quot;: false,
+				&quot;SimpleCollisionArray&quot;: [
+					&quot;Fatturazione&quot;
+				],
+				&quot;UpstreamCollisionArray&quot;: [
+					&quot;Reclamo Scritto&quot;,
+					&quot;Richiesta di informazioni&quot;,
+					&quot;Richiesta di Rettifica di fatturazione&quot;
+				]
+			}
+		}
+	],
+	&quot;Prelievi irregolari&quot;: [
+		{
+			&quot;label&quot;: &quot;CP01 - Prelievi irregolari&quot;,
+			&quot;value&quot;: &quot;CP01 - Prelievi irregolari&quot;
+		}
+	],
+	&quot;Servizio fognatura e depurazione&quot;: [
+		{
+			&quot;label&quot;: &quot;CD01 - Esenzione per mancanza servizio&quot;,
+			&quot;value&quot;: &quot;CD01 - Esenzione per mancanza servizio&quot;
+		},
+		{
+			&quot;label&quot;: &quot;CD02 - Contestazione addebito/accredito retroattivo&quot;,
+			&quot;value&quot;: &quot;CD02 - Contestazione addebito/accredito retroattivo&quot;
+		},
+		{
+			&quot;label&quot;: &quot;CD03 - Rifiuto di allaccio fognatura&quot;,
+			&quot;value&quot;: &quot;CD03 - Rifiuto di allaccio fognatura&quot;
+		},
+		{
+			&quot;label&quot;: &quot;CD04 - Scarichi produttivi-attribuzione tariffa&quot;,
+			&quot;value&quot;: &quot;CD04 - Scarichi produttivi-attribuzione tariffa&quot;
+		}
+	],
+	&quot;Voltura&quot;: [
+		{
+			&quot;label&quot;: &quot;CV01 -  Voltura non richiesta&quot;,
+			&quot;value&quot;: &quot;CV01 -  Voltura non richiesta&quot;
+		},
+		{
+			&quot;label&quot;: &quot;CV02 -  Voltura su contratto errato&quot;,
+			&quot;value&quot;: &quot;CV02 -  Voltura su contratto errato&quot;
+		}
+	],
+	&quot;Addebito contatore rotto dal gelo&quot;: [
+		{
+			&quot;label&quot;: &quot;FG01 - Addebito contatore rotto dal gelo&quot;,
+			&quot;value&quot;: &quot;FG01 - Addebito contatore rotto dal gelo&quot;
+		}
+	],
+	&quot;Bolletta&quot;: [
+		{
+			&quot;label&quot;: &quot;FB01 - Chiarezza bolletta&quot;,
+			&quot;value&quot;: &quot;FB01 - Chiarezza bolletta&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FB02 - Recapito bolletta&quot;,
+			&quot;value&quot;: &quot;FB02 - Recapito bolletta&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FB03 - Periodicità bolletta&quot;,
+			&quot;value&quot;: &quot;FB03 - Periodicità bolletta&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FB04 - Bolletta elettronica&quot;,
+			&quot;value&quot;: &quot;FB04 - Bolletta elettronica&quot;
+		}
+	],
+	&quot;Calcolo consumo&quot;: [
+		{
+			&quot;label&quot;: &quot;FC01 - Stima consumo&quot;,
+			&quot;value&quot;: &quot;FC01 - Stima consumo&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FC02 - Conguaglio&quot;,
+			&quot;value&quot;: &quot;FC02 - Conguaglio&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FC03 - Ricostruzione consumi da contatore&quot;,
+			&quot;value&quot;: &quot;FC03 - Ricostruzione consumi da contatore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FC04 - Applicazione procapite&quot;,
+			&quot;value&quot;: &quot;FC04 - Applicazione procapite&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FC05 - Bonus sociale&quot;,
+			&quot;value&quot;: &quot;FC05 - Bonus sociale&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FC06 - Incassi misti da divisionali&quot;,
+			&quot;value&quot;: &quot;FC06 - Incassi misti da divisionali&quot;
+		}
+	],
+	&quot;Modalità di pagamento/rimborso&quot;: [
+		{
+			&quot;label&quot;: &quot;FP01 - Modalità di pagamento/rimborso&quot;,
+			&quot;value&quot;: &quot;FP01 - Modalità di pagamento/rimborso&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FP02 - Domiciliazione bancaria&quot;,
+			&quot;value&quot;: &quot;FP02 - Domiciliazione bancaria&quot;
+		},
+		{
+			&quot;label&quot;: &quot;FP03 - Rateizzazione&quot;,
+			&quot;value&quot;: &quot;FP03 - Rateizzazione&quot;
+		}
+	],
+	&quot;Emissioni&quot;: [
+		{
+			&quot;label&quot;: &quot;IE01 - Cattivi odori da fognatura/depuratore&quot;,
+			&quot;value&quot;: &quot;IE01 - Cattivi odori da fognatura/depuratore&quot;
+		}
+	],
+	&quot;Rifiuti&quot;: [
+		{
+			&quot;label&quot;: &quot;IR01 - Rifiuti gestiti male in cantieri/impianti&quot;,
+			&quot;value&quot;: &quot;IR01 - Rifiuti gestiti male in cantieri/impianti&quot;
+		}
+	],
+	&quot;Rumore&quot;: [
+		{
+			&quot;label&quot;: &quot;IU01 - Eccessivi rumori da cantiere/impianti&quot;,
+			&quot;value&quot;: &quot;IU01 - Eccessivi rumori da cantiere/impianti&quot;
+		}
+	],
+	&quot;Scarichi&quot;: [
+		{
+			&quot;label&quot;: &quot;IS01 - Scarichi da depuratore visibilmente alterati&quot;,
+			&quot;value&quot;: &quot;IS01 - Scarichi da depuratore visibilmente alterati&quot;
+		}
+	],
+	&quot;Traffico&quot;: [
+		{
+			&quot;label&quot;: &quot;IT01 - Cantieri prolungati in zona trafficata&quot;,
+			&quot;value&quot;: &quot;IT01 - Cantieri prolungati in zona trafficata&quot;
+		}
+	],
+	&quot;Vibrazioni&quot;: [
+		{
+			&quot;label&quot;: &quot;IB01 - Eccessive vibrazioni da cantiere&quot;,
+			&quot;value&quot;: &quot;IB01 - Eccessive vibrazioni da cantiere&quot;
+		}
+	],
+	&quot;Visivo&quot;: [
+		{
+			&quot;label&quot;: &quot;IV01 - Cantieri non completati o in stato di abbandono&quot;,
+			&quot;value&quot;: &quot;IV01 - Cantieri non completati o in stato di abbandono&quot;
+		}
+	],
+	&quot;Comportamento operatore&quot;: [
+		{
+			&quot;label&quot;: &quot;LO01 - Comportamento tecnico&quot;,
+			&quot;value&quot;: &quot;LO01 - Comportamento tecnico&quot;,
+			&quot;AncestorValueGroup&quot;: {
+				&quot;SimpleCollision&quot;: false,
+				&quot;SimpleCollisionArray&quot;: [
+					&quot;Lavori e prestazioni accessorie su cliente&quot;
+				],
+				&quot;UpstreamCollisionArray&quot;: [
+					&quot;Reclamo Scritto&quot;,
+					&quot;Richiesta di informazioni&quot;,
+					&quot;Richiesta di Rettifica di fatturazione&quot;
+				]
+			}
+		},
+		{
+			&quot;label&quot;: &quot;MO01 - Comportamento letturista&quot;,
+			&quot;value&quot;: &quot;MO01 - Comportamento letturista&quot;,
+			&quot;AncestorValueGroup&quot;: {
+				&quot;SimpleCollision&quot;: false,
+				&quot;SimpleCollisionArray&quot;: [
+					&quot;Misura&quot;
+				],
+				&quot;UpstreamCollisionArray&quot;: [
+					&quot;Reclamo Scritto&quot;,
+					&quot;Richiesta di informazioni&quot;,
+					&quot;Richiesta di Rettifica di fatturazione&quot;
+				]
+			}
+		}
+	],
+	&quot;Costo del lavoro/prestazione&quot;: [
+		{
+			&quot;label&quot;: &quot;LC01 - Costo lavori allacciamento&quot;,
+			&quot;value&quot;: &quot;LC01 - Costo lavori allacciamento&quot;
+		},
+		{
+			&quot;label&quot;: &quot;LC02 - Costo prestazioni attività contatore&quot;,
+			&quot;value&quot;: &quot;LC02 - Costo prestazioni attività contatore&quot;
+		}
+	],
+	&quot;Qualità dell&apos;intervento&quot;: [
+		{
+			&quot;label&quot;: &quot;LA01 - Acquedotto - modalità e prestazioni allacciamenti&quot;,
+			&quot;value&quot;: &quot;LA01 - Acquedotto - modalità e prestazioni allacciamenti&quot;
+		},
+		{
+			&quot;label&quot;: &quot;LA02 - Acquedotto - modalità e prestazioni contatori&quot;,
+			&quot;value&quot;: &quot;LA02 - Acquedotto - modalità e prestazioni contatori&quot;
+		},
+		{
+			&quot;label&quot;: &quot;LD03 - Fognatura - modalità e prestazioni allacciamenti&quot;,
+			&quot;value&quot;: &quot;LD03 - Fognatura - modalità e prestazioni allacciamenti&quot;
+		}
+	],
+	&quot;Contatore&quot;: [
+		{
+			&quot;label&quot;: &quot;MC01 - Contatore malfunzionante&quot;,
+			&quot;value&quot;: &quot;MC01 - Contatore malfunzionante&quot;
+		}
+	],
+	&quot;Letture&quot;: [
+		{
+			&quot;label&quot;: &quot;ML01 - Modalità letture periodiche&quot;,
+			&quot;value&quot;: &quot;ML01 - Modalità letture periodiche&quot;
+		},
+		{
+			&quot;label&quot;: &quot;ML02 - Autolettura&quot;,
+			&quot;value&quot;: &quot;ML02 - Autolettura&quot;
+		},
+		{
+			&quot;label&quot;: &quot;ML03 - Autolettura errata (voltura)&quot;,
+			&quot;value&quot;: &quot;ML03 - Autolettura errata (voltura)&quot;
+		}
+	],
+	&quot;Morosità&quot;: [
+		{
+			&quot;label&quot;: &quot;MM01 - Sospensione per morosità/sezionamento&quot;,
+			&quot;value&quot;: &quot;MM01 - Sospensione per morosità/sezionamento&quot;
+		},
+		{
+			&quot;label&quot;: &quot;MM02 - Riattivazione&quot;,
+			&quot;value&quot;: &quot;MM02 - Riattivazione&quot;
+		}
+	],
+	&quot;Solleciti&quot;: [
+		{
+			&quot;label&quot;: &quot;MS01 - Sollecito non dovuto&quot;,
+			&quot;value&quot;: &quot;MS01 - Sollecito non dovuto&quot;
+		}
+	],
+	&quot;Fornitura servizio&quot;: [
+		{
+			&quot;label&quot;: &quot;QS01 - Problemi erogazione servizio&quot;,
+			&quot;value&quot;: &quot;QS01 - Problemi erogazione servizio&quot;
+		},
+		{
+			&quot;label&quot;: &quot;QS03 - Problemi pressione&quot;,
+			&quot;value&quot;: &quot;QS03 - Problemi pressione&quot;
+		},
+		{
+			&quot;label&quot;: &quot;QS04 - Fognatura - allagamenti/infiltrazioni&quot;,
+			&quot;value&quot;: &quot;QS04 - Fognatura - allagamenti/infiltrazioni&quot;
+		},
+		{
+			&quot;label&quot;: &quot;QS05 - Fognatura - avvallamenti/botole&quot;,
+			&quot;value&quot;: &quot;QS05 - Fognatura - avvallamenti/botole&quot;
+		},
+		{
+			&quot;label&quot;: &quot;QS06 - Fognatura - caditoie otturate/ristagni&quot;,
+			&quot;value&quot;: &quot;QS06 - Fognatura - caditoie otturate/ristagni&quot;
+		}
+	],
+	&quot;Pronto Intervento&quot;: [
+		{
+			&quot;label&quot;: &quot;QP01 - Ritardi&quot;,
+			&quot;value&quot;: &quot;QP01 - Ritardi&quot;
+		}
+	],
+	&quot;Qualità acqua potabile&quot;: [
+		{
+			&quot;label&quot;: &quot;QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore&quot;,
+			&quot;value&quot;: &quot;QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore&quot;
+		}
+	],
+	&quot;Call Center&quot;: [
+		{
+			&quot;label&quot;: &quot;SC01 - Call Center Tempi di attesa&quot;,
+			&quot;value&quot;: &quot;SC01 - Call Center Tempi di attesa&quot;
+		},
+		{
+			&quot;label&quot;: &quot;SC02 - Call Center Comportamento operatore&quot;,
+			&quot;value&quot;: &quot;SC02 - Call Center Comportamento operatore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;SC03 - Call Center Risposta&quot;,
+			&quot;value&quot;: &quot;SC03 - Call Center Risposta&quot;
+		}
+	],
+	&quot;Difficoltà contatto&quot;: [
+		{
+			&quot;label&quot;: &quot;SD01 - Difficoltà contatto&quot;,
+			&quot;value&quot;: &quot;SD01 - Difficoltà contatto&quot;
+		}
+	],
+	&quot;Risposta a reclamo&quot;: [
+		{
+			&quot;label&quot;: &quot;SR01 - Risposta a reclamo&quot;,
+			&quot;value&quot;: &quot;SR01 - Risposta a reclamo&quot;
+		}
+	],
+	&quot;Sportello&quot;: [
+		{
+			&quot;label&quot;: &quot;SS01 - Sportello Tempi di attesa&quot;,
+			&quot;value&quot;: &quot;SS01 - Sportello Tempi di attesa&quot;
+		},
+		{
+			&quot;label&quot;: &quot;SS02 - Sportello Comportamento operatore&quot;,
+			&quot;value&quot;: &quot;SS02 - Sportello Comportamento operatore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;SS03 - Sportello Risposta&quot;,
+			&quot;value&quot;: &quot;SS03 - Sportello Risposta&quot;
+		}
+	],
+	&quot;Web&quot;: [
+		{
+			&quot;label&quot;: &quot;SW01 - ServiziOnLine&quot;,
+			&quot;value&quot;: &quot;SW01 - ServiziOnLine&quot;
+		}
+	]
+}</value>
     </values>
     <values>
         <field>ObjectDeveloperName__c</field>
