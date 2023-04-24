@@ -7,6 +7,14 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
 
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                caseNew.SendDate__c = date.today();
+            }
+        }
+
+
     }
 
  	//public override void beforeDelete(){}
@@ -99,16 +107,6 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     public override void afterInsert(){
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
-
-        for(Case caseNew : (List<Case>) Trigger.new){
-            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
-                Case caseToUpdate = new Case(Id = caseNew.Id);
-                DateTime dt = caseNew.CreatedDate;
-                caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
-
-                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
-            }
-        }
     }
 
     /**
