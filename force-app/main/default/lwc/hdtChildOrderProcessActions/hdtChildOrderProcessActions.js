@@ -16,17 +16,20 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     @api lastStepData;
     loading = false;
     isDialogVisible = false;
+    blockDoubleClick = false;
 
     //Modifiche Gestione Scarti Complessi
     @api discardRework;
     @api activityIdToClose;
     
     handleResubmission(event){
+        this.blockDoubleClick = true;
         console.log('@@@Entro in risottomissione ' +this.activityIdToClose);
         console.log('@@@Entro in risottomissione ' +this.order.Id);
         let orderToSave = this.order;
         if (this.lastStepData != null) {
             if (!this.validateLastStepFields(this.lastStepData)) {
+                this.blockDoubleClick = false;
                 return;
             }
         }
@@ -43,6 +46,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                _message = response;
                _title = 'Error';
                _variant = 'error'; 
+               this.blockDoubleClick = false;
             }else{
                 this.loading = false;
 
@@ -65,6 +69,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
                 message: error.body.message,
                 variant: 'error'
             });
+            this.blockDoubleClick = false;
             this.dispatchEvent(toastSuccessMessage);
         });
     }
