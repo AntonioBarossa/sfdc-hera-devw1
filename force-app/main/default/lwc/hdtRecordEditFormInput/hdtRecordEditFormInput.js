@@ -23,7 +23,6 @@ export default class HdtRecordEditFormInput extends LightningElement {
     firstLevelValue;
 
     connectedCallback(){
-        debugger;
         this.controllingField = this.field?.ControllingField ? this.field.ControllingField : '';
         if(!this.controllingField &&this.customPicklistOptions.length<JSON.parse(JSON.stringify(this.field.PicklistOptions)).length) this.customPicklistOptions=this.customPicklistOptions.concat(JSON.parse(JSON.stringify(this.field.PicklistOptions)));
         let paramsObj={
