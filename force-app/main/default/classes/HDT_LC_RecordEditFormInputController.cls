@@ -12,10 +12,15 @@ public with sharing class HDT_LC_RecordEditFormInputController {
         String controllingField= params.containsKey('controllingField') ? String.valueOf(params.get('controllingField')):'';
         String process=params.containsKey('process') ? String.valueOf(params.get('process')):'';
         String objectName= String.valueOf(objectId.getSobjectType());
+        Boolean retrieveControllingValue = params.containsKey('retrieveControllingValue') ? Boolean.valueOf(params.get('retrieveControllingValue')) : false;
         if(fieldName.toLowerCase() == 'FourthLevelComplaintClassification__c'.toLowerCase()){
             tempFieldName+=' ,FirstLevelComplaintClassification__c';
             params.put('firstLevelValue','');
         }
+        if(retrieveControllingValue && String.isNotBlank(controllingField)){
+            tempFieldName+=' ,'+controllingField;
+        }
+        System.debug('temp field name value: '+tempFieldName);
         List<SObject> objectList=HDT_QR_RecordEditFormFlowController.getRecordFromIdQueryString(tempFieldName, objectName, objectId);
         if(String.isBlank(controllingField)){
             if(objectList.size()==0){
@@ -39,6 +44,10 @@ public with sharing class HDT_LC_RecordEditFormInputController {
         }
         if(params.containsKey('firstLevelValue')){
             params.put('firstLevelValue',objectList[0].get('FirstLevelComplaintClassification__c'));
+        }
+        if(retrieveControllingValue && String.isNotBlank(controllingField)){
+            params.put('controllingFieldValue',objectList[0].get(controllingField));
+            params.put('fieldValue',objectList[0].get(fieldName));
         }
         return params;
     }
