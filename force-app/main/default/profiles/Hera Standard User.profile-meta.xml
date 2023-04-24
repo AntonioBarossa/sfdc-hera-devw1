@@ -10620,7 +10620,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DiscardAnnullmentRule__c.DiscardReason__c</field>
+        <field>DiscardAnnullmentRule__c.DiscardReasonList__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

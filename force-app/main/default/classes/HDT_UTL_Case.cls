@@ -324,7 +324,8 @@ public inherited sharing class HDT_UTL_Case {
     }
 
     public static Date addBusinessDay(Date startDate, Integer businessDayToAdd){
-
+        //OLD Method
+        /*
         Date finalDate = startDate;
 
         Integer direction = businessDayToAdd < 0 ? -1 : 1;
@@ -339,9 +340,9 @@ public inherited sharing class HDT_UTL_Case {
             
             }
 
-        }
-
-        return finalDate;
+        }*/
+        HDT_UTL_Reclami utl = new HDT_UTL_Reclami();
+        return utl.addBusinsessDaysWithHolidays(businessDayToAdd,startDate);
 
     }
 
