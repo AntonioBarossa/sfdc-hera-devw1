@@ -21,7 +21,6 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     @track isValidazioneDocumentale=false;
     @track error;
 
-    showButton = false;
     disableButton = false;
 
     get approveLabel(){
@@ -36,7 +35,6 @@ export default class hdtDocumentActivityValidation extends LightningElement {
     wiredAccount({ error, data }) {
         if (data) {
             this.ActType = data.fields.Type__c.value;
-            this.showButton = true; 
         }
     }
 
