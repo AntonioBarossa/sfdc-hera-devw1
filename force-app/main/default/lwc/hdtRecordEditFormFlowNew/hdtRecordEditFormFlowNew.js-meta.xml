@@ -34,6 +34,8 @@
             <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
             <property name="documentRecordId" type="String" label="Document Record Id" description="Id of the record to upload documents" role="inputOnly"/>
             <property name="sessionid" type="String" label="sessionid" description="sessionid Id" role="inputOnly"/>
+            <property name="retrieveControllingFieldValues" type="Boolean" label="Retrieve controlling field" description="Allow the retrieve of controlling field values (Custom picklist handling implementation)" role="inputOnly" default="false"/>
+
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>
