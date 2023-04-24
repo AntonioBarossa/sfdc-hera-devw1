@@ -228,6 +228,20 @@
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito OK da DL</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>phase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Esito OK da SII</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>StopDelete</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
