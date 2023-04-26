@@ -8,34 +8,7 @@
     </values>
     <values>
         <field>FieldsJSON__c</field>
-        <value xsi:type="xsd:string">[
-    {
-        &quot;FieldName&quot;: &quot;ComplaintType__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1
-    },
-    {
-        &quot;FieldName&quot;: &quot;FirstLevelComplaintClassification__c&quot;,
-        &quot;Required&quot;: false,
-        &quot;Column&quot;: 1,
-        &quot;CustomPicklistHandling&quot;: true,
-        &quot;Label&quot;: &quot;1° Livello&quot;,
-        &quot;PicklistOptions&quot;: [
-            {
-                &quot;label&quot;: &quot;Reclamo Scritto&quot;,
-                &quot;value&quot;: &quot;Reclamo Scritto&quot;
-            },
-            {
-                &quot;label&quot;: &quot;Richiesta di informazioni&quot;,
-                &quot;value&quot;: &quot;Richiesta di informazioni&quot;
-            },
-            {
-                &quot;label&quot;: &quot;Richiesta di Rettifica di fatturazione&quot;,
-                &quot;value&quot;: &quot;Richiesta di Rettifica di fatturazione&quot;
-            }
-        ]
-    }
-]</value>
+        <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;ComplaintType__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1,&quot;CustomPicklistHandling&quot;:true,&quot;Label&quot;:&quot;Tipologia Reclamo&quot;,&quot;PicklistOptions&quot;:[{&quot;label&quot;:&quot;Reclamo Scritto&quot;,&quot;value&quot;:&quot;Reclamo Scritto&quot;},{&quot;label&quot;:&quot;Richiesta Info&quot;,&quot;value&quot;:&quot;Richiesta Info&quot;}]},{&quot;FieldName&quot;:&quot;FirstLevelComplaintClassification__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1,&quot;CustomPicklistHandling&quot;:true,&quot;Label&quot;:&quot;1° Livello&quot;,&quot;ControllingField&quot;:&quot;ComplaintType__c&quot;}]</value>
     </values>
     <values>
         <field>ProcessType__c</field>
