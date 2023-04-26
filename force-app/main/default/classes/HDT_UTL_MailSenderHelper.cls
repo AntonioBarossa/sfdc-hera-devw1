@@ -346,7 +346,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
                 if(mailStructure.attachmentsIdList.size() > 0){
                     List<String> contentVersionIdList = new List<String>();
-                    List<ContentVersion> cvList = [SELECT Id FROM ContentVersion WHERE ContentDocumentId IN :mailStructure.attachmentsIdList];
+                    List<ContentVersion> cvList = [SELECT Id FROM ContentVersion WHERE ContentDocumentId IN :mailStructure.attachmentsIdList WITH SECURITY_ENFORCED];
                     if(cvList.size() > 0){
                         for (ContentVersion cv : cvList) {
                             contentVersionIdList.add(cv.Id);
@@ -408,8 +408,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     public static void updateAttachmentsParent(List<String> attachmentIdList, Id parentId, Id oldParent){
 
         try {
-            List<ContentDocument> contDocList = [SELECT Id, parentId FROM ContentDocument WHERE Id IN :attachmentIdList];
-            List<ContentDocumentLink> oldLinksList = [SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink WHERE ContentDocumentId IN :contDocList AND LinkedEntityId =: oldParent];
+            List<ContentDocument> contDocList = [SELECT Id, parentId FROM ContentDocument WHERE Id IN :attachmentIdList WITH SECURITY_ENFORCED];
+            List<ContentDocumentLink> oldLinksList = [SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink WHERE ContentDocumentId IN :contDocList AND LinkedEntityId =: oldParent WITH SECURITY_ENFORCED];
 
             //creazione nuovo contentDocumentLink che punta al case figlio di Comunicazione con il gestore
             List<ContentDocumentLink> newLinkList = new List<ContentDocumentLink>();
@@ -445,7 +445,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     //}
 
     public static void deletePendingFiles(List<Id> cdIdList) {
-        List<ContentDocument> cdList = [SELECT Id FROM ContentDocument WHERE Id IN :cdIdList];
+        List<ContentDocument> cdList = [SELECT Id FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];
         if(cdList.size() > 0){
             try {
                 HDT_UTL_DatabaseService.deleteSObject(cdList);
@@ -456,7 +456,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     }
 
     public static Decimal getContentSizeAttachments(List<Id> cdIdList) {
-        List<ContentDocument> cdList = [SELECT ContentSize FROM ContentDocument WHERE Id IN :cdIdList];
+        List<ContentDocument> cdList = [SELECT ContentSize FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];
         Decimal attachmentSizeMb = 0.0;
         Long attachmentSizeBytes = 0;
         if(cdList.size() > 0){
