@@ -10982,7 +10982,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Bonus sociale</fullName>
+            <fullName>Morosità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavori e prestazioni accessorie su cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Qualità e continuità servizio</fullName>
             <default>false</default>
         </values>
         <values>
