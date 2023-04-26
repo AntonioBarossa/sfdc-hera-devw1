@@ -13449,6 +13449,7 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+    </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>
         <values>
