@@ -736,6 +736,136 @@
         <label>POD errato sulla fornitura</label>
     </customValue>
     <customValue>
+        <fullName>Accesso area privata</fullName>
+        <default>false</default>
+        <label>Accesso area privata</label>
+    </customValue>
+    <customValue>
+        <fullName>Accise - applicazione non corretta</fullName>
+        <default>false</default>
+        <label>Accise - applicazione non corretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - non eseguita causa Distributore</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - non eseguita causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - non eseguita causa Venditore</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - non eseguita causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - tempistiche/modalità/costi</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - tempistiche/modalità/costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Bper</fullName>
+        <default>false</default>
+        <label>Bper</label>
+    </customValue>
+     <customValue>
+        <fullName>Bonus web</fullName>
+        <default>false</default>
+        <label>Bonus web</label>
+    </customValue>
+    <customValue>
+        <fullName>Buoni/voucher</fullName>
+        <default>false</default>
+        <label>Buoni/voucher</label>
+    </customValue>
+    <customValue>
+        <fullName>CV01 -  Voltura non richiesta</fullName>
+        <default>false</default>
+        <label>CV01 -  Voltura non richiesta</label>
+    </customValue>
+    <customValue>
+        <fullName>CV02 -  Voltura su contratto errato</fullName>
+        <default>false</default>
+        <label>CV02 -  Voltura su contratto errato</label>
+    </customValue>
+    <customValue>
+        <fullName>Diniego voltura</fullName>
+        <default>false</default>
+        <label>Diniego voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Diritti fissi</fullName>
+        <default>false</default>
+        <label>Diritti fissi</label>
+    </customValue>
+    <customValue>
+        <fullName>Falso procurato</fullName>
+        <default>false</default>
+        <label>Falso procurato</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione elevata/importi anomali del.17/16</fullName>
+        <default>false</default>
+        <label>Fatturazione elevata/importi anomali del.17/16</label>
+    </customValue>
+    <customValue>
+        <fullName>Importo del sollecito</fullName>
+        <default>false</default>
+        <label>Importo del sollecito</label>
+    </customValue>
+    <customValue>
+        <fullName>IVA - applicazione non corretta</fullName>
+        <default>false</default>
+        <label>IVA - applicazione non corretta</label>
+    </customValue>
+    <customValue>
+        <fullName></fullName>
+        <default>false</default>
+        <label></label>
+    </customValue>
+    <customValue>
+        <fullName>Non accolto</fullName>
+        <default>false</default>
+        <label>Non accolto</label>
+    </customValue>
+    <customValue>
+        <fullName>Promo linear</fullName>
+        <default>false</default>
+        <label>Promo linear</label>
+    </customValue>
+    <customValue>
+        <fullName>Rateizzazione - mancata risposta</fullName>
+        <default>false</default>
+        <label>Rateizzazione - mancata risposta</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Analisi Consumi/Fast Check Up</fullName>
+        <default>false</default>
+        <label>VAS - Analisi Consumi/Fast Check Up</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Assicurazione</fullName>
+        <default>false</default>
+        <label>VAS - Assicurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - ContaWatt</fullName>
+        <default>false</default>
+        <label>VAS - ContaWatt</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Lampadine Led</fullName>
+        <default>false</default>
+        <label>VAS - Lampadine Led</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Thermo</fullName>
+        <default>false</default>
+        <label>VAS - Thermo</label>
+    </customValue>
+    <customValue>
         <fullName>Portabilità dei dati</fullName>
         <default>false</default>
         <label>Portabilità dei dati</label>
