@@ -801,11 +801,6 @@
         <label>Diritti fissi</label>
     </customValue>
     <customValue>
-        <fullName>Falso procurato</fullName>
-        <default>false</default>
-        <label>Falso procurato</label>
-    </customValue>
-    <customValue>
         <fullName>Fatturazione elevata/importi anomali del.17/16</fullName>
         <default>false</default>
         <label>Fatturazione elevata/importi anomali del.17/16</label>
