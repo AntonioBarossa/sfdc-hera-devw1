@@ -115,28 +115,6 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     public override void afterInsert(){
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
-        
-        List<Case> caseToUpdateList = new List<Case>();
-        Boolean toUpdate = false;
-        for(Case caseNew : (List<Case>) Trigger.new){
-            Case caseToUpdate = new Case(Id = caseNew.Id);
-            if(caseNew.CustomerRequestDate__c == null){
-                caseToUpdate.CustomerRequestDate__c = Date.today();
-                toUpdate = true;
-            }
-            if(caseNew.WrittenReceiptRequestDate__c == null){
-                caseToUpdate.WrittenReceiptRequestDate__c = Date.today();
-                toUpdate = true;
-            }
-            
-            if(toUpdate){
-                caseToUpdateList.add(caseToUpdate);
-            }
-        }
-
-        if(caseToUpdateList.size() > 0){
-            HDT_UTL_DatabaseService.updateSObject(caseToUpdateList);
-        }
     }
 
     /**
