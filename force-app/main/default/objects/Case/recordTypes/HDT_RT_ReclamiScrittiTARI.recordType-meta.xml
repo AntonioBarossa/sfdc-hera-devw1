@@ -11010,6 +11010,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Qualità e continuità servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Connessioni%2C lavori e qualità tecnica</fullName>
             <default>false</default>
         </values>
@@ -11070,6 +11074,10 @@
         </values>
         <values>
             <fullName>Canone RAI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lavori e prestazioni accessorie su cliente</fullName>
             <default>false</default>
         </values>
         <values>
