@@ -402,7 +402,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         //Restituisco i file che sono stati caricati negli ultimi minuti, in modo da evitare che vengano presi documenti già presenti sul case padre.
         DateTime timeNow = System.now();
         DateTime subTimeNow = timeNow.addMinutes(-2);
-        return [SELECT Id, Title, FileType,CreatedDate, ContentSize FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList AND createdDate <:timeNow AND createdDate >:subTimeNow];
+        return [SELECT Id, Title, FileType,CreatedDate, ContentSize FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList AND createdDate <:timeNow AND createdDate >:subTimeNow WITH SECURITY_ENFORCED];
     }
 
     public static void updateAttachmentsParent(List<String> attachmentIdList, Id parentId, Id oldParent){
