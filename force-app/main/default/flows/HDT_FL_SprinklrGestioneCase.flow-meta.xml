@@ -2,8 +2,8 @@
 <Flow xmlns="http://soap.sforce.com/2006/04/metadata">
     <apiVersion>53.0</apiVersion>
     <decisions>
-        <name>open_activities_exist_decision</name>
-        <label>Esistono altre Attività Aperte?</label>
+        <name>Exists_Activites</name>
+        <label>Exists Activites?</label>
         <locationX>182</locationX>
         <locationY>455</locationY>
         <defaultConnectorLabel>Yes</defaultConnectorLabel>
@@ -11,20 +11,21 @@
             <name>open_activities_exist_decision_no</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>open_activities_get.Id</leftValueReference>
+                <leftValueReference>Get_Open_Activities.Id</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Chiudi_Case_Padre</targetReference>
+                <targetReference>Update_Case</targetReference>
             </connector>
             <label>No</label>
         </rules>
     </decisions>
-    <interviewLabel>Social Studio - Chiusura Automatica Case {!$Flow.CurrentDateTime}</interviewLabel>
-    <label>Social Studio - Chiusura Automatica Case</label>
+    <description>Gestione social case a valle di chiusura Activity</description>
+    <interviewLabel>Sprinklr - Gestione Case {!$Flow.CurrentDateTime}</interviewLabel>
+    <label>Sprinklr - Gestione Case</label>
     <processMetadataValues>
         <name>BuilderType</name>
         <value>
@@ -45,13 +46,13 @@
     </processMetadataValues>
     <processType>AutoLaunchedFlow</processType>
     <recordLookups>
-        <name>open_activities_get</name>
-        <label>Attività Aperte</label>
+        <name>Get_Open_Activities</name>
+        <label>Get Open Activities</label>
         <locationX>182</locationX>
         <locationY>335</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>open_activities_exist_decision</targetReference>
+            <targetReference>Exists_Activites</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -74,8 +75,8 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordUpdates>
-        <name>Chiudi_Case_Padre</name>
-        <label>Chiudi Case Padre</label>
+        <name>Update_Case</name>
+        <label>Update Case</label>
         <locationX>50</locationX>
         <locationY>575</locationY>
         <filterLogic>and</filterLogic>
@@ -87,9 +88,21 @@
             </value>
         </filters>
         <inputAssignments>
+            <field>Comments</field>
+            <value>
+                <elementReference>$Record.ClosingNote__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Elaborazione Risposta</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Status</field>
             <value>
-                <stringValue>Closed</stringValue>
+                <stringValue>In Lavorazione</stringValue>
             </value>
         </inputAssignments>
         <object>Case</object>
@@ -98,7 +111,7 @@
         <locationX>56</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>open_activities_get</targetReference>
+            <targetReference>Get_Open_Activities</targetReference>
         </connector>
         <filterLogic>(1 OR 2) AND 3 AND 4</filterLogic>
         <filters>
@@ -133,5 +146,5 @@
         <recordTriggerType>Update</recordTriggerType>
         <triggerType>RecordAfterSave</triggerType>
     </start>
-    <status>Obsolete</status>
+    <status>Active</status>
 </Flow>
