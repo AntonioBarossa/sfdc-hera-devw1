@@ -3509,11 +3509,6 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
-        <editable>false</editable>
-        <field>HDT_RecordFormFieldDependency__mdt.DependecyJSON__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-    <fieldPermissions>
         <editable>true</editable>
         <field>Individual.GlobalMigrationKey__c</field>
         <readable>true</readable>
