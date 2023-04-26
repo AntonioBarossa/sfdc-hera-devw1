@@ -821,11 +821,6 @@
         <label>IVA - applicazione non corretta</label>
     </customValue>
     <customValue>
-        <fullName></fullName>
-        <default>false</default>
-        <label></label>
-    </customValue>
-    <customValue>
         <fullName>Non accolto</fullName>
         <default>false</default>
         <label>Non accolto</label>
