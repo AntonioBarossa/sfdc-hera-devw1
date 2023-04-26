@@ -12,6 +12,7 @@ import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.is
 import isCommunity from '@salesforce/apex/HDT_LC_SellingWizardController.checkCommunityLogin';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+import createActChangeAddress from '@salesforce/apex/HDT_LC_DocumentSignatureManager.createActChangeAddress';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
 import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
@@ -396,76 +397,48 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleSave(){
         this.loading = true;
-        try{
-            var sendMode = this.parentOrder.fields.DocSendingMethod__c.value;
-            var signMode = this.parentOrder.fields.SignatureMethod__c.value; 
-            var oldSignMode = this.parentOrder.fields.SignMode__c.value;
-            if(sendMode.localeCompare('Stampa Cartacea')===0){
-                sendMode = 'Sportello';
-            }
-            var discardOldEnvelope = false;
-            if (signMode.localeCompare('OTP Remoto') === 0 && oldSignMode && oldSignMode.localeCompare('OTP Coopresenza') === 0){
-                discardOldEnvelope = true;
-            }
-            console.log('discardRework --> '+this.discardRework);
-            console.log('discardActivityId --> '+this.discardActivityId);
-            var formParams = {
-                sendMode : sendMode,
-                signMode : signMode,      
-                mode : 'Print',
-                Archiviato : 'Y',
-                DiscardOldEnvelope : discardOldEnvelope,
-                discardRework : this.discardRework,
-                discardActivityId : this.discardActivityId
-            }
-            console.log('formParams --> '+JSON.stringify(formParams));
-            sendDocument({
-                recordId: this.recordId,
-                context: 'Order',
-                formParams: JSON.stringify(formParams)
-            }).then(result => {
-                save({orderParent: this.orderParentRecord}).then(data =>{
-                    this.loading = false;
-        
-                    this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
-        
-                    const toastSuccessMessage = new ShowToastEvent({
-                        title: 'Successo',
-                        message: 'Order confermato con successo',
-                        variant: 'success'
-                    });
-                    this.dispatchEvent(toastSuccessMessage);
-                    //this.sendDocumentFile();
-        
-                }).catch(error => {
-                    this.loading = false;
-        
-                    let errorMessage = '';
-        
-                    if (error.body.message !== undefined) {
-                        errorMessage = error.body.message;
-                    } else if(error.message !== undefined){
-                        errorMessage = error.message;
-                    } else if(error.body.pageErrors !== undefined){
-                        errorMessage = error.body.pageErrors[0].message;
-                    }
-        
-                    console.log('Error: ', errorMessage);
-                    const toastErrorMessage = new ShowToastEvent({
-                        title: 'Errore',
-                        message: errorMessage,
-                        variant: 'error',
-                        mode: 'sticky'
-                    });
-                    this.dispatchEvent(toastErrorMessage);
-                });
-            }).catch(error => {
-                this.showToast('Errore nell\'invio del documento al cliente.');
-                console.error(error);
-            });
-        }catch(error){
+
+        createActChangeAddress({
+            recordId: this.recordId
+        }).then(result => {
+            console.log('CreateActChangeAddress successfully run');
+        }).catch(error => {
+            this.showToast('Errore nella creazione dell\'activity di Modifica Indirizzo Fornitura.');
             console.error(error);
-        }
+        });
+
+        save({orderParent: this.orderParentRecord}).then(data =>{
+            this.loading = false;
+            this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
+            const toastSuccessMessage = new ShowToastEvent({
+                title: 'Successo',
+                message: 'Order confermato con successo',
+                variant: 'success'
+            });
+            this.dispatchEvent(toastSuccessMessage);
+        }).catch(error => {
+            this.loading = false;
+
+            let errorMessage = '';
+
+            if (error.body.message !== undefined) {
+                errorMessage = error.body.message;
+            } else if(error.message !== undefined){
+                errorMessage = error.message;
+            } else if(error.body.pageErrors !== undefined){
+                errorMessage = error.body.pageErrors[0].message;
+            }
+
+            console.log('Error: ', errorMessage);
+            const toastErrorMessage = new ShowToastEvent({
+                title: 'Errore',
+                message: errorMessage,
+                variant: 'error',
+                mode: 'sticky'
+            });
+            this.dispatchEvent(toastErrorMessage);
+        });
+
     }
 
     handleSave2(){
