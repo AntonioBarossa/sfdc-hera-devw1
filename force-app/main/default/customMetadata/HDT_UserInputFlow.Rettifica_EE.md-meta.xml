@@ -65,28 +65,12 @@
 		&quot;Column&quot;: 2
 	},
 	{
-		&quot;FieldName&quot;: &quot;ReminderBlock__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 2
-	},
-	{
 		&quot;FieldName&quot;: &quot;CorrectionDocumentEmissionDay__c&quot;,
 		&quot;Required&quot;: false,
 		&quot;Column&quot;: 2
 	},
 	{
-		&quot;FieldName&quot;: &quot;SoldBy__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;ReadOnly&quot;: true,
-		&quot;Column&quot;: 2
-	},
-	{
 		&quot;FieldName&quot;: &quot;ReminderBlock__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 2
-	},
-	{
-		&quot;FieldName&quot;: &quot;CorrectionDocumentEmissionDay__c&quot;,
 		&quot;Required&quot;: false,
 		&quot;Column&quot;: 2
 	}
