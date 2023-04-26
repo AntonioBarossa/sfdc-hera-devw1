@@ -173,7 +173,7 @@
                 <componentName>force:relatedListSingleContainer</componentName>
                 <identifier>force_relatedListSingleContainer10</identifier>
                 <visibilityRule>
-                    <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                    <booleanFilter>(( 1 AND 2 ) OR 4 ) AND 3</booleanFilter>
                     <criteria>
                         <leftValue>{!Record.Subprocess__c}</leftValue>
                         <operator>NE</operator>
@@ -188,6 +188,11 @@
                         <leftValue>{!Record.CommodityFormula__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Acqua</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.ProcessType__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Cambio Offerta</rightValue>
                     </criteria>
                 </visibilityRule>
             </componentInstance>
