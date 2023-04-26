@@ -123,7 +123,7 @@ public with sharing class HDT_BA_HandleSelfReadingRequest implements Database.Ba
                     }
                 }
                 if(dar != null) {
-                    caseToUpdate.abnormalReading__c = dar.DiscardReason__c;
+                    caseToUpdate.abnormalReading__c = dar.DiscardReasonList__c;
                 } 
                 Boolean isAutomaticDiscard = (dar != null && dar.IsActive__c && dar.ActivityType__c.equalsIgnoreCase(caseToUpdate.Phase__c) && (String.isBlank(dar.ControllingCommodity__c)  || dar.ControllingCommodity__c.equalsIgnoreCase(mapCaseCommodity.get(caseToUpdate.Id))));
                 

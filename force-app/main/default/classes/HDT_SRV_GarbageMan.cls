@@ -157,7 +157,7 @@ public with sharing class HDT_SRV_GarbageMan {
             Case currentCase = utlGarbage.getCurrentCase(caseId)[0];
             
             //Chiamata al servizio Ricerca Appuntamento 
-            String street = currentCase.InvoicingStreetName__c + currentCase.InvoicingStreetNumber__c + currentCase.InvoicingPostalCode__c + currentCase.InvoicingCity__c;
+            String street = currentCase.InvoicingStreetName__c +', ' + currentCase.InvoicingStreetNumber__c +' '+ currentCase.InvoicingPostalCode__c +' '+ currentCase.InvoicingCity__c;
             HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp wrpDataApp = new HDT_LC_AppointmentTariAgenda.HDT_WRP_DataApp (this.caseid, currentCase.InvoicingStreetCode__c, 
             street, currentCase.InvoicingStreetNumber__c, currentCase.TypeOperation__c, currentCase.InvoicingCity__c);
             errorCode= '06';

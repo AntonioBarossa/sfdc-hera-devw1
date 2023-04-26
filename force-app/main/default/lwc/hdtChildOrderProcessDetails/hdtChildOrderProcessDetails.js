@@ -294,7 +294,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     updateContractExpenses(){
-        if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' ) {
+        if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' &&
+            this.template.querySelector("[data-id='ContractExpenses__c']") ) {
             this.template.querySelector("[data-id='ContractExpenses__c']").value = 'Nessun Addebito';
         }
         if( this.typeVisibility('acqua') &&

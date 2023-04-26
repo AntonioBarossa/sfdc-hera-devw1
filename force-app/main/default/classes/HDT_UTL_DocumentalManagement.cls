@@ -434,8 +434,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		listAccount.add(accountObject);
 		List<sObject> listContact = new List<sObject>();
 		listContact.add(contactObject);
+		//DATI CATASTALI
+		List<LandRegistry__c> landList = new List<LandRegistry__c>();
+		for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) caseObject.Dati_Catastali__r){
+			landList.add(singleLandRegistry);
+		}
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
-			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList,'LandRegistry'=> landList
 		};
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		toReturn.add(mapStringObjectRecords);
