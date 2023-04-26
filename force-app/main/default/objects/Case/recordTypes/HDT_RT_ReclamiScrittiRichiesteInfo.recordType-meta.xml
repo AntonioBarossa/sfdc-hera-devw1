@@ -11707,8 +11707,12 @@
             <fullName>Altro</fullName>
             <default>false</default>
         </values>
-        		<values>
+        <values>
             <fullName>Arenile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centri di Raccolta</fullName>
             <default>false</default>
         </values>
 		<values>
