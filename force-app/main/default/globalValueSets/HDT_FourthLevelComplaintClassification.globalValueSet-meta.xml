@@ -1283,7 +1283,6 @@
     <customValue>
         <fullName>Falso procurato</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Falso procurato</label>
     </customValue>
     <customValue>
