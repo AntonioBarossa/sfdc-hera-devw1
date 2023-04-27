@@ -7169,6 +7169,102 @@
             <fullName>CD02 - Contestazione addebito/accredito retroattivo</fullName>
             <default>false</default>
         </values>
+        		<values>
+            <fullName>CA01 - non eseguita causa cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA02 - non eseguita causa HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT01 - componente economica/contrattuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT02 - errata attribuzione tariffa/tipologia utenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT03 - cambio opzione Residente / Non Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT04 - modifica indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CV01 - non eseguito per mancata presentazione della documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CV02 - gestito in ritardo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB01 - chiarezza bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB02 - recapito bolletta e relativi costi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB04 - tariffe diverse dalle aspettative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB05 - avviso/bolletta errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni/cessazioni - non eseguita causa Distributore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazioni/cessazioni - tempistiche/modalità/costi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC01 - addebito vuotature/litri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC02 - acconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC03 - conguaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC04 - riduzioni/sconti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC05 - metratura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC06 - periodo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC07 - imposte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC08 - altre voci</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FF01 - frequenza di fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FP02 - mancato addebito avviso/bolletta</fullName>
+            <default>false</default>
+	    </values>
         <values>
             <fullName>CD03 - Rifiuto di allaccio fognatura</fullName>
             <default>false</default>
@@ -7201,6 +7297,7 @@
             <fullName>FC01 - Stima consumo</fullName>
             <default>false</default>
         </values>
+
         <values>
             <fullName>FC02 - Conguaglio</fullName>
             <default>false</default>
