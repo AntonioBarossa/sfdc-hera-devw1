@@ -386,6 +386,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
 
     }
+
     @AuraEnabled
     public static Boolean checkPermissionSet(){
 
@@ -396,6 +397,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return false;
 
+    }
+
+    @AuraEnabled
+    public static Boolean checkCambioOffertaPermission(){
+        
+        if(FeatureManagement.checkPermission('HDT_CP_CambioOfferta')){
+            return true;
+        }
+        return false;
     }
 
     public static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checkTechnicalTransfer(HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck trCheck)

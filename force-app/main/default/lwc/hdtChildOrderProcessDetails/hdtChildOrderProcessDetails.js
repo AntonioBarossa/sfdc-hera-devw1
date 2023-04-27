@@ -11,6 +11,7 @@ import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessD
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
 import checkPermissionSet from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkPermissionSet';
+import checkCambioOffertaPermission from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkCambioOffertaPermission';
 import {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration} from 'c/hdtChildOrderProcessDetailsUtl';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
@@ -48,6 +49,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
     @track permissionFlag = true;
+    isCambioOffertaPermission = false;
     loginChannel;
     closeAttachmentEvent;
     @track additionalAttachments;
@@ -1575,6 +1577,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             this.permissionFlag = !data;
             console.log('PERMISSIONFLAG££' + this.permissionFlag);
+        })        
+        
+        checkCambioOffertaPermission({}).then(data =>{
+            this.isCambioOffertaPermission = data;
+            console.log('isCambioOffertaPermission: ' + this.isCambioOffertaPermission);
         })
 
         console.log('Details Callback Start');
