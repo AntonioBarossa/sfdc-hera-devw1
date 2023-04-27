@@ -7,6 +7,9 @@ private class HDT_LC_RecordEditFormInputControllerTst {
 
     @TestSetup
     static void setup(){
+        HDT_UTL_DataFactoryTst.pClickInstance();
+        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+        HDT_UTL_DataFactoryTst.pClickCasePhase();
         List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountResidenziale(2, false, 'HERA COMM', 'D1 - Persona fisica', 'Famiglie');
         accounts[1].CustomerLifeCycleWaste__c = 'ONBOARDING';
         insert accounts;
@@ -107,5 +110,18 @@ private class HDT_LC_RecordEditFormInputControllerTst {
         }
         Test.stopTest();
         System.assertEquals(true,String.isNotBlank(errorMessage),'a record was found');
+    }
+
+    @IsTest
+    static void DependentFieldRetrieveControllingTest() {
+        Case myCase=[SELECT Id FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+        Map<String,Object>params=new Map<String,Object>{
+                'fieldName'=> 'FirstLevelComplaintClassification__c','objectId'=> myCase.Id, 'process' => 'RiclassificazioneAcq', 'controllingField' =>'ComplaintType__c','retrieveControllingValue'=>true
+        };
+        Test.startTest();
+        params=HDT_LC_RecordEditFormInputController.init(params);
+        Test.stopTest();
+        System.assertEquals(true,params.containsKey('controllingFieldValue'),'no controllingFieldValue param');
+        System.assertEquals(true,params.containsKey('fieldValue'),'no fieldValue param');
     }
 }

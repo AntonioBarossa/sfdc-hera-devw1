@@ -43,6 +43,7 @@ public class HDT_WRP_MailSender {
         public String bodyMail;
         public String toAddress;
         public String templateName;
+        public List<String> attachmentsIdList;
     }
 
     public class HDT_WRP_GenerateCaseResult {

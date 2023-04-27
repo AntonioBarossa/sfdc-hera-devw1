@@ -12,6 +12,7 @@ export default class HdtRecordEditFormInput extends LightningElement {
     @api index;
     @api controllingField;
     @api processType;
+    @api retrieveControllingFieldValues;
     labels={recordEditFormReqField};
     customFieldValue;
     customPicklistOptions=[];
@@ -28,7 +29,8 @@ export default class HdtRecordEditFormInput extends LightningElement {
             'fieldName':this.field.FieldName,
             'objectId':this.recordId,
             'controllingField':this.controllingField ? this.controllingField:'',
-            'process':this.processType
+            'process':this.processType,
+            'retrieveControllingValue':(this.controllingField && this.retrieveControllingFieldValues == true) ? true:false
         };
         init({params:paramsObj})
         .then(data=>{
@@ -39,6 +41,10 @@ export default class HdtRecordEditFormInput extends LightningElement {
             if(data && this.controllingField && data.dependencySchema){
                 this.firstLevelValue= data?.firstLevelValue ? data.firstLevelValue : '';
                 this.picklistOptionsDependencyObject=JSON.parse(data.dependencySchema);
+            }
+            if(data && data.retrieveControllingValue && data.hasOwnProperty('controllingFieldValue') && data.hasOwnProperty('fieldValue')){
+                this.controllingFieldValue=data.controllingFieldValue;
+                this.customFieldValue=data.fieldValue;
             }
             this.dataLoaded=true;
         })

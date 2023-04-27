@@ -282,9 +282,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                 orderToUpdate.CIAccoutn__c = 'Richiesto';
             }
             when 'HDT_RT_CambioOfferta'{
-                if(String.isNotBlank(currentOrder.ServicePoint__r.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c)){
+/*                 if(String.isNotBlank(currentOrder.ServicePoint__r.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c)){
                     order.EffectiveDate__c = System.today();
-                }else if(order.SignedDate__c != null){                    
+                } */
+                if(order.SignedDate__c != null){                    
                     HDT_UTL_SwtichInProcess.calculateCambioOffertaDate(order);  // Data di decorrenza
                 }
                 /**Ribaltamento letture su Order per Cambio offerta Acqua*/

@@ -279,6 +279,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
             return null;
         }
 
+        if(eventObj.activityEvent != null && eventObj.activityEvent.Id != null){
+            currentTrack.Activity__c = eventObj.activityEvent.Id;
+        }
+
         if(singleRule.endRule.obj.equalsIgnoreCase(executionObject)){
 
             Object dt;
@@ -347,19 +351,35 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 if(!eventObj.fieldMap.containsKey(singleRule.startRule.field)){
                     return null;  
                 }
-                //dt = eventObj.fieldMap.get(singleRule.startRule.field);
-                dt = eventObj.fieldMap.get('LastModifiedDate');
+                dt = eventObj.fieldMap.get(singleRule.startRule.field);
+                //dt = eventObj.fieldMap.get('LastModifiedDate');
+
+                String typeField = getTypeField(executionObject, singleRule.startRule.field);
+
+                switch on typeField.toUpperCase() {
+                    when 'DATETIME'  {
+                        currentTrack.StartDateTime__c = Datetime.valueOf(dt);
+                    }
+                    when 'DATE'  {
+                        Date myDate = Date.valueOf(dt);
+                        Object objDateLastModifiedDate = eventObj.fieldMap.get('LastModifiedDate');
+                        Datetime lastModifiedDateDt = Datetime.valueOf(objDateLastModifiedDate);
+                        currentTrack.StartDateTime__c = DateTime.newInstance(myDate.year(), myDate.month(), myDate.day(), lastModifiedDateDt.hour(), lastModifiedDateDt.minute(), lastModifiedDateDt.second());
+                    }
+                }
+
             } else {
                 System.debug(logginglevel.DEBUG, '>>> isNotDate -> ' + singleRule.startRule.field);
                 String startField = String.valueOf(eventObj.fieldMap.get(singleRule.startRule.field));
                 if(startField.equalsIgnoreCase(singleRule.startRule.value)){
                     dt = eventObj.fieldMap.get('LastModifiedDate');
+                    currentTrack.StartDateTime__c = Datetime.valueOf(dt);
                 } else {
                     return null;
                 }
             }
 
-            currentTrack.StartDateTime__c = Datetime.valueOf(dt);
+            //currentTrack.StartDateTime__c = Datetime.valueOf(dt);
             
             if(!ruleDateIsValid(currentTrack.StartDateTime__c, singleRule)){
                 System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
@@ -372,6 +392,11 @@ public inherited sharing class HDT_UTL_SlaManagement {
             return null;
         }
 
+    }
+
+    public String getTypeField(String objName, String fieldApiName){
+        String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
+        return fieldTypeName;
     }
 
     public void deleteEventHandler(Datetime deletedTime){

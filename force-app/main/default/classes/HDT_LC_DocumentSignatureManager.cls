@@ -5,6 +5,7 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         String base64 = HDT_SRV_DocumentalManagementFacade.getBase64(recordId, context,formParams);
         return base64;
     }
+
     @AuraEnabled
     public static void sendDocumentFile(String recordId,String context,String formParams){
         if( 'Order'.equalsIgnoreCase(context) )
@@ -14,6 +15,11 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, context,formParams);
         HDT_SRV_DocumentalManagementFacade.checkEnvelopeForDiscard(recordId, formParams);
         HDT_UTL_Scarti.closeDocumentalManagementActivity(formParams);
+    }
+
+    @AuraEnabled
+    public static void createActChangeAddress(String recordId){
+            createActivityForChangeAddress(recordId);
     }
 
     @future

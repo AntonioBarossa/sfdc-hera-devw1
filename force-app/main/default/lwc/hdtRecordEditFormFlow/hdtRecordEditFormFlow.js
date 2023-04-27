@@ -769,6 +769,8 @@ export default class HdtRecordEditFormFlow extends LightningElement {
     handleQcDate(){
         let commodity = this.selector('Commodity__c');
         let writtenReceiptRequestDate = this.selector('WrittenReceiptRequestDate__c');
+        let customerRequestDate = this.selector('CustomerRequestDate__c');
+
         if(commodity && commodity.value === 'Acqua' && this.type === 'Riattivazione Fornitura' && writtenReceiptRequestDate){
             writtenReceiptRequestDate.disabled = false;
             writtenReceiptRequestDate.required = true;
@@ -776,8 +778,12 @@ export default class HdtRecordEditFormFlow extends LightningElement {
             writtenReceiptRequestDate.disabled = true;
             writtenReceiptRequestDate.required = false;
         }
-        if(writtenReceiptRequestDate){
-            writtenReceiptRequestDate.value = new Date();
+        var today = new Date();
+        if(writtenReceiptRequestDate && writtenReceiptRequestDate.value == null){
+            writtenReceiptRequestDate.value = today.toISOString();
+        }
+        if(customerRequestDate && customerRequestDate.value == null){
+            customerRequestDate.value = today.toISOString();
         }
     }
 }

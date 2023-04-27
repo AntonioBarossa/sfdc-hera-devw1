@@ -3,7 +3,7 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>4598</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -40,7 +40,7 @@
     <actionCalls>
         <name>Calculate_Expiration_Date_1</name>
         <label>Calculate Expiration Date</label>
-        <locationX>982</locationX>
+        <locationX>1766</locationX>
         <locationY>1094</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
@@ -78,7 +78,7 @@
     <assignments>
         <name>Assegna_Id_Contenitore</name>
         <label>Assegna Id Contenitore</label>
-        <locationX>50</locationX>
+        <locationX>833</locationX>
         <locationY>2726</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
@@ -94,7 +94,7 @@
     <assignments>
         <name>Assegna_Id_Contenitore_0</name>
         <label>Assegna Id Contenitore</label>
-        <locationX>314</locationX>
+        <locationX>1097</locationX>
         <locationY>2606</locationY>
         <assignmentItems>
             <assignToReference>IdContenitore</assignToReference>
@@ -110,55 +110,23 @@
     <assignments>
         <name>Assegna_Process_Type</name>
         <label>Assegna Process Type</label>
-        <locationX>850</locationX>
-        <locationY>3926</locationY>
+        <locationX>2954</locationX>
+        <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Reclamo Scritto Seconda Classificazione</stringValue>
+                <stringValue>RiclassificazioneAcq</stringValue>
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Screen_Seconda_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Process_Type_0</name>
-        <label>Assegna Process Type</label>
-        <locationX>1642</locationX>
-        <locationY>3926</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Richiesta Info Seconda Classificazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Screen_Seconda_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Assegna_Process_Type_0_0</name>
-        <label>Assegna Process Type</label>
-        <locationX>1114</locationX>
-        <locationY>3806</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Rettifica Seconda Classificazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Screen_Seconda_Classificazione</targetReference>
+            <targetReference>Controllo_Classificazione</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Process_Type_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1642</locationX>
+        <locationX>3218</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -174,13 +142,13 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>586</locationX>
+        <locationX>50</locationX>
         <locationY>3926</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Reclamo Scritto Seconda Classificazione Tari</stringValue>
+                <stringValue>Reclamo Scritto AMB</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -190,7 +158,7 @@
     <assignments>
         <name>Assegna_Process_Type_0_0_0_0_0</name>
         <label>Assegna Process Type</label>
-        <locationX>1378</locationX>
+        <locationX>2690</locationX>
         <locationY>398</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
@@ -206,13 +174,13 @@
     <assignments>
         <name>Assegna_Process_Type_RichInfoTari</name>
         <label>Assegna Process Type</label>
-        <locationX>1378</locationX>
+        <locationX>2690</locationX>
         <locationY>3926</locationY>
         <assignmentItems>
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Richiesta Info Seconda Classificazione Tari</stringValue>
+                <stringValue>Rich Info AMB</stringValue>
             </value>
         </assignmentItems>
         <connector>
@@ -222,7 +190,7 @@
     <assignments>
         <name>AssegnaCollection</name>
         <label>AssegnaCollection</label>
-        <locationX>182</locationX>
+        <locationX>965</locationX>
         <locationY>3062</locationY>
         <assignmentItems>
             <assignToReference>CaseCollection</assignToReference>
@@ -245,7 +213,7 @@
     <assignments>
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
-        <locationX>982</locationX>
+        <locationX>1766</locationX>
         <locationY>1550</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.CorrectionRight__c</assignToReference>
@@ -268,7 +236,7 @@
     <assignments>
         <name>AssegnaValori_1</name>
         <label>AssegnaValori</label>
-        <locationX>182</locationX>
+        <locationX>965</locationX>
         <locationY>2942</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.ParentId</assignToReference>
@@ -291,7 +259,7 @@
     <assignments>
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>5690</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
@@ -314,7 +282,7 @@
     <assignments>
         <name>AssegnaValoriActivity</name>
         <label>AssegnaValoriActivity</label>
-        <locationX>487</locationX>
+        <locationX>1271</locationX>
         <locationY>5318</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
@@ -379,7 +347,7 @@
     <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>4718</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.AmountToPayInInstallments__c</assignToReference>
@@ -423,7 +391,7 @@
     <assignments>
         <name>AssignExpirationDate_1</name>
         <label>AssignExpirationDate_1</label>
-        <locationX>982</locationX>
+        <locationX>1766</locationX>
         <locationY>1214</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.AmountToPayInInstallments__c</assignToReference>
@@ -460,7 +428,7 @@
     <assignments>
         <name>assignFieldsActivity</name>
         <label>assignFieldsActivity</label>
-        <locationX>157</locationX>
+        <locationX>941</locationX>
         <locationY>6290</locationY>
         <assignmentItems>
             <assignToReference>getActivityToClose.wrts_prcgvr__Status__c</assignToReference>
@@ -525,7 +493,7 @@
     <assignments>
         <name>assignFieldsActivity_0</name>
         <label>assignFieldsActivity</label>
-        <locationX>685</locationX>
+        <locationX>1469</locationX>
         <locationY>6290</locationY>
         <assignmentItems>
             <assignToReference>getActivityToClose_0.wrts_prcgvr__Status__c</assignToReference>
@@ -588,9 +556,169 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Copy_1_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>314</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto ACQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_1_of_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>2954</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rich Info ACQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_2_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>578</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto GAS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_2_of_Process_Type</name>
+        <label>Process Type</label>
+        <locationX>3218</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rich Info GAS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_3_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>842</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Scritto EE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_4_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>1370</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica AMB</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_5_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>1634</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica ACQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_6_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>1898</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica GAS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_7_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>2162</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica EE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Copy_8_of_Assegna_Process_Type</name>
+        <label>Assegna Process Type</label>
+        <locationX>3482</locationX>
+        <locationY>3926</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rich Info EE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Screen_Seconda_Classificazione</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
-        <locationX>1370</locationX>
+        <locationX>2153</locationX>
         <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
@@ -613,7 +741,7 @@
     <assignments>
         <name>Rimuovi_Link_Reiterazione_0_0</name>
         <label>Rimuovi Link Reiterazione</label>
-        <locationX>842</locationX>
+        <locationX>1625</locationX>
         <locationY>2246</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
@@ -657,7 +785,7 @@
     <decisions>
         <name>activityTrovata</name>
         <label>activityTrovata</label>
-        <locationX>289</locationX>
+        <locationX>1073</locationX>
         <locationY>6170</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -679,7 +807,7 @@
     <decisions>
         <name>activityTrovata_0</name>
         <label>activityTrovata</label>
-        <locationX>817</locationX>
+        <locationX>1601</locationX>
         <locationY>6170</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -701,7 +829,7 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>1510</locationX>
+        <locationX>2954</locationX>
         <locationY>734</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
@@ -711,14 +839,14 @@
             <name>Conferma_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_00.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_000.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm_00.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm_000.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -733,7 +861,7 @@
     <decisions>
         <name>Avanzamento_0</name>
         <label>Avanzamento</label>
-        <locationX>858</locationX>
+        <locationX>1642</locationX>
         <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0</targetReference>
@@ -765,7 +893,7 @@
     <decisions>
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>4358</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
@@ -775,14 +903,14 @@
             <name>Conferma_0_0_0</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>hdtRecordEditForm.cancelCase</leftValueReference>
+                <leftValueReference>hdtRecordEditForm0.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <conditions>
-                <leftValueReference>hdtRecordEditForm.saveInDraft</leftValueReference>
+                <leftValueReference>hdtRecordEditForm0.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
@@ -797,7 +925,7 @@
     <decisions>
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>4838</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_2</targetReference>
@@ -822,7 +950,7 @@
     <decisions>
         <name>Case_Contenitore_esiste</name>
         <label>Case Contenitore esiste?</label>
-        <locationX>182</locationX>
+        <locationX>965</locationX>
         <locationY>2486</locationY>
         <defaultConnector>
             <targetReference>Assegna_Id_Contenitore_0</targetReference>
@@ -854,7 +982,7 @@
     <decisions>
         <name>Case_Vecchio_Scaduto</name>
         <label>Case Vecchio Scaduto?</label>
-        <locationX>380</locationX>
+        <locationX>1163</locationX>
         <locationY>2246</locationY>
         <defaultConnector>
             <targetReference>AggiornaCase_0_0</targetReference>
@@ -878,33 +1006,75 @@
     </decisions>
     <decisions>
         <name>checkRecordType</name>
-        <label>checkRecordType</label>
-        <locationX>718</locationX>
+        <label>Commodity</label>
+        <locationX>578</locationX>
         <locationY>3806</locationY>
-        <defaultConnector>
-            <targetReference>Assegna_Process_Type</targetReference>
-        </defaultConnector>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>processTari</name>
+            <name>Ambiente</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetInputCaseAggiornato.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
+                    <stringValue>Ambiente</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Assegna_Process_Type_0_0_0_0</targetReference>
             </connector>
-            <label>processTari</label>
+            <label>Ambiente</label>
+        </rules>
+        <rules>
+            <name>Acqua_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+        <rules>
+            <name>Gas</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Gas</label>
+        </rules>
+        <rules>
+            <name>Energia_Elettrica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_3_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Energia Elettrica</label>
         </rules>
     </decisions>
     <decisions>
         <name>checkRecordType_0</name>
         <label>checkRecordType</label>
-        <locationX>1510</locationX>
+        <locationX>2954</locationX>
         <locationY>278</locationY>
         <defaultConnector>
             <targetReference>Assegna_Process_Type_0_0_0</targetReference>
@@ -925,36 +1095,160 @@
             </connector>
             <label>processTari</label>
         </rules>
-    </decisions>
-    <decisions>
-        <name>checkRecordType_richInfo</name>
-        <label>checkRecordType</label>
-        <locationX>1510</locationX>
-        <locationY>3806</locationY>
-        <defaultConnector>
-            <targetReference>Assegna_Process_Type_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
-            <name>processTari_richInfo</name>
+            <name>Classificazione_ACQ</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetInputCaseAggiornato.RecordType.DeveloperName</leftValueReference>
+                <leftValueReference>Get_Input_Case.Commodity__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <stringValue>HDT_RT_ReclamiScrittiTARI</stringValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Classificazione ACQ</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Commodity_0</name>
+        <label>Commodity?</label>
+        <locationX>3218</locationX>
+        <locationY>3806</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Ambiente_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
                 </rightValue>
             </conditions>
             <connector>
                 <targetReference>Assegna_Process_Type_RichInfoTari</targetReference>
             </connector>
-            <label>processTari</label>
+            <label>Ambiente</label>
+        </rules>
+        <rules>
+            <name>Acqua_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_1_of_Process_Type</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+        <rules>
+            <name>Gas_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_2_of_Process_Type</targetReference>
+            </connector>
+            <label>Gas</label>
+        </rules>
+        <rules>
+            <name>Energia_Elettrica_0_0</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_8_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Energia Elettrica</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Copy_1_of_Commodity</name>
+        <label>Commodity</label>
+        <locationX>1898</locationX>
+        <locationY>3806</locationY>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Copy_1_of_Ambiente</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Ambiente</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_4_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Ambiente</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Acqua</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Acqua</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_5_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Acqua</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Gas</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Gas</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_6_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Gas</label>
+        </rules>
+        <rules>
+            <name>Copy_1_of_Energia_Elettrica</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>GetInputCaseAggiornato.Commodity__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Energia Elettrica</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Copy_7_of_Assegna_Process_Type</targetReference>
+            </connector>
+            <label>Energia Elettrica</label>
         </rules>
     </decisions>
     <decisions>
         <name>Diritto_Rettifica</name>
         <label>Diritto Rettifica?</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>1430</locationY>
         <defaultConnector>
             <targetReference>Presenza_Reiterazione</targetReference>
@@ -979,7 +1273,7 @@
     <decisions>
         <name>Presenza_Reiterazione</name>
         <label>Presenza Reiterazione?</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
@@ -1004,10 +1298,10 @@
     <decisions>
         <name>Reclamo_Scritto_Richiesta_Info</name>
         <label>Reclamo Scritto/Richiesta Info?</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>3686</locationY>
         <defaultConnector>
-            <targetReference>checkRecordType_richInfo</targetReference>
+            <targetReference>Commodity_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Richiesta info</defaultConnectorLabel>
         <rules>
@@ -1043,7 +1337,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Assegna_Process_Type_0_0</targetReference>
+                <targetReference>Copy_1_of_Commodity</targetReference>
             </connector>
             <label>Rettifica Doppia Fatturazione</label>
         </rules>
@@ -1051,7 +1345,7 @@
     <decisions>
         <name>Reiterazione_Confermata</name>
         <label>Reiterazione Confermata?</label>
-        <locationX>611</locationX>
+        <locationX>1394</locationX>
         <locationY>2126</locationY>
         <defaultConnector>
             <targetReference>Rimuovi_Link_Reiterazione_0_0</targetReference>
@@ -1076,7 +1370,7 @@
     <decisions>
         <name>Riclassificato</name>
         <label>Riclassificato?</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>974</locationY>
         <defaultConnector>
             <targetReference>Diritto_Rettifica</targetReference>
@@ -1101,7 +1395,7 @@
     <decisions>
         <name>WhichCommodity</name>
         <label>WhichCommodity</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>5930</locationY>
         <defaultConnectorLabel>Altro</defaultConnectorLabel>
         <rules>
@@ -1211,7 +1505,7 @@
     <recordCreates>
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
-        <locationX>487</locationX>
+        <locationX>1271</locationX>
         <locationY>5078</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
@@ -1246,7 +1540,7 @@
     <recordCreates>
         <name>Crea_Case_Contenitore_0</name>
         <label>Crea Case Contenitore</label>
-        <locationX>50</locationX>
+        <locationX>833</locationX>
         <locationY>2606</locationY>
         <connector>
             <targetReference>Assegna_Id_Contenitore</targetReference>
@@ -1335,7 +1629,7 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>487</locationX>
+        <locationX>1271</locationX>
         <locationY>5198</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1370,7 +1664,7 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>1510</locationX>
+        <locationX>2954</locationX>
         <locationY>158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1391,7 +1685,7 @@
     <recordLookups>
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
-        <locationX>487</locationX>
+        <locationX>1271</locationX>
         <locationY>4958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1419,7 +1713,7 @@
     <recordLookups>
         <name>getActivityToClose</name>
         <label>getActivityToClose</label>
-        <locationX>289</locationX>
+        <locationX>1073</locationX>
         <locationY>6050</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1454,7 +1748,7 @@
     <recordLookups>
         <name>getActivityToClose_0</name>
         <label>getActivityToClose</label>
-        <locationX>817</locationX>
+        <locationX>1601</locationX>
         <locationY>6050</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1489,7 +1783,7 @@
     <recordLookups>
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>4478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1510,7 +1804,7 @@
     <recordLookups>
         <name>getCaseReiterato</name>
         <label>getCaseReiterato</label>
-        <locationX>182</locationX>
+        <locationX>965</locationX>
         <locationY>2366</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1531,7 +1825,7 @@
     <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>854</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -1552,7 +1846,7 @@
     <recordUpdates>
         <name>Aggiorna_Attivi</name>
         <label>Aggiorna Attivita</label>
-        <locationX>487</locationX>
+        <locationX>1271</locationX>
         <locationY>5438</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
@@ -1566,7 +1860,7 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>751</locationX>
+        <locationX>1535</locationX>
         <locationY>5810</locationY>
         <connector>
             <targetReference>WhichCommodity</targetReference>
@@ -1576,7 +1870,7 @@
     <recordUpdates>
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
-        <locationX>842</locationX>
+        <locationX>1625</locationX>
         <locationY>2366</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
@@ -1586,7 +1880,7 @@
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
-        <locationX>1370</locationX>
+        <locationX>2153</locationX>
         <locationY>2006</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
@@ -1596,7 +1890,7 @@
     <recordUpdates>
         <name>AggiornaCase_0_0</name>
         <label>AggiornaCase</label>
-        <locationX>578</locationX>
+        <locationX>1361</locationX>
         <locationY>2366</locationY>
         <connector>
             <targetReference>Inserimento_Sollecito_Vecchio_Reclamo</targetReference>
@@ -1606,7 +1900,7 @@
     <recordUpdates>
         <name>AggiornaCaseCollection</name>
         <label>AggiornaCaseCollection</label>
-        <locationX>182</locationX>
+        <locationX>965</locationX>
         <locationY>3182</locationY>
         <connector>
             <targetReference>Reclamo_Scritto_Richiesta_Info</targetReference>
@@ -1616,21 +1910,21 @@
     <recordUpdates>
         <name>closeActivity</name>
         <label>closeActivity</label>
-        <locationX>157</locationX>
+        <locationX>941</locationX>
         <locationY>6410</locationY>
         <inputReference>getActivityToClose</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>closeActivity_0</name>
         <label>closeActivity</label>
-        <locationX>685</locationX>
+        <locationX>1469</locationX>
         <locationY>6410</locationY>
         <inputReference>getActivityToClose_0</inputReference>
     </recordUpdates>
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>1510</locationX>
+        <locationX>2954</locationX>
         <locationY>614</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1644,9 +1938,15 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtRecordEditForm_00</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <name>hdtRecordEditForm_000</name>
+            <extensionName>c:hdtRecordEditFormFlowNew</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputParameters>
                 <name>density</name>
                 <value>
@@ -1657,6 +1957,18 @@
                 <name>draftButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Avanti</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1690,25 +2002,13 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Avanti</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
+                <name>showReadOnly</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>showReadOnly</name>
+                <name>retrieveControllingFieldValues</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
@@ -1723,7 +2023,7 @@
     <screens>
         <name>Inserimento_Sollecito_Vecchio_Reclamo</name>
         <label>Inserimento Sollecito Vecchio Reclamo</label>
-        <locationX>578</locationX>
+        <locationX>1361</locationX>
         <locationY>2486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1786,7 +2086,7 @@
     <screens>
         <name>Screen_Conferma_Reiterazione</name>
         <label>Screen Conferma Reiterazione</label>
-        <locationX>858</locationX>
+        <locationX>1642</locationX>
         <locationY>1886</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1923,7 +2223,7 @@
     <screens>
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
-        <locationX>1114</locationX>
+        <locationX>1898</locationX>
         <locationY>4238</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -1937,9 +2237,15 @@
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
-            <name>hdtRecordEditForm</name>
-            <extensionName>c:hdtRecordEditFormFlow</extensionName>
+            <name>hdtRecordEditForm0</name>
+            <extensionName>c:hdtRecordEditFormFlowNew</extensionName>
             <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>cancelButton</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputParameters>
                 <name>density</name>
                 <value>
@@ -1950,6 +2256,24 @@
                 <name>draftButton</name>
                 <value>
                     <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelInputSection</name>
+                <value>
+                    <stringValue>Variabili di Processo</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelPreviousButton</name>
+                <value>
+                    <stringValue>Indietro</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>labelSaveButton</name>
+                <value>
+                    <stringValue>Conferma Pratica</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -1983,37 +2307,7 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>labelInputSection</name>
-                <value>
-                    <stringValue>Variabili di Processo</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelSaveButton</name>
-                <value>
-                    <stringValue>Conferma Pratica</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>labelPreviousButton</name>
-                <value>
-                    <stringValue>Indietro</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>variantSaveButton</name>
-                <value>
-                    <stringValue>brand</stringValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
                 <name>showReadOnly</name>
-                <value>
-                    <booleanValue>true</booleanValue>
-                </value>
-            </inputParameters>
-            <inputParameters>
-                <name>cancelButton</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
@@ -2026,7 +2320,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>1384</locationX>
+        <locationX>2828</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -2036,7 +2330,7 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1906</locationX>
+        <locationX>4010</locationX>
         <locationY>854</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2061,7 +2355,7 @@
     <subflows>
         <name>Annulla_Prestazione_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1106</locationX>
+        <locationX>1889</locationX>
         <locationY>2126</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2086,7 +2380,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>578</locationX>
+        <locationX>1361</locationX>
         <locationY>2606</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
@@ -2111,7 +2405,7 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>1477</locationX>
+        <locationX>2261</locationX>
         <locationY>4478</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>

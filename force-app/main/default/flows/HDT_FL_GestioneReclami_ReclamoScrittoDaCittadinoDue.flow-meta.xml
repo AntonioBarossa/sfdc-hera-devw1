@@ -954,7 +954,7 @@
             <inputParameters>
                 <name>processType</name>
                 <value>
-                    <elementReference>ProcessType</elementReference>
+                    <stringValue>RiclassificazioneDaCittadino</stringValue>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -971,6 +971,12 @@
             </inputParameters>
             <inputParameters>
                 <name>showReadOnly</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>retrieveControllingFieldValues</name>
                 <value>
                     <booleanValue>true</booleanValue>
                 </value>
