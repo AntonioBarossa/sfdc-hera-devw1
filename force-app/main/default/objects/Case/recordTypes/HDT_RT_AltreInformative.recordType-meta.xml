@@ -7765,6 +7765,10 @@
             <fullName>Alexa</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Facebook</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>
@@ -7823,6 +7827,14 @@
         </values>
         <values>
             <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Risposta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10668,6 +10680,10 @@
         </values>
         <values>
             <fullName>Errore Chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social</fullName>
             <default>false</default>
         </values>
     </picklistValues>
