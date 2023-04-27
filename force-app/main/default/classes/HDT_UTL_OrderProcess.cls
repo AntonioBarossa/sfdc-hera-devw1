@@ -1074,11 +1074,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             for(Order ord : orderList){
                 if (!'Credit Check Forzato dall\'operatore'.equalsIgnoreCase(ord.CreditCheckDescription__c)){
                     wrts_prcgvr__Activity__c actToUpdate = mapIdOrderToActivity.get(ord.Id);
-                    actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
-                    actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
-                    actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
-                    actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
-                    actListToUpdate.add(actToUpdate);
+                    if(actToUpdate != null){
+                        actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
+                        actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
+                        actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
+                        actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
+                        actListToUpdate.add(actToUpdate);
+                    }
                 }
                 
                 /*if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') && actToUpdate.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_CreditCheckKO')){

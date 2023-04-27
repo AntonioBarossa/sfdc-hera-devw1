@@ -24,7 +24,7 @@ public inherited sharing class HDT_QR_CampaignMember {
         String channel = currentUser.Profile.Name.equalsIgnoreCase('Hera Teleseller Partner User') ? 'Telefonico Outbound' : 'Door to Door';
 
         return [SELECT Id, CampaignId, Campaign.Name, Campaign.Status, Campaign.Channel__c, Campaign.EndDate, Status FROM CampaignMember 
-                WHERE ContactId = :contactId AND Campaign.isActive = true AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED];
+                WHERE ContactId = :contactId AND (Campaign.Status = 'In Corso' OR Campaign.Status = 'Pianificata') AND HasResponded = false AND Campaign.StartDate <= :tday AND Campaign.Channel__c includes (:channel) WITH SECURITY_ENFORCED]; //AND Campaign.isActive = true
     }
 
     /**
