@@ -7683,6 +7683,10 @@
             <fullName>Consulenza offerte</fullName>
             <default>false</default>
         </values>
+       <values>
+            <fullName>Info adesione iniziativa</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Info Consegna e prodotti</fullName>
             <default>false</default>
