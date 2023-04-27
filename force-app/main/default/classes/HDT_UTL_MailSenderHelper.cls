@@ -344,7 +344,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                     return sendMailResult;
                 }
 
-                if(mailStructure.attachmentsIdList.size() > 0){
+                if(mailStructure.attachmentsIdList?.size() > 0){
                     List<String> contentVersionIdList = new List<String>();
                     List<ContentVersion> cvList = [SELECT Id FROM ContentVersion WHERE ContentDocumentId IN :mailStructure.attachmentsIdList WITH SECURITY_ENFORCED];
                     if(cvList.size() > 0){
