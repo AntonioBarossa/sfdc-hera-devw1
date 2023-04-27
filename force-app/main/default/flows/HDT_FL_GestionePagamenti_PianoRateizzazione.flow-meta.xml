@@ -1838,7 +1838,7 @@
     <formulas>
         <name>AlertNumeroRateNonValido</name>
         <dataType>String</dataType>
-        <expression>&quot;È stato inserito un numero di rate superiore al massimo consentito per i driver selezionati.  Numero massimo rate concedibili: Get_Case_Tari_Layout.MaxInstallmentsNumber__c,  Numero rate richieste: Get_Case_Tari_Layout.InstallmentNumberRequired__c&quot;</expression>
+        <expression>&quot;È stato inserito un numero di rate superiore al massimo consentito per i driver selezionati.  Numero massimo rate concedibili: &quot; &amp; TEXT({!Get_Case_Tari_Layout.MaxInstallmentsNumber__c}) &amp; &quot;,  Numero rate richieste: &quot; &amp; TEXT({!Get_Case_Tari_Layout.InstallmentNumberRequired__c})</expression>
     </formulas>
     <formulas>
         <name>AlertValoreSingolaRataNonConsentito</name>
@@ -1884,12 +1884,12 @@
     <formulas>
         <name>errorValoreDaRateizzareNonConsentito</name>
         <dataType>String</dataType>
-        <expression>&quot;L&apos;Importo Da Rateizzare risulta inferiore all&apos;Importo Minimo Rateizzabile, Importo Da Rateizzare: Get_Case_Tari_Layout.AmountToPayInInstallments__c , Importo Minimo Rateizzabile: {Get_Case_Tari_Layout.MinInstallmentAmount__c}&quot;</expression>
+        <expression>&quot;L&apos;Importo Da Rateizzare risulta inferiore all&apos;Importo Minimo Rateizzabile, Importo Da Rateizzare: &quot; &amp; TEXT({!Get_Case_Tari_Layout.AmountToPayInInstallments__c}) &amp; &quot;, Importo Minimo Rateizzabile: &quot; &amp; TEXT({!Get_Case_Tari_Layout.MinInstallmentAmount__c})</expression>
     </formulas>
     <formulas>
         <name>errorValoreSingolaRataNonConsentito</name>
         <dataType>String</dataType>
-        <expression>&quot;In base al Numero Rate Richieste il valore di ogni singola rata risulta inferiore all&apos;Importo Minimo Singola Rata pari a € Calcola_parametri_rate.importoMinimoSingolaRata.&quot;</expression>
+        <expression>&quot;In base al Numero Rate Richieste il valore di ogni singola rata risulta inferiore all&apos;Importo Minimo Singola Rata pari a € &quot; &amp; TEXT({!Calcola_parametri_rate.importoMinimoSingolaRata})</expression>
     </formulas>
     <formulas>
         <name>InstallmentAmount</name>
@@ -3125,7 +3125,7 @@
         <allowPause>true</allowPause>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+            <targetReference>Screen_Case_Layout_0</targetReference>
         </connector>
         <fields>
             <name>Alert_numero_di_rate_0</name>
@@ -3849,7 +3849,7 @@
         <allowPause>true</allowPause>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+            <targetReference>Screen_Case_Layout_0</targetReference>
         </connector>
         <fields>
             <name>Alert_importo_da_rateizzare_0</name>
@@ -3902,7 +3902,7 @@
         <allowPause>true</allowPause>
         <connector>
             <isGoTo>true</isGoTo>
-            <targetReference>Screen_Case_Layout_0_0_0</targetReference>
+            <targetReference>Screen_Case_Layout_0</targetReference>
         </connector>
         <fields>
             <name>Alert_importo_singola_rata_0</name>
