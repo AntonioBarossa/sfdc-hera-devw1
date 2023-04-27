@@ -219,9 +219,6 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
                     contToUpdateList.add(cont);
                 }
             }
-            if(!individToUpdateList.isEmpty()){
-                HDT_UTL_DatabaseService.updateSObject(individToUpdateList);
-            }
             if(!contToUpdateList.isEmpty()){
                 HDT_UTL_DatabaseService.updateSObject(contToUpdateList);
             }
