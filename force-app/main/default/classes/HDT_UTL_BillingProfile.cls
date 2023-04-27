@@ -42,10 +42,12 @@ public with sharing class HDT_UTL_BillingProfile {
                     'Legale Rappresentante'.equalsIgnoreCase(bp.SignatoryType__c) ? bp.LegalAgent__c : null;
         if (bpSubscriber.containsKey(keyMap)){
             HDT_WRP_Subscriber sub = new HDT_WRP_Subscriber(bpSubscriber.get(keyMap));
-            String fiscalcode = sub.getFiscalCode();
             bp.BankAccountSignatoryFirstName__c = sub.getFirstName();
             bp.BankAccountSignatoryLastName__c = sub.getLastName();
-            bp.BankAccountSignatoryFiscalCode__c = String.isBlank(fiscalcode)? bp.BankAccountSignatoryFiscalCode__c: fiscalcode;
+            String fiscalCode = sub.getFiscalCode();
+            if(String.isNotBlank(fiscalCode)){
+                bp.BankAccountSignatoryFiscalCode__c = fiscalCode;
+            }
         }
     }
 

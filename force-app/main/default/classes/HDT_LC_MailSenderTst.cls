@@ -50,6 +50,14 @@ public with sharing class HDT_LC_MailSenderTst {
         
         caseList.add(mySingleCase);
         insert caseList;
+
+        List<ContentVersion> contentVersion = HDT_UTL_DataFactoryTst.createContentVers(1, false);
+        insert contentVersion;
+
+        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument WHERE LatestPublishedVersionId = :contentVersion[0].Id];
+
+        list<ContentDocumentLink> listDocumentLink = HDT_UTL_DataFactoryTst.createContentDocumentLink(1, false, caseList[0].Id, documents[0].Id);
+        insert listDocumentLink;
     }
 
     /**​
@@ -106,5 +114,43 @@ public with sharing class HDT_LC_MailSenderTst {
         ret = HDT_LC_MailSender.sendMail(emailMessageJson);
         Test.stopTest();
         System.assertEquals(true, ret.success, ret.message);
+    }
+
+    @IsTest
+    static void getContentDocsTst(){
+
+        List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
+        Test.startTest();
+        List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
+        Test.stopTest();
+        System.assert(cdList.size() > 0, 'Errore in fase di retrieve dei documenti caricati.');
+        
+    }
+
+    @IsTest
+    static void deletePendingFilesTst(){
+        List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
+        List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
+        List<Id> cdIdList = new List<Id>();
+        cdIdList.add(cdList[0].Id);
+        Test.startTest();
+            HDT_UTL_MailSenderHelper.deletePendingFiles(cdIdList);
+        Test.stopTest();
+        
+        List<ContentDocument> cdListAfter = [SELECT Id FROM ContentDocument LIMIT 1];
+        System.assert(cdListAfter.size() == 0, 'Errore in fase di eliminazione dei documenti.');
+    }
+
+    @IsTest
+    static void getContentSizeAttachmentsTst(){
+        List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
+        List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
+        List<Id> cdIdList = new List<Id>();
+        cdIdList.add(cdList[0].Id);
+        Test.startTest();
+            Decimal attachmentsSize = HDT_UTL_MailSenderHelper.getContentSizeAttachments(cdIdList);
+        Test.stopTest();
+        
+        System.assert(attachmentsSize != null, 'Errore in fase di retrieve della dimensione dei documenti.');
     }
 }

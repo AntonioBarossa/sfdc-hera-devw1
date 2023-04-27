@@ -102,7 +102,9 @@ global inherited sharing class HDT_WS_SegnalazioniTari implements wrts_prcgvr.In
                     'csn' => '1000000000'                    
                 }
             );
-        }else if(STRING.isBlank(acc?.CustomerCode__c)){
+        }
+        
+        if(STRING.isBlank(acc?.CustomerCode__c)){
             mapObj.putAll(new Map<String, String>
                 {
                     'hercontactLastName' => caso.DifferentNameFromTheApplicant__c
