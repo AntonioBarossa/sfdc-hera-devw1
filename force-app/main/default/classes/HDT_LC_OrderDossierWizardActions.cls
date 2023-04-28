@@ -249,46 +249,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
         orderToUpdate.SignMode__c = orderParent.SignMode__c;
-      /*  if(isPlicoSend){
-          //  orderToUpdate.Phase__c = 'Plico da inviare';
-          orderToUpdate.Phase__c = 'Documentazione da validare';
-        }
-        else{
-            orderToUpdate.Phase__c = 'Documentazione da validare';
-        }*/
-        // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-        /*for (Order childOrd : childOrders) {
-            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
-                ordersToUpdate.add(
-                    new Order(
-                        Id = childOrd.Id,
-                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Comunicazione verso Heroku' : (checkRequiredDocs(childOrd) ? 'Comunicazione verso Heroku': 'In attesa validazione')
-                    )
-                );
-            }
-        }*/
-
-        //update CampaignMember Status From Stampa
-        /**@fvitiell 21/02/2022
-         * Implementato e commentato, utile laddove dovesse servire
-         * aggiornare alla pressione del tasto Stampa del Wizard
-         */
-        /*List<String> myCampaignListIds = new List<String>();
-        for (Order myChildOrder : childOrders){
-            Campaign myCampaign = new Campaign(
-                Id = myChildOrder.Campaign__c
-            );
-            myCampaignListIds.add(myChildOrder.Campaign__c);
-        }
-        List<CampaignMember> myCampaignMemberList = [Select id, Campaign.PositiveOutcomeDefaultStatus__c from CampaignMember where CampaignId IN :myCampaignListIds WITH SECURITY_ENFORCED];
-        for(myCampaignMember : myCampaignMemberList){
-            String status = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
-            String CampaignMemberId = myCampaignMember.Id;
-            HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
-        }*/
         /* L'aggiornamento dello step previene lo sbiancamento della data firma */
         if('Documentazione Gestita'.equalsIgnoreCase(orderToUpdate.Phase__c))
         {

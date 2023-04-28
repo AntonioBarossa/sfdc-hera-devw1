@@ -391,6 +391,13 @@
                 <elementReference>GetContenitoreStessoContratto.PartialOutcome__c</elementReference>
             </value>
         </assignmentItems>
+        <assignmentItems>
+            <assignToReference>GetInputCase.RelatedCase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>GetContenitoreStessoContratto.Id</elementReference>
+            </value>
+        </assignmentItems>
         <connector>
             <targetReference>Assegnazioni</targetReference>
         </connector>
@@ -1742,7 +1749,7 @@
             <targetReference>Innesco_Da_Sospensione</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>

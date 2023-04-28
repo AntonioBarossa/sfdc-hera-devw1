@@ -35496,7 +35496,7 @@
         <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazioni Ambiente</layout>
+        <layout>Order-Cambio Tariffa</layout>
         <recordType>Order.HDT_RT_CambioTariffa</recordType>
     </layoutAssignments>
     <layoutAssignments>

@@ -1215,6 +1215,7 @@ public inherited sharing class HDT_QR_Order {
         ProcessType__c,
         BillingProfile__c, 
         Vat__c, 
+        CommodityFormula__c,
         ServicePoint__c,
         ServicePoint__r.Distributor__r.Name,
         ServicePoint__r.Name,
