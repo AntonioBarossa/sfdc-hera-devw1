@@ -1269,4 +1269,11 @@
         <shortDescription>recordEditFormReqField</shortDescription>
         <value>Completare questo campo.</value>
     </labels>
+    <labels>
+        <fullName>recordEditFormMissingFields</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>recordEditFormMissingFields</shortDescription>
+        <value>Campi obbligatori non compilati.</value>
+    </labels>
 </CustomLabels>
