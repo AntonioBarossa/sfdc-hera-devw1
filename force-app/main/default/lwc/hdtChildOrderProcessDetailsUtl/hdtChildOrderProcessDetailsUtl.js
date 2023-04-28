@@ -359,6 +359,7 @@ import * as rateCategories from './hdtRateCategories.js';
                     new fieldData('','PaySewer__c',this.typeVisibility('both'),false,true,'',''),
                     new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
                     new fieldData('','BonusDeliveryMode__c', this.typeVisibility('acqua'), false, false, '',''),
+                    new fieldData('','SameFamilyUnit__c', this.typeVisibility('acqua'), false, false, '',''),
                     new fieldData('','SupplyAddressFormula__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('','SupplyCity__c',this.typeVisibility('acqua'),false,true,'',''),
                     new fieldData('Tariffa','RateCategory__c', this.typeVisibility('acqua'), false, true, '',''),
