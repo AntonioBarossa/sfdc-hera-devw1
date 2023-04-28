@@ -64,15 +64,15 @@ public inherited sharing class HDT_QR_MailSender {
         ];
     }
 
-    //public static String getEmail(String emailTemplateName){
-    //    return [
-    //        SELECT Email_Template_Name__c, Email__c, DeveloperName, MasterLabel
-    //        FROM HDT_EmailComunicazioneGestore__mdt
-    //        WHERE Email_Template_Name__c = :emailTemplateName
-    //        WITH SECURITY_ENFORCED
-    //        LIMIT 1
-    //    ].Email__c;
-    //}
+    public static String getEmail(String emailTemplateName){
+       return [
+           SELECT Email_Template_Name__c, Email__c, DeveloperName, MasterLabel
+           FROM HDT_EmailComunicazioneGestore__mdt
+           WHERE Email_Template_Name__c = :emailTemplateName
+           WITH SECURITY_ENFORCED
+           LIMIT 1
+       ].Email__c;
+    }
 
     public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){
         String subj = Subject + '%';
