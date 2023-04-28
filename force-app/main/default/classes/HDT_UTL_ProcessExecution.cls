@@ -18,6 +18,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public Id recordTypeRes = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
     public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
     public Boolean isTest = true;
+    public Boolean isDiscountAndBonusProcess = false;
 
     public void setRequestId(Id requestId){
         this.requestId = requestId;
@@ -26,6 +27,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     public void setProcess(String processName){
         this.processName = processName;
+        isDiscountAndBonusProcess = (processName.equalsIgnoreCase('TariffeSconti'));
         System.debug(LoggingLevel.DEBUG, '>>> set this process: ' + this.processName);
     }
 
