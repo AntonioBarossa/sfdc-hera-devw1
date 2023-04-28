@@ -100,6 +100,7 @@ public with sharing class HDT_SRV_VoltureChangeDispatcherTst
         ChamberCommerceRegistration__c,
         Instance326__c,
         DocumentLow80__c,
+        SupplyType__c,
         ContractSigned__c,
         SignedDate__c,
         SignatureMethod__c,
