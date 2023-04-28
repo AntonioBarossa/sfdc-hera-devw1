@@ -7,6 +7,7 @@ import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
+import recordEditFormMissingFields from '@salesforce/label/c.recordEditFormMissingFields';
 
 import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 import TYPE from '@salesforce/schema/Case.Type';
@@ -16,7 +17,7 @@ import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightn
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 export default class HdtRecordEditFormFlowNew extends LightningElement {
-
+    labels={recordEditFormMissingFields};
     @api processType;
     @api objectName;
     @api recordId;
@@ -355,7 +356,7 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             this.cancelCase = false;
             let fieldsControl =this.getCustomComboboxes(event.detail.fields);
             if(!fieldsControl.comboBoxesValid){
-                this.showMessage('Errore','testerror','error');
+                this.showMessage('Errore',this.labels.recordEditFormMissingFields,'error');
                 return;
             }
             if(this.validateClass){

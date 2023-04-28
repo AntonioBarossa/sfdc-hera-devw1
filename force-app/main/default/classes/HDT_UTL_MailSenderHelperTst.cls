@@ -240,4 +240,24 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         System.assertEquals(true,sendMailResultActual.success,'Error general case result was not update correctly');
     }
 
+    @isTest
+    static void sendReminderMailHelperTst(){
+
+        List<OrgWideEmailAddress> orgWideEmailAdress = [SELECT Id, Address FROM OrgWideEmailAddress];
+        List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
+        String orgWideAddId = orgWideEmailAdress[0].Id;
+        String toAddress = orgWideEmailAdress[0].Address;
+        String caseId= cases[0].Id;
+        
+        String emailMessageJson = '{"recordId": "'+ caseId +'", "isReminder": true,"orgWideAddId": "'+ orgWideAddId +'", "bodyMail": "Note 2", "toAddress": "'+ toAddress +'"}';
+       
+        HDT_WRP_MailSender.HDT_WRP_SendMailResult sendMailResultActual;
+
+        Test.startTest();
+        sendMailResultActual = HDT_UTL_MailSenderHelper.sendMailHelper(emailMessageJson);
+        Test.stopTest();
+
+        System.assertEquals(true,sendMailResultActual.success,'Error general case result was not update correctly');
+    }
+
 }
