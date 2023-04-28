@@ -27,7 +27,7 @@ public with sharing class HDT_UTL_LandRegistry {
         list<LandRegistry__c> originData = qrClass.getTARILandRegistryByServicePointIds(new list<Id> {servicePointId});
         Map<String, Id> cityData = getCities(originData);
         for(LandRegistry__c curOriginRecord : originData){
-            LandRegistry__c resultLR;
+            LandRegistry__c resultLr;
             resultLR = curOriginRecord.clone(false, true, false, false);
             resultLR.RecordTypeId = rtIdPraticaTARI;
             resultLR.ServicePoint__c = null;
