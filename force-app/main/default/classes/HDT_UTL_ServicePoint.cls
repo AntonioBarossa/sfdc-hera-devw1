@@ -221,7 +221,7 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOANNUOEE')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
-            String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+            String mercato =  mapRes.get('MERCATO').containsIgnoreCase('STGM') ? 'STGM' : mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
             Boolean isStg = mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_')? true:false;
             mercato = mercato.containsIgnoreCase('Tutela')?'Regolamentato':mercato;
             mercato = isStg ? 'Regolamentato':mercato;

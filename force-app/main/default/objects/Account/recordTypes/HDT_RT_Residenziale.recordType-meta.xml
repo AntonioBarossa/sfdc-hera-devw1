@@ -2946,6 +2946,10 @@
             <fullName>Tutele Graduali</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Tutele graduali Microimprese</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SBQQ__CoTerminationEvent__c</picklist>
