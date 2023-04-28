@@ -313,6 +313,15 @@ public with sharing class HDT_UTL_CaseProcess {
                     System.debug(LoggingLevel.DEBUG, 'Inside Condition');
                     HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
                 }
+                //CR31 - Creazione Activity all'annullamento Autolettura da Cliente
+                if(caseNew.ParentId != null){
+                    Case parentCase = new Case();
+                    parentCase = caseQr.getParentCaseById(caseNew.ParentId);
+                    
+                    if('Annullato'.equalsIgnoreCase(newPhase) && 'Autolettura da cliente'.equalsIgnoreCase(caseNew.Type) && 'Inviato al DL'.equalsIgnoreCase(oldPhase) && parentCase != null && 'Errore Stima Consumi'.equalsIgnoreCase(parentCase.Subprocess__c) && ('Energia Elettrica'.equalsIgnoreCase(caseNew.CommodityFormula__c) || 'Gas'.equalsIgnoreCase(caseNew.CommodityFormula__c))){
+                        HDT_UTL_Case.createActivity(caseNew.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                    }
+                }
             }
         }
     }
