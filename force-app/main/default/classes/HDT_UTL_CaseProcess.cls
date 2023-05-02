@@ -233,7 +233,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                 if(activities != null){
                                     List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
                                     for(wrts_prcgvr__Activity__c activity : activities){
-                                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
+                                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) && !'Contattare il cliente'.equalsIgnoreCase(activity.Type__c)){
                                             activitiesOwnerId.clear();
                                             if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
                                                 activityId = activity.OwnedByUser__c;
