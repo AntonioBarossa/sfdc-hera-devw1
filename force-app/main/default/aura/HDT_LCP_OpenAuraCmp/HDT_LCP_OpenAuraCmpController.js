@@ -117,9 +117,10 @@
                         parentId = element.tabId;
                     } else if(element.pageReference.attributes.recordId === parentRecordId){
                         caseTabId=element.tabId;
+                    }else if(element.pageReference.attributes.recordId === caseId){
+                        parentId=element.tabId;
                     }
-                    else if(element.pageReference.attributes.recordId === documentSendTracking)
-                    {
+                    else if(element.pageReference.attributes.recordId === documentSendTracking){
                         parentId = element.tabId;
                     }
                 }
