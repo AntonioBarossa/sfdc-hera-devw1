@@ -15,6 +15,7 @@ public inherited sharing class HDT_QR_MailSender {
             FROM EmailTemplate
             WHERE IsActive = true
             AND FolderId = :folderId
+            AND Name <> 'COM-Sollecito'
             WITH SECURITY_ENFORCED
             ORDER BY Name
         ];
@@ -64,15 +65,15 @@ public inherited sharing class HDT_QR_MailSender {
         ];
     }
 
-    //public static String getEmail(String emailTemplateName){
-    //    return [
-    //        SELECT Email_Template_Name__c, Email__c, DeveloperName, MasterLabel
-    //        FROM HDT_EmailComunicazioneGestore__mdt
-    //        WHERE Email_Template_Name__c = :emailTemplateName
-    //        WITH SECURITY_ENFORCED
-    //        LIMIT 1
-    //    ].Email__c;
-    //}
+    public static String getEmail(String emailTemplateName){
+       return [
+           SELECT Email_Template_Name__c, Email__c, DeveloperName, MasterLabel
+           FROM HDT_EmailComunicazioneGestore__mdt
+           WHERE Email_Template_Name__c = :emailTemplateName
+           WITH SECURITY_ENFORCED
+           LIMIT 1
+       ].Email__c;
+    }
 
     public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){
         String subj = Subject + '%';
@@ -97,7 +98,9 @@ public inherited sharing class HDT_QR_MailSender {
         queryString += 'SELECT ' + sObjectFields.get(0);
 
         for (Integer i=1 ; i < sObjectFields.size() ; i++){
-            queryString += ', ' + sObjectFields.get(i);
+            if(!'Reason__c'.equalsIgnoreCase(sObjectFields.get(i))){
+                queryString += ', ' + sObjectFields.get(i);
+            }
         }
 
         queryString += ' FROM Case ';

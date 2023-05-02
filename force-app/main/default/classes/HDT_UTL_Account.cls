@@ -171,7 +171,7 @@ public with sharing class HDT_UTL_Account {
   
     public static void makeRequest( Account acc,Contact cont){
         //Nuova Versione
-        string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
+        //string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
         List<SObject> sobjToUpdate = new List<SObject>();
         /* Setup query filters */

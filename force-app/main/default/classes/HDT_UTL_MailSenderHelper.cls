@@ -276,7 +276,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             bodyMailResult.success = true;
             bodyMailResult.message = '';
             bodyMailResult.bodyMail = singleEmailMessage.getHtmlBody();
-            bodyMailResult.receiver = '###';///getReceiverMail(templateId);
+            bodyMailResult.receiver = getReceiverMail(templateId);
             bodyMailResult.templateName = templateName;
         } catch(Exception e){
             bodyMailResult.success = false;
@@ -437,12 +437,11 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         }
     }
 
-    //public static String getReceiverMail(Id templateId){
-    //    List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
-    //    emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
-    //    //return HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
-    //    return 'receiver@mail.com';// inserita manualmente
-    //}
+    public static String getReceiverMail(Id templateId){
+       List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+       emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
+       return HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
+    }
 
     public static void deletePendingFiles(List<Id> cdIdList) {
         List<ContentDocument> cdList = [SELECT Id FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];

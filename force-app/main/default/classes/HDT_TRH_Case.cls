@@ -14,6 +14,14 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
             }
         }
 
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                caseNew.SendDate__c = date.today();
+            }
+        }
+
+
     }
 
  	//public override void beforeDelete(){}
