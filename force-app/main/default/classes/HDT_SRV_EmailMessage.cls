@@ -205,7 +205,9 @@ public with sharing class HDT_SRV_EmailMessage {
         List<String> receiverEmails = new List<String>();
         for (EmailMessage email : emailList) {
             if (email.Incoming == False) {
-                receiverEmails.add(email.ToAddress);
+                if(String.isNotBlank(email.ToAddress)){
+                    receiverEmails.add(email.ToAddress);
+                }
             }
         }
 

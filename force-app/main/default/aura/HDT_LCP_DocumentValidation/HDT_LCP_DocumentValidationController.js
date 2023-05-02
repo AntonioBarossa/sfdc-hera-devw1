@@ -169,8 +169,7 @@
                     console.log("HOLA");
                     $A.get("e.force:closeQuickAction").fire();
                     $A.get('e.force:refreshView').fire();  
-                }
-                button.set('v.disabled',false); 
+                }  
             });
             $A.enqueueAction(action);          
             //$A.get("e.force:closeQuickAction").fire();
