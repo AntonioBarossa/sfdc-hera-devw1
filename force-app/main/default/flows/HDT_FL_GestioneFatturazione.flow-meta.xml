@@ -872,7 +872,7 @@
         </rules>
         <rules>
             <name>Elaborazione_Manuale</name>
-            <conditionLogic>(1 AND 2) OR (2 AND 3) OR (4 AND 5)</conditionLogic>
+            <conditionLogic>(1 AND 2) OR 3 OR (4 AND 5)</conditionLogic>
             <conditions>
                 <leftValueReference>Query_Case.Type</leftValueReference>
                 <operator>EqualTo</operator>
