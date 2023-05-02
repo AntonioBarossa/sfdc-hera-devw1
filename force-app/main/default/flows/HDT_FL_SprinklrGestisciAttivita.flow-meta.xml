@@ -49,6 +49,17 @@
         </rules>
     </decisions>
     <description>Gestione attivività legata al Case Social</description>
+    <environments>Default</environments>
+    <formulas>
+        <name>FormulaSubject255</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Record.Note__c}, 255)</expression>
+    </formulas>
+    <formulas>
+        <name>FormulaText3000</name>
+        <dataType>String</dataType>
+        <expression>LEFT({!$Record.Note__c}, 3000)</expression>
+    </formulas>
     <formulas>
         <name>isNewRecord</name>
         <dataType>Boolean</dataType>
@@ -87,6 +98,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>OpeningNote__c</field>
+            <value>
+                <elementReference>FormulaText3000</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type__c</field>
             <value>
                 <stringValue>Gestione Richiesta Social</stringValue>
@@ -95,7 +112,7 @@
         <inputAssignments>
             <field>wrts_prcgvr__Description__c</field>
             <value>
-                <elementReference>$Record.Note__c</elementReference>
+                <elementReference>FormulaSubject255</elementReference>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>
@@ -113,6 +130,12 @@
             </value>
         </inputAssignments>
         <inputAssignments>
+            <field>OpeningNote__c</field>
+            <value>
+                <elementReference>FormulaText3000</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
             <field>Type__c</field>
             <value>
                 <stringValue>Integrazione richiesta social</stringValue>
@@ -121,7 +144,7 @@
         <inputAssignments>
             <field>wrts_prcgvr__Description__c</field>
             <value>
-                <elementReference>$Record.Note__c</elementReference>
+                <elementReference>FormulaSubject255</elementReference>
             </value>
         </inputAssignments>
         <object>wrts_prcgvr__Activity__c</object>

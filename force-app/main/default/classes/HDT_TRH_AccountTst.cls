@@ -21,7 +21,12 @@ public class HDT_TRH_AccountTst {
 		internalUser.UserPermissionsMarketingUser=true;
 
 		insert internalUser;
+		
+        User internalUser2=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
 
+		insert internalUser2;
+        
         System.runAs(internalUser){
             
             List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(2,false,'HERA COMM','Azienda','Aziende SME');
@@ -30,11 +35,16 @@ public class HDT_TRH_AccountTst {
             accs[1].VATNumber__c='13288870150';
             accs[1].FiscalCode__c='13288870150';
             insert accs;
+            List<Contact> contList=HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
+            contList[0].VATNumber__c='13288870150';
+            contList[0].FiscalCode__c='KNMKST92D20Z100D';
+            insert contList;
             System.assertEquals(2, [Select id from Account].size(), 'One Account not inserted');
             
             accs[0].BirthDate__c = System.today();
             accs[0].isPartner = true;
             accs[0].Published__c = true;
+            accs[0].OwnerId=internalUser2.Id;
             update accs;
             
             System.assertNotEquals(false, accs[0].Published__c, 'Account not updated');

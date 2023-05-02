@@ -2100,6 +2100,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Market__c</picklist>
@@ -2121,6 +2125,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
