@@ -302,7 +302,13 @@ public with sharing class HDT_SRV_VoltureChangeManager{
 
         if (response != null ){
             HDT_WRP_VoltureChangeManager.HDT_WRP_Response responseBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_Response( (Map<String, Object>)JSON.deserializeUntyped( response.getBody() ) );
-            return descriptionConstructor(responseBody.prestazione.tipoAttivita, responseBody.prestazione.note);
+            String tipoAttivita = '';
+            String note = '';
+            if (responseBody != null && responseBody.prestazione != null) {
+                tipoAttivita = responseBody.prestazione.tipoAttivita;
+                note = responseBody.prestazione.note;
+            }
+            return descriptionConstructor(tipoAttivita, note);
         }else {
             return 'Errore nella comunicazione Blocco/Sblocco al calcolo';
         }

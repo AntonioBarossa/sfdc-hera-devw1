@@ -149,8 +149,8 @@ export default class HdtAdvancedSearch extends LightningElement {
         this.maxRowSelected = (this.maxRowSelected ===false) ? 1 : this.originalData.length;        
 
         getCustomMetadataTwo({processType:this.processtype,targetObject:this.targetObject}).then(data =>{
-            console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
-            console.log('processType XXX'+ JSON.stringify(this.processtype));
+            // console.log('targetObject XXX'+ JSON.stringify(this.targetobject));
+            // console.log('processType XXX'+ JSON.stringify(this.processtype));
             this.hiddenSearchBarMod=false;
             if(data==='List is populated'){
                 this.hiddenSearchBarMod=true;
@@ -546,8 +546,14 @@ export default class HdtAdvancedSearch extends LightningElement {
             callService({contratto:contractCode, pod:servicePointCode,impianto:implantCode}).then(data =>{            
                 console.log('XXX callService (dataEnrichment): data --> '+JSON.stringify(data));
                 if(data.statusCode=='200' || this.postSales === true){
-                    if(data.statusCode != '200'){
-                        resolve();
+                    if(data.statusCode != '200')
+                    {
+                        if (isFrom != 'searchSap'){
+                            resolve();
+                        }else{
+                            this.alert('Errore','Il dato ricercato non è stato trovato in SAP, Modificare i parametri di ricerca o procedere alla creazione manuale.','error');
+                            this.preloading = false;
+                        }
                         return;
                     }
                     this.responseArriccData = data;

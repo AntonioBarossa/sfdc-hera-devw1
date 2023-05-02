@@ -100,6 +100,8 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         String codicePresa = herokuWrapper.requestMap.get('COD_PRESA');
         String codicePraticaDistributore = herokuWrapper.requestMap.get('COD_PRAT_DISTR');
         String herokuCode = herokuWrapper.requestMap.get('requestId');
+        // EDURSO TK 964701C
+        String dataDecorrenza = herokuWrapper.requestMap.get('DATA_DECORRENZA');
         HDT_ENU_AnagAlignmentContext context = codiceServizio.equals('VS2') ? HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_POD : HDT_ENU_AnagAlignmentContext.VARIAZIONE_STATO_PDR;
 
         HDT_QR_AnagAlignment queryHandlerOrder = new HDT_QR_AnagAlignment();
@@ -138,6 +140,10 @@ public inherited sharing class HDT_SRV_AnagAlignment {
                         alignSalesCompany(anagAlignCase,triggerOrder);
                         System.debug(LoggingLevel.DEBUG, 'Invio ad heroku Case con Id: ' + anagAlignCase.Id);
                         anagAlignCase.Phase__c = 'Da Inviare';
+                        // EDURSO TK 964701C
+                        if (!String.isBlank(dataDecorrenza)) {
+                            anagAlignCase.EffectiveDate__c = Date.valueOf(dataDecorrenza);
+                        }
                         HDT_UTL_DatabaseService.updateSObject(anagAlignCase);
                     }
                 }
@@ -583,7 +589,7 @@ public inherited sharing class HDT_SRV_AnagAlignment {
         for (Contact c : contacts) {
             contactsMap.put(c.Id, c);
         }
-
+        String emptyEmailDefault = 'mailnondisponibile@acquirenteunico.it';
         for (Case anagAlignCase : anagAlignCases) {
 
             // DATI INDIRIZZO DI RESIDENZA
@@ -597,6 +603,9 @@ public inherited sharing class HDT_SRV_AnagAlignment {
             anagAlignCase.BillingCityCode__c = caseAccount.BillingCityCode__c;
 
             // DATI CLIENTE FINALE
+            if(anagAlignCase.Email__c == null || String.isEmpty(anagAlignCase.Email__c)){
+                anagAlignCase.Email__c = emptyEmailDefault;
+            }   
             anagAlignCase.FirstName__c = caseAccount.FirstName__c;
             anagAlignCase.LastName__c = caseAccount.LastName__c;
             anagAlignCase.VATNumber__c = caseAccount.VATNumber__c;
