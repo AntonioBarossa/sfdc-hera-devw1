@@ -182,7 +182,7 @@ public with sharing class HDT_UTL_CaseValidationsTst {
 
         //Billing Profile
         List<BillingProfile__c> bPList = HDT_UTL_DataFactoryTst.createBillingProfile(1, true, accList[0].Id);
-        BPList[0].PaymentMethod__c = 'Bonifico bancario';
+        BPList[0].PaymentMethod__c = 'Bonifico';
         update BPList[0];
 
 		HDT_UTL_DataFactoryTst.createContentVers(1, true);

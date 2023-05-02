@@ -187,6 +187,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
             }
         }
+
+        if( this.currentSection.name === 'processVariables'){
+            this.showMessage('', 'Attenzione! Verificare la presenza del bonus sociale idrico sul cliente.', 'warning');
+        }
     }
 
     handleCohabitantChange(event){
@@ -1612,17 +1616,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
         if( this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || 
-        ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) ){
-            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
-            || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
-            this.isOfferChange = this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua';
-            console.log('IsVolture--> '+this.isVolture);
-            console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
-            console.log('Details Callback End');
-            console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
-            this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
-            console.log('ReadingDisabled? ->' +this.readingDisabled);
-        }
+            ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) )
+            {
+                this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+                this.isOfferChange = this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua';
+                console.log('IsVolture--> '+this.isVolture);
+                console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
+                console.log('Details Callback End');
+                console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
+                this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+                console.log('ReadingDisabled? ->' +this.readingDisabled);
+            }
         
         console.log('CheckVariables');
 
