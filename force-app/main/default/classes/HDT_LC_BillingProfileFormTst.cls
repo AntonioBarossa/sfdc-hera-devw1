@@ -74,7 +74,7 @@ public static void testCreateBillingProfile1() {
 public static void testCreateBillingProfile2() {
     List<Account> accList = [SELECT Id FROM Account LIMIT 1];
     List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,false,accList[0].Id);
-    billingProfileList[0].PaymentMethod__c = 'F24';
+    billingProfileList[0].PaymentMethod__c = 'Bonifico';
     billingProfileList[0].IbanIsForeign__c = false;
     billingProfileList[0].IBAN__c = 'IT66C0100503382000000218020';
 

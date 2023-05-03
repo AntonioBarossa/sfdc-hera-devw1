@@ -16813,6 +16813,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.SameFamilyUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.SBQQ__Contracted__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -37364,7 +37369,7 @@
         <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_ReclamiScrittiTARI</layout>
+        <layout>Case-HDT_ReclamoDaCittadino</layout>
         <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
     </layoutAssignments>
     <layoutAssignments>
