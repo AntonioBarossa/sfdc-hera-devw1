@@ -154,6 +154,7 @@
         <fields>Description__c</fields>
         <fields>Case__c</fields>
         <fields>Activity__c</fields>
+        <fields>SlaValue__c</fields>
         <fields>StartDateTime__c</fields>
         <fields>EndDateTime__c</fields>
         <fields>Status__c</fields>
