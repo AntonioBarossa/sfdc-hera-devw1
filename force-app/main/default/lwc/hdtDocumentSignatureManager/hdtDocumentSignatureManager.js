@@ -6,6 +6,9 @@ import getSignSendMode from '@salesforce/apex/HDT_LC_DocumentSignatureManager.ge
 import handleContactPoint from '@salesforce/apex/HDT_LC_DocumentSignatureManager.handleContactPoint';
 import TraderWithdrawalDate__c from '@salesforce/schema/Order.TraderWithdrawalDate__c';
 import { getRecord } from 'lightning/uiRecordApi';
+import { updateRecord } from 'lightning/uiRecordApi';
+import DELIVERY_ADDRESS from '@salesforce/schema/Case.DeliveryAddress__c';
+import ID_CASE from '@salesforce/schema/Case.Id';
 import CURRENT_USER_ID from '@salesforce/user/Id';
 import LOGIN_CHANNEL from '@salesforce/schema/User.LoginChannel__c';
 const sourceWithDefault = ['Agenzie','Agenzie SME','Business Agent'];
@@ -109,7 +112,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 this.email = inputWrapper.email;
                 this.accountId = inputWrapper.accountId;
                 this.documents = inputWrapper.documents;
-                this.quoteType = inputWrapper.quoteType;//var addressWrapper = JSON.parse(inputWrapper.addressWrapper);
+                this.quoteType = inputWrapper.quoteType;
                 this.address = inputWrapper.addressWrapper.completeAddress;
                 this.signMode = inputWrapper.signMode;
                 this.sendMode = inputWrapper.sendMode;
@@ -270,8 +273,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         this.showModalContact = false;
         this.disableinput=false;
     }
-    handleCloseModal(event){
-        
+
+    handleCloseModal(event){       
         var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
         console.log(JSON.stringify(addressWrapper));
         if((addressWrapper['Flag Verificato']) && addressWrapper.Via != null && addressWrapper.Via != ""){
@@ -292,6 +295,7 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
         }
         
     }
+
     handleNewAddress() {
         try{
             var addressWrapper = this.template.querySelector('c-hdt-target-object-address-fields').handleAddressFields();
@@ -304,10 +308,8 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
             this.returnWrapper.addressWrapper.Comune = addressWrapper.Comune;
             this.returnWrapper.addressWrapper.EstensCivico = addressWrapper['Estens.Civico'];
             this.returnWrapper.addressWrapper.FlagVerificato = addressWrapper['Flag Verificato'];
-            //this.returnWrapper.addressWrapper. = addressWrapper.
             this.returnWrapper.addressWrapper.Provincia = addressWrapper.Provincia;
             this.returnWrapper.addressWrapper.Stato = addressWrapper.Stato;
-            //this.returnWrapper.addressWrapper. = addressWrapper.
             this.returnWrapper.addressWrapper.Via = addressWrapper.Via;
             this.returnWrapper.addressWrapper.completeAddress = this.address;
         }catch(error){
@@ -525,8 +527,12 @@ export default class HdtDocumentSignatureManager extends NavigationMixin(Lightni
                 sendMode : this.template.querySelector("lightning-combobox[data-id=modalitaSpedizione]").value,
                 signMode : this.template.querySelector("lightning-combobox[data-id=modalitaFirma]").value,
                 telefono : this.template.querySelector("lightning-input[data-id=telefono]").value,      
-                email : this.template.querySelector("lightning-input[data-id=email]").value,      
-                //address : this.template.querySelector("lightning-input[data-id=indirizzoRecapito]").value,
+                email : this.template.querySelector("lightning-input[data-id=email]").value,
+                via : this.returnWrapper.addressWrapper.Via,
+                civico : this.returnWrapper.addressWrapper.Civico,
+                Comune : this.returnWrapper.addressWrapper.Comune,
+                Provincia : this.returnWrapper.addressWrapper.Provincia,
+                CAP : this.returnWrapper.addressWrapper.CAP,
                 mode : 'Preview',
                 Archiviato : 'N',
                 EstrattoConto:this.documents,
