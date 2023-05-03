@@ -284,7 +284,7 @@
         <name>Predefault_Campi_Modifica_Impianto</name>
         <label>Predefault Campi Modifica Impianto</label>
         <locationX>5093</locationX>
-        <locationY>2126</locationY>
+        <locationY>2462</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -519,7 +519,7 @@
         <name>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</name>
         <label>Assegna Fase Attesa Conferma Preventivo Cliente</label>
         <locationX>1815</locationX>
-        <locationY>10634</locationY>
+        <locationY>10814</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -572,7 +572,7 @@
         <name>Assegna_Predefault_1</name>
         <label>Assegna Predefault</label>
         <locationX>5093</locationX>
-        <locationY>2246</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.SupplyUseType__c</assignToReference>
             <operator>Assign</operator>
@@ -588,7 +588,7 @@
         <name>Assegna_Quotation_Validity_Date_0</name>
         <label>Assegna Quotation Validity Date</label>
         <locationX>5225</locationX>
-        <locationY>1886</locationY>
+        <locationY>2222</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.QuotationValidityDate__c</assignToReference>
             <operator>Assign</operator>
@@ -604,7 +604,7 @@
         <name>Assegna_Validita_preventivo</name>
         <label>Assegna Validita preventivo</label>
         <locationX>1683</locationX>
-        <locationY>10418</locationY>
+        <locationY>10598</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.QuotationValidityDate__c</assignToReference>
             <operator>Assign</operator>
@@ -754,7 +754,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
+            <targetReference>check_Disconnectibility</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -790,7 +790,7 @@
         <name>AssegnaPotenzaRichiesta</name>
         <label>AssegnaPotenzaRichiesta</label>
         <locationX>5731</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -806,7 +806,7 @@
         <name>AssegnaPredefaultSpostamentoContatoreVarPortata</name>
         <label>AssegnaPredefaultSpostamentoContatoreVarPortata</label>
         <locationX>5467</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.PowerRequested__c</assignToReference>
             <operator>Assign</operator>
@@ -889,7 +889,7 @@
         <name>AssegnaRipristoFornInterr</name>
         <label>AssegnaRipristoFornInterr</label>
         <locationX>5203</locationX>
-        <locationY>1550</locationY>
+        <locationY>1886</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case.TaxRate__c</assignToReference>
             <operator>Assign</operator>
@@ -1126,6 +1126,22 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Disconnectibility_Default</name>
+        <label>Disconnectibility Default</label>
+        <locationX>5247</locationX>
+        <locationY>1550</locationY>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case.DisconnectibilityType__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>01- App. medico terapeutiche</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Init_Case_For_Sottomissione</name>
         <label>Init Case For Sottomissione</label>
         <locationX>1507</locationX>
@@ -1152,7 +1168,7 @@
         <name>Pratica_non_gestita_per_DL</name>
         <label>Pratica non gestita per DL</label>
         <locationX>2387</locationX>
-        <locationY>10058</locationY>
+        <locationY>10238</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1175,14 +1191,15 @@
             </value>
         </assignmentItems>
         <connector>
+            <isGoTo>true</isGoTo>
             <targetReference>Aggiorna_Case</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Preventivo_da_inviare</name>
         <label>Preventivo da Inviare</label>
-        <locationX>2123</locationX>
-        <locationY>10178</locationY>
+        <locationX>1419</locationX>
+        <locationY>10358</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_0.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1468,7 +1485,6 @@
         <locationX>2035</locationX>
         <locationY>9350</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
             <targetReference>Annullamento_Prestazione</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Annulla</defaultConnectorLabel>
@@ -1541,6 +1557,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Annulla_Prestazione</targetReference>
             </connector>
             <label>Annulla</label>
@@ -1569,6 +1586,45 @@
                 <targetReference>Screen_Criteri_Eleggibilita</targetReference>
             </connector>
             <label>Non Superato</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>check_Disconnectibility</name>
+        <label>check Disconnectibility</label>
+        <locationX>5379</locationX>
+        <locationY>1430</locationY>
+        <defaultConnector>
+            <targetReference>Valorizzare_Potenza_Richiesta</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>isNot0102</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Input_Case.DisconnectibilityType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>01- App. medico terapeutiche</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.DisconnectibilityType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue>02- Pubblica utilità</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.DisconnectibilityType__c</leftValueReference>
+                <operator>NotEqualTo</operator>
+                <rightValue>
+                    <stringValue></stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Disconnectibility_Default</targetReference>
+            </connector>
+            <label>isNot0102</label>
         </rules>
     </decisions>
     <decisions>
@@ -1657,7 +1713,7 @@
         <name>Commodity</name>
         <label>Commodity?</label>
         <locationX>5379</locationX>
-        <locationY>1766</locationY>
+        <locationY>2102</locationY>
         <defaultConnector>
             <targetReference>AggiornaCase</targetReference>
         </defaultConnector>
@@ -1690,7 +1746,7 @@
         <name>Commodity_W1</name>
         <label>Commodity W1?</label>
         <locationX>1815</locationX>
-        <locationY>10178</locationY>
+        <locationY>10358</locationY>
         <defaultConnector>
             <targetReference>Assegna_Fase_Attesa_Conferma_Preventivo_Cliente</targetReference>
         </defaultConnector>
@@ -2110,7 +2166,7 @@
         <name>Prestazione_Gestita</name>
         <label>Prestazione Gestita?</label>
         <locationX>2079</locationX>
-        <locationY>9938</locationY>
+        <locationY>10118</locationY>
         <defaultConnector>
             <targetReference>Pratica_non_gestita_per_DL</targetReference>
         </defaultConnector>
@@ -2160,8 +2216,9 @@
         <name>Preventivo_Rapido_0</name>
         <label>Preventivo Rapido o Istruttoria?</label>
         <locationX>1771</locationX>
-        <locationY>10058</locationY>
+        <locationY>10238</locationY>
         <defaultConnector>
+            <isGoTo>true</isGoTo>
             <targetReference>Preventivo_da_inviare</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Analitico - Predeterminabile</defaultConnectorLabel>
@@ -2176,7 +2233,6 @@
                 </rightValue>
             </conditions>
             <connector>
-                <isGoTo>true</isGoTo>
                 <targetReference>Preventivo_da_inviare</targetReference>
             </connector>
             <label>Istruttoria</label>
@@ -2201,7 +2257,7 @@
         <name>Processo</name>
         <label>Processo?</label>
         <locationX>5225</locationX>
-        <locationY>2006</locationY>
+        <locationY>2342</locationY>
         <defaultConnector>
             <targetReference>AggiornaCase</targetReference>
         </defaultConnector>
@@ -2341,6 +2397,7 @@
                 </rightValue>
             </conditions>
             <connector>
+                <isGoTo>true</isGoTo>
                 <targetReference>Annullamento_Prestazione</targetReference>
             </connector>
             <label>Annulla</label>
@@ -2537,7 +2594,7 @@
         <name>Valorizzare_Potenza_Richiesta</name>
         <label>Valorizzare Potenza Richiesta?</label>
         <locationX>5379</locationX>
-        <locationY>1430</locationY>
+        <locationY>1766</locationY>
         <defaultConnector>
             <targetReference>AssegnaPotenzaRichiesta</targetReference>
         </defaultConnector>
@@ -2899,7 +2956,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>GetCaseForDataScadenza</name>
         <label>GetCaseForDataScadenza</label>
         <locationX>1683</locationX>
-        <locationY>10298</locationY>
+        <locationY>10478</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Assegna_Validita_preventivo</targetReference>
@@ -2991,7 +3048,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>Prestazione_Distrubutore</name>
         <label>Prestazione Distrubutore</label>
         <locationX>2079</locationX>
-        <locationY>9818</locationY>
+        <locationY>9998</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Prestazione_Gestita</targetReference>
@@ -3067,8 +3124,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>2079</locationX>
-        <locationY>10946</locationY>
+        <locationX>1815</locationX>
+        <locationY>10934</locationY>
         <inputReference>Get_Input_Case_0</inputReference>
     </recordUpdates>
     <recordUpdates>
@@ -3128,7 +3185,7 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <name>AggiornaCase</name>
         <label>AggiornaCase</label>
         <locationX>5379</locationX>
-        <locationY>2558</locationY>
+        <locationY>2894</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Processo_Screen</targetReference>
@@ -3148,8 +3205,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <recordUpdates>
         <name>AggiornaCaseDaInviare</name>
         <label>AggiornaCaseDaInviare</label>
-        <locationX>2123</locationX>
-        <locationY>10298</locationY>
+        <locationX>1419</locationX>
+        <locationY>10478</locationY>
         <connector>
             <targetReference>Loading_Screen</targetReference>
         </connector>
@@ -3390,8 +3447,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <screens>
         <name>Loading_Screen</name>
         <label>Loading Screen</label>
-        <locationX>2123</locationX>
-        <locationY>10418</locationY>
+        <locationX>1419</locationX>
+        <locationY>10598</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3773,7 +3830,6 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <isGoTo>true</isGoTo>
             <targetReference>Annulla_Prestazione</targetReference>
         </connector>
         <fields>
@@ -4061,8 +4117,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>3707</locationX>
-        <locationY>3662</locationY>
+        <locationX>842</locationX>
+        <locationY>4022</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -4111,8 +4167,8 @@ IF(ISBLANK({!GetRecordTypePreventivi.Id}),{!Get_Input_Case.RecordType.Id},{!GetR
     <subflows>
         <name>Annullamento_Prestazione</name>
         <label>Annullamento Prestazione</label>
-        <locationX>2387</locationX>
-        <locationY>9110</locationY>
+        <locationX>2123</locationX>
+        <locationY>9470</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
