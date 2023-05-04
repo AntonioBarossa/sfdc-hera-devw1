@@ -1634,6 +1634,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ExpectedBehavior__c</fieldItem>
+                <identifier>RecordExpectedBehavior__cField</identifier>
             </fieldInstance>
         </itemInstances>
         <itemInstances>
