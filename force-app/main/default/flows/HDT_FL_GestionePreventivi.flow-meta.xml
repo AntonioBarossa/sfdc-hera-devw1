@@ -1346,6 +1346,13 @@
                     <stringValue></stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Input_Case.DisconnectibilityType__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Disconnectibility_Default</targetReference>
             </connector>
