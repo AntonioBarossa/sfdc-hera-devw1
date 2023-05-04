@@ -124,6 +124,11 @@
                 <label>Continuità</label>
             </value>
             <value>
+                <fullName>Contratti</fullName>
+                <default>false</default>
+                <label>Contratti</label>
+            </value>
+            <value>
                 <fullName>Contratto</fullName>
                 <default>false</default>
                 <label>Contratto</label>

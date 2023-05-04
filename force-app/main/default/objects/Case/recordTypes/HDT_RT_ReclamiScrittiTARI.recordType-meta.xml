@@ -13253,8 +13253,16 @@
             <fullName>Attivazione/Cessazione</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
 		<values>
             <fullName>Avviso/Bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratti</fullName>
             <default>false</default>
         </values>
 		<values>
