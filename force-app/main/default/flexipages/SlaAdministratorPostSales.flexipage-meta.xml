@@ -327,6 +327,16 @@
                     <name>uiBehavior</name>
                     <value>none</value>
                 </fieldInstanceProperties>
+                <fieldItem>Record.CustomerType__c</fieldItem>
+                <identifier>RecordCustomerType_cField</identifier>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
                 <fieldItem>Record.SalesCompany__c</fieldItem>
                 <identifier>RecordSalesCompany_cField</identifier>
             </fieldInstance>

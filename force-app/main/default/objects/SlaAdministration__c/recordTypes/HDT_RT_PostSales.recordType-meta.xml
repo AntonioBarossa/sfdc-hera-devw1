@@ -2539,14 +2539,14 @@
             <fullName>Hera Comm S%2Ep%2EA%2E</fullName>
             <default>false</default>
         </values>
-        <!--<values>
+        <values>
             <fullName>Marche Multiservizi S%2Ep%2EA</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Marche Multiservizi TARI</fullName>
             <default>false</default>
-        </values>-->
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>SecondLevelComplaintClassification__c</picklist>
