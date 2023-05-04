@@ -408,7 +408,7 @@ public with sharing class HDT_UTL_BpCaCreate
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
-        request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.OfficeSubjectCode__c);
+        request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.SubjectCode__c);
         request.fatturaXml = transcodeFatturaXml(tryParse(infoOrder.BillingProfile__r.XMLType__c));
         request.mailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
         request.modello = transcodeModelloFattura(tryParse(infoOrder.BillingProfile__r.ElectronicInvoicingMethod__c));
@@ -419,7 +419,7 @@ public with sharing class HDT_UTL_BpCaCreate
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(BillingProfile__c billing)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
-        request.codiceUfficio = tryParse(billing.OfficeSubjectCode__c);
+        request.codiceUfficio = tryParse(billing.SubjectCode__c);
         request.fatturaXml = transcodeFatturaXml(tryParse(billing.XMLType__c));
         request.mailPec = tryParse(billing.ElectronicInvoiceCertifiedEmailAddress__c);
         request.modello = transcodeModelloFattura(tryParse(billing.ElectronicInvoicingMethod__c));

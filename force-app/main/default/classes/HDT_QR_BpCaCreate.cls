@@ -63,6 +63,7 @@ public with sharing class HDT_QR_BpCaCreate
             BillingProfile__r.InvoicingStreetName__c,
             BillingProfile__r.CareOf__c,
             BillingProfile__r.OfficeSubjectCode__c,
+            BillingProfile__r.SubjectCode__c,
             BillingProfile__r.XMLType__c,
             BillingProfile__r.ElectronicInvoicingMethod__c,
             BillingProfile__r.DivergentSubject__c,
