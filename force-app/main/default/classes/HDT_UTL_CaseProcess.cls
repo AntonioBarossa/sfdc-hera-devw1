@@ -233,7 +233,7 @@ public with sharing class HDT_UTL_CaseProcess {
                                 if(activities != null){
                                     List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
                                     for(wrts_prcgvr__Activity__c activity : activities){
-                                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c) && !'Contattare il cliente'.equalsIgnoreCase(activity.Type__c)){
+                                        if (!'Eseguire Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
                                             activitiesOwnerId.clear();
                                             if(activity.OwnedByUser__c != null && String.isNotBlank(activity.OwnedByUser__c)){
                                                 activityId = activity.OwnedByUser__c;
@@ -300,8 +300,11 @@ public with sharing class HDT_UTL_CaseProcess {
                         if ('Autolettura'.equalsIgnoreCase(caseNew.Cluster__c) && 'Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
                             continue;
                         }
-                        activity.wrts_prcgvr__Status__c = 'Annullata';
-                        activitiesToCancel.add(activity);
+                        //CR31 - Nel caso in cui il case sia stato annullato e l'activity sia di Contatto Cliente, la lascio aperta per dare la possibilità all'operatore come da requisito di lavorarla.
+                        if(!'Contattare il cliente'.equalsIgnoreCase(activity.Type__c)){
+                            activity.wrts_prcgvr__Status__c = 'Annullata';
+                            activitiesToCancel.add(activity);
+                        }
                     }
                     if(!activitiesToCancel.isEmpty())
                     {

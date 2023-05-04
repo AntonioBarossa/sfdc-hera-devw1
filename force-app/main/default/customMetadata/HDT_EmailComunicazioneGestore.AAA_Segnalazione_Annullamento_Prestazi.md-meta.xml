@@ -4,7 +4,7 @@
     <protected>false</protected>
     <values>
         <field>Email_Template_Name__c</field>
-        <value xsi:type="xsd:string">AAA - Segnalazione Annullamento Prestazione già a fluss</value>
+        <value xsi:type="xsd:string">AAA - Segnalazione Annullamento Prestazione già a flusso</value>
     </values>
     <values>
         <field>Email__c</field>

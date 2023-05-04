@@ -4,7 +4,7 @@
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
         <locationX>336</locationX>
-        <locationY>1574</locationY>
+        <locationY>1694</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -47,7 +47,7 @@
         <name>redirectToRecord</name>
         <label>redirectToRecord</label>
         <locationX>50</locationX>
-        <locationY>2414</locationY>
+        <locationY>2534</locationY>
         <actionName>c:HDT_LCP_RedirectToRecord</actionName>
         <actionType>component</actionType>
         <flowTransactionModel>CurrentTransaction</flowTransactionModel>
@@ -64,7 +64,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>50</locationX>
-        <locationY>2174</locationY>
+        <locationY>2294</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -112,10 +112,97 @@
         </connector>
     </assignments>
     <assignments>
+        <description>Valorizzazione dell&apos;indirizzo di recapito per il documentale</description>
+        <name>AssignDeliveryAddress</name>
+        <label>AssignDeliveryAddress</label>
+        <locationX>336</locationX>
+        <locationY>1334</locationY>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingProvince__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyProvince__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingPlace__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyPlace__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.InvoicingStreetCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getPostClassification.SupplyStreetCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>getPostClassification.DeliveryAddress__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>DeliveryAddressFormula</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>updateAfterAddress</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
         <locationX>336</locationX>
-        <locationY>1694</locationY>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
@@ -224,7 +311,7 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>updateAfterAddress</targetReference>
+            <targetReference>AssignDeliveryAddress</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -271,7 +358,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Get_Input_Case_Aggiornato</targetReference>
+                <targetReference>AssignDeliveryAddress</targetReference>
             </connector>
             <label>Yes</label>
         </rules>
@@ -280,7 +367,7 @@
         <name>Ambiente</name>
         <label>Ambiente?</label>
         <locationX>336</locationX>
-        <locationY>1814</locationY>
+        <locationY>1934</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>AssegnaValori_0_0</targetReference>
@@ -407,7 +494,7 @@
         <name>tariManaged</name>
         <label>tariManaged</label>
         <locationX>182</locationX>
-        <locationY>2054</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
         </defaultConnector>
@@ -429,6 +516,12 @@
         </rules>
     </decisions>
     <environments>Default</environments>
+    <formulas>
+        <description>Concatenazione dell&apos;indirizzo da visualizzare nel campo &quot;Indirizzo di Spedizione&quot; nel component del documentale</description>
+        <name>DeliveryAddressFormula</name>
+        <dataType>String</dataType>
+        <expression>{!getPostClassification.SupplyStreetName__c} + &apos; &apos; + {!getPostClassification.SupplyStreetNumber__c} + &apos; &apos; + {!getPostClassification.SupplyStreetNumberExtension__c} + &apos;, &apos; + {!getPostClassification.SupplyCity__c} + &apos; &apos; + {!getPostClassification.SupplyProvince__c} + &apos;, &apos; + {!getPostClassification.SupplyPostalCode__c} + &apos; &apos; + {!getPostClassification.SupplyCountry__c}</expression>
+    </formulas>
     <formulas>
         <name>SupplyCityFormula</name>
         <dataType>String</dataType>
@@ -459,7 +552,7 @@
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
         <locationX>336</locationX>
-        <locationY>1454</locationY>
+        <locationY>1574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Calculate_Expiration_Date</targetReference>
@@ -501,7 +594,7 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>50</locationX>
-        <locationY>2294</locationY>
+        <locationY>2414</locationY>
         <connector>
             <targetReference>redirectToRecord</targetReference>
         </connector>
@@ -510,8 +603,8 @@
     <recordUpdates>
         <name>updateAfterAddress</name>
         <label>updateAfterAddress</label>
-        <locationX>424</locationX>
-        <locationY>1238</locationY>
+        <locationX>336</locationX>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>Get_Input_Case_Aggiornato</targetReference>
         </connector>
@@ -822,7 +915,7 @@
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
         <locationX>226</locationX>
-        <locationY>3038</locationY>
+        <locationY>3158</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -847,7 +940,7 @@
         <name>checkTariManaged</name>
         <label>checkTariManaged</label>
         <locationX>182</locationX>
-        <locationY>1934</locationY>
+        <locationY>2054</locationY>
         <connector>
             <targetReference>tariManaged</targetReference>
         </connector>
