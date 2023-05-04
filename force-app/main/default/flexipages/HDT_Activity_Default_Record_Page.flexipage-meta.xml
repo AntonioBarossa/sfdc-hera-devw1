@@ -129,7 +129,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.ForwardToAgency</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2 AND 3 AND 4</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
@@ -144,6 +144,11 @@
                                     <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>HDT_RT_ChiamataOutbound</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Type__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Validazione Documentale</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
