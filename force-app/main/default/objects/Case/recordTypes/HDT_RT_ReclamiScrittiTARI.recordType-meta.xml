@@ -13257,6 +13257,10 @@
             <fullName>Avviso/Bolletta</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
 		<values>
             <fullName>Contratto</fullName>
             <default>false</default>
