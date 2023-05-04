@@ -1096,6 +1096,11 @@
         <label>VOTIVE Intervento Riattivazione luce - EE</label>
     </customValue>
     <customValue>
+        <fullName>VOTIVE Modena/Nuovo contratto</fullName>
+        <default>false</default>
+        <label>VOTIVE Modena/Nuovo contratto</label>
+    </customValue>
+    <customValue>
         <fullName>Votive Modena / Cessazione - EE</fullName>
         <default>false</default>
         <label>Votive Modena / Cessazione - EE</label>
