@@ -28,6 +28,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 criteriaFields.add('AtoFormula__c');
                 criteriaFields.add('CompanyOwner__c');
                 criteriaFields.add('Commodity__c');
+                criteriaFields.add('Type');
             }	
             when 'Order' {
                 trackingFieldKey = 'Order__c';
@@ -239,6 +240,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
             when 'Case' {
                 Case eventCaseToCompare = (Case)sObjectCriteriaMap.get(recordId);
                 for(String field : objectCriteria.keySet()){
+                    if(field.equalsIgnoreCase('Type')){
+                        if(evaluateCaseType(String.valueOf(objectCriteria.get(field)), String.valueOf(eventCaseToCompare.get(field)))){
+                            return true;
+                        } else {
+                            continue;
+                        }
+                    }
                     if(eventCaseToCompare.get(field) != objectCriteria.get(field)){
                         System.debug(logginglevel.DEBUG, '>>> criteria error: ' + field);
                         return true;
@@ -260,6 +268,16 @@ public inherited sharing class HDT_UTL_SlaManagement {
             }
         }
 
+    }
+
+    public static Boolean evaluateCaseType(String slaRule, String caseType){
+        if(slaRule.equalsIgnoreCase('Cittadino') && caseType.equalsIgnoreCase('Reclamo Scritto Da Cittadino')){
+            return false;
+        } else if (slaRule.equalsIgnoreCase('Account') && !caseType.equalsIgnoreCase('Reclamo Scritto Da Cittadino')){
+            return false;
+        } else {
+            return true;
+        }
     }
 
     public static Boolean ruleDateIsValid(DateTime dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
@@ -463,6 +481,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
                 if(String.isNotEmpty(slaAdmin.Ato__c)){
                     slaMgmt.objectCriteria.put('AtoFormula__c', slaAdmin.Ato__c);
+                }
+
+                if(String.isNotEmpty(slaAdmin.CustomerType__c)){
+                    slaMgmt.objectCriteria.put('Type', slaAdmin.CustomerType__c);
                 }
 
             }
