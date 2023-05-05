@@ -334,7 +334,8 @@ public with sharing class HDT_SRV_SelfReadings {
                 //HDT_UTL_DatabaseService.updateSObject(readingCaseToUpdate);
                 if (isErrorWithActivity(errorMessage, currentReadingCase.Origin)) {
                     if(enableTurbobilling && isEnergy){
-                        HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP');
+                        String actRecordTypeId = Schema.SObjectType.wrts_prcgvr__Activity__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_Scarto').getRecordTypeId();
+                        HDT_UTL_Case.createDiscardActivity(caseId, errorMessage, 'CBS_AUT002__ESITO_KO_DA_SAP', 'Esito KO da SAP', 'Scarto complesso', actRecordTypeId);
                     }else {
                         HDT_UTL_Case.createActivity(caseId, errorMessage, 'CBS_AUT001__CHECK_PRELIMINARI_KO', 'Check preliminari KO');
                     }
