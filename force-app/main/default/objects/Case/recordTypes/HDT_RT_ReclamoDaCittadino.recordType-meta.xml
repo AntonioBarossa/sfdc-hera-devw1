@@ -11083,6 +11083,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Bonus sociale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Contatore</fullName>
             <default>false</default>
         </values>
