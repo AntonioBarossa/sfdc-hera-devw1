@@ -1406,7 +1406,7 @@
         <locationX>4294</locationX>
         <locationY>10670</locationY>
         <assignmentItems>
-            <assignToReference>getPostAttachment.Surface__c</assignToReference>
+            <assignToReference>getPostAttachment.ImmobileSurface__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <numberValue>0.0</numberValue>
@@ -2548,7 +2548,7 @@
             <name>surfaceNull</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>getCase.Surface__c</leftValueReference>
+                <leftValueReference>getCase.ImmobileSurface__c</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>true</booleanValue>
@@ -2590,7 +2590,7 @@
                 <leftValueReference>getPostAttachment.DeclaredArea__c</leftValueReference>
                 <operator>LessThan</operator>
                 <rightValue>
-                    <elementReference>getPostAttachment.Surface__c</elementReference>
+                    <elementReference>getPostAttachment.ImmobileSurface__c</elementReference>
                 </rightValue>
             </conditions>
             <conditions>
@@ -5117,7 +5117,7 @@
                 <fieldType>Region</fieldType>
                 <fields>
                     <name>Surface</name>
-                    <fieldText>&lt;p&gt;Superficie: {!getCase.Surface__c}&lt;/p&gt;</fieldText>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: Calibri, sans-serif; font-size: 11pt;&quot;&gt;Superficie rilevante per il calcolo&lt;/span&gt;: {!getCase.ImmobileSurface__c}&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -5142,8 +5142,8 @@
                 <name>SubprocessChoice_Section1_Column2</name>
                 <fieldType>Region</fieldType>
                 <fields>
-                    <name>NumberOfPeople</name>
-                    <fieldText>&lt;p&gt;Numero componenti: {!getCase.NumberMembers__c}&lt;/p&gt;</fieldText>
+                    <name>SurfaceDisplay</name>
+                    <fieldText>&lt;p&gt;&lt;span style=&quot;font-size: 11pt; font-family: Calibri, sans-serif; background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Superficie&lt;/span&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;: {!getCase.Surface__c}&lt;/span&gt;&lt;/p&gt;</fieldText>
                     <fieldType>DisplayText</fieldType>
                     <visibilityRule>
                         <conditionLogic>and</conditionLogic>
@@ -5193,6 +5193,21 @@
             <fields>
                 <name>SubprocessChoice_Section1_Column4</name>
                 <fieldType>Region</fieldType>
+                <fields>
+                    <name>NumberOfPeople</name>
+                    <fieldText>&lt;p&gt;Numero componenti: {!getCase.NumberMembers__c}&lt;/p&gt;</fieldText>
+                    <fieldType>DisplayText</fieldType>
+                    <visibilityRule>
+                        <conditionLogic>and</conditionLogic>
+                        <conditions>
+                            <leftValueReference>getCase.Type</leftValueReference>
+                            <operator>EqualTo</operator>
+                            <rightValue>
+                                <stringValue>Modifica dati contrattuali</stringValue>
+                            </rightValue>
+                        </conditions>
+                    </visibilityRule>
+                </fields>
                 <inputParameters>
                     <name>width</name>
                     <value>
