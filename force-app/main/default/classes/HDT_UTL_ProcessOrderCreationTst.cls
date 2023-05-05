@@ -14,6 +14,19 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
         HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_ENABLECREDITCHECK, true);
  
         System.runAs(internalUser) {
+
+            HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Documentazione Validata', 'Bozza', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura','A','','','');
+            HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Credit Check KO', 'Documentazione Validata', constants.ORDER_RECORDTYPEID_VOLTURA, 'HDT_RT_Voltura','A','','','');
+            
+            RateCategory__c rt = new RateCategory__c();
+            rt.CalculatedValue__c = 'ELVND_FC0L';
+            rt.Commodity__c = 'Energia Elettrica';
+            rt.DistributorCode__c = '13D0000001';
+            rt.ProductName__c = 'N/A';
+            rt.operatore__c = 'N/A';
+            rt.Fornitura__c = 'Domestico';
+            insert rt;
    
             List<MassiveFieldsObjectMap__c> massFieldsMapList = new List<MassiveFieldsObjectMap__c>();
             MassiveFieldsObjectMap__c massFieldsMap = new MassiveFieldsObjectMap__c();
@@ -71,7 +84,29 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
             massFieldsMap7.nameField__c = 'CommercialId__c';
             massFieldsMap7.objectType__c = 'Sale__c';
             massFieldsMapList.add(massFieldsMap7);
+            
+            MassiveFieldsObjectMap__c massFieldsMap8 = new MassiveFieldsObjectMap__c();
+            massFieldsMap8.Name = 'Sales_OrderModalitaFirma';
+            massFieldsMap8.labelField__c = 'OrderModalitaFirma';
+            massFieldsMap8.nameField__c = 'SignatureMethod__c';
+            massFieldsMap8.objectType__c = 'ChildOrder';
+            massFieldsMapList.add(massFieldsMap8);
+            
+            MassiveFieldsObjectMap__c massFieldsMap9 = new MassiveFieldsObjectMap__c();
+            massFieldsMap9.Name = 'Sales_Processo';
+            massFieldsMap9.labelField__c = 'Processo';
+            massFieldsMap9.nameField__c = 'ProcessType__c';
+            massFieldsMap9.objectType__c = 'ChildOrder';
+            massFieldsMapList.add(massFieldsMap9);
 
+            MassiveFieldsObjectMap__c massFieldsMap10 = new MassiveFieldsObjectMap__c();
+            massFieldsMap10.Name = 'VAS_Contratto';
+            massFieldsMap10.labelField__c = 'Contratto';
+            massFieldsMap10.nameField__c = 'SAPContractCode__c';
+            massFieldsMap10.objectType__c = 'Contract';
+            massFieldsMap10.processType__c = 'Vas';
+            massFieldsMapList.add(massFieldsMap10);
+            
             insert massFieldsMapList;
  
             List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(2, false, 'Hera Comm', 'Azienda', 'Aziende SME');
@@ -119,6 +154,7 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
             insert sales;
             
             List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
+            contractList[0].ServicePoint__c = spList[0].Id;
             insert contractList;
 
             List<Order> childOrders = HDT_UTL_DataFactoryTst.createChildOrder(1, false, accList[0].Id, sales, orderList[0].Id, cttList[0].Id);
@@ -152,6 +188,23 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
             agMatrixList[0].IsMonitoring__c = true;
             insert agMatrixList;
 
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(2,false);
+            products[0].ProductCode = '1327650667';
+            products[0].Family = 'Offerta commerciale';
+
+            products[1].ProductCode = 'POD';
+            products[1].Family = 'Punto Fornitura';
+            insert products;
+
+            SBQQ__ProductOption__c prodOpt = HDT_UTL_DataFactoryTst.createProductOption(products[1].Id, products[0].Id, false);
+            prodOpt.SBQQ__Required__c = true;
+            insert prodOpt;
+
+            Id pricebookId = Test.getStandardPricebookId();
+            List<PricebookEntry> priceBookEntries = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true, pricebookId);
+
+            List<Pricebook2> pB = HDT_UTL_DataFactoryTst.createPricebook(1,true);
+            List<PricebookEntry> priceBookEntries1 = HDT_UTL_DataFactoryTst.createPricebookEntry(products,true, pB[0].Id);
         }
     }
 
@@ -166,9 +219,8 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
 
         System.runAs(internalUser){
 
-        HDT_UTL_DataFactoryTst.createWebServiceConfiguration('VerifIndirizzo','https://integration-ts.gruppohera.it/dev/salesforce-api-exp/api/data-management/files','POST','MulesoftSalesforceUser');
         String processName = 'Voltura';
-        String dataVoltura = 'Voltura|1327650667|1327650667|1327650667|1327650667|CLIENTI GENERICI 20%|Azienda|Aziende Soho|Hera Comm S.p.A.|+39|3440418691|+39|null|null|null|854455666|WITEL SRL UNIPERSONALE|Napoli|Back office|Back office|Back office|AG133|VIA DELLA VITTORIA|MORINO|67050|Hera Comm S.p.A.|AQ|null|null|8|null|NA|80014|true|Back office|null|null|Ester|Verdi|null|null|WITEL SRL UNIPERSONALE|Energia Elettrica|IT001E68971403|0011X00000lNMPAQA4|Domestico|13A0-Usi di Abitazione BT|1500|Libero|null|null|Si|null|null|true|3|150|330|BT|Si|Monofase|Monorario|null|null|null|null|null|null|Bologna|1|10|true|RID|null|null|null|null|false|IT98C0987612345098765987123|IT|98|C|9876|12345|98765987123|Stesso Sottoscrittore|Marta|Esposito|STTCFR80A01F205Q|null|null|null|MORINO|VIA DELLA VITTORIA|2|false|null|Vocal Order|E-Mail|Ordinaria (Perm)|Si|2|Permanente|null|621458596|null|999999|Si|621458596|null|75|null|null|Iva 22% (Cod. 02)|2021-09-15|Draft|Analisi Consumi|null|null|null|100|4|Si|Appartamento|null|2021-04-26';
+        String dataVoltura = 'Voltura|1327650667|1327650667|false|Contratto già firmato|Bollettino postale|45051|3332424312|email@gmail.com|42|42|null|null|null|null|null|SPORTELLO PESARO|DONINI Enrico|Sportello|SPORTELLI_TOP|CRM|AGMM|DONINI|Enrico|AGMMSPMMSPES016|Hera Comm S.p.A.|Pesaro|Italia|61122|Pesaro|VIA RENATO SERRA|106|false|null|Italia|CLIENTI GENERICI 20%|Pesaro|Luca|null|null|Pesaro|Pesaro|106|Rossi|41044806836|Pesaro|null|false|61121|Famiglie|33604|Persona fisica|null|VIA CASTELFIDARDO|email@gmail.com|+39|null|null|null|3332424312|RSSMTN96T67D611E|M|+39|null|Residenziale|1000|1200|null|false|null|13D0000001|Energia Elettrica|null|3|null|Si|3.3|null|R00100000000331554|null|null|Pesaro|3|Libero|BT|13A0-Usi di Abitazione BT|Si|Domestico|Monofase|true|106|Multiorario|IT001E59146780|4008840957|4008840957|61122|Pesaro|Italia|VILLA FASTIGGI|false|null|null|null|null|Pesaro|VIA RENATO SERRA|null|null|null|Dettaglio|106|null|XML + carta/email|Bollettino postale|false|Stesso Sottoscrittore|Cartaceo|null|null|null|null|null|null|null|Italia|VILLA FASTIGGI|61122|Pesaro|null|2022-07-05|Ordinaria|null|Si|null|null|Imposta usi domestici|null|null|null|null|null|null|null|null|null|null|null|null|false|null|null|null|null|null|null';
     
         List<Order> ordList = [SELECT Id,  AccountId, ServicePoint__c, BillingProfile__c, Contact__c, ParentOrder__c
                                 FROM Order WHERE ProcessType__c = 'Voltura' ];
@@ -181,7 +233,7 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
         wrpNextDataObj.orderCompatible = true;
 
         MassiveLoaderRequest__c mlr = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataVoltura});
-        HDT_MassiveLoaderProcess__mdt myCMT = new HDT_MassiveLoaderProcess__mdt(DeveloperName= 'Subentro', MasterLabel='Subentro', Priority__c= 20, IsActive__c=true);
+        HDT_MassiveLoaderProcess__mdt myCMT = new HDT_MassiveLoaderProcess__mdt(DeveloperName= 'Voltura', MasterLabel='Voltura', Priority__c= 20, IsActive__c=true);
         mlr.Priority__c = myCMT.Priority__c;
         mlr.Status__c = 'In Lavorazione';
         update mlr;
@@ -194,11 +246,6 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
         update ms;
         System.debug(ms);
 
-/*         HDT_UTL_ProcessOrderCreation pr =new HDT_UTL_ProcessOrderCreation();
-        pr.setProcess(processName);
-        pr.setMassiveLoaderRequestItemList(ms);
-        pr.checks(); */
-
         test.startTest();
         HDT_BA_ProcessOrderCreation processReq = new HDT_BA_ProcessOrderCreation(mlr.Id, 1, processName);
         Database.executeBatch(processReq,1);
@@ -208,30 +255,4 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
         }
     
     }
-
-/*     @isTest
-    public static void testSubentro1(){
-
-        String processName='Subentro';
-        
-        String dataLead = 'Titolare|Bianchi|Mario Rossi SAS|1327650667|1327650667|CLIENTI GENERICI 20%|Azienda|Aziende Soho|HERA COMM|+39|3440418691|+39|null|null|null|854455666|2015-12-31|Napoli|Maschio|Business|null|null|VIA DELLA VITTORIA|MORINO|67050|ITALIA|AQ|null|null|8|null|NA|80014|true|Back office|null|null|Ester|Verdi|null|null|WITEL SRL UNIPERSONALE|Energia Elettrica|IT001E68971403|0011X00000lNMPAQA4|Domestico|13A0-Usi di Abitazione BT|1500|Libero|null|null|Si|null|null|true|3|150|330|BT|Si|Monofase|Monorario|null|null|null|null|null|null|Bologna|1|10|true|RID|null|null|null|null|false|IT98C0987612345098765987123|IT|98|C|9876|12345|98765987123|Stesso Sottoscrittore|Marta|Esposito|STTCFR80A01F205Q|null|null|null|MORINO|VIA DELLA VITTORIA|2|false|null|Vocal Order|E-Mail|Ordinaria (Perm)|Si|2|Permanente|null|621458596|null|999999|Si|621458596|null|75|null|null|Iva 22% (Cod. 02)|2021-09-15|Draft|Analisi Consumi|null|null|null|100|4|Si|Appartamento|null|2021-04-26';
-        MassiveLoaderRequest__c req= HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataLead});
-        req.Status__c = 'In Lavorazione';
-        update req;
-        List<MassiveLoaderRequestItem__c> ms = [SELECT Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, NextStepData__c,
-                                                SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, MassiveLoaderRequest__c,
-                                                Account__c, Data__c, Lead__c, StatusDescription__c, Status__c,MassiveLoaderRequest__r.ProcessType__c 
-                                                FROM MassiveLoaderRequestItem__c ];
-        //ms[0].NextStepData__c = JSON.serialize(wrpNextDataObj);
-        //ms[0].Data__c = JSON.serialize(wrpNextDataObj);
-        ms[0].Status__c = 'In Lavorazione';
-        update ms;
-
-        test.startTest();
-        HDT_BA_ProcessOrderCreation processReq = new HDT_BA_ProcessOrderCreation(req.Id, 1, processName); 
-        Database.executeBatch(processReq,1);
-
-        test.stopTest();
-        MassiveLoaderRequestItem__c msResult =[SELECT  StatusDescription__c, Status__c FROM MassiveLoaderRequestItem__c WHERE MassiveLoaderRequest__c=:req.Id];
-    } */
 }
