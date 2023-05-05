@@ -13254,6 +13254,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Calcolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Centri di Raccolta</fullName>
             <default>false</default>
         </values>
