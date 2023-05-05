@@ -326,6 +326,7 @@
         <relatedList>RelatedActivityList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ASSET.NAME</fields>
         <fields>ASSET.INSTALL_DATE</fields>
         <fields>VasPracticeCode__c</fields>
@@ -333,10 +334,16 @@
         <relatedList>Asset.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
+        <fields>SBQQ__ProductName__c</fields>
+        <fields>SBQQ__StartDate__c</fields>
+        <fields>SBQQ__EndDate__c</fields>
         <fields>VasPracticeCode__c</fields>
         <fields>VasEffectiveDate__c</fields>
-        <fields>SBQQ__ProductName__c</fields>
+        <fields>VersionFormula__c</fields>
+        <fields>Version__c</fields>
         <relatedList>SBQQ__Subscription__c.SBQQ__Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -358,6 +365,7 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>ORDERS.STATUS</fields>
         <fields>ORDERS.EFFECTIVE_DATE</fields>
@@ -366,6 +374,8 @@
         <relatedList>RelatedOrderList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.CREATED_DATE</fields>
