@@ -54,10 +54,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Tari%2FTCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Busta Docusign non consegnata</fullName>
             <default>false</default>
         </values>
