@@ -164,7 +164,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('InvoicingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
-        requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
+        //requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
+        requestBody.ordine.indirizzo.presso = caseRecord.get('CareOf__c') == null ? '' : (String) caseRecord.get('CareOf__c');
         requestBody.ordine.emailInvioBolletta = (String) caseRecord.get('InvoiceEmail__c');
         requestBody.ordine.pecInvioBolletta = (String) caseRecord.get('InvoiceCertifiedEmailAddress__c');
         requestBody.ordine.modInvioBolletta = (String) caseRecord.get('BillSendingMethod__c');
