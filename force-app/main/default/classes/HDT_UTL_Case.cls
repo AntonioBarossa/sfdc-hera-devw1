@@ -207,11 +207,11 @@ public inherited sharing class HDT_UTL_Case {
             if(caseRetrieved.size() > 0){
 
                 //Logica prevalorizzazione campo Data Decorrenza (Data Inizio Variazione) con data creazione case BBP W2 pg. 594
-                currentCase.EffectiveDate__c = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()); 
+                currentCase.EffectiveDate__c = caseRetrieved[0].CustomerRequestDate__c != null ? date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()) : date.today(); 
 
                 //Logica prevalorizzazione campo Data Retroattiva in base a data Inizio Contratto BBP W2 pg. 594
                 if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
-                    dataRetroattiva = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+                    dataRetroattiva = caseRetrieved[0].CustomerRequestDate__c != null ? date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()) : date.today();
                 }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
                     dataRetroattiva = contractStartDate;
                 }
@@ -478,4 +478,36 @@ public inherited sharing class HDT_UTL_Case {
         }
         return serviceRequestList;
     }
+
+    /**
+     * Crea una Activity PClick sotto un Case passando anche una discardCategory e un RT.
+     * recordId = id del Case
+     * description = testo libero da mostrare nell'activity
+     * templateName = nome del template PClick dell'activity da creare
+     * type = tipo attività
+     * discardCategory = tipologia scarto
+     * recordTypeId
+     * 
+     */ 
+    public static void createDiscardActivity(String recordId, String description, String templateName, String type, String discardCategory, String recordTypeId){
+        String queryString = 'Select id,wrts_prcgvr__Assignees__c, wrts_prcgvr__Subject__c, wrts_prcgvr__DueDateField__c,Name from wrts_prcgvr__ActivityTemplate__c  where Name = \''+ templateName +'\'';
+        String objectName = 'wrts_prcgvr__ActivityTemplate__c';
+        List<SObject> listRecord = HDT_QR_GenericQuery.getGenericRecords(queryString, objectName);
+        wrts_prcgvr__ActivityTemplate__c template = new wrts_prcgvr__ActivityTemplate__c();
+        if(listRecord.size()>0){
+            template = (wrts_prcgvr__ActivityTemplate__c) listRecord[0];
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.wrts_prcgvr__ActivityTemplate__c = template.Id;
+            activity.Case__c = recordId;
+            activity.CausalError__c = description;
+            activity.wrts_prcgvr__Description__c = description;
+            activity.Type__c = type;
+            activity.DiscardCategory__c = discardCategory;
+            if(!String.isBlank(recordTypeId)){
+                activity.RecordTypeId = recordTypeId;
+            }
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        }
+    }
+
 }

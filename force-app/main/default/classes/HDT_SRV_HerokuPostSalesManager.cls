@@ -481,7 +481,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         qcDateField.fieldType = 'STRING';
                         qcDateField.value = dateFinal;
                         obj.fields.add(qcDateField);
-                        break;
                     }
                 }
 
@@ -511,7 +510,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         dlNoteField.fieldType = 'STRING';
                         dlNoteField.value = concatPhoneNote;
                         obj.fields.add(dlNoteField);
-                        break;
                     }
                 }
             }

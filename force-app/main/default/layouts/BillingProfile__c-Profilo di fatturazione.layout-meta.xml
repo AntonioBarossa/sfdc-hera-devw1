@@ -296,6 +296,7 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>ServicePoint__c</fields>
         <fields>CommercialProduct__c</fields>
@@ -323,6 +324,7 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
         <fields>ORDERS.STATUS</fields>

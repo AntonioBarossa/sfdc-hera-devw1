@@ -460,6 +460,8 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>VasPracticeCode__c</fields>
         <fields>VasEffectiveDate__c</fields>
@@ -472,6 +474,7 @@
         <relatedList>SBQQ__Subscription__c.SBQQ__Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ASSET.NAME</fields>
         <fields>ASSET.INSTALL_DATE</fields>
         <fields>VasPracticeCode__c</fields>
@@ -479,6 +482,8 @@
         <relatedList>Asset.Contract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SBQQ__NetAmount__c</fields>
         <fields>SBQQ__Status__c</fields>
@@ -487,6 +492,7 @@
         <relatedList>SBQQ__Quote__c.SBQQ__MasterContract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>OPPORTUNITY.NAME</fields>
         <fields>OPPORTUNITY.STAGE_NAME</fields>
         <fields>OPPORTUNITY.AMOUNT</fields>
@@ -494,6 +500,8 @@
         <relatedList>Opportunity.SBQQ__RenewedContract__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SBQQ__Product__c</fields>
         <fields>SBQQ__Price__c</fields>

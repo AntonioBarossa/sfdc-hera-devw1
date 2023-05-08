@@ -11823,6 +11823,14 @@
             <fullName>Contratto</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Contratti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Calcolo</fullName>
+            <default>false</default>
+        </values>
 		<values>
             <fullName>Impatto visivo</fullName>
             <default>false</default>

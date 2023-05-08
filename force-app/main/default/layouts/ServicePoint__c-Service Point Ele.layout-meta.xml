@@ -327,6 +327,7 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>BillingProfile__c</fields>
         <fields>CommercialProduct__c</fields>
@@ -335,6 +336,8 @@
         <relatedList>Contract.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Phase__c</fields>
         <fields>CASES.TYPE</fields>
@@ -342,6 +345,8 @@
         <relatedList>Case.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>Opportunity__c</fields>
