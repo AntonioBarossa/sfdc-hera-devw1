@@ -207,11 +207,11 @@ public inherited sharing class HDT_UTL_Case {
             if(caseRetrieved.size() > 0){
 
                 //Logica prevalorizzazione campo Data Decorrenza (Data Inizio Variazione) con data creazione case BBP W2 pg. 594
-                currentCase.EffectiveDate__c = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()); 
+                currentCase.EffectiveDate__c = caseRetrieved[0].CustomerRequestDate__c != null ? date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year(), caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()) : date.today(); 
 
                 //Logica prevalorizzazione campo Data Retroattiva in base a data Inizio Contratto BBP W2 pg. 594
                 if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) > 5){
-                    dataRetroattiva = date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day());
+                    dataRetroattiva = caseRetrieved[0].CustomerRequestDate__c != null ? date.newinstance(caseRetrieved[0].CustomerRequestDate__c.year() - 5, caseRetrieved[0].CustomerRequestDate__c.month(), caseRetrieved[0].CustomerRequestDate__c.day()) : date.today();
                 }else if (contractStartDate != null && (contractStartDate.daysBetween(Date.today()) / 365) < 5){
                     dataRetroattiva = contractStartDate;
                 }
