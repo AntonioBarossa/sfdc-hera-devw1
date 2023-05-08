@@ -50,43 +50,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Fatturazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Morosità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Pagamenti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Preventivi</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Back Office - Supporto%2FComunicazioni Urgenti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Back Office - Tari%2FTCP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Back Office - Vas e HVAC</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Busta Docusign non consegnata</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Caricamenti contratti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -135,14 +103,6 @@
         </values>
         <values>
             <fullName>Credit Management %E2%80%93 affidi ADR</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Management %E2%80%93 affidi legale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Credit Management %E2%80%93 cessioni</fullName>
             <default>false</default>
         </values>
         <values>
@@ -242,10 +202,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Gestione procedurale SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Gestione Back Office</fullName>
             <default>false</default>
         </values>
@@ -259,14 +215,6 @@
         </values>
         <values>
             <fullName>Gestione manuale SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione processi Ultima Istanza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Gestione processi di Misura</fullName>
             <default>false</default>
         </values>
         <values>
@@ -498,10 +446,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Supporto emissione SD_singola</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Supporto legale</fullName>
             <default>false</default>
         </values>
@@ -543,10 +487,6 @@
         </values>
         <values>
             <fullName>Verifiche Morosità Business</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifiche contratti</fullName>
             <default>false</default>
         </values>
         <values>
