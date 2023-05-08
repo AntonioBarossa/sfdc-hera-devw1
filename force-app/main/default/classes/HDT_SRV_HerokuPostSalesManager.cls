@@ -109,7 +109,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 objFields.put('Type', 'Verifica Integrita Sigilli');
             }
             if(!objFields.isEmpty()){
-                mrrList = handleMrrFields(mrrList, objFields);
+                mrrList = handleMrrFields(mrrList, objFields, currentCase);
             }
             arg.put('endpoint', endpoint);
             arg.put('timeout', 120000);
@@ -446,12 +446,12 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     }
 
     @TestVisible
-    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields)
+    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields, Case currentCase)
     {
         String fieldName = '';
         for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
         {
-            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case'))
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case') && currentCase != null && obj.Id == currentCase.Id)
             {
 
                 if(objFields.get('INVIADATAQC') != null && 'Y'.equalsIgnoreCase(String.valueOf(objFields.get('INVIADATAQC')))){
