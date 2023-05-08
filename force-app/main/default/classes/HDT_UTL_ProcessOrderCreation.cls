@@ -747,7 +747,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
     }
 
-    private void handleCustomFieldLogic(Order orderToUpdate, String commodity){
+/*     private void handleCustomFieldLogic(Order orderToUpdate, String commodity){
         HDT_SRV_Order orderSrv = new HDT_SRV_Order();
         String processType = orderToUpdate.ProcessType__c;
         Date effectiveDate = orderToUpdate.EffectiveDate__c;
@@ -781,7 +781,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }else{
             calculateRateCategory(orderToUpdate);
         }
-    }
+    } */
 
     private void setSalesCompanyAndCode(Order orderToUpdate, String commodity){
         if(commodity.equalsIgnoreCase('Gas')){
