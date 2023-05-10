@@ -644,7 +644,7 @@
             <assignToReference>ProcessType</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>Rettifica Seconda Classificazione</stringValue>
+                <stringValue>Reclamo Scritto Seconda Classificazione Tari</stringValue>
             </value>
         </assignmentItems>
         <connector>
