@@ -673,13 +673,16 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         String newPhase = newOrder.Phase__c;
         String oldPhase = oldOrder.Phase__c;
+        String newOrderProcess = newOrder.DocumentalProcessType__c;
 
         if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
-            if( !newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && !newOrder.DocumentalProcessType__c.containsIgnoreCase('Cambio offerta') ){
+            if( !newOrderProcess.containsIgnoreCase('Voltura') && !newOrderProcess.containsIgnoreCase('Cambio offerta') ){
                 newOrder.EffectiveDate__c = System.today();
             }
-            if( ( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ) || 
-                ( newOrder.DocumentalProcessType__c.containsIgnoreCase('Cambio offerta') && String.isBlank(newOrder.MeterSN__c) ) )
+            if( ( newOrderProcess.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ) || 
+                ( newOrderProcess.containsIgnoreCase('Cambio offerta') && String.isBlank(newOrder.MeterSN__c) ) ||
+                ( (newOrderProcess.containsIgnoreCase('Cambio offerta') || newOrderProcess.containsIgnoreCase('Voltura') ) && 'ACPOZZI000'.equalsIgnoreCase(newOrder.RateCategory__c) )
+              )
             {
                 newOrdersListReadingDate.add(newOrder);
                 newOrder.ReadingCustomerDate__c = System.today();

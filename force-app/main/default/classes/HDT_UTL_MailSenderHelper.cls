@@ -440,7 +440,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
     public static String getReceiverMail(Id templateId){
        List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
        emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
-       return HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
+       String receiverAddress = HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
+       return !String.isBlank(receiverAddress) ? receiverAddress : '###';
     }
 
     public static void deletePendingFiles(List<Id> cdIdList) {

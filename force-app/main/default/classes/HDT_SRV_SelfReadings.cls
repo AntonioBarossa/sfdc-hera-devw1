@@ -503,7 +503,9 @@ public with sharing class HDT_SRV_SelfReadings {
                 'Vendita Condomini',
                 'Vendita MM',
                 'Vendita TopBusiness' {
-                createActivity = msg.contains('superiore valore massimo concesso') || msg.contains('registri incompleti');
+                createActivity = msg.containsIgnoreCase('superiore valore massimo concesso') || msg.containsIgnoreCase('registri incompleti') || msg.containsIgnoreCase('Lettura non plausibile');
+
+                
             }
             when else {
                 /*
