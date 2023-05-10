@@ -162,6 +162,28 @@ public with sharing class HDT_UTL_ProcessDateManagerTst {
     }
 
     @isTest
+    public static void updateReadingDateTst() {
+ 
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            List<Order> orders = [SELECT Id, Phase__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c FROM Order LIMIT 1];
+
+            Test.startTest();
+            
+            HDT_UTL_ProcessDateManager.updateReadingDate(orders);
+
+            Test.stopTest();
+            
+            List<Reading__c> resultReading = [SELECT Id, ReadingValueMeter__c, OrderAcqua__c FROM Reading__c WHERE OrderAcqua__c = :orders[0].Id ];
+
+            System.assertEquals(true, resultReading.size() > 0, 'Reading__c not correct');
+
+        }
+    }
+
+    @isTest
     public static void testHandleBusinessDate() {
 
         List<Order> orders = [SELECT Id,DateSentToSII__c, Phase__c, SignedDate__c, RecessNotice__c,EffectiveDate__c,CommodityFormula__c,MarketOrigin__c,SupplyType__c,VoltageLevel__c, ClientCategoryFormula__c, DocumentalProcessType__c, IsActivationDeferred__c, Channel__c, Market__c, CustomerCategory__c, SignatureMethod__c, DocSendingMethod__c,WizardCompletedDate__c FROM Order WHERE Name = 'childOrder0'];
