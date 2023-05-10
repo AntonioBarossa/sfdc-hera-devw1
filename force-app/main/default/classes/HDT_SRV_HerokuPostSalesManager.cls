@@ -92,9 +92,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
             }
             mrrList = supplyTypeTech(mrrList);
             Map<String,Object> objFields = new Map<String,Object>();
-            if('Acqua'.equalsIgnoreCase(commodity) || 'Teleriscaldamento'.equalsIgnoreCase(commodity)){
-                objFields.put('EffectiveDate__c', obj.get('EffectiveDate__c'));
-            }
             if('Acqua'.equalsIgnoreCase(commodity)){
                 objFields.put('INVIADATAQC', 'Y');
                 objFields.put('WrittenReceiptRequestDate__c', obj.get('WrittenReceiptRequestDate__c'));
@@ -112,7 +109,7 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                 objFields.put('Type', 'Verifica Integrita Sigilli');
             }
             if(!objFields.isEmpty()){
-                mrrList = handleMrrFields(mrrList, objFields);
+                mrrList = handleMrrFields(mrrList, objFields, currentCase);
             }
             arg.put('endpoint', endpoint);
             arg.put('timeout', 120000);
@@ -449,12 +446,12 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
     }
 
     @TestVisible
-    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields)
+    private static wrts_prcgvr.MRR_1_0.MultiRequest handleMrrFields (wrts_prcgvr.MRR_1_0.MultiRequest mrrList, Map<String, Object> objFields, Case currentCase)
     {
         String fieldName = '';
         for(wrts_prcgvr.MRR_1_0.WObject obj : mrrList.requests[0].objects)
         {
-            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case'))
+            if(obj.objectType!= null && obj.objectType.equalsIgnoreCase('Case') && currentCase != null && obj.Id == currentCase.Id)
             {
 
                 if(objFields.get('INVIADATAQC') != null && 'Y'.equalsIgnoreCase(String.valueOf(objFields.get('INVIADATAQC')))){
@@ -514,14 +511,6 @@ global inherited sharing class HDT_SRV_HerokuPostSalesManager implements wrts_pr
                         dlNoteField.value = concatPhoneNote;
                         obj.fields.add(dlNoteField);
                     }
-                }
-                //Per commodity Acqua o Teleriscaldamento, EffectiveDate__c viene inviata sul tag DT_INCONN al posto di DT_DECRICHIESTA.
-                if(objFields.get('EffectiveDate__c') != null){
-                    wrts_prcgvr.MRR_1_0.Field effectiveDateField = new wrts_prcgvr.MRR_1_0.Field();
-                    effectiveDateField.name = 'DT_INCONN';
-                    effectiveDateField.fieldType = 'STRING';
-                    effectiveDateField.value = String.valueOf(objFields.get('EffectiveDate__c'));
-                    obj.fields.add(effectiveDateField);
                 }
             }
         }

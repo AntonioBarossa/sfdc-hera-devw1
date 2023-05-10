@@ -101,10 +101,17 @@
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>Get_Input_Case_Aggiornato.SalesCompanyCode__c</assignToReference>
+            <assignToReference>Get_Input_Case_Aggiornato.CompanyOwner__c</assignToReference>
             <operator>Assign</operator>
             <value>
-                <stringValue>11-HERASPA</stringValue>
+                <stringValue>MMS</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>Get_Input_Case_Aggiornato.CityOrInstitution__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>ATO</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -369,8 +376,7 @@
         <locationX>336</locationX>
         <locationY>1934</locationY>
         <defaultConnector>
-            <isGoTo>true</isGoTo>
-            <targetReference>AssegnaValori_0_0</targetReference>
+            <targetReference>Calcola_ATO</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -548,6 +554,31 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordLookups>
+        <description>Ricerca del ATO di appartenenza in base al comune</description>
+        <name>Calcola_ATO</name>
+        <label>Calcola ATO</label>
+        <locationX>490</locationX>
+        <locationY>2054</locationY>
+        <assignNullValuesIfNoRecordsFound>true</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>AssegnaValori_0_0</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Town__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Input_Case_Aggiornato.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <object>TownATOTable__c</object>
+        <outputAssignments>
+            <assignToReference>ATO</assignToReference>
+            <field>ATO__c</field>
+        </outputAssignments>
+    </recordLookups>
     <recordLookups>
         <name>Get_Input_Case_Aggiornato</name>
         <label>Get Input Case Aggiornato</label>
@@ -965,6 +996,14 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <description>Contiene l&apos;ATO di appartenenza del comune della segnalazione</description>
+        <name>ATO</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
     <variables>
         <name>DirittoRettifica</name>
         <dataType>Boolean</dataType>

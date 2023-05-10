@@ -46,8 +46,13 @@ public with sharing class HDT_UTL_ProcessDateManager {
 				reading.ReadingDate__c = System.today();
 				reading.ReadingValueMeter__c = String.isBlank(reading.OrderAcqua__r.MeterSN__c)? 0 : reading.ReadingValueMeter__c;
 			}
-			HDT_UTL_DatabaseService.updateSObject(readingList);
-        }
+        } else {
+			Reading__c dummyReading = new Reading__c();
+			dummyReading.ReadingDate__c = System.today();
+			dummyReading.ReadingValueMeter__c = 0;
+			readingList.add(dummyReading);
+		}
+		HDT_UTL_DatabaseService.updateSObject(readingList);
     }
 
     public static void setMaxAfterthoughtDate(List<Order> orderList) {

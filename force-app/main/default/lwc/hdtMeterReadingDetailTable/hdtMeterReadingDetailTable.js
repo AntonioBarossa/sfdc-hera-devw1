@@ -40,7 +40,7 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
 
             if(result.success){
                 this.columnsobj = JSON.parse(result.meterReadingTable);
-                this.showModality = result.trbEnable;
+                this.showModality = this.isFromFlow?false:result.trbEnable;
                 this.detailBackendCall();
             } else {
                 console.log('>>>> ERROR > getContractRecords');
@@ -247,5 +247,4 @@ export default class HdtMeterReadingDetailTable extends LightningElement {
         this.loadData = false;
         this.detailBackendCall();
     }
-
 }
