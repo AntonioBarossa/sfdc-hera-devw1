@@ -413,6 +413,9 @@ public inherited sharing class HDT_UTL_SlaManagement {
     }
 
     public String getTypeField(String objName, String fieldApiName){
+        if(fieldApiName.equalsIgnoreCase('ActivityStartTime__c') || fieldApiName.equalsIgnoreCase('ActivityEndTime__c')){
+            return 'DATETIME';
+        }
         String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
         return fieldTypeName;
     }
