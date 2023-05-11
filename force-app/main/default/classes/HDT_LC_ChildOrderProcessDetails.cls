@@ -161,7 +161,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             sobjListToUpdate.add(orderToUpdate);
             sobjListToUpdate.add(ordItem);
             sobjListToUpdate.add(quoteLine);
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjListToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
         
     }

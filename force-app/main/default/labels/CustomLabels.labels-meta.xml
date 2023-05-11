@@ -624,6 +624,13 @@
         <value>Salva il criterio</value>
     </labels>
     <labels>
+        <fullName>HDT_EnableDisableCpq</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EnableDisableCpq</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
         <fullName>LeadCantBeCertified</fullName>
         <categories>SendCertificationRequest</categories>
         <language>en_US</language>
