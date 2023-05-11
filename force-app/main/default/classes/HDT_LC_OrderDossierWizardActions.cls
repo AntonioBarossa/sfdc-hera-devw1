@@ -155,6 +155,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             CampaignMember campaignMember = HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
             System.debug('campaignMember Status -->'+campaignMember.Status);
             wrpActivityVo.campaignMemberStatus = myStatus;
+            wrpActivityVo.campaignMemberId = cm.Id;
         }
 
         List<Order> ordersToUpdate = new List<Order>();
@@ -475,6 +476,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         public String orderPhase {get; set;}
         public String campaignMemberStatus {get; set;}
         public Boolean isCommunity {get; set;}
+        public Id campaignMemberId {get; set;}
     }
 
     @AuraEnabled
@@ -639,7 +641,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         if(!sobjToUpdate.isEmpty())
         {
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
     }

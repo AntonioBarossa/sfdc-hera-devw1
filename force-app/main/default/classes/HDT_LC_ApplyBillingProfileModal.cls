@@ -97,7 +97,10 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         }
 
         quoteLineSrv.updateRecords(quoteLineListUpdate);
-
+        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+        HDT_UTL_QuoteProcess.disableCpq();
+        quoteLineSrv.updateRecords(quoteLineListUpdate);
+        HDT_UTL_QuoteProcess.enableCpq();
     }
 
 }
