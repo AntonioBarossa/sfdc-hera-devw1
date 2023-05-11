@@ -72,7 +72,7 @@ public inherited sharing class HDT_QR_MailSender {
            WHERE Email_Template_Name__c = :emailTemplateName
            WITH SECURITY_ENFORCED
            LIMIT 1
-       ].Email__c;
+       ]?.Email__c;
     }
 
     public static List<EmailMessage> getEmailMessage(Id caseId, String Subject){

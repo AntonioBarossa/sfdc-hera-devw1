@@ -348,6 +348,36 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 AmministrazioneSottotipologiaUso__c sottoTipologia=HDT_SRV_DataEnrichmentPostSales.handleSubType(childOrder.SalesCompany__c,offertaCommercialeCode);
                 childOrder.IntendedUse__c=sottoTipologia.IntendedUse__c;
                 childOrder.UseSubCategory__c=sottoTipologia.SottotipologiaUso__c;
+                String tempUseSubCategory=String.isNotBlank(childOrder.UseSubCategory__c) ? childOrder.UseSubCategory__c.toLowerCase():'';
+                switch on tempUseSubCategory{
+                    when 'uso agricolo e zootecnico'{
+                        childOrder.ZootechnicalHousingUnit__c=1.0;
+                    }
+                    when 'uso pubblico non disalimentabile','altri usi','uso pubblico disalimentabile'{
+                        childOrder.NotDomesticHousingUnit__c=1.0;
+                    }
+                    when 'uso artigianale e commerciale'{
+                        childOrder.CommercialHousingUnit__c=1.0;
+                    }
+                    when 'uso industriale'{
+                        childOrder.IndustrialHousingUnit__c=1.0;
+                    }
+                    when 'uso domestico non residente'{
+                        childOrder.NotResidentDomesticHousingUnit__c=1.0;
+                    }
+                    when 'uso domestico residente'{
+                        childOrder.ResidentDomesticHousingUnit__c=1.0;
+                    }
+                    when else {
+                        childOrder.AgriculturalHousingUnit__c=1.0;
+                        childOrder.CommercialHousingUnit__c=1.0;
+                        childOrder.IndustrialHousingUnit__c=1.0;
+                        childOrder.NotDomesticHousingUnit__c=1.0;
+                        childOrder.NotResidentDomesticHousingUnit__c=1.0;
+                        childOrder.ResidentDomesticHousingUnit__c=1.0;
+                        childOrder.ZootechnicalHousingUnit__c=1.0;
+                    }
+                }
             }
 
         }
