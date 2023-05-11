@@ -36,7 +36,7 @@ public inherited sharing class HDT_UTL_SlaTracking {
             Date endDate;
             for(SlaTracking__c track : slaTrackingToElaborate){
 
-                //startDate = convertDateTime(track.StartDateTime__c);
+                startDate = convertDateTime(track.StartDateTime__c);
                 //endDate = convertDateTime(track.EndDateTime__c);
                 //track.SlaValue__c = startDate.daysBetween(endDate);//+1;
                 track.SlaValue__c = calculateSlaValue(track.StartDateTime__c, track.EndDateTime__c);
