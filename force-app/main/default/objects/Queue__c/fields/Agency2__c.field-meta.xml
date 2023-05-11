@@ -12,6 +12,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>AcAgency</fullName>
+                <default>false</default>
+                <label>AcAgency</label>
+            </value>
+            <value>
                 <fullName>Comdata</fullName>
                 <default>false</default>
                 <label>Comdata</label>
@@ -67,6 +72,16 @@
                 <label>Linetech</label>
             </value>
             <value>
+                <fullName>Match</fullName>
+                <default>false</default>
+                <label>Match</label>
+            </value>
+            <value>
+                <fullName>Network Contacts</fullName>
+                <default>false</default>
+                <label>Network Contacts</label>
+            </value>
+            <value>
                 <fullName>Service A</fullName>
                 <default>false</default>
                 <label>Service A</label>
@@ -115,6 +130,11 @@
                 <fullName>Target Sinergie</fullName>
                 <default>false</default>
                 <label>Target Sinergie</label>
+            </value>
+            <value>
+                <fullName>Tecnocall</fullName>
+                <default>false</default>
+                <label>Tecnocall</label>
             </value>
         </valueSetDefinition>
     </valueSet>

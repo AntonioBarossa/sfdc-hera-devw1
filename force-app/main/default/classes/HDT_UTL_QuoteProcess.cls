@@ -120,6 +120,10 @@ public inherited sharing class HDT_UTL_QuoteProcess {
         newQuote.NewClient__c = oldQuote.NewClient__c;
         newQuote.SuperUser__c = oldQuote.SuperUser__c;
         newQuote.SBQQ__PricebookId__c = oldQuote.SBQQ__PricebookId__c;
+        if(oldQuote.CommercialId__c != null)
+        {
+            newQuote.CommercialId__c = oldQuote.CommercialId__c;
+        }
     }
 
     private static list<SBQQ__Quote__c> getSaleAmendOldQuotes(list<SBQQ__Quote__c> newQuoteList){

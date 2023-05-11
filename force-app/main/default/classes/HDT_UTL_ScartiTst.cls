@@ -532,9 +532,9 @@ public class HDT_UTL_ScartiTst {
         List<et4ae5__IndividualEmailResult__c> individualEmailResults = [Select id,BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c = null];
         
         individualEmailResults[0].BounceSubCategory__c = 'changed';
-        
-        update individualEmailResults;
-        
+        Test.startTest();
+            update individualEmailResults;
+        Test.stopTest();
         String newBounceSubCategory = [Select BounceSubCategory__c From et4ae5__IndividualEmailResult__c limit 1].BounceSubCategory__c;
         
         System.assertEquals('changed', newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
@@ -547,9 +547,9 @@ public class HDT_UTL_ScartiTst {
         List<et4ae5__IndividualEmailResult__c> individualEmailResults = [Select id,BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c != null ];
         
         individualEmailResults[0].BounceSubCategory__c = 'changed';
-        
-        update individualEmailResults;
-        
+        Test.startTest();
+            update individualEmailResults;
+        Test.stopTest();
         String newBounceSubCategory = [Select BounceSubCategory__c From et4ae5__IndividualEmailResult__c where OrderID__c != null limit 1].BounceSubCategory__c;
         
         System.assertEquals('changed', newBounceSubCategory, 'createScartoForMarketingCloud did not work correctly');
@@ -963,7 +963,7 @@ public class HDT_UTL_ScartiTst {
                 update new Order (Id = o.Id, Phase__c = 'Da Inviare');
             }catch(Exception e){
                 error = true;
-                System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
+                System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
             System.assert(error,'Non è stata lanciata l\'eccezione attesa');
             o.Phase__c = 'Errore Lavorazione SAP';
@@ -1001,7 +1001,7 @@ public class HDT_UTL_ScartiTst {
                 update new Case (Id = c.Id, Phase__c = 'Da Inviare');
             }catch(Exception e){
                 error = true;
-                System.assert(e.getMessage().containsIgnoreCase('Su questo ordine è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
+                System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
             System.assert(error,'Non è stata lanciata l\'eccezione attesa');
             c.Phase__c = 'Errore Lavorazione SAP';

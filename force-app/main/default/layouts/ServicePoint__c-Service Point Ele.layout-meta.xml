@@ -327,6 +327,7 @@
         </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>BillingProfile__c</fields>
         <fields>CommercialProduct__c</fields>

@@ -1172,7 +1172,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD --> 
+    <!--<picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1734,7 +1735,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -7578,6 +7579,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -8932,7 +8937,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD --> 
+    <!--<picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -9990,7 +9996,7 @@
             <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>

@@ -4,8 +4,8 @@
     <assignments>
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
-        <locationX>2360</locationX>
-        <locationY>6518</locationY>
+        <locationX>1634</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -27,8 +27,8 @@
     <assignments>
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
-        <locationX>1568</locationX>
-        <locationY>6518</locationY>
+        <locationX>842</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -50,8 +50,8 @@
     <assignments>
         <name>AssignEbike</name>
         <label>AssignEbike</label>
-        <locationX>3416</locationX>
-        <locationY>6518</locationY>
+        <locationX>2690</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistEbike</assignToReference>
             <operator>Assign</operator>
@@ -66,8 +66,8 @@
     <assignments>
         <name>AssignEE</name>
         <label>AssignEE</label>
-        <locationX>622</locationX>
-        <locationY>1118</locationY>
+        <locationX>908</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>IsEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -82,8 +82,8 @@
     <assignments>
         <name>AssignEE_0</name>
         <label>AssignEE</label>
-        <locationX>1590</locationX>
-        <locationY>1118</locationY>
+        <locationX>1696</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>IsEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -98,8 +98,8 @@
     <assignments>
         <name>AssignFotoVoltaico</name>
         <label>AssignFotoVoltaico</label>
-        <locationX>4208</locationX>
-        <locationY>6518</locationY>
+        <locationX>3482</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistFotoVoltaico</assignToReference>
             <operator>Assign</operator>
@@ -114,8 +114,8 @@
     <assignments>
         <name>AssignGas</name>
         <label>AssignGas</label>
-        <locationX>1502</locationX>
-        <locationY>1118</locationY>
+        <locationX>1788</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>IsGas</assignToReference>
             <operator>Assign</operator>
@@ -130,8 +130,8 @@
     <assignments>
         <name>AssignGas_0</name>
         <label>AssignGas</label>
-        <locationX>2118</locationX>
-        <locationY>1118</locationY>
+        <locationX>2224</locationX>
+        <locationY>1814</locationY>
         <assignmentItems>
             <assignToReference>IsGas</assignToReference>
             <operator>Assign</operator>
@@ -146,8 +146,8 @@
     <assignments>
         <name>AssignInstallazione</name>
         <label>AssignInstallazione</label>
-        <locationX>1150</locationX>
-        <locationY>3158</locationY>
+        <locationX>1436</locationX>
+        <locationY>3854</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneTermostato</assignToReference>
             <operator>Assign</operator>
@@ -162,8 +162,8 @@
     <assignments>
         <name>AssignInstallazioneStandard</name>
         <label>AssignInstallazioneStandard</label>
-        <locationX>1150</locationX>
-        <locationY>4166</locationY>
+        <locationX>1436</locationX>
+        <locationY>4862</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneStandard</assignToReference>
             <operator>Assign</operator>
@@ -178,8 +178,8 @@
     <assignments>
         <name>AssignLED</name>
         <label>AssignLED</label>
-        <locationX>1040</locationX>
-        <locationY>6518</locationY>
+        <locationX>314</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
             <operator>Assign</operator>
@@ -201,8 +201,8 @@
     <assignments>
         <name>AssignLedKit</name>
         <label>AssignLedKit</label>
-        <locationX>1150</locationX>
-        <locationY>3494</locationY>
+        <locationX>1436</locationX>
+        <locationY>4190</locationY>
         <assignmentItems>
             <assignToReference>KitLedVariable</assignToReference>
             <operator>Assign</operator>
@@ -215,10 +215,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignmentAnalisiConsumi</name>
+        <label>AssignmentAnalisiConsumi</label>
+        <locationX>840</locationX>
+        <locationY>638</locationY>
+        <assignmentItems>
+            <assignToReference>AnalisiConsumi</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <booleanValue>true</booleanValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
-        <locationX>3680</locationX>
-        <locationY>6518</locationY>
+        <locationX>2954</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
@@ -233,8 +249,8 @@
     <assignments>
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
-        <locationX>3152</locationX>
-        <locationY>6518</locationY>
+        <locationX>2426</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -256,8 +272,8 @@
     <assignments>
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
-        <locationX>2096</locationX>
-        <locationY>6518</locationY>
+        <locationX>1370</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -279,8 +295,8 @@
     <assignments>
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
-        <locationX>1832</locationX>
-        <locationY>6518</locationY>
+        <locationX>1106</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -300,10 +316,26 @@
         </connector>
     </assignments>
     <assignments>
+        <name>AssignOrderPadreId</name>
+        <label>AssignOrderPadreId</label>
+        <locationX>972</locationX>
+        <locationY>278</locationY>
+        <assignmentItems>
+            <assignToReference>idPadre</assignToReference>
+            <operator>Add</operator>
+            <value>
+                <elementReference>GetParent.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>getChilds</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
-        <locationX>2888</locationX>
-        <locationY>6518</locationY>
+        <locationX>2162</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -325,8 +357,8 @@
     <assignments>
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
-        <locationX>2624</locationX>
-        <locationY>6518</locationY>
+        <locationX>1898</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
             <operator>Assign</operator>
@@ -341,8 +373,8 @@
     <assignments>
         <name>AssignSanifica</name>
         <label>AssignSanifica</label>
-        <locationX>3944</locationX>
-        <locationY>6518</locationY>
+        <locationX>3218</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
@@ -357,8 +389,8 @@
     <assignments>
         <name>AssignThermo</name>
         <label>AssignThermo</label>
-        <locationX>1304</locationX>
-        <locationY>6518</locationY>
+        <locationX>578</locationX>
+        <locationY>7550</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -381,8 +413,8 @@
         <description>Assegno tutte le variabili in cui ho concatenato dei valori ad altre variabili per far funzionare la visibilità degli Screen</description>
         <name>AssignVariabiliConcatenate</name>
         <label>AssignVariabiliConcatenate</label>
-        <locationX>1062</locationX>
-        <locationY>878</locationY>
+        <locationX>1348</locationX>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -419,8 +451,8 @@
         <description>Assegno tutte le variabili in cui ho concatenato dei valori ad altre variabili per far funzionare la visibilità degli Screen</description>
         <name>AssignVariabiliConcatenate_0</name>
         <label>AssignVariabiliConcatenate</label>
-        <locationX>1854</locationX>
-        <locationY>878</locationY>
+        <locationX>1960</locationX>
+        <locationY>1574</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -456,8 +488,8 @@
     <assignments>
         <name>CounterTermostato</name>
         <label>CounterTermostato</label>
-        <locationX>1150</locationX>
-        <locationY>2822</locationY>
+        <locationX>1436</locationX>
+        <locationY>3518</locationY>
         <assignmentItems>
             <assignToReference>TermostatoQuantity</assignToReference>
             <operator>Add</operator>
@@ -472,8 +504,8 @@
     <assignments>
         <name>CounterWallBox</name>
         <label>CounterWallBox</label>
-        <locationX>1150</locationX>
-        <locationY>3830</locationY>
+        <locationX>1436</locationX>
+        <locationY>4526</locationY>
         <assignmentItems>
             <assignToReference>WallBoxCounter</assignToReference>
             <operator>Add</operator>
@@ -486,26 +518,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>ExistAnaConsAssignment_0</name>
-        <label>ExistAnaConsAssignment_0</label>
-        <locationX>50</locationX>
-        <locationY>5486</locationY>
-        <assignmentItems>
-            <assignToReference>ExistAnaCons</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <booleanValue>true</booleanValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Servizi_Bundle</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>VasPresentiAssign</name>
         <label>VasPresentiAssign</label>
-        <locationX>2756</locationX>
-        <locationY>6278</locationY>
+        <locationX>2030</locationX>
+        <locationY>7310</locationY>
         <assignmentItems>
             <assignToReference>VasPresentiBool</assignToReference>
             <operator>Assign</operator>
@@ -520,8 +536,8 @@
     <decisions>
         <name>Bonus_Decision_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>1854</locationX>
-        <locationY>1670</locationY>
+        <locationX>1960</locationX>
+        <locationY>2366</locationY>
         <defaultConnector>
             <targetReference>Servizio_Decision_0_0_0</targetReference>
         </defaultConnector>
@@ -545,8 +561,8 @@
     <decisions>
         <name>Bonus_Decision_0_0_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>842</locationX>
-        <locationY>1478</locationY>
+        <locationX>1128</locationX>
+        <locationY>2294</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -568,6 +584,13 @@
                     <stringValue>Nuova Impronta Zero Casa</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0</targetReference>
             </connector>
@@ -577,15 +600,15 @@
     <decisions>
         <name>Bonus_Decision_0_0_0_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>1722</locationX>
-        <locationY>1598</locationY>
+        <locationX>2008</locationX>
+        <locationY>2174</locationY>
         <defaultConnector>
-            <targetReference>Promo_Decision_0_0_0_0_0_0</targetReference>
+            <targetReference>Promo_Decision</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus_0_0_0_0_0_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -604,14 +627,7 @@
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Bonus Convenzione Linear</stringValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -623,15 +639,15 @@
     <decisions>
         <name>Bonus_Decision_0_0_0_0_0_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>402</locationX>
-        <locationY>1478</locationY>
+        <locationX>688</locationX>
+        <locationY>2294</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus_0_0_0_0_0_0_0_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 OR 3) AND 2</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -646,6 +662,13 @@
                     <stringValue>Nuova Impronta Zero Casa</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Soluzioni Sostenibili</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0_0_0</targetReference>
             </connector>
@@ -655,15 +678,15 @@
     <decisions>
         <name>Bonus_Decision_0_0_0_0_0_0_0_0</name>
         <label>Bonus Decision</label>
-        <locationX>1282</locationX>
-        <locationY>1598</locationY>
+        <locationX>1568</locationX>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_0_0_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotBonus</defaultConnectorLabel>
         <rules>
             <name>isBonus_0_0_0_0_0_0_0_0_0_0</name>
-            <conditionLogic>2 AND 1 AND (3 OR 4)</conditionLogic>
+            <conditionLogic>2 AND (1 OR 3)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                 <operator>Contains</operator>
@@ -685,13 +708,6 @@
                     <stringValue>Bonus Soluzioni Sostenibili</stringValue>
                 </rightValue>
             </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Bonus Convenzione Linear</stringValue>
-                </rightValue>
-            </conditions>
             <connector>
                 <targetReference>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0_0_0_0</targetReference>
             </connector>
@@ -701,8 +717,8 @@
     <decisions>
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>622</locationX>
-        <locationY>1238</locationY>
+        <locationX>908</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_0</targetReference>
         </defaultConnector>
@@ -726,8 +742,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1502</locationX>
-        <locationY>1238</locationY>
+        <locationX>1788</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -751,8 +767,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1590</locationX>
-        <locationY>1238</locationY>
+        <locationX>1696</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_EE_0</targetReference>
         </defaultConnector>
@@ -776,8 +792,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>2118</locationX>
-        <locationY>1238</locationY>
+        <locationX>2224</locationX>
+        <locationY>1934</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Aziende_GAS_0</targetReference>
         </defaultConnector>
@@ -801,8 +817,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>798</locationX>
-        <locationY>4598</locationY>
+        <locationX>1084</locationX>
+        <locationY>5294</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE</targetReference>
         </defaultConnector>
@@ -826,8 +842,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1326</locationX>
-        <locationY>4598</locationY>
+        <locationX>1612</locationX>
+        <locationY>5294</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_GAS</targetReference>
         </defaultConnector>
@@ -851,8 +867,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>1590</locationX>
-        <locationY>2126</locationY>
+        <locationX>1696</locationX>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_EE_0_0</targetReference>
         </defaultConnector>
@@ -876,8 +892,8 @@
     <decisions>
         <name>CanaleVenditaDecision_0_0_0_0_0_0_0</name>
         <label>CanaleVenditaDecision</label>
-        <locationX>2118</locationX>
-        <locationY>2126</locationY>
+        <locationX>2224</locationX>
+        <locationY>2822</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Aziende_GAS_0_0</targetReference>
         </defaultConnector>
@@ -901,8 +917,8 @@
     <decisions>
         <name>Categoria_Cliente_Decision</name>
         <label>Categoria Cliente Decision</label>
-        <locationX>776</locationX>
-        <locationY>518</locationY>
+        <locationX>972</locationX>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>LoopOrdiniFigliOfferta_0</targetReference>
         </defaultConnector>
@@ -924,37 +940,12 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Categoria_Cliente_Decision_0</name>
-        <label>Categoria Cliente Decision</label>
-        <locationX>776</locationX>
-        <locationY>6926</locationY>
-        <defaultConnector>
-            <targetReference>Durata_Contratto_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
-        <rules>
-            <name>isFamiglie_0</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Famiglie</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Durata_Contratto</targetReference>
-            </connector>
-            <label>isFamiglie</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>Categoria_Cliente_Decision_0_0</name>
         <label>Categoria Cliente Decision</label>
-        <locationX>776</locationX>
-        <locationY>7262</locationY>
+        <locationX>972</locationX>
+        <locationY>8054</locationY>
         <defaultConnector>
-            <targetReference>Conferma_Adesione_Screen_0</targetReference>
+            <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isAziende</defaultConnectorLabel>
         <rules>
@@ -974,12 +965,37 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Categoria_Cliente_Decision_1</name>
+        <label>Categoria Cliente Decision</label>
+        <locationX>972</locationX>
+        <locationY>6278</locationY>
+        <defaultConnector>
+            <targetReference>DecisionServiziBuddleAZ</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isAziende</defaultConnectorLabel>
+        <rules>
+            <name>isFamiglie_1</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.Category__c</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Famiglie</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>DecisionServiziBuddle</targetReference>
+            </connector>
+            <label>isFamiglie</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
-        <locationX>578</locationX>
-        <locationY>7382</locationY>
+        <locationX>774</locationX>
+        <locationY>8174</locationY>
         <defaultConnector>
-            <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
+            <targetReference>Durata_Contratto_INB_FAM</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Inbound</defaultConnectorLabel>
         <rules>
@@ -993,41 +1009,116 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
+                <targetReference>Durata_Contratto</targetReference>
             </connector>
             <label>Outbound</label>
         </rules>
     </decisions>
     <decisions>
-        <name>ExistOrderAnaCons</name>
-        <label>ExistOrderAnaCons</label>
-        <locationX>182</locationX>
-        <locationY>5246</locationY>
+        <name>ContainsVas</name>
+        <label>ContainsVas?</label>
+        <locationX>972</locationX>
+        <locationY>6830</locationY>
         <defaultConnector>
-            <targetReference>Servizi_Bundle</targetReference>
+            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
         </defaultConnector>
-        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
-            <name>ExistOrderAnaCons_1</name>
+            <name>Yes</name>
             <conditionLogic>and</conditionLogic>
             <conditions>
-                <leftValueReference>GetOrderAnaCons</leftValueReference>
+                <leftValueReference>getOrderChildVas</leftValueReference>
                 <operator>IsNull</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>GetAnalisiConsumi</targetReference>
+                <targetReference>Order_Items_Vas_Loop</targetReference>
             </connector>
-            <label>ExistOrderAnaCons_1</label>
+            <label>Yes</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionAnalisiConsumi</name>
+        <label>DecisionAnalisiConsumi</label>
+        <locationX>972</locationX>
+        <locationY>518</locationY>
+        <defaultConnector>
+            <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Not Contains</defaultConnectorLabel>
+        <rules>
+            <name>Contains</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getChilds</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>AssignmentAnalisiConsumi</targetReference>
+            </connector>
+            <label>Contains</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionServiziBuddle</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>752</locationX>
+        <locationY>6398</locationY>
+        <defaultConnector>
+            <targetReference>ContainsVas</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Analisi_Consumi</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Servizi_Bundle</targetReference>
+            </connector>
+            <label>Contains Analisi Consumi</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>DecisionServiziBuddleAZ</name>
+        <label>DecisionServiziBuddle</label>
+        <locationX>1192</locationX>
+        <locationY>6398</locationY>
+        <defaultConnector>
+            <targetReference>ContainsVas</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>Contains_Analisi_Consumi_AZ</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>AnalisiConsumi</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Servizi_Bundle_0</targetReference>
+            </connector>
+            <label>Contains Analisi Consumi</label>
         </rules>
     </decisions>
     <decisions>
         <name>InstallazioneStandard</name>
         <label>InstallazioneStandard</label>
-        <locationX>1282</locationX>
-        <locationY>4046</locationY>
+        <locationX>1568</locationX>
+        <locationY>4742</locationY>
         <defaultConnector>
             <targetReference>CounterLoop</targetReference>
         </defaultConnector>
@@ -1051,8 +1142,8 @@
     <decisions>
         <name>InstallazioneTermostato</name>
         <label>InstallazioneTermostato</label>
-        <locationX>1282</locationX>
-        <locationY>3038</locationY>
+        <locationX>1568</locationX>
+        <locationY>3734</locationY>
         <defaultConnector>
             <targetReference>KitLed</targetReference>
         </defaultConnector>
@@ -1076,8 +1167,8 @@
     <decisions>
         <name>KitLed</name>
         <label>KitLed</label>
-        <locationX>1282</locationX>
-        <locationY>3374</locationY>
+        <locationX>1568</locationX>
+        <locationY>4070</locationY>
         <defaultConnector>
             <targetReference>WallBox</targetReference>
         </defaultConnector>
@@ -1099,77 +1190,17 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Promo_Decision_0_0_0_0_0</name>
+        <name>Promo_Decision</name>
         <label>Promo Decision</label>
-        <locationX>842</locationX>
-        <locationY>1814</locationY>
+        <locationX>2008</locationX>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
-            <name>isPromo_0_0_0_0_0</name>
-            <conditionLogic>1 AND (2 OR 3 OR 4)</conditionLogic>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promozione</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promo Hera</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promo Dipendenti</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>PROMO DIPENDENTI</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>CondizioniEconomichePromozioni_0_0_0_0_0</targetReference>
-            </connector>
-            <label>isPromo</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Promo_Decision_0_0_0_0_0_0</name>
-        <label>Promo Decision</label>
-        <locationX>1722</locationX>
-        <locationY>1934</locationY>
-        <defaultConnector>
-            <targetReference>GetOrderItem</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
-        <rules>
-            <name>isPromo_0_0_0_0_0_0</name>
-            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promozione</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promo Hera</stringValue>
-                </rightValue>
-            </conditions>
+            <name>isPromo</name>
+            <conditionLogic>(1 OR 2) AND (3 OR 4 OR 5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                 <operator>Contains</operator>
@@ -1178,10 +1209,38 @@
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>PROMO</stringValue>
+                    <stringValue>Promo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 100</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1191,17 +1250,56 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Promo_Decision_0_0_0_0_0</name>
+        <label>Promo Decision</label>
+        <locationX>1128</locationX>
+        <locationY>2630</locationY>
+        <defaultConnector>
+            <targetReference>GetOrderItem</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
+        <rules>
+            <name>isPromo_0_0_0_0_0</name>
+            <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>CondizioniEconomichePromozioni_0_0_0_0_0</targetReference>
+            </connector>
+            <label>isPromo</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>Promo_Decision_0_0_0_0_0_0_0_0</name>
         <label>Promo Decision</label>
-        <locationX>402</locationX>
-        <locationY>1814</locationY>
+        <locationX>688</locationX>
+        <locationY>2630</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_0_0_0_0_0_0_0_0</name>
-            <conditionLogic>and</conditionLogic>
+            <conditionLogic>(1 OR 2 OR 5) AND (3 OR 4)</conditionLogic>
             <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
@@ -1221,6 +1319,20 @@
                 <operator>Contains</operator>
                 <rightValue>
                     <stringValue>Nuova Impronta Zero Casa</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1232,29 +1344,15 @@
     <decisions>
         <name>Promo_Decision_0_0_0_0_0_0_0_0_0</name>
         <label>Promo Decision</label>
-        <locationX>1282</locationX>
-        <locationY>1934</locationY>
+        <locationX>1568</locationX>
+        <locationY>2510</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>isNotPromo</defaultConnectorLabel>
         <rules>
             <name>isPromo_0_0_0_0_0_0_0_0_0</name>
-            <conditionLogic>(1 OR 2 OR 4) AND 3</conditionLogic>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promozione</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                <operator>Contains</operator>
-                <rightValue>
-                    <stringValue>Promo Hera</stringValue>
-                </rightValue>
-            </conditions>
+            <conditionLogic>(1 OR 2) AND (3 OR 4 OR 5 OR 6)</conditionLogic>
             <conditions>
                 <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
                 <operator>Contains</operator>
@@ -1263,10 +1361,38 @@
                 </rightValue>
             </conditions>
             <conditions>
+                <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
                 <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                 <operator>Contains</operator>
                 <rightValue>
-                    <stringValue>PROMO</stringValue>
+                    <stringValue>Promo</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 100</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo 50</stringValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                <operator>Contains</operator>
+                <rightValue>
+                    <stringValue>Promo Hera</stringValue>
                 </rightValue>
             </conditions>
             <connector>
@@ -1278,8 +1404,8 @@
     <decisions>
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
-        <locationX>1062</locationX>
-        <locationY>998</locationY>
+        <locationX>1348</locationX>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>AssignGas</targetReference>
         </defaultConnector>
@@ -1303,8 +1429,8 @@
     <decisions>
         <name>Servizio_Decision_0</name>
         <label>Servizio Decision</label>
-        <locationX>1062</locationX>
-        <locationY>4478</locationY>
+        <locationX>1348</locationX>
+        <locationY>5174</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1328,8 +1454,8 @@
     <decisions>
         <name>Servizio_Decision_0_0</name>
         <label>Servizio Decision</label>
-        <locationX>1854</locationX>
-        <locationY>998</locationY>
+        <locationX>1960</locationX>
+        <locationY>1694</locationY>
         <defaultConnector>
             <targetReference>AssignGas_0</targetReference>
         </defaultConnector>
@@ -1353,8 +1479,8 @@
     <decisions>
         <name>Servizio_Decision_0_0_0</name>
         <label>Servizio Decision</label>
-        <locationX>1854</locationX>
-        <locationY>2006</locationY>
+        <locationX>1960</locationX>
+        <locationY>2702</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_0_0_0_0_0_0_0</targetReference>
         </defaultConnector>
@@ -1378,8 +1504,8 @@
     <decisions>
         <name>Termostato</name>
         <label>Termostato</label>
-        <locationX>1282</locationX>
-        <locationY>2702</locationY>
+        <locationX>1568</locationX>
+        <locationY>3398</locationY>
         <defaultConnector>
             <targetReference>InstallazioneTermostato</targetReference>
         </defaultConnector>
@@ -1410,8 +1536,8 @@
     <decisions>
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
-        <locationX>1810</locationX>
-        <locationY>6158</locationY>
+        <locationX>1084</locationX>
+        <locationY>7190</locationY>
         <defaultConnector>
             <targetReference>VasPresentiAssign</targetReference>
         </defaultConnector>
@@ -1435,8 +1561,8 @@
     <decisions>
         <name>WallBox</name>
         <label>WallBox</label>
-        <locationX>1282</locationX>
-        <locationY>3710</locationY>
+        <locationX>1568</locationX>
+        <locationY>4406</locationY>
         <defaultConnector>
             <targetReference>InstallazioneStandard</targetReference>
         </defaultConnector>
@@ -1460,8 +1586,8 @@
     <decisions>
         <name>WhichVasName</name>
         <label>WhichVasName</label>
-        <locationX>2756</locationX>
-        <locationY>6398</locationY>
+        <locationX>2030</locationX>
+        <locationY>7430</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1662,28 +1788,29 @@
             <label>HERA FOTOVOLTAICO</label>
         </rules>
     </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>AzPrezzoLordoF1Formula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF1__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>AzPrezzoLordoF2Formula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF2__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>AzPrezzoLordoF3Formula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF3__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>AzPrezzoLordoFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta_0.CommercialProductLink__r.PriceF0__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
@@ -1714,19 +1841,19 @@
     <formulas>
         <name>PrezzoLordoFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PriceF0__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>PrezzoLordoOrePieneFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePick__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
         <name>PrezzoLordoOreVuoteFormula</name>
         <dataType>Number</dataType>
-        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.102</expression>
+        <expression>{!LoopOrdiniFigliOfferta.CommercialProductLink__r.PricePickOut__c}*1.1</expression>
         <scale>4</scale>
     </formulas>
     <formulas>
@@ -1749,8 +1876,8 @@
     <loops>
         <name>CounterLoop</name>
         <label>CounterLoop</label>
-        <locationX>1062</locationX>
-        <locationY>2582</locationY>
+        <locationX>1348</locationX>
+        <locationY>3278</locationY>
         <collectionReference>GetOrderItem</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1763,43 +1890,43 @@
     <loops>
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
-        <locationX>182</locationX>
-        <locationY>638</locationY>
+        <locationX>468</locationX>
+        <locationY>1334</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli_0</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>GetOrderAnaCons</targetReference>
+            <targetReference>getOrderChildVas</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>LoopOrdiniFigliOfferta_0</name>
         <label>LoopOrdiniFigliOfferta</label>
-        <locationX>1370</locationX>
-        <locationY>638</locationY>
+        <locationX>1476</locationX>
+        <locationY>1334</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_FL_Script_Concatenazione_Ordini_Figli_0_0</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Servizi_Bundle_0</targetReference>
+            <targetReference>getOrderChildVas</targetReference>
         </noMoreValuesConnector>
     </loops>
     <loops>
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
-        <locationX>776</locationX>
-        <locationY>5918</locationY>
+        <locationX>50</locationX>
+        <locationY>6950</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
             <targetReference>HDT_Script_VAS</targetReference>
         </nextValueConnector>
         <noMoreValuesConnector>
-            <targetReference>Categoria_Cliente_Decision_0</targetReference>
+            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
         </noMoreValuesConnector>
     </loops>
     <processMetadataValues>
@@ -1822,41 +1949,83 @@
     </processMetadataValues>
     <processType>Flow</processType>
     <recordLookups>
-        <name>GetAnalisiConsumi</name>
-        <label>GetAnalisiConsumi</label>
-        <locationX>50</locationX>
-        <locationY>5366</locationY>
+        <name>getChilds</name>
+        <label>getChilds</label>
+        <locationX>972</locationX>
+        <locationY>398</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>ExistAnaConsAssignment_0</targetReference>
-        </connector>
-        <filterLogic>and</filterLogic>
-        <filters>
-            <field>OrderId</field>
-            <operator>EqualTo</operator>
-            <value>
-                <elementReference>GetOrderAnaCons.Id</elementReference>
-            </value>
-        </filters>
-        <getFirstRecordOnly>true</getFirstRecordOnly>
-        <object>OrderItem</object>
-        <storeOutputAutomatically>true</storeOutputAutomatically>
-    </recordLookups>
-    <recordLookups>
-        <name>GetOrderAnaCons</name>
-        <label>GetOrderAnaCons</label>
-        <locationX>182</locationX>
-        <locationY>5126</locationY>
-        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
-        <connector>
-            <targetReference>ExistOrderAnaCons</targetReference>
+            <targetReference>DecisionAnalisiConsumi</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
             <field>ParentOrder__c</field>
             <operator>EqualTo</operator>
             <value>
-                <elementReference>idOrdinePadreInput</elementReference>
+                <elementReference>idPadre</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ProcessType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>VAS</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>VasSubtype__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Analisi Consumi</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOrderChildVas</name>
+        <label>getOrderChildVas</label>
+        <locationX>972</locationX>
+        <locationY>5918</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>getOrderId</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idPadre</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>ProcessType__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>VAS</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>false</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>getOrderId</name>
+        <label>getOrderId</label>
+        <locationX>972</locationX>
+        <locationY>6038</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>GetOrderProduct</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idPadre</elementReference>
             </value>
         </filters>
         <filters>
@@ -1880,8 +2049,8 @@
     <recordLookups>
         <name>GetOrderItem</name>
         <label>GetOrderItem</label>
-        <locationX>1062</locationX>
-        <locationY>2462</locationY>
+        <locationX>1348</locationX>
+        <locationY>3158</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CounterLoop</targetReference>
@@ -1898,40 +2067,89 @@
         <object>OrderItem</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>GetOrderProduct</name>
+        <label>GetOrderProduct</label>
+        <locationX>972</locationX>
+        <locationY>6158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Categoria_Cliente_Decision_1</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>OrderId</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getOrderId.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>OrderItem</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetParent</name>
+        <label>GetParent</label>
+        <locationX>972</locationX>
+        <locationY>158</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>AssignOrderPadreId</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>ParentOrder__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue></stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>idOrdinePadreInput</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Order</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <runInMode>DefaultMode</runInMode>
     <screens>
-        <name>Bonus_Fisso_0_0_0_Gas</name>
-        <label>Bonus Fisso Gas</label>
-        <locationX>1722</locationX>
-        <locationY>1478</locationY>
+        <name>Bonus_Obbligatorio_FAM_EE_INB</name>
+        <label>Bonus Obbligatorio FAM EE INB</label>
+        <locationX>1128</locationX>
+        <locationY>2174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Decision_0_0_0_0_0</targetReference>
+            <targetReference>Bonus_Decision_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>BonusFisso_Text1_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus e opzioni&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus €/smc&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
+            <name>Bonus_Obbligatorio_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Bonus_Fisso_0_0_Gas</name>
-        <label>Bonus Fisso Gas</label>
-        <locationX>1282</locationX>
-        <locationY>1478</locationY>
+        <name>Bonus_Obbligatorio_FAM_EE_OUT</name>
+        <label>Bonus Obbligatorio FAM EE OUT</label>
+        <locationX>688</locationX>
+        <locationY>2174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Decision_0_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Bonus_Decision_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>BonusFisso_Text1_0_0</name>
-            <fieldText>&lt;p&gt;Bonus e opzioni&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus €/smc&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
+            <name>Bonus_Obbligatorio_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus %&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -1940,8 +2158,8 @@
     <screens>
         <name>Condizioni_Economiche_Aziende_EE</name>
         <label>Condizioni Economiche Aziende EE</label>
-        <locationX>1458</locationX>
-        <locationY>1358</locationY>
+        <locationX>1564</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2056,8 +2274,8 @@
     <screens>
         <name>Condizioni_Economiche_Aziende_EE_0</name>
         <label>Condizioni Economiche Aziende EE</label>
-        <locationX>1722</locationX>
-        <locationY>1358</locationY>
+        <locationX>1828</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2172,8 +2390,8 @@
     <screens>
         <name>Condizioni_Economiche_Aziende_GAS_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
-        <locationX>2250</locationX>
-        <locationY>1358</locationY>
+        <locationX>2356</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2238,8 +2456,8 @@
     <screens>
         <name>Condizioni_Economiche_Aziende_GAS_0_0</name>
         <label>Condizioni Economiche Aziende GAS</label>
-        <locationX>1986</locationX>
-        <locationY>1358</locationY>
+        <locationX>2092</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2309,8 +2527,8 @@
     <screens>
         <name>Condizioni_Economiche_Bonus_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>1722</locationX>
-        <locationY>1790</locationY>
+        <locationX>1828</locationX>
+        <locationY>2486</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2329,8 +2547,8 @@
         <description>Contiene le condizioni economiche per i Bonus</description>
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>710</locationX>
-        <locationY>1598</locationY>
+        <locationX>996</locationX>
+        <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2338,124 +2556,23 @@
             <targetReference>Promo_Decision_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>Bonus_EE_Text_6_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus %&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
+            <name>Bonus_EE_Text_3_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
+                        <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Luce</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_EE_Text_3_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>4 AND (1 OR 2 OR 3 OR 5)</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_EE_Text_4_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Convenzione Linear&lt;/p&gt;&lt;p&gt;Il bonus convenzione Linear, riservato ai nostri nuovi clienti ammonta a 50 €, per ciascuna fornitura.&lt;/p&gt;&lt;p&gt;Il bonus sarà riconosciuto, per ogni fornitura, in due quote di uguale importo, accreditate in bolletta rispettivamente a seguito dell’attivazione della fornitura e trascorso un anno dall’attivazione della fornitura stessa.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Convenzione Linear</stringValue>
+                        <stringValue>Nuova Impronta Zero Casa Imola Luce</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2467,100 +2584,40 @@
         <description>Contiene le condizioni economiche per i Bonus</description>
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>1590</locationX>
-        <locationY>1718</locationY>
+        <locationX>1876</locationX>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Promo_Decision_0_0_0_0_0_0</targetReference>
+            <targetReference>Promo_Decision</targetReference>
         </connector>
         <fields>
-            <name>Bonus_EE_Text_3_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <name>Bonus_Gas_Text_3_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>(1 OR 2 OR 3 OR 5) AND 4</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                        <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
+            <name>Bonus_GAS_Text</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_EE_Text_4_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Convenzione Linear&lt;/p&gt;&lt;p&gt;Il bonus convenzione Linear, riservato ai nostri nuovi clienti ammonta a 50 €, per ciascuna fornitura, per i nostri nuovi clienti o a 30 €, per ciascuna fornitura, per i già clienti.&lt;/p&gt;&lt;p&gt;Il bonus sarà riconosciuto, per ogni fornitura, in due quote di uguale importo, accreditate in bolletta rispettivamente a seguito dell’attivazione della fornitura e trascorso un anno dall’attivazione della fornitura stessa.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Convenzione Linear</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -2569,8 +2626,8 @@
         <description>Contiene le condizioni economiche per i Bonus</description>
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>270</locationX>
-        <locationY>1598</locationY>
+        <locationX>556</locationX>
+        <locationY>2414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2578,13 +2635,8 @@
             <targetReference>Promo_Decision_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
-            <name>Bonus_EE_Text_3_0_0_0_0_0_0_0_0_0_0_1</name>
-            <fieldText>&lt;p&gt;Bonus %&lt;/p&gt;&lt;p&gt;Al prezzo a copertura della componente energia sarà applicato uno sconto del 20% per i primi 12 mesi e del 30% dal 13° al 24° mese di fornitura.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-        </fields>
-        <fields>
             <name>Bonus_EE_Text_3_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>(1 OR 2 OR 3) AND 4</conditionLogic>
@@ -2618,50 +2670,6 @@
                 </conditions>
             </visibilityRule>
         </fields>
-        <fields>
-            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_EE_Text_4_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Convenzione Linear&lt;/p&gt;&lt;p&gt;Il bonus convenzione Linear, riservato ai nostri nuovi clienti ammonta a 50 €, per ciascuna fornitura.&lt;/p&gt;&lt;p&gt;Il bonus sarà riconosciuto, per ogni fornitura, in due quote di uguale importo, accreditate in bolletta rispettivamente a seguito dell’attivazione della fornitura e trascorso un anno dall’attivazione della fornitura stessa.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Convenzione Linear</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -2669,8 +2677,8 @@
         <description>Contiene le condizioni economiche per i Bonus</description>
         <name>Condizioni_Economiche_Bonus_0_0_0_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Bonus</label>
-        <locationX>1150</locationX>
-        <locationY>1718</locationY>
+        <locationX>1436</locationX>
+        <locationY>2294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2679,10 +2687,10 @@
         </connector>
         <fields>
             <name>Bonus_EE_Text_3_0_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus €/a&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Bonus Soluzioni Sostenibili&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/a&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Bonus Soluzioni Sostenibili&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;Scegliendo di acquistare anche una delle soluzioni sostenibili di Hera Comm riceverai uno sconto di 20,00 € per ogni fornitura, riconosciuto in bolletta a copertura della componente energia e ripartito in due quote eguali nei primi due bimestri di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3 OR 4 OR 5)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
@@ -2691,78 +2699,18 @@
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
+                        <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Bonus_EE_Text_5_0_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Natura&lt;/p&gt;&lt;p&gt;Il bonus previsto dall’offerta e riservato ai nostri nuovi clienti ammonta a 30 €. Il bonus sarà riconosciuto ripartito in sei quote di uguale importo ed accreditato nei primi 3 mesi di fornitura e nel tredicesimo, quattordicesimo e quindicesimo di fornitura. Il bonus è subordinato ad una durata della fornitura non inferiore a 12 mesi.&lt;/p&gt;</fieldText>
+            <name>Bonus_Euro_SMC</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Bonus €/smc&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Al prezzo a copertura del corrispettivo di commercializzazione all’ingrosso sarà applicato uno sconto del 20% per i primi 24 mesi di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Natura</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Bonus_EE_Text_4_0_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Bonus Convenzione Linear&lt;/p&gt;&lt;p&gt;Il bonus convenzione Linear, riservato ai nostri nuovi clienti ammonta a 50 €, per ciascuna fornitura.&lt;/p&gt;&lt;p&gt;Il bonus sarà riconosciuto, per ogni fornitura, in due quote di uguale importo, accreditate in bolletta rispettivamente a seguito dell’attivazione della fornitura e trascorso un anno dall’attivazione della fornitura stessa.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Bonus Convenzione Linear</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
         </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
@@ -2770,13 +2718,13 @@
     <screens>
         <name>Condizioni_Economiche_Famiglie_EE</name>
         <label>Condizioni Economiche Famiglie EE</label>
-        <locationX>402</locationX>
-        <locationY>1358</locationY>
+        <locationX>688</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Decision_0_0_0_0_0_0_0</targetReference>
+            <targetReference>Bonus_Obbligatorio_FAM_EE_OUT</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7</name>
@@ -2828,11 +2776,11 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Condizioni_Economiche_Famiglie_EE_Text1</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;•	&lt;/span&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <name>Condizioni_Economiche_Famiglie_EE_Text5</name>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
@@ -2840,18 +2788,11 @@
                         <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear Luce</stringValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Il prezzo descritto, ridotto del 10,2% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,0% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 89% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2904,13 +2845,13 @@
     <screens>
         <name>Condizioni_Economiche_Famiglie_EE_0</name>
         <label>Condizioni Economiche Famiglie EE</label>
-        <locationX>842</locationX>
-        <locationY>1358</locationY>
+        <locationX>1128</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Decision_0_0_0_0</targetReference>
+            <targetReference>Bonus_Obbligatorio_FAM_EE_INB</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text7_0</name>
@@ -2956,7 +2897,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text1_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,2%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 89% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero, corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2978,7 +2919,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_EE_Text2_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,2% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 86% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 14% circa della spesa annua.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, ridotto del 10,0% per un cliente domestico, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa il 89% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144,00 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,005 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 11% circa della spesa annua.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3031,17 +2972,17 @@
     <screens>
         <name>Condizioni_Economiche_Famiglie_GAS</name>
         <label>Condizioni Economiche Famiglie GAS</label>
-        <locationX>1722</locationX>
-        <locationY>1358</locationY>
+        <locationX>2008</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Fisso_0_0_0_Gas</targetReference>
+            <targetReference>Bonus_Decision_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1</name>
-            <fieldText>&lt;p&gt;&lt;b&gt;[4. Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}]&amp;nbsp;&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Condizioni economiche Gas naturale per: {!LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c}&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -3051,29 +2992,15 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 96% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 106% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante -6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>or</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Web Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3118,13 +3045,13 @@
     <screens>
         <name>Condizioni_Economiche_Famiglie_GAS_0</name>
         <label>Condizioni Economiche Famiglie GAS</label>
-        <locationX>1282</locationX>
-        <locationY>1358</locationY>
+        <locationX>1568</locationX>
+        <locationY>2054</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Bonus_Fisso_0_0_Gas</targetReference>
+            <targetReference>Bonus_Decision_0_0_0_0_0_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text1_0</name>
@@ -3138,7 +3065,7 @@
         </fields>
         <fields>
             <name>Condizioni_Economiche_Famiglie_GAS_Text2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 96% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 4% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 106% della spesa annua per un cliente domestico, escluse IVA ed imposte, tenuto conto dello sconto del primo anno.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante -6% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -3147,13 +3074,6 @@
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Nuova Impronta Zero Casa Gas</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Linear Gas</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3194,8 +3114,8 @@
         <description>Contiene gli slot di testo relativi alle promozioni</description>
         <name>CondizioniEconomichePromozioni_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>710</locationX>
-        <locationY>1934</locationY>
+        <locationX>996</locationX>
+        <locationY>2750</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3232,8 +3152,8 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>Promo_Text_2_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Promo_Text_2_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3246,6 +3166,21 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>Promo_Text_2_2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -3253,8 +3188,8 @@
         <description>Contiene gli slot di testo relativi alle promozioni</description>
         <name>CondizioniEconomichePromozioni_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>1590</locationX>
-        <locationY>2054</locationY>
+        <locationX>1876</locationX>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3268,36 +3203,7 @@
         </fields>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
-                <conditions>
-                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Promo Hera</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_1</name>
-            <fieldText>&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3305,14 +3211,37 @@
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>PROMO 100</stringValue>
+                        <stringValue>Promo Hera</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_Text_2_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
+                        <stringValue>Promo 50</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 100&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
+                    <operator>Contains</operator>
+                    <rightValue>
+                        <stringValue>Promo 100</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3324,8 +3253,8 @@
         <description>Contiene gli slot di testo relativi alle promozioni</description>
         <name>CondizioniEconomichePromozioni_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>270</locationX>
-        <locationY>1934</locationY>
+        <locationX>556</locationX>
+        <locationY>2750</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3333,8 +3262,13 @@
             <targetReference>GetOrderItem</targetReference>
         </connector>
         <fields>
-            <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;Promozioni&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Promo_Title</name>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Promo_Hera</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO HERA&lt;/strong&gt; &lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>1 AND (2 OR 3)</conditionLogic>
@@ -3361,6 +3295,21 @@
                 </conditions>
             </visibilityRule>
         </fields>
+        <fields>
+            <name>promo_50</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>LoopOrdiniFigliOfferta.CommercialProductLink__r.OfferteVocalOrder__c</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Nuova Impronta Zero Casa Luce</stringValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
         <showFooter>true</showFooter>
         <showHeader>true</showHeader>
     </screens>
@@ -3368,8 +3317,8 @@
         <description>Contiene gli slot di testo relativi alle promozioni</description>
         <name>CondizioniEconomichePromozioni_0_0_0_0_0_0_0_0_0</name>
         <label>Condizioni Economiche Promozioni</label>
-        <locationX>1150</locationX>
-        <locationY>2054</locationY>
+        <locationX>1436</locationX>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3378,12 +3327,12 @@
         </connector>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_3</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Promozioni&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;Promozioni&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
             <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_2</name>
-            <fieldText>&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo 100&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 100”, potrà beneficiare di un bonus di benvenuto di € 100,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -3394,21 +3343,14 @@
                         <stringValue>PROMO 100</stringValue>
                     </rightValue>
                 </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
             </visibilityRule>
         </fields>
         <fields>
-            <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_0</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <name>Promo_Text_2_1</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Promo Hera&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo Hera”, potrà beneficiare di un bonus di benvenuto di € 30,00 per Punto di Fornitura riconosciuto in tre quote di 10€ erogate ogni sei mesi a partire dall’attivazione della promozione.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
-                <conditionLogic>1 AND (2 OR 3)</conditionLogic>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
@@ -3416,18 +3358,19 @@
                         <stringValue>Promo Hera</stringValue>
                     </rightValue>
                 </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Promo_Text_2_0_0_0_0_0_0_0_0_0_0_0_0</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;PROMO 50&lt;/strong&gt;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Grazie alla “Promo 50”, potrà beneficiare di un bonus di benvenuto di € 50,00 per Punto di Fornitura riconosciuto in 24 quote di pari importo erogate mensilmente a partire dall’attivazione della promozione&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
+                    <leftValueReference>NomiFamiglie_Promo_Concatenate</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>Nuova Impronta Zero Casa Imola</stringValue>
+                        <stringValue>Promo Hera</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -3438,8 +3381,8 @@
     <screens>
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>974</locationX>
-        <locationY>7382</locationY>
+        <locationX>1170</locationX>
+        <locationY>8294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3454,8 +3397,8 @@
     <screens>
         <name>Conferma_Adesione_Screen_0_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>710</locationX>
-        <locationY>7502</locationY>
+        <locationX>906</locationX>
+        <locationY>8414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3628,66 +3571,6 @@
                 <conditionLogic>and</conditionLogic>
                 <conditions>
                     <leftValueReference>ExistNoProblemAcqua</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaEbike</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera E-Bike&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaMonop</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Monopattino&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaSanifica</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaFV</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <booleanValue>true</booleanValue>
@@ -4051,66 +3934,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>recessoMonopattino</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Monopattino&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoEbikeIn</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera E-Bike&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoSanificaIn</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoFvIn</name>
-            <fieldText>&lt;p&gt;Per &lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>newtext1_0_0</name>
             <fieldText>&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la fornitura di gas in regime di tutela.&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in &lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;{!HDT_Script_Introduzione.salesCompany}.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -4121,8 +3944,8 @@
     <screens>
         <name>Conferma_Adesione_Screen_0_0_0</name>
         <label>Conferma Adesione Screen</label>
-        <locationX>446</locationX>
-        <locationY>7502</locationY>
+        <locationX>642</locationX>
+        <locationY>8414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4412,96 +4235,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>confermaEbike_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera E-Bike&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistEbike</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaMonop_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Monopattino&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaSanifica_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta &lt;strong&gt;Hera Sanifica Aria&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>confermaFV_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all’offerta&amp;nbsp;&lt;strong&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_8_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Ricarica Pubblica&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistRicaricaPubblica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>newtext1_0_9_0</name>
-            <fieldText>&lt;p&gt;Mi conferma che aderisce all&apos;offerta &lt;strong&gt;Hera Ricarica Privata&lt;/strong&gt;?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistRicaricaPrivata</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>newtext1_0_11_0</name>
             <fieldText>&lt;ul&gt;&lt;li&gt;Mi conferma che vuole ricevere la documentazione contrattuale e la scheda di confrontabilità dell’offerta rispetto al regime di tutela presso il suo indirizzo di comunicazione postale?&lt;/li&gt;&lt;/ul&gt;&lt;p class=&quot;ql-indent-1&quot;&gt;CONFERMO&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -4555,7 +4288,7 @@
         </fields>
         <fields>
             <name>verificaRicezione</name>
-            <fieldText>&lt;ul&gt;&lt;li&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione del contratto. La verifica potrà avvenire in due modalità:&lt;ul&gt;&lt;li&gt;Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/li&gt;&lt;li&gt;Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà chiamare il numero verde oppure accedere al sito internet per confermare la conclusione del contratto ed ascoltare la registrazione di questa telefonata.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;ul&gt;&lt;li&gt;Nei prossimi 10 giorni provvederemo a verificare la ricezione della documentazione contrattuale e la conclusione del contratto. La verifica potrà avvenire in due modalità:&lt;ul&gt;&lt;li&gt;Attraverso un nostro operatore che la ricontatterà per chiederle conferma;&lt;/li&gt;&lt;li&gt;Con le credenziali personali che troverà indicate all’interno della documentazione contrattuale e con le quali potrà chiamare il numero verde oppure accedere al sito internet per confermare la conclusione del contratto ed ascoltare la registrazione di questa telefonata.&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -4749,51 +4482,6 @@
             </visibilityRule>
         </fields>
         <fields>
-            <name>recessoMonop</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera Monopattino&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistMonopattino</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoSanifica</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera Sanifica Aria&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistSanifica</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
-            <name>recessoFv</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Per &lt;/span&gt;&lt;strong style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;Hera Fotovoltaico Kit Fai da Te&lt;/strong&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;, Lei potrà esercitare il diritto di recesso, nelle modalità che troverà indicate nelle Condizioni Generali di Contratto relative al Servizio, entro 14 giorni dalla consegna.&lt;/span&gt;&lt;/p&gt;</fieldText>
-            <fieldType>DisplayText</fieldType>
-            <visibilityRule>
-                <conditionLogic>and</conditionLogic>
-                <conditions>
-                    <leftValueReference>ExistFotoVoltaico</leftValueReference>
-                    <operator>EqualTo</operator>
-                    <rightValue>
-                        <booleanValue>true</booleanValue>
-                    </rightValue>
-                </conditions>
-            </visibilityRule>
-        </fields>
-        <fields>
             <name>newtext1_0_0_0</name>
             <fieldText>&lt;p&gt;•	Se deve inviare un reclamo o una richiesta di informazioni, può indirizzarle in forma scritta alla nostra sede legale.&lt;/p&gt;&lt;p&gt;•	Se non riceve risposta al reclamo, o non ritiene la risposta ricevuta soddisfacente, può ricorrere al Servizio di Conciliazione ARERA oppure alla Conciliazione Paritetica attraverso le modalità indicate sul sito www.gruppohera.it&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;ul&gt;&lt;li&gt;Le ricordo che in qualsiasi momento e senza alcuna spesa può scegliere le condizioni economiche e contrattuali di riferimento per:&lt;ul&gt;&lt;li&gt;la fornitura di gas in regime di tutela.&lt;/li&gt;&lt;li&gt;la nostra offerta PLACET a prezzo fisso o a prezzo variabile, di cui può trovare maggiori informazioni sul nostro sito internet.&amp;nbsp;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;&lt;/ul&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso al trattamento dei dati per finalità promozionali anche tramite comunicazioni elettroniche e sistemi automatizzati di chiamata?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;•	Conferisce il consenso allo svolgimento di attività volte all’analisi delle preferenze, abitudini e/o scelte di consumo?&lt;/p&gt;&lt;p&gt;SI/NO&lt;/p&gt;&lt;p&gt;Mi conferma inoltre che oggi è il {!$Flow.CurrentDateTime}?&lt;/p&gt;&lt;p&gt;•	CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Bene, sig. {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.LastName__c} abbiamo terminato la registrazione, benvenuto in &lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;{!HDT_Script_Introduzione.salesCompany}.&lt;/span&gt;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[***FINE REGISTRAZIONE**]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
@@ -4804,8 +4492,8 @@
     <screens>
         <name>Dati_Tecnici_Aziende_EE_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
-        <locationX>1722</locationX>
-        <locationY>2246</locationY>
+        <locationX>1828</locationX>
+        <locationY>2942</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4930,8 +4618,8 @@
     <screens>
         <name>Dati_Tecnici_Aziende_EE_0_0_0</name>
         <label>Dati Tecnici Aziende EE</label>
-        <locationX>1458</locationX>
-        <locationY>2246</locationY>
+        <locationX>1564</locationX>
+        <locationY>2942</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5063,8 +4751,8 @@
     <screens>
         <name>Dati_Tecnici_Aziende_GAS_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
-        <locationX>2250</locationX>
-        <locationY>2246</locationY>
+        <locationX>2356</locationX>
+        <locationY>2942</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5204,8 +4892,8 @@
     <screens>
         <name>Dati_Tecnici_Aziende_GAS_0_0_0</name>
         <label>Dati Tecnici Aziende GAS</label>
-        <locationX>1986</locationX>
-        <locationY>2246</locationY>
+        <locationX>2092</locationX>
+        <locationY>2942</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5345,8 +5033,8 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
-        <locationX>930</locationX>
-        <locationY>4718</locationY>
+        <locationX>1216</locationX>
+        <locationY>5414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5608,8 +5296,8 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_EE_0</name>
         <label>Dati Tecnici Famiglie EE</label>
-        <locationX>666</locationX>
-        <locationY>4718</locationY>
+        <locationX>952</locationX>
+        <locationY>5414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -5741,8 +5429,8 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_GAS</name>
         <label>Dati Tecnici Famiglie GAS</label>
-        <locationX>1458</locationX>
-        <locationY>4718</locationY>
+        <locationX>1744</locationX>
+        <locationY>5414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6011,8 +5699,8 @@
     <screens>
         <name>Dati_Tecnici_Famiglie_GAS_0</name>
         <label>Dati Tecnici Famiglie GAS</label>
-        <locationX>1194</locationX>
-        <locationY>4718</locationY>
+        <locationX>1480</locationX>
+        <locationY>5414</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -6144,13 +5832,13 @@
     <screens>
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
-        <locationX>644</locationX>
-        <locationY>7046</locationY>
+        <locationX>642</locationX>
+        <locationY>8294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+            <targetReference>Conferma_Adesione_Screen_0_0_0</targetReference>
         </connector>
         <fields>
             <name>Title_Durata_Contratto_FAM</name>
@@ -6225,7 +5913,7 @@
         </fields>
         <fields>
             <name>Durata_Contratto_Text1_gas</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -6234,13 +5922,13 @@
     <screens>
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
-        <locationX>908</locationX>
-        <locationY>7046</locationY>
+        <locationX>1170</locationX>
+        <locationY>8174</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Categoria_Cliente_Decision_0_0</targetReference>
+            <targetReference>Conferma_Adesione_Screen_0</targetReference>
         </connector>
         <fields>
             <name>Title_Aziende</name>
@@ -6256,15 +5944,105 @@
         <showHeader>true</showHeader>
     </screens>
     <screens>
-        <name>Servizi_Bundle</name>
-        <label>Servizi Bundle</label>
-        <locationX>182</locationX>
-        <locationY>5702</locationY>
+        <name>Durata_Contratto_INB_FAM</name>
+        <label>Durata Contratto</label>
+        <locationX>906</locationX>
+        <locationY>8294</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
+            <targetReference>Conferma_Adesione_Screen_0_0</targetReference>
+        </connector>
+        <fields>
+            <name>Copy_1_of_Title_Durata_Contratto_FAM</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Durata Contratto&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Copy_1_of_Durata_Contratto_Text1</name>
+            <fieldText>&lt;p&gt;In riferimento all’offerta Luce  {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>IsGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Copy_1_of_GasText_1</name>
+            <fieldText>&lt;p&gt;In riferimento all’offerta Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>false</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Copy_1_of_Ele_Gas_True</name>
+            <fieldText>&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255); color: rgb(68, 68, 68);&quot;&gt;In riferimento all’offerta Luce e Gas {!NomeOffertaCalcolato_Introduzione} le ricordo le seguenti condizioni contrattuali:&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+            <visibilityRule>
+                <conditionLogic>and</conditionLogic>
+                <conditions>
+                    <leftValueReference>IsGas</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>IsEnergiaElettrica</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <booleanValue>true</booleanValue>
+                    </rightValue>
+                </conditions>
+            </visibilityRule>
+        </fields>
+        <fields>
+            <name>Copy_1_of_Durata_Contratto_Text1_gas</name>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere con una raccomandata con ricevuta di ritorno, da inviare con preavviso di 30 giorni presso l’indirizzo della nostra sede legale.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Riceverà una bolletta bimestrale per i consumi elettrici, mentre per il gas la frequenza sarà bimestrale per consumi compresi fra 500 e 3000 smc/anno, almeno quadrimestrale per consumi inferiori a 500 smc/anno, mensile per consumi superiori a 3000 smc/anno.&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste le può essere sospesa la fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>Servizi_Bundle</name>
+        <label>Servizi Bundle</label>
+        <locationX>620</locationX>
+        <locationY>6518</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <targetReference>ContainsVas</targetReference>
         </connector>
         <fields>
             <name>Title_DIARIO</name>
@@ -6273,7 +6051,7 @@
         </fields>
         <fields>
             <name>Bundle_Text1</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Luce, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6288,7 +6066,7 @@
         </fields>
         <fields>
             <name>BundleText1_2</name>
-            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetAnalisiConsumi.OccupantsNumber__c} e la superficie è {!GetAnalisiConsumi.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Con la sottoscrizione dell’offerta Gas, avrà a disposizione, gratuitamente, per tutta la durata della fornitura, i servizi “DIARIO DEI CONSUMI e Hera Fast check up . A questo proposito, mi conferma che:&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6302,8 +6080,13 @@
             </visibilityRule>
         </fields>
         <fields>
+            <name>Bundle_Text7</name>
+            <fieldText>&lt;p&gt;•	il numero di abitanti della sua abitazione è {!GetOrderProduct.OccupantsNumber__c} e la superficie è {!GetOrderProduct.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
             <name>Bundle_Text6</name>
-            <fieldText>&lt;p&gt;•	La sua abitazione è {!GetAnalisiConsumi.DwellingType__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	La sua abitazione è {!GetOrderProduct.DwellingType__c} ?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6313,14 +6096,14 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <leftValueReference>GetOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>Si</stringValue>
                     </rightValue>
                 </conditions>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <leftValueReference>GetOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>NotEqualTo</operator>
                     <rightValue>
                         <stringValue></stringValue>
@@ -6335,17 +6118,17 @@
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
                 <conditions>
-                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
-                    <operator>NotEqualTo</operator>
-                    <rightValue>
-                        <stringValue></stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>GetAnalisiConsumi.OwnerAC__c</leftValueReference>
+                    <leftValueReference>GetOrderProduct.OwnerAC__c</leftValueReference>
                     <operator>EqualTo</operator>
                     <rightValue>
                         <stringValue>No</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>GetOrderProduct.OwnerAC__c</leftValueReference>
+                    <operator>NotEqualTo</operator>
+                    <rightValue>
+                        <stringValue></stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -6366,17 +6149,22 @@
     <screens>
         <name>Servizi_Bundle_0</name>
         <label>Servizi Bundle</label>
-        <locationX>1370</locationX>
-        <locationY>2654</locationY>
+        <locationX>1060</locationX>
+        <locationY>6518</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Order_Items_Vas_Loop</targetReference>
+            <targetReference>ContainsVas</targetReference>
         </connector>
         <fields>
             <name>textBun2</name>
-            <fieldText>&lt;p&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt;&quot;&gt;[7. Servizi in bundle alle offerte&lt;/span&gt;&lt;span style=&quot;font-family: &amp;quot;Times New Roman&amp;quot;, serif; font-size: 12pt; color: black;&quot;&gt;]&lt;/span&gt;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong style=&quot;font-size: 12pt; font-family: &amp;quot;Times New Roman&amp;quot;, serif;&quot;&gt;Servizi in bundle alle offerte&lt;/strong&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>Bundle_Text_Title</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Diario dei consumi&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <fields>
@@ -6425,7 +6213,7 @@
         </fields>
         <fields>
             <name>Bundle_Text1_0</name>
-            <fieldText>&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è XXXX?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è XXXX metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	il numero di addetti che lavorano nella sua attività è {!GetOrderProduct.OccupantsNumber__c}?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	la superficie dello stabile è {!GetOrderProduct.Surface__c} metri quadri?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il report di DIARIO DEI CONSUMI le sarà inviato all’indirizzo mail indicato.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Qualora Lei eserciti il recesso dal contratto sottoscritto, o lo stesso si sciolga per qualsiasi motivo, il servizio non sarà più disponibile.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Il servizio citato è descritto in dettaglio nel plico contrattuale che riceverà.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -6442,18 +6230,18 @@
         <showHeader>true</showHeader>
     </screens>
     <start>
-        <locationX>650</locationX>
+        <locationX>846</locationX>
         <locationY>0</locationY>
         <connector>
-            <targetReference>HDT_FL_Script_Gestione_Ordini</targetReference>
+            <targetReference>GetParent</targetReference>
         </connector>
     </start>
     <status>Active</status>
     <subflows>
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli_0</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
-        <locationX>1062</locationX>
-        <locationY>758</locationY>
+        <locationX>1348</locationX>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate</targetReference>
         </connector>
@@ -6469,8 +6257,8 @@
     <subflows>
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli_0_0</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
-        <locationX>1854</locationX>
-        <locationY>758</locationY>
+        <locationX>1960</locationX>
+        <locationY>1454</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate_0</targetReference>
         </connector>
@@ -6486,8 +6274,8 @@
     <subflows>
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
-        <locationX>776</locationX>
-        <locationY>158</locationY>
+        <locationX>972</locationX>
+        <locationY>854</locationY>
         <connector>
             <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
@@ -6509,8 +6297,8 @@
     <subflows>
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
-        <locationX>776</locationX>
-        <locationY>398</locationY>
+        <locationX>972</locationX>
+        <locationY>1094</locationY>
         <connector>
             <targetReference>Categoria_Cliente_Decision</targetReference>
         </connector>
@@ -6549,8 +6337,8 @@
     <subflows>
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
-        <locationX>776</locationX>
-        <locationY>278</locationY>
+        <locationX>972</locationX>
+        <locationY>974</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
@@ -6593,8 +6381,8 @@
     <subflows>
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
-        <locationX>1810</locationX>
-        <locationY>6038</locationY>
+        <locationX>1084</locationX>
+        <locationY>7070</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
@@ -6625,6 +6413,16 @@
         </inputAssignments>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </subflows>
+    <variables>
+        <name>AnalisiConsumi</name>
+        <dataType>Boolean</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <value>
+            <booleanValue>false</booleanValue>
+        </value>
+    </variables>
     <variables>
         <name>BonusPromoLoopOrder0</name>
         <dataType>String</dataType>
@@ -6804,6 +6602,13 @@
         <dataType>String</dataType>
         <isCollection>false</isCollection>
         <isInput>true</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>idPadre</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
         <isOutput>false</isOutput>
     </variables>
     <variables>

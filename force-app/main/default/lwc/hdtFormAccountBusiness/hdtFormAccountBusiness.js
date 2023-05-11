@@ -204,9 +204,9 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
     get ruoloOptions() {
         return [
             { label: 'Titolare', value: 'Titolare' },
-            { label: 'Legale rappresentante', value: 'Legale rappresentante' },
+            /*{ label: 'Legale rappresentante', value: 'Legale rappresentante' },
             { label: 'Amministratore condominio', value: 'Amministratore condominio' },
-            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }
+            { label: 'Dipendente azienda/collaboratore', value: 'Dipendente azienda/collaboratore' }*/
         ];
     }
     closeModal() {
@@ -280,13 +280,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.customerType='Persona fisica';
             this.makerequired= true;
             this.requiredVat=true; //HRAWRM-776 07/10/2021
-        }
-        else if(this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')  ){
-            this.requiredVat= false;
-            this.makerequired=true;
-
-        }//HRAWRM-776 07/10/2021
-        else{
+        }else{
          //   this.template.querySelector('[data-id="legalForm"]').readOnly = false;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-hide');
             this.template.querySelector('[data-id="showDiv"]').classList.remove('slds-show');
@@ -296,8 +290,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
             this.template.querySelector('[data-id="hideBusinessName"]').classList.remove('slds-hide');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.add('slds-show');
             this.template.querySelector('[data-id="hideBusinessName2"]').classList.remove('slds-hide');
-            this.makerequired= false;
-            this.requiredVat=true;//HRAWRM-776 07/10/2021
+            //Ticket 977444C
+            let fCodeVat = this.markingValue.includes("Condominio")||this.markingValue.includes('Associazione')? true : false;
+            this.makerequired= fCodeVat;
+            this.requiredVat= !fCodeVat;//HRAWRM-776 07/10/2021
             this.customerType='Organizzazione';
 
             this.template.querySelector('[data-id="fiscalCode"]').classList.remove('slds-has-error');
@@ -639,6 +635,10 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         }
         if(this.markingValue=='Ditta individuale'){
             if(!lastIndividualName.reportValidity()){
+                isValidated=false;
+            }
+            /* TK 951554C -- Anche il Nome deve essere un campo obbligatorio */
+            if(!firstIndividualName.reportValidity()){
                 isValidated=false;
             }
 

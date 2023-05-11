@@ -607,6 +607,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FEDELTA'</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lampadine kit doppio</fullName>
             <default>false</default>
         </values>
@@ -636,6 +640,10 @@
         </values>
         <values>
             <fullName>UPGRADE OFFERTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>verifica winback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1964,10 +1972,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>ExciseGAS__c</picklist>
-        <values>
+        <!--<values>
             <fullName>Altro</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Imosta Autopr-Prod EE Industr %28Cod%2E G_I15%29</fullName>
             <default>false</default>
@@ -2091,6 +2099,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Market__c</picklist>
@@ -2112,6 +2124,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>

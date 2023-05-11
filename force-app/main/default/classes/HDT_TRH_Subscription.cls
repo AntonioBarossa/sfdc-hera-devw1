@@ -1,4 +1,4 @@
- /**
+/**
 * @author Sabina Levonja (sabina.levonja@dunegroup.it)
 * @date 04/06/21
 * @description HDT_TRH_DocumentalActivity
@@ -7,11 +7,16 @@
 public inherited sharing class HDT_TRH_Subscription extends HDT_TRH_TriggerHandler{
 
     public override void beforeInsert(){
+        System.debug('Before Insert Sub: ' + trigger.new);
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         HDT_UTL_SubscriptionProcess.adjustVasContractBeforeInsert(trigger.new);
     }
-
+    public override void beforeUpdate(){
+            System.debug('Before Update Sub: ' + trigger.new);
+            HDT_UTL_SubscriptionProcess.adjustLookup(trigger.new,Trigger.oldMap);
+    }
     public override void afterInsert(){
-        HDT_UTL_SubscriptionProcess.deleteContractsOnAfterInsert();
+        System.debug('After Insert Sub: ' + trigger.new);
+        HDT_UTL_SubscriptionProcess.dmlOnAfterInsert();
     }
 }

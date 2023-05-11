@@ -405,9 +405,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					//record.put('DocumentalPhase__c','Plico firmato');
 					record.put('SignedDate__c', Date.today()); // data necessaria per far scattare logiche sui processi di vendita.
 				}else if(status.equalsIgnoreCase('declined')){
+					String dNote = String.isNotBlank(requestBody.declinedReason) && requestBody.declinedReason.length() > 255 ? requestBody.declinedReason.substring(0,255) : requestBody.declinedReason;
 					List<Order> ordList = new List<Order>();
 					record.put('DocumentalPhase__c','Plico rifiutato');
-					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'));
+					ordList = HDT_UTL_OrderProcess.cancellAllEligibleOrder((Id)record.get('Id'),dNote);
+					record.put('CancellationNote__c',dNote);
 					ordList.add((Order)record);
 					HDT_UTL_DatabaseService.updateSObject(ordList);
 					return;
@@ -539,7 +541,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							individualRecord.ProfilingPrivacy__c = value;
 							individualRecord.PrivacyProfilingChoiceDate__c = Date.today(); 
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
-							individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
+							individualRecord.PrivacyProfilingChoiceSource__c = 'CONTRATTO';
 						}
 						// Verifica radiobutton nei moduli opzionali (dati catastali, legge 80, istanza 326)
 						// I nomi dei radiobutton sono presenti nel JSON che manda Docusign

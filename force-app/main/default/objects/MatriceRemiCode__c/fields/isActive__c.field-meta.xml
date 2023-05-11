@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>isActive__c</fullName>
     <externalId>false</externalId>
-    <formula>EndDate__c &lt;= TODAY() &amp;&amp; StartDate__c &gt;= TODAY()</formula>
+    <formula>EndDate__c &gt;= TODAY() &amp;&amp; StartDate__c &lt;= TODAY()</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Is Active</label>
     <trackTrending>false</trackTrending>

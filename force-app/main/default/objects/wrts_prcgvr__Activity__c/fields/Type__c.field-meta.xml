@@ -86,6 +86,11 @@
                 <label>Back Office - Supporto/Comunicazioni Urgenti</label>
             </value>
             <value>
+                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Segnalazione HVAC e Fotovoltaico</label>
+            </value>
+            <value>
                 <fullName>Blocco Sollecito</fullName>
                 <default>false</default>
                 <label>Blocco Sollecito</label>
@@ -509,6 +514,11 @@
                 <fullName>Order Management MUI</fullName>
                 <default>false</default>
                 <label>Order Management MUI</label>
+            </value>
+            <value>
+                <fullName>PEC da DL</fullName>
+                <default>false</default>
+                <label>PEC da DL</label>
             </value>
             <value>
                 <fullName>Pratica avviata</fullName>

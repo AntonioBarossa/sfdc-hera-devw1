@@ -316,6 +316,10 @@
     </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
+        <name>CS_SprinklrSettings__c</name>
+    </customSettingAccesses>
+    <customSettingAccesses>
+        <enabled>true</enabled>
         <name>HDT_Process_Sale_Partner_Community__c</name>
     </customSettingAccesses>
     <customSettingAccesses>
@@ -567,6 +571,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Account_Partner_Matching__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -658,6 +667,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>MatriceRemiCode__c.VATNumberUdb__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.CustomerCodeSAP__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -2323,6 +2337,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>AccountContactRelation.IsManagerSOL__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>AccountContactRelation.RegistrationType__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -4763,6 +4782,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__Quote__c.VasSupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IsFromVasSection__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -8412,6 +8436,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Contact.KeyIBMUnica__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Contact.LeadSource</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -9780,6 +9809,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentSendTracking__c.Sender__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>DocumentSendTracking__c.SignatureMethod__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -14374,6 +14408,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.DiscardDocusignEnvelope__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.DiscardReason__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -14645,6 +14684,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.CallingNumber__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.QualityCallStartDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -28552,6 +28596,21 @@
         <field>TechnicalOffer__c.WeeklyContribution__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.Index__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.AccountPartner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.ProfileName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
         <fieldPermissions>
             <editable>true</editable>
@@ -31284,6 +31343,11 @@
         <field>wrts_prcgvr__Activity__c.DateTimeRef__c</field>
         <readable>true</readable>
     </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__Activity__c.DiscardCancellation__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.DiscardCategory__c</field>
@@ -31742,6 +31806,11 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>wrts_prcgvr__Activity__c.ShowcompletedActivity__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.ShowEdit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>

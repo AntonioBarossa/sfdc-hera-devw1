@@ -123,6 +123,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>LoginChannel__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>Channel__c</field>
             <table>Order</table>
         </columns>
@@ -1188,6 +1193,11 @@
         </columns>
         <columns>
             <checkedByDefault>false</checkedByDefault>
+            <field>isTransition__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
             <field>QuotationType__c</field>
             <table>Order</table>
         </columns>
@@ -2096,6 +2106,21 @@
             <field>FuiAccess__c</field>
             <table>Order</table>
         </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>CustomerCompanyNameFormula__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>TotalAmountVAT__c</field>
+            <table>Order</table>
+        </columns>
+        <columns>
+            <checkedByDefault>false</checkedByDefault>
+            <field>LoginWorkstation__c</field>
+            <table>Order</table>
+        </columns>
         <masterLabel>Orders</masterLabel>
     </sections>
     <sections>
@@ -2243,14 +2268,9 @@
     <sections>
         <columns>
             <checkedByDefault>false</checkedByDefault>
-            <field>CustomerCompanyNameFormula__c</field>
+            <field>CreatedBy.Contact.Account</field>
             <table>Order</table>
         </columns>
-        <columns>
-            <checkedByDefault>false</checkedByDefault>
-            <field>TotalAmountVAT__c</field>
-            <table>Order</table>
-        </columns>
-        <masterLabel>Ordini</masterLabel>
+        <masterLabel>Creatore</masterLabel>
     </sections>
 </ReportType>

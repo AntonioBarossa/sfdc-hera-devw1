@@ -81,7 +81,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>ClosingCreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -643,7 +643,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>Cluster__c</picklist>
         <values>
@@ -768,7 +768,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+   <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1330,7 +1330,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>--> 
     <picklistValues>
         <picklist>DiscardCategory__c</picklist>
         <values>
@@ -2439,177 +2439,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>Subject__c</picklist>
-        <values>
-            <fullName>Amministrazione Assegnatore regole</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Amministrazione Attività - campi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Amministrazione Sistemi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Analisi Reclamo Operatività CC</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Assistenza procedurale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Attività concordate</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Altro compenso mancante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Estraneità Debiti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C_Malfunzionamento processi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C_Malfunzionamento sistemi%2Ffunzionalità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>C_Post avvio progetti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comprensione voci invito a fatturare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazioni urgenti Linea Diretta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazioni urgenti Supporto Agenzie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consip</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errori Tari</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errori ambiente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Legge 80_Istanza EE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fidelizzazione mancante</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Incongruenze SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Invito a fatturare non ricevuto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mancato pagamento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>OIG Profilazione Utente-Anomalie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Permessi File Server rptcomfs%2Ehdc%2Elocal</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Problemi tecnici Sistemi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Report costi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Report operativo da Normativa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Report operativo ricorrente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Report operativo una tantum</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Reseller</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripresa formativa con Cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ripresa formativa senza Cliente da gestire</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Scarti ribaltamento SF vs SBL %28temporaneo%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>SD_Extrabilling massiva</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Segnalazione urgenza nel recupero del credito</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Social</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Storno non dovuto</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Supporto analisi survey</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Switch Ripristinatorio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>VAS</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica Canvass</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica colonnine e Prodotti</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>SuspensionReason__c</picklist>
         <values>
             <fullName>Approfondimenti in corso</fullName>
@@ -2692,6 +2521,14 @@
         </values>
         <values>
             <fullName>Supporto TL Front</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Canone Rai</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche Bonus Sociale</fullName>
             <default>false</default>
         </values>
     </picklistValues>

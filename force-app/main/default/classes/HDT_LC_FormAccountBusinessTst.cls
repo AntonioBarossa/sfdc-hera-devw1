@@ -60,7 +60,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tDataAccount.put('recordTypeId', rtIdBusiness);
 			tDataAccount.put('email', 'test@test.com');
 			tDataAccount.put('vatNumber', '07988320011');
-			tDataAccount.put('fiscalCode', 'TSTTTC05B47H501Y');
+			tDataAccount.put('fiscalCode', '07988320011');
 			tDataAccount.put('legalForm', 'Consorzi di Impresa');
 			tDataAccount.put('firstIndividualName', 'FirstNameTst');
 			tDataAccount.put('lastIndividualName', 'LastNameTst');
@@ -122,7 +122,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tDataAccount.put('customerTypeValue', 'Gruppo');
 			tDataAccount.put('recordTypeId', rtIdResidenziale);
 			tDataAccount.put('email', 'test@test.com');
-			tDataAccount.put('vatNumber', '02682500166');
+			tDataAccount.put('vatNumber', '');
 			tDataAccount.put('fiscalCode', 'TSTTTC05B46H501W');
 			tDataAccount.put('legalForm', 'Consorzi di Impresa');
 			tDataAccount.put('businessName', 'LastNameTst');
@@ -184,7 +184,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 			tDataAccount.put('recordTypeId', rtIdBusiness);
 			tDataAccount.put('email', 'test@test.com');
 			tDataAccount.put('vatNumber', '05724831002');
-			tDataAccount.put('fiscalCode', 'TSTTTC05B47H501Y');
+			tDataAccount.put('fiscalCode', '05724831002');
 			tDataAccount.put('legalForm', 'Consorzi di Impresa');
 			tDataAccount.put('businessName', 'LastNameTst');
 			tDataAccount.put('firstIndividualName', 'FirstNameTst');
@@ -236,7 +236,7 @@ public with sharing class HDT_LC_FormAccountBusinessTst{
 		tDataAccount.put('recordTypeId', rtIdBusiness);
 		tDataAccount.put('email', 'test@test.com');
 		tDataAccount.put('vatNumber', '05724831002');
-		tDataAccount.put('fiscalCode', 'TSTTTC05B47H501Y');
+		tDataAccount.put('fiscalCode', '05724831002');
 		tDataAccount.put('legalForm', 'Consorzi di Impresa');
 		tDataAccount.put('businessName', 'LastNameTst');
 		tDataAccount.put('firstIndividualName', 'FirstNameTst');

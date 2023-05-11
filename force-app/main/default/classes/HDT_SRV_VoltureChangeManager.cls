@@ -43,6 +43,7 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         clonedOrder.put('EffectiveDate__c',orderSrv.addBusinessDay(Date.today(), 3));
         clonedOrder.put('VoltureType__c','Ordinaria');
         clonedOrder.put('HerokuPracticeCode__c','');
+        clonedOrder.put('IsTechnicalTransfer__c',false);
         /**@frpanico 2022-07-05
          * gestione campi mancanti integrazione
          */
@@ -97,9 +98,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
          * Get account info and create the map to be passed to the Util class
          * set the outcome phase from the accountCheck method
          */
-        List<Account> orderAccount = voltureChangeQr.getAccountInfoById(clonedOrder.AccountId);
-        //ticket 911622C: solo Marcatura D1 - Persona Fisica RESIDENZIALE, Tutti gli altri sono BUSINESS (per impostare la fase )
-        accountCheckParams.put('accountType',orderAccount.isEmpty()? '' : ('D1 - Persona fisica'.equalsIgnoreCase(orderAccount[0].CustomerMarking__c) && 'Famiglie'.equalsIgnoreCase(orderAccount[0].Category__c))? 'HDT_RT_Residenziale' : 'HDT_RT_Business');
+        String supplyType = sobj.get('SupplyType__c') == null ? '' : (String)sobj.get('SupplyType__c');
+        accountCheckParams.put('accountType','Domestico'.equalsIgnoreCase(supplyType) || 'A-Domestico'.equalsIgnoreCase(supplyType) ? 'HDT_RT_Residenziale' : 'HDT_RT_Business');
         accountCheckParams.put('orderId', clonedOrder.get('Id'));
         accountCheckParams.put('dataDecorrenza',inputOrder?.EffectiveDate__c);
         accountCheckParams.put('preavvisoRecesso',inputOrder?.RecessNotice__c);
@@ -301,7 +301,13 @@ public with sharing class HDT_SRV_VoltureChangeManager{
 
         if (response != null ){
             HDT_WRP_VoltureChangeManager.HDT_WRP_Response responseBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_Response( (Map<String, Object>)JSON.deserializeUntyped( response.getBody() ) );
-            return descriptionConstructor(responseBody.prestazione.tipoAttivita, responseBody.prestazione.note);
+            String tipoAttivita = '';
+            String note = '';
+            if (responseBody != null && responseBody.prestazione != null) {
+                tipoAttivita = responseBody.prestazione.tipoAttivita;
+                note = responseBody.prestazione.note;
+            }
+            return descriptionConstructor(tipoAttivita, note);
         }else {
             return 'Errore nella comunicazione Blocco/Sblocco al calcolo';
         }

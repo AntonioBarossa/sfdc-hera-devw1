@@ -9,6 +9,8 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Bozza',constants.ORDER_RECORDTYPEID_ATTIVAZIONE,constants.ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONE);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Comunicazione verso Heroku','Amm. Precheck KO SII',constants.ORDER_RECORDTYPEID_SWITCHIN,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Amm. Precheck KO SII','Bozza',constants.ORDER_RECORDTYPEID_SWITCHIN,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);
 
         List<Account> acctList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Contact> contacts=HDT_UTL_DataFactoryTst.createContact(1, true, acctList[0].Id);
@@ -166,7 +168,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
     @isTest
     public static void executeResubmissionPractice(){
         String debugString = 'Method - executeResubmissionPractice ';
-        Order o = [SELECT Id,RecordTypeId, RecordType.DeveloperName FROM Order LIMIT 1];
+        Order o = [SELECT Id,RecordTypeId, RecordType.DeveloperName,Phase__c FROM Order LIMIT 1];
         System.debug('@@@@ o ' + o);
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
@@ -174,7 +176,8 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         insert actList;
         String response;
         Test.startTest();
-            response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id,'Attivazione');
+            o.ProcessType__c = 'Switch in Gas';
+            response = HDT_LC_EditScartiComplessi.resubmissionPractice(o, actList[0].Id,null);
         Test.stopTest(); 
         System.assertEquals(null, response, debugString + 'Il processo di risottomissione non ha funzionato');
         o = [SELECT Id,Phase__c FROM Order WHERE Id =:o.Id];
@@ -302,13 +305,6 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Test.startTest();
             Boolean isException = false;
             try{
-                HDT_LC_EditScartiComplessi.resubmissionPractice(FAKE_ID, FAKE_ID,'Attivazione');
-            }catch(Exception e){
-                isException = true;
-            }
-            System.assertEquals(true,isException,debugString + 'gestione exception non funzionante');
-            isException = false;
-            try{
                 HDT_LC_EditScartiComplessi.getInitData(FAKE_ID);
             }catch(Exception e){
                 isException = true;
@@ -327,7 +323,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
     @isTest
     public static void executeResubmissionPracticeErrorUploadOrder(){
         String debugString = 'Method - executeResubmissionPracticeErrorUploadOrder ';
-        Order o = [SELECT Id FROM Order LIMIT 1];
+        Order o = [SELECT Id,Phase__c FROM Order LIMIT 1];
         Account acc = [SELECT Id FROM Account];
         List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
         actList[0].Order__c = o.Id;
@@ -339,7 +335,8 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
         Test.startTest();
             String response;
             System.runAs(u){
-                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o.Id, actList[0].Id,'Attivazione');
+                o.ProcessType__c = 'Switch in Gas';
+                response = HDT_LC_EditScartiComplessi.resubmissionPractice(o, actList[0].Id,null);
             }
             System.assertEquals(null,response,debugString + 'gestione errore upload order non funzionante');
         Test.stopTest();
@@ -379,7 +376,7 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
 
             String response;
             System.runAs(u){
-                response = HDT_LC_EditScartiComplessi.resubmissionPractice(actList[0].Order__c, actList[0].Id,'Attivazione');
+                response = HDT_LC_EditScartiComplessi.resubmissionPractice(new Order(Id = actList[0].Order__c,ProcessType__c = 'Switch in Gas', Phase__c = 'Ammissibilità KO'), actList[0].Id,null);
             }
             System.assertEquals(null,response,debugString + 'gestione errore chiusura activity non funzionante');
         Test.stopTest();
@@ -479,4 +476,30 @@ public with sharing class HDT_LC_EditScartiComplessiTst {
 
     }
 
+    @isTest
+    static void transferCheck()
+    {
+        List<Order> orderTst = [SELECT Id FROM Order WHERE RecordType.DeveloperName = :constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN LIMIT 1];
+        Order updOrder = new Order (Id = orderTst[0].Id);
+        Account acc = [SELECT Id FROM Account];
+        List<wrts_prcgvr__Activity__c> actList = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,acc.Id);
+        actList[0].Order__c = updOrder.Id;
+        insert actList;
+        
+        updOrder.PreviousHolderFirstName__c = 'Nome';
+        updOrder.PreviousHolderLastName__c = 'COgnome';
+        updOrder.PreviousHolderFiscalCode__c = 'FiscalCode';
+        updOrder.Phase__c = 'Amm. Precheck KO SII';
+        updOrder.IsTechnicalTransfer__c = true;
+
+        update updOrder;
+
+        Test.startTest();
+            updOrder.ProcessType__c = 'Switch in Gas';
+            String result = HDT_LC_EditScartiComplessi.resubmissionPractice(updOrder, actList[0].Id,new Map<String,Object>{
+                'EffectiveDate__c' => Date.today()
+            });
+        Test.stopTest();
+        System.assertEquals(null, result, 'Check Incorretto');
+    }
 }

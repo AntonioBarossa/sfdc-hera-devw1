@@ -954,6 +954,18 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Hera ProtezionePiu Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera ProtezionePiu Casa Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Hera ProtezionePiu Casa Luce</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Hera Scaldacqua</fullName>
             <default>false</default>
         </values>
@@ -1023,6 +1035,18 @@
         </values>
         <values>
             <fullName>PiuControllo Active Special Casa Dual</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PiuControllo Flat Extra Casa Dual</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>PiuControllo Flat Extra Casa Luce</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>PiuControllo Flat Extra Casa Gas</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1096,6 +1120,10 @@
         </values>
         <values>
             <fullName>Tutele Graduali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Tutele graduali Microimprese</fullName>
             <default>false</default>
         </values>
     </picklistValues>

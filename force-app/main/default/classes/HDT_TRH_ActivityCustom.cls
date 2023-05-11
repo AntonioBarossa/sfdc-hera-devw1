@@ -22,6 +22,7 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
         HDT_UTL_ActivityCustom.inheritUserFields((List<wrts_prcgvr__Activity__c>) trigger.new);
         HDT_UTL_ActivityCustom.checkForProcessFields(Trigger.new, new Map<Id, wrts_prcgvr__Activity__c>());
         HDT_UTL_ActivityCustom.setAccountIdFromCaseOrder(trigger.new);
+        HDT_UTL_ActivityCustom.postSurvayWorkActivity(trigger.new);
     }
 
  	//public override void beforeDelete(){}
@@ -90,7 +91,6 @@ public inherited sharing class  HDT_TRH_ActivityCustom extends HDT_TRH_TriggerHa
     public override void afterInsert(){
         HDT_UTL_Scarti.checkForEsitiIntermedi(trigger.new);
         HDT_UTL_ActivityCustom.setCompanyName(trigger.new);
-        HDT_UTL_ActivityCustom.postSurvayWorkActivity(trigger.new);
     }
 
 }

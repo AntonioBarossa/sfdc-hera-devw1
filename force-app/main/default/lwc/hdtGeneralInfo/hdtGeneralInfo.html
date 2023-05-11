@@ -12,11 +12,24 @@
                                 <lightning-combobox required data-id="Channel__c" data-name="Channel__c" name="progress" label="Canale" placeholder="" options={channelOptionsComm} onchange={handleChannelComm}
                                     class="slds-size_1-of-3"> </lightning-combobox> 
                             </template>
-
-                            <template if:false={isProfileTeleselling}>
-                                <lightning-input-field required disabled={channelDisabled} onchange={handleDataCollection}
+                            <template if:true={isSportelloLogin}>
+                                <lightning-combobox required data-id="Channel__c" 
+                                    data-name="Channel__c"
+                                    disabled={channelDisabled}
+                                    name="progress" 
+                                    label="Canale" 
+                                    placeholder="" 
+                                    options={channelOptionsSportello} 
+                                    onchange={handleChannelComm}
+                                    value={channelValue}
+                                    class="slds-size_1-of-3">
+                                </lightning-combobox> 
+                            </template>
+                            <template if:true={isOtherChannel}>
+                                    <lightning-input-field required disabled={channelDisabled} onchange={handleDataCollection}
                                     class="slds-size_1-of-3" field-name="Channel__c" data-id="Channel__c" data-name="Channel__c" placeholder="Seleziona Canale"
-                                    variant="label-stacked"  value={channelValue}> </lightning-input-field> 
+                                    variant="label-stacked"  value={channelValue}>
+                                    </lightning-input-field> 
                             </template>
 
                             <lightning-input-field disabled onchange={handleDataCollection} class="slds-size_1-of-3"

@@ -168,7 +168,7 @@ private class HDT_UTL_OrderProcessAssignmentTst {
     update sptest;
     String field = HDT_UTL_OrderProcessAssignment.fieldsTransition(sale);
   
-    System.assertEquals('Subentro_Remi', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
+    System.assertEquals('Subentro', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
     System.assertNotEquals('code', field,' the service point has a CommoditySector equal to GAS and a MeterStatus different from Attivo');
   }
 

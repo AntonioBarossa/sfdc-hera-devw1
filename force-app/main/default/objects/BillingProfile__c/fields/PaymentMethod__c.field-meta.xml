@@ -20,9 +20,9 @@ RID</description>
                 <label>Bollettino postale</label>
             </value>
             <value>
-                <fullName>Bonifico bancario</fullName>
+                <fullName>Bonifico</fullName>
                 <default>false</default>
-                <label>Bonifico bancario</label>
+                <label>Bonifico</label>
             </value>
             <value>
                 <fullName>RID</fullName>

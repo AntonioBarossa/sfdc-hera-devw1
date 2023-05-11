@@ -439,7 +439,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
              * - Modalita' di rimboso "Compensazione" e residuo delle partite selezionate diverso da 0
              * In queste casistiche la fase viene impostata a "Elaborazione Manuale"
              */
-            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') 
+            }else if(recordCase.Type.equalsIgnoreCase('Rimborso') && nextPhase.equalsIgnoreCase('Completata') && !HDT_UTL_GestioneScartiSap.skipPhaseManager(currentPhase)
                 && (recordCase.IbanIsForeign__c 
                 || recordCase.RefundMethod__c.equalsIgnoreCase('Assegno')
                 || (recordCase.RefundMethod__c.equalsIgnoreCase('Compensazione') && recordCase.TotalResidue__c != 0))){
@@ -552,6 +552,7 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
         if (String.isNotBlank(codErrAeeg)){
             currentCase.DiscardCodeHeroku__c = codErrAeeg;
         }
+        HDT_UTL_UTils.setFieldsSize(currentCase);
         caseUpdate.add(currentCase);
         HDT_UTL_DatabaseService.updateSObject(caseUpdate);
         handleAfterNotify(currentCase,storno,activity,reqWrp.requestMap.get('ANNOTAZIONI_ANN'));

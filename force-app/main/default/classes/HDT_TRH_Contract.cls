@@ -8,21 +8,9 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
         list<Contract> newContracts = (List<Contract>) Trigger.New;
-        /*Set<Id> orderToContract = new Set<Id>();
-        for(Contract c : newContracts){
-            orderToContract.add(c.SBQQ__Order__c);
-        }
-
-        map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN:orderToContract with Security_Enforced]);
-        
         for(Contract c : newContracts){
             c.status='Attivo';
-            if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c){
-                //c.SBQQ__Quote__c=null;
-            }
-        }*/
-        for(Contract c : newContracts){
-            c.status='Attivo';
+            c.SBQQ__PreserveBundleStructureUponRenewals__c = true;
         }
     }
 
@@ -35,7 +23,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
         // system.debug('START HDT_TRH_Contract beforeUpdate');
         // HDT_UTL_ContractProcess.orderCompletataPhaseManagement(Trigger.new);
         // system.debug('END HDT_TRH_Contract beforeUpdate');
-        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
+        
         HDT_QR_Order qrOrder = new HDT_QR_Order();
         List<id> listOrderId = new List<id>();
         List<Contract> listContract = new List<Contract>();
@@ -83,6 +71,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             }
         }
 
+        HDT_UTL_GlobaMigrationKey.setGlobalMigrationKey(Trigger.new, Trigger.oldMap);
 
         list<Contract> newContracts = (List<Contract>) Trigger.New;
         Set<Id> orderToContract = new Set<Id>();
@@ -113,22 +102,5 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
             sie.initSIE(contractsForSieXiv);
         }
-
-
-       /*list<Contract> newContracts = (List<Contract>) Trigger.New;
-       Set<Id> orderToContract = new Set<Id>();
-       for(Contract c : newContracts){
-           orderToContract.add(c.SBQQ__Order__c);
-       }
-       map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
-       Set<id> contractsToBeBlanked = new Set<id>();
-       for(Contract c : newContracts){
-           if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
-               contractsToBeBlanked.add(c.id);
-           }
-       }
-       if(!contractsToBeBlanked.isEmpty()){
-           myUpdate(contractsToBeBlanked);
-       }*/
     }
 }

@@ -2,7 +2,7 @@ public with sharing class HDT_UTL_QualityCall {
     public static final Integer DAYS_TO_WORK = Test.isRunningTest() ? -1 : 50;
     public static final String HANDLE_ACTIVITY = 'Attività gestita';
     public static final String HANDLE_DEADLINE = 'Scadenza gestita';
-    public static final Integer ORDER_BATCH_SIZE = 100;
+    public static final Integer ORDER_BATCH_SIZE = 50;
     public static final Date START_DATE = Date.today().addDays(-DAYS_TO_WORK);
     
 
@@ -36,7 +36,8 @@ public with sharing class HDT_UTL_QualityCall {
         }
         Map<String,String> phaseResult = new Map<String,String>{
             'completata' => 'NO_CANCEL',
-            'In Corso caricamento Siebel' => 'NO_CANCEL',
+            'in corso caricamento siebel' => 'NO_CANCEL',
+            'errore invio a dl/sii' => 'NO_CANCEL',
             'comunicazione verso heroku ok' => 'NO_CANCEL_BILL',
             'comunicazione verso heroku' => 'NO_CANCEL_BILL',
             'caricamento siebel ok' => 'NO_CANCEL_BILL',
@@ -45,7 +46,7 @@ public with sharing class HDT_UTL_QualityCall {
             'comunicazione verso motore vas' => 'NO_CANCEL_NO_BILL',
             'annullato' => 'CLOSE_PHASE',
             'voltura rifiutata' => 'CLOSE_PHASE',
-            'accettazione voltura' => 'CLOSE_PHASE'
+            'accettazione voltura' => 'NO_CANCEL'
         };
         return phaseResult.containsKey(phase.toLowerCase()) ? phaseResult.get(phase.toLowerCase()) : 'CANCEL';
     }

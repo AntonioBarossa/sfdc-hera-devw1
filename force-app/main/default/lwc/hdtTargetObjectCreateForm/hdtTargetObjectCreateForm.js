@@ -854,6 +854,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
             this.fieldsDataObject = this.toObject(this.fieldsData, this.fieldsDataReq);
         }
         if (event.target.fieldName == 'ServicePointCode__c') {
+            this.allSubmitedFields[event.target.fieldName] = event.target.value?.toUpperCase();
             this.spCodeChanged = true;
         }
         if (event.target.fieldName == 'PlugPresence__c') {
@@ -925,6 +926,7 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
 
             if (this.servicePointRetrievedData['SupplyStreet__c'] != this.theRecord['Via']) {
                 this.servicePointRetrievedData['SupplyStreet__c'] = this.theRecord['Via'];
+                this.servicePointRetrievedData['SupplyStreetName__c'] = this.theRecord['Via'];
             }
             if (this.servicePointRetrievedData['SupplyCity__c'] != this.theRecord['Comune']) {
                 this.servicePointRetrievedData['SupplyCity__c'] = this.theRecord['Comune'];

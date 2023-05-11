@@ -36,6 +36,9 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     public void execute(Database.BatchableContext bc, List<SObject> scope){
 
         List<Case> myCurrentCaseList = new List<Case>();
+        HDT_UTL_PostSalesCriteriaManager psCrit = new HDT_UTL_PostSalesCriteriaManager();
+        List<Integration_Log__c> intLogList = new List<Integration_Log__c>();
+
         //List<HDT_PEV_NonReqContract__e> eventsToPublish = new List<HDT_PEV_NonReqContract__e>();
 
         for(SObject sobj : scope){
@@ -84,7 +87,8 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
                             myCurrentCaseList.add(currentCase);
 
                         }else if( (currentCase.Cluster__c.equalsIgnoreCase('Preventivi') || currentCase.Cluster__c.equalsIgnoreCase('Verifiche')) 
-                            && (currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') || (currentCase.Phase__c.equalsIgnoreCase('Ammissibilità OK') && currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile')))){
+                            && (currentCase.Phase__c.equalsIgnoreCase('Attesa conferma preventivo cliente') 
+                            || (currentCase.Phase__c.equalsIgnoreCase('Ammissibilità OK') && currentCase.QuotationType__c.equalsIgnoreCase('Predeterminabile') && psCrit.secondAdmissibility(currentCase.PhaseStory__c)))){
 
                             currentCase.Phase__c = 'Preventivo scaduto';
                             myCurrentCaseList.add(currentCase);
@@ -120,9 +124,20 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             }
             catch(Exception e)
             {
-                System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+                //System.debug(LoggingLevel.DEBUG, 'Exception: ' + e.getMessage() + '. At line: ' + e.getLineNumber());
+
+                Integration_Log__c intLog = new Integration_Log__c();
+                intLog.WebService__c = 'viewLogBulk';
+                intLog.Method__c = 'execute';
+                intLog.Error__c = e.getMessage() + '. At line: ' + e.getLineNumber();
+                intLogList.add(intLog);
+                
                 continue;
             }
+        }
+
+        if(!intLogList.isEmpty()){
+           HDT_UTL_DatabaseService.insertSObject(intLogList);
         }
         // if(!eventsToPublish.isEmpty()){
         //     //EventBus.publish(eventsToPublish);

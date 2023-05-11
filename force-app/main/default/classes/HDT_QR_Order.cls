@@ -109,11 +109,12 @@ public inherited sharing class HDT_QR_Order {
             Account.FirstName__c,
             Account.LastName__c,
             Account.CompanyOwner__c,
+            Account.OwnerId,
             Sale__r.SalesContact__c,
             Sale__r.Ecid__c,
             Sale__r.SalesContact__r.FiscalCode__c,
             Sale__r.SalesContact__r.VATNumber__c,
-            Sale__r.Account__c,
+            Sale__r.Account__r.OwnerId,
             Username__c,
             SalesContact__r.Email,
             SalesContact__r.MobilePhone,
@@ -354,7 +355,8 @@ public inherited sharing class HDT_QR_Order {
             Contact__r.MobilePhone,
             Subprocess__c,
             VASType__c,
-            DateSentToSII__c
+            DateSentToSII__c,
+            OperationCode__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -1044,7 +1046,8 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        SalesCompany__c
         FROM Order 
         WHERE ordernumber = :orderNumber WITH SECURITY_ENFORCED];
     }
@@ -1141,7 +1144,8 @@ public inherited sharing class HDT_QR_Order {
         IsTechnicalTransfer__c,
         RecordTypeId,
         ParentOrder__c,
-        ImplantType__c
+        ImplantType__c,
+        SalesCompany__c
         FROM Order 
         WHERE Id = :recordId WITH SECURITY_ENFORCED];
     }
@@ -1362,14 +1366,23 @@ public inherited sharing class HDT_QR_Order {
     * @return List<Order>
     */
     public List<Order> getOrderForComfort(String id){
-        return [SELECT Id, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
+        return [SELECT Id,SBQQ__Quote__c, Skip_Callout__c, Phase__c, SignedDate__c, isTransition__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, ParentOrder__c, RecordType.DeveloperName, DateComfortCall__c,ProcessCode__c FROM Order WHERE Id = :id WITH SECURITY_ENFORCED];
     }
 
     public List<Order> getAllOrdersForComfort(String id){
         return [SELECT Id, Phase__c, WorkedQualityCall__c, ConfirmCustomerContract__c, CancellationReason__c, ParentOrder__c, QualityCall__c FROM Order WHERE QualityCall__c =true AND ParentOrder__c = :id AND (VasSubtype__c != 'Analisi Consumi' OR ComfortCallDaysDue__c != NULL) WITH SECURITY_ENFORCED];
     }
 
-
+    public Set<Id> getAllOrdersVasForComfort(String ordId, String quoteId){
+        List<Order> ordersToWork = new List<Order>();
+        ordersToWork = [SELECT Id, isBillableVas__c, Contact__c, CancellationReason__c, OrderReference__c, SBQQ__Quote__c, RecordType.DeveloperName FROM Order WHERE RecordType.DeveloperName ='HDT_RT_VAS' AND QualityCall__c =true AND Phase__c != 'Annullato' AND (OrderReference__c = :ordId OR SBQQ__Quote__c = :quoteId) WITH SECURITY_ENFORCED];
+    	Set<Id> orderVasId = new Set<Id>();
+	    for (Order orderId : ordersToWork) {
+		    orderVasId.add(orderId.Id);
+         }
+         return orderVasId;
+    }
+    
     public List<Order> getOrdersList(List<String> ordIdList){
         return [SELECT Id, Phase__c, ProcessType__c, VASType__c, IsEarlyActivation__c, ComfortCallDaysDue__c, RecordType.DeveloperName FROM Order WHERE Id = :ordIdList WITH SECURITY_ENFORCED];
     }
@@ -1442,5 +1455,8 @@ public inherited sharing class HDT_QR_Order {
 
     public static List<Order> getChildOrdersFromParentId(Set<String> parentsId){
         return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,PhaseStory__c,WizardCompletedDate__c,RecordType.DeveloperName,Channel__c,CustomerCategory__c,SignatureMethod__c,QualityCallStatus__c FROM Order WHERE ParentOrder__c IN :parentsId AND Phase__c NOT IN ('In attesa conferma cliente') AND QualityCall__c = true AND VasSubtype__c != 'Analisi Consumi' AND ComfortCallDaysDue__c = null WITH SECURITY_ENFORCED];
+    }
+    public List<Order> getAllChildOrdersFromParentId(String parentId){
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,BillingProfile__c,ContractAccountCode__c,ServicePoint__c FROM Order WHERE ParentOrder__c =:parentId WITH SECURITY_ENFORCED];
     }
 }

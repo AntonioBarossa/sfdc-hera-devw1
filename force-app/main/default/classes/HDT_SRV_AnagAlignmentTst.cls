@@ -19,7 +19,9 @@ public class HDT_SRV_AnagAlignmentTst {
         ordList[0].ServicePoint__c = servPointList[0].Id;
         ordList[0].SupplyState__c = 'AQ';
         ordList[0].Type = 'New';
-        ordList[0].ProcessType__c='Prima Attivazione Ele';
+        //ordList[0].ProcessType__c='Prima Attivazione Ele';
+        ordList[0].ProcessType__c='Subentro Gas';
+
         insert ordList;
 
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
@@ -266,6 +268,40 @@ public class HDT_SRV_AnagAlignmentTst {
     }
     
     @IsTest
+    static void testHandleAnagAlignmentHerokuA01(){
+
+        ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
+
+        List<HDT_WRP_MrrRequest.HDT_WRP_Field> fieldList = new List<HDT_WRP_MrrRequest.HDT_WRP_Field>();
+        fieldList = createFieldsList(fieldList,'0200','VSG2', 'A01', servPoint.ServicePointCode__c,'A00000000288_DL','');
+        HDT_WRP_MrrRequest.HDT_WRP_Field f7 = new HDT_WRP_MrrRequest.HDT_WRP_Field();
+        f7.name = 'DATA_DECORRENZA';
+        f7.value = '2023-04-11 02:00:00';
+        fieldList.add(f7);
+
+        HDT_WRP_HerokuPostSalesManager herokuWrapper = new HDT_WRP_HerokuPostSalesManager(fieldList);
+        
+        Test.startTest();
+
+        HttpResponse response = new HttpResponse();
+        response.setHeader('Content-Type', 'application/json');
+        response.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"IMPOSTE","valore":"200008867681"},{"campo":"STAMPADEL501GAS","valore":"200008867681"},{"campo":"ACCISE","valore":"200008867681"},{"campo":"CA","valore":"200008867681"},{"campo":"PRESSIONE","valore":"200008867681"},{"campo":"CALIBRO1","valore":"200008867681"},{"campo":"DESCRFATTURACOLL","valore":"200008867681"},{"campo":"OPZIONE","valore":"200008867681"},{"campo":"MOTIVOBLOCCOCALCOLO","valore":"200008867681"},{"campo":"ANNOFABBRCONT","valore":"2021"},{"campo":"DATACESSAZIONE","valore":"20210930"}]}}');
+        response.setStatusCode(200);
+        response.setStatus('OK');
+        
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_AnagAlignmentTstMock(response));
+
+        Case cs = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(herokuWrapper);
+
+        System.assert(cs != null, 'cs != null');
+        System.assert(cs.Id != null, 'cs.Id != null');
+
+        Test.stopTest();
+        
+    }
+
+
+    @IsTest
     static void testHandleAnagAlignmentHerokuF01(){
 
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
@@ -288,7 +324,7 @@ public class HDT_SRV_AnagAlignmentTst {
         Case cs = HDT_SRV_AnagAlignment.handleAnagAlignmentHeroku(herokuWrapper);
 
         System.assert(cs != null, 'cs == null');
-        System.assert(cs.Id != null, 'cs.Id == null');
+        System.assert(cs.Id == null, 'cs.Id != null');
 
         Test.stopTest();
         

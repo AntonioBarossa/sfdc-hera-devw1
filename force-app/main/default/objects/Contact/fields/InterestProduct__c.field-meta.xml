@@ -149,6 +149,18 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera ProtezionePiu Casa Dual</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera ProtezionePiu Casa Gas</valueName>
+        </valueSettings>
+		<valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>Hera ProtezionePiu Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>Hera Scaldacqua</valueName>
         </valueSettings>
         <valueSettings>
@@ -226,6 +238,18 @@
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>
             <valueName>PiuControllo Active Special Casa Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Extra Casa Dual</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Extra Casa Luce</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Info commerciali</controllingFieldValue>
+            <valueName>PiuControllo Flat Extra Casa Gas</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Info commerciali</controllingFieldValue>

@@ -420,7 +420,7 @@
         </values>
         <values>
             <fullName>Annullamento da cliente</fullName>
-            <default>false</default>Contatto Quality Fallito
+            <default>false</default>
         </values>
         <values>
             <fullName>Annullo cambio offerta</fullName>
@@ -476,6 +476,10 @@
         </values>
         <values>
             <fullName>Firma falsa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il cliente rinuncia</fullName>
             <default>false</default>
         </values>
         <values>
@@ -612,6 +616,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>FEDELTA'</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Lampadine kit doppio</fullName>
             <default>false</default>
         </values>
@@ -641,6 +649,10 @@
         </values>
         <values>
             <fullName>UPGRADE OFFERTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>verifica winback</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1969,10 +1981,10 @@
     </picklistValues>
     <picklistValues>
         <picklist>ExciseGAS__c</picklist>
-        <values>
+        <!--<values>
             <fullName>Altro</fullName>
             <default>false</default>
-        </values>
+        </values>-->
         <values>
             <fullName>Imosta Autopr-Prod EE Industr %28Cod%2E G_I15%29</fullName>
             <default>false</default>
@@ -2096,6 +2108,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Market__c</picklist>
@@ -2117,6 +2133,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2376,6 +2396,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>In attesa di quality call</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>In Corso caricamento Siebel</fullName>
             <default>false</default>
         </values>
@@ -2433,6 +2457,10 @@
         </values>
         <values>
             <fullName>Sequenzializzato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Quality Call OK</fullName>
             <default>false</default>
         </values>
     </picklistValues>

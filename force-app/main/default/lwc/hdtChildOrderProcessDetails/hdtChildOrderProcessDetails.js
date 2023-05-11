@@ -763,6 +763,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         });
                     this.dispatchEvent(toastErrorMessage);
                     return;
+                /* 
+                ticket 967693C: necessario perchè se viene sbiancato il campo una volta eseguito il salvataggio in bozza al successivo accesso il campo è popolato con 
+                il precedente valore ed il wizard può essere portato avanti pur restando il campo blank nell'ordine.
+                 */
+                }else if (this.template.querySelector("[data-id='RequestPhase__c']") !== null && !this.sectionDataToSubmit["RequestPhase__c"]){
+                    this.sectionDataToSubmit["RequestPhase__c"] = this.template.querySelector("[data-id='RequestPhase__c']").value;
                 }
                 if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null 
                 && (this.template.querySelector("[data-id='PhoneNumber__c']").value === ''
@@ -900,6 +906,25 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         }).catch(error => {
             this.loading = false;
             console.log((error.body.message !== undefined) ? error.body.message : error.message);
+            let errorMsg = (error.body.message !== undefined) ? error.body.message : error.message;
+            /* Per evitare di bloccare l'utente nella navigazione, viene permesso di tornare indietro
+            * e compilare correttamente i dati del precedente intestatario
+            */
+            if(errorMsg !== undefined && errorMsg.indexOf('Valorizzare i dati del precedente intestatario') > -1)
+            {
+                
+            this.currentSection = this.availableSteps[nextIndex];
+            this.choosenSection = this.availableSteps[nextIndex].name;
+            this.activeSections = [this.choosenSection];
+            this.currentSectionObjectApi = this.availableSteps[nextIndex].objectApiName;
+            this.currentSectionRecordId = this.availableSteps[nextIndex].recordId;
+            this.sectionDataToSubmit = {};
+            if(this.currentSection?.name==="creditCheck"){
+                getRecordNotifyChange([{recordId: this.order.Id}]);
+            }
+            this.dispatchEvent(new CustomEvent('refreshorderchild'));
+            return;
+            }
             const toastErrorMessage = new ShowToastEvent({
                 title: 'Errore',
                 message: (error.body.message !== undefined) ? error.body.message : error.message,
@@ -1038,7 +1063,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 new fieldData('Potenzialità massima richiesta','MaxRequiredPotential__c', this.typeVisibility('gas') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' , this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro', false, '',''),
                 new fieldData('Classe prelievo','WithdrawalClass__c',  this.typeVisibility('gas'), this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta', '',''),
                 new fieldData('ConnectionMandate__c','ConnectionMandate__c', this.typeVisibility('ele') && (this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_TemporaneaNuovaAtt'), false, this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' || this.order.RecordType.DeveloperName === 'HDT_RT_SwitchInVolturaTecnica', '',''),
-                new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', true, false, '',''),
+                new fieldData('Fase richiesta','RequestPhase__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta', !(this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'), this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso', '',''),
                 new fieldData('','Revoke__c', this.typeVisibility('ele') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
                 new fieldData('','CreditAcquire__c', this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn', false, false, '',''),
                 new fieldData('Muc', 'IsMuc__c',this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta',false,this.permissionFlag, '',''),
@@ -1302,7 +1327,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                     new fieldData('POD/PDR',                'ServicePointCode__c',  true, false, true, ''),
                     new fieldData('Tipo VAS',               'VASType__c',           true, false, true, ''),
                     new fieldData('Sottotipo VAS',          'VasSubtype__c',        true, false, true, ''),
-                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, false, false, '')
+                    new fieldData('Recapito Telefonico',    'PhoneNumber__c',       true, true, false, '')
 
                 ]
             },

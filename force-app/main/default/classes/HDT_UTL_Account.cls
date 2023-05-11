@@ -171,7 +171,7 @@ public with sharing class HDT_UTL_Account {
   
     public static void makeRequest( Account acc,Contact cont){
         //Nuova Versione
-        string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
+        //string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
         List<SObject> sobjToUpdate = new List<SObject>();
         /* Setup query filters */
@@ -224,8 +224,15 @@ public with sharing class HDT_UTL_Account {
         }
         /**@frpanico 2022-12-07 Aggiunto Log Eccezione per monitorare gli scarti */
         catch(Exception e){
-            HDT_SRV_LogService log = new HDT_SRV_LogService('HDT_BPCA_CREATE');
-            log.insertSingleLog('BpCaRequest', 'makeRequest', UserInfo.getUserName(), UserInfo.getProfileId(), e.getMessage() + '. At line: ' + e.getLineNumber(), acc.Id, System.now(), system.now());
+            //HDT_SRV_LogService log = new HDT_SRV_LogService('HDT_BPCA_CREATE');
+            //log.insertSingleLog('BpCaRequest', 'makeRequest', UserInfo.getUserName(), UserInfo.getProfileId(), e.getMessage() + '. At line: ' + e.getLineNumber(), acc.Id, System.now(), system.now());
+
+            Integration_Log__c intLog = new Integration_Log__c();
+            intLog.WebService__c = 'viewLog';
+            intLog.Method__c = 'makeRequest';
+            intLog.Error__c = e.getMessage() + '. At line: ' + e.getLineNumber();
+
+            insert intLog;
         }
     }
     

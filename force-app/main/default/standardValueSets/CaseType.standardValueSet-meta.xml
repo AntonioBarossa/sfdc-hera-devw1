@@ -104,6 +104,11 @@
         <label>Consegna copia chiave GdM</label>
     </standardValue>
     <standardValue>
+        <fullName>Contenitore Morosità</fullName>
+        <default>false</default>
+        <label>Contenitore Morosità</label>
+    </standardValue>
+    <standardValue>
         <fullName>Contenzioso In Corso</fullName>
         <default>false</default>
         <label>Contenzioso In Corso</label>
@@ -712,5 +717,10 @@
         <fullName>Promessa di Pagamento Ente</fullName>
         <default>false</default>
         <label>Promessa di Pagamento Ente</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Social</fullName>
+        <default>false</default>
+        <label>Social</label>
     </standardValue>
 </StandardValueSet>

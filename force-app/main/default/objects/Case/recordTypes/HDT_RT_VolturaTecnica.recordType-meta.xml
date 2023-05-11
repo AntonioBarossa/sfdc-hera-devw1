@@ -1340,7 +1340,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD --> 
+    <!--<picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -1902,7 +1903,7 @@
             <fullName>HCM_BACK_OUT_CON</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -7746,6 +7747,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -8090,6 +8095,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Inviato al SII</fullName>
             <default>false</default>
         </values>
@@ -8099,6 +8108,10 @@
         </values>
         <values>
             <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sequenzializzato</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9172,7 +9185,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD --> 
+    <!--<picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -10230,7 +10244,7 @@
             <fullName>EE_TS_SP_Gorizia</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues>-->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>

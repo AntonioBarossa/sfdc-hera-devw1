@@ -271,7 +271,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             Contact__c, ParentOrder__c, PhaseStory__c 
             FROM Order WHERE ParentOrder__c = null];
             Test.startTest();
-            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id);
+            List<Order> ordChildList = HDT_UTL_OrderProcess.cancellAllEligibleOrder(orders[0].Id,'Test message');
             Test.stopTest();
             System.assertEquals(false, ordChildList.isEmpty(), 'child returned');
         }
@@ -322,7 +322,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c,ConfirmCustomerContract__c
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'Documentazione validata';
@@ -330,7 +330,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId, VasSubtype__c,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c,ConfirmCustomerContract__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
@@ -360,7 +360,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             Test.startTest();
 
-            List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersOld = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                         Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
@@ -368,7 +368,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
             ordersOld[0].Phase__c = 'In attesa di quality call';
             update ordersOld;
 
-            List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
+            List<Order> ordersNew = [SELECT Id, Phase__c, IsEarlyActivation__c, VASType__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c 
                                     FROM Order 
@@ -433,7 +433,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                         QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                        Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, ConfirmCustomerContract__C
                                     FROM Order WHERE AgencyCode__c = 'AgencyCode'];
 
             ordersOld[0].Phase__c = 'In attesa validazione';
@@ -441,7 +441,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
             List<Order> ordersNew = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
-                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c
+                                            Contact__c, ParentOrder__c, PhaseStory__c, TecnicalPhase__c, ComfortCallDaysDue__c, CommercialId__c,ConfirmCustomerContract__c
                                     FROM Order 
                                     WHERE AgencyCode__c = 'AgencyCode'];
 
