@@ -228,6 +228,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
             <valueName>SC04 - difficoltà nel contatto</valueName>
         </valueSettings>
         <valueSettings>
@@ -285,6 +286,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
+            <controllingFieldValue>Fondo fughe</controllingFieldValue>
             <valueName>FF01 - Richiesta revisione conteggi/diniego rimborso</valueName>
         </valueSettings>
         <valueSettings>
@@ -1059,7 +1061,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Arenile</controllingFieldValue>
-            <valueName>QA01- pulizia spiaggia</valueName>
+            <valueName>QA01 - pulizia spiaggia</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Traffico</controllingFieldValue>
