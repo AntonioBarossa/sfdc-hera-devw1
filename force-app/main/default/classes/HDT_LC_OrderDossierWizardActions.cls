@@ -155,7 +155,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             CampaignMember campaignMember = HDT_LC_CampaignsController.updateCampaignMemberStatus(cm.Id, myStatus);
             System.debug('campaignMember Status -->'+campaignMember.Status);
             wrpActivityVo.campaignMemberStatus = myStatus;
-            wrpActivityVo.campaignMemberId = cm.Id;
         }
 
         List<Order> ordersToUpdate = new List<Order>();
@@ -476,7 +475,6 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         public String orderPhase {get; set;}
         public String campaignMemberStatus {get; set;}
         public Boolean isCommunity {get; set;}
-        public Id campaignMemberId {get; set;}
     }
 
     @AuraEnabled
