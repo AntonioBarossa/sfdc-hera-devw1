@@ -315,6 +315,11 @@
                 <label>Rifiuti</label>
             </value>
             <value>
+                <fullName>Rimborsi</fullName>
+                <default>false</default>
+                <label>Rimborsi</label>
+            </value>
+            <value>
                 <fullName>Risposta a reclamo</fullName>
                 <default>false</default>
                 <label>Risposta a reclamo</label>
@@ -678,6 +683,10 @@
         <valueSettings>
             <controllingFieldValue>Fatturazione</controllingFieldValue>
             <valueName>Ricalcoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Fatturazione</controllingFieldValue>
+            <valueName>Rimborsi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Bonus sociale</controllingFieldValue>
