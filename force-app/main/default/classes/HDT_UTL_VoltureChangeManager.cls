@@ -407,6 +407,7 @@ public with sharing class HDT_UTL_VoltureChangeManager {
             {
                 message = 'Valorizzare campi obbligatori';
                 result='KO';
+                return new HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck(result,message,(SObject)order);
             }
             /**@frpanico 31/01/2022
              * Aggiunto controllo
