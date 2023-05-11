@@ -175,6 +175,7 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
         childOrder.Type='New';
+        childOrder.VoltureType__c='Ordinaria';
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
         childOrder.Channel__c='Web';
