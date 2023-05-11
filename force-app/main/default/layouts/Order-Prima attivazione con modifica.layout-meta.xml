@@ -562,6 +562,8 @@
         <relatedList>Case.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MultiAdd</excludeButtons>
+        <excludeButtons>MultiEdit</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
         <fields>Quantity</fields>
