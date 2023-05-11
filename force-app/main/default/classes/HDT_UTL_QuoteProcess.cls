@@ -295,4 +295,20 @@ public inherited sharing class HDT_UTL_QuoteProcess {
 
     }
 
+
+    public static void disableCpq()
+    {
+        if(String.isNotBlank(Label.HDT_EnableDisableCpq) && 'Y'.equalsIgnoreCase(Label.HDT_EnableDisableCpq))
+        {
+            SBQQ.TriggerControl.disable();
+        }
+    }
+    public static void enableCpq()
+    {
+        if(String.isNotBlank(Label.HDT_EnableDisableCpq) && 'Y'.equalsIgnoreCase(Label.HDT_EnableDisableCpq))
+        {
+            SBQQ.TriggerControl.enable();
+        }
+    }
+
 }
