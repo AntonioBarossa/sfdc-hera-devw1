@@ -951,10 +951,12 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Rimborsi</controllingFieldValue>
             <valueName>FI01 - assegno erede</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Rimborsi</controllingFieldValue>
             <valueName>FI02 - problemi emissione assegno</valueName>
         </valueSettings>
         <valueSettings>
