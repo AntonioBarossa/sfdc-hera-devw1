@@ -10114,7 +10114,7 @@
     <picklistValues>
         <picklist>SecondLevelComplaintClassification__c</picklist>
         <values>
-            <fullName>Contratto</fullName>
+            <fullName>Contratti</fullName>
             <default>false</default>
         </values>
         <values>
