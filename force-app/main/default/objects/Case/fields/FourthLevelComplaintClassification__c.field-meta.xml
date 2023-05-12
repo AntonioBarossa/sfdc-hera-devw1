@@ -220,10 +220,12 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
             <valueName>SC02 - comportamenti/attività operatore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
             <valueName>SC03 - risposta non chiara</valueName>
         </valueSettings>
         <valueSettings>
@@ -241,14 +243,17 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Sportello</controllingFieldValue>
             <valueName>SS01 - tempi di attesa</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Sportello</controllingFieldValue>
             <valueName>SS02 - comportamenti/attività operatore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Sportello</controllingFieldValue>
             <valueName>SS03 - risposta non chiara</valueName>
         </valueSettings>
         <valueSettings>
