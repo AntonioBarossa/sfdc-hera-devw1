@@ -216,6 +216,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
             <valueName>SC01 - attesa al telefono</valueName>
         </valueSettings>
         <valueSettings>
@@ -1058,21 +1059,19 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Arenile</controllingFieldValue>
-            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
-            <valueName>CA01 - non eseguita causa cliente</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Arenile</controllingFieldValue>
-            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
-            <valueName>CA02 - non eseguita causa HC</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Arenile</controllingFieldValue>
             <valueName>QA01 - pulizia spiaggia</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Traffico</controllingFieldValue>
             <valueName>IT01 - Cantieri prolungati in zona trafficata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <valueName>CA01 - non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <valueName>CA02 - non eseguita causa HC</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Vibrazioni</controllingFieldValue>
