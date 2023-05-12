@@ -639,7 +639,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         if(!sobjToUpdate.isEmpty())
         {
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
     }

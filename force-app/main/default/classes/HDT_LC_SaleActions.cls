@@ -59,7 +59,10 @@ public inherited sharing class HDT_LC_SaleActions {
         system.debug(json.serialize(listToUpdate));
         if(!listToUpdate.isEmpty()){
             //quoteLineSrv.updateRecords(listToUpdate);//We should Bypass Field security for this test
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             update listToUpdate;
+            HDT_UTL_QuoteProcess.enableCpq();
         }
     }
 
@@ -179,7 +182,10 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //6 - SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
+        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+        HDT_UTL_QuoteProcess.disableCpq();
         quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
+        HDT_UTL_QuoteProcess.enableCpq();
 
         List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
         
@@ -236,9 +242,12 @@ public inherited sharing class HDT_LC_SaleActions {
         }
 
         //7 - Execute actions
+        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+        HDT_UTL_QuoteProcess.disableCpq();
         opportunitySrv.updateRecords(opps);
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
+        HDT_UTL_QuoteProcess.enableCpq();
         quoteSrv.updateRecords(quoteList);
 
         //update campaignMember Status
@@ -422,6 +431,7 @@ public inherited sharing class HDT_LC_SaleActions {
         }
 
         //4 - Excecute actions
+        HDT_UTL_QuoteProcess.disableCpq();
         saleSrv.updateRecord(saleToUpdate);
 
         if (!opps.isEmpty()) {
@@ -431,6 +441,6 @@ public inherited sharing class HDT_LC_SaleActions {
         if (!quoteList.isEmpty()) {
             quoteSrv.updateRecords(quoteList);
         }
-
+        HDT_UTL_QuoteProcess.enableCpq();
     }
 }
