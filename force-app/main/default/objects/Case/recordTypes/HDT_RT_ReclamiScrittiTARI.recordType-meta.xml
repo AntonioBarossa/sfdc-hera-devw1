@@ -12222,11 +12222,47 @@
     <picklistValues>
         <picklist>ThirdLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Arenile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attivazione/Cessazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Avviso/Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Calcolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call center</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contestazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contratto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Emissioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Impatto visivo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Materiali/sostanze</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12246,43 +12282,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Rimborsi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Emissioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Impatto visivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Materiali/sostanze</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Richiamo animali/insetti</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Traffico/cantieri</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Contestazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Solleciti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Arenile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Centri di Raccolta</fullName>
+            <fullName>Rimborsi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12294,15 +12298,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Solleciti</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Spazzamento</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Call center</fullName>
+            <fullName>Sportello</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sportello</fullName>
+            <fullName>Subentro/Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Traffico/cantieri</fullName>
             <default>false</default>
         </values>
         <values>
