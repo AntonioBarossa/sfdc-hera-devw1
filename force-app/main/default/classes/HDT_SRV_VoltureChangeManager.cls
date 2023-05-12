@@ -236,8 +236,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         List<Order> orderListUpdate = new List<Order>();
         List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
         for(Order singleOrder : myOrderList){
-            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
-            && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+            if('Amm. Precheck OK SII'.equalsIgnoreCase(singleOrder.Phase__c) 
+            && ('Switch In'.equalsIgnoreCase(singleOrder.DocumentalProcessType__c) 
             /*|| singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')*/)
             && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();
