@@ -20,7 +20,7 @@ public class HDT_UTL_SlaTrackingTst {
             'Description__c'=>'test','StartCasePhase__c'=>'Bozza','EndCasePhase__c'=>'Comunicazione verso Heroku OK',
             'StartOrderPhase__c'=>'Bozza','EndOrderPhase__c'=>'Comunicazione verso Heroku OK','Range__c'=>15,
             'Process__c'=>'Documentale/Copia Contratto','RecordTypeId'=>Schema.SObjectType.SlaAdministration__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_PostSales').getRecordTypeId(),
-            'Commodity__c'=>'Acqua','SalesCompany__c'=>'Hera Comm S.p.A.','ActivityType__c'=>'Back Office - Fatturazione',
+            'Commodity__c'=>'Acqua','SalesCompany__c'=>'Hera Comm S.p.A.','ActivityType__c'=>'Back Office - Catalogo Prodotti',
             'CustomerType__c'=>'Account','RangeType__c'=>'Giorni Solari','Type__c'=>'01'
         };
         List<SlaAdministration__c> slaAdminRules=HDT_UTL_DataFactoryTst.createSlaAdministration(1,true,slaAdminFields);

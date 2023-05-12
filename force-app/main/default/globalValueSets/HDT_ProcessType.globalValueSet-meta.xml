@@ -838,6 +838,7 @@
     <customValue>
         <fullName>Switch in  - GAS</fullName>
         <default>false</default>
+        <isActive>false</isActive>
         <label>Switch in  - GAS</label>
     </customValue>
     <customValue>
@@ -1286,16 +1287,16 @@
         <label>Nuovo Impianto - GAS</label>
     </customValue>
     <customValue>
-        <fullName>Richiesta domiciliazione - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Richiesta domiciliazione - EE</label>
-    </customValue>
-    <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Richiesta domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Rimborso - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Rimborso - EE</label>
     </customValue>
     <customValue>
         <fullName>Rimborso - GAS</fullName>
@@ -1370,16 +1371,16 @@
         <label>Verifica Generica GDM - ACQ</label>
     </customValue>
     <customValue>
-        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
-    </customValue>
-    <customValue>
         <fullName>Errore di Fatturazione - ACQ</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Errore di Fatturazione - ACQ</label>
+    </customValue>
+    <customValue>
+        <fullName>Modifica Unità Immobiliari/Componenti - ACQ</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Modifica Unità Immobiliari/Componenti - ACQ</label>
     </customValue>
     <customValue>
         <fullName>Lettura Acqua Avviso al Cliente</fullName>
@@ -1414,7 +1415,6 @@
     <customValue>
         <fullName>Switch in - GAS</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Switch in - GAS</label>
     </customValue>
     <customValue>
@@ -1754,16 +1754,16 @@
         <label>Revoca Domiciliazione - EE</label>
     </customValue>
     <customValue>
-        <fullName>Rimborso - EE</fullName>
-        <default>false</default>
-        <isActive>false</isActive>
-        <label>Rimborso - EE</label>
-    </customValue>
-    <customValue>
         <fullName>Revoca Domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
         <label>Revoca Domiciliazione - GAS</label>
+    </customValue>
+    <customValue>
+        <fullName>Richiesta domiciliazione - EE</fullName>
+        <default>false</default>
+        <isActive>false</isActive>
+        <label>Richiesta domiciliazione - EE</label>
     </customValue>
     <description>Tipologia del processo della Service Request.</description>
     <masterLabel>Tipologia Processo</masterLabel>
