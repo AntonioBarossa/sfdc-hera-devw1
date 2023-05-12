@@ -24,6 +24,7 @@ public with sharing class HDT_TRH_ServicePointTst {
         ServicePoint__c sp = [SELECT Id, Name, SupplyType__c, ImplantType__c FROM ServicePoint__c WHERE Name = 'testServicePoint0' LIMIT 1];
         sp.SupplyType__c = null;
         sp.ImplantType__c = null;
+        sp.SupplyStreet__c = 'test street';
         update sp;
 
         ServicePoint__c updatedSp = [SELECT Id, Name, SupplyType__c, ImplantType__c FROM ServicePoint__c WHERE Name = 'testServicePoint0' LIMIT 1];        
