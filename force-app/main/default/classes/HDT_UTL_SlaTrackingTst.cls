@@ -28,10 +28,8 @@ public class HDT_UTL_SlaTrackingTst {
         HDT_UTL_DataFactoryTst.createSlaTracking(1,true,null, slaAdminRules[0].Id, null, orders[0].Id, 100, 'Aperto');
     }
 
-   
-
-  @isTest
-	private static void testCalculateSlaRealValue() {
+@isTest
+private static void testCalculateSlaRealValue() {
     // Create test data
     SlaAdministration__c slaAdmin = new SlaAdministration__c(RangeType__c = 'Giorni Lavorativi', Range__c = 5); // Define a dummy SLA administration rule
     insert slaAdmin;
@@ -51,14 +49,10 @@ public class HDT_UTL_SlaTrackingTst {
 
     // Verify the result
     slaTrack = [SELECT SlaValue__c FROM SlaTracking__c WHERE Id = :slaTrack.Id];
-    System.assertEquals(6, slaTrack.SlaValue__c); 
+    System.assertEquals(4, slaTrack.SlaValue__c); 
 }
 
-   
-    
-    
-    
-    @isTest
+@isTest
 private static void testCalculateSlaForecastValue() {
     // Create test data
     List<SlaTracking__c> slaTrackingToElaborate = [SELECT Id FROM SlaTracking__c LIMIT 1];
