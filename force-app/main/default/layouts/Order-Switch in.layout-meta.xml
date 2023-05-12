@@ -495,6 +495,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>FeedItem.PollPost</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>FeedItem.ContentPost</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
@@ -595,11 +600,6 @@
             <sortOrder>23</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>FeedItem.PollPost</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>Order.Validazione_Documenti</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>0</sortOrder>
@@ -630,6 +630,9 @@
         <relatedList>Order.OrderReference__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddOrderProduct</excludeButtons>
+        <excludeButtons>AddProduct</excludeButtons>
+        <excludeButtons>EditAllProduct</excludeButtons>
         <excludeButtons>MultiAdd</excludeButtons>
         <excludeButtons>MultiEdit</excludeButtons>
         <fields>Product2</fields>
