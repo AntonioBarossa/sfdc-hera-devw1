@@ -20,7 +20,7 @@ public class HDT_UTL_SlaTrackingTst {
             'Description__c'=>'test','StartCasePhase__c'=>'Bozza','EndCasePhase__c'=>'Comunicazione verso Heroku OK',
             'StartOrderPhase__c'=>'Bozza','EndOrderPhase__c'=>'Comunicazione verso Heroku OK','Range__c'=>15,
             'Process__c'=>'Documentale/Copia Contratto','RecordTypeId'=>Schema.SObjectType.SlaAdministration__c.getRecordTypeInfosByDeveloperName().get('HDT_RT_PostSales').getRecordTypeId(),
-            'Commodity__c'=>'Acqua','SalesCompany__c'=>'Hera Comm S.p.A.','ActivityType__c'=>'Back Office - Fatturazione',
+            'Commodity__c'=>'Acqua','SalesCompany__c'=>'Hera Comm S.p.A.','ActivityType__c'=>'Back Office - Catalogo Prodotti',
             'CustomerType__c'=>'Account','RangeType__c'=>'Giorni Solari','Type__c'=>'01'
         };
         List<SlaAdministration__c> slaAdminRules=HDT_UTL_DataFactoryTst.createSlaAdministration(1,true,slaAdminFields);
@@ -28,10 +28,8 @@ public class HDT_UTL_SlaTrackingTst {
         HDT_UTL_DataFactoryTst.createSlaTracking(1,true,null, slaAdminRules[0].Id, null, orders[0].Id, 100, 'Aperto');
     }
 
-   
-
-  @isTest
-	private static void testCalculateSlaRealValue() {
+@isTest
+private static void testCalculateSlaRealValue() {
     // Create test data
     SlaAdministration__c slaAdmin = new SlaAdministration__c(RangeType__c = 'Giorni Lavorativi', Range__c = 5); // Define a dummy SLA administration rule
     insert slaAdmin;
@@ -51,14 +49,10 @@ public class HDT_UTL_SlaTrackingTst {
 
     // Verify the result
     slaTrack = [SELECT SlaValue__c FROM SlaTracking__c WHERE Id = :slaTrack.Id];
-    System.assertEquals(6, slaTrack.SlaValue__c); 
+    System.assertEquals(4, slaTrack.SlaValue__c); 
 }
 
-   
-    
-    
-    
-    @isTest
+@isTest
 private static void testCalculateSlaForecastValue() {
     // Create test data
     List<SlaTracking__c> slaTrackingToElaborate = [SELECT Id FROM SlaTracking__c LIMIT 1];

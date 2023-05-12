@@ -2375,6 +2375,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Protocollo - Web</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Protocollo - TARI da Ufficio</fullName>
             <default>false</default>
         </values>

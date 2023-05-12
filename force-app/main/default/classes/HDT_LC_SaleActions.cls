@@ -35,6 +35,7 @@ public inherited sharing class HDT_LC_SaleActions {
     * @param primaryQlSconto 
     * @param allQlSconto 
     **/
+    @TestVisible
     private static void reassignQlSconti(List<SBQQ__QuoteLine__c> primaryQlSconto,  List<SBQQ__QuoteLine__c> allQlSconto){
         Map<id, SBQQ__QuoteLine__c> mapOfferToPrimary = new Map<id, SBQQ__QuoteLine__c>();
         list<SBQQ__QuoteLine__c> listToUpdate = new list<SBQQ__QuoteLine__c>();

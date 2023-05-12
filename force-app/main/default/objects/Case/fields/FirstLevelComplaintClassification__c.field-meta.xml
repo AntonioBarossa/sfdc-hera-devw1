@@ -44,12 +44,11 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <controllingFieldValue>Richiesta Info</controllingFieldValue>
-            <valueName>Richiesta di informazioni</valueName>
+            <valueName>Richiesta di Rettifica di fatturazione</valueName>
         </valueSettings>
         <valueSettings>
-            <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
-            <valueName>Richiesta di Rettifica di fatturazione</valueName>
+            <controllingFieldValue>Richiesta Info</controllingFieldValue>
+            <valueName>Richiesta di informazioni</valueName>
         </valueSettings>
     </valueSet>
 </CustomField>

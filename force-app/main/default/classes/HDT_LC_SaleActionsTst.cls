@@ -32,6 +32,7 @@ public with sharing class HDT_LC_SaleActionsTst{
 			insert products;
 
 			List<Sale__c> sales=HDT_UTL_DataFactoryTst.createSale(1, false, accounts[0].Id, 'Attiva');
+			sales[0].IsTransition__c = true;
 			sales[0].CommercialId__c = 'XXX0000111';
 			insert sales;
 			opps[0].Sale__c=sales[0].Id;
@@ -103,6 +104,25 @@ public with sharing class HDT_LC_SaleActionsTst{
 			quoteProcs.add(quoteProc);
 			insert quoteProcs;
 		}
+	}
+
+	@isTest
+	public static void reassignQlScontiTst(){
+
+		Test.startTest();
+
+		List<SBQQ__QuoteLine__c> allQlSconto = [SELECT Id, SBQQ__RequiredBy__c, SBQQ__RequiredBy__r.BillingProfile__c, BillingProfile__c 
+												FROM SBQQ__QuoteLine__c 
+												WHERE SBQQ__RequiredBy__c != null AND BillingProfile__c = null AND SBQQ__RequiredBy__r.BillingProfile__c != null LIMIT 1];
+		List<SBQQ__QuoteLine__c> primaryQlSconto = allQlSconto;
+
+		HDT_LC_SaleActions.reassignQlSconti(primaryQlSconto, allQlSconto);
+
+		List<SBQQ__QuoteLine__c> resultQl = [SELECT Id, SBQQ__RequiredBy__c, SBQQ__RequiredBy__r.BillingProfile__c, BillingProfile__c  FROM SBQQ__QuoteLine__c WHERE Id =:allQlSconto[0].Id LIMIT 1];
+
+		System.assertEquals( resultQl[0].BillingProfile__c, resultQl[0].SBQQ__RequiredBy__r.BillingProfile__c, 'Ql not updated');
+
+		Test.stopTest();
 	}
 
 	@isTest
