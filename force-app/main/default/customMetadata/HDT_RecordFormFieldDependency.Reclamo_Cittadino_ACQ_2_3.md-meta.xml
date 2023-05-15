@@ -12,7 +12,156 @@
     </values>
     <values>
         <field>DependecyJSON__c</field>
-        <value xsi:type="xsd:string">{&quot;Contratti&quot;:[{&quot;label&quot;:&quot;Componente economica tariffa&quot;,&quot;value&quot;:&quot;Componente economica tariffa&quot;},{&quot;label&quot;:&quot;Fondo fughe&quot;,&quot;value&quot;:&quot;Fondo fughe&quot;},{&quot;label&quot;:&quot;Prelievi irregolari&quot;,&quot;value&quot;:&quot;Prelievi irregolari&quot;},{&quot;label&quot;:&quot;Servizio fognatura e depurazione&quot;,&quot;value&quot;:&quot;Servizio fognatura e depurazione&quot;},{&quot;label&quot;:&quot;Voltura&quot;,&quot;value&quot;:&quot;Voltura&quot;}],&quot;Fatturazione&quot;:[{&quot;label&quot;:&quot;Addebito contatore rotto dal gelo&quot;,&quot;value&quot;:&quot;Addebito contatore rotto dal gelo&quot;},{&quot;label&quot;:&quot;Bolletta&quot;,&quot;value&quot;:&quot;Bolletta&quot;},{&quot;label&quot;:&quot;Calcolo consumo&quot;,&quot;value&quot;:&quot;Calcolo consumo&quot;},{&quot;label&quot;:&quot;Fondo fughe&quot;,&quot;value&quot;:&quot;Fondo fughe&quot;},{&quot;label&quot;:&quot;Modalità di pagamento/rimborso&quot;,&quot;value&quot;:&quot;Modalità di pagamento/rimborso&quot;}],&quot;Impatti Ambientali&quot;:[{&quot;label&quot;:&quot;Emissioni&quot;,&quot;value&quot;:&quot;Emissioni&quot;},{&quot;label&quot;:&quot;Rifiuti&quot;,&quot;value&quot;:&quot;Rifiuti&quot;},{&quot;label&quot;:&quot;Rumore&quot;,&quot;value&quot;:&quot;Rumore&quot;},{&quot;label&quot;:&quot;Scarichi&quot;,&quot;value&quot;:&quot;Scarichi&quot;},{&quot;label&quot;:&quot;Traffico&quot;,&quot;value&quot;:&quot;Traffico&quot;},{&quot;label&quot;:&quot;Vibrazioni&quot;,&quot;value&quot;:&quot;Vibrazioni&quot;},{&quot;label&quot;:&quot;Visivo&quot;,&quot;value&quot;:&quot;Visivo&quot;}],&quot;Lavori e prestazioni accessorie su cliente&quot;:[{&quot;label&quot;:&quot;Comportamento operatore&quot;,&quot;value&quot;:&quot;Comportamento operatore&quot;},{&quot;label&quot;:&quot;Costo del lavoro/prestazione&quot;,&quot;value&quot;:&quot;Costo del lavoro/prestazione&quot;},{&quot;label&quot;:&quot;Qualità dell&apos;intervento&quot;,&quot;value&quot;:&quot;Qualità dell&apos;intervento&quot;}],&quot;Misura&quot;:[{&quot;label&quot;:&quot;Comportamento operatore&quot;,&quot;value&quot;:&quot;Comportamento operatore&quot;},{&quot;label&quot;:&quot;Contatore&quot;,&quot;value&quot;:&quot;Contatore&quot;},{&quot;label&quot;:&quot;Letture&quot;,&quot;value&quot;:&quot;Letture&quot;}],&quot;Morosità&quot;:[{&quot;label&quot;:&quot;Morosità&quot;,&quot;value&quot;:&quot;Morosità&quot;},{&quot;label&quot;:&quot;Solleciti&quot;,&quot;value&quot;:&quot;Solleciti&quot;}],&quot;Qualità e continuità servizio&quot;:[{&quot;label&quot;:&quot;Fornitura servizio&quot;,&quot;value&quot;:&quot;Fornitura servizio&quot;},{&quot;label&quot;:&quot;Qualità acqua potabile&quot;,&quot;value&quot;:&quot;Qualità acqua potabile&quot;},{&quot;label&quot;:&quot;Pronto Intervento&quot;,&quot;value&quot;:&quot;Pronto Intervento&quot;}],&quot;Servizio Clienti&quot;:[{&quot;label&quot;:&quot;Call Center&quot;,&quot;value&quot;:&quot;Call Center&quot;},{&quot;label&quot;:&quot;Difficoltà contatto&quot;,&quot;value&quot;:&quot;Difficoltà contatto&quot;},{&quot;label&quot;:&quot;Risposta a reclamo&quot;,&quot;value&quot;:&quot;Risposta a reclamo&quot;},{&quot;label&quot;:&quot;Sportello&quot;,&quot;value&quot;:&quot;Sportello&quot;},{&quot;label&quot;:&quot;Web&quot;,&quot;value&quot;:&quot;Web&quot;}]}</value>
+        <value xsi:type="xsd:string">{
+	&quot;Contratti&quot;: [
+		{
+			&quot;label&quot;: &quot;Componente economica tariffa&quot;,
+			&quot;value&quot;: &quot;Componente economica tariffa&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Fondo fughe&quot;,
+			&quot;value&quot;: &quot;Fondo fughe&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Prelievi irregolari&quot;,
+			&quot;value&quot;: &quot;Prelievi irregolari&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Servizio fognatura e depurazione&quot;,
+			&quot;value&quot;: &quot;Servizio fognatura e depurazione&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Voltura&quot;,
+			&quot;value&quot;: &quot;Voltura&quot;
+		}
+	],
+	&quot;Fatturazione&quot;: [
+		{
+			&quot;label&quot;: &quot;Addebito contatore rotto dal gelo&quot;,
+			&quot;value&quot;: &quot;Addebito contatore rotto dal gelo&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Bolletta&quot;,
+			&quot;value&quot;: &quot;Bolletta&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Calcolo consumo&quot;,
+			&quot;value&quot;: &quot;Calcolo consumo&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Fondo fughe&quot;,
+			&quot;value&quot;: &quot;Fondo fughe&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Modalità di pagamento/rimborso&quot;,
+			&quot;value&quot;: &quot;Modalità di pagamento/rimborso&quot;
+		}
+	],
+	&quot;Impatti Ambientali&quot;: [
+		{
+			&quot;label&quot;: &quot;Emissioni&quot;,
+			&quot;value&quot;: &quot;Emissioni&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Rifiuti&quot;,
+			&quot;value&quot;: &quot;Rifiuti&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Rumore&quot;,
+			&quot;value&quot;: &quot;Rumore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Scarichi&quot;,
+			&quot;value&quot;: &quot;Scarichi&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Traffico&quot;,
+			&quot;value&quot;: &quot;Traffico&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Vibrazioni&quot;,
+			&quot;value&quot;: &quot;Vibrazioni&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Visivo&quot;,
+			&quot;value&quot;: &quot;Visivo&quot;
+		}
+	],
+	&quot;Lavori e prestazioni accessorie su cliente&quot;: [
+		{
+			&quot;label&quot;: &quot;Comportamento operatore&quot;,
+			&quot;value&quot;: &quot;Comportamento operatore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Costo del lavoro/prestazione&quot;,
+			&quot;value&quot;: &quot;Costo del lavoro/prestazione&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Qualità dell&apos;intervento&quot;,
+			&quot;value&quot;: &quot;Qualità dell&apos;intervento&quot;
+		}
+	],
+	&quot;Misura&quot;: [
+		{
+			&quot;label&quot;: &quot;Comportamento operatore&quot;,
+			&quot;value&quot;: &quot;Comportamento operatore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Contatore&quot;,
+			&quot;value&quot;: &quot;Contatore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Letture&quot;,
+			&quot;value&quot;: &quot;Letture&quot;
+		}
+	],
+	&quot;Morosità&quot;: [
+		{
+			&quot;label&quot;: &quot;Morosità&quot;,
+			&quot;value&quot;: &quot;Morosità&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Solleciti&quot;,
+			&quot;value&quot;: &quot;Solleciti&quot;
+		}
+	],
+	&quot;Qualità e continuità servizio&quot;: [
+		{
+			&quot;label&quot;: &quot;Fornitura servizio&quot;,
+			&quot;value&quot;: &quot;Fornitura servizio&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Pronto Intervento&quot;,
+			&quot;value&quot;: &quot;Pronto Intervento&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Qualità acqua potabile&quot;,
+			&quot;value&quot;: &quot;Qualità acqua potabile&quot;
+		}
+	],
+	&quot;Servizio Clienti&quot;: [
+		{
+			&quot;label&quot;: &quot;Call Center&quot;,
+			&quot;value&quot;: &quot;Call Center&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Difficoltà contatto&quot;,
+			&quot;value&quot;: &quot;Difficoltà contatto&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Risposta a reclamo&quot;,
+			&quot;value&quot;: &quot;Risposta a reclamo&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Sportello&quot;,
+			&quot;value&quot;: &quot;Sportello&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Web&quot;,
+			&quot;value&quot;: &quot;Web&quot;
+		}
+	]
+}</value>
     </values>
     <values>
         <field>ObjectDeveloperName__c</field>
