@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>SuspensionDays__c</field>
-        <value xsi:type="xsd:int">0</value>
+        <value xsi:type="xsd:int">20</value>
     </values>
 </CustomMetadata>
