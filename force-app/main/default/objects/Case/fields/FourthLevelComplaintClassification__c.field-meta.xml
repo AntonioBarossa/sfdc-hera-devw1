@@ -216,6 +216,7 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
             <valueName>SC01 - attesa al telefono</valueName>
         </valueSettings>
         <valueSettings>
