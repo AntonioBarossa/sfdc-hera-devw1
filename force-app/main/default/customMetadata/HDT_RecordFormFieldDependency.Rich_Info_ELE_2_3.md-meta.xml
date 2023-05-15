@@ -12,7 +12,188 @@
     </values>
     <values>
         <field>DependecyJSON__c</field>
-        <value xsi:type="xsd:string">{&quot;Altro&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Fotovoltaico&quot;, &quot;value&quot;: &quot;Fotovoltaico&quot;},{&quot;label&quot;: &quot;Modulistica&quot;, &quot;value&quot;: &quot;Modulistica&quot;},{&quot;label&quot;: &quot;Privacy&quot;, &quot;value&quot;: &quot;Privacy&quot;}],&quot;Bonus sociale&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Cessazioni&quot;, &quot;value&quot;: &quot;Cessazioni&quot;},{&quot;label&quot;: &quot;Erogazioni&quot;, &quot;value&quot;: &quot;Erogazioni&quot;},{&quot;label&quot;: &quot;Validazioni&quot;, &quot;value&quot;: &quot;Validazioni&quot;}],&quot;Connessioni, lavori e qualità tecnica&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Continuità&quot;, &quot;value&quot;: &quot;Continuità&quot;},{&quot;label&quot;: &quot;Preventivi/attivazioni/lavori (tempi e costi)&quot;, &quot;value&quot;: &quot;Preventivi/attivazioni/lavori (tempi e costi)&quot;},{&quot;label&quot;: &quot;Sicurezza&quot;, &quot;value&quot;: &quot;Sicurezza&quot;},{&quot;label&quot;: &quot;Valori della tensione/pressione&quot;, &quot;value&quot;: &quot;Valori della tensione/pressione&quot;}],&quot;Contratti&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Modifiche unilaterali&quot;, &quot;value&quot;: &quot;Modifiche unilaterali&quot;},{&quot;label&quot;: &quot;Recesso&quot;, &quot;value&quot;: &quot;Recesso&quot;},{&quot;label&quot;: &quot;Volture e subentri&quot;, &quot;value&quot;: &quot;Volture e subentri&quot;}],&quot;Fatturazione&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Autolettura (uso della)&quot;, &quot;value&quot;: &quot;Autolettura (uso della)&quot;},{&quot;label&quot;: &quot;Consumi stimati errati&quot;, &quot;value&quot;: &quot;Consumi stimati errati&quot;},{&quot;label&quot;: &quot;Importi per consumi risalenti a più di due anni&quot;, &quot;value&quot;: &quot;Importi per consumi risalenti a più di due anni&quot;},{&quot;label&quot;: &quot;Pagamenti e Rimborsi&quot;, &quot;value&quot;: &quot;Pagamenti e Rimborsi&quot;},{&quot;label&quot;: &quot;Periodicità e fattura di chiusura&quot;, &quot;value&quot;: &quot;Periodicità e fattura di chiusura&quot;},{&quot;label&quot;: &quot;Ricalcoli&quot;, &quot;value&quot;: &quot;Ricalcoli&quot;}],&quot;Mercato&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Cambio fornitore&quot;, &quot;value&quot;: &quot;Cambio fornitore&quot;},{&quot;label&quot;: &quot;Condizioni economiche nuovi contratti&quot;, &quot;value&quot;: &quot;Condizioni economiche nuovi contratti&quot;},{&quot;label&quot;: &quot;Doppia fatturazione&quot;, &quot;value&quot;: &quot;Doppia fatturazione&quot;},{&quot;label&quot;: &quot;Presunti contratti non richiesti&quot;, &quot;value&quot;: &quot;Presunti contratti non richiesti&quot;}],&quot;Misura&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Cambio misuratore&quot;, &quot;value&quot;: &quot;Cambio misuratore&quot;},{&quot;label&quot;: &quot;Mancate letture&quot;, &quot;value&quot;: &quot;Mancate letture&quot;},{&quot;label&quot;: &quot;Verifica e ricostruzioni&quot;, &quot;value&quot;: &quot;Verifica e ricostruzioni&quot;}],&quot;Morosità e sospensione&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Cmor (Corrispettivo morosità pregresse)&quot;, &quot;value&quot;: &quot;Cmor (Corrispettivo morosità pregresse)&quot;},{&quot;label&quot;: &quot;Morosità&quot;, &quot;value&quot;: &quot;Morosità&quot;},{&quot;label&quot;: &quot;Sospensione e riattivazione&quot;, &quot;value&quot;: &quot;Sospensione e riattivazione&quot;}],&quot;Qualità commerciale&quot;:[{&quot;label&quot;: &quot;Altro&quot;, &quot;value&quot;: &quot;Altro&quot;},{&quot;label&quot;: &quot;Indennizzi&quot;, &quot;value&quot;: &quot;Indennizzi&quot;},{&quot;label&quot;: &quot;Servizio clienti (call center, sportelli, altri servizi)&quot;, &quot;value&quot;: &quot;Servizio clienti (call center, sportelli, altri servizi)&quot;}],&quot;Doppia fatturazione&quot;:[{&quot;label&quot;: &quot;Doppia fatturazione&quot;, &quot;value&quot;: &quot;Doppia fatturazione&quot;}]}</value>
+        <value xsi:type="xsd:string">{
+	&quot;Altro&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Fotovoltaico&quot;,
+			&quot;value&quot;: &quot;Fotovoltaico&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Modulistica&quot;,
+			&quot;value&quot;: &quot;Modulistica&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Privacy&quot;,
+			&quot;value&quot;: &quot;Privacy&quot;
+		}
+	],
+	&quot;Bonus sociale&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Cessazioni&quot;,
+			&quot;value&quot;: &quot;Cessazioni&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Erogazioni&quot;,
+			&quot;value&quot;: &quot;Erogazioni&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Validazioni&quot;,
+			&quot;value&quot;: &quot;Validazioni&quot;
+		}
+	],
+	&quot;Connessioni, lavori e qualità tecnica&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Continuità&quot;,
+			&quot;value&quot;: &quot;Continuità&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Preventivi/attivazioni/lavori (tempi e costi)&quot;,
+			&quot;value&quot;: &quot;Preventivi/attivazioni/lavori (tempi e costi)&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Sicurezza&quot;,
+			&quot;value&quot;: &quot;Sicurezza&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Valori della tensione/pressione&quot;,
+			&quot;value&quot;: &quot;Valori della tensione/pressione&quot;
+		}
+	],
+	&quot;Contratti&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Modifiche unilaterali&quot;,
+			&quot;value&quot;: &quot;Modifiche unilaterali&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Recesso&quot;,
+			&quot;value&quot;: &quot;Recesso&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Volture e subentri&quot;,
+			&quot;value&quot;: &quot;Volture e subentri&quot;
+		}
+	],
+	&quot;Fatturazione&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Autolettura (uso della)&quot;,
+			&quot;value&quot;: &quot;Autolettura (uso della)&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Consumi stimati errati&quot;,
+			&quot;value&quot;: &quot;Consumi stimati errati&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Pagamenti e Rimborsi&quot;,
+			&quot;value&quot;: &quot;Pagamenti e Rimborsi&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Periodicità e fattura di chiusura&quot;,
+			&quot;value&quot;: &quot;Periodicità e fattura di chiusura&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Ricalcoli&quot;,
+			&quot;value&quot;: &quot;Ricalcoli&quot;
+		}
+	],
+	&quot;Mercato&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Cambio fornitore&quot;,
+			&quot;value&quot;: &quot;Cambio fornitore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Condizioni economiche nuovi contratti&quot;,
+			&quot;value&quot;: &quot;Condizioni economiche nuovi contratti&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Doppia fatturazione&quot;,
+			&quot;value&quot;: &quot;Doppia fatturazione&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Presunti contratti non richiesti&quot;,
+			&quot;value&quot;: &quot;Presunti contratti non richiesti&quot;
+		}
+	],
+	&quot;Misura&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Cambio misuratore&quot;,
+			&quot;value&quot;: &quot;Cambio misuratore&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Mancate letture&quot;,
+			&quot;value&quot;: &quot;Mancate letture&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Verifica e ricostruzioni&quot;,
+			&quot;value&quot;: &quot;Verifica e ricostruzioni&quot;
+		}
+	],
+	&quot;Morosità e sospensione&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Cmor (Corrispettivo morosità pregresse)&quot;,
+			&quot;value&quot;: &quot;Cmor (Corrispettivo morosità pregresse)&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Morosità&quot;,
+			&quot;value&quot;: &quot;Morosità&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Sospensione e riattivazione&quot;,
+			&quot;value&quot;: &quot;Sospensione e riattivazione&quot;
+		}
+	],
+	&quot;Qualità commerciale&quot;: [
+		{
+			&quot;label&quot;: &quot;Altro&quot;,
+			&quot;value&quot;: &quot;Altro&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Indennizzi&quot;,
+			&quot;value&quot;: &quot;Indennizzi&quot;
+		},
+		{
+			&quot;label&quot;: &quot;Servizio clienti (call center, sportelli, altri servizi)&quot;,
+			&quot;value&quot;: &quot;Servizio clienti (call center, sportelli, altri servizi)&quot;
+		}
+	],
+	&quot;Doppia fatturazione&quot;: [
+		{
+			&quot;label&quot;: &quot;Doppia fatturazione&quot;,
+			&quot;value&quot;: &quot;Doppia fatturazione&quot;
+		}
+	]
+}</value>
     </values>
     <values>
         <field>ObjectDeveloperName__c</field>
