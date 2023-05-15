@@ -87,6 +87,11 @@ public with sharing class HDT_LC_FormAccountBusiness {
                 throw new AuraHandledException('Codice Fiscale non coerente con i dati inseriti');
             }
         }
+        /** TK 978944C Impossibile selezionare categoria piccoli/grandi condomini per la categoria azienda */
+        if('Azienda'.equalsIgnoreCase(account.CustomerMarking__c) && String.isNotBlank(account.Category__c) && account.Category__c.containsIgnoreCase('Condomini'))
+        {
+            throw new AuraHandledException('Impossibile selezionare Categoria: ' + account.Category__c + ' per la marcatura: ' + account.CustomerMarking__c);
+        }
         //System.debug('ACCOUNT:' + account);
         //HRDTR-00_HRAWRM-720 12/10/2021
       //  System.debug('account.CustomerMarking__c '+account.CustomerMarking__c);
