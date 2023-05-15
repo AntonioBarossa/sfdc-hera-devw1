@@ -122,13 +122,17 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Indennizzi</controllingFieldValue>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
             <controllingFieldValue>Erogazioni</controllingFieldValue>
             <controllingFieldValue>Cessazioni</controllingFieldValue>
             <controllingFieldValue>Validazioni</controllingFieldValue>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
             <controllingFieldValue>Continuità</controllingFieldValue>
             <controllingFieldValue>Mancate letture</controllingFieldValue>
+            <controllingFieldValue>Verifica e ricostruzioni</controllingFieldValue>
             <controllingFieldValue>Cambio misuratore</controllingFieldValue>
             <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <controllingFieldValue>Doppia Fatturazione</controllingFieldValue>
             <controllingFieldValue>Fotovoltaico</controllingFieldValue>
             <controllingFieldValue>Periodicità e fattura di chiusura</controllingFieldValue>
@@ -136,10 +140,15 @@
             <controllingFieldValue>Ricalcoli</controllingFieldValue>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
             <controllingFieldValue>Cambio fornitore</controllingFieldValue>
+            <controllingFieldValue>Cmor (Corrispettivo morosità pregresse)</controllingFieldValue>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <controllingFieldValue>Sospensione e riattivazione</controllingFieldValue>
             <controllingFieldValue>Modifiche unilaterali</controllingFieldValue>
             <controllingFieldValue>Recesso</controllingFieldValue>
             <controllingFieldValue>Autolettura (uso della)</controllingFieldValue>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Sicurezza</controllingFieldValue>
+            <controllingFieldValue>Valori della tensione/pressione</controllingFieldValue>
             <controllingFieldValue>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</controllingFieldValue>
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>Altro</valueName>
@@ -369,6 +378,26 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Accesso area privata</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni/cessazioni - non eseguita causa cliente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni/cessazioni - non eseguita causa Distributore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni/cessazioni - non eseguita causa Venditore</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
+            <valueName>Attivazioni/cessazioni - tempistiche/modalità/costi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Preventivi/attivazioni/lavori (tempi e costi)</controllingFieldValue>
             <valueName>Attivazioni- non eseguita causa cliente</valueName>
         </valueSettings>
         <valueSettings>
@@ -543,11 +572,24 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Ricalcoli</controllingFieldValue>
+            <valueName>Fatturazione a conguaglio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>Fatturazione elevata/importi anomali del.17/16</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
             <valueName>Inversione contatore</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
             <valueName>IVA</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>IVA - applicazione non corretta</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
@@ -623,6 +665,26 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>VAS - Analisi Consumi/Fast Check Up</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>VAS - Assicurazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>VAS - ContaWatt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>VAS - Lampadine Led</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <valueName>VAS - Thermo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Altro</controllingFieldValue>
             <valueName>Venditore terzo</valueName>
         </valueSettings>
         <valueSettings>
@@ -639,6 +701,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Falso procurato</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Falso procuratore</valueName>
         </valueSettings>
         <valueSettings>
@@ -648,6 +714,10 @@
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>MUI_ disconoscimento totale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
+            <valueName>Non accolto</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
@@ -777,10 +847,6 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Ricalcoli</controllingFieldValue>
-            <valueName>Fatturazione a conguaglio</valueName>
-        </valueSettings>
-        <valueSettings>
-            <controllingFieldValue>Ricalcoli</controllingFieldValue>
             <valueName>Recupero quote non fatturate</valueName>
         </valueSettings>
         <valueSettings>
@@ -794,6 +860,22 @@
         <valueSettings>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
             <valueName>Bonus_Sconti_Promo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Bonus web</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Bper</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Buoni/voucher</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
+            <valueName>Promo linear</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Condizioni economiche nuovi contratti</controllingFieldValue>
@@ -850,6 +932,10 @@
         <valueSettings>
             <controllingFieldValue>Letture</controllingFieldValue>
             <valueName>ML03 - Autolettura errata (voltura)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Morosità</controllingFieldValue>
+            <valueName>Importo del sollecito</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Morosità</controllingFieldValue>
