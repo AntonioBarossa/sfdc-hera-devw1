@@ -17,6 +17,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
 
     public static List<List<String>> predefaultRatecategories = new List<List<String>>{
         new List<String>{'Disconnectable__c','No','ACANTINC00', 'ACINTERNO0', 'ACPUBNDIS0', 'ACSUBDIST0', 'ACANTIN000', 'ACTANTINC0'}, //altrimenti Si
+        new List<String>{'NotDisconnectabilityCustomer__c','Si','ACANTINC00', 'ACINTERNO0', 'ACPUBNDIS0', 'ACSUBDIST0', 'ACANTIN000', 'ACTANTINC0'}, // deve sempre essere al contrario di Disconnectable__c
         //new List<String>{'SecurityDepositExcluded__c','Y','AITBNDOME0','AITMNDOME0'},
         new List<String>{'Cohabitation__c','N','ACDOMRESP0','ACPROMISC0'},
         new List<String>{'NotResidentDomesticHousingUnit__c','1','ACDOMNR000'},
@@ -191,6 +192,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessPrecheck {
                 }
             }
 
+            newOrder.Disconnectable__c = 'Si';
             newOrder.NotDisconnectabilityCustomer__c = 'No';
             newOrder.VAT__c = 'Iva 22% (Cod. 02)';
             newOrder.AggregateBilling__c = 'Si';
