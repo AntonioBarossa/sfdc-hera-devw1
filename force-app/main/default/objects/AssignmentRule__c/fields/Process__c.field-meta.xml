@@ -11,6 +11,11 @@
         <valueSetDefinition>
             <sorted>true</sorted>
             <value>
+                <fullName>Adesione Rinuncia Fondo Fughe</fullName>
+                <default>false</default>
+                <label>Adesione Rinuncia Fondo Fughe</label>
+            </value>
+            <value>
                 <fullName>Aggiunta Attacco</fullName>
                 <default>false</default>
                 <label>Aggiunta Attacco</label>
@@ -20,6 +25,11 @@
                 <default>false</default>
                 <isActive>false</isActive>
                 <label>Aggiunta Attacco /Preventivo Analitico + EL</label>
+            </value>
+            <value>
+                <fullName>Aggiunta Attacco con Attivazione</fullName>
+                <default>false</default>
+                <label>Aggiunta Attacco con Attivazione</label>
             </value>
             <value>
                 <fullName>Aggiunta Sconti o Bonus VAS</fullName>
@@ -55,8 +65,12 @@
             <value>
                 <fullName>Altre Verifiche</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Altre Verifiche</label>
+            </value>
+            <value>
+                <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+                <default>false</default>
+                <label>Ambiente annullo richiesta senza appuntamento</label>
             </value>
             <value>
                 <fullName>Annullamento Contratti</fullName>
@@ -105,6 +119,11 @@
                 <label>Autolettura da processoAllineamento Anagrafica</label>
             </value>
             <value>
+                <fullName>Avviso di Servizio</fullName>
+                <default>false</default>
+                <label>Avviso di Servizio</label>
+            </value>
+            <value>
                 <fullName>Blocco al Sollecito ed Interessi</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -146,6 +165,11 @@
                 <label>Cambio Offerta Gas</label>
             </value>
             <value>
+                <fullName>Cambio Tariffa</fullName>
+                <default>false</default>
+                <label>Cambio Tariffa</label>
+            </value>
+            <value>
                 <fullName>Cambio Uso</fullName>
                 <default>false</default>
                 <label>Cambio Uso</label>
@@ -156,9 +180,29 @@
                 <label>Cambio Uso Tecnico</label>
             </value>
             <value>
+                <fullName>Cessazione</fullName>
+                <default>false</default>
+                <label>Cessazione</label>
+            </value>
+            <value>
+                <fullName>Cessazione post accertamento</fullName>
+                <default>false</default>
+                <label>Cessazione post accertamento</label>
+            </value>
+            <value>
+                <fullName>Cessazione Scarichi Produttivi</fullName>
+                <default>false</default>
+                <label>Cessazione Scarichi Produttivi</label>
+            </value>
+            <value>
                 <fullName>Chiusura Contatore</fullName>
                 <default>false</default>
                 <label>Chiusura Contatore</label>
+            </value>
+            <value>
+                <fullName>Chiusura Presa Stradale</fullName>
+                <default>false</default>
+                <label>Chiusura Presa Stradale</label>
             </value>
             <value>
                 <fullName>Comportamento Altri Venditori</fullName>
@@ -186,6 +230,11 @@
                 <label>Condizioni Contrattuali Errate</label>
             </value>
             <value>
+                <fullName>Conferimento Centri di Raccolta</fullName>
+                <default>false</default>
+                <label>Conferimento Centri di Raccolta</label>
+            </value>
+            <value>
                 <fullName>Connessione con Attivazione</fullName>
                 <default>false</default>
                 <label>Connessione con Attivazione</label>
@@ -194,6 +243,16 @@
                 <fullName>Consegna copia chiave GdM</fullName>
                 <default>false</default>
                 <label>Consegna copia chiave GdM</label>
+            </value>
+            <value>
+                <fullName>Consumo Anomalo Idrico</fullName>
+                <default>false</default>
+                <label>Consumo Anomalo Idrico</label>
+            </value>
+            <value>
+                <fullName>Contenitore Morosità</fullName>
+                <default>false</default>
+                <label>Contenitore Morosità</label>
             </value>
             <value>
                 <fullName>Contenzioso In Corso</fullName>
@@ -278,6 +337,11 @@
                 <label>Errore di Fatturazione</label>
             </value>
             <value>
+                <fullName>Esenzione Modifica Fognatura Depurazione</fullName>
+                <default>false</default>
+                <label>Esenzione Modifica Fognatura Depurazione</label>
+            </value>
+            <value>
                 <fullName>Esercizio Diritti Privacy</fullName>
                 <default>false</default>
                 <label>Esercizio Diritti Privacy</label>
@@ -285,13 +349,17 @@
             <value>
                 <fullName>Feature Request</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Feature Request</label>
             </value>
             <value>
                 <fullName>Fiscale</fullName>
                 <default>false</default>
                 <label>Fiscale</label>
+            </value>
+            <value>
+                <fullName>Formulari Richiesta Sconto</fullName>
+                <default>false</default>
+                <label>Formulari Richiesta Sconto</label>
             </value>
             <value>
                 <fullName>Gestione Bonus Sociale</fullName>
@@ -315,6 +383,11 @@
                 <label>Gestione Disalimentabilità</label>
             </value>
             <value>
+                <fullName>Gestione Rifiuti</fullName>
+                <default>false</default>
+                <label>Gestione Rifiuti</label>
+            </value>
+            <value>
                 <fullName>HVAC</fullName>
                 <default>false</default>
                 <label>HVAC</label>
@@ -322,7 +395,6 @@
             <value>
                 <fullName>Indennizzo</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Indennizzo</label>
             </value>
             <value>
@@ -333,13 +405,11 @@
             <value>
                 <fullName>Informazioni ambientali</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Informazioni ambientali</label>
             </value>
             <value>
                 <fullName>Informazioni servizi Hera</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Informazioni servizi Hera</label>
             </value>
             <value>
@@ -348,9 +418,29 @@
                 <label>Interruzione Fornitura</label>
             </value>
             <value>
+                <fullName>Interventi con Verifica</fullName>
+                <default>false</default>
+                <label>Interventi con Verifica</label>
+            </value>
+            <value>
                 <fullName>Inversione del Contatore</fullName>
                 <default>false</default>
                 <label>Inversione del Contatore</label>
+            </value>
+            <value>
+                <fullName>Istruttoria</fullName>
+                <default>false</default>
+                <label>Istruttoria</label>
+            </value>
+            <value>
+                <fullName>Lettura Acqua Avviso al Cliente</fullName>
+                <default>false</default>
+                <label>Lettura Acqua Avviso al Cliente</label>
+            </value>
+            <value>
+                <fullName>Limitazione Fornitura</fullName>
+                <default>false</default>
+                <label>Limitazione Fornitura</label>
             </value>
             <value>
                 <fullName>Mancata Telelettura/lettura</fullName>
@@ -386,14 +476,17 @@
             <value>
                 <fullName>Modifica Contr Preattivazione Anagr Res</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Modifica Contr Preattivazione Anagr Res</label>
             </value>
             <value>
                 <fullName>Modifica Contr Preattivazione Pagamento Residenziale</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Modifica Contr Preattivazione Pagamento Residenziale</label>
+            </value>
+            <value>
+                <fullName>Modifica dati contrattuali</fullName>
+                <default>false</default>
+                <label>Modifica dati contrattuali</label>
             </value>
             <value>
                 <fullName>Modifica Dati di Contatto</fullName>
@@ -422,6 +515,11 @@
                 <label>Modifica Portale SOL Gestione Energia</label>
             </value>
             <value>
+                <fullName>Modifica post accertamento</fullName>
+                <default>false</default>
+                <label>Modifica post accertamento</label>
+            </value>
+            <value>
                 <fullName>Modifica Privacy</fullName>
                 <default>false</default>
                 <label>Modifica Privacy</label>
@@ -433,9 +531,24 @@
                 <label>Modifica Servizio Energia</label>
             </value>
             <value>
+                <fullName>Modifica Tariffa</fullName>
+                <default>false</default>
+                <label>Modifica Tariffa</label>
+            </value>
+            <value>
                 <fullName>Modifica Tariffa Residente/Non Residente</fullName>
                 <default>false</default>
                 <label>Modifica Tariffa Residente/Non Residente</label>
+            </value>
+            <value>
+                <fullName>Modifica Tariffa - Rimozione Agevolazione</fullName>
+                <default>false</default>
+                <label>Modifica Tariffa - Rimozione Agevolazione</label>
+            </value>
+            <value>
+                <fullName>Modifica Unita Immobiliari Componenti</fullName>
+                <default>false</default>
+                <label>Modifica Unita Immobiliari Componenti</label>
             </value>
             <value>
                 <fullName>Notifica Attivazione POD</fullName>
@@ -461,7 +574,6 @@
             <value>
                 <fullName>Nuovo Impianto - Aggiunta Attacco</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Nuovo Impianto - Aggiunta Attacco</label>
             </value>
             <value>
@@ -475,6 +587,11 @@
                 <label>Pagamento Online</label>
             </value>
             <value>
+                <fullName>Pagamento Unico Annuale TARI</fullName>
+                <default>false</default>
+                <label>Pagamento Unico Annuale TARI</label>
+            </value>
+            <value>
                 <fullName>Paperless</fullName>
                 <default>false</default>
                 <label>Paperless</label>
@@ -483,6 +600,11 @@
                 <fullName>Piano Rateizzazione</fullName>
                 <default>false</default>
                 <label>Piano Rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Posizionamento Contenitore</fullName>
+                <default>false</default>
+                <label>Posizionamento Contenitore</label>
             </value>
             <value>
                 <fullName>Predeterminabile + EL</fullName>
@@ -496,9 +618,8 @@
                 <label>Prescrizione Fatture</label>
             </value>
             <value>
-                <fullName>Prima attivazione</fullName>
+                <fullName>Prima Attivazione</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Prima attivazione</label>
             </value>
             <value>
@@ -522,6 +643,11 @@
                 <label>Prima Attivazione In delibera</label>
             </value>
             <value>
+                <fullName>Promessa di Pagamento Ente</fullName>
+                <default>false</default>
+                <label>Promessa di Pagamento Ente</label>
+            </value>
+            <value>
                 <fullName>Proroga connessione temporanea</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -535,13 +661,11 @@
             <value>
                 <fullName>Question</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Question</label>
             </value>
             <value>
                 <fullName>Recesso</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Recesso</label>
             </value>
             <value>
@@ -582,6 +706,11 @@
                 <label>Reclamo Scritto/Rich. Info</label>
             </value>
             <value>
+                <fullName>Reclamo Scritto Da Cittadino</fullName>
+                <default>false</default>
+                <label>Reclamo Scritto Da Cittadino</label>
+            </value>
+            <value>
                 <fullName>Rettifica Consumi</fullName>
                 <default>false</default>
                 <label>Rettifica Consumi</label>
@@ -608,10 +737,9 @@
                 <label>Riattivazione fornitura non morosa</label>
             </value>
             <value>
-                <fullName>Riattivazione Non Morose</fullName>
+                <fullName>Riattivazione non morose</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
-                <label>Riattivazione Non Morose</label>
+                <label>Riattivazione non morose</label>
             </value>
             <value>
                 <fullName>Richiesta Domiciliazione</fullName>
@@ -646,9 +774,24 @@
                 <label>Ricostruzione Consumi</label>
             </value>
             <value>
+                <fullName>Riduz. superficie rifiuti spec promiscui</fullName>
+                <default>false</default>
+                <label>Riduz. superficie rifiuti spec promiscui</label>
+            </value>
+            <value>
+                <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+                <default>false</default>
+                <label>Riduzione Agevolazione dopo Accertamento</label>
+            </value>
+            <value>
                 <fullName>Rimborso</fullName>
                 <default>false</default>
                 <label>Rimborso</label>
+            </value>
+            <value>
+                <fullName>Rimozione Agevolazione</fullName>
+                <default>false</default>
+                <label>Rimozione Agevolazione</label>
             </value>
             <value>
                 <fullName>Rimozione Impianto</fullName>
@@ -670,7 +813,6 @@
             <value>
                 <fullName>Ripensamento</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Ripensamento</label>
             </value>
             <value>
@@ -685,6 +827,11 @@
                 <label>Ripristino Fornitura Interrotta/Preventivo Analitico + EL</label>
             </value>
             <value>
+                <fullName>Risoluzione Contrattuale</fullName>
+                <default>false</default>
+                <label>Risoluzione Contrattuale</label>
+            </value>
+            <value>
                 <fullName>Risoluzione No Disalimentabile</fullName>
                 <default>false</default>
                 <label>Risoluzione No Disalimentabile</label>
@@ -692,7 +839,6 @@
             <value>
                 <fullName>Risoluzione No Punto Sospeso</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Risoluzione No Punto Sospeso</label>
             </value>
             <value>
@@ -711,9 +857,24 @@
                 <label>Ritorno a Fatturazione Bimestrale/Mensile</label>
             </value>
             <value>
+                <fullName>Sconti Collettivi Pap</fullName>
+                <default>false</default>
+                <label>Sconti Collettivi Pap</label>
+            </value>
+            <value>
+                <fullName>Segnalazioni Ambientali</fullName>
+                <default>false</default>
+                <label>Segnalazioni Ambientali</label>
+            </value>
+            <value>
                 <fullName>Segnalazioni VAS</fullName>
                 <default>false</default>
                 <label>Segnalazioni VAS</label>
+            </value>
+            <value>
+                <fullName>Social</fullName>
+                <default>false</default>
+                <label>Social</label>
             </value>
             <value>
                 <fullName>Social Studio</fullName>
@@ -733,7 +894,6 @@
             <value>
                 <fullName>Sospensione Canone Rai</fullName>
                 <default>false</default>
-                <isActive>false</isActive>
                 <label>Sospensione Canone Rai</label>
             </value>
             <value>
@@ -793,6 +953,11 @@
                 <fullName>Subentro</fullName>
                 <default>false</default>
                 <label>Subentro</label>
+            </value>
+            <value>
+                <fullName>Subentro Cambio Cat.Tariffa</fullName>
+                <default>false</default>
+                <label>Subentro Cambio Cat.Tariffa</label>
             </value>
             <value>
                 <fullName>Subentro Ele</fullName>
@@ -984,9 +1149,24 @@
                 <label>Verifica Dati al DL</label>
             </value>
             <value>
+                <fullName>Verifica Fuga Idrica</fullName>
+                <default>false</default>
+                <label>Verifica Fuga Idrica</label>
+            </value>
+            <value>
                 <fullName>Verifica GDM</fullName>
                 <default>false</default>
                 <label>Verifica GDM</label>
+            </value>
+            <value>
+                <fullName>Verifica Integrita Sigilli</fullName>
+                <default>false</default>
+                <label>Verifica Integrita Sigilli</label>
+            </value>
+            <value>
+                <fullName>Verifica Interna</fullName>
+                <default>false</default>
+                <label>Verifica Interna</label>
             </value>
             <value>
                 <fullName>Verifica Pareggio Fittizio Canone Rai</fullName>
@@ -1018,6 +1198,11 @@
                 <fullName>Voltura con Switch</fullName>
                 <default>false</default>
                 <label>Voltura con Switch</label>
+            </value>
+            <value>
+                <fullName>Voltura - Subentro Scarico produttivo</fullName>
+                <default>false</default>
+                <label>Voltura - Subentro Scarico produttivo</label>
             </value>
             <value>
                 <fullName>Voltura Tecnica</fullName>
