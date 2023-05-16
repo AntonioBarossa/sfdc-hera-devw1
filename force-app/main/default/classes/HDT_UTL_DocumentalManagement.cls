@@ -1077,7 +1077,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		return transcoded;
 	}
 
-	public static Map<String, String> manageRadioBtns(List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, List<Order> orderList)
+	public static Map<String, String> manageRadioBtns(List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, List<Order> orderList, Map<String, Object> extraParams)
 	{
 		Map<String, String> result = new Map<String, String>();
 		String valueOne = '';
@@ -1093,6 +1093,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			/** Allegati opzionali per order */
 			if(!orderList.isEmpty())
 			{
+				SObject record = (SObject) extraParams.get('record');
+				String envelopeId = (String) extraParams.get('envelopeId');
 				if (singleRadio.groupName.contains('DTC_radio1')){
 					String actDescription = 'Ritornato correttamente';
 					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){

@@ -508,7 +508,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						privacyVersion = singleAttachment.Version__c;
 					}
 				}
-				Map<String, String> radioMap = HDT_UTL_DocumentalManagement.manageRadioBtns(listOfRadio, new List<Order>());
+				Map<String, String> radioMap = HDT_UTL_DocumentalManagement.manageRadioBtns(listOfRadio, new List<Order>(), new Map<String,Object>());
 				if(String.isNotBlank(radioMap.get('radio1')))
 				{
 					record.put('MarketingPrivacy__c', radioMap.get('radio1'));
@@ -569,7 +569,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						privacyVersion = singleAttachment.Version__c;
 					}
 				}
-				Map<String, String> radioMap = HDT_UTL_DocumentalManagement.manageRadioBtns(listOfRadio, orderList);
+				Map<String, String> radioMap = HDT_UTL_DocumentalManagement.manageRadioBtns(listOfRadio, orderList, new Map<String,Object>{'envelopeId'=> envelopeId, 'record' => record});
 				if(String.isNotBlank(radioMap.get('radio1')))
 				{
 					record.put('MarketingPrivacy__c', radioMap.get('radio1'));
