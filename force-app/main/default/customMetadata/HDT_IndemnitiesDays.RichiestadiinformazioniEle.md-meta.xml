@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-    <label>RichiestaParereDefaultGas</label>
+    <label>RichiestadiinformazioniEle</label>
     <protected>false</protected>
     <values>
         <field>BasicAmount__c</field>
-        <value xsi:type="xsd:double">0</value>
+        <value xsi:type="xsd:double">0.0</value>
     </values>
     <values>
         <field>Commodity__c</field>
-        <value xsi:type="xsd:string">Gas</value>
+        <value xsi:type="xsd:string">Energia Elettrica</value>
     </values>
     <values>
         <field>ComputeType__c</field>
@@ -20,14 +20,14 @@
     </values>
     <values>
         <field>Process__c</field>
-        <value xsi:type="xsd:string">Richiesta Parere</value>
+        <value xsi:type="xsd:string">Richiesta di informazioni</value>
     </values>
     <values>
         <field>SuspensionDaysRectification__c</field>
-        <value xsi:type="xsd:int">0</value>
+        <value xsi:type="xsd:double">0.0</value>
     </values>
     <values>
         <field>SuspensionDays__c</field>
-        <value xsi:type="xsd:int">10</value>
+        <value xsi:type="xsd:double">30.0</value>
     </values>
 </CustomMetadata>
