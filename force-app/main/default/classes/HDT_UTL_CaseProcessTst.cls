@@ -301,6 +301,15 @@ public with sharing class HDT_UTL_CaseProcessTst {
 
     //START MODIFICA marco.arci@webresults.it
     @isTest
+    private static void getMetadataComplaintsTest(){
+        Test.startTest();
+            List<HDT_EnvironmentalComplaintsRec__mdt> metas = HDT_QR_ProcessPostSales.getSecondLevelOptions();
+        Test.stopTest();
+        Assert.isFalse(metas.isEmpty(), 'Non sono stati trovati meta');
+        
+    }
+
+    @isTest
     private static void createActivityFromContractTest(){
         Test.startTest();
             List<Account> accList = [SELECT id FROM Account];
