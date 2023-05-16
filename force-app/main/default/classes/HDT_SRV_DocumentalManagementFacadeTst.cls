@@ -151,7 +151,79 @@ public with sharing class HDT_SRV_DocumentalManagementFacadeTst {
 		String debugString = TEST_NAME + ' - sendDocumentAsyncTest';
 		System.debug(debugString);
         
+        mySetup();
         
+        
+        //TODO: ESTRARRE E REALIZZARE METODO/UTILITY DI CREAZIONE OGGETTO HDT_WRP_DocumentalStructure AD HOC
+        
+        //docRecord
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord docRecord;
+        docRecord = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord();
+        //fields docRecord
+        
+        //TODO: IMPLEMENT
+        docRecord.field1 = '';
+		docRecord.field2 = '';
+		docRecord.field3 = '';
+		docRecord.field4 = '';
+        
+        //docSection
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection docSection;
+        docSection = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection();
+        
+        //fields docSection
+        docSection.records = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalRecord>{docRecord};
+
+        
+        //docStructure
+        HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure docStructure;
+        docStructure = new HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalStructure();
+        
+        //fields docStructure
+        docStructure.sections = new List<HDT_WRP_DocumentalConfiguration.HDT_WRP_DocumentalSection>{docSection};
+        
+        
+        
+        
+        //Documento Docstructure
+        Id folderId = [SELECT Id FROM Folder WHERE DeveloperName  = :'DocumentalPayloadAdministration' LIMIT 1].Id;
+        
+        Document myDocByContext = new Document();
+        myDocByContext.name = 'DocumentazioneAnticipata';
+        myDocByContext.FolderId = folderId;
+        myDocByContext.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocByContext;
+        
+        //Documento Driver3 - NOTA: CONSIGLIABILE CORREGGERE CON docStructure DISTINTA RISPETTO A myDocByContext.
+        Document myDocDriver3 = new Document();
+        myDocDriver3.name = 'Driver3';
+        myDocDriver3.FolderId = folderId;
+        myDocDriver3.Body = Blob.valueOf(JSON.serialize(docStructure));
+        insert myDocDriver3;
+        
+        
+        //PREPARAZIONE ARGOMENTI
+        String context = 'DocumentazioneAnticipata';//se non lo è, cambia codice
+        
+        
+        Map<String,Object> formParams = new Map<String,Object>();
+        //TODO: COMPLETARE MAPPA formParams. Struttura è complicata.
+        
+        
+        String formParamsJSON = JSON.serialize(formParams);
+        
+        
+        Order myOrder = [SELECT Id FROM Order];
+        testOrder = myOrder;
+        String orderId = myOrder.Id;
+        
+        //WEBSERVICE MOCK
+        Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagementFacade_HTTP_MOCK());
+        
+        //TESTING
+        Test.startTest();
+        HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(orderId, context, formParamsJSON);
+        Test.stopTest();
         //SETUP
         //mySetup();
         

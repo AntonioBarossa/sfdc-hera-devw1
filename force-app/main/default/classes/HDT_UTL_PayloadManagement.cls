@@ -290,6 +290,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
         String distributorName = '';
         String commodity = '';
         String cluster = '';
+        String companyOwner='';
         switch on context {
             when 'Order' {
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Order', 'SalesCompany__c', 0, inputs, formParams);
@@ -312,6 +313,7 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 distributorName = HDT_UTL_DocumentalManagement.getValue('Case', 'DistributorName__c', 0, inputs, formParams);
                 commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
+                companyOwner = HDT_UTL_DocumentalManagement.getValue('Case', 'CompanyOwner__c', 0, inputs, formParams);
                 List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
                 if (cityExceptionList != null && cityExceptionList.size()>0) {
                     List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
@@ -326,12 +328,20 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 if (companyDesc != 'Marche Multiservizi S.p.A' && companyDesc != 'Hera Comm S.p.A.' && (cluster == 'Verifiche' || cluster == 'Preventivi')) {
                     companyDesc = 'Hera Comm S.p.A.';
                 }
+                if(String.isBlank(companyDesc)){
+                    if('MMS'.equalsIgnoreCase(companyOwner)){
+                        companyDesc = 'Marche Multiservizi S.p.A';
+                    }
+                }
             }
             when 'Account'{
                 //gestire in base al compani owner
                 companyDesc = HDT_UTL_DocumentalManagement.getValue('Account', 'CompanyOwner__c', 0, inputs, formParams);
                 if(companyDesc.equalsIgnoreCase('HERA COMM')){
                     companyDesc = 'Hera Comm S.p.A.';
+                }
+                if(companyDesc.equalsIgnoreCase('MMS')){
+                    companyDesc = 'Marche Multiservizi S.p.A';
                 }
             }when 'EC','GC'{
                 return getCompanyAccountStatement(formParams);

@@ -53,7 +53,7 @@ public inherited sharing class HDT_UTL_SegnalazioniTariValidation implements HDT
 	    if(STRING.isBlank(operationGroup) || STRING.isBlank(operationType)){    return null;   }
 
         list<HDT_SegnalazioniAmbientali__mdt> pickoptions = [   
-                SELECT toLabel(Material__c)
+                SELECT Material__c, toLabel(Material__c) materialLabel
                 FROM HDT_SegnalazioniAmbientali__mdt 
                 WHERE 
                 OperationGroup__c =:operationGroup
