@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>248</locationX>
-        <locationY>1106</locationY>
+        <locationX>380</locationX>
+        <locationY>998</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -43,7 +43,7 @@
         <name>Assegna_Diritto_Rettifica_NO</name>
         <label>Assegna Diritto Rettifica NO</label>
         <locationX>512</locationX>
-        <locationY>1514</locationY>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -109,7 +109,7 @@
         <name>AssegnaValori</name>
         <label>AssegnaValori</label>
         <locationX>248</locationX>
-        <locationY>1514</locationY>
+        <locationY>1322</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.CorrectionRight__c</assignToReference>
             <operator>Assign</operator>
@@ -132,7 +132,7 @@
         <name>AssegnaValori_0</name>
         <label>AssegnaValori</label>
         <locationX>248</locationX>
-        <locationY>1922</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -176,7 +176,7 @@
         <name>AssegnaValori_0_0</name>
         <label>AssegnaValori</label>
         <locationX>512</locationX>
-        <locationY>1922</locationY>
+        <locationY>1730</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -212,8 +212,8 @@
     <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>248</locationX>
-        <locationY>1214</locationY>
+        <locationX>380</locationX>
+        <locationY>1106</locationY>
         <assignmentItems>
             <assignToReference>Get_Input_Case_Aggiornato.EndDate__c</assignToReference>
             <operator>Assign</operator>
@@ -276,7 +276,7 @@
         <name>Linkare_Case</name>
         <label>Linkare Case?</label>
         <locationX>380</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>AssegnaValori_0_0</targetReference>
         </defaultConnector>
@@ -305,42 +305,10 @@
         </rules>
     </decisions>
     <decisions>
-        <name>Non_Energy</name>
-        <label>Non Energy</label>
-        <locationX>380</locationX>
-        <locationY>998</locationY>
-        <defaultConnector>
-            <targetReference>Rettifica_Doppia_Fatturazione</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>No</defaultConnectorLabel>
-        <rules>
-            <name>Si_0</name>
-            <conditionLogic>or</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Input_Case_Aggiornato.Commodity__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Acqua</stringValue>
-                </rightValue>
-            </conditions>
-            <conditions>
-                <leftValueReference>Get_Input_Case_Aggiornato.Commodity__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Ambiente</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>Calculate_Expiration_Date</targetReference>
-            </connector>
-            <label>Si</label>
-        </rules>
-    </decisions>
-    <decisions>
         <name>ParentId_Valorizzato</name>
         <label>ParentId Valorizzato?</label>
         <locationX>380</locationX>
-        <locationY>2222</locationY>
+        <locationY>2030</locationY>
         <defaultConnectorLabel>Non Valorizzato</defaultConnectorLabel>
         <rules>
             <name>Valorizzato</name>
@@ -362,7 +330,7 @@
         <name>Processo_Padre</name>
         <label>Processo Padre</label>
         <locationX>182</locationX>
-        <locationY>2438</locationY>
+        <locationY>2246</locationY>
         <defaultConnectorLabel>Altri Processi</defaultConnectorLabel>
         <rules>
             <name>Ricostruzione_Consumi</name>
@@ -448,7 +416,7 @@
         <name>Rettifica_Doppia_Fatturazione</name>
         <label>Rettifica Doppia Fatturazione?</label>
         <locationX>380</locationX>
-        <locationY>1406</locationY>
+        <locationY>1214</locationY>
         <defaultConnector>
             <targetReference>Assegna_Diritto_Rettifica_NO</targetReference>
         </defaultConnector>
@@ -599,7 +567,7 @@
         <name>Cerca_Case_reiterazione</name>
         <label>Cerca Case reiterazione</label>
         <locationX>380</locationX>
-        <locationY>1706</locationY>
+        <locationY>1514</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Linkare_Case</targetReference>
@@ -648,7 +616,7 @@
         <name>Get_Case_Padre</name>
         <label>Get Case Padre</label>
         <locationX>182</locationX>
-        <locationY>2330</locationY>
+        <locationY>2138</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Processo_Padre</targetReference>
@@ -672,7 +640,7 @@
         <locationY>890</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Non_Energy</targetReference>
+            <targetReference>Calculate_Expiration_Date</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -690,7 +658,7 @@
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
         <locationX>248</locationX>
-        <locationY>2030</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>ParentId_Valorizzato</targetReference>
         </connector>
@@ -700,7 +668,7 @@
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>512</locationX>
-        <locationY>2030</locationY>
+        <locationY>1838</locationY>
         <connector>
             <targetReference>ParentId_Valorizzato</targetReference>
         </connector>
@@ -710,7 +678,7 @@
         <name>Collega_Case_Figlio</name>
         <label>Collega Case Figlio</label>
         <locationX>50</locationX>
-        <locationY>2546</locationY>
+        <locationY>2354</locationY>
         <filterLogic>and</filterLogic>
         <filters>
             <field>Id</field>
