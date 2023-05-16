@@ -591,6 +591,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
         String currentFiscalCode = a.FiscalCode__c != null ? a.FiscalCode__c : '';
         String currentVatNumber = a.VATNumber__c != null ? a.VATNumber__c : '';
         String currentAddress = a.BillingAddressFormula__c != null ? a.BillingAddressFormula__c : '';
+        /** TK 979123C - Implementato controllo Nome-Congome-Codice Fiscale in modo da mantenere coerenza dei dati sull'anagrafica */
+        String firstName = String.isBlank(newFirstName) ? currentFirstName : newFirstName;
+        String lastName = String.isBlank(newLastName) ? currentLastName : newLastName;
+        String fiscalCode = String.isBlank(newFiscalCode) ? currentFiscalCode : newFiscalCode;
 
         if (String.isBlank(newLastName)) {
             result = JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Il campo Cognome/Ragione sociale non può essere vuoto.'));
@@ -629,6 +633,11 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
                 }
 
+                if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+                {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
+                }
+
                 if (String.isNotBlank(newVatNumber)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Impossibile inserire una Partita IVA per la marcatura ' + marking));
                 }
@@ -638,6 +647,10 @@ public inherited sharing class HDT_UTL_CaseValidations implements HDT_UTL_CaseVa
                 String fiscalCodeValidation = validateFiscalCodeAgainstOld(currentFiscalCode, newFiscalCode);
                 if (String.isNotBlank(fiscalCodeValidation)) {
                     return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', fiscalCodeValidation));
+                }
+                if(!HDT_UTL_CalculateFiscalCode.checkFirstLastNameFromFiscalCode(fiscalCode, firstName, lastName))
+                {
+                    return JSON.serialize(new HDT_UTL_CaseValidationWrapper('Error', 'Codice Fiscale non coerente con i dati inseriti'));
                 }
             }
             // Marcature che prevedono CF numerico
