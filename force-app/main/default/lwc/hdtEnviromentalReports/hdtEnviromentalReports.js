@@ -110,7 +110,7 @@ export default class HdtEnviromentalReports extends HdtRecordEditFormFlow {
             let blankMaterial = true;
             this.materialOptions = data?.map(el=>{
                 if(this.materialValue === el.Material__c)   blankMaterial = false;
-                return {label: el.Material__c, value: el.Material__c};
+                return {label: el.materialLabel, value: el.Material__c};
             });
             if(this.materialOptions.length){
                 this.disableMaterial=false;
