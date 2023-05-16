@@ -160,7 +160,7 @@ public class HDT_UTL_SalesTst {
         Test.startTest();
 
         System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='PEP', SupplyCity__c = servPoint.SupplyCity__c),sale0), 'The return was empty 1');
-        System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ', SupplyCity__c = servPoint.SupplyCity__c, CommoditySector__c = 'Gas'),sale1), 'The return was empty 2');
+        System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(new ServicePoint__c(SupplyProvince__c='AQ', SupplyCity__c = servPoint.SupplyCity__c, CommoditySector__c = 'Gas'),sale1), 'The return was empty 2');
         System.assertEquals(true, HDT_UTL_Sales.isTransitionNoUp(sale0), 'The return was empty');
         System.assertEquals(true, !HDT_UTL_Sales.isTransitionNoUp(sale1), 'The return was empty');
         

@@ -307,7 +307,7 @@ public with sharing class HDT_UTL_Sales {
                         childToUpdate.add(ord);
                         //tutti i figli per cui crearla
                         //orderParentToActivityDocument.add(ord.id);
-                        //listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
+                        listActivityToCreate.add(instanceActValidazioneDocumentale(ord.accountid,ord.id,rt));
                     }
                     /*else if((ord.Sale__r.Channel__c == 'Teleselling Inbound' || ord.Sale__r.Channel__c == 'Telefono') && ord.SignatureMethod__c == 'Vocal Order'){
                         ord.Phase__c = 'Documentazione Gestita';
