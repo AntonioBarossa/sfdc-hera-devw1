@@ -915,7 +915,7 @@
         <defaultConnectorLabel>Annulla</defaultConnectorLabel>
         <rules>
             <name>Conferma_0_0_0</name>
-            <conditionLogic>(1 AND 2) OR (3 AND 4)</conditionLogic>
+            <conditionLogic>(1 AND 2) OR (3 AND 4) OR (5 AND 6)</conditionLogic>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_2.cancelCase</leftValueReference>
                 <operator>EqualTo</operator>
@@ -939,6 +939,20 @@
             </conditions>
             <conditions>
                 <leftValueReference>hdtRecordEditForm_2_Ambiente.saveInDraft</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_2_Ambiente_Rettifica.cancelCase</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>hdtRecordEditForm_2_Ambiente_Rettifica.saveInDraft</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
                     <booleanValue>false</booleanValue>
