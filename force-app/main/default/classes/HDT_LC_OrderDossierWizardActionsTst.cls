@@ -22,12 +22,13 @@ public class HDT_LC_OrderDossierWizardActionsTst{
         HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Bozza',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da inviare','Bozza',rt,'HDT_RT_OrderDossier');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Bozza',rt,'HDT_RT_OrderDossier');
+		HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione Gestita','In Lavorazione',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da validare','Documentazione da inviare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('Documentazione da inviare','Documentazione da validare',rt,'HDT_RT_OrderDossier');
         HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa validazione','Bozza',Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId(),'HDT_RT_VolturaConSwitch');
 		HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaConSwitch').getRecordTypeId(),'HDT_RT_VolturaConSwitch');
 		List<Account> accList=HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Famiglie');
-        
+
 		List<Sale__c> saleList=HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Attiva');
 
         List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(2, false);
@@ -136,6 +137,23 @@ public class HDT_LC_OrderDossierWizardActionsTst{
 		update ord;
         
 		HDT_LC_OrderDossierWizardActions.save2(ord, null);
+        
+        ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
+        
+		System.assertNotEquals('Bozza', ord.Phase__c, 'save did not work correctly');
+	}
+
+	@isTest static void testSave3(){
+
+		Order ord = [SELECT Id, SignMode__c, SignatureMethod__c,Phase__c, ContractSigned__c FROM Order LIMIT 1];
+        Id ordId = ord.id;
+        
+        ord.Phase__c = 'In Lavorazione';
+		ord.SignatureMethod__c = 'Contratto già firmato';
+		ord.Channel__c = 'Sportello';
+		update ord;
+        
+		HDT_LC_OrderDossierWizardActions.save(ord);
         
         ord = [SELECT Id, Phase__c, ContractSigned__c FROM Order WHERE Id =: ordId];
         
