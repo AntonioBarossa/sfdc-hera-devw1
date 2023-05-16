@@ -201,10 +201,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //6 - SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
-        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
-        HDT_UTL_QuoteProcess.disableCpq();
         quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
-        HDT_UTL_QuoteProcess.enableCpq();
 
         List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
         
@@ -270,7 +267,6 @@ public inherited sharing class HDT_LC_SaleActions {
         opportunitySrv.updateRecords(opps);
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
-        HDT_UTL_QuoteProcess.enableCpq();
         quoteSrv.updateRecords(quoteList);
         */
         //update campaignMember Status
