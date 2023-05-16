@@ -29,7 +29,10 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
             for(SBQQ__QuoteLine__c ql :quoteLine ){
                 qlToUpdate.add(new SBQQ__QuoteLine__c(Id=ql.id, BillingProfile__c=contract[0].BillingProfile__c) );
             }
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             quoteLineSrv.updateRecords(qlToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         } else {
             system.debug('HDT_LC_QuoteAmendContract - assocBillingProfileFromContract - nessun contract o quoteLine trovato');
         }
@@ -117,8 +120,10 @@ public inherited sharing class HDT_LC_QuoteAmendContract {
                         ));
                     }
                 }
-
+                /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+                HDT_UTL_QuoteProcess.disableCpq();
                 quoteLineSrv.updateRecords(quoteLinesToUpdate);
+                HDT_UTL_QuoteProcess.enableCpq();
 
             } else {
                 system.debug('HDT_LC_QuoteAmendContract - assocPodToQuoteLine - All Service Points have been assigned!');

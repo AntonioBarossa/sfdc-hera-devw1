@@ -588,6 +588,11 @@
         <relatedList>Case.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddOrderProduct</excludeButtons>
+        <excludeButtons>AddProduct</excludeButtons>
+        <excludeButtons>EditAllProduct</excludeButtons>
+        <excludeButtons>MultiAdd</excludeButtons>
+        <excludeButtons>MultiEdit</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
         <fields>Quantity</fields>

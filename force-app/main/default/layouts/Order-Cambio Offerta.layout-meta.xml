@@ -493,6 +493,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Order.Validazione_Documenti</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>FeedItem.ContentNote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -516,11 +521,6 @@
             <actionName>NewOpportunity</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Order.Validazione_Documenti</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>NewLead</actionName>
@@ -616,6 +616,11 @@
         <relatedList>Case.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddOrderProduct</excludeButtons>
+        <excludeButtons>AddProduct</excludeButtons>
+        <excludeButtons>EditAllProduct</excludeButtons>
+        <excludeButtons>MultiAdd</excludeButtons>
+        <excludeButtons>MultiEdit</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
         <fields>Quantity</fields>
