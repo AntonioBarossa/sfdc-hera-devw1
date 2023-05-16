@@ -34873,6 +34873,11 @@
 		<field>MandatoryAttachments__c.ProductDescription__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.ServiceProduct__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>MandatoryAttachments__c.SubProcessType__c</field>
