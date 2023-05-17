@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>479</locationX>
-        <locationY>1310</locationY>
+        <locationX>380</locationX>
+        <locationY>1166</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -39,26 +39,10 @@
     </actionCalls>
     <apiVersion>55.0</apiVersion>
     <assignments>
-        <name>AssegnaValori</name>
-        <label>AssegnaValori</label>
-        <locationX>479</locationX>
-        <locationY>1766</locationY>
-        <assignmentItems>
-            <assignToReference>GetInputCaseAggiornato.CorrectionRight__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Si</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>AssegnaValori_2</name>
         <label>AssegnaValori</label>
-        <locationX>281</locationX>
-        <locationY>3398</locationY>
+        <locationX>182</locationX>
+        <locationY>2738</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornatoSecondaClassificazione.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -80,8 +64,8 @@
     <assignments>
         <name>AssegnaValoriActivity</name>
         <label>AssegnaValoriActivity</label>
-        <locationX>281</locationX>
-        <locationY>3158</locationY>
+        <locationX>182</locationX>
+        <locationY>2522</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.ActivityEndTime__c</assignToReference>
             <operator>Assign</operator>
@@ -143,10 +127,90 @@
         </connector>
     </assignments>
     <assignments>
+        <name>Assign_ProcessType_ACQ_Recl_Scritto</name>
+        <label>Assign ProcessType ACQ Recl Scritto</label>
+        <locationX>941</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Cittadino ACQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Avanzamento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_ProcessType_ACQ_Rich_Info</name>
+        <label>Assign ProcessType ACQ Rich Info</label>
+        <locationX>1205</locationX>
+        <locationY>566</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rich Info Cittadino ACQ</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Avanzamento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_ProcessType_Ambiente</name>
+        <label>Assign ProcessType Ambiente</label>
+        <locationX>149</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Cittadino Seconda Classificazione</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Avanzamento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_ProcessType_EE</name>
+        <label>Assign ProcessType EE</label>
+        <locationX>677</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Cittadino EE</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Avanzamento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Assign_ProcessType_GAS</name>
+        <label>Assign ProcessType GAS</label>
+        <locationX>413</locationX>
+        <locationY>458</locationY>
+        <assignmentItems>
+            <assignToReference>ProcessType</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Reclamo Cittadino GAS</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Avanzamento</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>AssignExpirationDate</name>
         <label>AssignExpirationDate</label>
-        <locationX>479</locationX>
-        <locationY>1430</locationY>
+        <locationX>380</locationX>
+        <locationY>1274</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.AmountToPayInInstallments__c</assignToReference>
             <operator>Assign</operator>
@@ -183,14 +247,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Diritto_Rettifica</targetReference>
+            <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>assignFieldsActivity</name>
         <label>assignFieldsActivity</label>
-        <locationX>149</locationX>
-        <locationY>3878</locationY>
+        <locationX>50</locationX>
+        <locationY>3170</locationY>
         <assignmentItems>
             <assignToReference>getActivityToClose.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -252,106 +316,10 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Copy_1_of_ProcessTypeAmb</name>
-        <label>Copy 1 of ProcessTypeAmb</label>
-        <locationX>314</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Rich Info Cittadino AMB</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Copy_2_of_ProcessTypeAmb</name>
-        <label>Copy 2 of ProcessTypeAmb</label>
-        <locationX>1370</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Rich Info Cittadino ACQ</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ProcessTypeAcq</name>
-        <label>ProcessTypeAcq</label>
-        <locationX>1106</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Reclamo Cittadino ACQ</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ProcessTypeAmb</name>
-        <label>ProcessTypeAmb</label>
-        <locationX>50</locationX>
-        <locationY>518</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Reclamo Cittadino AMB</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ProcessTypeEE</name>
-        <label>ProcessTypeEE</label>
-        <locationX>842</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Reclamo Cittadino EE</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>ProcessTypeGas</name>
-        <label>ProcessTypeGas</label>
-        <locationX>578</locationX>
-        <locationY>398</locationY>
-        <assignmentItems>
-            <assignToReference>ProcessType</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>Reclamo Cittadino GAS</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Controllo_Classificazione</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Rimuovi_Link_Reiterazione_0</name>
         <label>Rimuovi Link Reiterazione</label>
-        <locationX>611</locationX>
-        <locationY>1982</locationY>
+        <locationX>512</locationX>
+        <locationY>1466</locationY>
         <assignmentItems>
             <assignToReference>GetInputCaseAggiornato.RelatedCase__c</assignToReference>
             <operator>Assign</operator>
@@ -394,8 +362,8 @@
     <decisions>
         <name>activityTrovata</name>
         <label>activityTrovata</label>
-        <locationX>281</locationX>
-        <locationY>3758</locationY>
+        <locationX>182</locationX>
+        <locationY>3062</locationY>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
             <name>Si_activityTrovata</name>
@@ -416,8 +384,8 @@
     <decisions>
         <name>Avanzamento</name>
         <label>Avanzamento</label>
-        <locationX>908</locationX>
-        <locationY>950</locationY>
+        <locationX>809</locationX>
+        <locationY>842</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione</targetReference>
         </defaultConnector>
@@ -448,8 +416,8 @@
     <decisions>
         <name>Avanzamento_0_0</name>
         <label>Avanzamento</label>
-        <locationX>611</locationX>
-        <locationY>2342</locationY>
+        <locationX>512</locationX>
+        <locationY>1790</locationY>
         <defaultConnector>
             <targetReference>Annulla_Prestazione_0_0_0</targetReference>
         </defaultConnector>
@@ -480,8 +448,8 @@
     <decisions>
         <name>Blocco_Sollecito_0</name>
         <label>Blocco Sollecito? (Fixare al completamento della build DM)</label>
-        <locationX>281</locationX>
-        <locationY>2582</locationY>
+        <locationX>182</locationX>
+        <locationY>2006</locationY>
         <defaultConnector>
             <targetReference>Get_Activity</targetReference>
         </defaultConnector>
@@ -505,8 +473,8 @@
     <decisions>
         <name>Commodity_0</name>
         <label>Commodity</label>
-        <locationX>908</locationX>
-        <locationY>278</locationY>
+        <locationX>809</locationX>
+        <locationY>350</locationY>
         <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
         <rules>
             <name>Ambiente_0</name>
@@ -519,7 +487,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Rich_info_o_Recl_scritto</targetReference>
+                <targetReference>Assign_ProcessType_Ambiente</targetReference>
             </connector>
             <label>Ambiente</label>
         </rules>
@@ -534,7 +502,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ProcessTypeGas</targetReference>
+                <targetReference>Assign_ProcessType_GAS</targetReference>
             </connector>
             <label>Gas</label>
         </rules>
@@ -549,7 +517,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ProcessTypeEE</targetReference>
+                <targetReference>Assign_ProcessType_EE</targetReference>
             </connector>
             <label>Energia Elettrica</label>
         </rules>
@@ -572,60 +540,10 @@
     <decisions>
         <name>Copy_1_of_Rich_info_o_Recl_scritto</name>
         <label>Copy 1 of Rich info o Recl scritto?</label>
-        <locationX>1238</locationX>
-        <locationY>398</locationY>
+        <locationX>1073</locationX>
+        <locationY>458</locationY>
         <defaultConnector>
-            <targetReference>Copy_2_of_ProcessTypeAmb</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Rich Info</defaultConnectorLabel>
-        <rules>
-            <name>Copy_1_of_Reclamo_scritto</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>Get_Input_Case.FirstLevelComplaintClassification__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Reclamo Scritto</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>ProcessTypeAcq</targetReference>
-            </connector>
-            <label>Copy 1 of Reclamo scritto</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Diritto_Rettifica</name>
-        <label>Diritto Rettifica?</label>
-        <locationX>611</locationX>
-        <locationY>1646</locationY>
-        <defaultConnector>
-            <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
-        </defaultConnector>
-        <defaultConnectorLabel>Non Diritto alla Rettifica</defaultConnectorLabel>
-        <rules>
-            <name>Diritto_alla_Rettifica</name>
-            <conditionLogic>and</conditionLogic>
-            <conditions>
-                <leftValueReference>GetInputCaseAggiornato.FirstLevelComplaintClassification__c</leftValueReference>
-                <operator>EqualTo</operator>
-                <rightValue>
-                    <stringValue>Rettifica Doppia Fatturazione</stringValue>
-                </rightValue>
-            </conditions>
-            <connector>
-                <targetReference>AssegnaValori</targetReference>
-            </connector>
-            <label>Diritto alla Rettifica</label>
-        </rules>
-    </decisions>
-    <decisions>
-        <name>Rich_info_o_Recl_scritto</name>
-        <label>Rich info o Recl scritto?</label>
-        <locationX>182</locationX>
-        <locationY>398</locationY>
-        <defaultConnector>
-            <targetReference>Copy_1_of_ProcessTypeAmb</targetReference>
+            <targetReference>Assign_ProcessType_ACQ_Rich_Info</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>Rich Info</defaultConnectorLabel>
         <rules>
@@ -639,7 +557,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>ProcessTypeAmb</targetReference>
+                <targetReference>Assign_ProcessType_ACQ_Recl_Scritto</targetReference>
             </connector>
             <label>Reclamo scritto</label>
         </rules>
@@ -647,10 +565,10 @@
     <decisions>
         <name>Riclassificato</name>
         <label>Riclassificato?</label>
-        <locationX>611</locationX>
-        <locationY>1190</locationY>
+        <locationX>512</locationX>
+        <locationY>1058</locationY>
         <defaultConnector>
-            <targetReference>Diritto_Rettifica</targetReference>
+            <targetReference>Rimuovi_Link_Reiterazione_0</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>No</defaultConnectorLabel>
         <rules>
@@ -744,8 +662,8 @@
     <recordCreates>
         <name>Crea_Activity_Blocco_Sollecito</name>
         <label>Crea Activity Blocco Sollecito</label>
-        <locationX>149</locationX>
-        <locationY>2822</locationY>
+        <locationX>50</locationX>
+        <locationY>2222</locationY>
         <connector>
             <targetReference>Get_Activity</targetReference>
         </connector>
@@ -779,8 +697,8 @@
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>281</locationX>
-        <locationY>3038</locationY>
+        <locationX>182</locationX>
+        <locationY>2414</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>AssegnaValoriActivity</targetReference>
@@ -807,11 +725,11 @@
     <recordLookups>
         <name>Get_Input_Case</name>
         <label>Get Input Case</label>
-        <locationX>908</locationX>
-        <locationY>158</locationY>
+        <locationX>809</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>Commodity_0</targetReference>
+            <targetReference>Controllo_Classificazione</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -828,8 +746,8 @@
     <recordLookups>
         <name>GetActivityBloccoSollecito</name>
         <label>Get Activity Blocco Sollecito</label>
-        <locationX>149</locationX>
-        <locationY>2702</locationY>
+        <locationX>50</locationX>
+        <locationY>2114</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Crea_Activity_Blocco_Sollecito</targetReference>
@@ -856,8 +774,8 @@
     <recordLookups>
         <name>getActivityToClose</name>
         <label>getActivityToClose</label>
-        <locationX>281</locationX>
-        <locationY>3638</locationY>
+        <locationX>182</locationX>
+        <locationY>2954</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>activityTrovata</targetReference>
@@ -891,8 +809,8 @@
     <recordLookups>
         <name>GetCaseAggiornatoSecondaClassificazione</name>
         <label>GetCaseAggiornatoSecondaClassificazione</label>
-        <locationX>281</locationX>
-        <locationY>2462</locationY>
+        <locationX>182</locationX>
+        <locationY>1898</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Blocco_Sollecito_0</targetReference>
@@ -912,8 +830,8 @@
     <recordLookups>
         <name>GetInputCaseAggiornato</name>
         <label>GetInputCaseAggiornato</label>
-        <locationX>611</locationX>
-        <locationY>1070</locationY>
+        <locationX>512</locationX>
+        <locationY>950</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Riclassificato</targetReference>
@@ -933,8 +851,8 @@
     <recordUpdates>
         <name>Aggiorna_Attivita</name>
         <label>Aggiorna Attivita</label>
-        <locationX>281</locationX>
-        <locationY>3278</locationY>
+        <locationX>182</locationX>
+        <locationY>2630</locationY>
         <connector>
             <targetReference>AssegnaValori_2</targetReference>
         </connector>
@@ -947,8 +865,8 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>281</locationX>
-        <locationY>3518</locationY>
+        <locationX>182</locationX>
+        <locationY>2846</locationY>
         <connector>
             <targetReference>getActivityToClose</targetReference>
         </connector>
@@ -957,8 +875,8 @@
     <recordUpdates>
         <name>AggiornaCase_0</name>
         <label>AggiornaCase</label>
-        <locationX>611</locationX>
-        <locationY>2102</locationY>
+        <locationX>512</locationX>
+        <locationY>1574</locationY>
         <connector>
             <targetReference>Screen_Seconda_Classificazione</targetReference>
         </connector>
@@ -967,20 +885,20 @@
     <recordUpdates>
         <name>updateActivity</name>
         <label>updateActivity</label>
-        <locationX>149</locationX>
-        <locationY>3998</locationY>
+        <locationX>50</locationX>
+        <locationY>3278</locationY>
         <inputReference>getActivityToClose</inputReference>
     </recordUpdates>
     <screens>
         <name>Controllo_Classificazione</name>
         <label>Controllo Classificazione</label>
-        <locationX>908</locationX>
-        <locationY>830</locationY>
+        <locationX>809</locationX>
+        <locationY>242</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Avanzamento</targetReference>
+            <targetReference>Commodity_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader</name>
@@ -1073,8 +991,8 @@
     <screens>
         <name>Screen_Seconda_Classificazione</name>
         <label>Screen Seconda Classificazione</label>
-        <locationX>611</locationX>
-        <locationY>2222</locationY>
+        <locationX>512</locationX>
+        <locationY>1682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1164,7 +1082,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>782</locationX>
+        <locationX>683</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>Get_Input_Case</targetReference>
@@ -1174,8 +1092,8 @@
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>
-        <locationX>1205</locationX>
-        <locationY>1070</locationY>
+        <locationX>1106</locationX>
+        <locationY>950</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
@@ -1199,8 +1117,8 @@
     <subflows>
         <name>Annulla_Prestazione_0_0_0</name>
         <label>Annulla Prestazione</label>
-        <locationX>941</locationX>
-        <locationY>2462</locationY>
+        <locationX>842</locationX>
+        <locationY>1898</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
