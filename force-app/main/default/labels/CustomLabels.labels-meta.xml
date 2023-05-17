@@ -631,6 +631,13 @@
         <value>Y</value>
     </labels>
     <labels>
+        <fullName>HDT_HideMailNonDisp</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_HideMailNonDisp</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
         <fullName>LeadCantBeCertified</fullName>
         <categories>SendCertificationRequest</categories>
         <language>en_US</language>

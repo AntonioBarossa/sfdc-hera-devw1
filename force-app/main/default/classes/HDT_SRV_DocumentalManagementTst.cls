@@ -380,7 +380,7 @@ public with sharing class HDT_SRV_DocumentalManagementTst {
     @isTest
         static void testHandleRadioOrder4(){
         Test.setMock(HttpCalloutMock.class, new HDT_SRV_DocumentalManagement_HTTP_MOCK());
-        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio_1","selected":"true","value":"Pulsante di opzione1"}]}';
+        String body = '{"status":"OK", "data":{"transactionId":"idPlico_0"},"listOfRadioGroup":[{"groupName":"L80_radio_1","selected":"true","value":"Pulsante di opzione1"},{"groupName":"326_radio_1","selected":"true","value":"Pulsante di opzione1"}]}';
         HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest requestBody = (HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest) JSON.deserialize(body, HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRequest.class);
         String status = requestBody.status;
         String envelopeId = 'idPlico_0';
