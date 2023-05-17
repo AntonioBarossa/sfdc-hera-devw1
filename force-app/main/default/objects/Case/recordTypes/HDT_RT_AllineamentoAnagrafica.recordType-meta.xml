@@ -8264,6 +8264,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore invio a DL/SII</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Esito KO da SII</fullName>
             <default>false</default>
         </values>
