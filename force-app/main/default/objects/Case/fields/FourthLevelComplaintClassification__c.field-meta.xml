@@ -1061,6 +1061,10 @@
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <valueName>Rateizzazione - mancata risposta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
             <valueName>Rateizzazione - numero rate</valueName>
         </valueSettings>
         <valueSettings>
@@ -1246,6 +1250,14 @@
         <valueSettings>
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
             <valueName>Diniego</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Diniego voltura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Volture e subentri</controllingFieldValue>
+            <valueName>Diritti fissi</valueName>
         </valueSettings>
         <valueSettings>
             <controllingFieldValue>Volture e subentri</controllingFieldValue>
