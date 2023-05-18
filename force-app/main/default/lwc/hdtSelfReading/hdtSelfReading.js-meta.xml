@@ -127,6 +127,9 @@
 
             <property name="processType" type="String" label="Process type" description="tipo di pratica eseguita" role="inputOnly"/>
 
+            <property name="isSmartMeterAbort" type="Boolean" label="Smart Meter Abort" description="Indica se l'annullamento è dovuto causa autolettura su smart meter" role="outputOnly"/>
+
+
 
         </targetConfig>
         
