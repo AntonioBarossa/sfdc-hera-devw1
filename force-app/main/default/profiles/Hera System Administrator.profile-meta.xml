@@ -37107,11 +37107,6 @@
     </fieldPermissions>
 	<fieldPermissions>
         <editable>false</editable>
-        <field>SlaAdministration__c.CreatedById</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>false</editable>
         <field>SlaAdministration__c.EndDate__c</field>
         <readable>true</readable>
     </fieldPermissions>
