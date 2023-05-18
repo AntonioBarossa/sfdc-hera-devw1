@@ -37161,11 +37161,6 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>true</editable>
-        <field>SlaAdministration__c.OwnerId</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
         <editable>false</editable>
         <field>SlaAdministration__c.Process__c</field>
         <readable>true</readable>
