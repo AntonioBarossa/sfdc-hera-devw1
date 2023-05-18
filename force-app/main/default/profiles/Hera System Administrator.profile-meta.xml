@@ -37146,11 +37146,6 @@
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
-        <editable>false</editable>
-        <field>SlaAdministration__c.LastModifiedById</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
         <editable>true</editable>
         <field>SlaAdministration__c.Name</field>
         <readable>true</readable>
@@ -37158,11 +37153,6 @@
 	<fieldPermissions>
         <editable>false</editable>
         <field>SlaAdministration__c.Process__c</field>
-        <readable>true</readable>
-    </fieldPermissions>
-	<fieldPermissions>
-        <editable>true</editable>
-        <field>SlaAdministration__c.RecordTypeId</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
