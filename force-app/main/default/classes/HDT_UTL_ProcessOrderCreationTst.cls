@@ -255,4 +255,102 @@ public with sharing class HDT_UTL_ProcessOrderCreationTst {
         }
     
     }
+
+    @isTest
+    public static void test2(){
+
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+	    User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
+		insert internalUser;
+        HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_ENABLECREDITCHECK, true);
+
+        System.runAs(internalUser){
+
+        String processName = 'SwitchIn';
+        String dataVoltura = 'true||ITALIA|HERA COMM|URBINO|VALENTINA||||13|EDERA|041067099015|PU||false|61029|Famiglie||D1 - Persona fisica||VIA CA BRUNELLO|email@prova.com|+39|||DREVNT67C42L500Y||||Femmina|+39|1010369692|false|||||URBINO|VIA CA BRUNELLO||||Sintetico|13||XML + carta/email|Bollettino postale||false||Cartaceo||||||200015387184|ITALIA||61029|PU|||HC_VenditaMM|||false|3385050158|||Si|Iva 10% (Cod. 01)||Imposta usi domestici|Cartacea|Posta Cartacea|2023-01-04|3385050158||URBINO|ITALIA|61029|PU|VIA CA BRUNELLO|13||Switch in Ele||Si|Permanente|2023-03-01|||Contratto firmato|Ordinaria (Perm)|Quality call|||URBINO||PU||VALENTINA|EDERA|DREVNT67C42L500Y|+39|3385050158||||||61029|ITALIA|Titolare|100|Appartamento||Si|3|PNNECB24+N|V42|false||||KAKTUS SRL|STEFANI Ilaria|Agenzie|AGENZIE|VI|AG870|Maggioli|Chiara|AG870V013|Hera Comm S.p.A.|||BT|13A0-Usi di Abitazione BT|URBINO|3|Si|Domestico||false|13|Multiorario|IT001E59103901|4012729301|61029|PU|ITALIA|||VIA CA BRUNELLO|3380|||false||Energia Elettrica||3||Si|3.3||||Persona Fisica|13D0000001||||';
+        List<Order> ordList = [SELECT Id,  AccountId, ServicePoint__c, BillingProfile__c, Contact__c, ParentOrder__c
+                                FROM Order WHERE ProcessType__c = 'Voltura' ];
+        HDT_UTL_ProcessSales.HDT_WRP_NextDataObj wrpNextDataObj = new HDT_UTL_ProcessSales.HDT_WRP_NextDataObj();
+        wrpNextDataObj.accountId = ordList[0].AccountId;
+        wrpNextDataObj.contactId = ordList[0].Contact__c;
+        wrpNextDataObj.billProfId = ordList[0].BillingProfile__c;
+        wrpNextDataObj.servPointId = ordList[0].ServicePoint__c;
+        wrpNextDataObj.parentOrderId = ordList[0].ParentOrder__c;
+        wrpNextDataObj.orderCompatible = true;
+
+        MassiveLoaderRequest__c mlr = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataVoltura});
+        HDT_MassiveLoaderProcess__mdt myCMT = new HDT_MassiveLoaderProcess__mdt(DeveloperName= 'Voltura', MasterLabel='Voltura', Priority__c= 20, IsActive__c=true);
+        mlr.Priority__c = myCMT.Priority__c;
+        mlr.Status__c = 'In Lavorazione';
+        update mlr;
+        List<MassiveLoaderRequestItem__c> ms = [SELECT Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, NextStepData__c,
+                                                SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, MassiveLoaderRequest__c,
+                                                Account__c, Data__c, Lead__c, StatusDescription__c, Status__c,MassiveLoaderRequest__r.ProcessType__c 
+                                                FROM MassiveLoaderRequestItem__c ];
+        ms[0].NextStepData__c = JSON.serialize(wrpNextDataObj);
+        ms[0].Status__c = 'In Lavorazione';
+        update ms;
+        System.debug(ms);
+
+        test.startTest();
+        HDT_BA_ProcessOrderCreation processReq = new HDT_BA_ProcessOrderCreation(mlr.Id, 1, processName);
+        Database.executeBatch(processReq,1);
+
+        test.stopTest();
+       
+        }
+    
+    }
+
+    @isTest
+    public static void test3(){
+
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(constants.SYSTEM_ADMINISTRATOR_NAME);
+	    User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
+		insert internalUser;
+        HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, constants.PERMISSIONSET_HDT_ENABLECREDITCHECK, true);
+
+        System.runAs(internalUser){
+            List<Account> accList = [SELECT Id FROM Account LIMIT 1];
+
+            List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].Id);
+            contractList[0].SAPContractCode__c = '3026372105';
+            insert contractList;
+
+            String processName = 'TariffeSconti';
+            String dataVoltura = 'PPORND71E41Z129S|1007747445|false|200011699690|false|3026372105|Aggiunta Sconti o Bonus VAS Ele|PPORND71E41Z129S|PNNECB24+N|V42|false|||KAKTUS SRL|STEFANI Ilaria|Agenzie|AGENZIE|VI|AG870|Maggioli|Chiara|AG870V013|Hera Comm S.p.A.|IT001E68662088|4010202394|Persona Fisica|13D0000001|Contratto già firmato|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X|bonus_X||||||||||||||||||||||||||||||';
+            List<Order> ordList = [SELECT Id,  AccountId, ServicePoint__c, BillingProfile__c, Contact__c, ParentOrder__c
+                                    FROM Order WHERE ProcessType__c = 'Voltura' ];
+            HDT_UTL_ProcessSales.HDT_WRP_NextDataObj wrpNextDataObj = new HDT_UTL_ProcessSales.HDT_WRP_NextDataObj();
+            wrpNextDataObj.accountId = ordList[0].AccountId;
+            wrpNextDataObj.contactId = ordList[0].Contact__c;
+            wrpNextDataObj.billProfId = ordList[0].BillingProfile__c;
+            wrpNextDataObj.servPointId = ordList[0].ServicePoint__c;
+            wrpNextDataObj.parentOrderId = ordList[0].ParentOrder__c;
+            wrpNextDataObj.orderCompatible = true;
+
+            MassiveLoaderRequest__c mlr = HDT_UTL_DataFactoryTst.createMassiveLoaderRequest(processName,new List<String>{dataVoltura});
+            HDT_MassiveLoaderProcess__mdt myCMT = new HDT_MassiveLoaderProcess__mdt(DeveloperName= 'Voltura', MasterLabel='Voltura', Priority__c= 20, IsActive__c=true);
+            mlr.Priority__c = myCMT.Priority__c;
+            mlr.Status__c = 'In Lavorazione';
+            update mlr;
+            List<MassiveLoaderRequestItem__c> ms = [SELECT Id, IsDeleted, Name, CreatedDate, CreatedById, LastModifiedDate, LastModifiedById, NextStepData__c,
+                                                    SystemModstamp, LastActivityDate, LastViewedDate, LastReferencedDate, MassiveLoaderRequest__c,
+                                                    Account__c, Data__c, Lead__c, StatusDescription__c, Status__c,MassiveLoaderRequest__r.ProcessType__c 
+                                                    FROM MassiveLoaderRequestItem__c ];
+            ms[0].NextStepData__c = JSON.serialize(wrpNextDataObj);
+            ms[0].Status__c = 'In Lavorazione';
+            update ms;
+            System.debug(ms);
+
+            test.startTest();
+            HDT_BA_ProcessOrderCreation processReq = new HDT_BA_ProcessOrderCreation(mlr.Id, 1, processName);
+            Database.executeBatch(processReq,1);
+
+            test.stopTest();
+       
+        }
+    }
 }

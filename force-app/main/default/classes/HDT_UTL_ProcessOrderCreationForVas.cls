@@ -1,6 +1,9 @@
 @SuppressWarnings('PMD.AvoidDebugStatements')
 public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UTL_ProcessExecution {
 
+    /*
+    not used for wave 2
+    
     private List<MassiveLoaderRequestItem__c> itemsToUpdate;
     private List<HDT_WRP_VasOrder.HDT_WRP_ProcessObjects> processObjList;
     private Id childOrderRecordTypeId;
@@ -956,4 +959,6 @@ public inherited sharing class HDT_UTL_ProcessOrderCreationForVas extends HDT_UT
         return processObject;
     }
 
+    not used for wave 2
+    */
 }
