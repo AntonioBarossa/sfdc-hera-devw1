@@ -157,7 +157,7 @@ public inherited sharing class HDT_QR_BillingProfile {
     }
 
     public BillingProfile__c getNewestByAccountId(String accountId){
-        return [
+        List<BillingProfile__c> bpList = [
                 SELECT
                         Id,
                         InvoicingPlace__c,
@@ -182,6 +182,11 @@ public inherited sharing class HDT_QR_BillingProfile {
                 ORDER BY CreatedDate DESC
                 LIMIT 1
         ];
+        if(bpList.isEmpty()){
+           return null; 
+        }else {
+            return bpList[0];
+        }
     }
 
     public List<BillingProfile__c> getRecordByContractAccount(Set<String> contractAccounts) {

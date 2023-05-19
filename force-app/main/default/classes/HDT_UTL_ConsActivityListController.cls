@@ -53,8 +53,13 @@ public inherited sharing class HDT_UTL_ConsActivityListController {
 
     public static Object processResponseHelper(List<String> labels, Object state){
         HttpResponse response = Continuation.getResponse(labels[0]);
-        System.debug('>>> response.getBody ' + response.getBody());
-        return response.getBody();
+        String body = '';
+        try {
+            body = response.getBody();
+        } catch (Exception ex) {
+            body = 'Error in response';
+        }
+        return body;
     }
 
 }
