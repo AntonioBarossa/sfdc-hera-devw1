@@ -837,7 +837,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     }
 
     @isTest
-    static void handleMrrFieldsTestAfundi()
+    static void handleMrrFieldsTestOne()
     {
         Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
 
@@ -847,8 +847,8 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.startTest();
 
         testCase.Phase__c = 'Da Inviare';
-        testCase.Type = 'Modifica Unita Immobiliari Componenti';
-        testCase.RateCategory__c = 'AITBNDOME0';
+        testCase.Commodity__c = 'Acqua';
+        testCase.WrittenReceiptRequestDate__c = date.today();
         update testCase;
         
         Test.stopTest();
@@ -860,7 +860,7 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
     }
 
     @isTest
-    static void handleMrrFieldsTestAfunda()
+    static void handleMrrFieldsTestTwo()
     {
         Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
 
@@ -870,10 +870,12 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         Test.startTest();
 
         testCase.Phase__c = 'Da Inviare';
-        testCase.Type = 'Modifica Unita Immobiliari Componenti';
-        testCase.RateCategory__c = 'ACAGRICO00';
+        testCase.Commodity__c = 'Acqua';
+        testCase.Type = 'Verifica Integrita Sigilli';
+        testCase.DistributorNote__c = 'TEST';
+        testCase.PhoneNumber__c = '0338855777';
         update testCase;
-
+        
         Test.stopTest();
 
         //Assertions
@@ -881,68 +883,4 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
         
     }
-
-    @isTest
-    static void handleMrrFieldsTestAfundc()
-    {
-        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
-
-        //Mock
-        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
-
-        Test.startTest();
-        testCase.Phase__c = 'Da Inviare';
-        testCase.Type = 'Modifica Unita Immobiliari Componenti';
-        testCase.RateCategory__c = 'ACARTCOMM0';
-        update testCase;
-        Test.stopTest();
-
-        //Assertions
-        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
-        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
-        
-    }
-
-    @isTest
-    static void handleMrrFieldsTestAfundz()
-    {
-        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
-
-        //Mock
-        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
-
-        Test.startTest();
-        testCase.Phase__c = 'Da Inviare';
-        testCase.Type = 'Modifica Unita Immobiliari Componenti';
-        testCase.RateCategory__c = 'ACAGRIZOO0';
-        update testCase;
-        Test.stopTest();
-
-        //Assertions
-        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
-        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
-        
-    }
-
-    @isTest
-    static void handleMrrFieldsTestAfund()
-    {
-        Case testCase = [SELECT Id, RateCategory__c, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
-
-        //Mock
-        wrts_prcgvr.MRR_1_0.setMock(HttpCalloutMock.class, new HDT_WS_PostSalesTstMock2(genericResponseMap));
-
-        Test.startTest();
-        testCase.Phase__c = 'Da Inviare';
-        testCase.Type = 'Modifica Unita Immobiliari Componenti';
-        testCase.RateCategory__c = 'ACAUGENER0';
-        update testCase;
-        Test.stopTest();
-
-        //Assertions
-        Case testCaseUpd = [SELECT Id,HerokuPracticeCode__c,CaseNumber, Type, Phase__c, TecnicalPhase__c, Status FROM Case WHERE Id =: testCase.Id LIMIT 1];
-        System.assertEquals('Comunicazione verso Heroku OK', testCaseUpd.TecnicalPhase__c, 'TecnicalPhase__c != Comunicazione verso Heroku OK');
-        
-    }
-    
 }
