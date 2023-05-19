@@ -54,6 +54,7 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         insert kArt;
         HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'30', 'PostSales');
         HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'30', 'Autolettura');
+        HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'90', 'PianoRateizzazioneTari');
 
     }
 
