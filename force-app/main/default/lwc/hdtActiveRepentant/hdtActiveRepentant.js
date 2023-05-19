@@ -181,7 +181,8 @@ export default class HdtActiveRepentant extends LightningElement {
     
 
     @api exportSieData(sobject){//this method returns a promise to handle;
-        this.outputExportSie.sobject = sobject;
+        //this.outputExportSie.record = {sobjectType:"Order", ...sobject};
+        this.outputExportSie.record = {...sobject};
         //this.outputExportSie.missingDue=missingDue;
         return createRecordForSie({wrapper:this.outputExportSie});
     }
