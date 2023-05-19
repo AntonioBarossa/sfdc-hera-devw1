@@ -98,11 +98,7 @@ public with sharing class HDT_UTL_CheckCompatibilitySalesTst {
     }
     @isTest
     public static void Execute(){
-        Order otherOrder=[SELECT Id,Contact__c,AccountId,ParentOrder__c,ServicePoint__c FROM ORder WHERE RecordType.DeveloperName='HDT_RT_SwitchIn'];
-        //
-        //
         List<MassiveLoaderRequestItem__c> listReqItem = [SELECT id ,Status__c,NextStepData__c,MassiveLoaderRequest__r.ProcessType__c FROM MassiveLoaderRequestItem__c];
-        System.debug('size is: '+listReqItem.size());
         HDT_UTL_CheckCompatibilitySales testClass =  new HDT_UTL_CheckCompatibilitySales();
         Test.startTest();
         testClass.setRequestItemList(listReqItem);
