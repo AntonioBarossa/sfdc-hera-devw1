@@ -2072,8 +2072,6 @@
             <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>   
-    </picklistValues>
-        </values>        
     </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>

@@ -397,7 +397,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-    </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
         <values>
