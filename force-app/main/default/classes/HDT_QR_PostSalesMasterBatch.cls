@@ -330,28 +330,32 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         WITH SECURITY_ENFORCED
         ];
 
-        Map<Id,Case> caseMap = new Map<Id,Case>(caseList);
+        if(!caseList.isEmpty()){
+            Map<Id,Case> caseMap = new Map<Id,Case>(caseList);
 
-        List<AggregateResult> cdLs = [SELECT LinkedEntityId 
-        FROM ContentDocumentLink 
-        WHERE LinkedEntityId IN :caseMap.keySet()
-        WITH SECURITY_ENFORCED
-        GROUP BY LinkedEntityId];
+            List<AggregateResult> cdLs = [SELECT LinkedEntityId
+            FROM ContentDocumentLink
+            WHERE LinkedEntityId IN :caseMap.keySet()
+            WITH SECURITY_ENFORCED
+            GROUP BY LinkedEntityId];
 
-        Case currCase = null;
-        for(AggregateResult currDocument : cdLs){
-            currCase = caseMap.get((Id)currDocument.get('LinkedEntityId'));
-            if(currCase != null){
-                if(Date.newinstance(currCase.CreatedDate.year(), currCase.CreatedDate.month(), currCase.CreatedDate.day()) > limitDateWithAttachment){
-                    caseMap.remove((Id)currDocument.get('LinkedEntityId'));
+            Case currCase = null;
+            for(AggregateResult currDocument : cdLs){
+                currCase = caseMap.get((Id)currDocument.get('LinkedEntityId'));
+                if(currCase != null){
+                    if(Date.newinstance(currCase.CreatedDate.year(), currCase.CreatedDate.month(), currCase.CreatedDate.day()) > limitDateWithAttachment){
+                        caseMap.remove((Id)currDocument.get('LinkedEntityId'));
+                    }
                 }
             }
+
+            List<Case> caseToReturn = caseMap.values();
+
+            return caseToReturn;
+            
+        }else{
+            return caseList;
         }
-
-        List<Case> caseToReturn = caseMap.values();
-
-        return caseToReturn;
-		
-	}
+    }
     //END MODIFICA marco.arci@webresults.it --> Annullamento Case piano rateizzazione dopo 30 giorni se non sono stati allegati documenti
 }
