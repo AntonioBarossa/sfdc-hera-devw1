@@ -149,7 +149,7 @@ export default class HdtStringGenerationForDocument extends LightningElement {
         }else{
             this.uniqueString = await getUniqueString({comune : this.comune , caseProcess : this.caseProcess , caseSubProcess : this.caseSubProcess});
             this.currNumber = this.numComponenti;
-            this.resultString = this.uniqueString[0].FixedString__c.replace('[N°]',this.currNumber) + ' - ';
+            this.resultString = this.uniqueString[0].FixedString__c.replace('[N°]',this.currNumber) + ' ';
         }
         this.numberOfLoop = [];
         for( let i=0; i<this.currNumber; i++){
