@@ -410,27 +410,29 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         try {
             List<ContentDocument> contDocList = [SELECT Id, parentId FROM ContentDocument WHERE Id IN :attachmentIdList WITH SECURITY_ENFORCED];
             if(contDocList.size() > 0){
-                List<ContentDocumentLink> oldLinksList = [SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink WHERE ContentDocumentId IN :contDocList AND LinkedEntityId =: oldParent WITH SECURITY_ENFORCED];
-    
+
+                
                 //creazione nuovo contentDocumentLink che punta al case figlio di Comunicazione con il gestore
                 List<ContentDocumentLink> newLinkList = new List<ContentDocumentLink>();
-                if (contDocList.size() > 0){
-                    for (ContentDocument cdoc : contDocList) {
-                        ContentDocumentLink  contDoc = new ContentDocumentLink ();
-                        contDoc.LinkedEntityId = parentId;
-                        contDoc.ContentDocumentId = cdoc.Id;
-                        newLinkList.add(contDoc);
-                    }
-    
-                    if(newLinkList.size() > 0){
-                        HDT_UTL_DatabaseService.insertSObject(newLinkList);
-                    }
+                for (ContentDocument cdoc : contDocList) {
+                    ContentDocumentLink  contDoc = new ContentDocumentLink ();
+                    contDoc.LinkedEntityId = parentId;
+                    contDoc.ContentDocumentId = cdoc.Id;
+                    newLinkList.add(contDoc);
                 }
-    
+                
+                if(newLinkList.size() > 0){
+                    HDT_UTL_DatabaseService.insertSObject(newLinkList);
+                }
+                
                 //Eliminazione vecchio contentDocumentLink che puntava al case padre (case da cui è stata innescata la comunicazione)
-                if(oldLinksList.size() > 0)
-                {
-                    HDT_UTL_DatabaseService.deleteSObject(oldLinksList);
+                if(oldParent != null){
+                    List<ContentDocumentLink> oldLinksList = [SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink WHERE ContentDocumentId IN :contDocList AND LinkedEntityId =: oldParent WITH SECURITY_ENFORCED];
+
+                    if(oldLinksList.size() > 0)
+                    {
+                        HDT_UTL_DatabaseService.deleteSObject(oldLinksList);
+                    }
                 }
             }
 

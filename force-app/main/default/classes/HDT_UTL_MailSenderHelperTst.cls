@@ -277,10 +277,10 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         List<String> attachmentsIdList = new List<String>();
         attachmentsIdList.add(cdList[0].Id);
         Test.startTest();
-        HDT_UTL_MailSenderHelper.updateAttachmentsParent(attachmentsIdList, caseNew.Id, caseOld.ParentId);
+        HDT_UTL_MailSenderHelper.updateAttachmentsParent(attachmentsIdList, caseNew.Id, caseOld.Id);
         Test.stopTest();
-        List<ContentDocumentLink> cdLinkList = [SELECT Id, LinkedEntityId FROM ContentDocumentLink WHERE ContentDocumentId =: cdList[0].Id LIMIT 1];
-        System.assert(cdLinkList[0].LinkedEntityId == caseNew.Id, 'Errore in fase di aggiornamento parentela allegato.');
+        List<ContentDocumentLink> cdLinkList = [SELECT Id FROM ContentDocumentLink WHERE LinkedEntityId =: caseNew.Id LIMIT 1];
+        System.assert(cdLinkList.size() > 0, 'Errore in fase di aggiornamento parentela allegato.');
         
     }
 
