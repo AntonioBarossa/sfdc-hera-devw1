@@ -20,6 +20,9 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
                     (servicePoint.SupplyStreet__c != null && servicePoint.SupplyStreet__c != '')){
                 servicePoint.SupplyStreetName__c = servicePoint.SupplyStreet__c;
             }
+            if ('Energia Elettrica'.equalsIgnoreCase(servicePoint.CommoditySector__c) && String.isNotBlank(servicePoint.ServicePointCode__c)){
+                servicePoint.ServicePointCode__c = servicePoint.ServicePointCode__c.toUpperCase();
+            }
         } 
     }
     private void handleGlobalMigrationKey(List<ServicePoint__c> servicePointList)
