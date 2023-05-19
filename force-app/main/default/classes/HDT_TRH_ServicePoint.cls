@@ -25,6 +25,9 @@ public with sharing class HDT_TRH_ServicePoint extends HDT_TRH_TriggerHandler{
                 servicePoint.SupplyCityCode__c = servicePoint.SupplySAPCityCode__c;
                 servicePoint.SupplyStreetCode__c = servicePoint.SupplySAPStreetCode__c;
             }
+            if ('Energia Elettrica'.equalsIgnoreCase(servicePoint.CommoditySector__c) && String.isNotBlank(servicePoint.ServicePointCode__c)){
+                servicePoint.ServicePointCode__c = servicePoint.ServicePointCode__c.toUpperCase();
+            }
         }
     }
     
