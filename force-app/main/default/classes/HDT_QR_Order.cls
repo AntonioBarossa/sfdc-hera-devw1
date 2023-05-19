@@ -372,6 +372,7 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             AdditionalAttachments__c,
             WasteCommodityType__c,
+            BillingCategory__c,
             VASType__c,
             DateSentToSII__c,
             OperationCode__c,

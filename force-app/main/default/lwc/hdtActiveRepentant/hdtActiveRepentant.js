@@ -363,6 +363,7 @@ export default class HdtActiveRepentant extends LightningElement {
                 dateX: dx,
                 dateY: dy,
                 missedDue: this.missedDueDate,
+                billingCategory : this.periodTable.BillingCategory__c,
                 period: this.periodType
             }
         });
