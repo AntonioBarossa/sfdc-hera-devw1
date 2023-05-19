@@ -35,6 +35,8 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(2, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        caseList[0].Type = 'Variazione indirizzo di fornitura';
+        caseList[1].Type = 'Comunicazione con il Gestore';
         insert caseList;
 
         List<EmailMessage> emailMessageList = HDT_UTL_DataFactoryTst.createEmailMessage(2, false);
@@ -44,6 +46,12 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         emailMessageList[1].RelatedToId = caseList[0].Id;
         emailMessageList[1].Subject = 'Sollecito';
         insert emailMessageList[1];
+
+        List<ContentVersion> contentVersion = HDT_UTL_DataFactoryTst.createContentVers(1, false);
+        insert contentVersion;
+        List<ContentDocument> documents = [SELECT Id, Title, LatestPublishedVersionId FROM ContentDocument WHERE LatestPublishedVersionId = :contentVersion[0].Id];
+        list<ContentDocumentLink> listDocumentLink = HDT_UTL_DataFactoryTst.createContentDocumentLink(1, false, caseList[0].Id, documents[0].Id);
+        insert listDocumentLink;
     }
 
     /**​
@@ -258,6 +266,22 @@ public with sharing class HDT_UTL_MailSenderHelperTst{
         Test.stopTest();
 
         System.assertEquals(true,sendMailResultActual.success,'Error general case result was not update correctly');
+    }
+
+    @IsTest
+    static void updateAttachmentsParentTst(){
+        List<ContentDocument> cdList = [SELECT Id FROM ContentDocument LIMIT 1];
+        Case caseOld = [SELECT Id, ParentId FROM Case WHERE Type = 'Variazione indirizzo di fornitura' LIMIT 1];
+        Case caseNew = [SELECT Id FROM Case WHERE Type = 'Comunicazione con il Gestore' LIMIT 1];
+        
+        List<String> attachmentsIdList = new List<String>();
+        attachmentsIdList.add(cdList[0].Id);
+        Test.startTest();
+        HDT_UTL_MailSenderHelper.updateAttachmentsParent(attachmentsIdList, caseNew.Id, caseOld.ParentId);
+        Test.stopTest();
+        List<ContentDocumentLink> cdLinkList = [SELECT Id, LinkedEntityId FROM ContentDocumentLink WHERE ContentDocumentId =: cdList[0].Id LIMIT 1];
+        System.assert(cdLinkList[0].LinkedEntityId == caseNew.Id, 'Errore in fase di aggiornamento parentela allegato.');
+        
     }
 
 }
