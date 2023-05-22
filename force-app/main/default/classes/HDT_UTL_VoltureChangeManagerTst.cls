@@ -406,7 +406,8 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Pricebook2Id,
         Contact__c,
         CompanyOwner__c,
-        CommodityFormula__c
+        CommodityFormula__c,
+        AnnualConsumption__c
         FROM Order];  
 
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = new  List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();

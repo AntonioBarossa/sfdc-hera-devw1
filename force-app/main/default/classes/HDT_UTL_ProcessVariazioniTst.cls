@@ -88,9 +88,22 @@ public with sharing class HDT_UTL_ProcessVariazioniTst {
         HDT_UTL_ProcessVariazioni.setCorrectContext(Label.VARIAZIONI_INDIRIZZO_FORNITURA);
         HDT_UTL_ProcessVariazioni.setCorrectContext(Label.VARIAZIONI_MARCATURA_USO_PDR);
         HDT_UTL_ProcessVariazioni.setCorrectContext('');
+
+        MassiveLoaderRequest__c request = new MassiveLoaderRequest__c();
+        request.TotalRequest__c = 1;
+        request.Priority__c = 1;
+        request.ProcessType__c = 'Variazioni';
+        request.Status__c = 'In attesa di lavorazione';
+        insert request;
+
         List<MassiveLoaderRequestItem__c> itemList = new List<MassiveLoaderRequestItem__c>();
         MassiveLoaderRequestItem__c item = new MassiveLoaderRequestItem__c();
+        item.MassiveLoaderRequest__c = request.Id;
+        item.Status__c = 'In attesa di lavorazione';
+        item.Data__c = '';
         itemList.add(item);
+        insert itemList;
+        
         HDT_UTL_ProcessVariazioni process = new HDT_UTL_ProcessVariazioni();
         process.manageCatchException(1, itemList, 'errorMessage');        
         Test.stopTest();
