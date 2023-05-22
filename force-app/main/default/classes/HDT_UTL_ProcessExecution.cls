@@ -33,6 +33,10 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     public void setMassiveLoaderRequestItemList(List<MassiveLoaderRequestItem__c> requestItemList){
 
+        if(Test.isRunningTest()){
+            isTest = true;
+        }
+
         this.requestItemList = requestItemList;
 
         HDT_MassiveLoaderProcess__mdt selectedProcess = massiveLoaderProcessQr.getRecordByName(processName);
