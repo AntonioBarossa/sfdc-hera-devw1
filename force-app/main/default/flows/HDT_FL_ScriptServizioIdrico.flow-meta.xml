@@ -422,7 +422,7 @@
         </fields>
         <fields>
             <name>text_dati_tecnici_servizio_Idrico_6</name>
-            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail contratti@gruppohera.it&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: La informo che per procedere all&apos;attivazione del punto è necessario restituire il modulo &quot;Dichiarazione sostitutiva dell&apos;atto di notorietà relativa al titolo attestante la proprietà, detenzione o possesso dell&apos;abitazione per il quale è richiesta la fornitura&quot; correttamente compilato e sottoscritto, unitamente alla copia del documento di identità. Può restituire il modulo tramite sportello o inviandolo all&apos;indirizzo e-mail clienti@gruppomarchemultiservizi.it.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
