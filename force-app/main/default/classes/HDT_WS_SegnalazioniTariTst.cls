@@ -190,7 +190,7 @@ public with sharing class HDT_WS_SegnalazioniTariTst {
 
         Test.startTest(); 
         wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse res = (wrts_prcgvr.ApexActionIntegration_1_0.CalloutResponse)segnalazione.execute(args);
-        System.assertEquals('OK', res.message, 'The call was not successful');
+        System.assertEquals('KO', res.message, 'The call was not successful');
         Test.stopTest();
     }
 

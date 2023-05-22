@@ -1747,6 +1747,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('###Missed Due Event >>> ');
         this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
+        this.sectionDataToSubmit["BillingCategory__c"]=event.detail.billingCategory;
         const MissingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
         MissingDueAmount.required = event.detail.missedDue? true : false;
         MissingDueAmount.disabled = event.detail.missedDue? false : true;

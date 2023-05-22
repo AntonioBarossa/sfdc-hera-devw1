@@ -6,9 +6,12 @@ public with sharing class HDT_UTL_ProcessMorositaTst {
 
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
         List<ServicePoint__c> servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+        servPoint[0].ServicePointCode__c = 'IT001E32452366';
+        update servPoint;
         List<Contract> cont = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].Id);
         cont[0].ServicePoint__c = servPoint[0].Id;
         cont[0].SAPContractCode__c = '3019602323';
+        cont[0].Status = 'Attivo';
         insert cont;
         
         List<Contact> contact = HDT_UTL_DataFactoryTst.createContact(1, true, acc[0].Id);

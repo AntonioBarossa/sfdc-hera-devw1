@@ -100,7 +100,7 @@ public class HDT_LC_MeterReadingControllerTst {
 
         System.assertEquals(true, meterReadingObj.success, 'Si è verificato un errore non previsto');
         System.assert(meterReadingObj.data != null, 'Si è verificato un errore in fase di scaricamento dei records');
-
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', true);
         Test.stopTest();
     }
 

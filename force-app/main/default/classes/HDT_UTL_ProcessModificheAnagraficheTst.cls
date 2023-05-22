@@ -5,6 +5,8 @@ public with sharing class HDT_UTL_ProcessModificheAnagraficheTst {
     static void setup(){
 
         List<Account> acc = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'D1 - Persona fisica', 'Enti');
+        acc[0].CustomerCode__c = '0123456';
+        update acc;
         List<ServicePoint__c> servPoint = HDT_UTL_DataFactoryTst.createServicePoint(1, true);
         List<Contract> cont = HDT_UTL_DataFactoryTst.createContract(1, false, acc[0].Id);
         cont[0].ServicePoint__c = servPoint[0].Id;
@@ -39,8 +41,9 @@ public with sharing class HDT_UTL_ProcessModificheAnagraficheTst {
             //item.Data__c = 'Variazione Anagrafica Cliente|0011X00000rL7Z6QAK||200010613357|3336560123|3336560123|||||||||||||||||||||||||ADAM|||||||||||||||';//--0011X00000jcKXUQA2
             item.Data__c = '';
             item.Data__c += 'Variazione Anagrafica Cliente|';// PROCESSO
-            item.Data__c += acc[0].Id + '|';// ACCOUNTID - 
-            item.Data__c += '|';// SOTTOPROCESSO
+            //item.Data__c += acc[0].Id + '|';// ACCOUNTID - 
+            item.Data__c += '0123456|';
+            item.Data__c += 'Modifica Dati di Contatto|';// SOTTOPROCESSO
             item.Data__c += '200010613357|';// CONTO_CONTRATTUALE
             item.Data__c += '3336560123|';// TELEFONO
             item.Data__c += '3336560123|';// CELLULARE

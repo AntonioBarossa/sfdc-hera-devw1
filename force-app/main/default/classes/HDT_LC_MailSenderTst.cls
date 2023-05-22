@@ -47,8 +47,15 @@ public with sharing class HDT_LC_MailSenderTst {
         Case mySingleCase = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
         mySingleCase.RecordTypeId = recTypeId;
         mySingleCase.Phase__c = 'Attesa Modulo Firmato';
-        
         caseList.add(mySingleCase);
+
+        HDT_QR_RecordType qrRecordType = new HDT_QR_RecordType();
+        Case caseGestore = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id)[0];
+        caseGestore.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Informative');
+        caseGestore.Type = 'Comunicazione con il Gestore';
+        caseGestore.Phase__c = 'In attesa risposta Mail';
+        caseList.add(caseGestore);
+        
         insert caseList;
 
         List<ContentVersion> contentVersion = HDT_UTL_DataFactoryTst.createContentVers(1, false);
@@ -58,6 +65,15 @@ public with sharing class HDT_LC_MailSenderTst {
 
         list<ContentDocumentLink> listDocumentLink = HDT_UTL_DataFactoryTst.createContentDocumentLink(1, false, caseList[0].Id, documents[0].Id);
         insert listDocumentLink;
+
+        List<EmailMessage> listEmailMessage = new List<EmailMessage>();
+        Case csGestore = [SELECT Id FROM Case WHERE Type = 'Comunicazione con il Gestore' LIMIT 1];
+        List<EmailMessage> msgList = HDT_UTL_DataFactoryTst.createEmailMessage(1, false);
+        msgList[0].Subject = 'Comunicazione dal gestore';
+        msgList[0].RelatedToId = csGestore.Id;
+        listEmailMessage.add(msgList[0]);
+        insert listEmailMessage;
+
     }
 
     /**​
@@ -130,10 +146,10 @@ public with sharing class HDT_LC_MailSenderTst {
     @IsTest
     static void deletePendingFilesTst(){
         List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
-        List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
         List<Id> cdIdList = new List<Id>();
-        cdIdList.add(cdList[0].Id);
         Test.startTest();
+            List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
+            cdIdList.add(cdList[0].Id); 
             HDT_UTL_MailSenderHelper.deletePendingFiles(cdIdList);
         Test.stopTest();
         
@@ -144,13 +160,24 @@ public with sharing class HDT_LC_MailSenderTst {
     @IsTest
     static void getContentSizeAttachmentsTst(){
         List<Case> cases =  [SELECT Id FROM Case LIMIT 1];
-        List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
-        List<Id> cdIdList = new List<Id>();
-        cdIdList.add(cdList[0].Id);
         Test.startTest();
+            List<ContentDocument> cdList = HDT_LC_MailSender.getContentDocs(cases[0].Id);
+            List<Id> cdIdList = new List<Id>();
+            cdIdList.add(cdList[0].Id);
             Decimal attachmentsSize = HDT_UTL_MailSenderHelper.getContentSizeAttachments(cdIdList);
         Test.stopTest();
         
         System.assert(attachmentsSize != null, 'Errore in fase di retrieve della dimensione dei documenti.');
+    }
+
+    @IsTest
+    static void getMetadataForReminderTst(){
+        HDT_WRP_MailSender.HDT_WRP_Result ret ;
+        List<Case> cases =  [SELECT Id FROM Case WHERE Type = 'Comunicazione con il Gestore' LIMIT 1];
+        Test.startTest();
+            ret = HDT_LC_MailSender.getMetadata(cases[0].Id);
+        Test.stopTest();
+        
+        System.assert(ret != null, 'Errore in fase di retrieve della dimensione dei documenti.');
     }
 }
