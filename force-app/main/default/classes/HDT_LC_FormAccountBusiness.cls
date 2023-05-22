@@ -212,7 +212,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // }
             //
             // Fix bug LEM006 EC  06/08/2021 
-            Map<String, String> mapTranscodifica = new Map<String, String>{'AAA-EBT'=>'AAS Persona fisica','HERA COMM'=>'Persona fisica','MMS'=>'MMS Persona fisica'};
+            Map<String, String> mapTranscodifica = new Map<String, String>{'AAA-EBT'=>'AAS Persona fisica','HERA COMM'=>'Persona fisica','MMS'=>'G1 - MMS Persona fisica'};
            
             Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
             String namePerson= dataAccount.get('firstName') + ' '+ dataAccount.get('lastName');
