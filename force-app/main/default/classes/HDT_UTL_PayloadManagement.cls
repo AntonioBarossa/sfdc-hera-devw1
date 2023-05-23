@@ -47,6 +47,8 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                     return handleOtpSign(inputs,formParams);
                 }when 'calculateCommodityArcZeroTwo'{
                     return calculateCommodityArcZeroTwo(inputs, formParams);
+                }when 'calculatePaymentMethod'{
+                    return calculatePaymentMethod(inputs, formParams);
                 }
                 when else {
                     return '';
@@ -1311,6 +1313,24 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
             }
         }
         return result;
+    }
+
+    private static String calculatePaymentMethod(Map<String,List<sObject>> inputs, Map<String,Object> formParams)
+    {
+        String context = (String) formParams.get('Contesto');
+        String modpagamento = HDT_UTL_DocumentalManagement.getValue(context, 'DocumentPaymentMethod__c', 0, inputs, formParams);
+        String modpagacconto = HDT_UTL_DocumentalManagement.getValue(context, 'DepositPaymentMode__c', 0, inputs, formParams);
+        String modpagorder = HDT_UTL_DocumentalManagement.getValue(context, 'PaymentMode__c', 0, inputs, formParams);
+
+        if (modpagamento == 'Bollettino Paperless' || modpagacconto == 'Paperless' ) {
+            return 'BOLLETTINO PAPER LESS';       
+        } else if (modpagacconto == 'Bonifico Paperless') {
+            return 'BONIFICO PAPER LESS';   
+        } else if (modpagorder =='') {
+            return 'NULL';  
+        } else {
+            return '';
+        }           
     }
     
 }
