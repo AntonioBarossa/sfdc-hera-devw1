@@ -618,6 +618,13 @@ public with sharing class HDT_UTL_BpCaCreate
             update bp;
         }
     }
+    public void updateAccount(String dataString, Id accountId){
+        HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
+        if(String.isNotBlank(data.codiceBP)){
+            Account acc = new Account(Id=accountId,CustomerCode__c=data.codiceBP);
+            update acc;
+        }
+    }
     /* Wrapper Object for the Web Service Response */
     public class HDT_WRP_BpCaCreateResponse
     {
