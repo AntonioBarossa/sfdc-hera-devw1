@@ -170,6 +170,127 @@ public with sharing class HDT_SRV_HerokuPostSalesManagerTst {
         
     }
 
+
+    @IsTest
+    static void handleResponseTst(){
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+
+        HDT_WRP_HerokuPostSalesManager wrp = new HDT_WRP_HerokuPostSalesManager('ReqType','Ok','','','','','','');
+        wrp.responseMap=new Map<String,String>{
+            'REQUEST_TYPE'=>'CREA_RIC','requestId'=>'TESTREQUESTAA','COD_PRAT_DISTR'=>'PratDist001','DT_INVIO_DL'=>'','errorMessage'=>'','comunicationChannel'=>'ATOAAA','result'=>'OK'
+        };
+        List<Case> respCase=new List<Case>();
+        Test.startTest();
+        testCase.Phase__c = 'In Lavorazione';
+        update testCase;
+        HDT_UTL_HerokuPostSalesManager saleMng=new HDT_UTL_HerokuPostSalesManager();
+        respCase.addAll(saleMng.handleResponse(new List<HDT_WRP_HerokuPostSalesManager>{wrp}, testCase));
+        Test.stopTest();
+        System.assertEquals(false,respCase.isEmpty(),'Case list is empty');
+    }
+
+    @IsTest
+    static void handleResponseAllineamentoAnagraficaTst(){
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status,RecordType.DeveloperName FROM Case LIMIT 1];
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','In Lavorazione', testCase.RecordTypeId, testCase.RecordType.DeveloperName);
+        HDT_WRP_HerokuPostSalesManager wrp = new HDT_WRP_HerokuPostSalesManager('ReqType','Ok','','','','','','');
+        wrp.responseMap=new Map<String,String>{
+                'REQUEST_TYPE'=>'CREA_RIC','requestId'=>'TESTREQUESTAA','COD_PRAT_DISTR'=>'PratDist001','DT_INVIO_DL'=>'','errorMessage'=>'','comunicationChannel'=>'ATOA','result'=>'OK','FASE'=>'Esito OK da SII'
+        };
+        List<Case> respCase=new List<Case>();
+        Test.startTest();
+        testCase.Phase__c = 'In Lavorazione';
+        testCase.Type='Allineamento Anagrafica';
+        update testCase;
+        HDT_UTL_HerokuPostSalesManager saleMng=new HDT_UTL_HerokuPostSalesManager();
+        respCase.addAll(saleMng.handleResponse(new List<HDT_WRP_HerokuPostSalesManager>{wrp}, testCase));
+        Test.stopTest();
+        System.assertEquals(false,respCase.isEmpty(),'Case list is empty');
+    }
+
+    @IsTest
+    static void handleResponseEmptyWrpTst(){
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status FROM Case LIMIT 1];
+
+        HDT_WRP_HerokuPostSalesManager wrp = new HDT_WRP_HerokuPostSalesManager('ReqType','Ok','','','','','','');
+        List<Case> respCase=new List<Case>();
+        Test.startTest();
+        testCase.Phase__c = 'In Lavorazione';
+        update testCase;
+        HDT_UTL_HerokuPostSalesManager saleMng=new HDT_UTL_HerokuPostSalesManager();
+        respCase.addAll(saleMng.handleResponse(new List<HDT_WRP_HerokuPostSalesManager>(), testCase));
+        Test.stopTest();
+        System.assertEquals(false,respCase.isEmpty(),'Case list is empty');
+    }
+
+    @IsTest
+    static void throwCustomException(){
+        String initialMessage='Test error';
+        String testError='';
+        Test.startTest();
+        try{
+            throw new HDT_UTL_HerokuPostSalesManager.HDT_UTL_RichPassException(initialMessage,'500');
+        }catch(Exception e){
+            testError=e.getMessage();
+        }
+        Test.stopTest();
+        System.assertEquals(false,String.isBlank(testError),'error message is null or empty');
+    }
+
+    @IsTest
+    static void handleRequestTst(){
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status,RecordType.DeveloperName FROM Case LIMIT 1];
+        HDT_WRP_HerokuPostSalesManager wrp = new HDT_WRP_HerokuPostSalesManager('ReqType','Ok','','','','','','');
+        wrp.requestMap=new Map<String,String>{
+            'RECORD_ID'=>testCase.Id,'SALESFORCE_KEY'=>testCase.CaseNumber,'METHOD'=>'esito_intermedio','COD_SERVIZIO'=>'CODSERV','COD_PRESA'=>'CODPRESA','COD_PRAT_DISTR'=>'PRAT001','NOTE_SAP'=>'Test Note Sap','CALC_AMOUNT'=>'15.00','BILL_NUM'=>'FATT11052','MAN_BILL_NUM'=>'15123','FASE'=>testCase.Phase__c
+        };
+        List<Case> retCases=new List<Case>();
+        Test.startTest();
+        HDT_UTL_HerokuPostSalesManager psMng=new HDT_UTL_HerokuPostSalesManager();
+        retCases.addAll(psMng.handleRequest(wrp));
+        Test.stopTest();
+        System.assertEquals(false,retCases.isEmpty(),'case list is empty');
+    }
+    @IsTest
+    static void handleRequestEmptyMethodTst(){
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status,RecordType.DeveloperName FROM Case LIMIT 1];
+        HDT_WRP_HerokuPostSalesManager wrp = new HDT_WRP_HerokuPostSalesManager('ReqType','Ok','','','','','','');
+        wrp.requestMap=new Map<String,String>{
+                'RECORD_ID'=>testCase.Id,'SALESFORCE_KEY'=>testCase.CaseNumber,'METHOD'=>'','COD_SERVIZIO'=>'CODSERV','COD_PRESA'=>'CODPRESA','COD_PRAT_DISTR'=>'PRAT001','NOTE_SAP'=>'Test Note Sap','CALC_AMOUNT'=>'15.00','BILL_NUM'=>'FATT11052','MAN_BILL_NUM'=>'15123','FASE'=>testCase.Phase__c
+        };
+        List<Case> retCases=new List<Case>();
+        String errorMessage='';
+        Test.startTest();
+        try{
+            HDT_UTL_HerokuPostSalesManager psMng=new HDT_UTL_HerokuPostSalesManager();
+            retCases.addAll(psMng.handleRequest(wrp));
+        }catch(Exception e){
+            errorMessage=e.getMessage();
+        }
+        Test.stopTest();
+        System.assertEquals(false,String.isBlank(errorMessage),'error not fired');
+    }
+
+    @IsTest
+    static void handleRequestRiattivazioneTst(){
+        Case testCase = [SELECT Id, CaseNumber,RecordTypeId, Type, Phase__c, Status,RecordType.DeveloperName FROM Case LIMIT 1];
+        HDT_WRP_HerokuPostSalesManager wrp = new HDT_WRP_HerokuPostSalesManager('ReqType','Ok','','','','','','');
+        wrp.requestMap=new Map<String,String>{
+                'RECORD_ID'=>testCase.Id,'SALESFORCE_KEY'=>testCase.CaseNumber,'METHOD'=>'esito_finale','COD_SERVIZIO'=>'CODSERV','COD_PRESA'=>'CODPRESA','COD_PRAT_DISTR'=>'PRAT001','NOTE_SAP'=>'Test Note Sap','CALC_AMOUNT'=>'15.00','BILL_NUM'=>'FATT11052','MAN_BILL_NUM'=>'15123','FASE'=>testCase.Phase__c,
+                'DT_CREA'=>String.valueOf(Date.today()),'FATTURA'=>'TestFattura','VBELN'=>'ODV Test','NOTA_HK'=>'Nota SAP'
+        };
+        List<Case> retCases=new List<Case>();
+        testCase.Type='Riattivazione Fornitura';
+        update testCase;
+        Test.startTest();
+            HDT_UTL_HerokuPostSalesManager psMng=new HDT_UTL_HerokuPostSalesManager();
+            retCases.addAll(psMng.handleRequest(wrp));
+        Test.stopTest();
+        System.assertEquals(false,retCases.isEmpty(),'case list is empty');
+    }
+
+
+
     @isTest
     static void executeTstWithComChannelATOA()
     {

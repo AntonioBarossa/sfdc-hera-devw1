@@ -5,7 +5,7 @@
         <name>AllVas</name>
         <label>AllVas</label>
         <locationX>3152</locationX>
-        <locationY>1982</locationY>
+        <locationY>1766</locationY>
         <assignmentItems>
             <assignToReference>ChildProcessTypeVas</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>assignAxa</name>
         <label>assignAxa</label>
         <locationX>4340</locationX>
-        <locationY>2558</locationY>
+        <locationY>2282</locationY>
         <assignmentItems>
             <assignToReference>isAxa3</assignToReference>
             <operator>Assign</operator>
@@ -37,7 +37,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>5264</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -53,7 +53,7 @@
         <name>assignEstEnergy</name>
         <label>assignEstEnergy</label>
         <locationX>864</locationX>
-        <locationY>3542</locationY>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -69,7 +69,7 @@
         <name>AssignHeraAcqua</name>
         <label>AssignHeraAcqua</label>
         <locationX>5000</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -85,7 +85,7 @@
         <name>assignHeraComm</name>
         <label>assignHeraComm</label>
         <locationX>336</locationX>
-        <locationY>3542</locationY>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -101,7 +101,7 @@
         <name>assignHeraCommMarche</name>
         <label>assignHeraCommMarche</label>
         <locationX>600</locationX>
-        <locationY>3542</locationY>
+        <locationY>3158</locationY>
         <assignmentItems>
             <assignToReference>salesCompanyToDisplay</assignToReference>
             <operator>Add</operator>
@@ -117,7 +117,7 @@
         <name>AssignHeraContawatt</name>
         <label>AssignHeraContawatt</label>
         <locationX>4208</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -133,7 +133,7 @@
         <name>AssignHeraGas</name>
         <label>AssignHeraGas</label>
         <locationX>4736</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -149,7 +149,7 @@
         <name>AssignHeraLed</name>
         <label>AssignHeraLed</label>
         <locationX>3680</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -165,7 +165,7 @@
         <name>AssignHeraLuce</name>
         <label>AssignHeraLuce</label>
         <locationX>4472</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -181,7 +181,7 @@
         <name>AssignHerEBike</name>
         <label>AssignHerEBike</label>
         <locationX>3416</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -197,7 +197,7 @@
         <name>AssignIdricoTrue</name>
         <label>AssignIdricoTrue</label>
         <locationX>2932</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>CheckIdrico</assignToReference>
             <operator>Assign</operator>
@@ -213,7 +213,7 @@
         <name>AssignmentVariableFromLoop</name>
         <label>AssignmentVariableFromLoop</label>
         <locationX>3064</locationX>
-        <locationY>1070</locationY>
+        <locationY>950</locationY>
         <assignmentItems>
             <assignToReference>containsSalesCompany</assignToReference>
             <operator>Assign</operator>
@@ -229,7 +229,7 @@
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
         <locationX>3152</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -245,7 +245,7 @@
         <name>assignOrder</name>
         <label>assignOrderSalesCompany</label>
         <locationX>336</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <assignmentItems>
             <assignToReference>salesCompany</assignToReference>
             <operator>Add</operator>
@@ -261,7 +261,7 @@
         <name>AssignRicarica</name>
         <label>AssignRicarica</label>
         <locationX>5528</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -277,7 +277,7 @@
         <name>AssignTermostato</name>
         <label>AssignTermostato</label>
         <locationX>3944</locationX>
-        <locationY>2894</locationY>
+        <locationY>2582</locationY>
         <assignmentItems>
             <assignToReference>VasToDisplay</assignToReference>
             <operator>Add</operator>
@@ -293,7 +293,7 @@
         <name>ExistVas</name>
         <label>ExistVas</label>
         <locationX>2932</locationX>
-        <locationY>1646</locationY>
+        <locationY>1466</locationY>
         <assignmentItems>
             <assignToReference>VasForBonus</assignToReference>
             <operator>Assign</operator>
@@ -309,7 +309,7 @@
         <name>notContains_0</name>
         <label>notContains</label>
         <locationX>3152</locationX>
-        <locationY>1310</locationY>
+        <locationY>1166</locationY>
         <assignmentItems>
             <assignToReference>salesCompany</assignToReference>
             <operator>Add</operator>
@@ -325,7 +325,7 @@
         <name>Axa</name>
         <label>Axa</label>
         <locationX>4472</locationX>
-        <locationY>2438</locationY>
+        <locationY>2174</locationY>
         <defaultConnector>
             <targetReference>VasName</targetReference>
         </defaultConnector>
@@ -350,7 +350,7 @@
         <name>callTypeDecision</name>
         <label>callTypeDecision</label>
         <locationX>446</locationX>
-        <locationY>3974</locationY>
+        <locationY>3542</locationY>
         <defaultConnector>
             <targetReference>Introduzione_Inbound</targetReference>
         </defaultConnector>
@@ -375,7 +375,7 @@
         <name>decisionSalesCompany</name>
         <label>decisionSalesCompany</label>
         <locationX>3064</locationX>
-        <locationY>1190</locationY>
+        <locationY>1058</locationY>
         <defaultConnector>
             <targetReference>notContains_0</targetReference>
         </defaultConnector>
@@ -400,7 +400,7 @@
         <name>isIdrico</name>
         <label>isIdrico</label>
         <locationX>248</locationX>
-        <locationY>3854</locationY>
+        <locationY>3434</locationY>
         <defaultConnector>
             <targetReference>callTypeDecision</targetReference>
         </defaultConnector>
@@ -425,7 +425,7 @@
         <name>isVasForBonus</name>
         <label>isVasForBonus</label>
         <locationX>3064</locationX>
-        <locationY>1526</locationY>
+        <locationY>1358</locationY>
         <defaultConnector>
             <targetReference>ProcessType</targetReference>
         </defaultConnector>
@@ -450,7 +450,7 @@
         <name>LoopCheckIdrico</name>
         <label>LoopCheckIdrico</label>
         <locationX>3064</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <defaultConnector>
             <targetReference>AssignmentVariableFromLoop</targetReference>
         </defaultConnector>
@@ -475,7 +475,7 @@
         <name>ProcessType</name>
         <label>ProcessType</label>
         <locationX>3064</locationX>
-        <locationY>1862</locationY>
+        <locationY>1658</locationY>
         <defaultConnector>
             <targetReference>AllVas</targetReference>
         </defaultConnector>
@@ -500,7 +500,7 @@
         <name>salesCompanyDisplay</name>
         <label>salesCompanyDisplay</label>
         <locationX>732</locationX>
-        <locationY>3422</locationY>
+        <locationY>3050</locationY>
         <defaultConnector>
             <targetReference>LoopSalesCompany</targetReference>
         </defaultConnector>
@@ -555,7 +555,7 @@
         <name>salesCompanyisNull</name>
         <label>salesCompanyisNull</label>
         <locationX>248</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>assignOrder</targetReference>
         </defaultConnector>
@@ -580,7 +580,7 @@
         <name>VasName</name>
         <label>VasName</label>
         <locationX>4472</locationX>
-        <locationY>2774</locationY>
+        <locationY>2474</locationY>
         <defaultConnector>
             <targetReference>LoopOrderItem</targetReference>
         </defaultConnector>
@@ -750,7 +750,7 @@
         <name>LoopOrderChild</name>
         <label>LoopOrderChild</label>
         <locationX>248</locationX>
-        <locationY>614</locationY>
+        <locationY>542</locationY>
         <collectionReference>GetChildOrder</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -764,7 +764,7 @@
         <name>LoopOrderItem</name>
         <label>LoopOrderItem</label>
         <locationX>3064</locationX>
-        <locationY>2318</locationY>
+        <locationY>2066</locationY>
         <collectionReference>GetOrderItem_0</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -778,7 +778,7 @@
         <name>LoopSalesCompany</name>
         <label>LoopSalesCompany</label>
         <locationX>248</locationX>
-        <locationY>3302</locationY>
+        <locationY>2942</locationY>
         <collectionReference>salesCompany</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -811,7 +811,7 @@
         <name>GetChildOrder</name>
         <label>GetChildOrder</label>
         <locationX>248</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>salesCompanyisNull</targetReference>
@@ -832,7 +832,7 @@
         <name>GetOrderItem_0</name>
         <label>GetOrderItem</label>
         <locationX>3064</locationX>
-        <locationY>2198</locationY>
+        <locationY>1958</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopOrderItem</targetReference>
@@ -853,7 +853,7 @@
         <name>Introduzione_Inbound</name>
         <label>Introduzione Inbound</label>
         <locationX>578</locationX>
-        <locationY>4094</locationY>
+        <locationY>3650</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -952,7 +952,7 @@
         <name>Introduzione_Outbound</name>
         <label>Introduzione_Outbound</label>
         <locationX>314</locationX>
-        <locationY>4094</locationY>
+        <locationY>3650</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1051,13 +1051,13 @@
         <name>Introduzione_Servizio_Idrico</name>
         <label>Introduzione_Servizio_Idrico</label>
         <locationX>50</locationX>
-        <locationY>3974</locationY>
+        <locationY>3542</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <fields>
             <name>Introduzione_Acqua</name>
-            <fieldText>&lt;p&gt;Chiamo Per conto di Hera SpA , Gestore del Servizio Idrico Integrato con sede a Bologna Via Berti Pichat 2/4 per procedere all’attivazione della fornitura del servizio idrico&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, e saranno trattati nella modalità descritta nell’ informativa dettagliata nel plico contrattuale che le invieremo nella modalità da Lei prescelta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole procedere con l’attivazione del servizio procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Chiamo Per conto di Marche Multiservizi Spa, Gestore del Servizio Idrico Integrato con sede a Pesaro Via dei Canonici 144, per procedere all’attivazione della fornitura del servizio idrico&amp;nbsp;&amp;nbsp;&lt;/p&gt;&lt;p&gt;I dati personali raccolti durante questa registrazione saranno utilizzati per attivare i servizi da Lei richiesti, e saranno trattati nella modalità descritta nell’ informativa dettagliata nel plico contrattuale che le invieremo nella modalità da Lei prescelta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Mi conferma che vuole procedere con l’attivazione del servizio procedendo con la registrazione di questa telefonata, anziché in forma scritta?&lt;/p&gt;&lt;p&gt;CONFERMO&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
