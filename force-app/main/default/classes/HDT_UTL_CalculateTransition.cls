@@ -77,18 +77,30 @@ public with sharing class HDT_UTL_CalculateTransition {
        Sale__c sale = new Sale__c();
        calculateTransitionMap = this.inputMap;
        string[] markerConverted;
-
-       City__c city = [SELECT Name, Province__c 
+        //TK 982072C @enricodursontt trasformato in lista per i comuni con lo stesso nome
+       /*City__c city = [SELECT Name, Province__c 
                        FROM City__c 
-                       WHERE Name =: (String)calculateTransitionMap.get('city') WITH SECURITY_ENFORCED LIMIT 1];
+                       WHERE Name =: (String)calculateTransitionMap.get('city') WITH SECURITY_ENFORCED LIMIT 1];*/
+
+        List<City__c> city = [SELECT Name, Province__c 
+                       FROM City__c 
+                       WHERE Name =: (String)calculateTransitionMap.get('city') WITH SECURITY_ENFORCED];
+        String  cityprovince = city[0].Province__c;
 
        //if(city.IsNotTransition__c){
             if(calculateTransitionMap.get('servicePoint') != null){
                 servicePointRetrieved = ((ServicePoint__c)calculateTransitionMap.get('servicePoint'));
                 String servicePointRetrievedId = ((ServicePoint__c)calculateTransitionMap.get('servicePoint')).Id;
                 if(servicePointRetrieved != null && servicePointRetrievedId != null && servicePointRetrievedId != '')
-                    servicePoint = [SELECT Id, IsReseller__c FROM ServicePoint__c WHERE Id =: servicePointRetrievedId WITH SECURITY_ENFORCED LIMIT 1];
+                    servicePoint = [SELECT Id, IsReseller__c, SupplyProvince__c FROM ServicePoint__c WHERE Id =: servicePointRetrievedId WITH SECURITY_ENFORCED LIMIT 1];
                 // if(servicePoint == null){
+                    if(city.size()> 1){
+                        //ciclo e confronto province di City e SP
+                        for (City__c citylist : city) {
+                            if(citylist.Province__c == servicePoint.SupplyProvince__c)
+                                cityprovince = citylist.Province__c;
+                        }
+                    }
                 else{
                     servicePoint = servicePointRetrieved;
                 }
@@ -113,7 +125,8 @@ public with sharing class HDT_UTL_CalculateTransition {
              String regex = '^[DG][0-9] - .*';
             Pattern regexPattern = Pattern.compile(regex);
             /** Check comune, punto reseller, categoria Account, Codice cliente non valorizzato o Codice cliente valorizzato e marcatura nuovo modello */
-            if(stabbedData.contains(city.Province__c) 
+            //if(stabbedData.contains(city.Province__c) 
+            if(stabbedData.contains(cityprovince) //TK 982072C @enricodursontt
                 && (servicePoint == null || (servicePoint != null && !servicePoint.IsReseller__c)) 
                 && (sale.Account__r.CompanyOwner__c != 'Reseller') 
                 && (sale.Account__r.Category__c == 'Famiglie' || sale.Account__r.Category__c == 'Aziende Soho' || sale.Account__r.Category__c == 'Piccoli Condomini')
