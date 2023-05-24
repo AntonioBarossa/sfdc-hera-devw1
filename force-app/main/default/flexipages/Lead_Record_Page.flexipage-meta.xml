@@ -16,6 +16,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
+                <identifier>force_highlightsPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -30,6 +31,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_lead:pathAssistant</componentName>
+                <identifier>runtime_sales_lead_pathAssistant</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -40,6 +42,7 @@
         <itemInstances>
             <componentInstance>
                 <componentName>force:detailPanel</componentName>
+                <identifier>force_detailPanel</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -70,6 +73,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -95,6 +99,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListSingleContainer</componentName>
+                <identifier>force_relatedListSingleContainer2</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -112,6 +117,7 @@
                     <value>true</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListContainer</componentName>
+                <identifier>force_relatedListContainer</identifier>
             </componentInstance>
         </itemInstances>
         <name>Facet-bf375978-a108-4987-98db-7475baf8bec3</name>
@@ -133,6 +139,7 @@
                     <value>Standard.Tab.detail</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>detailTab</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -146,6 +153,7 @@
                     <value>Related</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tab</componentName>
+                <identifier>customTab</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -160,6 +168,7 @@
                     <value>tabs</value>
                 </componentInstanceProperties>
                 <componentName>flexipage:tabset</componentName>
+                <identifier>flexipage_tabset</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
@@ -176,6 +185,7 @@
                     <name>recordId</name>
                 </componentInstanceProperties>
                 <componentName>hdtActivityTrace</componentName>
+                <identifier>hdtActivityTrace</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -185,6 +195,7 @@
                     <value>CARD</value>
                 </componentInstanceProperties>
                 <componentName>runtime_sales_merge:mergeCandidatesPreviewCard</componentName>
+                <identifier>runtime_sales_merge_mergeCandidatesPreviewCard</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -194,6 +205,7 @@
                     <value>false</value>
                 </componentInstanceProperties>
                 <componentName>force:relatedListQuickLinksContainer</componentName>
+                <identifier>force_relatedListQuickLinksContainer</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
@@ -207,11 +219,13 @@
                     <value>Individual.HDT_LeadFieldShower</value>
                 </componentInstanceProperties>
                 <componentName>console:relatedRecord</componentName>
+                <identifier>console_relatedRecord</identifier>
             </componentInstance>
         </itemInstances>
         <itemInstances>
             <componentInstance>
                 <componentName>hdtLeadAddress</componentName>
+                <identifier>hdtLeadAddress</identifier>
             </componentInstance>
         </itemInstances>
         <mode>Replace</mode>
