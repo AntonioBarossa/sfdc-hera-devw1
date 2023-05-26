@@ -86,17 +86,6 @@
 		&quot;FieldName&quot;: &quot;ReminderBlock__c&quot;,
 		&quot;Required&quot;: false,
 		&quot;Column&quot;: 2
-	},
-	{
-		&quot;FieldName&quot;: &quot;CorrectionDocumentEmissionDay__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;Column&quot;: 2
-	},
-	{
-		&quot;FieldName&quot;: &quot;SoldBy__c&quot;,
-		&quot;Required&quot;: false,
-		&quot;ReadOnly&quot;: true,
-		&quot;Column&quot;: 2
 	}
 ]</value>
     </values>
@@ -108,7 +97,6 @@
         <field>ReadOnlyFields__c</field>
         <value xsi:type="xsd:string">[{&quot;FieldName&quot;:&quot;AccountId&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;ContractCode__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;CommodityFormula__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;CorrectionRight__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;DistributorName__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;AddressFormula__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:2},
 {&quot;FieldName&quot;:&quot;Market__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
