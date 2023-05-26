@@ -19,9 +19,7 @@ public with sharing class HDT_UTL_CaseProcessTst {
         HDT_UTL_DataFactoryTst.pClickCasePhase();
 
         String rtName = 'HDT_RT_AlertDisassociazioneUtenteWeb';
-        String rtConsAnomIdrName = 'HDT_RT_ConsumoAnomaloIdrico';
         String rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtName).getRecordTypeId();
-        String rtConsAnomIdrId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(rtConsAnomIdrName).getRecordTypeId();
 
         List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
         List<Order> ordList = HDT_UTL_DataFactoryTst.createOrder(1, true, accList[0].id, 'Bozza');
@@ -64,9 +62,6 @@ public with sharing class HDT_UTL_CaseProcessTst {
 
 
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Da Inviare', 'Bozza', rtId, rtName,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Documentazione validata', 'Fuga da Gestire - In attesa validazione', rtConsAnomIdrId, rtConsAnomIdrName,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Documentazione incompleta', 'Fuga da Gestire - In attesa validazione', rtConsAnomIdrId, rtConsAnomIdrName,'A','','','');
-        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Documentazione da verificare sul posto', 'Fuga da Gestire - In attesa validazione', rtConsAnomIdrId, rtConsAnomIdrName,'A','','','');
         update caseList;
 
         Case nonReqContr = new Case();
@@ -74,14 +69,6 @@ public with sharing class HDT_UTL_CaseProcessTst {
         nonReqContr.RelatedCase__c = caseList[0].Id;
         nonReqContr.Type = 'Contratto Non Richiesto';
         insert nonReqContr;
-
-
-        Case caseConsAnomIdr = new Case();
-        caseConsAnomIdr.recordTypeId = rtConsAnomIdrId;
-        caseConsAnomIdr.Type = 'Consumo Anomalo Idrico';
-        caseConsAnomIdr.Cluster__c = 'Segnalazioni';
-        caseConsAnomIdr.Phase__c = 'Fuga da Gestire - In attesa validazione';
-        insert caseConsAnomIdr;
     }
     
     
@@ -314,6 +301,15 @@ public with sharing class HDT_UTL_CaseProcessTst {
 
     //START MODIFICA marco.arci@webresults.it
     @isTest
+    private static void getMetadataComplaintsTest(){
+        Test.startTest();
+            List<HDT_EnvironmentalComplaintsRec__mdt> metas = HDT_QR_ProcessPostSales.getSecondLevelOptions();
+        Test.stopTest();
+        Assert.isFalse(metas.isEmpty(), 'Non sono stati trovati meta');
+        
+    }
+
+    @isTest
     private static void createActivityFromContractTest(){
         Test.startTest();
             List<Account> accList = [SELECT id FROM Account];
@@ -363,99 +359,4 @@ public with sharing class HDT_UTL_CaseProcessTst {
     }
     //END MODIFICA marco.arci@webresults.it
 
-    @isTest
-    private static void updatePhaseConsAnomIdrDocValidata(){
-        
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'updatePhaseConsAnomIdrDocValidata';
-        System.debug(debugString);
-        
-        //SETUP      
-        List<Case> newCasesList = new List<Case>();
-        List<Case> oldCasesList = [Select Id, Status, Phase__c, Type from Case where Type = 'Consumo Anomalo Idrico'];
-        newCasesList.add(oldCasesList[0]);
-        newCasesList[0].Phase__c = 'Documentazione validata';
-        update newCasesList;
-        
-        //TESTING
-        Test.startTest();
-        Try{
-            
-            HDT_UTL_CaseProcess.closeChildActivityGestioneBackOffice(newCasesList, oldCasesList);
-
-
-        }catch(DmlException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }        
-        Test.stopTest();
-        
-        //ASSERTS
-        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
-        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
-
-    }
-
-    @isTest
-    private static void updatePhaseConsAnomIdrDocIncompleta(){
-        
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'updatePhaseConsAnomIdrDocValidata';
-        System.debug(debugString);
-        
-        //SETUP      
-        List<Case> newCasesList = new List<Case>();
-        List<Case> oldCasesList = [Select Id, Status, Phase__c, Type from Case where Type = 'Consumo Anomalo Idrico'];
-        newCasesList.add(oldCasesList[0]);
-        newCasesList[0].Phase__c = 'Documentazione incompleta';
-        update newCasesList;
-        
-        //TESTING
-        Test.startTest();
-        Try{
-            
-            HDT_UTL_CaseProcess.closeChildActivityGestioneBackOffice(newCasesList, oldCasesList);
-
-
-        }catch(DmlException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }        
-        Test.stopTest();
-        
-        //ASSERTS
-        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
-        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
-
-    }
-
-    @isTest
-    private static void updatePhaseConsAnomIdrDocDaVerificare(){
-        
-        //DEBUG
-        String debugString = TEST_NAME + ' - ' + 'updatePhaseConsAnomIdrDocValidata';
-        System.debug(debugString);
-        
-        //SETUP      
-        List<Case> newCasesList = new List<Case>();
-        List<Case> oldCasesList = [Select Id, Status, Phase__c, Type from Case where Type = 'Consumo Anomalo Idrico'];
-        newCasesList.add(oldCasesList[0]);
-        newCasesList[0].Phase__c = 'Documentazione da verificare sul posto';
-        update newCasesList;
-        
-        //TESTING
-        Test.startTest();
-        Try{
-            
-            HDT_UTL_CaseProcess.closeChildActivityGestioneBackOffice(newCasesList, oldCasesList);
-
-
-        }catch(DmlException e) {
-            System.debug('The following exception has occurred: ' + e.getMessage());
-        }        
-        Test.stopTest();
-        
-        //ASSERTS
-        System.assert(newCasesList != null, 'Attenzione, la lista non può essere vuota!');
-        System.assert(oldCasesList != null, 'Attenzione, la lista non può essere vuota!');
-
-    }
 }

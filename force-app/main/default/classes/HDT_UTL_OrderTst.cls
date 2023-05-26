@@ -81,19 +81,9 @@ public with sharing class HDT_UTL_OrderTst {
             servPointList[0].UseCategory__c = '001-Uso cottura cibi';
             servPointList[0].Vat__c = '02';
             servPointList[0].ExciseEle__c = 'E_IE_M04';
-            //servPointList[0].ExciseGas__c = '';
-            //servPointList[0].SapContractStatus__c = '';
             update servPointList;
 
             List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList2[0].Id);
-            /*billingProfileList[0].InvoicingStreetName__c = 'Roma';
-            billingProfileList[0].InvoicingStreetNumber__c = '15';
-            billingProfileList[0].InvoicingStreetNumberExtension__c = '20100 ITALIA';
-            billingProfileList[0].InvoicingCity__c = 'ROMA';
-            billingProfileList[0].InvoicingProvince__c = 'RM';
-            billingProfileList[0].InvoicingPostalCode__c = '10190';
-            billingProfileList[0].InvoicingCountry__c = 'ITALIA';*/
-            //update billingProfileList;
 
             List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
             productList[0].Family = 'Offerta commerciale';
@@ -138,24 +128,6 @@ public with sharing class HDT_UTL_OrderTst {
             ordList[2].CommercialProduct__c = 'Hera Impronta Zero Casa Luce 24 + AC';
             ordList[2].SupplyType__c = 'Domestico';
             ordList[2].Phase__c = 'Da Inviare';
-            /*ordList[0].Username__c = '';
-            ordList[0].SwitchOutDate__c = Date.today();
-            ordList[0].Vat__c = 'Iva 22% (Cod. 02)';
-            ordList[0].ExciseGas__c = '';
-            ordList[0].ExciseEle__c = 'Imposta usi domestici';
-            ordList[0].ContractSigned__c = false;
-            ordList[0].SignedDate__c = Date.today();
-            ordList[0].SignatureMethod__c = 'Cartacea';
-            ordList[0].DocSendingMethod__c = 'Stampa Cartacea';
-            ordList[0].Step__c = 2;
-            ordList[0].PowerAvailable__c = 251;
-            ordList[0].UseTypeEnergy__c = 'Ordinaria (Perm)';
-            ordList[0].Deliberation__c = 'In Delibera';
-            ordList[0].RequestOption__c = 'AEEG Op MTA2 >100 <=500-E_MTA2';
-            ordList[0].WaiverRightAfterthought__c = 'Si';
-            ordList[0].MaxAfterthoughtDate__c = Date.today();
-            ordList[0].PreviousTrader__c = '';
-            ordList[0].VolturaThirdTrader__c = false;*/        
             update ordList;
 
             List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, ordList[0].id, servPointList[0].id, productList[0].id, priceBookEntryList[0].id);
@@ -180,14 +152,13 @@ public with sharing class HDT_UTL_OrderTst {
             ordList[0].SBQQ__Quote__c = quoteList[0].Id;      
             update ordList;
 
-            List<RateCategory__c> myCatList = HDT_UTL_DataFactoryTst.createRateCategoty(1, true);
-            myCatList[0].Commodity__c =  'Energia Elettrica';
+            List<RateCategory__c> myCatList = HDT_UTL_DataFactoryTst.createRateCategoty(1, false);
+            myCatList[0].Commodity__c = 'Energia Elettrica';
             myCatList[0].ProductName__c = 'Hera Impronta Zero Casa Luce 24 + AC';
             myCatList[0].DistributorCode__c = '13D1900000';
-            myCatList[0].Commodity__c = 'Energia Elettrica';
             myCatList[0].Fornitura__c = 'Domestico';
             myCatList[0].operatore__c = 'Uguale';
-            update myCatList;
+            insert myCatList;
 
             String rtCase = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_VolturaTecnica').getRecordTypeId();        
             List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, true, accList2[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
@@ -245,10 +216,14 @@ public with sharing class HDT_UTL_OrderTst {
     static void calculateRateCategoryNATest(){
 
         Order myOrder = [SELECT Id FROM Order where Name = 'testOrderName0'];
-        RateCategory__c myRatCat = [Select Id, operatore__c from RateCategory__c];
 
-        myRatCat.operatore__c = 'N/A';
-        update myRatCat;
+        List<RateCategory__c> myCatList = HDT_UTL_DataFactoryTst.createRateCategoty(1, false);
+        myCatList[0].Commodity__c = 'Energia Elettrica';
+        myCatList[0].ProductName__c = 'Hera Impronta Zero Casa Luce 24 + AC';
+        myCatList[0].DistributorCode__c = '13D1900000';
+        myCatList[0].Fornitura__c = 'Domestico';
+        myCatList[0].operatore__c = 'N/A';
+        insert myCatList;
 
         Test.startTest();
         Boolean result = HDT_UTL_Order.calculateRateCategory(myOrder);
@@ -262,10 +237,14 @@ public with sharing class HDT_UTL_OrderTst {
     static void calculateRateCategoryNotResOperatoreUgualeTest(){
 
         Order myOrder = [SELECT Id FROM Order where Name = 'testOrderName0'];
-        RateCategory__c myRatCat = [Select Id, operatore__c, ProductName__c from RateCategory__c];
 
-        myRatCat.ProductName__c = 'N/A';
-        update myRatCat;
+        List<RateCategory__c> myCatList = HDT_UTL_DataFactoryTst.createRateCategoty(1, false);
+        myCatList[0].Commodity__c = 'Energia Elettrica';
+        myCatList[0].ProductName__c = 'N/A';
+        myCatList[0].DistributorCode__c = '13D1900000';
+        myCatList[0].Fornitura__c = 'Domestico';
+        myCatList[0].operatore__c = 'Uguale';
+        insert myCatList;
 
         Test.startTest();
         Boolean result = HDT_UTL_Order.calculateRateCategory(myOrder);
@@ -300,11 +279,14 @@ public with sharing class HDT_UTL_OrderTst {
     static void calculateRateCategoryNotResNATest(){
 
         Order myOrder = [SELECT Id FROM Order where Name = 'testOrderName0'];
-        RateCategory__c myRatCat = [Select Id, operatore__c, ProductName__c from RateCategory__c];
 
-        myRatCat.ProductName__c = 'N/A';
-        myRatCat.operatore__c = 'N/A';
-        update myRatCat;
+        List<RateCategory__c> myCatList = HDT_UTL_DataFactoryTst.createRateCategoty(1, false);
+        myCatList[0].Commodity__c = 'Energia Elettrica';
+        myCatList[0].DistributorCode__c = '13D1900000';
+        myCatList[0].Fornitura__c = 'Domestico';
+        myCatList[0].ProductName__c = 'N/A';
+        myCatList[0].operatore__c = 'N/A';
+        insert myCatList;
 
         Test.startTest();
         Boolean result = HDT_UTL_Order.calculateRateCategory(myOrder);

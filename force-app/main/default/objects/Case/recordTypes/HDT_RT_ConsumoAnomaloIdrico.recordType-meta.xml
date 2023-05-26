@@ -1494,17 +1494,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>CaseSource__c</picklist>
-        <values>
-            <fullName>Gestore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Utente</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>Category__c</picklist>
         <values>
             <fullName>Accedi</fullName>
@@ -2578,7 +2567,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -3080,7 +3069,7 @@
             <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
         <values>
@@ -8119,7 +8108,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -8554,10 +8543,6 @@
         </values>
         <values>
             <fullName>Modifiche Anagrafiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9135,7 +9120,7 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>InquiryOutcome__c</picklist>
         <values>
@@ -9246,7 +9231,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- <picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Appuntamento agente</fullName>
@@ -9324,7 +9309,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -11791,7 +11776,8 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+    <!-- Commentata picklist esclusa da CI/CD -->
+    <!-- <picklistValues>
         <picklist>Station__c</picklist>
         <values>
             <fullName>ALTOFE_SP_ Goro</fullName>
@@ -12645,7 +12631,7 @@
             <fullName>Team 1</fullName>
             <default>false</default>
         </values>
-    </picklistValues>
+    </picklistValues> -->
     <picklistValues>
         <picklist>Subprocess__c</picklist>
         <values>

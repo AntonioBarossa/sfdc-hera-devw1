@@ -338,8 +338,11 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('AF_BOC_IDR')!=null && !String.isBlank(mapRes.get('AF_BOC_IDR'))){         
             spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
         }
-        if(mapRes.get('TFRS000000')!=null && !String.isBlank(mapRes.get('TFRS000000'))){         
-            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('TFRS000000')));
+        if(mapRes.get('SUP_DICH')!=null && !String.isBlank(mapRes.get('SUP_DICH'))){         
+            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('SUP_DICH')));
+        }
+        if(mapRes.get('SUP_RILEVANTE')!=null && !String.isBlank(mapRes.get('SUP_RILEVANTE'))){         
+            spNew.AreaRelevantForCalculation__c  = integer.valueOf(Decimal.valueOf(mapRes.get('SUP_RILEVANTE')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
             String mercato =  mapRes.get('MERCATO').containsIgnoreCase('STGM') ? 'STGM' : mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();

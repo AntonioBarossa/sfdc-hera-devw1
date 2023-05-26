@@ -95,6 +95,16 @@
                 <default>false</default>
                 <label>Data Attivazione Contratto SAP</label>
             </value>
+            <value>
+                <fullName>ReadingCustomerDate__c</fullName>
+                <default>false</default>
+                <label>Data Lettura Cliente</label>
+            </value>
+            <value>
+                <fullName>EffectiveDate</fullName>
+                <default>false</default>
+                <label>Data iniziale ordine</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

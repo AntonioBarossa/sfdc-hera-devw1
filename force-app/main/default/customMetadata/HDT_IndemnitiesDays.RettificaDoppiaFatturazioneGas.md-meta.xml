@@ -12,7 +12,7 @@
     </values>
     <values>
         <field>ComputeType__c</field>
-        <value xsi:type="xsd:string">W</value>
+        <value xsi:type="xsd:string">S</value>
     </values>
     <values>
         <field>ObjectName__c</field>
@@ -28,6 +28,6 @@
     </values>
     <values>
         <field>SuspensionDays__c</field>
-        <value xsi:type="xsd:int">0</value>
+        <value xsi:type="xsd:int">20</value>
     </values>
 </CustomMetadata>

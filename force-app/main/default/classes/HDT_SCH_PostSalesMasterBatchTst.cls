@@ -15,7 +15,7 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
         
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(3, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(4, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, ordList[0].id);
         caseList[0].BillingProfile__c = billingProfileList[0].Id;
         caseList[0].QuotationValidityDate__c = Date.today()-5;
         caseList[0].Cluster__c = 'Verifiche';
@@ -32,8 +32,18 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         caseList[2].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
         caseList[2].Type = 'Contratto Non Richiesto';
         caseList[2].Order__c = ordList[0].Id;
+
+        caseList[3].RecordTypeId  = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_PianoRateizzazione').getRecordTypeId();
+        caseList[3].Type = 'Piano Rateizzazione';
+        caseList[3].Phase__c = 'Bozza';
+        caseList[3].Commodity__c = 'Ambiente';
+        caseList[3].MandatoryAttachments__c = 'Test';
+
         insert caseList;
         
+        
+        Datetime oneMonthAgo = Datetime.now().addDays(-40);
+        Test.setCreatedDate(caseList[3].Id, oneMonthAgo);
         
         HDT_UTL_Constants constantsUtl = new HDT_UTL_Constants();
         String rtName = 'HDT_RT_VerificheGas';
@@ -54,6 +64,7 @@ public class HDT_SCH_PostSalesMasterBatchTst {
         insert kArt;
         HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'30', 'PostSales');
         HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'30', 'Autolettura');
+        HDT_UTL_DataFactoryTst.createDaysToExpiration(1, true,'90', 'PianoRateizzazioneTari');
 
     }
 

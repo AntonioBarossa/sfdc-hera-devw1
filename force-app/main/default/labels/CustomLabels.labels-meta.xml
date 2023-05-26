@@ -798,6 +798,20 @@
         <value>00D58000000KR1c!AQgAQJyKK5vLgfE7PGN5RYGw3eh9HuBHBHFbIyFxHlcCa6l1Ju40yJgft9qRroF9NU.cn0RPU_E7XFTNiK5RAETcWY1.6G5y</value>
     </labels>
     <labels>
+        <fullName>HDT_EnableDisableCpq</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_EnableDisableCpq</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
+        <fullName>HDT_HideMailNonDisp</fullName>
+        <language>en_US</language>
+        <protected>false</protected>
+        <shortDescription>HDT_HideMailNonDisp</shortDescription>
+        <value>Y</value>
+    </labels>
+    <labels>
         <fullName>ObjectNotAllowedForCertification</fullName>
         <categories>SendCertificationRequest</categories>
         <language>en_US</language>

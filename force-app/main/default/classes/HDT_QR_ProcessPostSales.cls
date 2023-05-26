@@ -169,4 +169,18 @@ public with sharing class HDT_QR_ProcessPostSales {
         ];
     }
 
+    @AuraEnabled(cacheable=true)
+    public static List<HDT_EnvironmentalComplaintsRec__mdt> getSecondLevelOptions(){
+        list<HDT_EnvironmentalComplaintsRec__mdt> pickoptions = [
+                SELECT Value__c
+                FROM HDT_EnvironmentalComplaintsRec__mdt 
+                WHERE 
+                FieldApiName__c = 'SecondLevelComplaintClassification__c'
+                AND Commodity__c = 'Ambiente'
+                WITH SECURITY_ENFORCED
+                Order By Value__c
+            ];
+        return pickoptions;    
+    }
+
 }

@@ -1103,6 +1103,26 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>Order.AgriculturalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IndustrialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ZootechnicalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>Order.AnnualTARIPayment__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
@@ -34957,6 +34977,11 @@
 		<field>MandatoryAttachments__c.ProductDescription__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.ServiceProduct__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>MandatoryAttachments__c.SubProcessType__c</field>
@@ -35847,7 +35872,7 @@
         <layout>SalesforceCustomer__x-Cliente Salesforce Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SalesforceDocActivity__x-Attività Documentale Salesforce Layout</layout>
+        <layout>SalesforceDocActivity__x-Attivita Documentale Salesforce Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SalesforceDocSelected__x-Documento Selezionato Salesforce Layout</layout>

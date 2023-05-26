@@ -168,6 +168,7 @@
         <valueSettings>
             <controllingFieldValue>Reclamo Scritto</controllingFieldValue>
             <controllingFieldValue>Richiesta di informazioni</controllingFieldValue>
+            <controllingFieldValue>Richiesta di Rettifica di fatturazione</controllingFieldValue>
             <valueName>Qualità del Servizio</valueName>
         </valueSettings>
         <valueSettings>

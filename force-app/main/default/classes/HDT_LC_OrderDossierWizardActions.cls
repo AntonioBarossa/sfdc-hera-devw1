@@ -603,7 +603,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         if(!sobjToUpdate.isEmpty())
         {
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
     }
@@ -619,7 +622,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
         }
 
-        List<Order> ordersToUpdate = new List<Order>{parentOrderToUpdate};
+        Map<id, Order> ordersToUpdateMap = new map<id, Order>{parentOrderToUpdate.Id => parentOrderToUpdate};
 
         for(Order childOrd : orderQr.getChildOrdersByParentId(orderParentRetreived.Id)){
             if( 'HDT_RT_AgevolazioniAmbiente' == childOrd.RecordType.DeveloperName && childOrd.OrderReference__c != null){
@@ -628,11 +631,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     Surface__c = childOrd.OrderReference__r.Surface__c
                 );
 
-                ordersToUpdate.add(new Order(Id=childOrd.OrderReference__c, BlockOnComputation__c = 'Y'));
-                ordersToUpdate.add( o );
+                ordersToUpdateMap.put(childOrd.OrderReference__c, new Order(Id=childOrd.OrderReference__c, BlockOnComputation__c = 'Y'));
+                ordersToUpdateMap.put( o.Id, o );
             }
         }
-        map<id, Order> ordersToUpdateMap = new map<id, Order>(ordersToUpdate);
         orderSrv.updateRecords(ordersToUpdateMap.values());
     }
 }

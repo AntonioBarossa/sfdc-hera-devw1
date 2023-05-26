@@ -706,35 +706,6 @@ public with sharing class HDT_UTL_CaseProcess {
         }
     }
 
-    public static void closeChildActivityGestioneBackOffice(List<Case> newCaseList, List<Case> oldCaseList){
-        Set<Id> caseIds = new Set<Id>();
-        Map<Id, Case> oldCaseMap = new Map<Id, Case>(oldCaseList);
-        List<wrts_prcgvr__Activity__c> activitiesToUpdate = new List<wrts_prcgvr__Activity__c>();
-        String phaseUpdated = '';
-        for(Case c : newCaseList){
-            if('Consumo Anomalo Idrico'.equalsIgnoreCase(c.Type) && 
-            ((c.Phase__c=='Documentazione validata' && oldCaseMap.get(c.id).Phase__c=='Fuga da Gestire - In attesa validazione') ||
-             (c.Phase__c=='Documentazione incompleta' && oldCaseMap.get(c.id).Phase__c=='Fuga da Gestire - In attesa validazione') ||
-             (c.Phase__c=='Documentazione da verificare sul posto' && oldCaseMap.get(c.id).Phase__c=='Fuga da Gestire - In attesa validazione'))){
-                caseIds.add((ID)c.Id);
-                phaseUpdated = c.Phase__c;
-            }
-        }
-
-        Map<Id, wrts_prcgvr__Activity__c> activitiesMap = new Map<Id, wrts_prcgvr__Activity__c>([SELECT Id, wrts_prcgvr__Status__c, Reason__c FROM wrts_prcgvr__Activity__c WHERE Type__c = 'Gestione Back Office' AND wrts_prcgvr__Status__c = 'Aperta' AND Case__c IN :caseIds WITH SECURITY_ENFORCED]);
-        
-        if(!activitiesMap.isEmpty()){
-            for(wrts_prcgvr__Activity__c act : activitiesMap.values()){
-                act.wrts_prcgvr__Status__c = 'Chiusa';
-                if(phaseUpdated == 'Documentazione incompleta'){
-                    act.Reason__c = 'Documentazione Incompleta';
-                }
-                activitiesToUpdate.add(act);
-            }
-        }
-
-        HDT_UTL_DatabaseService.updateSObject(activitiesToUpdate);
-    }
 
 
 }

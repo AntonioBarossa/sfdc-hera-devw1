@@ -610,6 +610,14 @@
             <fullName>TCP Comune no Int</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>Autorità idrico 655</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Costituzione in mora (REMSI)</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>

@@ -175,17 +175,18 @@ public with sharing class HDT_UTL_GenericSolHandler {
         childOrder.ProcessType__c='Voltura';
         childOrder.RecordTypeId=Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_Voltura').getRecordTypeId();
         childOrder.Type='New';
+        childOrder.VoltureType__c='Ordinaria';
         childOrder.Step__c=3.0;
         childOrder.RealEstateUnit__c=1.0;
         childOrder.Channel__c='Web';
-        childOrder.BillingProfile__c=bp.Id;
-        childOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
+        childOrder.BillingProfile__c=bp?.Id;
+        childOrder.ContractAccountCode__c=bp?.ContractAccountCode__c;
         childOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         childOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
         childOrder.CausalCode__c='MA1';
         childOrder.ProcessCode__c='MA1';
-        parentOrder.BillingProfile__c=bp.Id;
-        parentOrder.ContractAccountCode__c=bp.ContractAccountCode__c;
+        parentOrder.BillingProfile__c=bp?.Id;
+        parentOrder.ContractAccountCode__c=bp?.ContractAccountCode__c;
         parentOrder.Note__c=params.containsKey('note') ? (String)params.get('note') : '';
         parentOrder.PhoneNumber__c=params.containsKey('phoneNumber') ? (String) params.get('phoneNumber') : '';
         List<AccountContactRelation> exitingContacts = voltureChangeQr.getContactInfosByAccountId(contractList[0].AccountId);
@@ -229,19 +230,19 @@ public with sharing class HDT_UTL_GenericSolHandler {
             childOrder.DisconnectibilityType__c=contractList[0].ServicePoint__r.DisconnectibilityType__c;
             childOrder.MarketOrigin__c=contractList[0].ServicePoint__r.MarketOrigin__c;
 
-            childOrder.BillSendMode__c=bp.BillSendingMethod__c;
-            childOrder.InvoiceEmailAddress__c=bp.InvoiceEmailAddress__c;
-            childOrder.InvoiceCertifiedEmailAddress__c=bp.InvoiceCertifiedEmailAddress__c;
-            childOrder.SendCertifiedEmailConsentDate__c=bp.SendCertifiedEmailConsentDate__c;
-            childOrder.DivergentSubject__c=bp.DivergentSubject__c;
-            childOrder.BillingCity__c=bp.InvoicingCity__c;
-            childOrder.BillingCountry__c=bp.InvoicingCountry__c;
-            childOrder.BillingPlace__c=bp.InvoicingPlace__c;
-            childOrder.BillingProvince__c=bp.InvoicingProvince__c;
-            childOrder.BillingStreetName__c=bp.InvoicingStreetName__c;
-            childOrder.BillingStreetNumber__c=bp.InvoicingStreetNumber__c;
-            childOrder.BillingPostalCode__c=bp.InvoicingPostalCode__c;
-            childOrder.BillingCityCode__c=bp.InvoicingCityCode__c;
+            childOrder.BillSendMode__c=bp?.BillSendingMethod__c;
+            childOrder.InvoiceEmailAddress__c=bp?.InvoiceEmailAddress__c;
+            childOrder.InvoiceCertifiedEmailAddress__c=bp?.InvoiceCertifiedEmailAddress__c;
+            childOrder.SendCertifiedEmailConsentDate__c=bp?.SendCertifiedEmailConsentDate__c;
+            childOrder.DivergentSubject__c=bp?.DivergentSubject__c;
+            childOrder.BillingCity__c=bp?.InvoicingCity__c;
+            childOrder.BillingCountry__c=bp?.InvoicingCountry__c;
+            childOrder.BillingPlace__c=bp?.InvoicingPlace__c;
+            childOrder.BillingProvince__c=bp?.InvoicingProvince__c;
+            childOrder.BillingStreetName__c=bp?.InvoicingStreetName__c;
+            childOrder.BillingStreetNumber__c=bp?.InvoicingStreetNumber__c;
+            childOrder.BillingPostalCode__c=bp?.InvoicingPostalCode__c;
+            childOrder.BillingCityCode__c=bp?.InvoicingCityCode__c;
             childOrder.VAT__c='Iva 10% (Cod. 01)';
             List<OrderItem> ois=generateOrderItem(contractList[0],childOrder,params);
             HDT_UTL_DatabaseService.insertSObject(ois);
@@ -348,6 +349,36 @@ public with sharing class HDT_UTL_GenericSolHandler {
                 AmministrazioneSottotipologiaUso__c sottoTipologia=HDT_SRV_DataEnrichmentPostSales.handleSubType(childOrder.SalesCompany__c,offertaCommercialeCode);
                 childOrder.IntendedUse__c=sottoTipologia.IntendedUse__c;
                 childOrder.UseSubCategory__c=sottoTipologia.SottotipologiaUso__c;
+                String tempUseSubCategory=String.isNotBlank(childOrder.UseSubCategory__c) ? childOrder.UseSubCategory__c.toLowerCase():'';
+                switch on tempUseSubCategory{
+                    when 'uso agricolo e zootecnico'{
+                        childOrder.ZootechnicalHousingUnit__c=1.0;
+                    }
+                    when 'uso pubblico non disalimentabile','altri usi','uso pubblico disalimentabile'{
+                        childOrder.NotDomesticHousingUnit__c=1.0;
+                    }
+                    when 'uso artigianale e commerciale'{
+                        childOrder.CommercialHousingUnit__c=1.0;
+                    }
+                    when 'uso industriale'{
+                        childOrder.IndustrialHousingUnit__c=1.0;
+                    }
+                    when 'uso domestico non residente'{
+                        childOrder.NotResidentDomesticHousingUnit__c=1.0;
+                    }
+                    when 'uso domestico residente'{
+                        childOrder.ResidentDomesticHousingUnit__c=1.0;
+                    }
+                    when else {
+                        childOrder.AgriculturalHousingUnit__c=1.0;
+                        childOrder.CommercialHousingUnit__c=1.0;
+                        childOrder.IndustrialHousingUnit__c=1.0;
+                        childOrder.NotDomesticHousingUnit__c=1.0;
+                        childOrder.NotResidentDomesticHousingUnit__c=1.0;
+                        childOrder.ResidentDomesticHousingUnit__c=1.0;
+                        childOrder.ZootechnicalHousingUnit__c=1.0;
+                    }
+                }
             }
 
         }
@@ -482,52 +513,4 @@ public with sharing class HDT_UTL_GenericSolHandler {
 
         return companyCode;
     }
-
-    /*public static Map<String,String> amendContract(String contractNumber){
-        Map<String,String> returnMap = new Map<String,String>();
-        List<Contract> contractList = getContractByNumber(contractNumber);
-        Id contractId = contractList[0].Id;
-        String quoteJson = SBQQ.ServiceRouter.load('SBQQ.ContractManipulationAPI.ContractAmender', contractId, null);
-        Map<String,Object> parsedQuote = (Map<String,Object>) JSON.deserializeUntyped(quoteJson);
-        Map<String, Object> recordObj = (Map<String, Object>) parsedQuote.get('record');
-        String quoteId = (String) recordObj.get('Id');
-        String opportunityId = (String) recordObj.get('SBQQ__Opportunity2__c');
-        returnMap.put('quoteId', quoteId);
-        returnMap.put('opportunityId', opportunityId);
-        returnMap.put('contractId', contractId);
-        return returnMap;
-    }*/
-
-    /*public static void updateOpportunityQuote( Map<String,String> params){
-        Opportunity opp = new Opportunity();
-        opp.Sale__c = params.get('saleId');
-        opp.Id = params.get('opportunityId');
-        HDT_UTL_DatabaseService.updateSObject(opp);
-
-        SBQQ__Quote__c quoteRecord = new SBQQ__Quote__c();
-        quoteRecord.Id = params.get('quoteId');
-        quoteRecord.Sale__c = params.get('saleId');
-        quoteRecord.ContractReference__c = params.get('contractId');
-        quoteRecord.IntegrationId__c = params.get('integrationId');
-        HDT_UTL_DatabaseService.updateSObject(quoteRecord);
-    }
-
-    public static String createServiceItem(Map<String,String> params){
-        String recordId;
-        SaleServiceItem__c serviceItem = new SaleServiceItem__c();
-        serviceItem.Opportunity__c = params.get('opportunityId');
-        serviceItem.Quote__c = params.get('quoteId');
-        serviceItem.ServicePoint__c = params.get('servicePointId');
-        HDT_UTL_DatabaseService.insertSObject(serviceItem);
-        recordId = serviceItem.Id;
-        return recordId;
-    }
-
-    public static String createAnalisiConsumiLine(Map<String,String> params){
-        String recordId;
-        HDT_QR_GenericQuery queryClass = new HDT_QR_GenericQuery();
-        String conditions = 'Name = \''+params.get('serviceRequest')+'\'';
-        SBQQ__Quote__c quoteRecord = HDT_QR_GenericQuery.getGenericRecords('Id','SBQQ__Quote__c',conditions);
-        return recordId;
-    }*/
 }

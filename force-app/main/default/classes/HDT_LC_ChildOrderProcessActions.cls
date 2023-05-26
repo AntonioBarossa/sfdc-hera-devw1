@@ -644,6 +644,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
         return fixedFeeExclVat == null ? null : fixedFeeExclVat*(1+vatNumber);
     }
 
+    @TestVisible
     private static void setVasProductField(Order ordToUpdate,Order originalOrder){
         Id contractId = originalOrder.ContractReference__c;
         Id servicePointId = originalOrder.ServicePoint__c;

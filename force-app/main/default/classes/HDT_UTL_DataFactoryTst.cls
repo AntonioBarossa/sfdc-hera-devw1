@@ -2917,7 +2917,7 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		for (Integer i=0; i<amount; i++){
 
 			CS_DaysToExpiration__c exp = new CS_DaysToExpiration__c(
-				Name = 'Vendita',
+				Name = type,
 				NumberOfDays__c = numberOfDays,
 				Type__c = type
 			);

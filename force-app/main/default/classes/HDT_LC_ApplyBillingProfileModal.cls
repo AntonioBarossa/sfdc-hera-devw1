@@ -94,7 +94,9 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         }
         if(!sobjToUpdate.isEmpty())
         {
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
         /*
@@ -160,7 +162,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         AND 
         (
             (
-                SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura')
+                SBQQ__Product__r.Name IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura TLR','Punto Fornitura')
                 AND ( SBQQ__RequiredBy__r.PaymentMode__c = :paymentMethod  OR SBQQ__RequiredBy__r.PaymentMode__c = NULL)
                 AND ( SBQQ__RequiredBy__r.SendingBillMode__c = :sendingBillMode OR SBQQ__RequiredBy__r.SendingBillMode__c = NULL)
             )
@@ -178,7 +180,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                     AND (SBQQ__Quote__r.AmendmentAllowed__c = null OR SBQQ__Quote__r.AmendmentAllowed__c = false)
                     )
                 )
-                AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura','Punto Fornitura Ambiente')
+                AND SBQQ__Product__r.Name NOT IN ('POD', 'PDR','Punto Fornitura Acqua','Punto Fornitura TLR','Punto Fornitura','Punto Fornitura Ambiente')
                 AND SBQQ__ProductFamily__c IN('VAS Fatturabili','VAS Prodotto','VAS Servizio')
             )
         )
@@ -187,7 +189,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
         ORDER BY CreatedDate ASC];
 
         for(SBQQ__QuoteLine__c quoteLine : quoteLines){
-            if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua')){
+            if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura Acqua') || quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura TLR') ){
                 // Caso del cambio offerta la riga non è selezionabile
                 if('Attivo'.equalsIgnoreCase(quoteLine.SBQQ__Quote__r.ContractReference__r.Status) && 
                     quoteLine.SBQQ__Quote__r.SBQQ__Account__c == quoteLine.SBQQ__Quote__r.ContractReference__r.AccountId ){
@@ -197,6 +199,11 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
                 if(quoteLine.ServicePoint__c == null){
                     continue;
                 }
+
+               if(quoteLine.SBQQ__Product__r.Name.equalsIgnoreCase('Punto Fornitura TLR')){
+						HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
+						quoteLineToApply.add(singleApply);
+				}
 
                 HDT_WRP_QuoteLineWrp singleApply = new HDT_WRP_QuoteLineWrp(quoteLine);
                 singleApply.isDueThirtyDays = 'Si';
@@ -232,7 +239,7 @@ public inherited sharing class HDT_LC_ApplyBillingProfileModal {
     {
         public HDT_WRP_QuoteLineWrp(SBQQ__QuoteLine__c quoteLine)
         {
-            Boolean isVas = quoteLine.SBQQ__ProductFamily__c.containsIgnoreCase('Vas') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi');
+            Boolean isVas = quoteLine.SBQQ__ProductFamily__c.containsIgnoreCase('Vas') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi') || quoteLine.SBQQ__ProductFamily__c.equalsIgnoreCase('Analisi Consumi TLR');
 
             this.id = isVas ? quoteLine.Id : quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__c : quoteLine.Id;
             this.name = isVas ? quoteLine.Name : quoteLine.SBQQ__RequiredBy__c != null ? quoteLine.SBQQ__RequiredBy__r.Name : quoteLine.Name;

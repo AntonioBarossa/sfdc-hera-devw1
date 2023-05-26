@@ -456,7 +456,7 @@ import * as rateCategories from './hdtRateCategories.js';
                 || this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
                 || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt',
                 data: [
-                new fieldData('Disalimentabilità','Disconnectable__c', this.typeVisibility('both'), false, false, '',''),
+                new fieldData('Disalimentabilità','Disconnectable__c', this.typeVisibility('both'), false, true, '',''),
                 new fieldData('Categoria disalimentabilità','DisconnectibilityType__c', this.typeVisibility('ele') || this.typeVisibility('gas'), false, false, '',''),
                 new fieldData('Uso energia','UseTypeEnergy__c', this.typeVisibility('gas') || this.typeVisibility('ele'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), !(this.order.RecordType.DeveloperName !== 'HDT_RT_CambioOfferta' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchIn' && this.order.RecordType.DeveloperName !== 'HDT_RT_SwitchInVolturaTecnica'), '',''),
                 new fieldData('Attivazione Anticipata','WaiverRightAfterthought__c', this.typeVisibility('both') && this.order.RecordType.DeveloperName === 'HDT_RT_SwitchIn' && this.order.Account.RecordType.DeveloperName === 'HDT_RT_Residenziale', (this.order.ProcessType__c == 'Switch in Ripristinatorio' || this.loginChannel == 'SPORTELLO') && !this.isNoDayAfterthought, this.isNoDayAfterthought , '',''),
@@ -496,7 +496,6 @@ import * as rateCategories from './hdtRateCategories.js';
                 new fieldData('','PayPurification__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','PaySewer__c', this.typeVisibility('acqua'), false, true, '',''),
                 new fieldData('','ProcessCode__c', this.typeVisibility('acqua'), false, true, '',''),
-                new fieldData('','BonusDeliveryMode__c', this.typeVisibility('acqua'), false, false, '',''),
                 new fieldData('','RealEstateUnit__c', this.typeVisibility('acqua') && ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' || this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione' ) , false, false, '','',
                 function(event){
                     checkHousingUnitRateCategory(event.target.value, this.order.RateCategory__c );

@@ -1042,6 +1042,13 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						}else{
 							value = HDT_UTL_DocumentalManagement.getValueFromObject(inputs,singleRecord,i,formParams);
 							value = HDT_UTL_DocumentalManagement.removeSpecialChar(value);
+							/**TK 977805C - 'mailnondisponibile@acquirenteunico.it' non deve visualizzarsi nel plico contrattuale */			
+							if(Label.HDT_HideMailNonDisp.equalsIgnoreCase('Y') 
+							&& ((singleRecord.field1 != null && singleRecord.field1.equalsIgnoreCase('Email__c')) || (singleRecord.field2 != null && singleRecord.field2.equalsIgnoreCase('Email__c'))) 
+							&& 'mailnondisponibile@acquirenteunico.it'.equalsIgnoreCase(value))
+							{
+								value = '';
+							}
 						}
 						if(value == '' && defaultVal != null && defaultVal != ''){
 							if(defaultVal == 'sysdate'){
