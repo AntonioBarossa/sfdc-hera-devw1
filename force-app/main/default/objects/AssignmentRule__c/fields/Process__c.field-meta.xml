@@ -255,6 +255,11 @@
                 <label>Contenitore Morosità</label>
             </value>
             <value>
+                <fullName>Contenitore Reclami</fullName>
+                <default>false</default>
+                <label>Contenitore Reclami</label>
+            </value>
+            <value>
                 <fullName>Contenzioso In Corso</fullName>
                 <default>false</default>
                 <label>Contenzioso In Corso</label>
