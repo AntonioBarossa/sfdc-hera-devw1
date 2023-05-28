@@ -675,6 +675,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Order.Validazione_Documenti</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>FeedItem.ContentNote</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -693,11 +698,6 @@
             <actionName>NewContact</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>4</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Order.Validazione_Documenti</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>NewOpportunity</actionName>
@@ -872,6 +872,10 @@
         <fields>Version__c</fields>
         <fields>Required__c</fields>
         <relatedList>DocumentalEnvelopeAttachment__c.Order__c</relatedList>
+    </relatedLists>
+    <relatedLists>
+        <fields>NAME</fields>
+        <relatedList>LandRegistry__c.Order__c</relatedList>
     </relatedLists>
     <relatedObjects>ContractId</relatedObjects>
     <relatedObjects>AccountId</relatedObjects>
