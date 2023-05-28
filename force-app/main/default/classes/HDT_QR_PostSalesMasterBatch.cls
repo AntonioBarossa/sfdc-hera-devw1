@@ -43,7 +43,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Type,
         Cluster__c,
         DepositPaymentMode__c,
-        SuspensionEndDate__c
+        SuspensionEndDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status
         FROM Case
         WHERE Phase__c = :this.phaseInstallments
         AND Type IN :this.typeSet
@@ -59,7 +62,9 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         EffectiveDate__c,
         Type,
         Cluster__c,
-        Order__c
+        Order__c,
+        RecordType.DeveloperName,
+        Status
         FROM Case
         WHERE Type = :this.nonRequestedContract
         AND Phase__c = : this.phaseInstallments
@@ -84,7 +89,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Type,
         Cluster__c,
         QuotationType__c,
-        QuotationValidityDate__c
+        QuotationValidityDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status
         FROM Case
         WHERE QuotationValidityDate__c < :this.todayDate
         AND (Phase__c = :this.phaseQuotations OR (Phase__c = :this.phaseQuotationsPred AND QuotationType__c = :this.quotationTypePred))
@@ -116,7 +124,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         EffectiveDate__c,
         Order__c,
         QuotationType__c,
-        QuotationValidityDate__c
+        QuotationValidityDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c = : this.autoletturaCase
@@ -135,7 +146,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
             Id,
             Type,
             Phase__c,
-            Cluster__c
+            Cluster__c,
+            Commodity__C,
+            RecordType.DeveloperName,
+            Status
             FROM Case
             WHERE 
             RecordTypeId = :processTypeId
@@ -156,7 +170,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
             Id,
             Type,
             Phase__c,
-            Cluster__c
+            Cluster__c,
+            Commodity__C,
+            RecordType.DeveloperName,
+            Status
             FROM Case
             WHERE 
             RecordTypeId = :processTypeId
@@ -196,7 +213,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         EffectiveDate__c,
         Order__c,
         QuotationType__c,
-        QuotationValidityDate__c
+        QuotationValidityDate__c,
+        Status
         FROM Case
         WHERE Phase__c = :this.bozzaCase
         AND Cluster__c != : this.autoletturaCase
@@ -217,7 +235,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         SupplyCity__c,
         SupplyStreetName__c,
         ServicePoint__c,
-        CreatedDate
+        CreatedDate,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status
         FROM Case
         WHERE Phase__c =: this.phaseInLavorazione
         AND RecordType.DeveloperName IN :this.caseRt
@@ -282,7 +303,10 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         AnnualConsumption__c,
         CaliberAvailable__c,
         CausalCode__c,
-        Order__r.EffectiveDate__c
+        Order__r.EffectiveDate__c,
+        Commodity__C,
+        RecordType.DeveloperName,
+        Status
         FROM Case
         WHERE Type = 'Voltura Tecnica'
         AND Phase__c = 'In attesa Data Decorrenza'
