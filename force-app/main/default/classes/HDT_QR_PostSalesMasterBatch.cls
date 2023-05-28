@@ -66,7 +66,8 @@ public inherited sharing class HDT_QR_PostSalesMasterBatch {
         Order__c,
         RecordType.DeveloperName,
         Status,
-        MandatoryAttachments__c
+        MandatoryAttachments__c,
+        Commodity__c
         FROM Case
         WHERE Type = :this.nonRequestedContract
         AND Phase__c = : this.phaseInstallments
