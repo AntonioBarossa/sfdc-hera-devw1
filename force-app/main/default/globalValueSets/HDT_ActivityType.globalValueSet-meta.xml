@@ -1220,7 +1220,7 @@
     <customValue>
         <fullName>Contattare cliente</fullName>
         <default>false</default>
-        <isActive>false</isActive>
+        <isActive>true</isActive>
         <label>Contattare cliente</label>
     </customValue>
     <customValue>
