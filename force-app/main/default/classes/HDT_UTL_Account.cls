@@ -170,8 +170,9 @@ public with sharing class HDT_UTL_Account {
     
   
     public static void makeRequest( Account acc,Contact cont){
+        if(acc == null) return;
         //Nuova Versione
-        string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
+        //string accountType = Schema.SObjectType.Account.getRecordTypeInfosById().get(acc.RecordTypeId).getDeveloperName();
         List<SiebelCustomer__x> siebelCustomer = new List<SiebelCustomer__x>();
         List<SObject> sobjToUpdate = new List<SObject>();
         /* Setup query filters */
@@ -184,11 +185,11 @@ public with sharing class HDT_UTL_Account {
 
             /* Query account archive */
             String query = 'SELECT Id,OU_NUM__c, X_MARCATURA_CLIENTE__c FROM SiebelCustomer__x WHERE OU_TYPE_CD__c = :category';
-            if(acc.FiscalCode__c != null && acc.FiscalCode__c != '')
+            if(String.isNotBlank(acc.FiscalCode__c))
             {
                 query += ' AND TAX_IDEN_NUM__c = :fiscalCode';
             }
-            if(acc.VATNumber__c != null && acc.VATNumber__c != '')
+            if(String.isNotBlank(acc.VATNumber__c))
             {
                 query += ' AND VAT_REGN_NUM__c = :vatNumber';
             }

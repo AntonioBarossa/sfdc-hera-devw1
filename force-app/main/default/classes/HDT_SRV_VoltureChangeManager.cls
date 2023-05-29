@@ -237,8 +237,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         List<Order> orderListUpdate = new List<Order>();
         List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
         for(Order singleOrder : myOrderList){
-            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
-            && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+            if('Amm. Precheck OK SII'.equalsIgnoreCase(singleOrder.Phase__c) 
+            && ('Switch In'.equalsIgnoreCase(singleOrder.DocumentalProcessType__c) 
             /*|| singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')*/)
             && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();
@@ -302,7 +302,13 @@ public with sharing class HDT_SRV_VoltureChangeManager{
 
         if (response != null ){
             HDT_WRP_VoltureChangeManager.HDT_WRP_Response responseBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_Response( (Map<String, Object>)JSON.deserializeUntyped( response.getBody() ) );
-            return descriptionConstructor(responseBody.prestazione.tipoAttivita, responseBody.prestazione.note);
+            String tipoAttivita = '';
+            String note = '';
+            if (responseBody != null && responseBody.prestazione != null) {
+                tipoAttivita = responseBody.prestazione.tipoAttivita;
+                note = responseBody.prestazione.note;
+            }
+            return descriptionConstructor(tipoAttivita, note);
         }else {
             return 'Errore nella comunicazione Blocco/Sblocco al calcolo';
         }

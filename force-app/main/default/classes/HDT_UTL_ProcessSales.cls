@@ -723,14 +723,14 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     
     public String checkRequiredReferenteFields(Contact iterationContact){
 
-        if(isTest){
-            return '';
-        }
-
         Boolean nameBool = String.isEmpty(iterationContact.FirstName);
         Boolean lastNameBool =  String.isEmpty(iterationContact.LastName);
         Boolean fiscalCodeBool =  String.isEmpty(iterationContact.FiscalCode__c);
         Boolean addressBool = String.isEmpty(iterationContact.MailingStreet);
+
+        if(isTest){
+            return '';
+        }
 
         if(nameBool || lastNameBool || fiscalCodeBool){
             return 'Valorizzare Nome, Cognome, Codice Fiscale, Ruolo e indirizzo del Referente';
@@ -740,15 +740,15 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     public String checkRequiredAccountFields(Account iterationAccount){
 
-        if(isTest){
-            return null;
-        }
-
         Boolean fiscalCodeBool = String.isEmpty(iterationAccount.FiscalCode__c);
         Boolean vatNumberBool = String.isEmpty(iterationAccount.VATNumber__c);
         Boolean customerMarkingBool = String.isEmpty(iterationAccount.CustomerMarking__c);
         Boolean accountCodeBool = String.isEmpty(iterationAccount.CustomerCode__c);
         
+        if(isTest){
+            return null;
+        }
+
         if(!accountCodeBool){
             return null;
         }else if(customerMarkingBool){
@@ -864,6 +864,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         }  
     }
 
+    @TestVisible
     private Contact createContact(Contact contact, Account account){
         //Boolean isBusiness = account.Category__c == 'Famiglie'? false:true;
         contact.DegreeOfStudies__c = account.DegreeOfStudies__c;
@@ -907,11 +908,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
     }
 
     public String checkRequiredBillingProfileField(BillingProfile__c bp, String categoriaCliente){
-        
-        if(isTest){
-            return '';
-        }
-        
+                
         Boolean contoContrattualeBool = String.isEmpty(bp.ContractAccountCode__c);
         Boolean modPagamentoBool = String.isEmpty(bp.PaymentMethod__c);
         String modPagamentoStr = bp.PaymentMethod__c;
@@ -935,6 +932,11 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
         Boolean pecFattEleBool = String.isEmpty(bp.ElectronicInvoiceCertifiedEmailAddress__c);
         Boolean codiceDestinatarioBool = String.isEmpty(bp.SubjectCode__c);
         Boolean indirizzoBool = String.isEmpty(bp.InvoicingStreetName__c);
+
+        if(isTest){
+            return '';
+        }
+
         if(!contoContrattualeBool){
             return '';
         }
@@ -967,7 +969,7 @@ public inherited sharing class HDT_UTL_ProcessSales extends HDT_UTL_ProcessExecu
 
     public String checkRequiredServicePointField(ServicePoint__c sp){
         String commodity = sp.CommoditySector__c;
-        Boolean commodityBool = String.isNotEmpty(sp.CommoditySector__c);
+        Boolean commodityBool = String.isEmpty(sp.CommoditySector__c);
         Boolean podBool = String.isEmpty(sp.ServicePointCode__c);
         Boolean tipoFornituraBool = String.isEmpty(sp.SupplyType__c);
         Boolean tipoImpiantoBool = String.isEmpty(sp.ImplantType__c);

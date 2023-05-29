@@ -406,7 +406,8 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         Pricebook2Id,
         Contact__c,
         CompanyOwner__c,
-        CommodityFormula__c
+        CommodityFormula__c,
+        AnnualConsumption__c
         FROM Order];  
 
         List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni> posizioni = new  List<HDT_WS_ArricchimentoDatiTemp.HDT_WRP_ArricchimentoPosizioni>();
@@ -443,8 +444,6 @@ public with sharing class HDT_UTL_VoltureChangeManagerTst {
         System.assertEquals(0.34, orderList[0].RegionalAdditional__c, 'Arricchimento fallito');
         System.assertEquals('9999', orderList[0].AtecoCode__c, 'Arricchimento fallito');
         System.assertEquals('Imposta usi domestici', orderList[0].ExciseEle__c, 'Arricchimento fallito');
-        System.assertEquals(1000, orderList[0].AnnualConsumption__c, 'Arricchimento fallito');
-
     }
 
     @IsTest

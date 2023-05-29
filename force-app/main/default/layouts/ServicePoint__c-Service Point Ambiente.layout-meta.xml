@@ -71,18 +71,18 @@
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
+                <field>NumberOfTARIMembers__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
                 <field>AreaDeclaredTARI__c</field>
             </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
-                <field>CountFreeWithdraw__c</field>
+                <field>AreaRelevantForCalculation__c</field>
             </layoutItems>
         </layoutColumns>
         <layoutColumns>
-            <layoutItems>
-                <behavior>Readonly</behavior>
-                <field>NumberOfTARIMembers__c</field>
-            </layoutItems>
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>AuthorizedNotToConfer__c</field>
@@ -90,6 +90,10 @@
             <layoutItems>
                 <behavior>Readonly</behavior>
                 <field>MaxFreeWithdrawDate__c</field>
+            </layoutItems>
+            <layoutItems>
+                <behavior>Readonly</behavior>
+                <field>CountFreeWithdraw__c</field>
             </layoutItems>
         </layoutColumns>
         <style>TwoColumnsLeftToRight</style>
@@ -201,11 +205,6 @@
             <sortOrder>2</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>PrintableView</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>9</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
             <actionName>HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>3</sortOrder>
@@ -226,14 +225,29 @@
             <sortOrder>6</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
-            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionName>ServicePoint__c.HDT_GaaView</actionName>
             <actionType>QuickAction</actionType>
-            <sortOrder>7</sortOrder>
+            <sortOrder>16</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>ServicePoint__c.HDT_Vista_Dati_Catastali</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>17</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Clone</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>8</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>PrintableView</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>9</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>10</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
             <actionName>Delete</actionName>
@@ -256,27 +270,18 @@
             <sortOrder>14</sortOrder>
         </platformActionListItems>
         <platformActionListItems>
+            <actionName>HDT_SendCertifiedEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>7</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>RecordShareHierarchy</actionName>
             <actionType>StandardButton</actionType>
             <sortOrder>15</sortOrder>
         </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ServicePoint__c.HDT_GaaView</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>16</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>ServicePoint__c.HDT_Vista_Dati_Catastali</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>17</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>10</sortOrder>
-        </platformActionListItems>
     </platformActionList>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>BillingProfile__c</fields>
         <fields>CommercialProduct__c</fields>
@@ -285,6 +290,8 @@
         <relatedList>Contract.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Phase__c</fields>
         <fields>CASES.TYPE</fields>
@@ -292,6 +299,8 @@
         <relatedList>Case.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>CREATED_DATE</fields>
         <fields>Opportunity__c</fields>
@@ -311,6 +320,8 @@
         <relatedList>OrderItem.ServicePoint__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>MassChangeOwner</excludeButtons>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>RegistryCategory__c</fields>
         <fields>RegistryCityCode__c</fields>

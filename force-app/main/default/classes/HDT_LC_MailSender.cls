@@ -21,4 +21,19 @@ public inherited sharing class HDT_LC_MailSender {
         return HDT_UTL_MailSenderHelper.sendMailHelper(mailStructure);
     }
 
+    @AuraEnabled
+    public static List<ContentDocument> getContentDocs(Id arecordId){
+        return HDT_UTL_MailSenderHelper.getContentDocs(arecordId);
+    }
+
+    @AuraEnabled
+    public static void deletePendingFiles(List<Id> cdIdList){
+        HDT_UTL_MailSenderHelper.deletePendingFiles(cdIdList);
+    }
+
+    @AuraEnabled
+    public static Decimal getContentSizeAttachments(List<Id> cdIdList){
+        return HDT_UTL_MailSenderHelper.getContentSizeAttachments(cdIdList);
+    }
+
 }

@@ -381,7 +381,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-    </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
         <values>
@@ -654,6 +653,10 @@
         </values>
         <values>
             <fullName>CORE PL AZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FEDELTA'</fullName>
             <default>false</default>
         </values>
         <values>

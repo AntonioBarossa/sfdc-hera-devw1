@@ -24,7 +24,7 @@
                                         <div class="slds-size_1-of-1 slds-m-bottom_medium" key={field.FieldName}>
                                             <c-hdt-record-edit-form-input data-id="inputcomponent" data-field={field.FieldName} field={field} density={density} if:true={field.CustomPicklistHandling} record-id={recordId}
                                                                           object-name={objectName} onfieldchanged={handleChange} index={index} process-type={processType} controlling-field={field.ControllingField}
-                                                                          data-controlling-field={field.ControllingField} onfindancestor={searchAncestor}>
+                                                                          data-controlling-field={field.ControllingField} onfindancestor={searchAncestor} retrieve-controlling-field-values={retrieveControllingFieldValues}>
                                             </c-hdt-Record-edit-form-input>
                                             <template if:false={field.CustomPicklistHandling}>
                                                 <template if:false={field.Label}>
@@ -60,7 +60,7 @@
                                         <div class="slds-size_1-of-1 slds-m-bottom_medium" key={field.FieldName}>
                                             <c-hdt-record-edit-form-input data-id="inputcomponent" data-field={field.FieldName} field={field} density={density} if:true={field.CustomPicklistHandling} record-id={recordId}
                                                                           object-name={objectName} onfieldchanged={handleChange} index={index2} process-type={processType} controlling-field={field.ControllingField}
-                                                                          data-controlling-field={field.ControllingField} onfindancestor={searchAncestor}>
+                                                                          data-controlling-field={field.ControllingField} onfindancestor={searchAncestor} retrieve-controlling-field-values={retrieveControllingFieldValues}>
                                             </c-hdt-Record-edit-form-input>
                                             <template if:false={field.CustomPicklistHandling}>
                                                 <template if:false={field.Label}>

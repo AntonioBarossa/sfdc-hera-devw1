@@ -27,6 +27,7 @@ public with sharing class HDT_SRV_SalesHandler {
 
         HDT_QR_Order orderQr = new HDT_QR_Order();
         HDT_SRV_Order orderSrv = new HDT_SRV_Order();
+        HDT_QR_BillingProfile bpQr = new HDT_QR_BillingProfile();
         HDT_WRP_MrrRequest.HDT_WRP_Header header = request.header;
 		Map<String,String> mapRequestFields = new Map<String,String>();
 
@@ -163,8 +164,6 @@ public with sharing class HDT_SRV_SalesHandler {
                             String discardReasonString = String.join((Iterable<String>)discardReasonSet, ' \n');
                             switch on mapRequestFields.get('FASE') {
                                 when 'Ammissibilità KO' {
-                                    
-
                                     ord.DiscardReason__c = String.isNotBlank(discardReasonString) && discardReasonString.length()>255 ? discardReasonString.substring(0,255) : discardReasonString;
                                     ord.CausalCode__c = mapRequestFields.get('CODERR');
                                     //ord.CausalCode__c = mapRequestFields.get('CODERR_AEEG'); campo sostituito
@@ -172,25 +171,11 @@ public with sharing class HDT_SRV_SalesHandler {
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.Description = writeDescription(mapRequestFields.get('ANNOTAZIONI'), oldDescription);
-
-                                    /*
-                                    if((ord.CausalCode__c == '032' || ord.CausalCode__c == '033')
-                                        && (ordRetrieved.ProcessType__c == 'Subentro Gas' 
-                                            || ordRetrieved.ProcessType__c == 'Prima Attivazione In delibera'
-                                            || ordRetrieved.ProcessType__c == 'Prima Attivazione Fuori delibera'
-                                    )){
-                                        ord.TecnicalPhase__c = 'Annullato';
-                                        ord.Status = 'Annullato';
-                                    } */
                                 }
                                 when 'Ammissibilità OK' {
-
-
-
                                     ord.HerokuPracticeCode__c = mapRequestFields.get('COD_PRAT_UTENTE');
                                     ord.DistributorPracticeCode__c = mapRequestFields.get('COD_PRAT_DISTR');
                                     ord.CausalCode__c = mapRequestFields.get('COD_FLUSSO');
-
 
                                     if( mapRequestFields.get('DES_ERR_AEEG') != null) {
                                         ord.DiscardReason__c = HDT_UTL_Accents.removeDiacritics(mapRequestFields.get('DES_ERR_AEEG'));
@@ -589,17 +574,45 @@ public with sharing class HDT_SRV_SalesHandler {
                                             
                                             if(mapRequestFields.get('VKONT') != null) {
                                                 ord.ContractAccountCode__c = mapRequestFields.get('VKONT');
-
-                                                BillingProfile__c billingProfile = new BillingProfile__c();
-                                                billingProfile.Id = ordRetrieved.BillingProfile__c;
-                                                billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
-                                                
-                                                HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
-                                                try{
-                                                    billingProfileSrv.updateRecord(billingProfile);
-                                                }
-                                                catch(Exception e){
-                                                    throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile, VKONT Already not Unique - '+e.getMessage());
+                                                //check if BP already exist
+                                                //if not exist update BP related to the Order
+                                                //if exist update Order with correct BP
+                                                if(String.isNotBlank(ordRetrieved.BillingProfile__c)){
+                                                    BillingProfile__c billingProfile = new BillingProfile__c();
+                                                    billingProfile.Id = ordRetrieved.BillingProfile__c;
+                                                    billingProfile.ContractAccountCode__c = mapRequestFields.get('VKONT');
+                                                    HDT_SRV_BillingProfile billingProfileSrv = new HDT_SRV_BillingProfile();
+                                                    try{
+                                                        billingProfileSrv.updateRecord(billingProfile);
+                                                    }
+                                                    catch(Exception e){
+                                                        //if exist BP replace reference on Order
+                                                        String error = e.getMessage();
+                                                        if(String.isNotBlank(error) && error.containsIgnoreCase('duplicates value')){
+                                                            BillingProfile__c bp  = bpQr.getRecordByContractAccount(mapRequestFields.get('VKONT'));
+                                                            if(bp != null){
+                                                                ord.BillingProfile__c = bp.Id;
+                                                                List<Order> childOrdList = orderQr.getAllChildOrdersFromParentId(ordRetrieved.ParentOrder__c);
+                                                                List<Order> childOrderToUpdate = new List<Order>();
+                                                                for(Order child : childOrdList){
+                                                                    String bpChildId = child.BillingProfile__c;
+                                                                    String servicePointId = child.ServicePoint__c;
+                                                                    String phase = child.Phase__c;
+                                                                    if(String.isNotBlank(bpChildId) && bpChildId.equalsIgnoreCase(ordRetrieved.BillingProfile__c) 
+                                                                        && String.isNotBlank(servicePointId) && servicePointId.equalsIgnoreCase(ordRetrieved.ServicePoint__c)
+                                                                        && 'Sequenzializzato'.equalsIgnoreCase(child.Phase__c)){
+                                                                            Order childToUpdate = new Order(Id=child.Id,BillingProfile__c = bp.Id,ContractAccountCode__c=mapRequestFields.get('VKONT'));
+                                                                            childOrderToUpdate.add(childToUpdate);
+                                                                        }
+                                                                }
+                                                                if(!childOrderToUpdate.isEmpty()){
+                                                                    orderSrv.updateRecords(childOrderToUpdate);
+                                                                }
+                                                            }
+                                                        }else {
+                                                            throw new HDT_WS_MrrRequest.CustomMessageException('Error on Updating Billing Profile - '+e.getMessage()); 
+                                                        }
+                                                    }
                                                 }
 
                                                 //Gestione CodiceCliente/Update Account - HRADTR_GV 31/03/2022

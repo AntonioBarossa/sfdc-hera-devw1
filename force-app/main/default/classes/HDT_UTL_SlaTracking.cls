@@ -7,47 +7,51 @@ public inherited sharing class HDT_UTL_SlaTracking {
         List<SlaTracking__c> slaTrackingToElaborate = new List<SlaTracking__c>();
         Map<Id, SlaAdministration__c> adminRuleMap;
 
-        for(SlaTracking__c track : slaTrackingFromTrigger){
+        try{
+            for(SlaTracking__c track : slaTrackingFromTrigger){
 
-            //if(track.Status__c.equalsIgnoreCase('Chiuso')){
-            //    continue;
-            //}
+                //if(track.Status__c.equalsIgnoreCase('Chiuso')){
+                //    continue;
+                //}
 
-            if(track.StartDateTime__c != null && track.EndDateTime__c != null){
-                adminRuleIds.add(track.SlaAdministration__c);
-                slaTrackingToElaborate.add(track);
-            }
-        }
-
-        if(slaTrackingToElaborate.size()==0){
-            return;
-        }
-
-        List<SlaAdministration__c> slaAdminList = HDT_QR_SlaTracking.getSlaAdminList(adminRuleIds);
-        List<TechnicalHolidaysCalendar__c> holidayList = HDT_QR_SlaTracking.getHolidaysList();
-
-        if(slaAdminList.size() > 0){
-            adminRuleMap = new Map<Id, SlaAdministration__c>(slaAdminList);
-        }
-
-        String rangeType;
-        Date startDate;
-        Date endDate;
-        for(SlaTracking__c track : slaTrackingToElaborate){
-
-            startDate = convertDateTime(track.StartDateTime__c);
-            endDate = convertDateTime(track.EndDateTime__c);
-            track.SlaValue__c = startDate.daysBetween(endDate);//+1;
-
-            if(adminRuleMap.containsKey(track.SlaAdministration__c)){
-                rangeType = adminRuleMap.get(track.SlaAdministration__c).RangeType__c;
-                if(String.isNotEmpty(rangeType) && rangeType.equalsIgnoreCase('Giorni Lavorativi')){
-                    track.SlaValue__c = calculateWorkingDaysInteger(startDate, Integer.valueOf(track.SlaValue__c), holidayList);
+                if(track.StartDateTime__c != null && track.EndDateTime__c != null){
+                    adminRuleIds.add(track.SlaAdministration__c);
+                    slaTrackingToElaborate.add(track);
                 }
             }
 
-        }
+            if(slaTrackingToElaborate.size()==0){
+                return;
+            }
 
+            List<SlaAdministration__c> slaAdminList = HDT_QR_SlaTracking.getSlaAdminList(adminRuleIds);
+            List<TechnicalHolidaysCalendar__c> holidayList = HDT_QR_SlaTracking.getHolidaysList();
+
+            if(slaAdminList.size() > 0){
+                adminRuleMap = new Map<Id, SlaAdministration__c>(slaAdminList);
+            }
+
+            String rangeType;
+            Date startDate;
+            Date endDate;
+            for(SlaTracking__c track : slaTrackingToElaborate){
+
+                startDate = convertDateTime(track.StartDateTime__c);
+                endDate = convertDateTime(track.EndDateTime__c);
+                track.SlaValue__c = startDate.daysBetween(endDate);
+                //track.SlaValue__c = calculateSlaValue(track.StartDateTime__c, track.EndDateTime__c);
+
+                if(adminRuleMap.containsKey(track.SlaAdministration__c)){
+                    rangeType = adminRuleMap.get(track.SlaAdministration__c).RangeType__c;
+                    if(String.isNotEmpty(rangeType) && rangeType.equalsIgnoreCase('Giorni Lavorativi')){
+                        track.SlaValue__c = calculateWorkingDaysInteger(startDate, Integer.valueOf(track.SlaValue__c), holidayList);
+                    }
+                }
+
+            }
+        } catch(Exception e){
+            System.debug('>>> ERROR calculate SlaValue__c -> ' + e.getMessage());
+        }
     }
     
     public static void calculateSlaForecastValue(List<SlaTracking__c> slaTrackingFromTrigger){
@@ -75,6 +79,9 @@ public inherited sharing class HDT_UTL_SlaTracking {
         Date endDate;
         for(SlaTracking__c track : slaTrackingToElaborate){
             startDate = convertDateTime(track.StartDateTime__c);
+            if(!adminRuleMap.containsKey(track.SlaAdministration__c)){
+                continue;
+            }
             slaRange = Integer.valueOf(adminRuleMap.get(track.SlaAdministration__c).Range__c);
             track.EndDateSolarDays__c = startDate.addDays(slaRange);
             //slaRange = calculateWorkingDays(track.StartDateTime__c, slaRange, holidayList);
@@ -143,14 +150,15 @@ public inherited sharing class HDT_UTL_SlaTracking {
         return slaValue;
     }
 
-    //DateTime startDt = DateTime.newInstance(2023, 03, 01, 10, 20 , 00);
-    //DateTime endDt = DateTime.newInstance(2023, 03, 02, 10, 20 , 00);
+    //DateTime startDt = DateTime.newInstance(2023, 04, 06, 12, 00 , 00);
+    //DateTime endDt = DateTime.newInstance(2023, 04, 07, 12, 00 , 01);
     //System.debug('>>>>>>>>> SLA ' + calculateSlaValue(startDt, endDt));
     public static Integer calculateSlaValue(DateTime startDatetime, DateTime endDatetime){
         Decimal timeStart = startDatetime.getTime();
         Decimal timeEnd = endDatetime.getTime();
         Decimal hours = (timeEnd - timeStart) / 3600000;
         Decimal days = hours / 24;
+        System.debug('>>>>>>>>> days ' + days + ' - hours ' + hours);
         return (days < 1) ? 0 : (Integer)days.round(System.RoundingMode.UP);
     }
 

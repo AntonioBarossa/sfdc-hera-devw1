@@ -10,6 +10,16 @@
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {
+&quot;FieldName&quot;:&quot;FirstName__c&quot;,
+&quot;Required&quot;:true,
+&quot;Column&quot;:1
+},
+{
+&quot;FieldName&quot;:&quot;LastName__c&quot;,
+&quot;Required&quot;:true,
+&quot;Column&quot;:2
+},
+{
 &quot;FieldName&quot;:&quot;ComplaintType__c&quot;,
 &quot;Required&quot;:true,
 &quot;Column&quot;:1
@@ -46,7 +56,7 @@
 &quot;Column&quot;:1
 },
 {
-&quot;FieldName&quot;:&quot;Distributor__c&quot;,
+&quot;FieldName&quot;:&quot;Market__c&quot;,
 &quot;Required&quot;:false,
 &quot;Column&quot;:2
 }

@@ -11,6 +11,7 @@ import retrieveOrderCreditCheck from '@salesforce/apex/HDT_LC_ChildOrderProcessD
 import getReadingId from '@salesforce/apex/HDT_LC_SelfReading.getReadingId';
 import isAfterthoughtDaysZero from '@salesforce/apex/HDT_UTL_ProcessDateManager.isAfterthoughtDaysZero';
 import checkPermissionSet from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkPermissionSet';
+import checkCambioOffertaPermission from '@salesforce/apex/HDT_LC_ChildOrderProcessDetails.checkCambioOffertaPermission';
 import {handleSections, equalsIgnoreCase, safeStr, getRateCategoriesConfiguration} from 'c/hdtChildOrderProcessDetailsUtl';
 
 export default class hdtChildOrderProcessDetails extends LightningElement {
@@ -48,6 +49,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     @track lastStepData = {};
     @track isNoDayAfterthought = false;
     @track permissionFlag = true;
+    isCambioOffertaPermission = false;
     loginChannel;
     closeAttachmentEvent;
     @track additionalAttachments;
@@ -185,6 +187,10 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 this.cohabitantNumber = this.template.querySelector("[data-id='CohabitantsNumber__c']").value;
             }
         }
+
+        if( this.currentSection.name === 'processVariables'){
+            this.showMessage('', 'Attenzione! Verificare la presenza del bonus sociale idrico sul cliente.', 'warning');
+        }
     }
 
     handleCohabitantChange(event){
@@ -294,7 +300,8 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
     }
 
     updateContractExpenses(){
-        if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' ) {
+        if ( this.template.querySelector("[data-id='VoltureType__c']") && this.template.querySelector("[data-id='VoltureType__c']").value === 'Mortis Causa' &&
+            this.template.querySelector("[data-id='ContractExpenses__c']") ) {
             this.template.querySelector("[data-id='ContractExpenses__c']").value = 'Nessun Addebito';
         }
         if( this.typeVisibility('acqua') &&
@@ -1085,6 +1092,12 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                         });
                     this.dispatchEvent(toastErrorMessage);
                     return;
+                /* 
+                ticket 967693C: necessario perchè se viene sbiancato il campo una volta eseguito il salvataggio in bozza al successivo accesso il campo è popolato con 
+                il precedente valore ed il wizard può essere portato avanti pur restando il campo blank nell'ordine.
+                 */
+                }else if (this.template.querySelector("[data-id='RequestPhase__c']") !== null && !this.sectionDataToSubmit["RequestPhase__c"]){
+                    this.sectionDataToSubmit["RequestPhase__c"] = this.template.querySelector("[data-id='RequestPhase__c']").value;
                 }
                 if(this.template.querySelector("[data-id='PhoneNumber__c']") !== null 
                 && (this.template.querySelector("[data-id='PhoneNumber__c']").value === ''
@@ -1574,6 +1587,11 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
 
             this.permissionFlag = !data;
             console.log('PERMISSIONFLAG££' + this.permissionFlag);
+        })        
+        
+        checkCambioOffertaPermission({}).then(data =>{
+            this.isCambioOffertaPermission = data;
+            console.log('isCambioOffertaPermission: ' + this.isCambioOffertaPermission);
         })
 
         console.log('Details Callback Start');
@@ -1604,17 +1622,18 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         this.loadAccordion();
 
         if( this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' || 
-        ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) ){
-            this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
-            || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
-            this.isOfferChange = this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua';
-            console.log('IsVolture--> '+this.isVolture);
-            console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
-            console.log('Details Callback End');
-            console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
-            this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
-            console.log('ReadingDisabled? ->' +this.readingDisabled);
-        }
+            ( this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua' ) )
+            {
+                this.isVolture = this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' 
+                || (this.order.RecordType.DeveloperName === 'HDT_RT_VolturaConSwitch' && this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+                this.isOfferChange = this.order.RecordType.DeveloperName === 'HDT_RT_CambioOfferta' && this.order.ServicePoint__r.CommoditySector__c == 'Acqua';
+                console.log('IsVolture--> '+this.isVolture);
+                console.log('ConfirmedSteps--> '+JSON.stringify(this.confirmedSteps));
+                console.log('Details Callback End');
+                console.log('CommoditySector -> ' + this.order.ServicePoint__r.CommoditySector__c)
+                this.readingDisabled = (this.order.ServicePoint__r.CommoditySector__c.localeCompare('Energia Elettrica') === 0);
+                console.log('ReadingDisabled? ->' +this.readingDisabled);
+            }
         
         console.log('CheckVariables');
 
@@ -1728,6 +1747,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         console.log('###Missed Due Event >>> ');
         this.template.querySelector("[data-id='OnerousReviewableStartDate__c']").value = event.detail.dateX, this.sectionDataToSubmit["OnerousReviewableStartDate__c"]=event.detail.dateX;
         this.template.querySelector("[data-id='OnerousUnreviewableStartDate__c']").value = event.detail.dateY, this.sectionDataToSubmit["OnerousUnreviewableStartDate__c"]=event.detail.dateY;
+        this.sectionDataToSubmit["BillingCategory__c"]=event.detail.billingCategory;
         const MissingDueAmount = this.template.querySelector("[data-id='MissingDueAmount__c']");
         MissingDueAmount.required = event.detail.missedDue? true : false;
         MissingDueAmount.disabled = event.detail.missedDue? false : true;

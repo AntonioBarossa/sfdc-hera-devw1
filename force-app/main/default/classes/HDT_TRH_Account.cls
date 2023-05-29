@@ -169,6 +169,8 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
         Map<String, List<String>> accToIndividualMap = new Map<String, List<String>>();
         Map<String, String> accountToOwnerIdMap = new Map<String, String>();
         HDT_QR_Contact contQr = new HDT_QR_Contact();
+        Map<String, List<String>> accToContListMap = new Map<String, List<String>>();
+        List<Contact> contToUpdateList = new List<Contact>();
 
         for(Account acc : (List<Account>) Trigger.new){
             Account odlAcc = (Account) Trigger.oldMap.get(acc.Id);
@@ -188,6 +190,13 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
                     accToIndividualMap.put(cont.AccountId, new List<String>());
                     accToIndividualMap.get(cont.AccountId).add(cont.IndividualId);
                 }
+                if(accToContListMap.containsKey(cont.AccountId)){
+                    accToContListMap.get(cont.AccountId).add(cont.Id);
+                }
+                else{
+                    accToContListMap.put(cont.AccountId, new List<String>());
+                    accToContListMap.get(cont.AccountId).add(cont.Id);
+                }
             }
         }
 
@@ -205,7 +214,22 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
                 HDT_UTL_DatabaseService.updateSObject(individToUpdateList);
             }
         }
+        if(!accToContListMap.values().isEmpty()){
+            for(String accId : accToContListMap.keySet()){
+                for(String contId : accToContListMap.get(accId)){
+                    Contact cont = new Contact(
+                        Id = contId,
+                        OwnerId = accountToOwnerIdMap.get(accId)
+                    );
+                    contToUpdateList.add(cont);
+                }
+            }
+            if(!contToUpdateList.isEmpty()){
+                HDT_UTL_DatabaseService.updateSObject(contToUpdateList);
+            }
+        }
     }
+
     @TestVisible
     private static void feedBillingCountry(List<Account> accountList)
     {

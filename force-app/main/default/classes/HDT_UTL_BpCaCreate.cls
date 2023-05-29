@@ -231,6 +231,8 @@ public with sharing class HDT_UTL_BpCaCreate
         request.emailInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceEmailAddress__c);
         //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
         request.creaNuovoCA = infoOrder.BillingProfile__r.CreateContractAccount__c?'Y':'';
+        request.cup = tryParse(infoOrder.BillingProfile__r.CUP__c);
+        request.cig = tryParse(infoOrder.BillingProfile__r.CIG__c);
         request.pecInvioBolletta = tryParse(infoOrder.BillingProfile__r.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(infoOrder.BillingProfile__r.BillSendingMethod__c);
         request.emailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
@@ -251,6 +253,8 @@ public with sharing class HDT_UTL_BpCaCreate
         request.emailInvioBolletta = tryParse(billing.InvoiceEmailAddress__c);
         //SE CREA NUOVO CA E' FALSE VIENE PASSATO IL VALORE VUOTO PERCHè SAP SE RICEVE IL TAG CON QUALSIASI VALORE LO INTERPRETA COME Y
         request.creaNuovoCA = billing.CreateContractAccount__c?'Y':'';
+        request.cup = tryParse(billing.CUP__c);
+        request.cig = tryParse(billing.CIG__c);
         request.pecInvioBolletta = tryParse(billing.InvoiceCertifiedEmailAddress__c);
         request.modInvioBolletta = tryParse(billing.BillSendingMethod__c);
         request.emailPec = tryParse(billing.ElectronicInvoiceCertifiedEmailAddress__c);
@@ -404,7 +408,7 @@ public with sharing class HDT_UTL_BpCaCreate
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(Order infoOrder)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
-        request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.OfficeSubjectCode__c);
+        request.codiceUfficio = tryParse(infoOrder.BillingProfile__r.SubjectCode__c);
         request.fatturaXml = transcodeFatturaXml(tryParse(infoOrder.BillingProfile__r.XMLType__c));
         request.mailPec = tryParse(infoOrder.BillingProfile__r.ElectronicInvoiceCertifiedEmailAddress__c);
         request.modello = transcodeModelloFattura(tryParse(infoOrder.BillingProfile__r.ElectronicInvoicingMethod__c));
@@ -415,7 +419,7 @@ public with sharing class HDT_UTL_BpCaCreate
     private HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura generateBillingProfileFatturaRequest(BillingProfile__c billing)
     {
         HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura request = new HDT_WRP_BpCaVariation.HDT_WRP_BpCaVariationFattura();
-        request.codiceUfficio = tryParse(billing.OfficeSubjectCode__c);
+        request.codiceUfficio = tryParse(billing.SubjectCode__c);
         request.fatturaXml = transcodeFatturaXml(tryParse(billing.XMLType__c));
         request.mailPec = tryParse(billing.ElectronicInvoiceCertifiedEmailAddress__c);
         request.modello = transcodeModelloFattura(tryParse(billing.ElectronicInvoicingMethod__c));
@@ -612,6 +616,13 @@ public with sharing class HDT_UTL_BpCaCreate
         if(String.isNotBlank(data.codiceContatto)){
             BillingProfile__c bp = new BillingProfile__c(Id=billingId,ContractAccountCode__c=data.codiceContatto);
             update bp;
+        }
+    }
+    public void updateAccount(String dataString, Id accountId){
+        HDT_WRP_Data data =  (HDT_WRP_Data) JSON.deserialize(dataString,HDT_WRP_Data.class);
+        if(String.isNotBlank(data.codiceBP)){
+            Account acc = new Account(Id=accountId,CustomerCode__c=data.codiceBP);
+            update acc;
         }
     }
     /* Wrapper Object for the Web Service Response */

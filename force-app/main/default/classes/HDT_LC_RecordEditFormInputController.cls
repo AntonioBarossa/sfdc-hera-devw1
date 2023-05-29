@@ -7,12 +7,22 @@ public with sharing class HDT_LC_RecordEditFormInputController {
     @AuraEnabled
     public static Map<String,Object> init(Map<String,Object>params){
         String fieldName=String.valueOf(params.get('fieldName'));
+        String tempFieldName=fieldName;
         Id objectId=Id.valueOf(String.valueOf(params.get('objectId')));
         String controllingField= params.containsKey('controllingField') ? String.valueOf(params.get('controllingField')):'';
         String process=params.containsKey('process') ? String.valueOf(params.get('process')):'';
         String objectName= String.valueOf(objectId.getSobjectType());
+        Boolean retrieveControllingValue = params.containsKey('retrieveControllingValue') ? Boolean.valueOf(params.get('retrieveControllingValue')) : false;
+        if(fieldName.toLowerCase() == 'FourthLevelComplaintClassification__c'.toLowerCase()){
+            tempFieldName+=' ,FirstLevelComplaintClassification__c';
+            params.put('firstLevelValue','');
+        }
+        if(retrieveControllingValue && String.isNotBlank(controllingField)){
+            tempFieldName+=' ,'+controllingField;
+        }
+        System.debug('temp field name value: '+tempFieldName);
+        List<SObject> objectList=HDT_QR_RecordEditFormFlowController.getRecordFromIdQueryString(tempFieldName, objectName, objectId);
         if(String.isBlank(controllingField)){
-            List<SObject> objectList=HDT_QR_RecordEditFormFlowController.getRecordFromIdQueryString(fieldName, objectName, objectId);
             if(objectList.size()==0){
                 throw new AuraHandledException('Record not found');
             }
@@ -26,12 +36,18 @@ public with sharing class HDT_LC_RecordEditFormInputController {
             params.put('fieldLabel',String.isNotBlank(picklistLabel) ? picklistLabel:objectList[0].get(fieldName));
             params.put('fieldValue',objectList[0].get(fieldName));
         }else{
-            System.debug('parameters: '+controllingField+' | '+fieldName+' | '+process+' | '+objectName);
             List<HDT_RecordFormFieldDependency__mdt> rffd=HDT_QR_RecordEditFormFlowController.getDependencyConfigurations(controllingField,fieldName,process,objectName);
             if(rffd.size()==0){
                 throw new AuraHandledException('No configuration record found');
             }
             params.put('dependencySchema',rffd[0].DependecyJSON__c);
+        }
+        if(params.containsKey('firstLevelValue')){
+            params.put('firstLevelValue',objectList[0].get('FirstLevelComplaintClassification__c'));
+        }
+        if(retrieveControllingValue && String.isNotBlank(controllingField)){
+            params.put('controllingFieldValue',objectList[0].get(controllingField));
+            params.put('fieldValue',objectList[0].get(fieldName));
         }
         return params;
     }

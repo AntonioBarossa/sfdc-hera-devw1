@@ -7,6 +7,7 @@ import validateRecord from '@salesforce/apex/HDT_LC_RecordEditFormFlowController
 import getContentDocs from '@salesforce/apex/HDT_LC_RecordEditFormFlowController.getContentDocs';
 import { updateRecord } from 'lightning/uiRecordApi';
 import { getRecord } from 'lightning/uiRecordApi';
+import recordEditFormMissingFields from '@salesforce/label/c.recordEditFormMissingFields';
 
 import ASSISTED from '@salesforce/schema/Case.CutomerAssisted__c';
 import TYPE from '@salesforce/schema/Case.Type';
@@ -16,7 +17,7 @@ import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightn
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 export default class HdtRecordEditFormFlowNew extends LightningElement {
-
+    labels={recordEditFormMissingFields};
     @api processType;
     @api objectName;
     @api recordId;
@@ -43,6 +44,7 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     @api outputId;
     @api documentRecordId;
     @api sessionid;
+    @api retrieveControllingFieldValues;
 
     @track errorMessage;
     @track error;
@@ -97,11 +99,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     @wire(getFields, { processType: '$processType' })
     wiredFieldsJSON ({ error, data }) {
         if (data) {
-            console.log('### Struttura Form ' + JSON.stringify(data));
-            console.log('### Object Name ' + this.objectName);
-            console.log('### RecordId ' + this.recordId);
-            console.log('### RecordType ' + this.recordType);
-            console.log('### processType '+this.processType);
             this.wiredResponse = JSON.parse(data);
             this.validateClass = this.wiredResponse[0].ValidateClass__c;
             if(this.wiredResponse[0].hasOwnProperty("FieldsJSON__c")){
@@ -145,12 +142,8 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             }else{
                 if(this.recordId != null){
                     updateRecord({fields: { Id: this.recordId }}).then(() => {
-                        console.log('Record Refreshato');
-                        console.log('Prima Colonna ' + JSON.stringify(this.firstColumn));
-                        console.log('Seconda Colonna ' + JSON.stringify(this.secondColumn));
                         this.variablesLoaded = true;
                     }).catch(error => {
-                        console.log('Error Refreshing record');
                         this.error = true;
                     });
                 }
@@ -174,11 +167,7 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             objectType:this.objectName
         })
             .then(result => {
-                console.log('# related field ' + JSON.stringify(result));
                 var object = JSON.parse(result);
-
-                console.log('# related field 2 ' + object.ServicePoint__r);
-                console.log('# related field 3 ' + object['ServicePoint__r']);
                 this.firstColumnRelatedReadOnly.forEach(obj => {
                     var relatedObj = object[obj.relatedObject];
                     var fieldValue = relatedObj[obj.apiName];
@@ -234,7 +223,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             arecordId: this.documentRecordId
         })
             .then(result => {
-                console.log(JSON.stringify(result));
                 if(Object.keys(result).length > 0 )
                     this.contentDocument = result;
                 else
@@ -250,19 +238,12 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
         if(this.addContentDocument){
             this.selectContentDocument();
         }
-        console.log('### Accepted Format ' + this.acceptedFormats);
         if(this.acceptedFormats){
-            console.log(this.acceptedFormats);
             this.formats = this.acceptedFormats.split(";");
-            console.log(JSON.stringify(this.formats));
         }
-        console.log('### PreviousButton -> ' +this.previousButton);
         if(this.previousButton && !this.availableActions.find(action => action === 'BACK')){
             this.previousButton = false;
         }
-        console.log('### ProcessType -> ' + this.processType);
-        console.log('### END Connected ###');
-
     }
     renderedCallback(){
         //this.installmentsLogic();
@@ -291,7 +272,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     }
     handleSuccess(event) {
 
-        console.log('#Record Id Created --> ' +event.detail.id);
 
         if(this.recordId == null || this.recordId == undefined){
 
@@ -317,14 +297,12 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             this.installmentsLogic();
             this.handleReadOnlyOnFields();
             this.handleQcDate();
-            console.log('Edit Form Loaded ' + fields);
 
         }
         this.showCustomLabels=true;
     }
 
     handleError(event){
-        console.log('Error Loading: ' + JSON.stringify(event.detail));
         let message = '';
         let obj = event.detail.output.fieldErrors;
         if (Object.keys(obj).length > 0) {
@@ -333,8 +311,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             // Errore da validation rules con error location "top of the page"
             message = event.detail.detail;
         }
-
-        console.log('Error Loading message ' + message);
         this.dispatchEvent(
             new ShowToastEvent({
                 title: 'Errore',
@@ -345,7 +321,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     }
 
     handleDraft(event){
-        console.log('draft handle');
         if(event.target.name === 'draft'){
 
             this.saveInDraft = true;
@@ -381,7 +356,7 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             this.cancelCase = false;
             let fieldsControl =this.getCustomComboboxes(event.detail.fields);
             if(!fieldsControl.comboBoxesValid){
-                this.showMessage('Errore','testerror','error');
+                this.showMessage('Errore',this.labels.recordEditFormMissingFields,'error');
                 return;
             }
             if(this.validateClass){
@@ -395,7 +370,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
                         if(resultWrapper.outcomeCode === "OK"){
                             this.template.querySelector('lightning-record-edit-form').submit(fieldsControl.fields);
                         }else{
-                            console.log('ErrorMessage: ' +resultWrapper.outcomeDescription);
                             this.showMessage('Errore',resultWrapper.outcomeDescription,'error');
                         }
                     })
@@ -550,12 +524,9 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
 
     complaintsLogic(){
         let five = this.objSelector('FithLevelComplaintClassification__c');
-        console.log('Five '+five);
         let channel = this.objSelector('ComplaintEntryChannel__c');
-        console.log('Channel '+channel);
         if(!(Object.keys(five).length === 0)){
             let fifthLevel = this.selector('FithLevelComplaintClassification__c');
-            console.log('#Valore quinto livello -->' +fifthLevel.value)
             if(fifthLevel != null){
                 let soldBy = this.selector('SoldBy__c');
                 if(soldBy != null){
@@ -568,7 +539,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             }
         } else if(!(Object.keys(channel).length === 0)){
             let entryChannel = this.selector('ComplaintEntryChannel__c');
-            console.log('#Valore Entry Channel --> ' +entryChannel.value);
             let address = this.selector('CompliantOriginEmail__c');
             if(entryChannel.value === 'Email' || entryChannel.value === 'PEC'){
                 address.required = true;
@@ -579,22 +549,16 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     }
 
     installmentsLogic(){
-        console.log('Rec ' + this.type);
         let reasonObj =  this.objSelector('Reason__c');
-        console.log('#Reason --> ' + JSON.stringify(reasonObj));
         let paymentType = this.objSelector('PaymentType__c');
-        console.log('#PaymentType --> ' + JSON.stringify(paymentType));
         if(!(Object.keys(reasonObj).length === 0)){
             let reason = this.selector('Reason__c');
             if(reason != null){
-                console.log('#Valore Reason --> ' + reason.value);
                 if(reason.value && reason.value != ''){
                     if(!(Object.keys(paymentType).length === 0)){
-                        console.log('Inside Condition Installments');
                         let payType = this.selector('PaymentType__c');
                         let workStatus = this.selector('WorkStatus__c');
                         let refundableEscape = this.selector('RefundableEscape__c');
-                        console.log('#Valore payType -> ' + payType.value);
                         if(reason.value.localeCompare('Assistenza sociale (cliente)') === 0 && payType != null){
                             if(this.assisted){
                                 payType.disabled = true;
@@ -632,10 +596,8 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             }
         }
         let depositObj = this.objSelector('Deposit__c');
-        console.log('#Deposit --> ' + JSON.stringify(depositObj));
         if(!(Object.keys(depositObj).length === 0)){
             let deposit = this.selector('Deposit__c');
-            console.log('#Deposit -> ' + deposit.value);
             if(deposit.value != null && deposit.value != undefined){
                 let depositPaymentMode = this.selector('DepositPaymentMode__c');
                 let sendPaperlessCode = this.selector('SendPaperlessCodeMode__c');
@@ -661,10 +623,8 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
             }
         }
         let depositPaymentModeObj = this.objSelector('DepositPaymentMode__c');
-        console.log('#DepositPaymentMode --> ' + JSON.stringify(depositPaymentModeObj));
         if(!(Object.keys(depositPaymentModeObj).length === 0)){
             let depositPaymentMode = this.selector('DepositPaymentMode__c');
-            console.log('#DepositPaymentMode -> ' + depositPaymentMode.value)
             if(depositPaymentMode.value !== null && depositPaymentMode.value !== undefined){
                 let paperlessCode = this.selector('SendPaperlessCodeMode__c');
                 if(depositPaymentMode.value === 'Paperless' || depositPaymentMode.value === 'Bonifico Paperless'){
@@ -695,15 +655,12 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     reimbursmentLogic()
     {
         let reimbursMethodObj = this.objSelector('RefundMethod__c');
-        console.log('#Reimburs --> ' + JSON.stringify(reimbursMethodObj));
         if(!(Object.keys(reimbursMethodObj).length === 0))
         {
             let reimbursMethod = this.selector('RefundMethod__c');
-            console.log('#Reimburs -> ' + reimbursMethod.value);
             if(reimbursMethod.value !== null && reimbursMethod.value !== undefined )
             {
                 let beneficiaryAccountObj = this.objSelector('AccountholderTypeBeneficiary__c');
-                console.log('#ReimbursAccount --> ' + JSON.stringify(reimbursMethodObj));
                 if(!(Object.keys(beneficiaryAccountObj).length === 0))
                 {
                     let beneficiaryAccount = this.selector('AccountholderTypeBeneficiary__c');
@@ -722,19 +679,15 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
     disconnectableLogic()
     {
         let disconnectableCategoryObj = this.objSelector('DisconnectibilityType__c');
-        console.log('#DisconnectObject ---> ' + JSON.stringify(disconnectableCategoryObj));
         if(!(Object.keys(disconnectableCategoryObj).length === 0))
         {
             let disconnectableCategory = this.selector('DisconnectibilityType__c');
-            console.log('#Disconnect -> ' + disconnectableCategory.value);
             let autocertAslObj = this.objSelector('SelfCertificationAcquisitionAsl__c');
-            console.log('#AutocertObject ---> ' + JSON.stringify(autocertAslObj));
             if(disconnectableCategory.value !== null && disconnectableCategory.value !== undefined && disconnectableCategory.value === '01- App. medico terapeutiche')
             {
                 if(!(Object.keys(autocertAslObj).length === 0))
                 {
                     let autocertAsl = this.selector('SelfCertificationAcquisitionAsl__c');
-                    console.log('#Autocert -> ' + autocertAsl.value);
                     autocertAsl.value = 'SI';
                 }
             }
@@ -743,7 +696,6 @@ export default class HdtRecordEditFormFlowNew extends LightningElement {
                 if(!(Object.keys(autocertAslObj).length === 0))
                 {
                     let autocertAsl = this.selector('SelfCertificationAcquisitionAsl__c');
-                    console.log('#Autocert -> ' + autocertAsl.value);
                     autocertAsl.value = '';
                 }
             }

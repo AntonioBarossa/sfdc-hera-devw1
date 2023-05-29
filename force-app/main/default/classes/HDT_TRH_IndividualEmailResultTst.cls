@@ -48,7 +48,7 @@ public with sharing class HDT_TRH_IndividualEmailResultTst{
             insert fieldTemplates;
             
             List<wrts_prcgvr__ActivityTemplate__c> activityTemplates = HDT_UTL_DataFactoryTst.createActivityTemplate(1,false);
-            activityTemplates[0].Name = 'CBS_CRP004__SCARTI_DOCUMENTALI_POST_SALES';
+            activityTemplates[0].Name = 'CBS_CRP003__SCARTI_DOCUMENTALI_SALES';
             activityTemplates[0].wrts_prcgvr__Code__c = 'b5a0181e-68c3-4f99-9d4f-9c899b01ed4b';
             activityTemplates[0].wrts_prcgvr__FieldsTemplate__c= fieldTemplates[0].id;
             activityTemplates[0].wrts_prcgvr__ObjectType__c = 'Order'; 

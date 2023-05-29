@@ -177,6 +177,42 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
  
 		}
 	}
+
+	@isTest
+	static void checkPermissionSetTst(){
+
+		User tUser=[SELECT Id, Alias
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			Test.startTest();
+			Boolean result = HDT_LC_ChildOrderProcessDetails.checkPermissionSet();
+			Test.stopTest();
+
+			System.assertEquals(false, result, 'checkPermissionSetTst failed');
+		}
+	}
+
+	@isTest
+	static void checkCambioOffertaPermissionTst(){
+
+		User tUser=[SELECT Id, Alias
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			Test.startTest();
+			Boolean result = HDT_LC_ChildOrderProcessDetails.checkCambioOffertaPermission();
+			Test.stopTest();
+
+			System.assertEquals(false, result, 'checkCambioOffertaPermissionTst failed');
+		}
+	}
     
     @isTest static void testInit(){
         

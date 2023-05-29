@@ -76,7 +76,7 @@ public class HDT_QBL_BpCaRequestTst {
 	@isTest
     public static void HDT_QBL_BpCaRequestFirst() {
         Test.startTest();
-        Account  acc = [SELECT Id,RecordTypeId,Category__c,VATNumber__c, FiscalCode__c  FROM Account WHERE CustomerCode__c='1003616210'];
+        Account  acc = [SELECT Id,RecordTypeId,Category__c,VATNumber__c, FiscalCode__c  FROM Account LIMIT 1];
         Contact  contact = [SELECT Id FROM Contact WHERE AccountId=:acc.Id];
         List<AccountContactRelation> accCtcRel=[Select Id FROM AccountContactRelation WHERE AccountId =: acc.Id And ContactId =: contact.Id];
        /* List<AccountContactRelation> accountContactRelList = new List<AccountContactRelation>();
@@ -102,7 +102,7 @@ public class HDT_QBL_BpCaRequestTst {
     @isTest
     public static void HDT_QBL_BpCaRequestSecond() {
         Test.startTest();
-        Account  acc = [SELECT Id,RecordTypeId,Category__c,VATNumber__c, FiscalCode__c FROM Account WHERE CustomerCode__c='1003616210'];
+        Account  acc = [SELECT Id,RecordTypeId,Category__c,VATNumber__c, FiscalCode__c FROM Account LIMIT 1];
         Contact  contact = [SELECT Id FROM Contact WHERE AccountId=:acc.Id];
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
 

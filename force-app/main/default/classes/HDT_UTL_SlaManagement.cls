@@ -28,6 +28,7 @@ public inherited sharing class HDT_UTL_SlaManagement {
                 criteriaFields.add('AtoFormula__c');
                 criteriaFields.add('CompanyOwner__c');
                 criteriaFields.add('Commodity__c');
+                criteriaFields.add('Type');
             }	
             when 'Order' {
                 trackingFieldKey = 'Order__c';
@@ -239,6 +240,13 @@ public inherited sharing class HDT_UTL_SlaManagement {
             when 'Case' {
                 Case eventCaseToCompare = (Case)sObjectCriteriaMap.get(recordId);
                 for(String field : objectCriteria.keySet()){
+                    if(field.equalsIgnoreCase('Type')){
+                        if(evaluateCaseType(String.valueOf(objectCriteria.get(field)), String.valueOf(eventCaseToCompare.get(field)))){
+                            return true;
+                        } else {
+                            continue;
+                        }
+                    }
                     if(eventCaseToCompare.get(field) != objectCriteria.get(field)){
                         System.debug(logginglevel.DEBUG, '>>> criteria error: ' + field);
                         return true;
@@ -262,6 +270,16 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
     }
 
+    public static Boolean evaluateCaseType(String slaRule, String caseType){
+        if(slaRule.equalsIgnoreCase('Cittadino') && caseType.equalsIgnoreCase('Reclamo Scritto Da Cittadino')){
+            return false;
+        } else if (slaRule.equalsIgnoreCase('Account') && !caseType.equalsIgnoreCase('Reclamo Scritto Da Cittadino')){
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     public static Boolean ruleDateIsValid(DateTime dateToValidate, HDT_WRP_SlaManagement.HDT_WRP_AdminRule singleRule){
         System.debug(logginglevel.DEBUG, '>>> dateToValidate: ' + String.valueOf(dateToValidate) + ' - startDate: ' + String.valueOf(singleRule.startValidDate) + ' - endDate: ' + String.valueOf(singleRule.endValidDate));
         return (dateToValidate >= singleRule.startValidDate && dateToValidate <= singleRule.endValidDate);
@@ -277,6 +295,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
         if(errorCheckObjectCriteria(eventObj.recordId, singleRule.objectCriteria)){
             System.debug(logginglevel.DEBUG, '>>> errorCheckObjectCriteria');
             return null;
+        }
+
+        if(eventObj.activityEvent != null && eventObj.activityEvent.Id != null){
+            currentTrack.Activity__c = eventObj.activityEvent.Id;
         }
 
         if(singleRule.endRule.obj.equalsIgnoreCase(executionObject)){
@@ -348,20 +370,35 @@ public inherited sharing class HDT_UTL_SlaManagement {
                     return null;  
                 }
                 dt = eventObj.fieldMap.get(singleRule.startRule.field);
+                //dt = eventObj.fieldMap.get('LastModifiedDate');
+
+                String typeField = getTypeField(executionObject, singleRule.startRule.field);
+
+                switch on typeField.toUpperCase() {
+                    when 'DATETIME'  {
+                        currentTrack.StartDateTime__c = Datetime.valueOf(dt);
+                    }
+                    when 'DATE'  {
+                        Date myDate = Date.valueOf(dt);
+                        Object objDateLastModifiedDate = eventObj.fieldMap.get('LastModifiedDate');
+                        Datetime lastModifiedDateDt = Datetime.valueOf(objDateLastModifiedDate);
+                        currentTrack.StartDateTime__c = DateTime.newInstance(myDate.year(), myDate.month(), myDate.day(), lastModifiedDateDt.hour(), lastModifiedDateDt.minute(), lastModifiedDateDt.second());
+                    }
+                }
+
             } else {
                 System.debug(logginglevel.DEBUG, '>>> isNotDate -> ' + singleRule.startRule.field);
                 String startField = String.valueOf(eventObj.fieldMap.get(singleRule.startRule.field));
                 if(startField.equalsIgnoreCase(singleRule.startRule.value)){
                     dt = eventObj.fieldMap.get('LastModifiedDate');
+                    currentTrack.StartDateTime__c = Datetime.valueOf(dt);
                 } else {
                     return null;
                 }
             }
 
-            currentTrack.StartDateTime__c = Datetime.valueOf(dt);
+            //currentTrack.StartDateTime__c = Datetime.valueOf(dt);
             
-
-
             if(!ruleDateIsValid(currentTrack.StartDateTime__c, singleRule)){
                 System.debug(logginglevel.DEBUG, '>>> admin rule date is not valid');
                 return null;
@@ -373,6 +410,14 @@ public inherited sharing class HDT_UTL_SlaManagement {
             return null;
         }
 
+    }
+
+    public String getTypeField(String objName, String fieldApiName){
+        if(fieldApiName.equalsIgnoreCase('ActivityStartTime__c') || fieldApiName.equalsIgnoreCase('ActivityEndTime__c')){
+            return 'DATETIME';
+        }
+        String fieldTypeName = Schema.getGlobalDescribe().get(objName).getDescribe().fields.getMap().get(fieldApiName).getDescribe().getType().name().toupperCase(); 
+        return fieldTypeName;
     }
 
     public void deleteEventHandler(Datetime deletedTime){
@@ -439,6 +484,10 @@ public inherited sharing class HDT_UTL_SlaManagement {
 
                 if(String.isNotEmpty(slaAdmin.Ato__c)){
                     slaMgmt.objectCriteria.put('AtoFormula__c', slaAdmin.Ato__c);
+                }
+
+                if(String.isNotEmpty(slaAdmin.CustomerType__c)){
+                    slaMgmt.objectCriteria.put('Type', slaAdmin.CustomerType__c);
                 }
 
             }

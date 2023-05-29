@@ -49,9 +49,6 @@ public with sharing class HDT_UTL_CaseProcess {
                     needUpdate.put(servicePoint, true);
                 }
                 singleNewCase.Email__c = String.isBlank(singleNewCase.Email__c) && !String.isBlank(singleNewCase.SuppliedEmail) ? singleNewCase.SuppliedEmail : singleNewCase.Email__c;
-                if('Acqua'.equalsIgnoreCase(commodity)){
-                    singleNewCase.WrittenReceiptRequestDate__c = date.today();
-                }
                 if(String.isNotBlank(accountId) && String.isBlank(singleNewCase.FirstName__c) && String.isBlank(singleNewCase.LastName__c)){
                     accountIdSet.add(accountId);
                     //caseAccountSet.add(singleNewCase.Id);
@@ -88,9 +85,6 @@ public with sharing class HDT_UTL_CaseProcess {
                         singleCaseToUpdate.Commodity__c = spMap.get(singleCaseToUpdate.ServicePoint__c).CommoditySector__c;
                         singleCaseToUpdate.FirstName__c = String.isBlank(singleCaseToUpdate.FirstName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.FirstName__c:singleCaseToUpdate.FirstName__c;
                         singleCaseToUpdate.LastName__c = String.isBlank(singleCaseToUpdate.LastName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.LastName__c:singleCaseToUpdate.LastName__c;
-                    }
-                    if('Acqua'.equalsIgnoreCase(singleCaseToUpdate.Commodity__c)){
-                        singleCaseToUpdate.WrittenReceiptRequestDate__c = singleCaseToUpdate.WrittenReceiptRequestDate__c == null ? date.today() : singleCaseToUpdate.WrittenReceiptRequestDate__c;
                     }
                     
                 }
@@ -306,8 +300,11 @@ public with sharing class HDT_UTL_CaseProcess {
                         if ('Autolettura'.equalsIgnoreCase(caseNew.Cluster__c) && 'Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
                             continue;
                         }
-                        activity.wrts_prcgvr__Status__c = 'Annullata';
-                        activitiesToCancel.add(activity);
+                        //CR31 - Nel caso in cui il case sia stato annullato e l'activity sia di Contatto Cliente, la lascio aperta per dare la possibilità all'operatore come da requisito di lavorarla.
+                        if(!'Contattare il cliente'.equalsIgnoreCase(activity.Type__c)){
+                            activity.wrts_prcgvr__Status__c = 'Annullata';
+                            activitiesToCancel.add(activity);
+                        }
                     }
                     if(!activitiesToCancel.isEmpty())
                     {
@@ -318,6 +315,15 @@ public with sharing class HDT_UTL_CaseProcess {
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
                     System.debug(LoggingLevel.DEBUG, 'Inside Condition');
                     HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
+                }
+                //CR31 - Creazione Activity all'annullamento Autolettura da Cliente
+                if(caseNew.ParentId != null){
+                    Case parentCase = new Case();
+                    parentCase = caseQr.getParentCaseById(caseNew.ParentId);
+                    
+                    if('Annullato'.equalsIgnoreCase(newPhase) && 'Autolettura da cliente'.equalsIgnoreCase(caseNew.Type) && 'Inviato al DL'.equalsIgnoreCase(oldPhase) && parentCase != null && 'Errore Stima Consumi'.equalsIgnoreCase(parentCase.Subprocess__c) && ('Energia Elettrica'.equalsIgnoreCase(caseNew.CommodityFormula__c) || 'Gas'.equalsIgnoreCase(caseNew.CommodityFormula__c))){
+                        HDT_UTL_Case.createActivity(caseNew.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                    }
                 }
             }
         }
@@ -699,6 +705,7 @@ public with sharing class HDT_UTL_CaseProcess {
             c.Status = 'Closed';
         }
     }
+
 
 
 }

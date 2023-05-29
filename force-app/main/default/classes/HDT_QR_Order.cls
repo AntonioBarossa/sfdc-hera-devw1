@@ -372,9 +372,11 @@ public inherited sharing class HDT_QR_Order {
             ApprovalType__c,
             AdditionalAttachments__c,
             WasteCommodityType__c,
+            BillingCategory__c,
             VASType__c,
             DateSentToSII__c,
-            OperationCode__c
+            OperationCode__c,
+            IntegrationExclusion__c
             FROM Order 
             WHERE Id = :orderId
             WITH SECURITY_ENFORCED
@@ -1087,6 +1089,7 @@ public inherited sharing class HDT_QR_Order {
         Sale__c,
         Commodity__c,
         RecordTypeId,
+        RecordType.DeveloperName,
         ParentOrder__c,
         ImplantType__c,
         SalesCompany__c,
@@ -1158,7 +1161,7 @@ public inherited sharing class HDT_QR_Order {
     }
 
     /**
-    * @description getRecordByOrderNumber
+    * @description getRecordByOrderId
     * @param recordId - String
     * @return List<Order>
     */
@@ -1213,6 +1216,7 @@ public inherited sharing class HDT_QR_Order {
         ProcessType__c,
         BillingProfile__c, 
         Vat__c, 
+        CommodityFormula__c,
         ServicePoint__c,
         ServicePoint__r.Distributor__r.Name,
         ServicePoint__r.Name,
@@ -1510,12 +1514,17 @@ public inherited sharing class HDT_QR_Order {
     }
 
     public Order getParentOrderVolturaSol(String orderNumber){
-        return [SELECT Id,IntegrationId__c,Contact__c,AccountId,RecordTypeId,Sale__c,ProcessType__c,EffectiveDate__c,ContractAccountCode__c,CustomerLastName__c,CustomerName__c,CustomerType__c,
+        List <Order> ordList =  [SELECT Id,IntegrationId__c,Contact__c,AccountId,RecordTypeId,Sale__c,ProcessType__c,EffectiveDate__c,ContractAccountCode__c,CustomerLastName__c,CustomerName__c,CustomerType__c,
                 CustomerVATNumber__c, CustomerFiscalCode__c,EffectiveDate,Status,BillingProfile__c,PaymentMode__c,Note__c,Account.Category__c,PhoneNumber__c,
                 BillingProfile__r.BillSendingMethod__c, BillingProfile__r.InvoiceEmailAddress__c, BillingProfile__r.InvoiceCertifiedEmailAddress__c, BillingProfile__r.SendCertifiedEmailConsentDate__c,
                 BillingProfile__r.DivergentSubject__c, BillingProfile__r.InvoicingCity__c, BillingProfile__r.InvoicingCountry__c, BillingProfile__r.InvoicingPlace__c,
                 BillingProfile__r.InvoicingProvince__c, BillingProfile__r.InvoicingStreetName__c, BillingProfile__r.InvoicingStreetNumber__c, BillingProfile__r.InvoicingPostalCode__c,
                 BillingProfile__r.InvoicingCityCode__c,Account.PrimaryEmail__c,Email__c
         FROM Order WHERE OrderNumber=:orderNumber WITH SECURITY_ENFORCED ];
+        return ordList[0];
+    }
+    
+    public List<Order> getAllChildOrdersFromParentId(String parentId){
+        return [SELECT Id, OrderNumber, ParentOrder__c, Phase__c,BillingProfile__c,ContractAccountCode__c,ServicePoint__c FROM Order WHERE ParentOrder__c =:parentId WITH SECURITY_ENFORCED];
     }
 }

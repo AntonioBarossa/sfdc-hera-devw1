@@ -66,54 +66,14 @@
                 <label>Back Office - Catalogo Prodotti</label>
             </value>
             <value>
-                <fullName>Back Office - Contratti</fullName>
-                <default>false</default>
-                <label>Back Office - Contratti</label>
-            </value>
-            <value>
-                <fullName>Back Office - Fatturazione</fullName>
-                <default>false</default>
-                <label>Back Office - Fatturazione</label>
-            </value>
-            <value>
-                <fullName>Back Office - Morosità</fullName>
-                <default>false</default>
-                <label>Back Office - Morosità</label>
-            </value>
-            <value>
-                <fullName>Back Office - Pagamenti</fullName>
-                <default>false</default>
-                <label>Back Office - Pagamenti</label>
-            </value>
-            <value>
-                <fullName>Back Office - Preventivi</fullName>
-                <default>false</default>
-                <label>Back Office - Preventivi</label>
-            </value>
-            <value>
                 <fullName>Back Office - Supporto/Comunicazioni Urgenti</fullName>
                 <default>false</default>
                 <label>Back Office - Supporto/Comunicazioni Urgenti</label>
             </value>
             <value>
-                <fullName>Back Office - Tari/TCP</fullName>
-                <default>false</default>
-                <label>Back Office - Tari/TCP</label>
-            </value>
-            <value>
-                <fullName>Back Office - Vas e HVAC</fullName>
-                <default>false</default>
-                <label>Back Office - Vas e HVAC</label>
-            </value>
-            <value>
                 <fullName>Busta Docusign non consegnata</fullName>
                 <default>false</default>
                 <label>Busta Docusign non consegnata</label>
-            </value>
-            <value>
-                <fullName>Caricamenti contratti</fullName>
-                <default>false</default>
-                <label>Caricamenti contratti</label>
             </value>
             <value>
                 <fullName>Check preliminari KO</fullName>
@@ -174,16 +134,6 @@
                 <fullName>Credit Management – affidi ADR</fullName>
                 <default>false</default>
                 <label>Credit Management – affidi ADR</label>
-            </value>
-            <value>
-                <fullName>Credit Management – affidi legale</fullName>
-                <default>false</default>
-                <label>Credit Management – affidi legale</label>
-            </value>
-            <value>
-                <fullName>Credit Management – cessioni</fullName>
-                <default>false</default>
-                <label>Credit Management – cessioni</label>
             </value>
             <value>
                 <fullName>Credit Management – sospensioni</fullName>
@@ -301,16 +251,6 @@
                 <label>Gestione manuale SAP</label>
             </value>
             <value>
-                <fullName>Gestione processi di Misura</fullName>
-                <default>false</default>
-                <label>Gestione processi di Misura</label>
-            </value>
-            <value>
-                <fullName>Gestione processi Ultima Istanza</fullName>
-                <default>false</default>
-                <label>Gestione processi Ultima Istanza</label>
-            </value>
-            <value>
                 <fullName>Gestione Sblocco al Calcolo</fullName>
                 <default>false</default>
                 <label>Gestione Sblocco al Calcolo</label>
@@ -324,11 +264,6 @@
                 <fullName>Gestione Votive</fullName>
                 <default>false</default>
                 <label>Gestione Votive</label>
-            </value>
-            <value>
-                <fullName>Gestione procedurale SAP</fullName>
-                <default>false</default>
-                <label>Gestione procedurale SAP</label>
             </value>
             <value>
                 <fullName>Gestione Back Office</fullName>
@@ -501,6 +436,11 @@
                 <label>Protocollo - Voltura</label>
             </value>
             <value>
+                <fullName>Protocollo - Web</fullName>
+                <default>false</default>
+                <label>Protocollo - Web</label>
+            </value>
+            <value>
                 <fullName>Protocollo - TARI da Ufficio</fullName>
                 <default>false</default>
                 <label>Protocollo - TARI da Ufficio</label>
@@ -616,11 +556,6 @@
                 <label>Supporto emissione SD_massiva</label>
             </value>
             <value>
-                <fullName>Supporto emissione SD_singola</fullName>
-                <default>false</default>
-                <label>Supporto emissione SD_singola</label>
-            </value>
-            <value>
                 <fullName>Supporto Esercizio Sistemi</fullName>
                 <default>false</default>
                 <label>Supporto Esercizio Sistemi</label>
@@ -671,11 +606,6 @@
                 <label>Verifiche Canone Rai</label>
             </value>
             <value>
-                <fullName>Verifiche contratti</fullName>
-                <default>false</default>
-                <label>Verifiche contratti</label>
-            </value>
-            <value>
                 <fullName>Verifiche Credito Business</fullName>
                 <default>false</default>
                 <label>Verifiche Credito Business</label>
@@ -714,6 +644,466 @@
                 <fullName>Venditore Non Definito</fullName>
                 <default>false</default>
                 <label>Venditore Non Definito</label>
+            </value>
+            <value>
+                <fullName>Inviare Resoconto Verifica</fullName>
+                <default>false</default>
+                <label>Inviare Resoconto Verifica</label>
+            </value>
+            <value>
+                <fullName>Acconto scaduto non pagato da gestire</fullName>
+                <default>false</default>
+                <label>Acconto scaduto non pagato da gestire</label>
+            </value>
+            <value>
+                <fullName>Annullamento Allineamento</fullName>
+                <default>false</default>
+                <label>Annullamento Allineamento</label>
+            </value>
+            <value>
+                <fullName>Annullamento processo transitorio Siebel</fullName>
+                <default>false</default>
+                <label>Annullamento processo transitorio Siebel</label>
+            </value>
+            <value>
+                <fullName>Approvazione Agevolazione</fullName>
+                <default>false</default>
+                <label>Approvazione Agevolazione</label>
+            </value>
+            <value>
+                <fullName>Approvazione Gestione Fuga</fullName>
+                <default>false</default>
+                <label>Approvazione Gestione Fuga</label>
+            </value>
+            <value>
+                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Segnalazione HVAC e Fotovoltaico</label>
+            </value>
+            <value>
+                <fullName>Blocco Sollecito</fullName>
+                <default>false</default>
+                <label>Blocco Sollecito</label>
+            </value>
+            <value>
+                <fullName>Caricamento Manuale Siebel</fullName>
+                <default>false</default>
+                <label>Caricamento Manuale Siebel</label>
+            </value>
+            <value>
+                <fullName>Cliente senza Fornitura</fullName>
+                <default>false</default>
+                <label>Cliente senza Fornitura</label>
+            </value>
+            <value>
+                <fullName>Comfort Call</fullName>
+                <default>false</default>
+                <label>Comfort Call</label>
+            </value>
+            <value>
+                <fullName>Contratto non richiesto da gestire</fullName>
+                <default>false</default>
+                <label>Contratto non richiesto da gestire</label>
+            </value>
+            <value>
+                <fullName>Correzione dati</fullName>
+                <default>false</default>
+                <label>Correzione dati</label>
+            </value>
+            <value>
+                <fullName>Errore Comunicazione e-BDM</fullName>
+                <default>false</default>
+                <label>Errore Comunicazione e-BDM</label>
+            </value>
+            <value>
+                <fullName>Errore Consu. e-BDM</fullName>
+                <default>false</default>
+                <label>Errore Consu. e-BDM</label>
+            </value>
+            <value>
+                <fullName>Errore e-BDM gestito</fullName>
+                <default>false</default>
+                <label>Errore e-BDM gestito</label>
+            </value>
+            <value>
+                <fullName>Errore tecnico interno</fullName>
+                <default>false</default>
+                <label>Errore tecnico interno</label>
+            </value>
+            <value>
+                <fullName>Errore tecnico SDD</fullName>
+                <default>false</default>
+                <label>Errore tecnico SDD</label>
+            </value>
+            <value>
+                <fullName>Esito approvazione</fullName>
+                <default>false</default>
+                <label>Esito approvazione</label>
+            </value>
+            <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
+                <fullName>Esito OK da DL</fullName>
+                <default>false</default>
+                <label>Esito OK da DL</label>
+            </value>
+            <value>
+                <fullName>Esito OK Riduzione Potenza</fullName>
+                <default>false</default>
+                <label>Esito OK Riduzione Potenza</label>
+            </value>
+            <value>
+                <fullName>Gestione Agenzia</fullName>
+                <default>false</default>
+                <label>Gestione Agenzia</label>
+            </value>
+            <value>
+                <fullName>Gestione blocco sollecito</fullName>
+                <default>false</default>
+                <label>Gestione blocco sollecito</label>
+            </value>
+            <value>
+                <fullName>Gestione contratto colonnetta</fullName>
+                <default>false</default>
+                <label>Gestione contratto colonnetta</label>
+            </value>
+            <value>
+                <fullName>Gestione M02</fullName>
+                <default>false</default>
+                <label>Gestione M02</label>
+            </value>
+            <value>
+                <fullName>Gestione M03</fullName>
+                <default>false</default>
+                <label>Gestione M03</label>
+            </value>
+            <value>
+                <fullName>Gestione manuale</fullName>
+                <default>false</default>
+                <label>Gestione manuale</label>
+            </value>
+            <value>
+                <fullName>Gestione Misure Energy</fullName>
+                <default>false</default>
+                <label>Gestione Misure Energy</label>
+            </value>
+            <value>
+                <fullName>Gestione richiesta social</fullName>
+                <default>false</default>
+                <label>Gestione richiesta social</label>
+            </value>
+            <value>
+                <fullName>In attesa risposta cliente</fullName>
+                <default>false</default>
+                <label>In attesa risposta cliente</label>
+            </value>
+            <value>
+                <fullName>In gestione</fullName>
+                <default>false</default>
+                <label>In gestione</label>
+            </value>
+            <value>
+                <fullName>Integrazione richiesta social</fullName>
+                <default>false</default>
+                <label>Integrazione richiesta social</label>
+            </value>
+            <value>
+                <fullName>Inviata comunicazione</fullName>
+                <default>false</default>
+                <label>Inviata comunicazione</label>
+            </value>
+            <value>
+                <fullName>Istruttoria Back Office</fullName>
+                <default>false</default>
+                <label>Istruttoria Back Office</label>
+            </value>
+            <value>
+                <fullName>Istruttoria creata/Non necessaria</fullName>
+                <default>false</default>
+                <label>Istruttoria creata/Non necessaria</label>
+            </value>
+            <value>
+                <fullName>KO creazione BP CA</fullName>
+                <default>false</default>
+                <label>KO creazione BP CA</label>
+            </value>
+            <value>
+                <fullName>KO definitivo</fullName>
+                <default>false</default>
+                <label>KO definitivo</label>
+            </value>
+            <value>
+                <fullName>KO gestito</fullName>
+                <default>false</default>
+                <label>KO gestito</label>
+            </value>
+            <value>
+                <fullName>KO Motore VAS</fullName>
+                <default>false</default>
+                <label>KO Motore VAS</label>
+            </value>
+            <value>
+                <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
+                <default>false</default>
+                <label>Legge 80_Istanza EE Estraneità Debiti</label>
+            </value>
+            <value>
+                <fullName>Mancata messa a ruolo contratto</fullName>
+                <default>false</default>
+                <label>Mancata messa a ruolo contratto</label>
+            </value>
+            <value>
+                <fullName>Modifica Indirizzo Fornitura</fullName>
+                <default>false</default>
+                <label>Modifica Indirizzo Fornitura</label>
+            </value>
+            <value>
+                <fullName>Note_di gestione pratica</fullName>
+                <default>false</default>
+                <label>Note_di gestione pratica</label>
+            </value>
+            <value>
+                <fullName>Note_il cliente dice</fullName>
+                <default>false</default>
+                <label>Note_il cliente dice</label>
+            </value>
+            <value>
+                <fullName>Order Management MUI</fullName>
+                <default>false</default>
+                <label>Order Management MUI</label>
+            </value>
+            <value>
+                <fullName>PEC da DL</fullName>
+                <default>false</default>
+                <label>PEC da DL</label>
+            </value>
+            <value>
+                <fullName>Pratica avviata</fullName>
+                <default>false</default>
+                <label>Pratica avviata</label>
+            </value>
+            <value>
+                <fullName>Pratica Fuori Flusso</fullName>
+                <default>false</default>
+                <label>Pratica Fuori Flusso</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita</fullName>
+                <default>false</default>
+                <label>Pratica gestita</label>
+            </value>
+            <value>
+                <fullName>Pratica gestita erroneamente</fullName>
+                <default>false</default>
+                <label>Pratica gestita erroneamente</label>
+            </value>
+            <value>
+                <fullName>Pratica non gestita</fullName>
+                <default>false</default>
+                <label>Pratica non gestita</label>
+            </value>
+            <value>
+                <fullName>Pratica non gestita per il DL</fullName>
+                <default>false</default>
+                <label>Pratica non gestita per il DL</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Reclami Contratti</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Contratti</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Reclami Post Vendita</fullName>
+                <default>false</default>
+                <label>Protocollo - Reclami Post Vendita</label>
+            </value>
+            <value>
+                <fullName>Protocollo - Segnalazioni</fullName>
+                <default>false</default>
+                <label>Protocollo - Segnalazioni</label>
+            </value>
+            <value>
+                <fullName>Quality Call</fullName>
+                <default>false</default>
+                <label>Quality Call</label>
+            </value>
+            <value>
+                <fullName>Quality Scaduta</fullName>
+                <default>false</default>
+                <label>Quality Scaduta</label>
+            </value>
+            <value>
+                <fullName>Reclamo da Riclassificare</fullName>
+                <default>false</default>
+                <label>Reclamo da Riclassificare</label>
+            </value>
+            <value>
+                <fullName>Riaperture urgenti errori DL</fullName>
+                <default>false</default>
+                <label>Riaperture urgenti errori DL</label>
+            </value>
+            <value>
+                <fullName>Richiesta non identificata</fullName>
+                <default>false</default>
+                <label>Richiesta non identificata</label>
+            </value>
+            <value>
+                <fullName>Richiesta Parere</fullName>
+                <default>false</default>
+                <label>Richiesta Parere</label>
+            </value>
+            <value>
+                <fullName>Risposta Motivata Con Allegato</fullName>
+                <default>false</default>
+                <label>Risposta Motivata Con Allegato</label>
+            </value>
+            <value>
+                <fullName>Sblocco Processo Post-Vendita</fullName>
+                <default>false</default>
+                <label>Sblocco Processo Post-Vendita</label>
+            </value>
+            <value>
+                <fullName>Sblocco Processo verso SII/DL</fullName>
+                <default>false</default>
+                <label>Sblocco Processo verso SII/DL</label>
+            </value>
+            <value>
+                <fullName>Sblocco Voltura</fullName>
+                <default>false</default>
+                <label>Sblocco Voltura</label>
+            </value>
+            <value>
+                <fullName>Scarti Documentali</fullName>
+                <default>false</default>
+                <label>Scarti Documentali</label>
+            </value>
+            <value>
+                <fullName>Sollecito cli da gestire</fullName>
+                <default>false</default>
+                <label>Sollecito cli da gestire</label>
+            </value>
+            <value>
+                <fullName>Sollecito gestito</fullName>
+                <default>false</default>
+                <label>Sollecito gestito</label>
+            </value>
+            <value>
+                <fullName>Validazione Firma OTP</fullName>
+                <default>false</default>
+                <label>Validazione Firma OTP</label>
+            </value>
+            <value>
+                <fullName>Valori non corrispondenti</fullName>
+                <default>false</default>
+                <label>Valori non corrispondenti</label>
+            </value>
+            <value>
+                <fullName>Valutazione Penale</fullName>
+                <default>false</default>
+                <label>Valutazione Penale</label>
+            </value>
+            <value>
+                <fullName>Vendita - Contratti</fullName>
+                <default>false</default>
+                <label>Vendita - Contratti</label>
+            </value>
+            <value>
+                <fullName>Verifica Back Office</fullName>
+                <default>false</default>
+                <label>Verifica Back Office</label>
+            </value>
+            <value>
+                <fullName>Back Office - Contratti</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Contratti</label>
+            </value>
+            <value>
+                <fullName>Back Office - Fatturazione</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Fatturazione</label>
+            </value>
+            <value>
+                <fullName>Back Office - Morosità</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Morosità</label>
+            </value>
+            <value>
+                <fullName>Back Office - Pagamenti</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Pagamenti</label>
+            </value>
+            <value>
+                <fullName>Back Office - Preventivi</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Preventivi</label>
+            </value>
+            <value>
+                <fullName>Back Office - Tari/TCP</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Tari/TCP</label>
+            </value>
+            <value>
+                <fullName>Back Office - Vas e HVAC</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Back Office - Vas e HVAC</label>
+            </value>
+            <value>
+                <fullName>Caricamenti contratti</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Caricamenti contratti</label>
+            </value>
+            <value>
+                <fullName>Credit Management – affidi legale</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Credit Management – affidi legale</label>
+            </value>
+            <value>
+                <fullName>Credit Management – cessioni</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Credit Management – cessioni</label>
+            </value>
+            <value>
+                <fullName>Gestione procedurale SAP</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gestione procedurale SAP</label>
+            </value>
+            <value>
+                <fullName>Gestione processi Ultima Istanza</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gestione processi Ultima Istanza</label>
+            </value>
+            <value>
+                <fullName>Gestione processi di Misura</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Gestione processi di Misura</label>
+            </value>
+            <value>
+                <fullName>Supporto emissione SD_singola</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Supporto emissione SD_singola</label>
+            </value>
+            <value>
+                <fullName>Verifiche contratti</fullName>
+                <default>false</default>
+                <isActive>false</isActive>
+                <label>Verifiche contratti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

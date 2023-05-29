@@ -61,6 +61,7 @@ public with sharing class HDT_SRV_BpCaCreate
         String response = bpCaUtl.executeRequest(body);
         String data = bpCaUtl.handleResponse(response);
         bpCaUtl.updateBillingProfile(data,billingId);
+        bpCaUtl.updateAccount(data, accountId);
         return data;
     }
 

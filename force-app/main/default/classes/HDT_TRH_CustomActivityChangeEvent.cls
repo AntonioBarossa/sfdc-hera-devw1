@@ -115,9 +115,9 @@ public inherited sharing class HDT_TRH_CustomActivityChangeEvent {
                             wrpObjMap.put(changeId, wrpObj);
                         }
 
-                        if(!wrpObjMap.get(i).fieldMap.containsKey('LastModifiedDate')){
-                            wrpObjMap.remove(i);
-                        }
+                        //if(!wrpObjMap.get(i).fieldMap.containsKey('LastModifiedDate')){
+                        //    wrpObjMap.remove(i);
+                        //}
 
                     }
 

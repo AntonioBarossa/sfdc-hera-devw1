@@ -2,7 +2,7 @@
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     public static Boolean enableTurbobilling(String commodity){
-        return (Label.TRB_Enable.equalsIgnoreCase('Y') && Label.TRB_Commodity.contains(commodity));
+        return (Label.TRB_Enable.equalsIgnoreCase('Y') && !String.isBlank(commodity) && Label.TRB_Commodity.contains(commodity));
     }
 
     public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDataHelper(){
