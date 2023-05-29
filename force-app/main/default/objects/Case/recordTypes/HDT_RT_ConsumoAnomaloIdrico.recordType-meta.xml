@@ -160,36 +160,6 @@
         </values>
     </picklistValues>
     <picklistValues>
-        <picklist>PayPurification__c</picklist>
-        <values>
-            <fullName>No - Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Paga</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Ridotta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
-        <picklist>PaySewer__c</picklist>
-        <values>
-            <fullName>No - Esente</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Paga</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Si - Ridotta</fullName>
-            <default>false</default>
-        </values>
-    </picklistValues>
-    <picklistValues>
         <picklist>AnnualUnicInstallment__c</picklist>
         <values>
             <fullName>Attiva</fullName>
@@ -328,6 +298,10 @@
     <picklistValues>
         <picklist>CaliberAvailable__c</picklist>
         <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>100</fullName>
             <default>false</default>
         </values>
@@ -336,11 +310,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>230 Volt</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>3 x 15 - 2%2E5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
             <default>false</default>
         </values>
         <values>
@@ -352,7 +338,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6%2E3 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -564,47 +562,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>3 x 15 - 2.5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5 x 20 - 4 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20 x 40 - 16 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7 x 25 - 6.3 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>10 x 30 - 10 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30X50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>60X100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV 80 - 63 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WV 100 - 100 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV150 - 300 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV40</fullName>
             <default>false</default>
         </values>
         <values>
@@ -612,11 +570,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV65</fullName>
+            <fullName>WV 80 - 63 mc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -636,13 +598,25 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>CaliberRequested__c</picklist>
         <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>100</fullName>
             <default>false</default>
         </values>
@@ -651,11 +625,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>230 Volt</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>3 x 15 - 2%2E5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
             <default>false</default>
         </values>
         <values>
@@ -667,7 +653,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6%2E3 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -879,47 +877,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>3 x 15 - 2.5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5 x 20 - 4 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20 x 40 - 16 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7 x 25 - 6.3 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>10 x 30 - 10 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30X50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>60X100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV 80 - 63 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WV 100 - 100 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV150 - 300 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV40</fullName>
             <default>false</default>
         </values>
         <values>
@@ -927,11 +885,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV65</fullName>
+            <fullName>WV 80 - 63 mc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -951,13 +913,25 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>Caliber__c</picklist>
         <values>
+            <fullName>10 x 30 - 10 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>100</fullName>
             <default>false</default>
         </values>
@@ -966,11 +940,23 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>20 x 40 - 16 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>230 Volt</fullName>
             <default>false</default>
         </values>
         <values>
+            <fullName>3 x 15 - 2%2E5 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>30</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>30X50</fullName>
             <default>false</default>
         </values>
         <values>
@@ -982,7 +968,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>5 x 20 - 4 mc</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>50</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>60X100</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>7 x 25 - 6%2E3 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1194,47 +1192,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>3 x 15 - 2.5 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>5 x 20 - 4 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>20 x 40 - 16 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>7 x 25 - 6.3 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>10 x 30 - 10 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>30X50</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>60X100</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV 80 - 63 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>WV 100 - 100 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV150 - 300 mc</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>WV40</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1242,11 +1200,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>WV65</fullName>
+            <fullName>WV 80 - 63 mc</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>WV125</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV150 - 300 mc</fullName>
             <default>false</default>
         </values>
         <values>
@@ -1266,7 +1228,15 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>WV40</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>WV400</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>WV65</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -1501,6 +1471,25 @@
         </values>
         <values>
             <fullName>Volontà estorta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>CartographyDetail__c</picklist>
+        <values>
+            <fullName>Accesso agli atti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificazione esistenza%2Finesistenza fogna</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risanamento Ambientale nulla osta NO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Risanamento Ambientale nulla osta SI</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2293,6 +2282,17 @@
         </values>
     </picklistValues>
     <picklistValues>
+        <picklist>Cohabitation__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
         <picklist>Commodity__c</picklist>
         <values>
             <fullName>Acqua</fullName>
@@ -2567,8 +2567,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <!-- Commentata picklist esclusa da CI/CD -->
-    <!---<picklistValues>
+    <!-- <picklistValues>
         <picklist>CreatorGroup__c</picklist>
         <values>
             <fullName>AA CALL TS OUT</fullName>
@@ -3023,6 +3022,34 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMS_BACK_CONSERVICE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CALL_CENTER_KOINE%27</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CREDITO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_CRM_AMBIENTE</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MMS_CRM_SPORTELLO</fullName>
             <default>false</default>
         </values>
@@ -3031,39 +3058,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMS_BACK_GESTIONE_CLIENTI</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_CRM_AMBIENTE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_BACK_CONTACT_CENTER</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_BACK_CONSERVICE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_CREDITO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_LEGALE</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_CALL_CENTER_COVISIAN</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>MMS_INCASSI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>MMS_CALL_CENTER_KOINE'</fullName>
+            <fullName>MMS_LEGALE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -3616,6 +3615,17 @@
         </values>
         <values>
             <fullName>S - Dettaglio 2</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>DeviationOver2000mc__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8098,7 +8108,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <!--<picklistValues>
+    <!-- <picklistValues>
         <picklist>InformationDetail__c</picklist>
         <values>
             <fullName>Abbina%2FDisabbina contatto %28Sol%2FApp%29</fullName>
@@ -8533,10 +8543,6 @@
         </values>
         <values>
             <fullName>Modifiche Anagrafiche</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Morosita</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9114,9 +9120,85 @@
             <fullName>Votive Modena Pagamenti Morosità</fullName>
             <default>false</default>
         </values>
-    </picklistValues>-->
+    </picklistValues> -->
+    <picklistValues>
+        <picklist>InquiryOutcome__c</picklist>
+        <values>
+            <fullName>Accolta depurazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Accolta fognatura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Non accolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta accolta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>IntendedUse__c</picklist>
+        <values>
+            <fullName>Alberghi%2Fpensioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Antincendio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Attività di intratten%2E e altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Completamento allacciamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>NO DOM TEMPOR%2E %3E40kW-FIERA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ospedali%2Fcase di cura%2F</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stralcio di allac%2E - Uso cant%2E</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>IsSameReasonComplaint__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>JointBottomAdhesion__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Lettura_inserita_in_SAP__c</picklist>
         <values>
             <fullName>No</fullName>
             <default>false</default>
@@ -9149,7 +9231,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <!--<picklistValues>
+    <!-- <picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Appuntamento agente</fullName>
@@ -9227,7 +9309,7 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues>-->
+    </picklistValues> -->
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
@@ -9269,55 +9351,71 @@
     <picklistValues>
         <picklist>Material__c</picklist>
         <values>
-            <fullName>Abiti usati</fullName>
+            <fullName>ABITI USATI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Amianto</fullName>
+            <fullName>AMIANTO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Amianto%2FEthernit</fullName>
+            <fullName>AMIANTO%2FETHERNIT</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Animali d%27affezione</fullName>
+            <fullName>ANIMALI D%27AFFEZIONE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Buche su strada</fullName>
+            <fullName>BUCHE SU STRADA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Caduta calcinacci</fullName>
+            <fullName>CADUTA CALCINACCI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Carcasse animali</fullName>
+            <fullName>CARCASSE ANIMALI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Carta</fullName>
+            <fullName>CARTA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Carta%2FCartone</fullName>
+            <fullName>CARTA%2FCARTONE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cartone_soloAziende</fullName>
+            <fullName>CARTONE_SOLOAZIENDE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Con rimozione</fullName>
+            <fullName>CESTINI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>DistanzaCassonDaDomicilioUT</fullName>
+            <fullName>CON RIMOZIONE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>ECOSELF %28carta e plastica%29</fullName>
+            <fullName>DISTANZACASSONDADOMICILIOUT</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ECOSELF %28CARTA E PLASTICA%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FANGOSI NON PERICOLOSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FANGOSI PERICOLOSI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FARMACI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9325,23 +9423,19 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Fangosi non pericolosi</fullName>
+            <fullName>INGOMBRANTI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Fangosi pericolosi</fullName>
+            <fullName>INGOMBRANTI%2BRAEE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Farmaci</fullName>
+            <fullName>LATTINE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ingombranti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ingombranti%2BRaee</fullName>
+            <fullName>LAVAGGIO%2FPULIZIA SEDE STRADALE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9349,95 +9443,87 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lattine</fullName>
+            <fullName>LEGNO_SOLOAZIENDE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavaggio%2Fpulizia sede stradale</fullName>
+            <fullName>LIQUIDI NON PERICOLOSI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Legno_soloAziende</fullName>
+            <fullName>LIQUIDI PERICOLOSI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Liquidi non pericolosi</fullName>
+            <fullName>MACERIE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Liquidi pericolosi</fullName>
+            <fullName>MARCIAPIEDE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Macerie</fullName>
+            <fullName>MULTIMATERIALE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Marciapiede</fullName>
+            <fullName>NESSUN MATERIALE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Multimateriale</fullName>
+            <fullName>OLIO SU STRADA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Nessun materiale</fullName>
+            <fullName>OLIO VEGETALE%2FALIMENTARE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Olio su strada</fullName>
+            <fullName>ORGANICO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Olio vegetale%2FAlimentare</fullName>
+            <fullName>ORGANICO_SOLOUTNONDOM</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Organico</fullName>
+            <fullName>PANNOLINI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Organico_soloUTNonDom</fullName>
+            <fullName>PANNOLINI%2FPANNOLONI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pannolini</fullName>
+            <fullName>PILE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pannolini%2FPannoloni</fullName>
+            <fullName>PILE%2FBATTERIE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pile</fullName>
+            <fullName>PISTA CICLABILE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pile%2FBatterie</fullName>
+            <fullName>PLASTICA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pista ciclabile</fullName>
+            <fullName>PLASTICA%2FLATTINE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Plastica</fullName>
+            <fullName>PORTICO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Plastica%2FLattine</fullName>
+            <fullName>POTATURE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Portico</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Potature</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pseudoedili</fullName>
+            <fullName>PSEUDOEDILI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9449,75 +9535,82 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>RIFIUTI SPECIALI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RIMOZIONE%2FROVESCIAMENTO CASSON</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>RSU</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RSU_SoloAziende</fullName>
+            <fullName>RSU_SOLOAZIENDE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rifiuti Speciali</fullName>
+            <fullName>SEDE STRADALE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rimozione%2FRovesciamento casson</fullName>
+            <fullName>SFALCI E POTATURE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sede stradale</fullName>
+            <fullName>SIRINGHE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sfalci e potature</fullName>
+            <fullName>SOLIDI NON PERICOLOSI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Siringhe</fullName>
+            <fullName>SOLIDI PERICOLOSI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Solidi non pericolosi</fullName>
+            <fullName>TONER</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Solidi pericolosi</fullName>
+            <fullName>UTENZA INSERITA IN PAP_CENTRO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Toner</fullName>
+            <fullName>UTENZA INSERITA IN PAP_ZAI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Utenza inserita in PAP_CENTRO</fullName>
+            <fullName>VERDE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Utenza inserita in PAP_ZAI</fullName>
+            <fullName>VETRI A TERRA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Verde</fullName>
+            <fullName>VETRO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Vetri a terra</fullName>
+            <fullName>VETRO%2FPLASTICA%2FLATTINE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Vetro</fullName>
+            <fullName>VETRO%2FVETRO %2B LATTINE</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>MissingDue__c</picklist>
+        <values>
+            <fullName>N</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Vetro%2FPlastica%2FLattine</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Vetro%2FVetro %2B lattine</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>cestini</fullName>
+            <fullName>Y</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -9819,11 +9912,15 @@
     <picklistValues>
         <picklist>OperationGroup__c</picklist>
         <values>
-            <fullName>Altri servizi-IUAS0001</fullName>
+            <fullName>ALTRI SERVIZI-IUAS0001</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Altri servizi-IUAS0002</fullName>
+            <fullName>ALTRI SERVIZI-IUAS0002</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CIMITERIALI-IUIN0023</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9831,43 +9928,39 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cimiteriali-IUIN0023</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>DLGS_116%2F2020-IUAS0003</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pulizia aree pubblic-IUPS0000</fullName>
+            <fullName>PULIZIA AREE PUBBLIC-IUPS0000</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pulizia aree pubblic-IUPS0002</fullName>
+            <fullName>PULIZIA AREE PUBBLIC-IUPS0002</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pulizia aree pubblic-IUPS0007</fullName>
+            <fullName>PULIZIA AREE PUBBLIC-IUPS0007</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Raccolta differenziat-IURD0023</fullName>
+            <fullName>RACCOLTA DIFFERENZIAT-IURD0023</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Raccolta indifferenz-IUIN0021</fullName>
+            <fullName>RACCOLTA INDIFFERENZ-IUIN0021</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Scarichi abusivi-IUPS0000</fullName>
+            <fullName>SCARICHI ABUSIVI-IUPS0000</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizi a pag%2Ecarcass-IUAS0001</fullName>
+            <fullName>SERVIZI A PAG%2ECARCASS-IUAS0001</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizi a pagamento-IUAS0002</fullName>
+            <fullName>SERVIZI A PAGAMENTO-IUAS0002</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -9893,7 +9986,7 @@
     <picklistValues>
         <picklist>OperationType__c</picklist>
         <values>
-            <fullName>Modifica dati contr. stesso Cli</fullName>
+            <fullName>Modifica dati contr%2E stesso Cli</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10035,6 +10128,40 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PayPurification__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PaySewer__c</picklist>
+        <values>
+            <fullName>No - Esente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Paga</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si - Ridotta</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>
@@ -10080,6 +10207,14 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Annullata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Annullato</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Approvazione KO</fullName>
             <default>false</default>
         </values>
@@ -10089,6 +10224,10 @@
         </values>
         <values>
             <fullName>Attesa risposta cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Autorizzata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10108,11 +10247,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Comunicazionee EngageOne KO</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Consumo effettivo</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Contattare cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Da Inviare</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10132,6 +10279,10 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Errore tecnico invio a SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Fuga da Gestire - In attesa validazione</fullName>
             <default>false</default>
         </values>
@@ -10144,7 +10295,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>in attesa processo doc massivo</fullName>
+            <fullName>In Attesa Di Autorizzazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In attesa esito EngageOne</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Inviata a SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10172,7 +10331,27 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Mancata risposta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica Elaborata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Ricalcolata SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sospesa SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Stornata SAP</fullName>
             <default>false</default>
         </values>
         <values>
@@ -10180,31 +10359,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Annullato</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mancata risposta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Comunicazionee EngageOne KO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>In attesa esito EngageOne</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Da Inviare</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Inviata a SAP</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Errore tecnico invio a SAP</fullName>
+            <fullName>in attesa processo doc massivo</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10295,6 +10450,25 @@
         </values>
         <values>
             <fullName>SI</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PurificationInfoOnTheInvoice__c</picklist>
+        <values>
+            <fullName>Utenza non servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza non servita con progettazione in corso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza servita</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Utenza temporaneamente non servita</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -12166,6 +12340,130 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>MMS_SP_Acqualagna_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Apecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cagli_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cantiano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Cartoceto_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fermignano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Fossombrone_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Gabicce_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Lunano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Macerata_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Montecchio_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Orciano_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pergola_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_4</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_5</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_6</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_7</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Pesaro_8</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Piobbico_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_San_Lorenzo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Sant_Angelo_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbania_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_1</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_2</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_3</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MMS_SP_Urbino_4</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>MO_SP_Bastiglia</fullName>
             <default>false</default>
         </values>
@@ -12331,130 +12629,6 @@
         </values>
         <values>
             <fullName>Team 1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Acqualagna_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Apecchio_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Cagli_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Cantiano_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Cartoceto_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Fermignano_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Fossombrone_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Gabicce_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Lunano_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Macerata_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Montecchio_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Montecchio_2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Montecchio_3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Orciano_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pergola_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_4</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_5</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_6</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_7</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Pesaro_8</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Piobbico_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_San_Lorenzo_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Sant_Angelo_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Urbania_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Urbino_1</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Urbino_2</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Urbino_3</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS_SP_Urbino_4</fullName>
             <default>false</default>
         </values>
     </picklistValues> -->
@@ -12640,6 +12814,25 @@
         </values>
         <values>
             <fullName>Non Domestico</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>SupplyUseType__c</picklist>
+        <values>
+            <fullName>ACQUEDOTTO CIVILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>ACQUEDOTTO INDUSTRIALE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FOGNATURA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>TELERISCALDAMENTO</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -13050,50 +13243,50 @@
     </picklistValues>
     <picklistValues>
         <picklist>Type</picklist>
-		<values>
-			<fullName>Ambiente annullo richiesta senza appuntamento</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Conferimento Centri di Raccolta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Consumo Anomalo Idrico</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Formulari Richiesta Sconto</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Gestione Rifiuti</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Pagamento Unico Annuale TARI</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Riduz. superficie rifiuti spec promiscui</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Riduzione Agevolazione dopo Accertamento</fullName>
-			<default>false</default>
-		</values>
+        <values>
+            <fullName>Ambiente annullo richiesta senza appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Conferimento Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Consumo Anomalo Idrico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Formulari Richiesta Sconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Gestione Rifiuti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pagamento Unico Annuale TARI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduz%2E superficie rifiuti spec promiscui</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Riduzione Agevolazione dopo Accertamento</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Rimozione Agevolazione</fullName>
             <default>false</default>
         </values>
-		<values>
-			<fullName>Sconti Collettivi Pap</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>Segnalazioni Ambientali</fullName>
-			<default>false</default>
-		</values>
+        <values>
+            <fullName>Sconti Collettivi Pap</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Ambientali</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>TypeInstallmentPlan__c</picklist>
@@ -13117,6 +13310,10 @@
     <picklistValues>
         <picklist>TypeOperation__c</picklist>
         <values>
+            <fullName>APERTURAELETTRONICANONFUNZIONA</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Amianto%2FEternit-IURD0026</fullName>
             <default>false</default>
         </values>
@@ -13125,7 +13322,39 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>AperturaElettronicaNonFunziona</fullName>
+            <fullName>CALOTTA_MANUTENZIONE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CANCELLAZIONE SCRITTE MURARIE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHIAVETTA ELETTRONICA_CONSEGNA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CHIAVETTA ELETTRONICA_MANUTENZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CIMITERIALI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA KIT PANNOLINI ECO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA KIT PORTA A PORTA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA PANNOLINI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CONSEGNA%2FRITIRO CASSONE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13133,51 +13362,15 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Calotta_manutenzione</fullName>
+            <fullName>DISERBO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cancellazione scritte murarie</fullName>
+            <fullName>DISMISSIONE COMPOSTIERA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Chiavetta elettronica_consegna</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Chiavetta elettronica_manutenz</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Cimiteriali</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consegna KIT Pannolini ECO</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consegna KIT Porta a Porta</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consegna pannolini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consegna%2FRitiro cassone</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Diserbo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Dismissione compostiera</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>GuastoCheImpedisceConferimento</fullName>
+            <fullName>GUASTOCHEIMPEDISCECONFERIMENTO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13193,35 +13386,63 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Lamentele Comportam Operatore</fullName>
+            <fullName>LAMENTELE COMPORTAM OPERATORE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavaggio Portici</fullName>
+            <fullName>LAVAGGIO CONTENITORE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Lavaggio contenitore</fullName>
+            <fullName>LAVAGGIO PORTICI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Manutenzione Cestini</fullName>
+            <fullName>MANUTENZIONE CESTINI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Manutenzione contenitore PAP</fullName>
+            <fullName>MANUTENZIONE CONTENITORE PAP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Muschio_Erba murella</fullName>
+            <fullName>MUSCHIO_ERBA MURELLA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Noleggio cassoni</fullName>
+            <fullName>NOLEGGIO CASSONI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Odori Mezzi%2FDotazione%2FImpianti</fullName>
+            <fullName>ODORI MEZZI%2FDOTAZIONE%2FIMPIANTI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PRELIEVO CARCASSE ANIMALI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PRONTO INTERVENTO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PSEUDOEDILI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PULIZIA ARENILE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PULIZIA CADITOIE</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PULIZIA GIARDINI</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PULIZIA SUOLO PUBBLICO</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13229,31 +13450,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Prelievo carcasse animali</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pronto Intervento</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pseudoedili</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pulizia Caditoie</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pulizia Giardini</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pulizia arenile</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Pulizia suolo pubblico</fullName>
+            <fullName>RACCOLTA SIRINGHE</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13261,111 +13458,119 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Raccolta siringhe</fullName>
+            <fullName>RICH%2E VERIFICA SCONTI RACC%2EDIF</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rich%2E verifica sconti racc%2Edif</fullName>
+            <fullName>RICHIESTA COMPOSTIERA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiesta Informazioni</fullName>
+            <fullName>RICHIESTA CONTENITORE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiesta compostiera</fullName>
+            <fullName>RICHIESTA INFORMAZIONI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiesta contenitore</fullName>
+            <fullName>RICHIESTA SACCHI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiesta sacchi</fullName>
+            <fullName>RICHIESTACONTENITAGGIUNTIVOPAP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>RichiestaContenitAggiuntivoPAP</fullName>
+            <fullName>RIFIUTI ATTORNO AL CONTENITORE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rimozione Contenitore PAP</fullName>
+            <fullName>RIMOZIONE CONTENITORE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rimozione contenitore</fullName>
+            <fullName>RIMOZIONE CONTENITORE PAP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ritiro a pagamento</fullName>
+            <fullName>RITIRO A PAGAMENTO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Ritiro animali morti</fullName>
+            <fullName>RITIRO ANIMALI MORTI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Rumori di Mezzi%2FImpianti</fullName>
+            <fullName>RUMORI DI MEZZI%2FIMPIANTI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>SE_segnalazione disservizi</fullName>
+            <fullName>SCARICHI ABUSIVI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Scarichi abusivi</fullName>
+            <fullName>SEGNALAZ COMPORTAMEN CITTADINI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalaz comportamen cittadini</fullName>
+            <fullName>SEGNALAZIONE SU CDR</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Segnalazione su CDR</fullName>
+            <fullName>SERVIZI A FESTE E MANIFESTAZ</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizi a feste e manifestaz</fullName>
+            <fullName>SERVIZI DEIEZIONI CANINE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizi deiezioni canine</fullName>
+            <fullName>SERVIZIO BORA</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizio Bora</fullName>
+            <fullName>SERVIZIO NEVE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizio Neve</fullName>
+            <fullName>SE_SEGNALAZIONE DISSERVIZI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Smaltimento Rifiuti Speciali</fullName>
+            <fullName>SMALTIMENTO RIFIUTI SPECIALI</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sollec RitiroGratuito conApp</fullName>
+            <fullName>SOLLEC RITIROGRATUITO CONAPP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sollec RitiroGratuito senzaApp</fullName>
+            <fullName>SOLLEC RITIROGRATUITO SENZAAPP</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sollecito Ritiro a Pagamento</fullName>
+            <fullName>SOLLECITO RITIRO A PAGAMENTO</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Sostituzione contenitore</fullName>
+            <fullName>SOSTITUZIONE CONTENITORE</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Spostamento Cassonetto</fullName>
+            <fullName>SPOSTAMENTO CASSONETTO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SPOSTAMENTO CONTENITORE</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Toner-IURD0053</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VERIFICA TARIFFA</fullName>
             <default>false</default>
         </values>
         <values>
@@ -13410,18 +13615,6 @@
         </values>
         <values>
             <fullName>Verde%2Fpotature_NOApp-IURD0043</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica tariffa</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>rifiuti attorno al contenitore</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>spostamento contenitore</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -13477,6 +13670,45 @@
         </values>
         <values>
             <fullName>013-Uso Condizionam%2E%2BRiscald%2E</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>UseSubCategory__c</picklist>
+        <values>
+            <fullName>Altri usi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso agricolo e zootecnico</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso artigianale e commerciale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso condominiale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico non residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso domestico residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso industriale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico disalimentabile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Uso pubblico non disalimentabile</fullName>
             <default>false</default>
         </values>
     </picklistValues>

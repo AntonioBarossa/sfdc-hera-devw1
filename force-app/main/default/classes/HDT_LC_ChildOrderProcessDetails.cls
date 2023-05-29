@@ -123,9 +123,9 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
                     throw new AuraHandledException(check.message);
                 }
             }
-            if(orderToUpdate.TemporaryConnectionStartDate__c != null 
-            && orderToUpdate.TemporaryConnectionEndDate__c != null
-            && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
+            if( orderToUpdate.TemporaryConnectionStartDate__c != null 
+                && orderToUpdate.TemporaryConnectionEndDate__c != null
+                && orderToUpdate.TemporaryConnectionEndDate__c <= orderToUpdate.TemporaryConnectionStartDate__c)
             {
                 throw new AuraHandledException('La data fine connessione temporanea non puo essere precedente alla data inizio!');
             }
@@ -148,12 +148,16 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             if( !( 'Prima Attivazione'.equalsIgnoreCase(currentOrder.ProcessType__c) && 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) ) && orderToUpdate.DeferredDate__c != null && (
                 orderToUpdate.DeferredDate__c < orderSrv.addBusinessDay(System.today(),5) || 
-                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) ){
-
-                throw new AuraHandledException('La data differita popolata erroneamente');
-                
+                orderToUpdate.DeferredDate__c > orderSrv.addBusinessDay(System.today(),120) ) )
+            {
+                throw new AuraHandledException('La data differita popolata erroneamente');  
             }
 
+            if( 'Acqua'.equalsIgnoreCase(currentOrder.ServicePoint__r.CommoditySector__c) && orderToUpdate.Disconnectable__c != null )
+            {
+                orderToUpdate.NotDisconnectabilityCustomer__c = 'Si'.equalsIgnoreCase(orderToUpdate.Disconnectable__c)? 'No' : 'Si';
+            }
+            
             orderSrv.updateRecord(orderToUpdate);
         }
         if(order.getSObjectType().getDescribe().getName() == 'OrderItem')
@@ -176,7 +180,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             sobjListToUpdate.add(orderToUpdate);
             sobjListToUpdate.add(ordItem);
             sobjListToUpdate.add(quoteLine);
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjListToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
         
     }
@@ -386,6 +393,7 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
         return result = ( !ords.isEmpty() && ords[0].QuotationType__c != null && !String.isBlank(ords[0].QuotationType__c) )? true:false;
 
     }
+
     @AuraEnabled
     public static Boolean checkPermissionSet(){
 
@@ -396,6 +404,15 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
         return false;
 
+    }
+
+    @AuraEnabled
+    public static Boolean checkCambioOffertaPermission(){
+        
+        if(FeatureManagement.checkPermission('HDT_CP_CambioOfferta')){
+            return true;
+        }
+        return false;
     }
 
     public static HDT_WRP_VoltureChangeManager.HDT_WRP_ProcessCheck checkTechnicalTransfer(HDT_WRP_VoltureChangeManager.HDT_WRP_TransferCheck trCheck)

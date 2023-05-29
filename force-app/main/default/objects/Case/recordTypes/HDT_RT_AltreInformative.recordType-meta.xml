@@ -7672,6 +7672,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -7883,8 +7887,16 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Alexa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Facebook</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -7945,6 +7957,14 @@
         </values>
         <values>
             <fullName>Risposta ricevuta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>In Lavorazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Elaborazione Risposta</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -10899,6 +10919,10 @@
 		</values>
         <values>
             <fullName>Errore Chiamata</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Social</fullName>
             <default>false</default>
         </values>
 		<values>

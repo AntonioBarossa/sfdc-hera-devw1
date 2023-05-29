@@ -25,7 +25,7 @@ public with sharing class HDT_UTL_ContractSubsRelocationTest {
         insert pbEntry;
         insert pbEntryTwo;
 
-        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, accList[0].Id, 'Bozza');
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(3, false, accList[0].Id, 'Bozza');
         orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
         orderList[0].ServicePoint__c = spList[0].Id;
         orderList[0].Pricebook2Id = priceBookId;
@@ -37,6 +37,13 @@ public with sharing class HDT_UTL_ContractSubsRelocationTest {
         orderList[1].SAPContractCode__c = SAP_CONTR_CODE;
         orderList[1].EffectiveDate__c = date.today();
         orderList[1].Commodity__c = 'Ambiente';
+
+        orderList[2].RecordTypeId = orderList[1].RecordTypeId;
+        orderList[2].ServicePoint__c = spList[0].Id;
+        orderList[2].Pricebook2Id = priceBookId;
+        orderList[2].SAPContractCode__c = SAP_CONTR_CODE;
+        orderList[2].EffectiveDate__c = date.today();
+        orderList[2].Commodity__c = 'Ambiente';
         
         insert orderList;
 
@@ -49,19 +56,26 @@ public with sharing class HDT_UTL_ContractSubsRelocationTest {
         orderItemList[1].Product2Id = prodList[1].Id;
         orderItemList[1].PricebookEntryId = pbEntryTwo.Id;
 
+        orderItemList[2].OrderId = orderList[2].Id;
+        orderItemList[2].Product2Id = prodList[1].Id;
+        orderItemList[2].PricebookEntryId = pbEntryTwo.Id;
+
         insert orderItemList;
 
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(2, false, accList[0].Id);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(3, false, accList[0].Id);
         contractList[0].SBQQ__Order__c = orderList[0].Id;
         contractList[0].SAPContractCode__c = SAP_CONTR_CODE;
         contractList[1].SBQQ__Order__c = orderList[1].Id;
         contractList[1].SAPContractCode__c = SAP_CONTR_CODE;
+        contractList[2].SBQQ__Order__c = orderList[2].Id;
+        contractList[2].SAPContractCode__c = SAP_CONTR_CODE;
         /*contractList[2].SBQQ__Order__c = orderList[2].Id;
         contractList[3].SBQQ__Order__c = orderList[3].Id;*/
         insert contractList;
 
         orderList[1].ContractReference__c = contractList[0].Id;
-        update orderList[1];
+        orderList[2].ContractReference__c = contractList[0].Id;
+        update new List<Order>{orderList[1], orderList[2]};
 
         List<SBQQ__Subscription__c> subList = HDT_UTL_DataFactoryTst.createSubscription(2, false, accList[0].Id, contractList[0].Id, spList[0].Id);
         //List<SBQQ__Subscription__c> subListTest = new List<SBQQ__Subscription__c>();
@@ -72,19 +86,16 @@ public with sharing class HDT_UTL_ContractSubsRelocationTest {
         subList[1].SBQQ__Product__c = prodList[1].Id;
         subList[1].SBQQ__OrderProduct__c = orderItemList[1].Id;
         insert subList;
-        //insert subList[0];
-        //insert subList[1];
-        /*subList[2].SBQQ__Contract__c = contractList[2].Id;
-        subList[2].SBQQ__Product__c = prodList[1].Id;
-        subList[2].SBQQ__OrderProduct__c = orderItemList[2].Id;
-        subList[3].SBQQ__Contract__c = contractList[3].Id;
-        subList[3].SBQQ__Product__c = prodList[1].Id;
-        subList[3].SBQQ__OrderProduct__c = orderItemList[3].Id;*/
+
         subList = HDT_UTL_DataFactoryTst.createSubscription(1, false, accList[0].Id, contractList[0].Id, spList[0].Id);
 
-        subList[0].SBQQ__Contract__c = contractList[1].Id;
-        subList[0].SBQQ__Product__c = prodList[1].Id;
-        subList[0].SBQQ__OrderProduct__c = orderItemList[1].Id;
+        subList[0].SBQQ__Contract__c = contractList[2].Id;
+        subList[0].SBQQ__Product__c = prodList[1].Id;   
+        subList[0].SBQQ__OrderProduct__c = orderItemList[2].Id;
+        
+        /*subList[1].SBQQ__Contract__c = contractList[2].Id;
+        subList[1].SBQQ__Product__c = prodList[0].Id;   
+        subList[1].SBQQ__OrderProduct__c = orderItemList[2].Id;*/
         insert subList;
         
     }
@@ -93,8 +104,7 @@ public with sharing class HDT_UTL_ContractSubsRelocationTest {
     @isTest
     public static void fakeMoveInMoveOutTest(){
         Order o = [Select id, contractReference__c, SAPContractCode__c, ContractReference__r.SAPContractCode__c, RecordTypeId from Order where contractReference__c != null LIMIT 1];
-        Contract c = [Select id, SapContractCode__c from Contract Where ID != :o.contractReference__c AND SAPContractCode__c = :o.SAPContractCode__c LIMIT 1];
-        Contract otherContr = [Select id from Contract where id =:o.contractReference__c LIMIT 1];
+        Contract c = new Contract(SAPContractCode__c = SAP_CONTR_CODE);
         Test.startTest();
         system.assert(
             new HDT_UTL_ContractSubscriptionRelocation().checkConditionsBefore(c, o),

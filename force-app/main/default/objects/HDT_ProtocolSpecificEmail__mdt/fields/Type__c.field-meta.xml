@@ -96,6 +96,16 @@
                 <label>Protocollo - Voltura</label>
             </value>
             <value>
+                <fullName>Protocollo - Web</fullName>
+                <default>false</default>
+                <label>Protocollo - Web</label>
+            </value>
+            <value>
+                <fullName>Protocollo - TARI da Ufficio</fullName>
+                <default>false</default>
+                <label>Protocollo - TARI da Ufficio</label>
+            </value>
+            <value>
                 <fullName>Vendita - Contratti</fullName>
                 <default>false</default>
                 <label>Vendita - Contratti</label>

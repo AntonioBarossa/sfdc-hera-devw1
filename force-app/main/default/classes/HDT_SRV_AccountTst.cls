@@ -29,6 +29,48 @@ public with sharing class HDT_SRV_AccountTst {
     }
 
     @isTest
+    public static void testUpdateRecordsWithCheckTrigger() {
+
+        User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            Test.startTest();
+           
+            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'Persona fisica', 'Famiglie');
+
+            srvAccount.updateRecordsWithCheckTrigger(accList);
+
+            Account acc = [SELECT Id, Name FROM Account WHERE Name = 'test account0'];
+
+            Test.stopTest();
+
+            System.assertEquals(accList[0].Name, 'test account0', 'Account successfully created');
+        }
+    }
+
+    @isTest
+    public static void testUpdateRecordsWithCheck() {
+
+        User u = [SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+ 
+        System.runAs(u){
+
+            Test.startTest();
+           
+            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountResidenziale(1, true, 'HERA COMM', 'Persona fisica', 'Famiglie');
+
+            srvAccount.updateRecordsWithCheck(accList);
+
+            Account acc = [SELECT Id, Name FROM Account WHERE Name = 'test account0'];
+
+            Test.stopTest();
+
+            System.assertEquals(accList[0].Name, 'test account0', 'Account successfully created');
+        }
+    }
+
+    @isTest
     public static void testCheckReadAccess() {
 
         boolean finito;
@@ -185,60 +227,5 @@ public with sharing class HDT_SRV_AccountTst {
             System.assertNotEquals('Roma', account.BillingCityCode__c, 'Account was not updated');
         }
     }
-    
-/*     public static List<Account> createAccountBusiness(Integer amount, Boolean doInsert, String companyOwner, String customerMarking, String category){
 
-		List<Account> accList=new List<Account>();
-
-		Id rt=constants.ACCOUNT_RECORDTYPEID_BUSINESS;
-
-		for (Integer i=0; i<amount; i++){
-			//** [START MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
-			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			Decimal numCustomerCode = Decimal.valueOf('1003616210');
-			Decimal result = numCustomerCode + i;
-			String stringResult = String.valueOf(result);
-			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
-			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-
-			Account acc=new Account();
-
-			acc.RecordTypeId=rt;
-			acc.Name='test account'+i;
-			acc.CompanyOwner__c=companyOwner;
-			acc.CustomerMarking__c=customerMarking;
-			acc.Category__C=category;
-			acc.BillingCityCode__c='Roma';
-			acc.BillingStreetName__c='via roma';
-			acc.BillingStreetNumber__c='55';
-			acc.LastName__c='test account'+i;
-			acc.BillingIsAddressVerified__c=true;
-			
-			if(String.isNotBlank(customerMarking) && (customerMarking.containsIgnoreCase('Condominio') || customerMarking.containsIgnoreCase('Associazione'))) {
-				acc.FiscalCode__c='SXSRLA45H28H5' + String.valueOf(500 + i);
-			} else {
-				acc.VATNumber__c='12345678' + String.valueOf(100 + i);
-			}
-
-			//@frpanico 06/08 added Customer Code
-			//** [START MOD 2021-08-20] @Author:Luca Belometti @Description: Modified the customer code field
-			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-			// OLD VALUE → acc.CustomerCode__c='1003616210';
-        	acc.IsWrongFiscalData__c = false;
-			acc.CustomerCode__c = stringResult;
-			//** [END MOD 2021-08-20] @Author:Luca Belometti - wr (luca.belometti@webresults.it) @Description: Modified the customer code field
-			//** It is a unique field, it will crash the insert of acc if the ammount param is more than 1 record
-
-			System.debug('Business account created in Data Factory ' + acc);
-			accList.add(acc);
-
-		}
-
-		if (doInsert){
-
-			insert accList;
-		}
-
-		return accList;
-	} */
 }

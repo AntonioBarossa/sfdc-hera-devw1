@@ -114,7 +114,9 @@ public inherited sharing class HDT_QR_Case {
         Type,
         Phase__c,
         DistributorName__c,
-        Commodity__c
+        Commodity__c,
+        PhaseStory__c,
+        Subprocess__c
         FROM Case
         WHERE Id = :caseId
         WITH SECURITY_ENFORCED

@@ -97,6 +97,16 @@
                 <default>false</default>
                 <label>VAS</label>
             </value>
+            <value>
+                <fullName>Sospensione</fullName>
+                <default>false</default>
+                <label>Sospensione</label>
+            </value>
+            <value>
+                <fullName>Sconti e Agevolazioni</fullName>
+                <default>false</default>
+                <label>Sconti e Agevolazioni</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

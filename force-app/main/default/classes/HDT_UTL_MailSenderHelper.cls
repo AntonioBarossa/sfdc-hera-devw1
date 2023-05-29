@@ -145,14 +145,17 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         
         HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult updateCaseResult = new HDT_WRP_MailSender.HDT_WRP_GenerateCaseResult();
 
+        String csNumber = '';
+        
         try {
-
+            
             Case reminderCase = new Case();
             reminderCase.Id = caseId;
             
             List<Case> detailedCases = HDT_QR_MailSender.getCaseById(caseId);
             String newPhase = '';
             if(detailedCases.size() >0){
+                csNumber = detailedCases[0].Parent?.CaseNumber;
                 String oldPhase = detailedCases[0].Phase__c;
                 switch on oldPhase {
                     when 'In attesa risposta Mail'{
@@ -190,6 +193,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
 
         updateCaseResult.caseId = caseId;
         updateCaseResult.success = true;
+        updateCaseResult.caseNumber = csNumber;
         return updateCaseResult;
 
     }
@@ -234,6 +238,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             mailCase.PhaseStory__c = null;
             mailCase.FirstName__c = acc.FirstName__c;
             mailCase.LastName__c = acc.LastName__c;
+            mailCase.NotCancellable__c = true;
 
             SObjectType objtype = Schema.getGlobalDescribe().get('Case');
             Schema.DescribeSObjectResult objRes = objtype.getDescribe();
@@ -245,10 +250,11 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 generateCaseResult.message = 'No access to Case';
                 return generateCaseResult;
             }
-
+            
             generateCaseResult.success = true;
             generateCaseResult.message = 'Case created';
             generateCaseResult.caseId = mailCase.Id;
+            generateCaseResult.caseNumber = caseToClone?.CaseNumber;
 
         } catch (Exception e){
             generateCaseResult.success = false;
@@ -258,9 +264,9 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         return generateCaseResult;
     }
 
-    public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(Id templateId, Id recordId){
+    public static HDT_WRP_MailSender.HDT_WRP_BodyMail getBodyMailMerged(String templateName, Id templateId, Id recordId){
         
-        System.debug('>>> templateId: ' + templateId + ' - recordId: ' + recordId);
+        System.debug('>>> templateName: ' + templateName + ' - ' + 'templateId: ' + templateId + ' - recordId: ' + recordId);
 
         HDT_WRP_MailSender.HDT_WRP_BodyMail bodyMailResult = new HDT_WRP_MailSender.HDT_WRP_BodyMail();
         Messaging.SingleEmailMessage singleEmailMessage;
@@ -270,7 +276,8 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
             bodyMailResult.success = true;
             bodyMailResult.message = '';
             bodyMailResult.bodyMail = singleEmailMessage.getHtmlBody();
-            bodyMailResult.receiver = '###';///getReceiverMail(templateId);
+            bodyMailResult.receiver = getReceiverMail(templateId);
+            bodyMailResult.templateName = templateName;
         } catch(Exception e){
             bodyMailResult.success = false;
             bodyMailResult.message = e.getMessage() + ' - linea [' + String.valueOf(e.getLineNumber()) + ']';
@@ -323,7 +330,7 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                 //mail.setReferences('<OZCJB000000000000000000000000000000000000000000000ROQDLZ0048utoRPnQK2LnoiL9jyV4A@sfdc.net>');
                 //mail.setBccAddresses(new List<String>{''});
             } else {
-                subjectString = comGestore;
+                subjectString = comGestore + ' - ' + mailStructure.templateName;
                 List<Case> detailedCaseList = HDT_QR_MailSender.getCaseById(mailStructure.recordId);
                 if(detailedCaseList.size() > 0 && 'Comunicazione con il Gestore'.equalsIgnoreCase(detailedCaseList[0].Type)){
                     caseResult = updateReminderCase(mailStructure.recordId, isCaseObj);
@@ -336,15 +343,30 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
                     sendMailResult.message = caseResult.message;
                     return sendMailResult;
                 }
+
+                if(mailStructure.attachmentsIdList?.size() > 0){
+                    List<String> contentVersionIdList = new List<String>();
+                    List<ContentVersion> cvList = [SELECT Id FROM ContentVersion WHERE ContentDocumentId IN :mailStructure.attachmentsIdList WITH SECURITY_ENFORCED];
+                    if(cvList.size() > 0){
+                        for (ContentVersion cv : cvList) {
+                            contentVersionIdList.add(cv.Id);
+                        }
+                        mail.setEntityAttachments(contentVersionIdList);
+                        updateAttachmentsParent(mailStructure.attachmentsIdList, caseResult.caseId, currentId);
+                    }
+                }
             }
 
             String messageId = Cases.generateThreadingMessageId(caseResult.caseId);
+            String stringCaseLink = '<br><br><a href="'+ URL.getSalesforceBaseUrl().toExternalForm()+ '/'+caseResult.caseId +'">Link Pratica Salesforce</a>';
             mail.setReferences(messageId);
-            mail.setHtmlBody(mailStructure.bodyMail);
+            mail.setHtmlBody(mailStructure.bodyMail + '\n' + stringCaseLink);
             mail.setToAddresses(new String[]{mailStructure.toAddress});
             //mail.setCcAddresses(new String[]{'antonino.fugazzotto@2hy53hdpybee3yyzu1pnnhfr9jl2twp6abttuei499hjwqdemq.3n-8mj0uaa.cs128.case.sandbox.salesforce.com'});
             mail.setOrgWideEmailAddressId(Id.valueOf(mailStructure.orgWideAddId));
-            mail.setSubject(subjectString + '[ thread::' + caseResult.caseId + ':: ]');
+            //DA GESTIRE MEGLIO SELEZIONE SUBJECT, SU CASE COM AL GESTORE il CASENUMBER RISULTA NULL
+            String subjectStringExtend = !String.isBlank(caseResult.caseNumber) ? ' - Case Controllante: ' + caseResult.caseNumber + ' ' + '[ thread::' + caseResult.caseId + ':: ]' : ' [ thread::' + caseResult.caseId + ':: ]';
+            mail.setSubject(subjectString + subjectStringExtend);
             mail.setWhatId(caseResult.caseId);
 			Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
 
@@ -367,11 +389,90 @@ public inherited sharing class HDT_UTL_MailSenderHelper {
         return sendMailResult;
     }
 
-    //public static String getReceiverMail(Id templateId){
-    //    List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
-    //    emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
-    //    //return HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
-    //    return 'receiver@mail.com';// inserita manualmente
-    //}
+    public static List<ContentDocument> getContentDocs(Id arecordId){   
+        List<ContentDocumentLink> cdLs = [SELECT ContentDocumentId FROM ContentDocumentLink WHERE LinkedEntityId = :arecordId WITH SECURITY_ENFORCED];
+        if (cdLs.size() < 1){
+            return new List<ContentDocument>();
+        }
+
+        List <Id> cdIdList = new List <Id> ();
+        for (ContentDocumentLink nextCdl : cdLs) {
+            cdIdList.add(nextCdl.ContentDocumentId); }    
+
+        //Restituisco i file che sono stati caricati negli ultimi minuti, in modo da evitare che vengano presi documenti già presenti sul case padre.
+        DateTime timeNow = System.now();
+        DateTime subTimeNow = timeNow.addMinutes(-2);
+        return [SELECT Id, Title, FileType,CreatedDate, ContentSize FROM ContentDocument WHERE ContentDocument.Id IN :cdIdList AND createdDate <:timeNow AND createdDate >:subTimeNow WITH SECURITY_ENFORCED];
+    }
+
+    public static void updateAttachmentsParent(List<String> attachmentIdList, Id parentId, Id oldParent){
+
+        try {
+            List<ContentDocument> contDocList = [SELECT Id, parentId FROM ContentDocument WHERE Id IN :attachmentIdList WITH SECURITY_ENFORCED];
+            if(contDocList.size() > 0){
+
+                
+                //creazione nuovo contentDocumentLink che punta al case figlio di Comunicazione con il gestore
+                List<ContentDocumentLink> newLinkList = new List<ContentDocumentLink>();
+                for (ContentDocument cdoc : contDocList) {
+                    ContentDocumentLink  contDoc = new ContentDocumentLink ();
+                    contDoc.LinkedEntityId = parentId;
+                    contDoc.ContentDocumentId = cdoc.Id;
+                    newLinkList.add(contDoc);
+                }
+                
+                if(newLinkList.size() > 0){
+                    HDT_UTL_DatabaseService.insertSObject(newLinkList);
+                }
+                
+                //Eliminazione vecchio contentDocumentLink che puntava al case padre (case da cui è stata innescata la comunicazione)
+                if(oldParent != null){
+                    List<ContentDocumentLink> oldLinksList = [SELECT Id, LinkedEntityId, ContentDocumentId FROM ContentDocumentLink WHERE ContentDocumentId IN :contDocList AND LinkedEntityId =: oldParent WITH SECURITY_ENFORCED];
+
+                    if(oldLinksList.size() > 0)
+                    {
+                        HDT_UTL_DatabaseService.deleteSObject(oldLinksList);
+                    }
+                }
+            }
+
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed Exception: ' + e.getStackTraceString());
+        }
+    }
+
+    public static String getReceiverMail(Id templateId){
+       List<EmailTemplate> emailTemplateList = new List<EmailTemplate>();
+       emailTemplateList = HDT_QR_MailSender.getEmailTemplateById(templateId);
+       String receiverAddress = HDT_QR_MailSender.getEmail(emailTemplateList[0].Name);
+       return !String.isBlank(receiverAddress) ? receiverAddress : '###';
+    }
+
+    public static void deletePendingFiles(List<Id> cdIdList) {
+        List<ContentDocument> cdList = [SELECT Id FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];
+        if(cdList.size() > 0){
+            try {
+                HDT_UTL_DatabaseService.deleteSObject(cdList);
+            } catch (Exception e) {
+                System.debug(LoggingLevel.DEBUG, 'Throwed Error: ' + e.getStackTraceString());
+            }
+        }
+    }
+
+    public static Decimal getContentSizeAttachments(List<Id> cdIdList) {
+        List<ContentDocument> cdList = [SELECT ContentSize FROM ContentDocument WHERE Id IN :cdIdList WITH SECURITY_ENFORCED];
+        Decimal attachmentSizeMb = 0.0;
+        Long attachmentSizeBytes = 0;
+        if(cdList.size() > 0){
+            for (ContentDocument cd : cdList){
+                attachmentSizeBytes = attachmentSizeBytes + cd.ContentSize;
+            }
+            //La ContentSize è in bytes, la converto in megabytes in modo da poter fare il check sulla dimensione lato js
+            Decimal mb = Decimal.valueOf(attachmentSizeBytes);
+            attachmentSizeMb = mb?.divide((1024*1024),2);
+        }
+        
+        return attachmentSizeMb;
+    }
 
 }

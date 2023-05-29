@@ -249,46 +249,9 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
 
         //il campo SignMode è stato utilizzato per salvare il SignatureMethod dell'ultimo invio
         orderToUpdate.SignMode__c = orderParent.SignMode__c;
-      /*  if(isPlicoSend){
-          //  orderToUpdate.Phase__c = 'Plico da inviare';
-          orderToUpdate.Phase__c = 'Documentazione da validare';
-        }
-        else{
-            orderToUpdate.Phase__c = 'Documentazione da validare';
-        }*/
-        // }
 
         orderToUpdate.DocumentPackage__c = 'Richiesto';
 
-        /*for (Order childOrd : childOrders) {
-            if (childOrd.RecordType.DeveloperName == 'HDT_RT_VolturaConSwitch') {
-                ordersToUpdate.add(
-                    new Order(
-                        Id = childOrd.Id,
-                        Phase__c = childOrd.Account.RecordType.DeveloperName == 'HDT_RT_Business' ? 'Comunicazione verso Heroku' : (checkRequiredDocs(childOrd) ? 'Comunicazione verso Heroku': 'In attesa validazione')
-                    )
-                );
-            }
-        }*/
-
-        //update CampaignMember Status From Stampa
-        /**@fvitiell 21/02/2022
-         * Implementato e commentato, utile laddove dovesse servire
-         * aggiornare alla pressione del tasto Stampa del Wizard
-         */
-        /*List<String> myCampaignListIds = new List<String>();
-        for (Order myChildOrder : childOrders){
-            Campaign myCampaign = new Campaign(
-                Id = myChildOrder.Campaign__c
-            );
-            myCampaignListIds.add(myChildOrder.Campaign__c);
-        }
-        List<CampaignMember> myCampaignMemberList = [Select id, Campaign.PositiveOutcomeDefaultStatus__c from CampaignMember where CampaignId IN :myCampaignListIds WITH SECURITY_ENFORCED];
-        for(myCampaignMember : myCampaignMemberList){
-            String status = myCampaignMember.Campaign.PositiveOutcomeDefaultStatus__c;
-            String CampaignMemberId = myCampaignMember.Id;
-            HDT_LC_CampaignsController.updateCampaignMemberStatusFromStampa(CampaignMemberId, status);
-        }*/
         /* L'aggiornamento dello step previene lo sbiancamento della data firma */
         if('Documentazione Gestita'.equalsIgnoreCase(orderToUpdate.Phase__c))
         {
@@ -640,11 +603,15 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         }
         if(!sobjToUpdate.isEmpty())
         {
+            /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
+            HDT_UTL_QuoteProcess.disableCpq();
             HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
+            HDT_UTL_QuoteProcess.enableCpq();
         }
 
     }
 
+    @TestVisible
     private static void handleTariOrder(Order orderParentRetreived){
         Order parentOrderToUpdate = new Order();
         parentOrderToUpdate.Id = orderParentRetreived.Id;
@@ -655,7 +622,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
             parentOrderToUpdate.Phase__c = 'Documentazione da inviare';
         }
 
-        List<Order> ordersToUpdate = new List<Order>{parentOrderToUpdate};
+        Map<id, Order> ordersToUpdateMap = new map<id, Order>{parentOrderToUpdate.Id => parentOrderToUpdate};
 
         for(Order childOrd : orderQr.getChildOrdersByParentId(orderParentRetreived.Id)){
             if( 'HDT_RT_AgevolazioniAmbiente' == childOrd.RecordType.DeveloperName && childOrd.OrderReference__c != null){
@@ -663,10 +630,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
                     Id=childOrd.Id,
                     Surface__c = childOrd.OrderReference__r.Surface__c
                 );
-                ordersToUpdate.add( o );
+
+                ordersToUpdateMap.put(childOrd.OrderReference__c, new Order(Id=childOrd.OrderReference__c, BlockOnComputation__c = 'Y'));
+                ordersToUpdateMap.put( o.Id, o );
             }
         }
-        orderSrv.updateRecords(ordersToUpdate);
+        orderSrv.updateRecords(ordersToUpdateMap.values());
     }
-
 }

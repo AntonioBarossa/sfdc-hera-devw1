@@ -3,7 +3,8 @@
     <fullName>HDT_VatNumberCheck</fullName>
     <active>true</active>
     <description>Il campo &quot;Partita Iva&quot; sul Lead deve avere lunghezza uguale a 11 caratteri e deve ammettere solo caratteri numerici ai fini del salvataggio</description>
-    <errorConditionFormula>IF(  NOT(ISBLANK(VATNumber__c) ), IF(  ( LEN(VATNumber__c) ==11)&amp;&amp;(REGEX(VATNumber__c,&quot;[0-9]*&quot;)), false, true), false)</errorConditionFormula>
+    <errorConditionFormula>IF(AND(CONTAINS($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipUsernames__c,$User.Username), OR(ISBLANK($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipDueDateTime__c),DATETIMEVALUE(NOW()) &lt; DATETIMEVALUE($CustomMetadata.HDT_AutomationToggle__mdt.HDT_TRH_Lead.SkipDueDateTime__c))),false,
+    IF(  NOT(ISBLANK(VATNumber__c) ), IF(  ( LEN(VATNumber__c) ==11)&amp;&amp;(REGEX(VATNumber__c,&quot;[0-9]*&quot;)), false, true), false))</errorConditionFormula>
     <errorDisplayField>VATNumber__c</errorDisplayField>
     <errorMessage>La Partita Iva deve essere composta da 11 caratteri numerici</errorMessage>
 </ValidationRule>

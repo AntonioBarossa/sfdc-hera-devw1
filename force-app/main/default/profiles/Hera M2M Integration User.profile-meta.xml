@@ -310,6 +310,14 @@
         <enabled>true</enabled>
         <name>HDT_IndemnitiesDays__mdt</name>
     </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_RecordFormFieldDependency__mdt</name>
+    </customMetadataTypeAccesses>
+    <customMetadataTypeAccesses>
+        <enabled>true</enabled>
+        <name>HDT_EmailComunicazioneGestore__mdt</name>
+    </customMetadataTypeAccesses>
     <customSettingAccesses>
         <enabled>true</enabled>
         <name>CS_ArchivedRecordsDeleteBatch__c</name>
@@ -720,6 +728,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.CustomerCodeSAP__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>ServicePoint__c.AfDistrib__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -935,6 +948,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>ServicePoint__c.AggregateBilling__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>CampaignMemberLeadAssigmentItem__c.Agency__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -1046,6 +1064,26 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.AnnualTARIPayment__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.AgriculturalHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.CommercialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.IndustrialHousingUnit__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.ZootechnicalHousingUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -5295,7 +5333,17 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.AtoReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.VasSupplyAddress__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__Quote__c.IsFromVasSection__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -7746,6 +7794,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>ServicePoint__c.AreaDeclaredTARI__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>ServicePoint__c.AreaRelevantForCalculation__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -10667,7 +10720,7 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
-        <field>DiscardAnnullmentRule__c.DiscardReason__c</field>
+        <field>DiscardAnnullmentRule__c.DiscardReasonList__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -11253,6 +11306,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalPayloadAdministration__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EligibilityCriteria__c.AtoReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EligibilityCriteria__c.AtoReferenceOperator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -13730,10 +13793,11 @@
         <field>Knowledge__kav.PublicLink__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <!-- W2 - Rimossa momentaneamente visibilità Link Rifiutologo, da gestire come CR per visualizzazione dinamica -->
     <fieldPermissions>
         <editable>false</editable>
         <field>Knowledge__kav.WasterLink__c</field>
-        <readable>true</readable>
+        <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
@@ -16978,6 +17042,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>Order.SAPImplantCode__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>Order.SameFamilyUnit__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22033,6 +22102,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__LookupData__c.ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__LookupData__c.NumberValueLookup__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>
@@ -30467,6 +30541,21 @@
         <field>TechnicalOffer__c.WeeklyContribution__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>TechnicalOffer__c.Index__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.AccountPartner__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>User.ProfileName__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
         <!--SFDC-OIG/OIM 17/09/2021-->
         <fieldPermissions>
             <editable>true</editable>
@@ -32650,6 +32739,11 @@
         <readable>false</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_RecordFormFieldDependency__mdt.DependecyJSON__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>trailheadapp__Trail__c.trailheadapp__Archived__c</field>
         <readable>true</readable>
@@ -34275,6 +34369,11 @@
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
+        <editable>false</editable>
+        <field>wrts_prcgvr__Activity__c.Account_Partner_Matching__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__Activity__c.Individual_Email_Result__c</field>
         <readable>true</readable>
@@ -35015,6 +35114,11 @@
 		<field>MandatoryAttachments__c.ProductDescription__c</field>
 		<readable>true</readable>
 	</fieldPermissions>
+    <fieldPermissions>
+		<editable>true</editable>
+		<field>MandatoryAttachments__c.ServiceProduct__c</field>
+		<readable>true</readable>
+	</fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>MandatoryAttachments__c.SubProcessType__c</field>
@@ -35098,6 +35202,16 @@
     <fieldPermissions>
         <editable>false</editable>
         <field>SlaTracking__c.RangeType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_EmailComunicazioneGestore__mdt.Email_Template_Name__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>false</editable>
+        <field>HDT_EmailComunicazioneGestore__mdt.Email__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <layoutAssignments>
@@ -35338,7 +35452,7 @@
         <recordType>Case.HDT_RT_ReclamiScrittiTARI</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Case-HDT_ReclamiScrittiTARI</layout>
+        <layout>Case-HDT_ReclamoDaCittadino</layout>
         <recordType>Case.HDT_RT_ReclamoDaCittadino</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -35563,7 +35677,7 @@
         <recordType>Order.HDT_RT_AttivazioneAmbiente</recordType>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>Order-Attivazioni Ambiente</layout>
+        <layout>Order-Cambio Tariffa</layout>
         <recordType>Order.HDT_RT_CambioTariffa</recordType>
     </layoutAssignments>
     <layoutAssignments>
@@ -35899,7 +36013,7 @@
         <layout>SalesforceCustomer__x-Cliente Salesforce Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
-        <layout>SalesforceDocActivity__x-Attività Documentale Salesforce Layout</layout>
+        <layout>SalesforceDocActivity__x-Attivita Documentale Salesforce Layout</layout>
     </layoutAssignments>
     <layoutAssignments>
         <layout>SalesforceDocSelected__x-Documento Selezionato Salesforce Layout</layout>

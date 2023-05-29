@@ -111,13 +111,17 @@ public inherited sharing class HDT_UTL_PostSalesManager{
                 activity.wrts_prcgvr__IsRequired__c	= true;
                 HDT_UTL_DatabaseService.insertSObject(activity);
             } else if (parentCase.Type.equalsIgnoreCase('Consumo Anomalo Idrico') && currentCase.Type.equalsIgnoreCase('Verifica Fuga Idrica') && (currentCase.Commodity__c.equalsIgnoreCase('Acqua') || currentCase.CommodityFormula__c.equalsIgnoreCase('Acqua'))) {
-                wrts_prcgvr__Activity__c actElabManuale = [SELECT Id, ActivityOutcome__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Elaborazione Manuale' AND wrts_prcgvr__Status__c = 'Chiusa' WITH SECURITY_ENFORCED LIMIT 1];
-                if (actElabManuale != null && 'Negativo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
-                    parentCase.Phase__c = 'KO Definitivo';
-                    parentCase.Status = 'Closed';
-                }else if (actElabManuale != null && 'Positivo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
-                    parentCase.Phase__c = 'Documentazione validata';
-                    parentCase.Status = 'In Lavorazione';
+                List<wrts_prcgvr__Activity__c> actElabManualeList = [SELECT Id, ActivityOutcome__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND Type__c = 'Elaborazione Manuale' AND wrts_prcgvr__Status__c = 'Chiusa' WITH SECURITY_ENFORCED];
+                wrts_prcgvr__Activity__c actElabManuale = new wrts_prcgvr__Activity__c();
+                if(actElabManualeList != null && !actElabManualeList.isEmpty()){
+                    actElabManuale = actElabManualeList[0];
+                    if (actElabManuale != null && 'Negativo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                        parentCase.Phase__c = 'KO Definitivo';
+                        parentCase.Status = 'Closed';
+                    }else if (actElabManuale != null && 'Positivo'.equalsIgnoreCase(actElabManuale.ActivityOutcome__c)){
+                        parentCase.Phase__c = 'Documentazione validata';
+                        parentCase.Status = 'In Lavorazione';
+                    }
                 }
             } else if ('Ricostruzione Consumi'.equalsIgnoreCase(parentCase.Type) && !'Completata'.equalsIgnoreCase(parentCase.Phase__c) && 'Acqua'.equalsIgnoreCase(parentCase.Commodity__c) &&'Completata'.equalsIgnoreCase(currentCase.Phase__c)){
                 parentCase.Phase__c = 'Completata';
@@ -691,7 +695,7 @@ public inherited sharing class HDT_UTL_PostSalesManager{
             if(currentCase.ParentId != null){
                 Case parentCase = [SELECT Id, Type, Subprocess__c FROM Case where Id =: currentCase.ParentId WITH SECURITY_ENFORCED LIMIT 1];
                 if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiKo.contains(currentCase.Phase__c)){
-                    HDT_UTL_Case.createActivity(currentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                    HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
                 }else if('Errore Stima Consumi'.equals(parentCase.Subprocess__c) && fasiOk.contains(currentCase.Phase__c)){
                     parentCase.Phase__c = 'Da Inviare';
                     update parentCase;
@@ -775,14 +779,29 @@ public inherited sharing class HDT_UTL_PostSalesManager{
     @SuppressWarnings('PMD.ApexCRUDViolation')
     public void handleChiusuraActivitiesPending(SObject inputCase){
         Case currentCase = (Case) inputCase;
+        Set<String> processTypeSet = new Set<String>{'Ricostruzione Consumi', 'Comunicazione con il Gestore'};
 
         try {
-            if ('Ricostruzione Consumi'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
+            if (processTypeSet.contains(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)) {
                 List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa'];
                 List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
                 if(actToCloseList.size() > 0){
                     for (wrts_prcgvr__Activity__c act : actToCloseList){
                         act.wrts_prcgvr__Status__c = 'Chiusa';
+                        actToUpdate.add(act);
+                    }
+    
+                    update actToUpdate;
+                }
+            }else if ('Consumo Anomalo Idrico'.equalsIgnoreCase(currentCase.Type) && 'Acqua'.equalsIgnoreCase(currentCase.Commodity__c)){
+                List<wrts_prcgvr__Activity__c> actToCloseList = [SELECT Id, wrts_prcgvr__Status__c FROM wrts_prcgvr__Activity__c WHERE Case__c =: currentCase.Id AND wrts_prcgvr__Status__c <> 'Chiusa' AND Type__c = 'Gestione Back Office'];
+                List<wrts_prcgvr__Activity__c> actToUpdate = new List<wrts_prcgvr__Activity__c>();
+                if(actToCloseList.size() > 0){
+                    for (wrts_prcgvr__Activity__c act : actToCloseList){
+                        act.wrts_prcgvr__Status__c = 'Chiusa';
+                        if ('Documentazione incompleta'.equalsIgnoreCase(currentCase.Phase__c)) {
+                            act.Reason__c = 'Documentazione Incompleta';
+                        }
                         actToUpdate.add(act);
                     }
     

@@ -20,7 +20,7 @@
 public with sharing class HDT_WS_GarbageManTest {
 
 	private static final String JSON_REQUEST = '{"phoneNumber":"3287777777","fiscalCode":"BRRSMN81T22I459C","clientTypology":"Domestico","contactName":"Simone tortora","streetCode":"041044811157","city":"PESARO","street":"VIALE VENTIQUATTRO MAGGIO","streetNumber":"16","typeInt":"Ingombr+RAEE_NOAPP-IURD0033","requestCode":"11111","materialDescription":"Prodotto 1: Valigia varie tipologie"}';
-	
+
 	@isTest
     public static void testCalloutOk() {
 
@@ -46,6 +46,7 @@ public with sharing class HDT_WS_GarbageManTest {
 			res.requestInCharge,
 			'Test Callout returned negative'
 		);
+        HDT_WS_GarbageMan waGar = new HDT_WS_GarbageMan();
         Test.StopTest();
     }
 
@@ -59,6 +60,20 @@ public with sharing class HDT_WS_GarbageManTest {
 		insert accs;
         //test
         Test.startTest();
+
+        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, false, accs[0].Id);
+        contacts[0].FiscalCode__c = 'BRRSMN81T22I459C';
+        insert contacts;
+
+        AccountContactRelation currAccConRel =[ SELECT Id, Roles
+                                                FROM AccountContactRelation 
+                                                WHERE AccountId = :accs[0].Id
+                                                AND ContactId = :contacts[0].Id
+                                                WITH SECURITY_ENFORCED 
+                                                LIMIT 1
+                                               ];
+        currAccConRel.roles = 'Titolare';
+        update currAccConRel;
 
         //setup for test
         RestRequest req = new RestRequest();
@@ -93,6 +108,35 @@ public with sharing class HDT_WS_GarbageManTest {
 			'Test Callout did not failed as expected for Invalid Type Intervention'
 		);
 
+        Test.StopTest();
+    }
+
+	@isTest
+    public static void testCalloutKoInsertFailed() {
+
+        //test
+        Test.startTest();
+
+        //setup for test
+        RestRequest req = new RestRequest();
+        RestResponse restResp = new RestResponse();
+
+        String reqString = '{"phoneNumber":"3287777777","fiscalCode":"BRRSMN81T22I459C","clientTypology":"Domestico Non","contactName":"Simone tortora","streetCode":"041044811157","city":"PESARO","street":"VIALE VENTIQUATTRO MAGGIO","streetNumber":"16","typeInt":"Ingombr+RAEE_NOAPP-IURD0033","requestCode":"11111","materialDescription":"Prodotto 1: Valigia varie tipologie"}';
+        req.requestURI = 'services/apexrest/rifiutologo';
+        req.httpMethod = 'POST';
+        req.requestBody = Blob.valueOf(reqString);
+
+        RestContext.request = req;
+        RestContext.response = restResp;
+
+        //call webservice method
+        HDT_WS_GarbageMan.HDT_WRP_WasteDisposalResponse res = HDT_WS_GarbageMan.handleWasteDisposalFromApp();
+        system.assertEquals(
+			'N',
+			res.requestInCharge,
+			'Test Callout did not failed as expected for Invalid Type Intervention'
+		);
+        HDT_WS_GarbageMan waGar = new HDT_WS_GarbageMan();
         Test.StopTest();
     }
 

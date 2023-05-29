@@ -725,6 +725,7 @@ public with sharing class HDT_UTL_OrderProcessTst {
 
     @isTest
     public static void testModificaTariffaChildPhase() {
+        Pricebook2 pricebook = HDT_UTL_DataFactoryTst.activeStandardPricebook();
  
         User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
  
@@ -732,12 +733,17 @@ public with sharing class HDT_UTL_OrderProcessTst {
  
             Test.startTest();
             HDT_UTL_DataFactoryTst.newPhaseTransition('In Lavorazione','Da Inviare', constants.ORDER_RECORDTYPEID_MODIFICATARI, constants.ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI);
+            HDT_UTL_DataFactoryTst.newPhaseTransition('Completata','Documentazione Validata', constants.ORDER_RECORDTYPEID_MODIFICATARI, constants.ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI);
 
             List<Order> ordersOld = [SELECT Id, Phase__c, AccountId, isTransition__c, ContractSigned__c, RecordTypeId,
                                             QualityCall__c, AgencyCode__c, EffectiveDate__c, Status, WizardCompletedDate__c, ProcessType__c,
                                             Contact__c, ParentOrder__c, PhaseStory__c, SignedDate__c, IncomingCreditCheckResult__c,
-                                            IsSequanzialized__c, TecnicalPhase__c, (Select sale__c from Orders__r)
+                                            IsSequanzialized__c, BillingProfile__c, TecnicalPhase__c, (Select sale__c from Orders__r)
                                      FROM Order WHERE AgencyCode__c = 'AgencyCode'];
+
+
+            List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(2, true);
+            List<PricebookEntry> pricebookEntries = HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pricebook.Id);
  
 
             List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(2, false, ordersOld[0].AccountId, 'Da Inviare');
@@ -752,14 +758,34 @@ public with sharing class HDT_UTL_OrderProcessTst {
             orderList[0].ChamberCommerceRegistration__c = 'Validato';
             orderList[0].Instance326__c = 'Validato';
             orderList[0].DocumentLow80__c = 'Validato';
+            orderList[0].pricebook2Id = pricebook.Id;
 
+            orderList[1].ProcessType__c = 'Modifica Tariffa';
+            orderList[1].ApprovalType__c ='2 - Attività';
+            orderList[1].Commodity__c ='Ambiente';
+            orderList[1].Phase__c ='Documentazione Validata';
+            orderList[1].ParentOrder__c = ordersOld[0].Id;
+            orderList[1].RecordTypeId = constants.ORDER_RECORDTYPEID_MODIFICATARI;
+            orderList[1].AutorizationVolturaThirdTrader__c = 'Validato';
+            orderList[1].CIAccoutn__c = 'Validato';
+            orderList[1].QuickQuote__c = 'Validato';
+            orderList[1].ChamberCommerceRegistration__c = 'Validato';
+            orderList[1].Instance326__c = 'Validato';
+            orderList[1].DocumentLow80__c = 'Validato';
+            orderList[1].pricebook2Id = pricebook.Id;
 
             insert orderList;
+            
+            List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[0].id, null, products[0].id, pricebookEntries[0].id);
+            HDT_UTL_DataFactoryTst.createOrderItem(1, true, orderList[1].id, null, products[1].id, pricebookEntries[1].id);
 
             ordersOld[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ORDERDOSSIER;
             ordersOld[0].Phase__c = 'Documentazione Gestita';
             update ordersOld; 
             Test.stopTest();
+
+            List<Order> results = [Select id, Status from Order WHERE ID IN (:orderList[0].Id, :orderList[1].Id) AND Status ='Activated'];
+            System.assert(!results.isEmpty(), 'L\'ordine di modifica tariffa non si è attivato');
         }
     }
 

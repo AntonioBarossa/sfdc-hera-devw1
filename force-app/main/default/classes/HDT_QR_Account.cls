@@ -104,8 +104,8 @@ public inherited sharing class HDT_QR_Account {
         
         return [
             SELECT
-                Id,
-                Phone, MobilePhone__c, OtherPhone__c,
+                Id, Name,
+                Phone, MobilePhone__c, OtherPhone__c, CustomerCode__c,
                 CompanyOwner__c, BillingPlace__c
             FROM Account 
             WHERE FiscalCode__c = :fiscalCode

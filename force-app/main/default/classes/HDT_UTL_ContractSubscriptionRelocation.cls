@@ -11,7 +11,12 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         allContractsIds.addAll(oldOfferContracts);*/
         Map<Id, Contract> oldContractWithSubs = new Map<Id, Contract>([
             SELECT
-            Id, (Select SBQQ__TerminatedDate__c, SBQQ__SubscriptionEndDate__c from SBQQ__Subscriptions__r)
+            Id, 
+            (   Select 
+                    SBQQ__TerminatedDate__c, SBQQ__SubscriptionEndDate__c,
+                    SBQQ__Product__r.Family
+                from SBQQ__Subscriptions__r
+            )
             FROM Contract
             where Id IN :oldOfferContracts 
         ]);
@@ -22,20 +27,33 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         Map<Id, Contract> contrsToDelete = new Map<Id, Contract>();
         Map<Id, Contract> contrsToUpdate = new Map<Id, Contract>();
         
-        for(SBQQ__Subscription__c sub : subsToMove){
-            Order ord = itemsMap.get(sub.SBQQ__OrderProduct__c)?.Order;
+        for(SBQQ__Subscription__c subToMove : subsToMove){
+            Order ord = itemsMap.get(subToMove.SBQQ__OrderProduct__c)?.Order;
             if(checkConditions(ord, ord?.SapContractCode__c)){
-                List<SBQQ__Subscription__c> oldSubs = oldContractWithSubs.get(ord.ContractReference__r.Id)?.SBQQ__Subscriptions__r;
+                Contract oldContract = oldContractWithSubs.get(ord.ContractReference__r.Id);
+                List<SBQQ__Subscription__c> oldSubs = oldContract?.SBQQ__Subscriptions__r;
+
                 for(SBQQ__Subscription__c oldSub : oldSubs){
-                    if(ord.EffectiveDate__c != null){
+                    if(oldSub.SBQQ__TerminatedDate__c != null ){       continue;      }
+                    
+                    if(
+                        ord.EffectiveDate__c != null
+                        && 'Offerta Commerciale'.equalsIgnoreCase(oldSub.SBQQ__Product__r.Family)
+                    ){
                         oldSub.SBQQ__SubscriptionEndDate__c = ord.EffectiveDate__c.addDays(-1);
                         oldSub.SBQQ__TerminatedDate__c = ord.EffectiveDate__c.addDays(-1);
                         subsToUpdate.put(oldSub.Id, oldSub);
-                    } 
+                    }
+                    else{//se != da offerta commerciale
+                        oldSub.SBQQ__RequiredByProduct__c = subToMove.SBQQ__Product__c;
+                        oldSub.SBQQ__RequiredById__c = subToMove.Id;
+                        oldSub.SBQQ__RootId__c = subToMove.Id;
+                        subsToUpdate.put(oldSub.Id, oldSub);
+                    }
                 }
                 
-                contrsToDelete.put(sub.SBQQ__Contract__c, new Contract(Id=sub.SBQQ__Contract__c));
-                sub.SBQQ__Contract__c = ord.ContractReference__r.Id;
+                contrsToDelete.put(subToMove.SBQQ__Contract__c, new Contract(Id=subToMove.SBQQ__Contract__c));
+                subToMove.SBQQ__Contract__c = ord.ContractReference__r.Id;
                 //subsToUpdate.add(sub);//beforeInsert
                 contrsToUpdate.put(ord.ContractReference__r.Id, new Contract(Id=ord.ContractReference__r.Id, SBQQ__Order__c=ord.Id));
             }
@@ -48,69 +66,6 @@ public inherited sharing class HDT_UTL_ContractSubscriptionRelocation {
         };
         return mapToReturn;
     }
-
-    /* public void moveSubscriptions( Set<Id> oldOfferContracts, Map<Id, Sobject> newMapContracts, Map<Id, Order> mapOrder){
-        if(oldOfferContracts.isEmpty()){    return;    }
-        //Set<Id> allContractsIds = new Set<Id>();
-        //allContractsIds.addAll(newMapContracts.keySet());
-        //allContractsIds.addAll(oldOfferContracts);
-        Map<Id, Contract> contractWithSubs = new Map<Id, Contract>([
-            SELECT
-            Id, (Select SBQQ__TerminatedDate__c, SBQQ__SubscriptionEndDate__c from SBQQ__Subscriptions__r)
-            FROM Contract
-            where Id IN :oldOfferContracts 
-        ]);
-
-        if(contractWithSubs.isEmpty()){    return;    }
-
-        List<SBQQ__Subscription__c> subsToUpdate = new List<SBQQ__Subscription__c>();
-        Set<Id> contractsToDelete = new Set<Id>();
-        Map<Id, Contract> contractsToUpdate = new Map<Id, Contract>();
-
-        for(Contract c : (List<Contract>) newMapContracts.values()){
-            Order ord = mapOrder.get(c.SBQQ__Order__c);
-            if(
-                checkConditions(c, ord)
-            ){                
-                //SF Created a New Contract but SAP didn't
-                List<SBQQ__Subscription__c> oldSubs = contractWithSubs.get(ord.ContractReference__r.Id)?.SBQQ__Subscriptions__r;
-                for(SBQQ__Subscription__c sub : oldSubs){
-                    if(ord.EffectiveDate__c != null){
-                        sub.SBQQ__SubscriptionEndDate__c = ord.EffectiveDate__c.addDays(-1);
-                        sub.SBQQ__TerminatedDate__c = ord.EffectiveDate__c.addDays(-1);
-                        subsToUpdate.add(sub);
-                    } 
-                }
-
-                List<SBQQ__Subscription__c> newSubs = contractWithSubs.get(c.Id)?.SBQQ__Subscriptions__r;
-                for(SBQQ__Subscription__c sub : newSubs){
-                    sub.SBQQ__Contract__c = ord.ContractReference__r.Id;
-                    subsToUpdate.add(sub);
-                    contractsToDelete.add(c.Id);
-                }
-                contractsToUpdate.put(ord.ContractReference__r.Id, new Contract(Id=ord.ContractReference__r.Id, SBQQ__Order__c=ord.Id));
-            }    
-        }
-        dmlOperations(subsToUpdate, contractsToDelete, contractsToUpdate);
-        
-    }
-
-    private static void dmlOperations(List<SBQQ__Subscription__c> subsToUpdate, Set<Id> contractsToDelete, Map<Id, Contract> contractsToUpdate){
-        if(!subsToUpdate.isEmpty()){    HDT_UTL_DatabaseService.updateSObject(subsToUpdate);    }
-        if(!contractsToUpdate.isEmpty()){   HDT_UTL_DatabaseService.updateSObject(contractsToUpdate.values());    }
-        system.debug('@@@@@@ delete operation');
-        system.debug(contractsToDelete);
-        if(!contractsToDelete.isEmpty()){    System.attachFinalizer(new HDT_QBL_Finalizer(contractsToDelete));  }
-    } */
-    
-    /*@future
-    private static void dmlOperations(Set<Id> contractsToDelete){
-        if(!contractsToDelete.isEmpty()){    HDT_UTL_DatabaseService.deleteSObject(new List<Id>(contractsToDelete));  }
-    }*/
-
-    /*public Boolean checkConditions(Contract c, Order ord){
-        return c.Id != ord?.ContractReference__r?.Id && checkConditions(ord, c?.SapContractCode__c);
-    }*/
 
     public Boolean checkConditionsBefore(Contract c, Order ord){
         return c.Id != ord?.ContractReference__r?.Id 

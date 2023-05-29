@@ -11,21 +11,9 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
 
     public override void beforeInsert(){
         list<Contract> newContracts = (List<Contract>) Trigger.New;
-        /*Set<Id> orderToContract = new Set<Id>();
-        for(Contract c : newContracts){
-            orderToContract.add(c.SBQQ__Order__c);
-        }
-
-        map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN:orderToContract with Security_Enforced]);
-        
         for(Contract c : newContracts){
             c.status='Attivo';
-            if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c){
-                //c.SBQQ__Quote__c=null;
-            }
-        }*/
-        for(Contract c : newContracts){
-            c.status='Attivo';
+            c.SBQQ__PreserveBundleStructureUponRenewals__c = true;
         }
     }
 
@@ -84,7 +72,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                             * Aggiunta scrittura della EndDate
                             * Nel caso di Temporanea - Nuova Attivazione
                             */ 
-                            if( mapOrder.get(tempContract.SBQQ__Order__c) != null && ((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')).equalsIgnoreCase('Temporanea - Nuova Attivazione')
+                            if( mapOrder.get(tempContract.SBQQ__Order__c) != null && 'Temporanea - Nuova Attivazione'.equalsIgnoreCase(((String)mapOrder.get(tempContract.SBQQ__Order__c).get('ProcessType__c')))
                                 && String.isNotBlank(String.valueOf(mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c'))))
                                 {
                                     tempContract.EndDate = (Date) mapOrder.get(tempContract.SBQQ__Order__c).get('TemporaryConnectionEndDate__c');
@@ -92,6 +80,7 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
                         }
                     } catch (Exception e){
                         System.debug(LoggingLevel.DEBUG, '>>> HDT_TRH_Contract.beforeUpdate ' + e.getMessage());
+                        System.debug(LoggingLevel.DEBUG, '>>> HDT_TRH_Contract.beforeUpdate ' + e.getStackTraceString());
                         tempContract.addError(e.getMessage());
                     }
                 }
@@ -159,24 +148,6 @@ public inherited sharing class HDT_TRH_Contract extends HDT_TRH_TriggerHandler {
             HDT_SRV_SieXiv sie = new HDT_SRV_SieXiv();
             sie.initSIE(contractsForSieXiv);
         }
-
-
-
-       /*list<Contract> newContracts = (List<Contract>) Trigger.New;
-       Set<Id> orderToContract = new Set<Id>();
-       for(Contract c : newContracts){
-           orderToContract.add(c.SBQQ__Order__c);
-       }
-       map<Id, Order> ordersMap = new Map<Id, Order>([Select isMultipleQuoteOffer__c from Order where id IN :orderToContract]);
-       Set<id> contractsToBeBlanked = new Set<id>();
-       for(Contract c : newContracts){
-           if(ordersMap.get(c.SBQQ__Order__c).isMultipleQuoteOffer__c && c.SBQQ__Quote__c!=null){
-               contractsToBeBlanked.add(c.id);
-           }
-       }
-       if(!contractsToBeBlanked.isEmpty()){
-           myUpdate(contractsToBeBlanked);
-       }*/
     }
 
 }

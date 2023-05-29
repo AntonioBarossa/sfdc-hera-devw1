@@ -25,13 +25,11 @@ public with sharing class HDT_UTL_Reclami
     {
         Map<String,String> result = new Map<String,String>();
         String process = 'Reclamo Scritto/Rich. Info'.equalsIgnoreCase(inputCase.Type) || 'Reclamo Scritto Da Cittadino'.equalsIgnoreCase(inputCase.Type) ? inputCase.FirstLevelComplaintClassification__c : inputCase.Type ;
-        Integer suspensionDays;
 
         List<HDT_IndemnitiesDays__mdt> configurations = getExpirationDateConfigurations(process,'Acqua');
 
         for(HDT_IndemnitiesDays__mdt config : configurations)
         {
-            SuspensionDays = Integer.valueOf(config.SuspensionDays__c);
             if( ( process.equalsIgnoreCase('Richiesta Parere') && String.isNotBlank(ato) && config.ObjectName__c.containsIgnoreCase(ato) && config.ObjectName__c.containsIgnoreCase(inputCase.SecondLevelOpinion__c) ) ||
                 ( String.isNotBlank(ato) && config.ObjectName__c.equalsIgnoreCase(ato) ) ||
                  config.ObjectName__c.equalsIgnoreCase('Default') )
@@ -150,7 +148,7 @@ public with sharing class HDT_UTL_Reclami
         return result;
     }
 
-    private Date addBusinsessDaysWithHolidays(Integer businessDayToAdd, Date startDate)
+    public Date addBusinsessDaysWithHolidays(Integer businessDayToAdd, Date startDate)
     {
         Set<Date> holidays = getHolidaysDate();
         Date finalDate = startDate;

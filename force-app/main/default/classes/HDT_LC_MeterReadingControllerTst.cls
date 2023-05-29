@@ -96,11 +96,25 @@ public class HDT_LC_MeterReadingControllerTst {
         Contract contr = [SELECT Id,SAPContractCode__c FROM Contract LIMIT 1];
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMock());
         Test.startTest();
-        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', false);
 
         System.assertEquals(true, meterReadingObj.success, 'Si è verificato un errore non previsto');
         System.assert(meterReadingObj.data != null, 'Si è verificato un errore in fase di scaricamento dei records');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', true);
+        Test.stopTest();
+    }
 
+    @isTest
+    public static void getConfigurationDetailTableTest(){
+
+        HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata meterReadingObj;
+        Contract contr = [SELECT Id,SAPContractCode__c FROM Contract LIMIT 1];
+        Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMock());
+        Test.startTest();
+        meterReadingObj = HDT_LC_MeterReadingController.getConfigurationDetailTable(contr.SapContractCode__c, false);
+
+        System.assertEquals(true, meterReadingObj.success, 'Si è verificato un errore non previsto');
+        
         Test.stopTest();
     }
 
@@ -120,7 +134,7 @@ public class HDT_LC_MeterReadingControllerTst {
 
         Test.startTest();
         Contract contr = [SELECT Id,SAPContractCode__c FROM Contract LIMIT 1];
-        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', false);
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');
 
@@ -128,7 +142,7 @@ public class HDT_LC_MeterReadingControllerTst {
         response.setStatusCode(500); 
         response.setStatus('KO');
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
-        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', false);
 
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');
@@ -136,7 +150,7 @@ public class HDT_LC_MeterReadingControllerTst {
         //Caso con HTTP STATUS KO 401
         response.setStatusCode(401); 
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
-        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', false);
         
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');
@@ -145,7 +159,7 @@ public class HDT_LC_MeterReadingControllerTst {
         response.setStatusCode(400); 
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
 
-        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', false);
         
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');
@@ -154,7 +168,7 @@ public class HDT_LC_MeterReadingControllerTst {
         response.setStatusCode(408); 
         Test.setMock(HttpCalloutMock.class, new HDT_LC_MeterReadingControllerTstMockFail(response));
 
-        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas');
+        meterReadingObj = HDT_LC_MeterReadingController.getMeterReadingRecords(contr.SapContractCode__c, 'FULL', 'Gas', false);
         
         System.assertEquals(false, meterReadingObj.success, 'success != false');
         System.assert(meterReadingObj.data == null, 'data != null');

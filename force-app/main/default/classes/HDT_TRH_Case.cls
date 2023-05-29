@@ -7,6 +7,21 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
         markCasesFromCurrentUser();
         HDT_UTL_CompanyOwner.feedCompanyOwner(trigger.new);
         //HDT_UTL_CaseProcess.predefaultCaseValues((List<Case>)Trigger.new,null);
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                caseNew.SendDate__c = date.today();
+            }
+        }
+
+
+        for(Case caseNew : (List<Case>) Trigger.new){
+            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
+                caseNew.SendDate__c = date.today();
+            }
+        }
+
+
     }
 
  	//public override void beforeDelete(){}
@@ -29,6 +44,7 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
                 //AF W2 Inserito controllo sulla fase Bozza
                 if(caseOld.Amount__c != null && caseNew.Amount__c != caseOld.Amount__c && caseOld.QuotationType__c == 'Rapido' && caseNew.Phase__c != 'Bozza' && caseNew.Phase__c != 'Da Inviare'){
                     caseNew.QuotationType__c = 'Predeterminabile';
+                    caseNew.PaymentDetails__c = 'Change Quotation';
                 }
                 //Inserito questo controllo per gestire la casistica di un Preventivo Analitico che riceve più ammissibilità causa esecuzione lavori.
                 //pertanto se il Preventivo è Analitico, ho già ricevuto un ammissibilità OK e sto ricevendo un importo, non devo riclassificare.
@@ -107,16 +123,6 @@ public inherited sharing class HDT_TRH_Case extends HDT_TRH_TriggerHandler {
 
     public override void afterInsert(){
         HDT_UTL_CaseProcess.linkServiceRequestToCase(trigger.new);
-
-        for(Case caseNew : (List<Case>) Trigger.new){
-            if(String.isNotBlank(caseNew.Origin) && (caseNew.Origin == 'SOL' || caseNew.Origin == 'APP' || caseNew.Origin == 'WEB') && caseNew.Cluster__c == 'Reclami'){
-                Case caseToUpdate = new Case(Id = caseNew.Id);
-                DateTime dt = caseNew.CreatedDate;
-                caseToUpdate.SendDate__c = date.newinstance(dt.year(), dt.month(), dt.day());
-
-                HDT_UTL_DatabaseService.updateSObject(caseToUpdate);
-            }
-        }
     }
 
     /**

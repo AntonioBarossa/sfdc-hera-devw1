@@ -249,6 +249,20 @@ public with sharing class HDT_UTL_Constants {
     public final String SERVICEPOINT_RECORDTYPEID_GAS =
     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS).getRecordTypeId();
 
+     //ServicePoint RecordType Punto Acqua
+     @AuraEnabled
+     public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PACQUA = 'HDT_RT_Acqua';
+     @AuraEnabled
+     public final String SERVICEPOINT_RECORDTYPEID_PACQUA =
+     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PACQUA).getRecordTypeId();
+      //ServicePoint RecordType Punto Ambiente
+    
+      @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PAMBIENTE = 'HDT_RT_Ambiente';
+    @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPEID_PAMBIENTE =
+    Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PaMBIENTE).getRecordTypeId();
+    
     //Hera internal Profiles
     @AuraEnabled
     public final String SYSTEM_ADMINISTRATOR_NAME {

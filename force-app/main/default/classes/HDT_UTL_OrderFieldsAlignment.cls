@@ -70,7 +70,7 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.BankAccountSignatoryFirstName__c = billingProfile.BankAccountSignatoryFirstName__c;
         orderToUpdate.BankAccountSignatoryLastName__c = billingProfile.BankAccountSignatoryLastName__c;
         orderToUpdate.BillSendMode__c = billingProfile.BillSendingMethod__c;
-        orderToUpdate.PaymentMode__c = billingProfile.PaymentMethod__c;
+        orderToUpdate.PaymentMode__c = 'Bonifico bancario'.equalsIgnoreCase(billingProfile.PaymentMethod__c)? 'Bonifico' : billingProfile.PaymentMethod__c ;
         orderToUpdate.InvoiceEmailAddress__c = billingProfile.InvoiceEmailAddress__c;
         orderToUpdate.BillingCity__c = billingProfile.InvoicingCity__c;
         orderToUpdate.BillingCountry__c = billingProfile.InvoicingCountry__c;
@@ -318,8 +318,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
                     orderToUpdate.VAT__c = 'Iva 10% (Cod. 01)';
                 }
 
-                orderToUpdate.AtecoCode__c = '999999';
-                orderToUpdate.HerAteco__c = '999999';
+                if(!'Ambiente'.equalsIgnoreCase(orderOld.ServicePoint__r.CommoditySector__c) ){
+                    orderToUpdate.AtecoCode__c = '999999';
+                    orderToUpdate.HerAteco__c = '999999';
+                }
             }
         // }
         orderToUpdate.CustomerFiscalCode__c = account.FiscalCode__c;
@@ -354,10 +356,10 @@ public inherited sharing class HDT_UTL_OrderFieldsAlignment {
         orderToUpdate.CampaignName__c = sale.Campaign__r?.Name;
         orderToUpdate.CommissioningCampaignName__c = sale.CommissioningCampaign__r?.Name;
 
-        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.PhoneNumber__c = sale.SalesContact__c != null ? (sale.SalesContact__r.MobilePhone != null ? sale.SalesContact__r.MobilePhone : sale.SalesContact__r.Phone) : null;
         orderToUpdate.Contact__c = sale.SalesContact__c;
         orderToUpdate.SalesContact__c = sale.SalesContact__c;
-        orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.Phone != null ? sale.SalesContact__r.Phone : sale.SalesContact__r.MobilePhone) : null;
+        orderToUpdate.CommentForDL__c = sale.SalesContact__c != null ? (sale.SalesContact__r.MobilePhone != null ? sale.SalesContact__r.MobilePhone : sale.SalesContact__r.Phone) : null;
         orderToUpdate.MarketingPrivacy__c = sale.SalesContact__r?.Individual?.MarketingPrivacy__c;
         orderToUpdate.ProfilingPrivacy__c = sale.SalesContact__r?.Individual?.ProfilingPrivacy__c;
         orderToUpdate.LowerChannelAgency__c = sale.LowerChannelAgency__c;

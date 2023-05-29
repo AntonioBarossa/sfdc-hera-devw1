@@ -16,6 +16,22 @@ public class HDT_LC_AccountDataEnrichmentTst {
 
     }
 
+    @isTest
+    public static void getAccountIdTst(){
+
+        Account acc = [ SELECT Id, CustomerCode__c FROM Account WITH SECURITY_ENFORCED LIMIT 1 ];
+        Map<String,Object> params = new Map<String,Object>();
+        params.put('AccountId', acc.Id);
+
+        List<Case> caseList = HDT_UTL_DataFactoryTst.createCaseWithParams(1, true, params);
+
+        Test.startTest();
+
+        Id result = HDT_LC_AccountDataEnrichmentHelper.getAccountId(caseList[0].Id);
+
+        System.assertEquals(acc.Id, result, 'Si è verificato un errore non previsto');
+        Test.stopTest();
+    }
 
     @isTest
     public static void getTableConfig(){
@@ -130,11 +146,18 @@ public class HDT_LC_AccountDataEnrichmentTst {
     @IsTest
     static void startRequestHelperHandleThrownError(){
         
+        Account account = [
+            SELECT Id, CustomerCode__c
+            FROM Account
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
         Test.startTest();
 
         try {
             
-            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(null,null, 'cmor');
+            Object obj = HDT_LC_AccountDataEnrichmentHelper.startRequestHelper(account.Id,null, 'cmor');
 
         } catch (AuraHandledException e) {
             

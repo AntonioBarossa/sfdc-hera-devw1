@@ -110,7 +110,7 @@ public with sharing class HDT_SRV_EmailMessage {
         
         List<Id> caseIdList = params.values();
         String idString = String.join( new List<Id>(caseIdList) , '\',\'');
-        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c, CompanyOwner__c FROM Case WHERE Id in (\''+ idString +'\')';
+        String queryString = 'SELECT Id, ParentId, Type, RecordType.DeveloperName, Phase__c, PhaseStory__c, CompanyOwner__c, Status FROM Case WHERE Id in (\''+ idString +'\')';
         List<SObject> recordList = HDT_QR_GenericQuery.getGenericRecords(queryString, 'Case');
         List<Case> caseList = (List<Case>) recordList;
         
@@ -139,10 +139,20 @@ public with sharing class HDT_SRV_EmailMessage {
                         //Gestione avanzamento ParentCase di Reclamo
                         if(CASE_TYPE3.equals(caseRecord.Type)){
                             System.debug(LoggingLevel.DEBUG, debugString + ' - ### Inside Parere Condition ###');
+                            DateTime nowDateTime = DateTime.now();
                             caseRecord.Phase__c = 'Completata';
+                            caseRecord.Status = 'Closed';
+                            caseRecord.OpinionRequestResponse__c = email.TextBody;
+                            if(!'Completata'.equalsIgnoreCase(oldPhase)){
+                                caseRecord.PhaseStory__c = oldPhase+'@@Completata@@'+nowDateTime.getTime()+'@@A||'+caseRecord.PhaseStory__c;
+                            }
                             if(parentRecord != null){
+                                String oldPhaseParent = parentRecord.Phase__c;
                                 System.debug(LoggingLevel.DEBUG, debugString + ' - ### Inside Parent Condition ###');
                                 parentRecord.Phase__c = 'Risposta Parere Ricevuta';
+                                if(!'Risposta Parere Ricevuta'.equalsIgnoreCase(oldPhaseParent)){
+                                    parentRecord.PhaseStory__c = oldPhaseParent+'@@Risposta Parere Ricevuta@@'+nowDateTime.getTime()+'@@A||'+parentRecord.PhaseStory__c;
+                                }
                                 caseToUpdate.add(parentRecord);
                                 System.debug(LoggingLevel.DEBUG, debugString + ' - ### adding parentRecord --> ' + parentRecord);
                             }
@@ -195,7 +205,9 @@ public with sharing class HDT_SRV_EmailMessage {
         List<String> receiverEmails = new List<String>();
         for (EmailMessage email : emailList) {
             if (email.Incoming == False) {
-                receiverEmails.add(email.ToAddress);
+                if(String.isNotBlank(email.ToAddress)){
+                    receiverEmails.add(email.ToAddress);
+                }
             }
         }
 

@@ -7925,6 +7925,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>MarketingPrivacy__c</picklist>
@@ -8136,6 +8140,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Alexa</fullName>
             <default>false</default>
@@ -8214,6 +8222,10 @@
         </values>
         <values>
             <fullName>Errore Lavorazione SAP</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Errore invio a DL/SII</fullName>
             <default>false</default>
         </values>
         <values>

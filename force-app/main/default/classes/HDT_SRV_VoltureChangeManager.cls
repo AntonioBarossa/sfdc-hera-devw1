@@ -61,7 +61,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             }
             clonedOrder.put('PhoneNumber__c', phone);
         }
-        if(clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')))
+        if( ( clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')) ) &&
+            !'Acqua'.equalsIgnoreCase((String)clonedOrder.get('CommodityFormula__c')) )
         {
             clonedOrder.put('Email__c', emptyEmailDefault);
         }
@@ -98,9 +99,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
          * Get account info and create the map to be passed to the Util class
          * set the outcome phase from the accountCheck method
          */
-        List<Account> orderAccount = voltureChangeQr.getAccountInfoById(clonedOrder.AccountId);
-        //ticket 911622C: solo Marcatura D1 - Persona Fisica RESIDENZIALE, Tutti gli altri sono BUSINESS (per impostare la fase )
-        accountCheckParams.put('accountType',orderAccount.isEmpty()? '' : ('D1 - Persona fisica'.equalsIgnoreCase(orderAccount[0].CustomerMarking__c) && 'Famiglie'.equalsIgnoreCase(orderAccount[0].Category__c))? 'HDT_RT_Residenziale' : 'HDT_RT_Business');
+        String supplyType = sobj.get('SupplyType__c') == null ? '' : (String)sobj.get('SupplyType__c');
+        accountCheckParams.put('accountType','Domestico'.equalsIgnoreCase(supplyType) || 'A-Domestico'.equalsIgnoreCase(supplyType) ? 'HDT_RT_Residenziale' : 'HDT_RT_Business');
         accountCheckParams.put('orderId', clonedOrder.get('Id'));
         accountCheckParams.put('dataDecorrenza',inputOrder?.EffectiveDate__c);
         accountCheckParams.put('preavvisoRecesso',inputOrder?.RecessNotice__c);
@@ -237,8 +237,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
         List<Order> orderListUpdate = new List<Order>();
         List<HDT_PEV_VoltureChangeManagerUpdateSObj__e> pltformEventList = new List<HDT_PEV_VoltureChangeManagerUpdateSObj__e>();
         for(Order singleOrder : myOrderList){
-            if(singleOrder.Phase__c.equalsIgnoreCase('Amm. Precheck OK SII') 
-            && (singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Switch In') 
+            if('Amm. Precheck OK SII'.equalsIgnoreCase(singleOrder.Phase__c) 
+            && ('Switch In'.equalsIgnoreCase(singleOrder.DocumentalProcessType__c) 
             /*|| singleOrder.DocumentalProcessType__c.equalsIgnoreCase('Voltura con Switch')*/)
             && singleOrder.TecnicalPhase__c == null){
                 Order ordToUpdate = new Order();
@@ -302,7 +302,13 @@ public with sharing class HDT_SRV_VoltureChangeManager{
 
         if (response != null ){
             HDT_WRP_VoltureChangeManager.HDT_WRP_Response responseBody = new HDT_WRP_VoltureChangeManager.HDT_WRP_Response( (Map<String, Object>)JSON.deserializeUntyped( response.getBody() ) );
-            return descriptionConstructor(responseBody.prestazione.tipoAttivita, responseBody.prestazione.note);
+            String tipoAttivita = '';
+            String note = '';
+            if (responseBody != null && responseBody.prestazione != null) {
+                tipoAttivita = responseBody.prestazione.tipoAttivita;
+                note = responseBody.prestazione.note;
+            }
+            return descriptionConstructor(tipoAttivita, note);
         }else {
             return 'Errore nella comunicazione Blocco/Sblocco al calcolo';
         }

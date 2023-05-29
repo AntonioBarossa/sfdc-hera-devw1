@@ -472,6 +472,13 @@
                     <stringValue>Acqua</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>Get_Amount_Quote.Amount__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Aggiorna_Amount_0</targetReference>
             </connector>

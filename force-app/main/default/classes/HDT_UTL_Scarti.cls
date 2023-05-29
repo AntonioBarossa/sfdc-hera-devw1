@@ -234,7 +234,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     	system.debug(LoggingLevel.DEBUG, 'handleMRRInboundRequest curField: ' + curField.name + ' ' + curField.value);
                         for(HDT_WRP_MrrResponse.HDT_WRP_Field curField2 : curObj.fields){
                             if('RECORD_ID'.equalsIgnoreCase(curField2.name)){
-                                if(curField2.value.length() == 18 ){
+                                if(String.isNotBlank(curField2.value) && curField2.value.length() == 18 ){
                                     wrts_prcgvr__Activity__c tempAct = new wrts_prcgvr__Activity__c(DiscardCategory__c = 'Tracciatura');
                                     tempAct.wrts_prcgvr__ObjectId__c = curField2.value;   
                                     if(Schema.Case.SObjectType == Id.valueOf(curField2.value).getSobjectType()){
@@ -245,7 +245,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                                         dataForCheckEsitiIntermedi.add(tempAct);
                                     }
                                 }
-                                else if(curField2.value.startsWith('O-') ){
+                                else if(String.isNotBlank(curField2.value) && curField2.value.startsWith('O-') ){
                                     orderNameSet.add(curField2.value);
                                 }
                             }
@@ -472,7 +472,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         
 
         //Gestione Scarti SAP tolti i campi parent Object process field e controlling field
-        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c, DiscardReason__c
+        List<DiscardAnnullmentRule__c> rules = [SELECT ControllingValue__c, ProcessValue__c, DiscardNoteReliability__c, ControllingCommodity__c, DiscardReasonList__c
                                                 FROM DiscardAnnullmentRule__c
                                                 WHERE ActivityType__c = :activityType
                                                 AND IsActive__c = true
@@ -836,29 +836,35 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             for(SObject handlesItem: toHandle){
                 if(String.isNotBlank((string)handlesItem.get('OrderID__c'))){
                     parentObjId = (String)handlesItem.get('OrderID__c');
+                    currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('salesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
                 }else if(String.isNotBlank((string)handlesItem.get('CaseID__c'))){ 
                     parentObjId = (String)handlesItem.get('CaseID__c');
+                    currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
                 }
-                currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
-                currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
-                if(handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType()){
-                    currActivities[0].Individual_Email_Result__c = (Id)handlesItem.get('Id');
-                    if(handlesItem.get('et4ae5__Contact__c') != null && String.isNotBlank((string)handlesItem.get('et4ae5__Contact__c')))
-                        currActivities[0].Contact__c = (Id)handlesItem.get('et4ae5__Contact__c');
-                    if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
-                        currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                //currActivities = (wrts_prcgvr__Activity__c[]) activityIntegration.createFromTemplate(templateCodes.get('postSalesTemplate'), new Map<String,Object>{'objectId' => parentObjId});
+                if(currActivities != null && !currActivities.isEmpty()){
+                    currActivities[0].wrts_prcgvr__Description__c = handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType() ? 'Scarto EMAIL Marketing Cloud' : (handlesItem.getSObjectType()==schema.SMSTracking__c.getSObjectType() ? 'Scarto SMS Marketing Cloud' : '');
+                    if(handlesItem.getSObjectType() == schema.et4ae5__IndividualEmailResult__c.getSObjectType()){
+                        currActivities[0].Individual_Email_Result__c = (Id)handlesItem.get('Id');
+                        if(handlesItem.get('et4ae5__Contact__c') != null && String.isNotBlank((string)handlesItem.get('et4ae5__Contact__c')))
+                            currActivities[0].Contact__c = (Id)handlesItem.get('et4ae5__Contact__c');
+                        if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
+                            currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                    }
+                    else if(handlesItem.getSObjectType() == schema.SMSTracking__c.getSObjectType()){
+                        currActivities[0].SMS_Tracking__c = (Id)handlesItem.get('Id');
+                        if(handlesItem.get('ContactID__c') != null && String.isNotBlank((string)handlesItem.get('ContactID__c')))
+                            currActivities[0].Contact__c = (Id)handlesItem.get('ContactID__c');
+                        if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
+                            currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
+                    }
+    
+                    insertedActivities.addAll(currActivities);
                 }
-                else if(handlesItem.getSObjectType() == schema.SMSTracking__c.getSObjectType()){
-                    currActivities[0].SMS_Tracking__c = (Id)handlesItem.get('Id');
-                    if(handlesItem.get('ContactID__c') != null && String.isNotBlank((string)handlesItem.get('ContactID__c')))
-                        currActivities[0].Contact__c = (Id)handlesItem.get('ContactID__c');
-                    if(handlesItem.get('Account__c') != null && String.isNotBlank((string)handlesItem.get('Account__c')))
-                        currActivities[0].Account__c = (Id)handlesItem.get('Account__c');
-                }
-
-                insertedActivities.addAll(currActivities);
             }
-            HDT_UTL_DatabaseService.insertSObject(insertedActivities);
+            if(!insertedActivities.isEmpty()){
+                HDT_UTL_DatabaseService.insertSObject(insertedActivities);
+            }
         }
     }
 
@@ -1222,7 +1228,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             }
             //[DV - 15/12/22] 2022_2B02 - Del.609_2021 e Del.639_2021 - Qualità Tecnica SII: Se ho popolato la discardRecord vado a ribaltare la DiscardReason__c sul Case
             if(discardRecord != null){
-                objectToUpdate.put('AbnormalReading__c', discardRecord.DiscardReason__c);
+                objectToUpdate.put('AbnormalReading__c', discardRecord.DiscardReasonList__c);
             }
 
             updateObjectFuture(JSON.serialize(objectToUpdate));
@@ -1327,11 +1333,10 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
         for (Sobject obj : newRecsMap.values()){
             String fieldName =  obj.getSObjectType() == Order.getSObjectType() ? 'ManagedSapDiscard__c' : 'distributorflowcode__c';
             SObject oldObj = oldRecsMap.get((Id)obj.get('Id'));
-            String oldFieldName =  oldObj.getSObjectType() == Order.getSObjectType() ? 'ManagedSapDiscard__c' : 'distributorflowcode__c';
             String newPhase = obj.get('Phase__c') == null ? '' : (String)obj.get('Phase__c');
             String oldPhase = oldObj.get('Phase__c') == null ? '' : (String)oldObj.get('Phase__c');
             String checkScartoSap = obj.get(fieldName) == null ? '' : (String)obj.get(fieldName);
-            String checkOldScartoSap = oldObj.get(oldFieldName) == null ? '' : (String)oldObj.get(oldFieldName);
+            String checkOldScartoSap = oldObj.get(fieldName) == null ? '' : (String)oldObj.get(fieldName);
             if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)
             && (String.isBlank(checkScartoSap))){
                 if ('Completata'.equalsIgnoreCase(newPhase)){
@@ -1339,14 +1344,15 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                     String phase = HDT_UTL_Utils.beforeSapPhase(oldPhase,phaseStoryOld);
                     if (phase.containsIgnoreCase('KO')){
                         obj.put('Phase__c',phase);
+                        obj.put('Status',oldObj.get('Status'));
                         DateTime nowDateTime = DateTime.now();
                         String phaseStrory = oldPhase+'@@'+phase+'@@'+nowDateTime.getTime()+'@@A||'+phaseStoryOld;
                         obj.put('PhaseStory__c',phaseStrory);
                         pManSkip = newRecsMap.values().size() == 1;
                         continue;
                     }
-                }else if (!newPhase.containsIgnoreCase('OK') && !'Annullato SII'.equalsIgnoreCase(newPhase)){
-                    obj.addError('Su questo ordine è presente uno scarto SAP da gestire');
+                }else if (!newPhase.containsIgnoreCase('OK') && !'Annullato SII'.equalsIgnoreCase(newPhase) && !'Inviare preventivo'.equalsIgnoreCase(newPhase)){
+                    obj.addError('Su questa pratica è presente uno scarto SAP da gestire');
                 }
                 obj.put('PreviousPhase__c','');
             }

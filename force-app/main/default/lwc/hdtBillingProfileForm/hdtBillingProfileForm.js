@@ -3,6 +3,7 @@ import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import getFormFields from '@salesforce/apex/HDT_LC_BillingProfileForm.getFormFields';
 import createBillingProfile from '@salesforce/apex/HDT_LC_BillingProfileForm.createBillingProfile';
 import getAccountOwnerInfo from '@salesforce/apex/HDT_LC_BillingProfileForm.getAccountOwnerInfo';
+import getInputAccount from '@salesforce/apex/HDT_LC_BillingProfileForm.getAccount';
 import getLegalAccount from '@salesforce/apex/HDT_LC_BillingProfileForm.getLegalAccount';
 import getCloneBillingProfile from '@salesforce/apex/HDT_LC_BillingProfileForm.getCloneBillingProfile';
 
@@ -12,6 +13,7 @@ export default class hdtBillingProfileForm extends LightningElement {
     @api accountId;
     @api recordId;
     loading = false;
+    category = '';
     @track fields = [];
   //  @track refreshField = true;
     @track fatturazioneElettronicaFields = [];
@@ -39,7 +41,17 @@ export default class hdtBillingProfileForm extends LightningElement {
                         && this.sale.Account__r.Category__c !== 'Ditta individuale') {
                 options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
             }
-        }else{
+        }else if (this.category != ''){
+            if (this.category === 'Famiglie' 
+                || this.category === 'Parti comuni'
+                || this.category === 'Ditta individuale') {
+                options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
+            } else if (this.category !== 'Famiglie' 
+                        && this.category !== 'Parti comuni'
+                        && this.category !== 'Ditta individuale') {
+                options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
+            }
+        }else {
             options.push({ label: 'Stesso Sottoscrittore', value: 'Stesso Sottoscrittore' });
             options.push({ label: 'Legale Rappresentante', value: 'Legale Rappresentante' });
         }
@@ -669,10 +681,10 @@ export default class hdtBillingProfileForm extends LightningElement {
         console.log('hdtBillingProfileForm_js - validFields');
 
         if (this.template.querySelector("[data-id='SubjectCode__c']") !== null 
-        && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
-        && this.template.querySelector("[data-id='SubjectCode__c']").value.length !== 7
-        && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
-            this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri');
+            && this.template.querySelector("[data-id='SubjectCode__c']").value !== null 
+            && !( this.template.querySelector("[data-id='SubjectCode__c']").value.length === 7 || this.template.querySelector("[data-id='SubjectCode__c']").value.length === 6 )
+            && this.template.querySelector("[data-id='SubjectCode__c']").value.length > 0) {
+            this.saveErrorMessage.push('Il campo Codice Destinatario deve avere 7 caratteri oppure 6 caratteri per le Pubbliche Amministrazioni');
         }
 
         if ((this.template.querySelector("[data-id='ElectronicInvoicingMethod__c']") !== null 
@@ -1019,9 +1031,19 @@ export default class hdtBillingProfileForm extends LightningElement {
 
     }
 
+    getAccount(){
+        getInputAccount({accountId: this.accountId}).then(data =>{
+            if (data != ''){
+                this.category = data;            
+            }         
+        })
+    }
+
     connectedCallback(){
         if(this.recordId !== undefined && this.recordId !== ''){
             this.getClone();
+        } else if(this.accountId !== undefined && this.accountId !== ''){
+            this.getAccount();
         }
         console.log('connectedCallback sale billing form: ', JSON.stringify(this.sale));
     }

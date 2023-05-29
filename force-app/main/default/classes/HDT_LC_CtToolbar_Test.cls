@@ -65,9 +65,9 @@ public class HDT_LC_CtToolbar_Test {
         
   		String s = HDT_LC_CtToolbar.createActivityInbound('test','test','test1');
 
-        wrts_prcgvr__Activity__c actv = HDT_LC_CtToolbar.createActivity(null, null,  null, cmb[0].Id, null);
+        wrts_prcgvr__Activity__c actv = HDT_LC_CtToolbar.createActivity( null, null, '123456', cmb[0].Id, null);
         
-        boolean b = HDT_LC_CtToolbar.updateActivity(null, '20222403',3,4);
+        boolean b = HDT_LC_CtToolbar.updateActivity('123456', '20222403',3,4);
         
         Test.stopTest();
         System.assertEquals(true, b, 'evaluate did not work correctly');

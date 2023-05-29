@@ -59,6 +59,7 @@ export default class HdtSelfReading extends LightningElement {
     @api showReadingWindows;
     @api isMono;
     @api processType
+    @api isSmartMeterAbort=false;
 
     @track isLoading = false;
     @track windowColumns;
@@ -204,9 +205,10 @@ export default class HdtSelfReading extends LightningElement {
                     return;
                 }
                 lastReadings = this.fillLastReadingsArray(parsedResult);
-                if(this.commodity.toLowerCase()===gasCommodity && this.processType.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.GB_TELELETT && parsedResult.data.GB_TELELETT.toLowerCase()==='y'){
+                if(this.commodity?.toLowerCase()===gasCommodity && this.processType?.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.gbTeleLett && parsedResult.data.gbTeleLett.toLowerCase()==='y'){
                     this.showToastMessage(autoletturaSmartMeterError);
                     forceAbort=true;
+                    this.isSmartMeterAbort=true;
                 }
             }
             this.isLoading = false;

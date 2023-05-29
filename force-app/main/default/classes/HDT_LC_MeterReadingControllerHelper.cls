@@ -2,7 +2,7 @@
 public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     public static Boolean enableTurbobilling(String commodity){
-        return (Label.TRB_Enable.equalsIgnoreCase('Y') && Label.TRB_Commodity.contains(commodity));
+        return (Label.TRB_Enable.equalsIgnoreCase('Y') && !String.isBlank(commodity) && Label.TRB_Commodity.contains(commodity));
     }
 
     public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDataHelper(){
@@ -31,7 +31,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
     }
 
-    public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDetailTableHelper(String contractService){
+    public static HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata getConfigurationDetailTableHelper(String contractService, Boolean isFromFlow){
 
         HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata columnsMetadata = new HDT_WRP_MeterReading.HDT_WRP_ColumnsMetadata();
 
@@ -39,7 +39,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
 
             String code;
             columnsMetadata.trbEnable = enableTurbobilling(contractService);
-            if(columnsMetadata.trbEnable){
+            
+            if(columnsMetadata.trbEnable && !isFromFlow){
                 if(contractService.equalsIgnoreCase('Energia Elettrica')){
                     code = 'meterReading_ele';
                 } else if(contractService.equalsIgnoreCase('Gas')){
@@ -117,7 +118,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return contrWrp;
     }
 
-    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode, String modality, String contractService) {
+    public static HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj getMeterReadingRecordsHelper(String contractCode, String modality, String contractService, Boolean isFromFlow) {
         HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj meterReadingObj = new HDT_WRP_MeterReading.HDT_WRP_MeterReadingObj();
 
         try{
@@ -126,7 +127,8 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             String baseServiceUrl = '';
             Boolean trbEnable = enableTurbobilling(contractService);
 
-            if(trbEnable){
+            System.debug(LoggingLevel.DEBUG, 'DBG_ORIGIN_FLOW: ' + isFromFlow);
+            if(trbEnable && !isFromFlow){
                 if(contractService.equalsIgnoreCase('Energia Elettrica')){
                     baseServiceUrl = '/ele/letture';
                     code = 'meterReading_ele';
@@ -151,16 +153,17 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             List<Contract> contractRecord;
             contractRecord= HDT_QR_MeterReading.getContract(contractRecord, contractCode);
 
-            String body = generateBodyOrParameters(contractRecord[0], modality);
+            String body = generateBodyOrParameters(contractRecord[0], modality, isFromFlow);
             System.debug(LoggingLevel.DEBUG, '>>> body obj > ' + body);
 
-            if(trbEnable){
+            if(trbEnable && !isFromFlow){
                 httpObj.endPoint += baseServiceUrl + body;
                 body = null;
                 System.debug(LoggingLevel.DEBUG, '>>> httpObj.endPoint > ' + httpObj.endPoint);
             }
 
             HDT_WS_MulesoftCaller.HDT_WRP_Response responseCtrl = HDT_WS_MulesoftCaller.retrieveDataCtrl(body, httpObj);
+            System.debug(LoggingLevel.DEBUG, 'DBG_responseCtrl: ' + JSON.serializePretty(responseCtrl));
      
             if(!responseCtrl.success){
                 meterReadingObj.success = false;
@@ -168,7 +171,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
                 return meterReadingObj;
             }
 
-            if(trbEnable){
+            if(trbEnable && !isFromFlow){
                 meterReadingObj.success = true;
                 meterReadingObj.data = responseCtrl.body.replaceAll('Response', 'data');
                 return meterReadingObj;
@@ -194,7 +197,7 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
             HDT_WRP_EstrattoLettureResponse responseWrapper;
             responseWrapper = (HDT_WRP_EstrattoLettureResponse) JSON.deserialize(responseCtrl.body, HDT_WRP_EstrattoLettureResponse.class);
 
-            if(!enableTurbobilling(contractService)){
+            if(!enableTurbobilling(contractService) || (enableTurbobilling(contractService) && isFromFlow)){
                 transcodeSapData(responseWrapper.data);
             }
 
@@ -209,12 +212,12 @@ public inherited sharing class HDT_LC_MeterReadingControllerHelper {
         return meterReadingObj;
     }
 
-    public static String generateBodyOrParameters(Contract contr, String modality){
+    public static String generateBodyOrParameters(Contract contr, String modality, Boolean isFromFlow){
         String body;
         String contractService = contr.ServicePoint__r.CommoditySector__c;
         Set<String> trbCommodity = new Set<String>{'Energia Elettrica','Gas'};
 
-        if(enableTurbobilling(contractService)){
+        if(enableTurbobilling(contractService) && !isFromFlow){
 
             //body = 'pod=pariatur Duis&dataInizio=1963-10-26&dataFine=1963-10-26&modalita=FULL';
             body = '?';

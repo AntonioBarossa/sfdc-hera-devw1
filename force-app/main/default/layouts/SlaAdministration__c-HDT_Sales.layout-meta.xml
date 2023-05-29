@@ -141,11 +141,13 @@
     </layoutSections>
     <relatedLists>
         <fields>NAME</fields>
+        <fields>Description__c</fields>
         <fields>Order__c</fields>
+        <fields>Activity__c</fields>
+        <fields>SlaValue__c</fields>
         <fields>StartDateTime__c</fields>
         <fields>EndDateTime__c</fields>
         <fields>Status__c</fields>
-        <fields>SlaValue__c</fields>
         <relatedList>SlaTracking__c.SlaAdministration__c</relatedList>
     </relatedLists>
     <showEmailCheckbox>false</showEmailCheckbox>
@@ -154,7 +156,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1w000000TPMe</masterLabel>
+        <masterLabel>00h3N000003dzXJ</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

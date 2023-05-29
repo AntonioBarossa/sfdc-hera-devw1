@@ -58,6 +58,20 @@ public with sharing class HDT_UTL_GarbageMan {
         return callout.execute(argsMap);
     }
 
+    public String getCompanyOwnerFromCityData(String comune){
+        String companyOwner;
+        List<CityTechnicalData__c> tecs = 
+        [
+            SELECT CompanyOwner__c 
+            FROM CityTechnicalData__c 
+            WHERE Name =:comune
+            WITH SECURITY_ENFORCED
+        ];
+        if(!tecs.isEmpty()) companyOwner = tecs[0].CompanyOwner__c;
+        return companyOwner;
+    }
+
+
     public List<Case> getCurrentCase(Id caseId){
         return [  
                     SELECT Id, WasterCode__c, StartAppointment__c, 
@@ -102,6 +116,7 @@ public with sharing class HDT_UTL_GarbageMan {
         theCase.Type = 'Gestione Rifiuti';
         theCase.OperationGroup__c = 'CONSULTA IL RIFIUTOLOGO';
         theCase.Origin = 'Rifiutologo';
+        theCase.Commodity__c = 'Ambiente';
         theCase.Phase__c = 'In Attesa Appuntamento';
         theCase.Status = 'In Lavorazione';
 

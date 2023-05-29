@@ -12,9 +12,11 @@ import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.is
 import isCommunity from '@salesforce/apex/HDT_LC_SellingWizardController.checkCommunityLogin';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+import createActChangeAddress from '@salesforce/apex/HDT_LC_DocumentSignatureManager.createActChangeAddress';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
-import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
+import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
+import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
 import RequestSource from '@salesforce/schema/Order.RequestSource__c';
 import WasteCommodityType from '@salesforce/schema/Order.WasteCommodityType__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
@@ -395,19 +397,25 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleSave(){
         this.loading = true;
+
+        createActChangeAddress({
+            recordId: this.recordId
+        }).then(result => {
+            console.log('CreateActChangeAddress successfully run');
+        }).catch(error => {
+            this.showToast('Errore nella creazione dell\'activity di Modifica Indirizzo Fornitura.');
+            console.error(error);
+        });
+
         save({orderParent: this.orderParentRecord}).then(data =>{
             this.loading = false;
-
             this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
-
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Order confermato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
-            //this.sendDocumentFile();
-
         }).catch(error => {
             this.loading = false;
 
@@ -430,6 +438,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             });
             this.dispatchEvent(toastErrorMessage);
         });
+
     }
 
     handleSave2(){

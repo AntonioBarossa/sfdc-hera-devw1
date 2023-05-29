@@ -75,6 +75,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.OperationGroup__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -289,10 +296,24 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.ServicePoint__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>getOldCase.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOldCase.DifferentNameFromTheApplicant__c</elementReference>
             </value>
         </assignmentItems>
         <connector>
@@ -418,6 +439,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.MaterialDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -496,6 +524,13 @@
             </value>
         </assignmentItems>
         <assignmentItems>
+            <assignToReference>theCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Ambiente</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
             <assignToReference>theCase.PhoneNumber__c</assignToReference>
             <operator>Assign</operator>
             <value>
@@ -507,6 +542,13 @@
             <operator>Assign</operator>
             <value>
                 <stringValue>CONSULTA IL RIFIUTOLOGO</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>theCase.DifferentNameFromTheApplicant__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getAccount.Name</elementReference>
             </value>
         </assignmentItems>
         <connector>

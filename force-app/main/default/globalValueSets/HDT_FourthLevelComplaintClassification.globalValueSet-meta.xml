@@ -736,6 +736,126 @@
         <label>POD errato sulla fornitura</label>
     </customValue>
     <customValue>
+        <fullName>Accesso area privata</fullName>
+        <default>false</default>
+        <label>Accesso area privata</label>
+    </customValue>
+    <customValue>
+        <fullName>Accise - applicazione non corretta</fullName>
+        <default>false</default>
+        <label>Accise - applicazione non corretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - non eseguita causa cliente</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - non eseguita causa cliente</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - non eseguita causa Distributore</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - non eseguita causa Distributore</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - non eseguita causa Venditore</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - non eseguita causa Venditore</label>
+    </customValue>
+    <customValue>
+        <fullName>Attivazioni/cessazioni - tempistiche/modalità/costi</fullName>
+        <default>false</default>
+        <label>Attivazioni/cessazioni - tempistiche/modalità/costi</label>
+    </customValue>
+    <customValue>
+        <fullName>Bper</fullName>
+        <default>false</default>
+        <label>Bper</label>
+    </customValue>
+     <customValue>
+        <fullName>Bonus web</fullName>
+        <default>false</default>
+        <label>Bonus web</label>
+    </customValue>
+    <customValue>
+        <fullName>Buoni/voucher</fullName>
+        <default>false</default>
+        <label>Buoni/voucher</label>
+    </customValue>
+    <customValue>
+        <fullName>CV01 -  Voltura non richiesta</fullName>
+        <default>false</default>
+        <label>CV01 -  Voltura non richiesta</label>
+    </customValue>
+    <customValue>
+        <fullName>CV02 -  Voltura su contratto errato</fullName>
+        <default>false</default>
+        <label>CV02 -  Voltura su contratto errato</label>
+    </customValue>
+    <customValue>
+        <fullName>Diniego voltura</fullName>
+        <default>false</default>
+        <label>Diniego voltura</label>
+    </customValue>
+    <customValue>
+        <fullName>Diritti fissi</fullName>
+        <default>false</default>
+        <label>Diritti fissi</label>
+    </customValue>
+    <customValue>
+        <fullName>Fatturazione elevata/importi anomali del.17/16</fullName>
+        <default>false</default>
+        <label>Fatturazione elevata/importi anomali del.17/16</label>
+    </customValue>
+    <customValue>
+        <fullName>Importo del sollecito</fullName>
+        <default>false</default>
+        <label>Importo del sollecito</label>
+    </customValue>
+    <customValue>
+        <fullName>IVA - applicazione non corretta</fullName>
+        <default>false</default>
+        <label>IVA - applicazione non corretta</label>
+    </customValue>
+    <customValue>
+        <fullName>Non accolto</fullName>
+        <default>false</default>
+        <label>Non accolto</label>
+    </customValue>
+    <customValue>
+        <fullName>Promo linear</fullName>
+        <default>false</default>
+        <label>Promo linear</label>
+    </customValue>
+    <customValue>
+        <fullName>Rateizzazione - mancata risposta</fullName>
+        <default>false</default>
+        <label>Rateizzazione - mancata risposta</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Analisi Consumi/Fast Check Up</fullName>
+        <default>false</default>
+        <label>VAS - Analisi Consumi/Fast Check Up</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Assicurazione</fullName>
+        <default>false</default>
+        <label>VAS - Assicurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - ContaWatt</fullName>
+        <default>false</default>
+        <label>VAS - ContaWatt</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Lampadine Led</fullName>
+        <default>false</default>
+        <label>VAS - Lampadine Led</label>
+    </customValue>
+    <customValue>
+        <fullName>VAS - Thermo</fullName>
+        <default>false</default>
+        <label>VAS - Thermo</label>
+    </customValue>
+    <customValue>
         <fullName>Portabilità dei dati</fullName>
         <default>false</default>
         <label>Portabilità dei dati</label>
@@ -811,9 +931,9 @@
         <label>Proposto del. 231</label>
     </customValue>
     <customValue>
-        <fullName>QA01- pulizia spiaggia</fullName>
+        <fullName>QA01 - pulizia spiaggia</fullName>
         <default>false</default>
-        <label>QA01- pulizia spiaggia</label>
+        <label>QA01 - pulizia spiaggia</label>
     </customValue>
     <customValue>
         <fullName>QC01 - orari di apertura non rispettati</fullName>
@@ -1163,7 +1283,6 @@
     <customValue>
         <fullName>Falso procurato</fullName>
         <default>false</default>
-        <isActive>false</isActive>
         <label>Falso procurato</label>
     </customValue>
     <customValue>
@@ -1177,6 +1296,306 @@
         <default>false</default>
         <isActive>false</isActive>
         <label>Prelivo abusivo</label>
+    </customValue>
+    <customValue>
+        <fullName>CT01 - Tariffa al metro cubo</fullName>
+        <default>false</default>
+        <label>CT01 - Tariffa al metro cubo</label>
+    </customValue>
+    <customValue>
+        <fullName>CT02 - Deposito cauzionale</fullName>
+        <default>false</default>
+        <label>CT02 - Deposito cauzionale</label>
+    </customValue>
+    <customValue>
+        <fullName>CT03 - Errata attribuzione tariffa/tipologia utenza</fullName>
+        <default>false</default>
+        <label>CT03 - Errata attribuzione tariffa/tipologia utenza</label>
+    </customValue>
+    <customValue>
+        <fullName>CF01 - Errato inserimento nel contratto</fullName>
+        <default>false</default>
+        <label>CF01 - Errato inserimento nel contratto</label>
+    </customValue>
+    <customValue>
+        <fullName>CP01 - Prelievi irregolari</fullName>
+        <default>false</default>
+        <label>CP01 - Prelievi irregolari</label>
+    </customValue>
+    <customValue>
+        <fullName>CD01 - Esenzione per mancanza servizio</fullName>
+        <default>false</default>
+        <label>CD01 - Esenzione per mancanza servizio</label>
+    </customValue>
+    <customValue>
+        <fullName>CD02 - Contestazione addebito/accredito retroattivo</fullName>
+        <default>false</default>
+        <label>CD02 - Contestazione addebito/accredito retroattivo</label>
+    </customValue>
+    <customValue>
+        <fullName>CD03 - Rifiuto di allaccio fognatura</fullName>
+        <default>false</default>
+        <label>CD03 - Rifiuto di allaccio fognatura</label>
+    </customValue>
+    <customValue>
+        <fullName>CD04 - Scarichi produttivi-attribuzione tariffa</fullName>
+        <default>false</default>
+        <label>CD04 - Scarichi produttivi-attribuzione tariffa</label>
+    </customValue>
+    <customValue>
+        <fullName>CV01 - Voltura non richiesta</fullName>
+        <default>false</default>
+        <label>CV01 - Voltura non richiesta</label>
+    </customValue>
+    <customValue>
+        <fullName>CV02 - Voltura su contratto errato</fullName>
+        <default>false</default>
+        <label>CV02 - Voltura su contratto errato</label>
+    </customValue>
+    <customValue>
+        <fullName>FG01 - Addebito contatore rotto dal gelo</fullName>
+        <default>false</default>
+        <label>FG01 - Addebito contatore rotto dal gelo</label>
+    </customValue>
+    <customValue>
+        <fullName>FB02 - Recapito bolletta</fullName>
+        <default>false</default>
+        <label>FB02 - Recapito bolletta</label>
+    </customValue>
+    <customValue>
+        <fullName>FB04 - Bolletta elettronica</fullName>
+        <default>false</default>
+        <label>FB04 - Bolletta elettronica</label>
+    </customValue>
+    <customValue>
+        <fullName>FC01 - Stima consumo</fullName>
+        <default>false</default>
+        <label>FC01 - Stima consumo</label>
+    </customValue>
+    <customValue>
+        <fullName>FC02 - Conguaglio</fullName>
+        <default>false</default>
+        <label>FC02 - Conguaglio</label>
+    </customValue>
+    <customValue>
+        <fullName>FC03 - Ricostruzione consumi da contatore</fullName>
+        <default>false</default>
+        <label>FC03 - Ricostruzione consumi da contatore</label>
+    </customValue>
+    <customValue>
+        <fullName>FC04 - Applicazione procapite</fullName>
+        <default>false</default>
+        <label>FC04 - Applicazione procapite</label>
+    </customValue>
+    <customValue>
+        <fullName>FC05 - Bonus sociale</fullName>
+        <default>false</default>
+        <label>FC05 - Bonus sociale</label>
+    </customValue>
+    <customValue>
+        <fullName>FC06 - Incassi misti da divisionali</fullName>
+        <default>false</default>
+        <label>FC06 - Incassi misti da divisionali</label>
+    </customValue>
+    <customValue>
+        <fullName>FF01 - Richiesta revisione conteggi/diniego rimborso</fullName>
+        <default>false</default>
+        <label>FF01 - Richiesta revisione conteggi/diniego rimborso</label>
+    </customValue>
+    <customValue>
+        <fullName>FP01 - Modalità di pagamento/rimborso</fullName>
+        <default>false</default>
+        <label>FP01 - Modalità di pagamento/rimborso</label>
+    </customValue>
+    <customValue>
+        <fullName>FP02 - Domiciliazione bancaria</fullName>
+        <default>false</default>
+        <label>FP02 - Domiciliazione bancaria</label>
+    </customValue>
+    <customValue>
+        <fullName>FP03 - Rateizzazione</fullName>
+        <default>false</default>
+        <label>FP03 - Rateizzazione</label>
+    </customValue>
+    <customValue>
+        <fullName>IE01 - Cattivi odori da fognatura/depuratore</fullName>
+        <default>false</default>
+        <label>IE01 - Cattivi odori da fognatura/depuratore</label>
+    </customValue>
+    <customValue>
+        <fullName>IR01 - Rifiuti gestiti male in cantieri/impianti</fullName>
+        <default>false</default>
+        <label>IR01 - Rifiuti gestiti male in cantieri/impianti</label>
+    </customValue>
+    <customValue>
+        <fullName>IU01 - Eccessivi rumori da cantiere/impianti</fullName>
+        <default>false</default>
+        <label>IU01 - Eccessivi rumori da cantiere/impianti</label>
+    </customValue>
+    <customValue>
+        <fullName>IS01 - Scarichi da depuratore visibilmente alterati</fullName>
+        <default>false</default>
+        <label>IS01 - Scarichi da depuratore visibilmente alterati</label>
+    </customValue>
+    <customValue>
+        <fullName>IT01 - Cantieri prolungati in zona trafficata</fullName>
+        <default>false</default>
+        <label>IT01 - Cantieri prolungati in zona trafficata</label>
+    </customValue>
+    <customValue>
+        <fullName>IB01 - Eccessive vibrazioni da cantiere</fullName>
+        <default>false</default>
+        <label>IB01 - Eccessive vibrazioni da cantiere</label>
+    </customValue>
+    <customValue>
+        <fullName>IV01 - Cantieri non completati o in stato di abbandono</fullName>
+        <default>false</default>
+        <label>IV01 - Cantieri non completati o in stato di abbandono</label>
+    </customValue>
+    <customValue>
+        <fullName>LO01 - Comportamento tecnico</fullName>
+        <default>false</default>
+        <label>LO01 - Comportamento tecnico</label>
+    </customValue>
+    <customValue>
+        <fullName>LC01 - Costo lavori allacciamento</fullName>
+        <default>false</default>
+        <label>LC01 - Costo lavori allacciamento</label>
+    </customValue>
+    <customValue>
+        <fullName>LC02 - Costo prestazioni attività contatore</fullName>
+        <default>false</default>
+        <label>LC02 - Costo prestazioni attività contatore</label>
+    </customValue>
+    <customValue>
+        <fullName>LA01 - Acquedotto - modalità e prestazioni allacciamenti</fullName>
+        <default>false</default>
+        <label>LA01 - Acquedotto - modalità e prestazioni allacciamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>LA02 - Acquedotto - modalità e prestazioni contatori</fullName>
+        <default>false</default>
+        <label>LA02 - Acquedotto - modalità e prestazioni contatori</label>
+    </customValue>
+    <customValue>
+        <fullName>LD03 - Fognatura - modalità e prestazioni allacciamenti</fullName>
+        <default>false</default>
+        <label>LD03 - Fognatura - modalità e prestazioni allacciamenti</label>
+    </customValue>
+    <customValue>
+        <fullName>MO01 - Comportamento letturista</fullName>
+        <default>false</default>
+        <label>MO01 - Comportamento letturista</label>
+    </customValue>
+    <customValue>
+        <fullName>MC01 - Contatore malfunzionante</fullName>
+        <default>false</default>
+        <label>MC01 - Contatore malfunzionante</label>
+    </customValue>
+    <customValue>
+        <fullName>ML01 - Modalità letture periodiche</fullName>
+        <default>false</default>
+        <label>ML01 - Modalità letture periodiche</label>
+    </customValue>
+    <customValue>
+        <fullName>ML02 - Autolettura</fullName>
+        <default>false</default>
+        <label>ML02 - Autolettura</label>
+    </customValue>
+    <customValue>
+        <fullName>ML03 - Autolettura errata (voltura)</fullName>
+        <default>false</default>
+        <label>ML03 - Autolettura errata (voltura)</label>
+    </customValue>
+    <customValue>
+        <fullName>MM01 - Sospensione per morosità/sezionamento</fullName>
+        <default>false</default>
+        <label>MM01 - Sospensione per morosità/sezionamento</label>
+    </customValue>
+    <customValue>
+        <fullName>MM02 - Riattivazione</fullName>
+        <default>false</default>
+        <label>MM02 - Riattivazione</label>
+    </customValue>
+    <customValue>
+        <fullName>QS01 - Problemi erogazione servizio</fullName>
+        <default>false</default>
+        <label>QS01 - Problemi erogazione servizio</label>
+    </customValue>
+    <customValue>
+        <fullName>QS03 - Problemi pressione</fullName>
+        <default>false</default>
+        <label>QS03 - Problemi pressione</label>
+    </customValue>
+    <customValue>
+        <fullName>QS04 - Fognatura - allagamenti/infiltrazioni</fullName>
+        <default>false</default>
+        <label>QS04 - Fognatura - allagamenti/infiltrazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>QS05 - Fognatura - avvallamenti/botole</fullName>
+        <default>false</default>
+        <label>QS05 - Fognatura - avvallamenti/botole</label>
+    </customValue>
+    <customValue>
+        <fullName>QS06 - Fognatura - caditoie otturate/ristagni</fullName>
+        <default>false</default>
+        <label>QS06 - Fognatura - caditoie otturate/ristagni</label>
+    </customValue>
+    <customValue>
+        <fullName>QP01 - Ritardi</fullName>
+        <default>false</default>
+        <label>QP01 - Ritardi</label>
+    </customValue>
+    <customValue>
+        <fullName>QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore</fullName>
+        <default>false</default>
+        <label>QA01 - Alterazione qualitativa- sporca/rossa/maleodorante/cattivo sapore</label>
+    </customValue>
+    <customValue>
+        <fullName>SC01 - Call Center Tempi di attesa</fullName>
+        <default>false</default>
+        <label>SC01 - Call Center Tempi di attesa</label>
+    </customValue>
+    <customValue>
+        <fullName>SC02 - Call Center Comportamento operatore</fullName>
+        <default>false</default>
+        <label>SC02 - Call Center Comportamento operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>SC03 - Call Center Risposta</fullName>
+        <default>false</default>
+        <label>SC03 - Call Center Risposta</label>
+    </customValue>
+    <customValue>
+        <fullName>SD01 - Difficoltà contatto</fullName>
+        <default>false</default>
+        <label>SD01 - Difficoltà contatto</label>
+    </customValue>
+    <customValue>
+        <fullName>SR01 - Risposta a reclamo</fullName>
+        <default>false</default>
+        <label>SR01 - Risposta a reclamo</label>
+    </customValue>
+    <customValue>
+        <fullName>SS01 - Sportello Tempi di attesa</fullName>
+        <default>false</default>
+        <label>SS01 - Sportello Tempi di attesa</label>
+    </customValue>
+    <customValue>
+        <fullName>SS02 - Sportello Comportamento operatore</fullName>
+        <default>false</default>
+        <label>SS02 - Sportello Comportamento operatore</label>
+    </customValue>
+    <customValue>
+        <fullName>SS03 - Sportello Risposta</fullName>
+        <default>false</default>
+        <label>SS03 - Sportello Risposta</label>
+    </customValue>
+    <customValue>
+        <fullName>SW01 - ServiziOnLine</fullName>
+        <default>false</default>
+        <label>SW01 - ServiziOnLine</label>
     </customValue>
     <description>Classificazione Quarto Livello (cluster Reclami)</description>
     <masterLabel>4° Livello</masterLabel>

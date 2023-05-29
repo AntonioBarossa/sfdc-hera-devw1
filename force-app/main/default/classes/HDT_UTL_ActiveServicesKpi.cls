@@ -29,7 +29,7 @@ public with sharing class HDT_UTL_ActiveServicesKpi {
         update accountMap.values();
     }
 
-    private static void updateServicesCount(Account account, String service, Integer delta) {
+    public static void updateServicesCount(Account account, String service, Integer delta) {
         switch on service {
             when 'Energia Elettrica' {
                 if (account.ActiveServicesEle__c == null) {

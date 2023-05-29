@@ -7131,156 +7131,300 @@
     <picklistValues>
         <picklist>FithLevelComplaintClassification__c</picklist>
         <values>
+            <fullName>Ambiente</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Igiene ambientale</fullName>
             <default>false</default>
         </values>
     </picklistValues>
     <picklistValues>
         <picklist>FourthLevelComplaintClassification__c</picklist>
-		<values>
-			<fullName>IE01 - fumi/pulviscolo provenienti da contenitori/dotazioni</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IE02 - fumi/pulviscolo provenienti da Centri di Raccolta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IE03 - fumi da tubi di scappamento di automezzi aziendali</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IE04 - cattivi odori provenienti da Centri di Raccolta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IE05 - cattivi odori provenienti da contenitori/dotazioni</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>II01 - rifiuti abbandonati per cause imputabili al gestore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>II02 - rifiuti abbandonati per cause non imputabili al gestore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IM01 - perdita di liquidi/olii da automezzi aziendali</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IR01 - presenza di animali o insetti nei pressi di contenitori/dotazioni</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IT01 - rumore prodotto da automezzi/attrezzature</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QA01- pulizia spiaggia</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QC01 - orari di apertura non rispettati</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QC02 - comportamenti/attività operatore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QC03 - malfunzionamento dispositivo di identificazione/pesa</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR01 - mancato svuotamento contenitori stradali</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR02 - mancata consegna dotazioni</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR03 - manutenzioni contenitori/dotazioni</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR04 - comportamenti/attività operatore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR05 - lavaggio contenitori</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR06 - mancato svuotamento domiciliare</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QR07 - sollecito di servizio</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QS01 - mancata raccolta / errato prelievo per servizi su appuntamento gratuiti</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QS02 - comportamenti/attività operatore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QS03 - mancata raccolta / errato prelievo per servizi a pagamento</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>QZ02 - comportamenti/attività operatore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SC01 - attesa al telefono</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SC02 - comportamenti/attività operatore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SC03 - risposta non chiara</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SC04 - difficoltà nel contatto</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SS01 - tempi di attesa</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SS02 - comportamenti/attività operatore</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SS03 - risposta non chiara</fullName>
-			<default>false</default>
-		</values>
-		<values>
-			<fullName>SW01 - malfunzionamento</fullName>
-			<default>false</default>
-		</values>
+        <values>
+            <fullName>CA01 - non eseguita causa cliente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CA02 - non eseguita causa HC</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT01 - componente economica/contrattuale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT02 - errata attribuzione tariffa/tipologia utenza</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT03 - cambio opzione Residente / Non Residente</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CT04 - modifica indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CV01 - non eseguito per mancata presentazione della documentazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>CV02 - gestito in ritardo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB01 - chiarezza bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB02 - recapito bolletta e relativi costi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB03 - periodicità bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB04 - tariffe diverse dalle aspettative</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FB05 - avviso/bolletta errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC01 - addebito vuotature/litri</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC02 - acconto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC03 - conguaglio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC04 - riduzioni/sconti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC05 - metratura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC06 - periodo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC07 - imposte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FC08 - altre voci</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FM01 - modalità di pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FM02 - rimborso</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FM03 - rateizzazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FF01 - frequenza di fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FP01 - doppia fatturazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FP02 - mancato addebito avviso/bolletta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR01 - consegna in ritardo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR02 - mancato recapito causa errato indirizzo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FR03 - mancato recapito causa vettore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI01 - assegno erede</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FI02 - problemi emissione assegno</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE01 - fumi/pulviscolo provenienti da contenitori/dotazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE02 - fumi/pulviscolo provenienti da Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE03 - fumi da tubi di scappamento di automezzi aziendali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE04 - cattivi odori provenienti da Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IE05 - cattivi odori provenienti da contenitori/dotazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>II01 - rifiuti abbandonati per cause imputabili al gestore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>II02 - rifiuti abbandonati per cause non imputabili al gestore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IM01 - perdita di liquidi/olii da automezzi aziendali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR01 - presenza di animali o insetti nei pressi di contenitori/dotazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IR02 - presenza di animali o insetti nei pressi di Centri di Raccolta</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT01 - rumore prodotto da automezzi/attrezzature</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>IT02 - rallentamenti del traffico provocati da automezzi aziendali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MC01 - contestazioni su n. vuotature/conferimenti/litri presenti su web</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS01 - sollecito non dovuto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>MS02 - storno spese di sollecito</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QA01 - pulizia spiaggia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QC01 - orari di apertura non rispettati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QC02 - comportamenti/attività operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QC03 - malfunzionamento dispositivo di identificazione/pesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS01 - mancata raccolta / errato prelievo per servizi su appuntamento gratuiti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS02 - comportamenti/attività operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QS03 - mancata raccolta / errato prelievo per servizi a pagamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR01 - mancato svuotamento contenitori stradali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR02 - mancata consegna dotazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR03 - manutenzioni contenitori/dotazioni</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR04 - comportamenti/attività operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR05 - lavaggio contenitori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR06 - mancato svuotamento domiciliare</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QR07 - sollecito di servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QZ01 - pulizia strade/marciapiedi, cestini, aree cani</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>QZ02 - comportamenti/attività operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC01 - attesa al telefono</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC02 - comportamenti/attività operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC03 - risposta non chiara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SC04 - difficoltà nel contatto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SS01 - tempi di attesa</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SS02 - comportamenti/attività operatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SS03 - risposta non chiara</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SW01 - malfunzionamento</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>HouseOwner__c</picklist>
@@ -9241,6 +9385,10 @@
             <fullName>Web</fullName>
             <default>false</default>
         </values>
+		<values>
+            <fullName>Web-MMS</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>PaymentType__c</picklist>
@@ -9946,23 +10094,7 @@
     <picklistValues>
         <picklist>SecondLevelComplaintClassification__c</picklist>
         <values>
-            <fullName>Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Bonus sociale</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Connessioni%2C lavori e qualità tecnica</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Doppia Fatturazione</fullName>
             <default>false</default>
         </values>
         <values>
@@ -9974,19 +10106,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Mercato</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Misura</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità e sospensione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Qualità Commerciale</fullName>
+            <fullName>Morosità</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12078,23 +12202,23 @@
     <picklistValues>
         <picklist>ThirdLevelComplaintClassification__c</picklist>
         <values>
-            <fullName>Altro</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Arenile</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Autolettura %28uso della%29</fullName>
+            <fullName>Attivazione/Cessazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio fornitore</fullName>
+            <fullName>Avviso/Bolletta</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cambio misuratore</fullName>
+            <fullName>Calcolo</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Call center</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12102,27 +12226,11 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Cessazioni</fullName>
+            <fullName>Contestazioni</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Cmor %28Corrispettivo morosità pregresse%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Condizioni economiche nuovi contratti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Consumi stimati errati</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Continuità</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Doppia Fatturazione</fullName>
+            <fullName>Contratto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12130,23 +12238,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Erogazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Fotovoltaico</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Impatto visivo</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Indennizzi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Mancate letture</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12154,47 +12246,27 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Modifiche unilaterali</fullName>
+            <fullName>Modalità di pagamento</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Modulistica</fullName>
+            <fullName>Periodicità</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Morosità</fullName>
+            <fullName>Problemi di fatturazione</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Pagamenti e Rimborsi</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Periodicità e fattura di chiusura</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Presunti Contratti non Richiesti</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Preventivi%2Fattivazioni%2Flavori %28tempi e costi%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Privacy</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Recesso</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Ricalcoli</fullName>
+            <fullName>Recapito</fullName>
             <default>false</default>
         </values>
         <values>
             <fullName>Richiamo animali/insetti</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Rimborsi</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12206,15 +12278,7 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Servizio clienti %28call center%2C sportelli%2C altri servizi%29</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sicurezza</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Sospensione e riattivazione</fullName>
+            <fullName>Solleciti</fullName>
             <default>false</default>
         </values>
         <values>
@@ -12222,31 +12286,19 @@
             <default>false</default>
         </values>
         <values>
+            <fullName>Sportello</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Subentro/Voltura</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Traffico/cantieri</fullName>
             <default>false</default>
         </values>
         <values>
-            <fullName>Validazioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Valori della tensione%2Fpressione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Verifica e ricostruzioni</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>Volture e subentri</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Web</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>importi per consumi risalenti a più di due anni per i quali non risulti maturata la prescrizione</fullName>
             <default>false</default>
         </values>
     </picklistValues>

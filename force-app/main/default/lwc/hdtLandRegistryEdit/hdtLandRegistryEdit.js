@@ -282,7 +282,8 @@ export default class HdtLandRegistryEdit extends LightningElement {
         console.log("missing fields "+valuation.apinames);
         const message = valuation.labels.slice(2);
         if(message){
-            this.showMessage('Errore', 'Popolare i campi obbligatori: '+message, 'error');
+            //this.showMessage('Errore', 'Popolare i campi obbligatori: '+message, 'error');
+            this.showMessage('Errore', 'Clicca su Modifica e compila i Dati catastali obbligatori','error');
             return true;
         }
     }

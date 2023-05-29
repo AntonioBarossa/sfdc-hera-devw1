@@ -391,7 +391,6 @@
             <default>false</default>
         </values>
     </picklistValues>
-    </picklistValues>
     <picklistValues>
         <picklist>CancellationReasonDescription__c</picklist>
         <values>
@@ -679,6 +678,10 @@
         </values>
         <values>
             <fullName>CORE PL AZ</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>FEDELTA'</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2170,6 +2173,10 @@
             <fullName>Salvaguardia</fullName>
             <default>false</default>
         </values>
+        <values>
+            <fullName>STGM</fullName>
+            <default>false</default>
+        </values>
     </picklistValues>
     <picklistValues>
         <picklist>Market__c</picklist>
@@ -2191,6 +2198,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -2236,6 +2247,10 @@
         </values>
         <values>
             <fullName>Standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Bonifico</fullName>
             <default>false</default>
         </values>
     </picklistValues>

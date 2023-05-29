@@ -91,7 +91,8 @@ public inherited sharing class HDT_LC_BillingProfileForm {
         billingProfileSRV.checkReadAccess(String.join(fieldsToCheck,','));
 
         switch on paymentMethod {
-            when  'Bonifico bancario'{
+            //when  'Bonifico bancario'{
+            when  'Bonifico'{
                 resultMap.put('choosenFields', bonificoBancario);
             }
             when  'Bollettino postale'{
@@ -249,6 +250,13 @@ public inherited sharing class HDT_LC_BillingProfileForm {
     public static Account getAccountOwnerInfo(String accountId){
         accountSrv.checkReadAccess('FirstName__c,LastName__c,FiscalCode__c');
         return accountQr.getRecordById(accountId, 'FirstName__c,LastName__c,FiscalCode__c');
+    }
+
+    @AuraEnabled
+    public static String getAccount(String accountId){
+        accountSrv.checkReadAccess('Category__c');
+        Account acc = accountQr.getRecordById(accountId, 'Category__c');
+        return acc != null ? acc.Category__c : '';
     }
 
     /**

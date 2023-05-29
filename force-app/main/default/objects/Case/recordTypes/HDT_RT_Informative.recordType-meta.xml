@@ -2072,8 +2072,6 @@
             <fullName>MMS_TESORERIA</fullName>
             <default>false</default>
         </values>   
-    </picklistValues>
-        </values>        
     </picklistValues>-->
     <picklistValues>
         <picklist>CriticalAttribute__c</picklist>
@@ -8031,6 +8029,10 @@
             <fullName>Consulenza offerte</fullName>
             <default>false</default>
         </values>
+       <values>
+            <fullName>Info adesione iniziativa</fullName>
+            <default>false</default>
+        </values>
         <values>
             <fullName>Info Consegna e prodotti</fullName>
             <default>false</default>
@@ -8116,6 +8118,10 @@
         </values>
         <values>
             <fullName>Salvaguardia</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>STGM</fullName>
             <default>false</default>
         </values>
     </picklistValues>
@@ -8327,6 +8333,10 @@
         </values>
         <values>
             <fullName>Web</fullName>
+            <default>false</default>
+        </values>
+		<values>
+            <fullName>Web-MMS</fullName>
             <default>false</default>
         </values>
         <values>

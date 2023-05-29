@@ -32,6 +32,10 @@ public with sharing class HDT_UTL_CaseProcess {
         Map<Id,String> spCommodityMap = new Map<Id,String>();
         List<Id> spIds = new List<Id>();
         Map<Id,Boolean> needUpdate = new Map<Id,Boolean>();
+        Set<Id> accountIdSet = new Set<Id>();
+        String accountId;
+        String oldAccountId;
+        Map<Id,Account> mapIdAccount = new Map<Id,Account>();
         //First check if is from Insert or Update
         //1. Is From insert
         if(caseList != null && !caseList.isEmpty() && caseOldMap == null){
@@ -39,13 +43,15 @@ public with sharing class HDT_UTL_CaseProcess {
             for(Case singleNewCase : caseList){
                 servicePoint = singleNewCase.ServicePoint__c;
                 commodity = singleNewCase.Commodity__c;
+                accountId = singleNewCase.AccountId;
                 if (servicePoint != null && String.isNotBlank(servicePoint) && String.isBlank(commodity)) {
                     spIds.add(servicePoint);
                     needUpdate.put(servicePoint, true);
                 }
                 singleNewCase.Email__c = String.isBlank(singleNewCase.Email__c) && !String.isBlank(singleNewCase.SuppliedEmail) ? singleNewCase.SuppliedEmail : singleNewCase.Email__c;
-                if('Acqua'.equalsIgnoreCase(commodity)){
-                    singleNewCase.WrittenReceiptRequestDate__c = date.today();
+                if(String.isNotBlank(accountId) && String.isBlank(singleNewCase.FirstName__c) && String.isBlank(singleNewCase.LastName__c)){
+                    accountIdSet.add(accountId);
+                    //caseAccountSet.add(singleNewCase.Id);
                 }
             }
         }
@@ -55,14 +61,20 @@ public with sharing class HDT_UTL_CaseProcess {
             for(Case singleCase : caseList){
                 Case caseNew = singleCase;
                 Case caseOld = (Case) caseOldMap.get(caseNew.Id);
+                accountId = singleCase.AccountId;
+                oldAccountId = caseOld.AccountId;
                 servicePoint = caseNew.ServicePoint__c;
                 servicePointOld = caseOld.ServicePoint__c;
                 if((String.isBlank(commodity) && String.isBlank(servicePointOld) && String.isNotBlank(servicePoint)) || (String.isNotBlank(servicePointOld) && String.isNotBlank(servicePoint) && servicePoint != servicePointOld)){
                     spIds.add(servicePoint);
                     needUpdate.put(servicePoint, true);
                 }
+                if(String.isNotBlank(accountId) && String.isNotBlank(oldAccountId) && accountId != oldAccountId){
+                    accountIdSet.add(accountId);
+                }
             }
         }
+        
         if(spIds!=null && !spIds.isEmpty()){
             HDT_QR_ServicePoint spQrClass = new HDT_QR_ServicePoint();
             List<ServicePoint__c> spList = spQrClass.getRecordByIdList(spIds,'Id,CommoditySector__c,Account__r.FirstName__c, Account__r.LastName__c');
@@ -74,9 +86,16 @@ public with sharing class HDT_UTL_CaseProcess {
                         singleCaseToUpdate.FirstName__c = String.isBlank(singleCaseToUpdate.FirstName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.FirstName__c:singleCaseToUpdate.FirstName__c;
                         singleCaseToUpdate.LastName__c = String.isBlank(singleCaseToUpdate.LastName__c)?spMap.get(singleCaseToUpdate.ServicePoint__c).Account__r.LastName__c:singleCaseToUpdate.LastName__c;
                     }
-                    if('Acqua'.equalsIgnoreCase(singleCaseToUpdate.Commodity__c)){
-                        singleCaseToUpdate.WrittenReceiptRequestDate__c = singleCaseToUpdate.WrittenReceiptRequestDate__c == null ? date.today() : singleCaseToUpdate.WrittenReceiptRequestDate__c;
-                    }
+                    
+                }
+            }
+        }else if(!accountIdSet.isEmpty()){
+            mapIdAccount = new Map<Id,Account>([SELECT Id,FirstName__c,LastName__c FROM Account WHERE Id IN:accountIdSet WITH SECURITY_ENFORCED]);
+            for(Case singleCaseToUpdate : caseList){
+                if(accountIdSet.contains(singleCaseToUpdate.AccountId) && mapIdAccount != null){
+                    Account acc = mapIdAccount.get(singleCaseToUpdate.AccountId);
+                    singleCaseToUpdate.FirstName__c = acc.FirstName__c;
+                    singleCaseToUpdate.LastName__c = acc.LastName__c;
                 }
             }
         }
@@ -281,8 +300,11 @@ public with sharing class HDT_UTL_CaseProcess {
                         if ('Autolettura'.equalsIgnoreCase(caseNew.Cluster__c) && 'Gestione Manuale SAP'.equalsIgnoreCase(activity.Type__c)){
                             continue;
                         }
-                        activity.wrts_prcgvr__Status__c = 'Annullata';
-                        activitiesToCancel.add(activity);
+                        //CR31 - Nel caso in cui il case sia stato annullato e l'activity sia di Contatto Cliente, la lascio aperta per dare la possibilità all'operatore come da requisito di lavorarla.
+                        if(!'Contattare il cliente'.equalsIgnoreCase(activity.Type__c)){
+                            activity.wrts_prcgvr__Status__c = 'Annullata';
+                            activitiesToCancel.add(activity);
+                        }
                     }
                     if(!activitiesToCancel.isEmpty())
                     {
@@ -293,6 +315,15 @@ public with sharing class HDT_UTL_CaseProcess {
                 if(caseNew.Type.containsIgnoreCase('Variazione indirizzo di fornitura') || caseNew.Type.containsIgnoreCase('Marcatura/Uso PdR')){
                     System.debug(LoggingLevel.DEBUG, 'Inside Condition');
                     HDT_UTL_Case.createActivity(caseNew.Id, 'Annullare Case di Allineamento Anagrafica o crearne uno opposto', 'Annullamento Allineamento', 'Annullamento Allineamento');
+                }
+                //CR31 - Creazione Activity all'annullamento Autolettura da Cliente
+                if(caseNew.ParentId != null){
+                    Case parentCase = new Case();
+                    parentCase = caseQr.getParentCaseById(caseNew.ParentId);
+                    
+                    if('Annullato'.equalsIgnoreCase(newPhase) && 'Autolettura da cliente'.equalsIgnoreCase(caseNew.Type) && 'Inviato al DL'.equalsIgnoreCase(oldPhase) && parentCase != null && 'Errore Stima Consumi'.equalsIgnoreCase(parentCase.Subprocess__c) && ('Energia Elettrica'.equalsIgnoreCase(caseNew.CommodityFormula__c) || 'Gas'.equalsIgnoreCase(caseNew.CommodityFormula__c))){
+                        HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                    }
                 }
             }
         }
@@ -674,6 +705,7 @@ public with sharing class HDT_UTL_CaseProcess {
             c.Status = 'Closed';
         }
     }
+
 
 
 }

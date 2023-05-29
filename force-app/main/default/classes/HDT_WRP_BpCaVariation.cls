@@ -93,6 +93,8 @@ public class HDT_WRP_BpCaVariation {
 		public String contoContrattuale;
 		public String emailInvioBolletta;
 		public String creaNuovoCA;
+		public String cig;
+		public String cup;
 		public String pecInvioBolletta;
 		public String modInvioBolletta;
 		public String emailPec;

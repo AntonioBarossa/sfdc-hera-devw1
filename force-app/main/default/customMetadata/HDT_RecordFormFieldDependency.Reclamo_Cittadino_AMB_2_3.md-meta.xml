@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Reclamo Cittadino AMB 2-3</label>
+    <protected>false</protected>
+    <values>
+        <field>ControlledField__c</field>
+        <value xsi:type="xsd:string">ThirdLevelComplaintClassification__c</value>
+    </values>
+    <values>
+        <field>ControllingField__c</field>
+        <value xsi:type="xsd:string">SecondLevelComplaintClassification__c</value>
+    </values>
+    <values>
+        <field>DependecyJSON__c</field>
+        <value xsi:type="xsd:string">{&quot;Contratti&quot;:[{&quot;label&quot;:&quot;Attivazione/Cessazione&quot;,&quot;value&quot;:&quot;Attivazione/Cessazione&quot;},{&quot;label&quot;:&quot;Contratti&quot;,&quot;value&quot;:&quot;Contratti&quot;},{&quot;label&quot;:&quot;Subentro/Voltura&quot;,&quot;value&quot;:&quot;Subentro/Voltura&quot;}],&quot;Fatturazione&quot;:[{&quot;label&quot;:&quot;Avviso/Bolletta&quot;,&quot;value&quot;:&quot;Avviso/Bolletta&quot;},{&quot;label&quot;:&quot;Calcolo&quot;,&quot;value&quot;:&quot;Calcolo&quot;},{&quot;label&quot;:&quot;Modalità di pagamento&quot;,&quot;value&quot;:&quot;Modalità di pagamento&quot;},{&quot;label&quot;:&quot;Periodicità&quot;,&quot;value&quot;:&quot;Periodicità&quot;},{&quot;label&quot;:&quot;Problemi di fatturazione&quot;,&quot;value&quot;:&quot;Problemi di fatturazione&quot;},{&quot;label&quot;:&quot;Recapito&quot;,&quot;value&quot;:&quot;Recapito&quot;},{&quot;label&quot;:&quot;Rimborsi&quot;,&quot;value&quot;:&quot;Rimborsi&quot;}],&quot;Impatti Ambientali&quot;:[{&quot;label&quot;:&quot;Emissioni&quot;,&quot;value&quot;:&quot;Emissioni&quot;},{&quot;label&quot;:&quot;Impatto visivo&quot;,&quot;value&quot;:&quot;Impatto visivo&quot;},{&quot;label&quot;:&quot;Materiali/sostanze&quot;,&quot;value&quot;:&quot;Materiali/sostanze&quot;},{&quot;label&quot;:&quot;Richiamo animali/insetti&quot;,&quot;value&quot;:&quot;Richiamo animali/insetti&quot;},{&quot;label&quot;:&quot;Traffico/cantieri&quot;,&quot;value&quot;:&quot;Traffico/cantieri&quot;}],&quot;Misura&quot;:[{&quot;label&quot;:&quot;Contestazioni&quot;,&quot;value&quot;:&quot;Contestazioni&quot;}],&quot;Morosità&quot;:[{&quot;label&quot;:&quot;Solleciti&quot;,&quot;value&quot;:&quot;Solleciti&quot;}],&quot;Qualità del Servizio&quot;:[{&quot;label&quot;:&quot;Arenile&quot;,&quot;value&quot;:&quot;Arenile&quot;},{&quot;label&quot;:&quot;Centri di Raccolta&quot;,&quot;value&quot;:&quot;Centri di Raccolta&quot;},{&quot;label&quot;:&quot;Servizi a chiamata&quot;,&quot;value&quot;:&quot;Servizi a chiamata&quot;},{&quot;label&quot;:&quot;Servizi di raccolta&quot;,&quot;value&quot;:&quot;Servizi di raccolta&quot;},{&quot;label&quot;:&quot;Spazzamento&quot;,&quot;value&quot;:&quot;Spazzamento&quot;}],&quot;Servizio Clienti&quot;:[{&quot;label&quot;:&quot;Call center&quot;,&quot;value&quot;:&quot;Call center&quot;},{&quot;label&quot;:&quot;Sportello&quot;,&quot;value&quot;:&quot;Sportello&quot;},{&quot;label&quot;:&quot;Web&quot;,&quot;value&quot;:&quot;Web&quot;}]}</value>
+    </values>
+    <values>
+        <field>ObjectDeveloperName__c</field>
+        <value xsi:type="xsd:string">Case</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">Reclamo Cittadino AMB</value>
+    </values>
+</CustomMetadata>

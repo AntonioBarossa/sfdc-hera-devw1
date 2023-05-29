@@ -4,7 +4,7 @@
 * @date 23/03/2021
 * @description HDT_UTL_ServicePoint Class
 * @history Luca Molino – 23/03/2021 – Created Class
-* 18/11/2022 - Fabio Palladino - Class refactoring e gestione dati castali 
+* 18/11/2022 - Fabio Palladino - Class refactoring e gestione dati catastali 
 */
 public with sharing class HDT_UTL_ServicePoint {
     
@@ -44,11 +44,6 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_') ){
             spNew.isSTG__c = true;
         }
-        /**@frpanico 2022-03-15
-         * Aggiunto campo
-         * GRUPPONUMERATORE
-         * Per processo Sconti e Bonus
-         */
         if(mapRes.get('GRUPPONUMERATORE')!=null)
         {
             spNew.NumeratorGroup__c = mapRes.get('GRUPPONUMERATORE');
@@ -87,57 +82,6 @@ public with sharing class HDT_UTL_ServicePoint {
             String calDevName = 'CAL_' + mapRes.get('CALIBRO1');
             HDT_CaliberTranscode__mdt cmdCaliber = HDT_CaliberTranscode__mdt.getInstance(calDevName);
             spNew.MeterClass__c = cmdCaliber != null ? cmdCaliber.SfdcFieldValue__c : '';
-            // if(mapRes.get('CALIBRO1')=='GRT005'){
-            //     spNew.MeterClass__c = 'G10';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT010'){
-            //     spNew.MeterClass__c = 'G100';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT015'){
-            //     spNew.MeterClass__c = 'G100';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT006'){
-            //     spNew.MeterClass__c = 'G16';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT011'){
-            //     spNew.MeterClass__c = 'G160';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT016'){
-            //     spNew.MeterClass__c = 'G1600';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT002'){
-            //     spNew.MeterClass__c = 'G2,5';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT007'){
-            //     spNew.MeterClass__c = 'G25';                
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT012'){
-            //     spNew.MeterClass__c = 'G250';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT003'){
-            //     spNew.MeterClass__c = 'G4';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT008'){
-            //     spNew.MeterClass__c = 'G40';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT013'){
-            //     spNew.MeterClass__c = 'G400';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT017'){
-            //     spNew.MeterClass__c = 'G4000';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT004'){
-            //     spNew.MeterClass__c = 'G6';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT009'){
-            //     spNew.MeterClass__c = 'G65';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT014'){
-            //     spNew.MeterClass__c = 'G650';
-            // }
-            // if(mapRes.get('CALIBRO1')=='GRT018'){
-            //     spNew.MeterClass__c = 'G6500';
-            // }            
         }
         if(mapRes.get('AF_CLASSE')!=null && !String.isBlank(mapRes.get('AF_CLASSE'))){
             String devName = 'AF_' + mapRes.get('AF_CLASSE');
@@ -145,7 +89,7 @@ public with sharing class HDT_UTL_ServicePoint {
             spNew.MeterClass__c = cmdAfClass != null ? cmdAfClass.SfdcFieldValue__c : '';
         }
         if(mapRes.get('STATO_PUNTO')!=null && !String.isBlank(mapRes.get('STATO_PUNTO'))){
-            String metStatus = '';
+            String metStatus = spNew.MeterStatus__c;
             switch on mapRes.get('STATO_PUNTO') {
                 when 'H010', 'H030', 'H045', 'H050', 'H060' {
                     metStatus = 'Sospeso';
@@ -254,10 +198,6 @@ public with sharing class HDT_UTL_ServicePoint {
         else{
             spNew.isReseller__c = false;
         }
-        /**@frpanico 2022-04-08
-         * Aggiunta gestione Stato Contratto SAP
-         * Da DATACESSAZIONE
-         */
         if(mapRes.get('DATACESSAZIONE') !=null && !String.isBlank(mapRes.get('DATACESSAZIONE')))
         {
             if(mapRes.get('DATACESSAZIONE') == '99991231' || Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8)) > System.today())
@@ -398,11 +338,14 @@ public with sharing class HDT_UTL_ServicePoint {
         if(mapRes.get('AF_BOC_IDR')!=null && !String.isBlank(mapRes.get('AF_BOC_IDR'))){         
             spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
         }
-        if(mapRes.get('TFRS000000')!=null && !String.isBlank(mapRes.get('TFRS000000'))){         
-            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('TFRS000000')));
+        if(mapRes.get('SUP_DICH')!=null && !String.isBlank(mapRes.get('SUP_DICH'))){         
+            spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('SUP_DICH')));
+        }
+        if(mapRes.get('SUP_RILEVANTE')!=null && !String.isBlank(mapRes.get('SUP_RILEVANTE'))){         
+            spNew.AreaRelevantForCalculation__c  = integer.valueOf(Decimal.valueOf(mapRes.get('SUP_RILEVANTE')));
         }
         if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
-            String mercato = mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
+            String mercato =  mapRes.get('MERCATO').containsIgnoreCase('STGM') ? 'STGM' : mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
             Boolean isStg = mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_')? true:false;
             mercato = mercato.containsIgnoreCase('Tutela')?'Regolamentato':mercato;
             mercato = isStg ? 'Regolamentato':mercato;
@@ -477,13 +420,17 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.AlignmentFrequencyGAA__c = listAllineamentoGaa.get(0).Frequenza__c;
             }
         }
+        if(mapRes.get('FATTURACOLLETTIVA')!=null && !String.isBlank(mapRes.get('FATTURACOLLETTIVA'))){
+            spNew.AggregateBilling__c = mapRes.get('FATTURACOLLETTIVA');
+        }
+
+        if(mapRes.get('DATAULTIMAGAA')!=null && !String.isBlank(mapRes.get('DATAULTIMAGAA'))){
+            spNew.DateOfLastAlignmentGAA__c = dataEnrich.alignGaaDate(String.valueOf(spNew.DateOfLastAlignmentGAA__c), mapRes.get('DATAULTIMAGAA'));
+        }
 
         //Reset flag di check creazione activity di "Modifica Indirizzo Fornitura", tale flag verrà impostato a true nel caso in cui si vada a modificare l'indirizzo sul form del service point.
         spNew.IsAddressChanged__c = false;
 
-         /**Edoardo Zanatta 2023-01-11
-         * Aggiunta gestione SAPContractAccountCode__c
-         */
         if(mapRes.get('CA')!=null && !String.isBlank(mapRes.get('CA'))){
             spNew.SAPContractAccountCode__c = mapRes.get('CA');
         }
@@ -493,6 +440,10 @@ public with sharing class HDT_UTL_ServicePoint {
             if (!accBp.isEmpty()) {
                 spNew.Account__c = accBp[0].Id;
                 accBpMap.put(accBp[0].Id, accBp[0]);
+                spNew.CustomerCodeSAP__c = null;
+            }
+            else {
+                spNew.CustomerCodeSAP__c = mapRes.get('BP');
             }
         }
         Map<String, String> inputFields = new Map<String, String>();
@@ -549,6 +500,7 @@ public with sharing class HDT_UTL_ServicePoint {
         
         return listFields;        
     }
+
     @AuraEnabled(cacheable=true)
     public static  HDT_WRP_AddressObject getInstanceWrapAddressObject(String servicePoint)
     {
@@ -707,6 +659,5 @@ public with sharing class HDT_UTL_ServicePoint {
         public ServicePoint__c servicePoint;
         @InvocableVariable
         public String responseSerialized;
-
     }
 }

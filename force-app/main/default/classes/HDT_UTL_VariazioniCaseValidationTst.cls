@@ -86,5 +86,55 @@ public with sharing class HDT_UTL_VariazioniCaseValidationTst {
 
     }
 
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    @isTest
+    private static void validateProcessoModificaUnitaImm1(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateProcessoModificaUnitaImm';
+        System.debug(LoggingLevel.DEBUG, debugString);
+
+        //SETUP
+        mySetup();
+
+        Case myCaseModUnitImm = [SELECT Id, Type, Unita_Abitative__c,CommercialHousingUnit__c,ResidentDomesticHousingUnit__c, ResidentMembers__c,NotResidentDomesticHousingUnit__c FROM Case where Type = 'Modifica Unita Immobiliari Componenti'];
+        myCaseModUnitImm.ResidentDomesticHousingUnit__c = 3;
+        myCaseModUnitImm.ResidentMembers__c = 4;
+
+        String recordId1 = myCaseModUnitImm.Id;
+        HDT_UTL_VariazioniCaseValidation validation = new HDT_UTL_VariazioniCaseValidation();
+        String fields = JSON.serialize(myCaseModUnitImm);
+        System.debug('fields ' + fields);
+        String result = validation.validate(fields, recordId1);
+        
+        System.assertNotEquals(null, result, 'Si è verificato un errore in fase di validazione.');
+
+    }
+
+    @SuppressWarnings('PMD.AvoidDebugStatements')
+    @isTest
+    private static void validateProcessoModificaUnitaImm2(){
+
+        //DEBUG
+        String debugString = TEST_NAME + ' - ' + 'validateProcessoModificaUnitaImm';
+        System.debug(LoggingLevel.DEBUG, debugString);
+
+        //SETUP
+        mySetup();
+
+        Case myCaseModUnitImm = [SELECT Id, Type, Unita_Abitative__c,CommercialHousingUnit__c,ResidentDomesticHousingUnit__c, ResidentMembers__c,NotResidentDomesticHousingUnit__c FROM Case where Type = 'Modifica Unita Immobiliari Componenti'];
+        myCaseModUnitImm.ResidentDomesticHousingUnit__c = 0;
+        myCaseModUnitImm.ResidentMembers__c = 4;
+
+        String recordId1 = myCaseModUnitImm.Id;
+        HDT_UTL_VariazioniCaseValidation validation = new HDT_UTL_VariazioniCaseValidation();
+        String fields = JSON.serialize(myCaseModUnitImm);
+        System.debug('fields ' + fields);
+        String result = validation.validate(fields, recordId1);
+        
+        System.assertNotEquals(null, result, 'Si è verificato un errore in fase di validazione.');
+
+    }
+
 
 }

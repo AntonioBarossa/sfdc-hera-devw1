@@ -457,7 +457,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             List<Order> ordersHeroku = new List<Order>();
             List<Order> ordersSiebel = new List<Order>();
             List<Order> ordersNonEnergy = new List<Order>();
-            //List<Order> ordersCompletata = new List<Order>();
+            List<Order> ordersCompletata = new List<Order>();
             for(Order o:filtered){
                 if(o.sale__r.isTransition__c==true){
                     ordersSiebel.add(o);
@@ -472,7 +472,7 @@ public inherited sharing  class HDT_UTL_OrderProcess {
                     ordersNonEnergy.add(o);
                 }else if('Ambiente'.equalsIgnoreCase(o.Commodity__c) && o.ProcessType__c.startsWithIgnoreCase( 'Modifica Tariffa')){
                     if(o.ProcessType__c.endsWithIgnoreCase('Rimozione Agevolazione')){  continue;  }
-                    //else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
+                    else if(!o.IntegratedSAP__c){    ordersCompletata.add(o);    }
                     else if (o.IntegratedSAP__c){   ordersHeroku.add(o);    }
                 }
                 else{
@@ -487,9 +487,9 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersNonEnergy, 'Documentazione Validata', 'Creazione BP-CA','Documentazione Validata','Comunicazione Motore VAS')
             );
-            /*vasOrdersToUpdate.putAll(
+            vasOrdersToUpdate.putAll(
                 updateChildOrdersPhase(ordersCompletata, 'Documentazione Validata', 'Completata','Documentazione Validata','Comunicazione Motore VAS')
-            );*/
+            );
             if(!vasOrdersToUpdate.isEmpty()){
                 system.enqueueJob(new HDT_UTL_PrClickDoubleTransaction.HDT_QBL_BulkUpdate(vasOrdersToUpdate));
             }
@@ -673,10 +673,17 @@ public inherited sharing  class HDT_UTL_OrderProcess {
 
         String newPhase = newOrder.Phase__c;
         String oldPhase = oldOrder.Phase__c;
+        String newOrderProcess = newOrder.DocumentalProcessType__c;
 
         if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase && newPhaseSet.contains(newPhase)){
-            newOrder.EffectiveDate__c = System.today();
-            if( newOrder.DocumentalProcessType__c.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ){
+            if( !newOrderProcess.containsIgnoreCase('Voltura') && !newOrderProcess.containsIgnoreCase('Cambio offerta') ){
+                newOrder.EffectiveDate__c = System.today();
+            }
+            if( ( newOrderProcess.containsIgnoreCase('Voltura') && 'Con Autolettura'.equalsIgnoreCase(newOrder.Subprocess__c) ) || 
+                ( newOrderProcess.containsIgnoreCase('Cambio offerta') && String.isBlank(newOrder.MeterSN__c) ) ||
+                ( (newOrderProcess.containsIgnoreCase('Cambio offerta') || newOrderProcess.containsIgnoreCase('Voltura') ) && 'ACPOZZI000'.equalsIgnoreCase(newOrder.RateCategory__c) )
+              )
+            {
                 newOrdersListReadingDate.add(newOrder);
                 newOrder.ReadingCustomerDate__c = System.today();
             }
@@ -685,7 +692,6 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         if(!newOrdersListReadingDate.isEmpty()){
             HDT_UTL_ProcessDateManager.updateReadingDate(newOrdersListReadingDate);
         }
-        
     }
     // START @Picchiri HRADTR-77 Calcolo Date 01.06.21
     /**
@@ -1170,11 +1176,13 @@ public inherited sharing  class HDT_UTL_OrderProcess {
             for(Order ord : orderList){
                 if (!'Credit Check Forzato dall\'operatore'.equalsIgnoreCase(ord.CreditCheckDescription__c)){
                     wrts_prcgvr__Activity__c actToUpdate = mapIdOrderToActivity.get(ord.Id);
-                    actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
-                    actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
-                    actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
-                    actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
-                    actListToUpdate.add(actToUpdate);
+                    if(actToUpdate != null){
+                        actToUpdate.CreditCheckResolutionReason__c = ord.CreditCheckDescription__c;
+                        actToUpdate.CreditCheckReason__c = ord.CreditCheckDescription__c;
+                        actToUpdate.CreditCheckResults__c = ord.IncomingCreditCheckResult__c;
+                        actToUpdate.wrts_prcgvr__Status__c = 'KO Risolto';
+                        actListToUpdate.add(actToUpdate);
+                    }
                 }
                 
                 /*if(ord.CreditCheckDescription__c.contains('Saldo debito cattivo pagatore') && actToUpdate.RecordType.DeveloperName.equalsIgnoreCase('HDT_RT_CreditCheckKO')){

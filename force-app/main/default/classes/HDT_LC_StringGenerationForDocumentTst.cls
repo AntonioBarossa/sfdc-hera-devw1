@@ -24,14 +24,15 @@ public with sharing class HDT_LC_StringGenerationForDocumentTst {
 
     @isTest
     static void test_fail(){
-        User testUser = [SELECT Id FROM User WHERE alias = 'ftest'];
         test.startTest();
+            User testUser = [SELECT Id FROM User WHERE alias = 'ftest'];
             System.runAs(testUser){
+                List<StaticStringForDocuments__c> listStringDocumental = new List<StaticStringForDocuments__c>();
                 try{
-                    List<StaticStringForDocuments__c> listStringDocumental = HDT_LC_StringGenerationForDocument.getUniqueString('city', 'process', 'subprocess');
-                } catch (DmlException ex) {
-                    System.assertEquals('expected text', ex.getMessage());
-                }  
+                    listStringDocumental = HDT_LC_StringGenerationForDocument.getUniqueString(null,null,null);
+                } catch (AuraHandledException ex) {
+                    System.assertEquals('Script-thrown exception', ex.getMessage());
+                }
             }
         test.stopTest();
     }

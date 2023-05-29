@@ -34,11 +34,16 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
     private List<HDT_RegionalAdditional__mdt> regionalAddList;
     private List<RateCategory__c> rateCategoryList;
     private HDT_UTL_CarMassPredefaultValues orderPreDefault;
+    private HDT_UTL_ProcessDiscountAndBonus processDiscountBonus;
     private Set<String> activationItemTypes;
 
     public override void checks(){
 
         mapFieldsObject();
+
+        if(isDiscountAndBonusProcess){
+            processDiscountBonus = new HDT_UTL_ProcessDiscountAndBonus(mapHeaderForWrapper);
+        }
 
         itemsToUpdate = new List<MassiveLoaderRequestItem__c>();
         commOfferForRetrieve = new List<Product2>();
@@ -130,6 +135,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
 
         }
         //getLimitDetails('convertionEnd');
+
     }
 
     public override void getRecords(){
@@ -282,6 +288,10 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             FROM HDT_RegionalAdditional__mdt
         ];
         
+        if(isDiscountAndBonusProcess){
+            processDiscountBonus.getDataForDiscountAndBonus();
+        }
+
     }
 
     public override void registryCreation(){
@@ -299,6 +309,14 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         String errorFieldCheck;
         // STEP 2: check Sale__c required fields and save
         for(HDT_WRP_ProcessObjects processObj : processObjList){
+
+            if(processObj.requestItem.Status__c == 'Errore'){
+                continue;
+            }
+
+            if(isDiscountAndBonusProcess){
+                processObj = processDiscountBonus.checkDiscountAndBonus(processObj);
+            }
 
             if(processObj.requestItem.Status__c == 'Errore'){
                 continue;
@@ -593,6 +611,12 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 setSalesCompanyAndCode(wrpChildOrder.childOrder, commodity);
                 //handleCustomFieldLogic(wrpChildOrder.childOrder, commodity); 
 
+                if(wrpChildOrder.childOrder.VasSubtype__c != null && wrpChildOrder.childOrder.VasSubtype__c == 'Analisi Consumi'){
+                    //no rate
+                }else{
+                    calculateRateCategory(wrpChildOrder.childOrder);
+                }
+
                 if(wrpChildOrder.childOrder.ProcessType__c.equalsIgnoreCase('Voltura')){
                     orderPreDefault.setMetadataLists(wrpChildOrder.childOrder);
                 }
@@ -723,7 +747,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }
     }
 
-    private void handleCustomFieldLogic(Order orderToUpdate, String commodity){
+/*     private void handleCustomFieldLogic(Order orderToUpdate, String commodity){
         HDT_SRV_Order orderSrv = new HDT_SRV_Order();
         String processType = orderToUpdate.ProcessType__c;
         Date effectiveDate = orderToUpdate.EffectiveDate__c;
@@ -757,7 +781,7 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         }else{
             calculateRateCategory(orderToUpdate);
         }
-    }
+    } */
 
     private void setSalesCompanyAndCode(Order orderToUpdate, String commodity){
         if(commodity.equalsIgnoreCase('Gas')){
@@ -1142,7 +1166,11 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
                 additionalProduct2.add(wrpOrderItem.product);
             }*/
 
-            if(!processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura')){
+            if(isDiscountAndBonusProcess){
+                processDiscountBonus.handleDiscountAndBonus(wrpChildOrder, csvValues);
+            }
+
+            if(!processName.equalsIgnoreCase('VolturaNoEnergy') && !processName.equalsIgnoreCase('Voltura') && !isDiscountAndBonusProcess){
                 wrpChildOrder = handleBonus(wrpChildOrder,csvValues);
             }
 
@@ -1217,20 +1245,20 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         
     }
 
-    private class HDT_WRP_ProcessObjects {
-        private Opportunity opportunity;
-        private Sale__c sale;
-        private SaleServiceItem__c saleServiceItem;
-        private Order parentOrder;
-        private List<HDT_WRP_ChildOrder> childOrderList;
-        private MassiveLoaderRequestItem__c requestItem;
+    public class HDT_WRP_ProcessObjects {
+        public Opportunity opportunity;
+        public Sale__c sale;
+        public SaleServiceItem__c saleServiceItem;
+        public Order parentOrder;
+        public List<HDT_WRP_ChildOrder> childOrderList;
+        public MassiveLoaderRequestItem__c requestItem;
         //private Id accountId;
         //private Id contactId;
         //private Id billProfId;
         //private Id servPointId;
-        private HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
+        public HDT_UTL_ProcessSales.HDT_WRP_NextDataObj nextDataObj;
 
-        private HDT_WRP_ProcessObjects(){
+        public HDT_WRP_ProcessObjects(){
             opportunity = new Opportunity();
             sale = new Sale__c();
             saleServiceItem = new SaleServiceItem__c();
@@ -1296,16 +1324,17 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
         order.RateCategory__c = code;
     }
 
-    private class HDT_WRP_ChildOrder {
-        private String orderType;
-        private Order childOrder;
-        private List<HDT_WRP_OrderItem> orderItemList;
+    public class HDT_WRP_ChildOrder {
+        public String orderType;
+        public Order childOrder;
+        public String sapContractCode;
+        public List<HDT_WRP_OrderItem> orderItemList;
     }
 
-    private class HDT_WRP_OrderItem {
-        private String itemType;
-        private OrderItem orderItem;
-        private Product2 product;
+    public class HDT_WRP_OrderItem {
+        public String itemType;
+        public OrderItem orderItem;
+        public Product2 product;
     }
 
 }
