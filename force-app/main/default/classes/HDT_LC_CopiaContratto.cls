@@ -71,7 +71,8 @@ public with sharing class HDT_LC_CopiaContratto {
                 c.phase__c = 'In Lavorazione';
                 res = 'Recupero contratto da Postel';
             }else{
-                if('Inbound'.equalsIgnoreCase(tipoAttivita) && 'Posta Cartacea'.equalsIgnoreCase(tipoSend)){
+                //if('Inbound'.equalsIgnoreCase(tipoAttivita) && 'Posta Cartacea'.equalsIgnoreCase(tipoSend)){
+                if(('Telefono Inbound'.equalsIgnoreCase(tipoAttivita) || 'Sportello'.equalsIgnoreCase(tipoAttivita) ) && 'Posta Cartacea'.equalsIgnoreCase(tipoSend)){
                     wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Invio Contratto');
                     activitySrv.createRecord(activity);
                     res = 'Invio Contratti';
