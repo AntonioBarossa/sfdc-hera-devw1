@@ -170,40 +170,42 @@ public with sharing class HDT_LC_ClientHistory {
             }
             
             //>>> QUERY SU SALESFORCECUSTOMER
-            String querySvecchiati = 'select Id, FiscalCodeC__c, VATNumberC__c, CustomerCodeC__c, FirstNameC__c, LastNameC__c, CompanyOwnerC__c FROM SalesforceCustomer__x ';
-            if(filterby=='Codice Fiscale'){
-                querySvecchiati +=' WHERE FiscalCodeC__c = :searchKey';
-            }else if(filterby=='Partita Iva'){
-                querySvecchiati += ' WHERE VATNumberC__c = :searchKey';
-            }else if(filterby=='Codice Cliente'){
-                querySvecchiati += ' WHERE CustomerCodeC__c = :searchKey';
-            }
-            if (silosPermessi.size() != null && silosPermessi.size() > 0 && !isBackofficeUser){
-                querySvecchiati += ' AND CompanyOwnerC__c IN :silosPermessi';
-            }else if(isBackofficeUser){
-                querySvecchiati += ' AND CompanyOwnerC__c = :silos';
-            }
-            if (sortBy != null && sortDirection != null ) {
-                querySvecchiati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
-            }
-            List<SalesforceCustomer__x> listSalesforceCustomer = 'SalesforceCustomer__x'.equalsIgnoreCase(whatToMock) ? 
-                                                                 HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(querySvecchiati) )) :
-                                                                 Database.query( String.escapeSingleQuotes(querySvecchiati) ); 
+            // 2023-06-29 / Temporary comment awaiting fix -- START
+            // String querySvecchiati = 'select Id, FiscalCodeC__c, VATNumberC__c, CustomerCodeC__c, FirstNameC__c, LastNameC__c, CompanyOwnerC__c FROM SalesforceCustomer__x ';
+            // if(filterby=='Codice Fiscale'){
+            //     querySvecchiati +=' WHERE FiscalCodeC__c = :searchKey';
+            // }else if(filterby=='Partita Iva'){
+            //     querySvecchiati += ' WHERE VATNumberC__c = :searchKey';
+            // }else if(filterby=='Codice Cliente'){
+            //     querySvecchiati += ' WHERE CustomerCodeC__c = :searchKey';
+            // }
+            // if (silosPermessi.size() != null && silosPermessi.size() > 0 && !isBackofficeUser){
+            //     querySvecchiati += ' AND CompanyOwnerC__c IN :silosPermessi';
+            // }else if(isBackofficeUser){
+            //     querySvecchiati += ' AND CompanyOwnerC__c = :silos';
+            // }
+            // if (sortBy != null && sortDirection != null ) {
+            //     querySvecchiati += ' ORDER BY ' + sortBy + ' ' + sortDirection;
+            // }
+            // List<SalesforceCustomer__x> listSalesforceCustomer = 'SalesforceCustomer__x'.equalsIgnoreCase(whatToMock) ? 
+            //                                                      HDT_UTL_ObjectManagerTst.records(Database.query( String.escapeSingleQuotes(querySvecchiati) )) :
+            //                                                      Database.query( String.escapeSingleQuotes(querySvecchiati) ); 
 
-            for(SalesforceCustomer__x salesforceCustomer : listSalesforceCustomer){
-                wrapperToreturn.add(
-                    new HDT_LC_Customer(
-                        salesforceCustomer.LastNameC__c,                       
-                        salesforceCustomer.FiscalCodeC__c,
-                        salesforceCustomer.VATNumberC__c,
-                        salesforceCustomer.CustomerCodeC__c,
-                        salesforceCustomer.Id,
-                        'NO',
-                        salesforceCustomer.FirstNameC__c,
-                        salesforceCustomer.CompanyOwnerC__c
-                        )
-                );
-            }
+            // for(SalesforceCustomer__x salesforceCustomer : listSalesforceCustomer){
+            //     wrapperToreturn.add(
+            //         new HDT_LC_Customer(
+            //             salesforceCustomer.LastNameC__c,                       
+            //             salesforceCustomer.FiscalCodeC__c,
+            //             salesforceCustomer.VATNumberC__c,
+            //             salesforceCustomer.CustomerCodeC__c,
+            //             salesforceCustomer.Id,
+            //             'NO',
+            //             salesforceCustomer.FirstNameC__c,
+            //             salesforceCustomer.CompanyOwnerC__c
+            //             )
+            //     );
+            // }
+            // 2023-06-29 / Temporary comment awaiting fix -- END
         }
         return wrapperToreturn;
     }
