@@ -322,7 +322,7 @@ public with sharing class HDT_UTL_CaseProcess {
                     parentCase = caseQr.getParentCaseById(caseNew.ParentId);
                     
                     if('Annullato'.equalsIgnoreCase(newPhase) && 'Autolettura da cliente'.equalsIgnoreCase(caseNew.Type) && 'Inviato al DL'.equalsIgnoreCase(oldPhase) && parentCase != null && 'Errore Stima Consumi'.equalsIgnoreCase(parentCase.Subprocess__c) && ('Energia Elettrica'.equalsIgnoreCase(caseNew.CommodityFormula__c) || 'Gas'.equalsIgnoreCase(caseNew.CommodityFormula__c))){
-                        HDT_UTL_Case.createActivity(caseNew.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
+                        HDT_UTL_Case.createActivity(parentCase.Id, '', 'CBS_CRP002__CONTATTARE_IL_CLIENTE_POSTSALES', 'Contattare il cliente');
                     }
                 }
             }
