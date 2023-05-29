@@ -16,6 +16,7 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 	@AuraEnabled
 	public static Boolean isInBlacklist(String pod){
+		if(String.isBlank(pod))return false;
 		HDT_QR_Blacklist qrBlack = new HDT_QR_Blacklist();
 		Blacklist__c blacklist = qrBlack.getBlacklist(pod);
 		Boolean response = false;
@@ -296,6 +297,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 			if(ac.BillingCityCode__c != null){
 				outPut.put('Codice Comune SAP',ac.BillingCityCode__c);
 			}
+			if(ac.BillingPlace__c != null){
+				outPut.put('Localita',ac.BillingPlace__c);
+			}
 
 		system.debug('outPut *******'+ outPut);
 
@@ -306,9 +310,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 	/*
 	 * Retrieve data from ServicePoint Object By ServiceCode
 	 */
-	@AuraEnabled(cacheable = true)
-	public static List<Map<String, Object>> getServicePoints(String parameter,
-															 String queryType,String additionalFilter,Boolean isSuperUser) {
+	@AuraEnabled(cacheable = false)
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,String additionalFilter,
+	                                                                          Boolean isSuperUser, String datiCatastali) {
 		Set<ServicePoint__c> servicePoints = new Set<ServicePoint__c>();
 		HDT_QR_Contract contractQr= new HDT_QR_Contract();
 		system.debug('queryType' + queryType);
@@ -316,27 +320,23 @@ public with sharing class HDT_LC_AdvancedSearch {
 		Boolean isSerachFromContract = false;												
 		switch on queryType {
 			when 'serialnumber' {
-	 
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
 				if(additionalFilter=='' || additionalFilter== null){
 					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumber(parameter, customSetting.OutputServicePoint__c));
 				}else{
 					servicePoints.addAll(servicePointQr.getServicePointsByMeterSerialNumberWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
-					//else chiami getRecordFromCodeWithFilter(accountId,additionalFilter) 
 				}
-
 			}
 			when 'pod' {
 				if (parameter.length() < 10 || parameter.length() > 15) {
 					throw new AuraHandledException('il codice PDO/PDR deve essere di 15 caratteri');
 				}
 				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
-				system.debug('additionalFilter***********************************' + additionalFilter);
+				
 				if(additionalFilter=='' || additionalFilter== null){
 					servicePoints.addAll(servicePointQr.getServicePointsByCode(parameter, customSetting.OutputServicePoint__c));
 				}else {
 					servicePoints.addAll(servicePointQr.getServicePointsByCodeWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
-					//else chiami getRecordFromCodeWithFilter(accountId,additionalFilter) 
 				}
 			}
 			when 'contract' {
@@ -349,20 +349,30 @@ public with sharing class HDT_LC_AdvancedSearch {
 					servicePoints.addAll(servicePointQr.getRecordFromCode(parameter, customSetting.OutputServicePoint__c));
 				}else {
 					servicePoints.addAll(servicePointQr.getRecordFromCodeWithFilter(parameter, customSetting.OutputServicePoint__c,additionalFilter));
-
-					
-
-
 				}
 				isSerachFromContract=true;
 			}
-
+			when 'podH2o' {
+				if (parameter.length() < 5 || parameter.length() > 20) {
+					throw new AuraHandledException('Il Codice Punto Presa deve essere di compreso tra 5 e 20 caratteri');
+				}
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByCodeWater(parameter, customSetting.OutputServicePoint__c));
+			}
+			when 'address' {
+				servicePointSrv.checkReadAccess(customSetting.OutputServicePoint__c);
+				servicePoints.addAll(servicePointQr.getServicePointsByAddress(parameter, customSetting.OutputServicePoint__c));
+			}
+			when 'datiCatastali' {
+				return servicePointQr.getServicePointsByDatiCatastali(datiCatastali, customSetting.OutputServicePoint__c);
+			}
 		}
 		checkTheNumberOfRecords(servicePoints.size());
 		String[] customSettingFields = customSetting.OutputServicePoint__c.split(',');
 		List<Map<String, Object>> output = new List<Map<String, Object>>();
 		Map<String, Object> record = new Map<String, Object>();
 		for (ServicePoint__c servicePointObject : servicePoints) {
+			
 			for (String customSettingField : customSettingFields) {
 				if (!customSettingField.contains('.')) {
 					if (servicePointObject.get(customSettingField) == null) {
@@ -385,33 +395,23 @@ public with sharing class HDT_LC_AdvancedSearch {
 			if(isSerachFromContract != true){
 				isSuperUser=false;
 			}
-
-			Contract c = contractQr.getSapContractCode(servicePointObject.ServicePointCode__c,isSuperUser);
+			if(servicePointObject.Id != null){
+				record.put('ServicePointId', servicePointObject.Id);
+				Contract spContract = contractQr.getSapContractCode(servicePointObject.Id,isSuperUser);
+				record.put('Codice Contratto', spContract != null ? (String) spContract.SAPContractCode__c : ' ');
+			}
 			
-
-				if(c.SAPContractCode__c!=null){
-					String value = '';
-					String label = '';
-					label='Codice Contratto';
-					value=(String) c.SAPContractCode__c;
-					record.put(label,value);
-
-				}else{
-					String value = '';
-					String label = '';
-					label='Codice Contratto';
-					value=' ';
-					record.put(label,value);
-				}
-			
-
-			system.debug('record***********'+record);
 			output.add(new Map<String, Object>(record));
 			record.clear();
 		}
 
-
 		return output;
+	}
+
+	@AuraEnabled(cacheable = true)
+	public static List<Map<String, Object>> getServicePoints(String parameter,String queryType,
+																			  String additionalFilter,Boolean isSuperUser) {
+		return getServicePoints(parameter,queryType,additionalFilter,isSuperUser, '');
 	}
 
 	@AuraEnabled(cacheable = true)
@@ -420,12 +420,8 @@ public with sharing class HDT_LC_AdvancedSearch {
 		return servicePointFields;
 	}
 
-
-
-//aggiungi parametro additionalFilter
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String,String>> getContracts(String accountid,String additionalFilter) {
-		
+	public static List<Map<String,String>> getContracts(String accountid,String additionalFilter) {		
 		String type='Contract';
 		String fieldContract = customSetting.Output_Contract__c;
 		List<String> listField = fieldContract != null ? fieldContract.split(',') : new List<String>();
@@ -527,10 +523,6 @@ public with sharing class HDT_LC_AdvancedSearch {
 		}
 	}
 
-
-
-
-
 	/*
 	 * Getting All get ServicePoint Fields as Map
 	 */
@@ -546,10 +538,9 @@ public with sharing class HDT_LC_AdvancedSearch {
 	}
 
 	@AuraEnabled(cacheable = true)
-	public static List<Map<String, String>> getForniture(String accountid,String additionalFilter) {
-		
+	public static List<Map<String, String>> getForniture(String accountid,String additionalFilter) {		
 		String fieldForniture = customSetting.OutputServicePoint__c;
-		HDT_QR_Contract contractQr= new HDT_QR_Contract();
+		HDT_QR_Contract contractQr = new HDT_QR_Contract();
 		List<String> listField = fieldForniture != null ? fieldForniture.split(',') : new List<String>();
 		List<ServicePoint__c> servicePoints = new List<ServicePoint__c>();
 
@@ -562,18 +553,26 @@ public with sharing class HDT_LC_AdvancedSearch {
 
 		String type='ServicePoint__c';
 		List<String> servicePointsCodes = new List<String>();
-		for(ServicePoint__c s :servicePoints){
-			servicePointsCodes.add(s.ServicePointCode__c);
+		for(ServicePoint__c sp :servicePoints){
+			servicePointsCodes.add((String) sp.Id);
 		}
 		
-		List<Contract> c = contractQr.getSapContractCode(servicePointsCodes);
+		// Recupero dei contratti legati ai Service Point e costruzione della mappa di associazione
+		List<Contract> contractList = contractQr.getSapContractCode(servicePointsCodes);
+		Map<String,Contract> contractMap = new Map<String,Contract>();
+		for(Contract contractItem : contractList){
+			if(String.isBlank(contractItem.ServicePoint__c)) continue;
+			contractMap.put(contractItem.ServicePoint__c, contractItem);
+		}
+
 		Map<String, Schema.SObjectType> schemaMap = Schema.getGlobalDescribe();
 		Schema.SObjectType leadSchema = schemaMap.get(type);
 		Map<String, Schema.SObjectField> fieldMap = leadSchema.getDescribe().fields.getMap();
 
         List<Map<String,String>> customSp = new List<Map<String,String>>();
 		for (ServicePoint__c sp : servicePoints) {
-            Map<String,String> row = new Map<String, String>();	
+            Map<String,String> row = new Map<String, String>();
+			
 			for(String field : listField){
 				String value = '';
 				String label = '';
@@ -583,31 +582,22 @@ public with sharing class HDT_LC_AdvancedSearch {
 					if(sp.getSObject(s[0]+'__r')!=null){						
 						value = (String)sp.getSObject(s[0]+'__r').get(s[1]);
 						label = fieldMap.get(s[0]+'__c').getDescribe().getLabel();
+						row.put(label,value);
 					}
 				}
 				else{
 					value = (String)sp.get(field);
 					label = fieldMap.get(field).getDescribe().getLabel();
+					row.put(label,value);
 				}
-				row.put(label,value);
 			}
-			if(!c.isEmpty() ){
-				for(Contract con :c){
-					String value = '';
-					String label = '';
-					if(con.ServicePoint__r.ServicePointCode__c== sp.ServicePointCode__c){
-						label='Codice Contratto';
-						value=(String) con.SAPContractCode__c;
-						row.put(label,value);
-					}
-					else{
-						label='Codice Contratto';
-						value=' ';
-						row.put(label,value);
-					}
-				}				
+			if(sp.Id != null){
+				row.put('ServicePointId', sp.Id);
+				Contract spContract = contractMap.get(sp.Id);
+				row.put('Codice Contratto', spContract != null ? (String) spContract.SAPContractCode__c : ' ');
 			}
-            customSp.add(row);
+			
+	        customSp.add(row);
 		}
 		return customSp;
 	}

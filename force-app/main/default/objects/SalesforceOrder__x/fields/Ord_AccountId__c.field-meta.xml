@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Ord_AccountId__c</fullName>
+    <description>Ord_AccountId</description>
+    <externalDeveloperName>Ord_AccountId</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Ord_AccountId</label>
+    <length>255</length>
+    <referenceTo>SalesforceCustomer__x</referenceTo>
+    <relationshipLabel>Ordini Salesforce</relationshipLabel>
+    <relationshipName>OrdiniSalesforce</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

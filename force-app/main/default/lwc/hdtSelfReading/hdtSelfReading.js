@@ -6,6 +6,10 @@ import getRecordTypeId from '@salesforce/apex/HDT_LC_SelfReading.getRecordTypeId
 import checkLastReadings from '@salesforce/apex/HDT_LC_SelfReading.checkLastReadings';
 import {FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+import gasCommodity from '@salesforce/label/c.gasCommodity';
+import processTypeAutoletturaCliente from '@salesforce/label/c.processTypeAutoletturaCliente';
+import autoletturaSmartMeterError from '@salesforce/label/c.autoletturaSmartMeterError';
+
 
 const columns = [
     {
@@ -23,7 +27,6 @@ const columns = [
         cellAttributes: { class: { fieldName: 'windowClass' } }
     }
 ];
-
 export default class HdtSelfReading extends LightningElement {
 
     @api commodity;
@@ -31,6 +34,7 @@ export default class HdtSelfReading extends LightningElement {
     @api object;
     @api servicePointId;
     @api isVolture;
+    @api isOfferChange;
     @api isRetroactive;
     @api isProcessReading;
     @api availableActions = [];
@@ -54,6 +58,8 @@ export default class HdtSelfReading extends LightningElement {
     @api tipizzazioneRettificaConsumi;
     @api showReadingWindows;
     @api isMono;
+    @api processType
+    @api isSmartMeterAbort=false;
 
     @track isLoading = false;
     @track windowColumns;
@@ -97,10 +103,10 @@ export default class HdtSelfReading extends LightningElement {
         this.readingCustomerDate = this.sysdate();
 
         this.recordKey = this.object === 'Order' ? 
-            (this.commodity === 'Energia Elettrica' ? 'OrderEle__c' : 'OrderGas__c') : 
-            (this.commodity === 'Energia Elettrica' ? 'CaseEle__c' : 'CaseGas__c');
+            (this.commodity === 'Energia Elettrica' ? 'OrderEle__c' : (this.commodity === 'Gas' ? 'OrderGas__c' : 'OrderAcqua__c')) : 
+            (this.commodity === 'Energia Elettrica' ? 'CaseEle__c' : (this.commodity === 'Gas' ? 'CaseGas__c' : 'CaseAcqua__c'));
 
-        this.rowNumber = this.commodity === 'Energia Elettrica' ? 9 : this.commodity === 'Gas' ? 2 : 0;
+        this.rowNumber = this.commodity === 'Energia Elettrica' ? 9 : this.commodity === 'Gas' ? 2 : 1;
 
         if(this.commodity === 'Energia Elettrica'){
 
@@ -109,18 +115,14 @@ export default class HdtSelfReading extends LightningElement {
             for(let i=1; i <= this.rowNumber; ++i){
                 const headerText = i <= 3 ? 'Energia Attiva' : (i <= 6 ? 'Energia Reattiva' : 'Potenza');
                 const headerIndex = i % 3 == 0 ? 3 : i % 3;  // L'indice è sempre 1, 2, o 3.
-
                 this.rowObj = [...this.rowObj,{id:i, number: i, headerText: headerText, headerIndex: headerIndex}];
-    
             }    
-
-        } else if(this.commodity === 'Gas'){
-
+        } else if(this.commodity === 'Gas' ){
             console.log('loop gas');
-
             this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore", headerText: "Misuratore"},{id:'Corrector', number: "Correttore", headerText: "Correttore"}];
-
-
+        } else if(this.commodity === 'Acqua' ){
+            console.log('loop acqua');
+            this.rowObj = [...this.rowObj,{id:'Meter', number: "Misuratore", headerText: "Misuratore"}];
         }
 
         getRecordTypeId({commodity:this.commodity})
@@ -180,6 +182,7 @@ export default class HdtSelfReading extends LightningElement {
 
         checkLastReadings({servicePointId:this.servicePointId})
         .then(result =>{
+            let forceAbort=false;
             let lastReadings = [];
             console.log('checkLastReadings results: ' + result);
             if (result == null) {
@@ -192,7 +195,7 @@ export default class HdtSelfReading extends LightningElement {
             if (result === 'ERROR_NO_ASSET_NUMBER') {
                 lastReadings = this.emptyArrayAutoletturaDaProcesso();
             } else {
-                const parsedResult = JSON.parse(result);
+                const parsedResult = JSON.parse( result);
                 // Verifichiamo se la response contiene un errore da SAP.
                 if ("errorDetails" in parsedResult && "message" in parsedResult.errorDetails[0]) {
                     this.isLoading = false;
@@ -202,6 +205,11 @@ export default class HdtSelfReading extends LightningElement {
                     return;
                 }
                 lastReadings = this.fillLastReadingsArray(parsedResult);
+                if(this.commodity?.toLowerCase()===gasCommodity && this.processType?.toLowerCase()===processTypeAutoletturaCliente && parsedResult.data?.gbTeleLett && parsedResult.data.gbTeleLett.toLowerCase()==='y'){
+                    this.showToastMessage(autoletturaSmartMeterError);
+                    forceAbort=true;
+                    this.isSmartMeterAbort=true;
+                }
             }
             this.isLoading = false;
             console.log('isLoading?: ' + this.isLoading);
@@ -213,13 +221,13 @@ export default class HdtSelfReading extends LightningElement {
                     element.handleLastReading(lastReadings);
                     //element.handleLastReading('[{"register":"1", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F1","readingSerialNumber":"R00100000002956134", "readingOldValue":"1620"},{"register":"2", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F2","readingSerialNumber":"R00100000002956134", "readingOldValue":"1390"},{"register":"3", "readingType":"Multi Reg. Attiva", "readingDate":"2021-01-20", "readingBand":"F3","readingSerialNumber":"R00100000002956134", "readingOldValue":"1410"}]');
                 });
-            } else if(this.commodity == 'Gas'){
+            } else if(this.commodity == 'Gas' || this.commodity == 'Acqua'){
                 this.template.querySelectorAll('c-hdt-self-reading-register').forEach(element =>{
                     element.handleLastReading(lastReadings);
                     //element.handleLastReading('[{"register":"Misuratore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"},{"register":"Correttore", "readingType":"Volumetrico","readingSerialNumber":"R00050030408819956","readingBand":"M1","readingRegister":"001","readingDate":"2021-02-11","readingOldValue":"3000","readingUnit":"M3"}]');
                 });
             }
-
+            if(forceAbort) this.template.querySelector('c-hdt-flow-navigation-button').clickAbort();
         }).catch(error =>{
             this.isLoading = false;
             this.buttonDisabled = false;
@@ -252,7 +260,7 @@ export default class HdtSelfReading extends LightningElement {
                     readingDigitNumber: null
                 });
             }
-        } else {
+        } else if (this.commodity === 'Gas'){
             emptyRegisters.push({
                 register: 'Misuratore',
                 readingType: null,
@@ -265,6 +273,17 @@ export default class HdtSelfReading extends LightningElement {
             });
             emptyRegisters.push({
                 register: 'Correttore',
+                readingType: null,
+                readingSerialNumber: null,
+                readingDate: null,
+                readingOldValue: null,
+                readingUnit: null,
+                readingRegister: null,
+                readingDigitNumber: null
+            });
+        }else{
+            emptyRegisters.push({
+                register: 'Misuratore',
                 readingType: null,
                 readingSerialNumber: null,
                 readingDate: null,
@@ -452,7 +471,7 @@ export default class HdtSelfReading extends LightningElement {
                 for (let i = 0; i < registers.length; i++) {
                     let register = registers[i];
 
-                    let result = register.handleSave(this.readingCustomerDate);
+                    let result = register.handleSave(this.readingCustomerDate, this.object );
 
                     if(String(result).includes("Impossibile")){
                         this.errorAdvanceMessage = result;
@@ -561,6 +580,18 @@ export default class HdtSelfReading extends LightningElement {
                         updateSelfReading({fields : JSON.stringify(this.outputObj)})
                         .then(result => { 
                                        
+                            this.isSaved = true;
+                        
+                        })
+                        .catch(error => { console.log(error) });
+                    }
+                }else{ 
+                    //gestione creazione record Reading__c al Riprendi Case da Bozza, in questo caso infatti non è presente il record di Reading e va creato
+                    if(!this.isSaved && this.resumedFromDraft && this.object === 'case'){
+                        console.log('Inserimento nuovo record oggetto Reading__c');
+                        insertSelfReading({fields : JSON.stringify(this.outputObj)})
+                        .then(result => { 
+                            
                             this.isSaved = true;
                         
                         })
@@ -748,7 +779,9 @@ export default class HdtSelfReading extends LightningElement {
                             parseInt(parts[0], 10));
 
         var dateIso = date.toISOString(); // Es: 2021-03-01T15:34:47.987Z
-        return dateIso.substr(0, dateIso.indexOf('T'));
+        var stringDate = parts[2] +'-'+parts[1] + '-' + parts[0];
+        return stringDate;
+        //return dateIso.substr(0, dateIso.indexOf('T'));
     }
 
     reverseDate(inputDate){
@@ -765,7 +798,6 @@ export default class HdtSelfReading extends LightningElement {
 
 
     }
-
 
 
 

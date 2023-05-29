@@ -5,6 +5,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
     private id idLoaderRequest;
     private Integer batchSize;
     private String process;
+    private String orderCreationClass = 'HDT_UTL_ProcessOrderCreation';
     
     public HDT_BA_ProcessOrderCreation(Id varIdLoaderRequest, Integer batchSize, String process) {
         this.idLoaderRequest = varIdLoaderRequest;
@@ -28,7 +29,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
         System.debug(LoggingLevel.DEBUG, '>>> HDT_BA_ProcessRequestItem execute...');
 
         HDT_UTL_ProcessExecution cls;
-        Type t = Type.forName('HDT_UTL_ProcessOrderCreation');
+        Type t = Type.forName(orderCreationClass);
         cls = (HDT_UTL_ProcessExecution)t.newInstance();
         cls.setProcess(process);
         cls.setMassiveLoaderRequestItemList(scope);
@@ -41,7 +42,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
             //update massiveItem;
         } catch (Exception e) {
             System.debug(LoggingLevel.DEBUG, 'Standard Exception: ' + e.getMessage());
-            cls.manageCatchException(batchSize, scope, e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + ']');
+            cls.manageCatchException(batchSize, scope, e.getMessage() + ': at line [' + String.valueOf(e.getLineNumber()) + '] - ' + orderCreationClass);
         }
 
     }
@@ -49,8 +50,17 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
     public void finish(Database.BatchableContext bc){
         System.debug('HDT_BA_ProcessOrderCreation finish ');
 
-        HDT_BA_CheckCompatibilitySales checkCompatibilitySales = new HDT_BA_CheckCompatibilitySales(idLoaderRequest, 1, process);
-        Database.executebatch(checkCompatibilitySales, 1);
+        Datetime dt = Datetime.now();
+
+        MassiveLoaderRequest__c oldReq = [SELECT Id, Description__c FROM MassiveLoaderRequest__c WHERE Id = :idLoaderRequest LIMIT 1];
+        oldReq.Description__c = oldReq.Description__c + '\n[4] Creazione ordini -----> ora fine ---> ' + String.valueOf(dt.format('HH:mm:ss'));
+        update oldReq;
+        
+        //Marco Ficorella 18/11/2022 - aumentato size post ottimizzazione metodi a valle
+        //batchSize = 20;
+        batchSize = 1;
+        HDT_BA_CheckCompatibilitySales checkCompatibilitySales = new HDT_BA_CheckCompatibilitySales(idLoaderRequest, batchSize, process);
+        Database.executebatch(checkCompatibilitySales, batchSize);
 
     }
 

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CalloutSyncCase__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Se true il sistema gestisce in Sync sia request che response</description>
+    <externalId>false</externalId>
+    <inlineHelpText>Inserisci true se desideri che request e response vengano gestite in sync</inlineHelpText>
+    <label>Callout Sync Case </label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Sales_Rule_07_08</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Type__c,&apos;07&apos;),ISPICKVAL(Type__c,&apos;08&apos;)),
+OR(ISPICKVAL(OrderField__c,&apos;&apos;), ISPICKVAL(ActivityType__c,&apos;&apos;))
+)</errorConditionFormula>
+    <errorMessage>Per questo tipo di regola devono essere compilati i campi &quot;Campo Order&quot; e &quot;Tipo Attività&quot;</errorMessage>
+</ValidationRule>

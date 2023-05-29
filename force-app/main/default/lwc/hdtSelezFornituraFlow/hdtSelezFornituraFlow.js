@@ -38,6 +38,22 @@ const DATA_ACCESS_MAP = {
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
     },
+    'RIMOZIONE_AGEVOLAZIONE':{
+        label: 'Contratti con Agevolazioni',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono Contratti Ambiente con Agevolazione da poter rimuovere',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.PodPdr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__c !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Codice Contratto Sap', fieldName: 'SAPContractCode__c', type: 'text'},
+            {label: 'Numero Contratto', fieldName: 'ContractNumber', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
     'ORDERS_ELE':{
         label: 'Ordini Energia Elettrica',
         sObjectName: 'Order',
@@ -234,6 +250,27 @@ const DATA_ACCESS_MAP = {
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
+    },
+    'RICHIESTA_SERVIZIO_ASSOCIATA':{
+        label : 'Richiesta di servizio associata',
+        sObjectName: 'OrderCase',
+        emptyMessage: 'Non ci sono richieste da associare',
+        optionalSelection : true,
+        defaultSelection : true,
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.recNumber = item.OrderNumber? item.OrderNumber : item.CaseNumber;
+                item.Type = item.Type? item.Type : item.ProcessType__c;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Servizio', fieldName: 'recNumber', type: 'text'},
+            {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
     }
 };
 const ROWS_PER_PAGE = 4;
@@ -249,6 +286,8 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     @api sObjectName;
     
     emptyMessage = '';
+
+    defaultSelection;
     
     selectedRecord = {};
     selectedOption = '';
@@ -292,7 +331,9 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     loadRecords(){
         this.isLoading = true;
-        getFornitura({searchString: this.accountId, key: this.selectedOption}).then(data =>{
+        getFornitura({searchString: this.accountId, key: this.selectedOption}).then(dataReadOnly =>{
+
+            const data = dataReadOnly.map(obj=>Object.create(obj));//Object from Apex are now Non extensible, must deep-clone to add attributes
             this.isLoading = false;
             
             if(data.length > 0){
@@ -300,7 +341,18 @@ export default class HdtSelezFornituraFlow extends LightningElement {
                 if (DATA_ACCESS_MAP[this.selectedOption].dataProcessFunction) {
                     DATA_ACCESS_MAP[this.selectedOption].dataProcessFunction(data);
                 }
-                this.createTable(data);
+                let dataToTable;
+                if(this.defaultSelection){
+                    dataToTable= data.reduce((result, elem) => {
+                        elem.Id==this.defaultSelection? result.unshift(elem) : result.push(elem);
+                        return result;
+                    }, []);
+
+                }else{
+                    dataToTable=data;
+                }
+
+                this.createTable(dataToTable);
             } else {
                 this.emptyMessage = DATA_ACCESS_MAP[this.selectedOption].emptyMessage;
             }
@@ -315,6 +367,16 @@ export default class HdtSelezFornituraFlow extends LightningElement {
             });
             this.dispatchEvent(toastErrorMessage);
         });
+    }
+
+    preselectRow(){
+        setTimeout(
+            () => {if(this.defaultSelection){
+                var el = this.template.querySelector('lightning-datatable');
+                el.selectedRows=[this.defaultSelection];
+                this.defaultSelection=null;
+            }}
+          );
     }
 
     //Pagination start
@@ -333,10 +395,17 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     reLoadTable() {
         this.tableData = this.pages[this.currentPage];
+        if(this.defaultSelection){
+            this.preselectRow();
+        }
     }
 
     get showPaginationButtons(){
         return this.totalPages > 1;
+    }
+
+    get maxRowSelection(){
+        return DATA_ACCESS_MAP[this.selectedOption].optionalSelection? 2 : 1;
     }
 
     get getCurrentPage() {
@@ -363,7 +432,16 @@ export default class HdtSelezFornituraFlow extends LightningElement {
     //Pagination end
 
     getSelectedRecord(event){
+        if(this.defaultSelection){
+            this.defaultSelection=null;
+        }
         let selectedRows = event.detail.selectedRows;
+        if(selectedRows.length>1)
+        {
+            var el = this.template.querySelector('lightning-datatable');
+            selectedRows=el.selectedRows=el.selectedRows.slice(1);
+            event.preventDefault();
+        }
         if (selectedRows[0] !== undefined) {
             this.selectedRecord = selectedRows[0];
             this.recordId = selectedRows[0].Id;
@@ -379,7 +457,7 @@ export default class HdtSelezFornituraFlow extends LightningElement {
 
     @api
     validate() {
-        if (this.recordId) {
+        if (this.recordId || DATA_ACCESS_MAP[this.selectedOption].optionalSelection) {
             return { isValid: true }; 
         }
         else {

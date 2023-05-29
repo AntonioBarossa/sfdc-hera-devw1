@@ -21,11 +21,13 @@ public with sharing class HDT_LC_CampaignsControllerTst {
     HDT_UTL_DataFactoryTst.createServicePoint(1,true);
     HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
     HDT_UTL_DataFactoryTst.createOrder(1, true, accounts[0].Id,sales);
+
     List<Individual> individuals=HDT_UTL_DataFactoryTst.createIndividual(1, true);
     List<Lead> leads=HDT_UTL_DataFactoryTst.createLead(1, false);
     leads[0].CompanyOwner__c='HERA COMM';
     leads[0].IndividualId=individuals[0].Id;
     insert leads;
+
     //public static List<Case> createCase(, Boolean doInsert, Id accId, Id contactId, servicePoint[0].ID, contract[0].Id,orders[0].Id){
     List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1, false);
     products[0].Family = 'VAS Opzione prodotto';
@@ -242,7 +244,6 @@ CampaignMember member = new CampaignMember(
 
 @isTest
 static void testGetAccountsforCampaignMembers(){
-
     Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId((new HDT_UTL_Constants()).SYSTEM_ADMINISTRATOR_NAME);
     User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
     internalUser.UserPermissionsMarketingUser=true;
@@ -1084,9 +1085,9 @@ CampaignMember member = new CampaignMember(
         System.assert(campaignChannel == null, 'Nessun CampaignMember');
         Test.stopTest();
     }
+
     @isTest
     static void testGetCampaignsOutPortal(){
-
         List<Account> accList = [SELECT Id, RecordTypeId FROM Account LIMIT 1];
         accList[0].RecordTypeId = (new HDT_UTL_Constants()).ACCOUNT_RECORDTYPEID_PARTNER;
 
@@ -1108,8 +1109,8 @@ CampaignMember member = new CampaignMember(
         }
     }
     
-        @isTest
-    	static void testGetCurrUserRole(){
+    @isTest
+    static void testGetCurrUserRole(){
         Test.startTest();
         boolean isFront = HDT_LC_CampaignsController.getCurrUserRole();
         System.assertEquals(false, isFront, 'is Front User');

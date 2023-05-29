@@ -77,6 +77,9 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
     @track hiddenFields=false;
     @track validateClass;
     @track wiredResponse;
+    @track selectedSalesCompany;
+    @track salesCompanies;
+    @track disabledSalesCompany = false;
 
     connectedCallback(){
         this.loadingSpinner = true;
@@ -86,6 +89,25 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 method:'cluster',
                 context: this.context
             }
+            var salesCompArray = [
+                {
+                    label: 'Marche Multiservizi S.p.A',
+                    value: 'Marche Multiservizi S.p.A'
+                },
+                {
+                    label: 'Hera Comm S.p.A.',
+                    value: 'Hera Comm S.p.A.'
+                },
+                {
+                    label: 'Hera Comm Marche',
+                    value: 'Hera Comm Marche'
+                },
+                {
+                    label: 'Marche Multiservizi TARI',
+                    value: 'Marche Multiservizi TARI'
+                }
+            ];
+            this.salesCompanies = JSON.stringify(salesCompArray);
             getOptions({
 
                 serviceClass: this.serviceClass,
@@ -159,6 +181,14 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                                 {
                                                     label:'Multi',
                                                     value:'Multi'
+                                                },
+                                                {
+                                                    label:'Acqua',
+                                                    value:'Acqua'
+                                                },
+                                                {
+                                                    label:'Ambiente',
+                                                    value:'Ambiente'
                                                 }
                                             ];
                                             console.log('#Servizio -> ' + JSON.stringify(result));
@@ -193,6 +223,10 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                                                 this.loadingSpinner = false;
                                             });
                                             //Topic ThenCatch    
+                                        }
+                                        if (payload.SalesCompany__c){
+                                            this.selectedSalesCompany = payload.SalesCompany__c;
+                                            this.disabledSalesCompany = true;
                                         }
 
                                     }
@@ -345,6 +379,14 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
                 {
                     label:'Multi',
                     value:'Multi'
+                },
+                {
+                    label:'Acqua',
+                    value:'Acqua'
+                },
+                {
+                    label:'Ambiente',
+                    value:'Ambiente'
                 }
             ];
             console.log('#Servizio -> '+JSON.stringify(result));
@@ -394,6 +436,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
         fields.Commodity__c = this.selectedCommodity;
         fields.MacroTopic__c = this.selectedTopic;
         fields.InformationDetail__c = this.selectedDettaglioInfo;
+        fields.SalesCompany__c = this.selectedSalesCompany;
         this.saveInDraft = true;
         this.template.querySelector('lightning-record-edit-form').submit();
     }
@@ -416,7 +459,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
         event.preventDefault();       // stop the form from submitting
         this.saveInDraft = false;
         const fields = event.detail.fields;
-        if(this.selectedCluster == null || this.selectedProcess == null || this.selectedCommodity == null || this.selectedTopic == null || this.selectedDettaglioInfo == null || (this.showTitolo && fields.Subject == null)){
+        if(this.selectedCluster == null || this.selectedProcess == null || this.selectedCommodity == null || this.selectedTopic == null || this.selectedDettaglioInfo == null || this.selectedSalesCompany == null || (this.showTitolo && fields.Subject == null)){
             console.log('valorizza obbligatori');
             this.dispatchEvent(
                 new ShowToastEvent({
@@ -432,6 +475,7 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
             fields.Commodity__c = this.selectedCommodity;
             fields.MacroTopic__c = this.selectedTopic;
             fields.InformationDetail__c = this.selectedDettaglioInfo;
+            fields.SalesCompany__c = this.selectedSalesCompany;
             console.log('fields ' + JSON.stringify(fields));
             if(this.validateClass){
                 validateRecord({
@@ -483,5 +527,11 @@ export default class HdtRecordEditFormInformativeFlow extends LightningElement {
     handlePrevious(){
         const navigateBackEvent = new FlowNavigationBackEvent();
         this.dispatchEvent(navigateBackEvent);
+    }
+
+    getSalesCompany(event){
+        var salesComp = event.detail;
+        console.log('salesCompany --> ' + salesComp);
+        this.selectedSalesCompany = salesComp;    
     }
 }

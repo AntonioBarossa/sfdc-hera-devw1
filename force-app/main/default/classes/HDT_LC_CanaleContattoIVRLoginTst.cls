@@ -6,7 +6,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLoginTst {
         HDT_UTL_DataFactoryTst.pClickInstance();
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Condominio', 'Grandi Condomini');
+        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda','Aziende SME');
         //Account accResidenziale= HDT_UTL_DataFactoryTst.createAccountResidenziale(1,true,'HERA COMM','Persona fisica','Famiglie')[0];
         List<Contact> contList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].Id);
         contList[0].FiscalCode__c = accList[0].FiscalCode__c;
@@ -219,6 +219,7 @@ public with sharing class HDT_LC_CanaleContattoIVRLoginTst {
         accResidenziale[0].RecordTypeId = Schema.SObjectType.Account.getRecordTypeInfosByDeveloperName().get('HDT_RT_Residenziale').getRecordTypeId();
         accResidenziale[0].Category__c = 'Famiglie';
         accResidenziale[0].CustomerMarking__c = 'Persona fisica';
+        accResidenziale[0].FiscalCode__c = 'MTTRRT61A20G479C';
         accResidenziale[0].BirthDate__c = Date.newInstance(1975, 12, 04);
         update accResidenziale;
         List<Sale__c> salesList = [SELECT Id, Channel__c FROM Sale__c WITH SECURITY_ENFORCED];

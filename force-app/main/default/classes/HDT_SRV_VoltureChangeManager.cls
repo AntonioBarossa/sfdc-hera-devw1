@@ -61,7 +61,8 @@ public with sharing class HDT_SRV_VoltureChangeManager{
             }
             clonedOrder.put('PhoneNumber__c', phone);
         }
-        if(clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')))
+        if( ( clonedOrder.get('Email__c') == null || String.isBlank((String)clonedOrder.get('Email__c')) ) &&
+            !'Acqua'.equalsIgnoreCase((String)clonedOrder.get('CommodityFormula__c')) )
         {
             clonedOrder.put('Email__c', emptyEmailDefault);
         }

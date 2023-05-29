@@ -129,7 +129,7 @@ public class HDT_SRV_ActivityCustomTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<wrts_prcgvr__Activity__c> activityCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, tAccount[0].Id);
@@ -157,7 +157,7 @@ public class HDT_SRV_ActivityCustomTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<wrts_prcgvr__Activity__c> activityCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, tAccount[0].Id);
@@ -185,7 +185,7 @@ public class HDT_SRV_ActivityCustomTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<wrts_prcgvr__Activity__c> activityCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, true, tAccount[0].Id);
@@ -218,7 +218,7 @@ public class HDT_SRV_ActivityCustomTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<wrts_prcgvr__Activity__c> activityCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, true, tAccount[0].Id);
@@ -251,7 +251,7 @@ public class HDT_SRV_ActivityCustomTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<wrts_prcgvr__Activity__c> activityCusts=HDT_UTL_DataFactoryTst.createActivityCustom(1, false, tAccount[0].Id);

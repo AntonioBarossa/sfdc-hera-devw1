@@ -151,6 +151,13 @@ public with sharing class HDT_UTL_Constants {
     public final String ORDER_RECORDTYPEID_ATTIVAZIONECONMODIFICA =
     Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_ATTIVAZIONECONMODIFICA).getRecordTypeId();
 
+    // Order RecordType Modifica Tariffa
+    @AuraEnabled
+    public final String ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI = 'HDT_RT_AgevolazioniAmbiente';
+    @AuraEnabled
+    public final String ORDER_RECORDTYPEID_MODIFICATARI =
+    Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get(ORDER_RECORDTYPE_DEVELOPERNAME_MODIFICATARI).getRecordTypeId();
+
     //@frpanico 05/08 Case RecordType default Morosita
     @AuraEnabled
     public final String CASE_RECORDTYPE_DEVELOPERNAME_MOROSITA = 'HDT_RT_Morosita';
@@ -193,6 +200,20 @@ public with sharing class HDT_UTL_Constants {
     public final String CASE_RECORDTYPEID_POST_SALES_VAS =
     Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_POST_SALES_VAS).getRecordTypeId();
 
+    //Case RecordType Consumo Anomalo Idrico
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_CONSUMO_ANOMALO_IDRICO='HDT_RT_ConsumoAnomaloIdrico';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_CONSUMO_ANOMALO_IDRICO=
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_CONSUMO_ANOMALO_IDRICO).getRecordTypeId();
+
+    //Case RecordType Informative
+    @AuraEnabled
+    public final String CASE_RECORDTYPE_DEVELOPERNAME_INFORMATIVE='HDT_RT_Informative';
+    @AuraEnabled
+    public final String CASE_RECORDTYPEID_INFORMATIVE=
+    Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get(CASE_RECORDTYPE_DEVELOPERNAME_INFORMATIVE).getRecordTypeId();
+
     // Order RecordType Riattivazione Non Morose
     @AuraEnabled
     public final String ORDER_RECORDTYPE_DEVELOPERNAME_RIATTIVAZIONENONMOROSE = 'HDT_RT_RiattivazioniNonMorose';
@@ -228,6 +249,20 @@ public with sharing class HDT_UTL_Constants {
     public final String SERVICEPOINT_RECORDTYPEID_GAS =
     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_GAS).getRecordTypeId();
 
+     //ServicePoint RecordType Punto Acqua
+     @AuraEnabled
+     public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PACQUA = 'HDT_RT_Acqua';
+     @AuraEnabled
+     public final String SERVICEPOINT_RECORDTYPEID_PACQUA =
+     Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PACQUA).getRecordTypeId();
+      //ServicePoint RecordType Punto Ambiente
+    
+      @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PAMBIENTE = 'HDT_RT_Ambiente';
+    @AuraEnabled
+    public final String SERVICEPOINT_RECORDTYPEID_PAMBIENTE =
+    Schema.SObjectType.ServicePoint__c.getRecordTypeInfosByDeveloperName().get(SERVICEPOINT_RECORDTYPE_DEVELOPERNAME_PaMBIENTE).getRecordTypeId();
+    
     //Hera internal Profiles
     @AuraEnabled
     public final String SYSTEM_ADMINISTRATOR_NAME {

@@ -9,7 +9,67 @@
     <valueSet>
         <restricted>true</restricted>
         <valueSetDefinition>
-            <sorted>false</sorted>
+            <sorted>true</sorted>
+            <value>
+                <fullName>Back Office _ Pagamenti e Credito Corp</fullName>
+                <default>false</default>
+                <label>Back Office _ Pagamenti e Credito Corp</label>
+            </value>
+            <value>
+                <fullName>Back office - Contestazione lettura_consumi</fullName>
+                <default>false</default>
+                <label>Back office - Contestazione lettura_consumi</label>
+            </value>
+            <value>
+                <fullName>Back office - Fuga idrica</fullName>
+                <default>false</default>
+                <label>Back office - Fuga idrica</label>
+            </value>
+            <value>
+                <fullName>Back office - Pagamenti e credito TARI</fullName>
+                <default>false</default>
+                <label>Back office - Pagamenti e credito TARI</label>
+            </value>
+            <value>
+                <fullName>Back office - Problematiche in fase di attivazione contrattuale</fullName>
+                <default>false</default>
+                <label>Back office - Problematiche in fase di attivazione contrattuale</label>
+            </value>
+            <value>
+                <fullName>Back office - Problematiche in fase di cessazione contrattuale</fullName>
+                <default>false</default>
+                <label>Back office - Problematiche in fase di cessazione contrattuale</label>
+            </value>
+            <value>
+                <fullName>Back Office - Reclami e compensazioni Corp</fullName>
+                <default>false</default>
+                <label>Back Office - Reclami e compensazioni Corp</label>
+            </value>
+            <value>
+                <fullName>Back office - Reclami rateizzazione</fullName>
+                <default>false</default>
+                <label>Back office - Reclami rateizzazione</label>
+            </value>
+            <value>
+                <fullName>Back office - Reclami su inversione contatore</fullName>
+                <default>false</default>
+                <label>Back office - Reclami su inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Back office - Reclami su preventivi</fullName>
+                <default>false</default>
+                <label>Back office - Reclami su preventivi</label>
+            </value>
+            <value>
+                <fullName>Back office - Sollecito emissione prima bolletta</fullName>
+                <default>false</default>
+                <label>Back office - Sollecito emissione prima bolletta</label>
+            </value>
+            <value>
+                <fullName>BO_Cont lettura voltura  subentro  disattivazione  taglio  cambio offerta</fullName>
+                <default>false</default>
+                <label>BO_Cont lettura voltura  subentro  disattivazione  taglio  cambio offerta</label>
+            </value>
             <value>
                 <fullName>Cambio contatore non reg_doppia matr</fullName>
                 <default>false</default>
@@ -26,19 +86,34 @@
                 <label>Cmor venditore uscente</label>
             </value>
             <value>
+                <fullName>Contestazione contatore rotto dal gelo</fullName>
+                <default>false</default>
+                <label>Contestazione contatore rotto dal gelo</label>
+            </value>
+            <value>
                 <fullName>Contestazione disattivazione_cambio offerta</fullName>
                 <default>false</default>
                 <label>Contestazione disattivazione_cambio offerta</label>
             </value>
             <value>
-                <fullName>Contestazione voltura_subentro</fullName>
+                <fullName>Contestazione letture di switch in e switch out</fullName>
                 <default>false</default>
-                <label>Contestazione voltura_subentro</label>
+                <label>Contestazione letture di switch in e switch out</label>
+            </value>
+            <value>
+                <fullName>Contestazione mancata esenzione Fognatura e Depurazione</fullName>
+                <default>false</default>
+                <label>Contestazione mancata esenzione Fognatura e Depurazione</label>
             </value>
             <value>
                 <fullName>Contestazione Offerta_Promo_Bonus_Sconti</fullName>
                 <default>false</default>
                 <label>Contestazione Offerta_Promo_Bonus_Sconti</label>
+            </value>
+            <value>
+                <fullName>Contestazione voltura_subentro</fullName>
+                <default>false</default>
+                <label>Contestazione voltura_subentro</label>
             </value>
             <value>
                 <fullName>Contestazioni Diritti fissi e costi aperture e chiusura</fullName>
@@ -51,14 +126,14 @@
                 <label>Contratti contestati ML</label>
             </value>
             <value>
-                <fullName>Contestazione letture di switch in e switch out</fullName>
-                <default>false</default>
-                <label>Contestazione letture di switch in e switch out</label>
-            </value>
-            <value>
                 <fullName>Inversione contatore</fullName>
                 <default>false</default>
                 <label>Inversione contatore</label>
+            </value>
+            <value>
+                <fullName>Lettere_Legge 81</fullName>
+                <default>false</default>
+                <label>Lettere_Legge 81</label>
             </value>
             <value>
                 <fullName>Lettere_Wave Rimborsi</fullName>
@@ -91,6 +166,11 @@
                 <label>LETTERE PAGAMENTI 3 - CLIENTE COMUNICA PAGAMENTO DI FATTURA CHE RISULTA INSOLUTA</label>
             </value>
             <value>
+                <fullName>Lettere Recl_Rich info_Credit check ko</fullName>
+                <default>false</default>
+                <label>Lettere Recl_Rich info_Credit check ko</label>
+            </value>
+            <value>
                 <fullName>Lettere V4_Wave Ricostruzione Consumi</fullName>
                 <default>false</default>
                 <label>Lettere V4_Wave Ricostruzione Consumi</label>
@@ -116,19 +196,14 @@
                 <label>Lettere Wave Doppi Pagamenti</label>
             </value>
             <value>
+                <fullName>Morosità - Lettere valide per Non energy</fullName>
+                <default>false</default>
+                <label>Morosità - Lettere valide per Non energy</label>
+            </value>
+            <value>
                 <fullName>Preventivi Lavori</fullName>
                 <default>false</default>
                 <label>Preventivi Lavori</label>
-            </value>
-            <value>
-                <fullName>Lettere Recl_Rich info_Credit check ko</fullName>
-                <default>false</default>
-                <label>Lettere Recl_Rich info_Credit check ko</label>
-            </value>
-            <value>
-                <fullName>Lettere_Legge 81</fullName>
-                <default>false</default>
-                <label>Lettere_Legge 81</label>
             </value>
             <value>
                 <fullName>Problematiche in fase di attivazione contrattuale</fullName>
@@ -154,6 +229,16 @@
                 <fullName>Procedura Contestazioni Lettura Stimata</fullName>
                 <default>false</default>
                 <label>Procedura Contestazioni Lettura Stimata</label>
+            </value>
+            <value>
+                <fullName>Reclami Diritti fissi e costi di attivazione e chiusura</fullName>
+                <default>false</default>
+                <label>Reclami Diritti fissi e costi di attivazione e chiusura</label>
+            </value>
+            <value>
+                <fullName>Reclami su contatore non a sistema e doppia matricola</fullName>
+                <default>false</default>
+                <label>Reclami su contatore non a sistema e doppia matricola</label>
             </value>
             <value>
                 <fullName>Reclamo Rateizzazioni</fullName>

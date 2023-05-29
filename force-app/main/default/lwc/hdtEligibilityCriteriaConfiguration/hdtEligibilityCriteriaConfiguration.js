@@ -607,6 +607,10 @@ export default class HdtEligibilityCriteriaConfiguration extends NavigationMixin
             if(!this.cityZipCode.provinceOptions[i].isEnabled || this.cityZipCode.provinceOptions[i].cityRemoved.length > 0){
                 n++;
             }
+
+            //#### 24-02-2023 enhanced eligibleForAllCities
+            //this.cityZipCode.provinceOptions[i].eligibleForAllCities = (this.cityZipCode.provinceOptions[i].cityRemoved.length==0) ? true : false;
+            //#### 24-02-2023 enhanced eligibleForAllCities
             this.cityZipCode.provinceOptions[i].cityRemoved = [];
         }
 

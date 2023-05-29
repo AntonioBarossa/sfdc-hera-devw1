@@ -90,6 +90,7 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         mapResponse.put('order',ord);
         mapResponse.put('accountId',ord.AccountId);
         mapResponse.put('venditaId',ord.Sale__c);
+        mapResponse.put('stepRepeated', isStepRepeated(ord));
         return mapResponse;
     }
     
@@ -133,4 +134,20 @@ public inherited sharing class HDT_LC_ChildOrderProcess {
         return orderQr.getRecordById(orderId);
     }
 
+
+    @AuraEnabled
+    public static Map<String, Object> refreshOrderChildAndHistory(String orderId){
+        Order ord = refreshOrderChild(orderId);
+        Boolean stepRepeated = isStepRepeated(ord);
+        Map<String, Object> result = new Map<String, Object>{'order'=>ord, 'stepRepeated'=> stepRepeated};
+        return result;
+    }
+
+    private static Boolean isStepRepeated(Order ord){
+        List<OrderHistory> histories = [ SELECT OldValue FROM OrderHistory WHERE OrderId=:ord.Id AND Field='Step__c' WITH SECURITY_ENFORCED ];
+        for(OrderHistory hist : histories){
+            if(hist.OldValue == ord.Step__c){return true;}
+        }
+        return false;
+    }
 }

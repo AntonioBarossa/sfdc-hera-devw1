@@ -53,10 +53,15 @@ public with sharing class HDT_WS_SelfReadingsTst {
         
         //CASE
         Case myCase = HDT_UTL_DataFactoryTst.createCaseAutolettura(1, false, acc[0].id, contactOne.Id, servPoint.Id, contractList[0].id, ordList[0].id)[0];
-        myCase.Type = 'Paperless';
+        myCase.Type = 'Autolettura da cliente';
+        myCase.Commodity__c = 'Gas';
+        myCase.Caliber__c = 'G4';
         insert myCase;
         
         HDT_UTL_DataFactoryTst.pClickCasePhase();
+        Id rtId = Schema.SObjectType.Case.getRecordTypeInfosByDeveloperName().get('HDT_RT_Autolettura').getRecordTypeId();
+        HDT_UTL_DataFactoryTst.newPhaseTransition('Esito OK da SAP', 'Bozza', rtId, 'HDT_RT_Autolettura');
+
     }
     
     
@@ -209,6 +214,7 @@ public with sharing class HDT_WS_SelfReadingsTst {
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari KO', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo', 'Check preliminari KO', rtId, rtName,'A','','','');
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Bozza', rtId, rtName,'A','','','');
         
         
         //TESTING
@@ -346,7 +352,8 @@ public with sharing class HDT_WS_SelfReadingsTst {
         String rtId = constants.CASE_RECORDTYPEID_AUTOLETTURA;
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Check preliminari KO', 'Bozza', rtId, rtName,'A','','','');
         HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'KO Definitivo', 'Check preliminari KO', rtId, rtName,'A','','','');
-        
+        HDT_UTL_DataFactoryTst.createPhaseTransition(true, 'Esito KO da SAP', 'Bozza', rtId, rtName,'A','','','');
+
         
         //TESTING
         //HDT_WS_SelfReadings.doPost();

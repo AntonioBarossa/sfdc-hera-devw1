@@ -69,11 +69,14 @@ public inherited sharing class HDT_LC_SaleServiceContainer {
             extraParams.put('contractReference', contractReference);
         }
 
+        boolean isMeterRelation = (servicePoint.MeterRelation__c != null);
+
         saleServiceItemSrv.createRecord(servicePoint, sale, extraParams);
         //boolean isTransition =HDT_UTL_Sales.isTransition(ServicePoint,sale);
         Map<String,Boolean> result = new Map<String,Boolean>{
             'isTransition'=>isTransition,
-            'message' => message
+            'message' => message,
+            'isMeterRelation' => isMeterRelation
         };
         return result;
 

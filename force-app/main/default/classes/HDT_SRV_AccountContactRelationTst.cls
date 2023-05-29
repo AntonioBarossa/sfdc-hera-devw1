@@ -128,7 +128,7 @@ public class HDT_SRV_AccountContactRelationTst{
 
 			List<Account> tAccounts=[SELECT Id, Name
 			                         FROM Account 
-			                         WHERE Name='test account0'
+			                         WHERE Name='test account bsn0'
 			                         LIMIT 1];
 			List<Contact> tContacts=[SELECT Id, FirstName
 			                         FROM Contact
@@ -162,7 +162,7 @@ public class HDT_SRV_AccountContactRelationTst{
 
 			List<Account> tAccounts=[SELECT Id, Name
 			                         FROM Account 
-			                         WHERE Name='test account0'
+			                         WHERE Name='test account bsn0'
 			                         LIMIT 1];
 			List<Contact> tContacts=[SELECT Id, FirstName
 			                         FROM Contact
@@ -196,7 +196,7 @@ public class HDT_SRV_AccountContactRelationTst{
 
 			List<Account> tAccounts=[SELECT Id, Name
 			                         FROM Account 
-			                         WHERE Name='test account0'
+			                         WHERE Name='test account bsn0'
 			                         LIMIT 1];
 			List<Contact> tContacts=[SELECT Id, FirstName
 			                         FROM Contact

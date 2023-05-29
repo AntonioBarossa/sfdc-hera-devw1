@@ -17,6 +17,16 @@ export default class HdtTargetObjectRecordTypeSelection extends LightningElement
         return {label:'',value: this.objectInfo.data.defaultRecordTypeId};
     }
 
+    showToast(message) {
+        const event = new ShowToastEvent({
+            title: 'Attenzione',
+            message: message,
+            variant: 'warning',
+            mode:'sticky',
+        });
+        this.dispatchEvent(event);
+    }
+
     getRecordTypeOptions(){
 
         getRecordTypesForServicePoint().then(data =>{
@@ -51,6 +61,10 @@ export default class HdtTargetObjectRecordTypeSelection extends LightningElement
             let selectedRecordType = this.recordTypeOptions.filter(obj => obj.value == this.defaultRecordType.value);
             this.recordType = selectedRecordType[0];
         }
+        if(this.recordType.label === 'Punto Idrico'){
+            this.showToast("Attenzione! Puoi creare il Punto Idrico solo per i processi di Connessione con Attivazione e Prima Attivazione - Colonnetta");
+        }
+
 
         this.dispatchEvent(new CustomEvent('next', {detail:this.recordType}));
     }

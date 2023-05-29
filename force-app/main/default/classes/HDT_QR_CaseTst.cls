@@ -29,6 +29,39 @@ public class HDT_QR_CaseTst {
         
     }
 
+    @isTest
+    static void testGetCasesByCaseNumbers() {
+
+        Test.startTest();
+
+        Case tCase = [SELECT Id, CaseNumber FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+
+        HDT_QR_Case qrCase = new HDT_QR_Case();
+
+        List<Case> testCase = qrCase.getCasesByCaseNumbers(new List<String>{tCase.CaseNumber});
+
+        System.assertEquals(false, testCase.isEmpty(), 'Case not populated correctly');
+
+        Test.stopTest();
+    
+    }
+
+    @isTest
+    static void testGetCasesByCaseNumbers1() {
+
+        Test.startTest();
+
+        Case tCase = [SELECT Id, CaseNumber FROM Case WHERE Status = 'In Lavorazione' LIMIT 1];
+
+        HDT_QR_Case qrCase = new HDT_QR_Case();
+
+        List<Case> testCase = qrCase.getCasesByCaseNumbers(new List<String>{});
+
+        System.assertEquals(true, testCase == null, 'Case not populated correctly');
+
+        Test.stopTest();
+    
+    }
 
     @isTest
     static void testgetRecordById() {
@@ -41,15 +74,8 @@ public class HDT_QR_CaseTst {
 
         Case testCase = qrCase.getRecordById(tCase.Id);
 
-    
-
         System.assertEquals('In Lavorazione', testCase.Status, 'Case Status not populated correctly');
-
-
         System.assertNotEquals('Draft', testCase.Status,'value of parameter is not matching');
-
-    
-
 
         Test.stopTest();
     

@@ -167,7 +167,7 @@ public inherited sharing class HDT_UTL_CheckCompatibilitySales {
                 }
 
                 processObj.requestItem.Status__c = 'Errore';
-                processObj.requestItem.StatusDescription__c = compatibilityResponse;
+                processObj.requestItem.StatusDescription__c = compatibilityResponse.abbreviate(250);
                 
                 
             }

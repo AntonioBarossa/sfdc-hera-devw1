@@ -26,6 +26,38 @@ public with sharing class HDT_QR_ProcessPostSales {
         ];
         return contractList;
     }
+    public static List<wrts_prcgvr__Activity__c> getActivityById(Set<String> actIdSet){
+        List<wrts_prcgvr__Activity__c> activityList = new List<wrts_prcgvr__Activity__c>();
+        activityList = [
+            SELECT Id, ActivityOutcome__c,wrts_prcgvr__Status__c,ClosingNote__c,ClosingUserChannel__c,ClosingCreatorGroup__c,Case__c, Order__c
+            FROM wrts_prcgvr__Activity__c
+            //WHERE ServicePoint__r.ServicePointCode__c IN :podSet
+            WHERE Id IN :actIdSet
+            WITH SECURITY_ENFORCED
+        ];
+        return activityList;
+    }
+    public static List<User> getUserByLoginAdn(Set<String> userSet){
+        List<User> userList = new List<User>();
+        userList = [
+            SELECT id,LoginADN__c,CreatorGroup__c, LoginChannel__c,Username
+            FROM User
+            //WHERE ServicePoint__r.ServicePointCode__c IN :podSet
+            WHERE LoginADN__c IN :userSet
+            WITH SECURITY_ENFORCED
+        ];
+        return userList;
+    }
+    public static List<Contract> getContractsByCodSapDgrer(List<Contract> contractList, Set<String> codeSet){
+        contractList = new List<Contract>();
+        contractList = [
+            SELECT Id, ServicePoint__c, BillingProfile__c, AccountId, ServicePoint__r.ServicePointCode__c, ServicePoint__r.CommoditySector__c, SAPContractCode__c,Iniziativa__c
+            FROM Contract
+            WHERE SAPContractCode__c IN :codeSet
+            WITH SECURITY_ENFORCED
+        ];
+        return contractList;
+    }
     public static List<Contract> getContractsByPod(List<Contract> contractList, Set<String> podSet){
         contractList = new List<Contract>();
         contractList = [
@@ -118,6 +150,37 @@ public with sharing class HDT_QR_ProcessPostSales {
             WHERE DeveloperName LIKE :devName
             WITH SECURITY_ENFORCED
         ];
+    }
+
+    public static List<Case> getAllCaseIdInList(List<String> caseList){
+        return [
+            SELECT Id 
+            FROM Case
+            WHERE Id IN :caseList
+            WITH SECURITY_ENFORCED
+        ];
+    }
+    public static List<Order> getAllOrderIdInList(List<String> orderList){
+        return [
+            SELECT Id 
+            FROM Order
+            WHERE Id IN :orderList
+            WITH SECURITY_ENFORCED
+        ];
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static List<HDT_EnvironmentalComplaintsRec__mdt> getSecondLevelOptions(){
+        list<HDT_EnvironmentalComplaintsRec__mdt> pickoptions = [
+                SELECT Value__c
+                FROM HDT_EnvironmentalComplaintsRec__mdt 
+                WHERE 
+                FieldApiName__c = 'SecondLevelComplaintClassification__c'
+                AND Commodity__c = 'Ambiente'
+                WITH SECURITY_ENFORCED
+                Order By Value__c
+            ];
+        return pickoptions;    
     }
 
 }

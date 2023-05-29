@@ -1,6 +1,6 @@
 @SuppressWarnings('PMD.AvoidDebugStatements, PMD.ExcessiveClassLength, PMD.ExcessivePublicCount, PMD.CyclomaticComplexity, PMD.AvoidDeeplyNestedIfStmts, PMD.NcssMethodCount, PMD.ExcessiveParameterList')
 public with sharing class  HDT_SRV_DocumentalManagement{
-	
+	public static String formParams;
 	public static String generateRequest(String recordId, String context, String formParams){
 		
 		//DEBUG
@@ -93,6 +93,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		System.debug(LoggingLevel.DEBUG, 'Body ' + body);
 		
 		return body;
+	}
+
+	public static void traceRequest(Map<String,String> resultMap, String body,String recordId){
+		String code = resultMap.get('code');
+		String result = resultMap.get('result');
+		Boolean enableTrace =  String.isNotBlank(System.Label.HDT_DocTraceEnable) && 'Y'.equalsIgnoreCase(System.Label.HDT_DocTraceEnable)?true:false;
+		if(enableTrace && String.isNotBlank(code) && String.isNotBlank(result) && result!='000'){
+			ContentVersion cv = HDT_UTL_DocumentalManagement.createContentVersion(body,'PayloadDocumentale','JSON');
+			HDT_UTL_DocumentalManagement.createContentLink(cv.Id,recordId);
+		}
 	}
 
 	public static String generateGetAttachmentRequest(String recordId){
@@ -271,11 +281,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 	}
 
 	@future(callout=true)
-	public static void executeCalloutRequestFuture(String body, String context){
-		
+	public static void executeCalloutRequestFuture(String body, String context,String formParamsString){
+		formParams = formParamsString;
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
-		
 		manageResponse(documentalResponse, context);
 		
 	}
@@ -284,6 +293,14 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
 		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
 		manageResponseFuture(JSON.serialize(documentalResponse), context);
+		return documentalResponse;
+	}
+
+	public static HDT_WRP_DocumentalResponse executeCalloutRequestSync(String body,String context,String formParamsInput){
+		formParams = formParamsInput;
+		HDT_WRP_DocumentalResponse documentalResponse = new HDT_WRP_DocumentalResponse();
+		documentalResponse = HDT_WS_DocumentalIntegration.submitRequest(body);
+		manageResponse(documentalResponse, context);
 		return documentalResponse;
 	}
 
@@ -415,8 +432,10 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					return;
 				}
 			}
-			handleRadioGroup(record,listOfRadio,envelopeId);
-			handleLandRegistry(record,listOfData,listOfRadio);
+			if(!status.equalsIgnoreCase('declined')){
+				handleRadioGroup(record,listOfRadio,envelopeId);
+				handleLandRegistry(record,listOfData,listOfRadio);
+			}
 			HDT_UTL_DatabaseService.upsertSObject(record);
 		}
 	}
@@ -627,16 +646,16 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					List<Order> childToUpdate = new List<Order>();
 					Map<Id,String> orderPhaseMap = new Map<Id,String>();
 					//orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
-					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
+					Map<Id,Order> orderMap = new Map<Id,Order>((List<Order>)HDT_QR_GenericQuery.getGenericRecords('SELECT Id,CILegalRepresentative__c,CIAccoutn__c,DocumentPackage__c,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order'));
 					for(Sobject childOrder : orderList){
 						Order singleOrder = new Order();
 						Order ordRefresh = orderMap.get(childOrder.Id);
 						singleOrder.Id = childOrder.Id;
-						singleOrder.CIAccoutn__c = 'Validato';
-						singleOrder.CILegalRepresentative__c = 'Validato';
+						singleOrder.CIAccoutn__c = String.isNotBlank(ordRefresh.CIAccoutn__c) && 'Richiesto'.equalsIgnoreCase(ordRefresh.CIAccoutn__c)?'Validato':ordRefresh.CIAccoutn__c;
+						singleOrder.CILegalRepresentative__c = String.isNotBlank(ordRefresh.CILegalRepresentative__c) && 'Richiesto'.equalsIgnoreCase(ordRefresh.CILegalRepresentative__c)?'Validato':ordRefresh.CILegalRepresentative__c;
 						singleOrder.DocumentLow80__c = (String)childOrder.get('DocumentLow80__c');
 						singleOrder.Instance326__c = (String)childOrder.get('Instance326__c');
-						singleOrder.DocumentPackage__c = 'Validato';
+						singleOrder.DocumentPackage__c = String.isNotBlank(ordRefresh.DocumentPackage__c) && 'Richiesto'.equalsIgnoreCase(ordRefresh.DocumentPackage__c)?'Validato':ordRefresh.DocumentPackage__c;
 						String leggeOtt = (String)childOrder.get('DocumentLow80__c');
 						String istanza = (String)childOrder.get('Instance326__c');
 						if((String.isBlank(leggeOtt) || (String.isNotBlank(leggeOtt) && leggeOtt.equalsIgnoreCase('Validato'))) && 
@@ -716,17 +735,17 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 
 	private static void manageResponse(HDT_WRP_DocumentalResponse response, String context){
 		try{
+			HDT_QR_Case qrCase=new HDT_QR_Case();
 			SObject processRecord = HDT_UTL_DocumentalManagement.getProcessRecord((String) response.deliverPackageResponse.requestId, context);
 			
 			Id recordId = (Id)processRecord.get('Id');
 			if(context == 'Order' || context == 'Case'){
 				try{
-					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context);
+					HDT_UTL_DocumentalManagement.updateDocumentalPhase(processRecord, response,context,formParams);
 				}catch(Exception ex){
 					System.debug(LoggingLevel.DEBUG, 'Errore ' + ex.getMessage() + ' at line ' + ex.getLineNumber());
 				}
 			}
-			
 			if(response.deliverPackageResponse.archive != null && response.deliverPackageResponse.archive == 'Y' ){
 				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result == '000'){
 					String msg = response.deliverPackageResponse.message;
@@ -737,6 +756,18 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						Date dToday = Date.today();
 						String dateStr = dToday.day() + '/' + dToday.month() + '/' + dToday.year();
 						createPublicLink(recordId, response.deliverPackageResponse.composedDocument, 'Plico Contrattuale ' +dateStr);
+					}
+				}
+				List<Case> integratedCases= qrCase.getCasesByCaseNumbers(new List<String>{response.deliverPackageResponse.requestId});
+				if((response.responseCode == 200 || response.responseCode == 201) && response.deliverPackageResponse.result != '000' && context=='Case'){
+					if(!integratedCases.isEmpty() && integratedCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						integratedCases[0].Phase__c=Label.consumoAnomaloIdricoE1KOPhase;
+						HDT_UTL_DatabaseService.updateSObject(integratedCases);
+					}
+				}else{
+					if(!integratedCases.isEmpty() && integratedCases[0].Type==Label.caseTypeConsumoAnomaloIdro){
+						integratedCases[0].Phase__c=Label.casePhaseAttesaCliente;
+						HDT_UTL_DatabaseService.updateSObject(integratedCases);
 					}
 				}
 			}

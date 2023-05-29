@@ -44,6 +44,14 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
             {
                 result = criteriaUtl.areActivityOpen((String)sender.get('Id'));
             }
+            when 'activityLetturaNonInseritaInSapPresente'
+            {
+                result = criteriaUtl.activityLetturaNonInseritaInSapPresente((String)sender.get('Id'));
+            }
+            when 'activityLetturaNonInseritaInSapAssenti'
+            {
+                result = criteriaUtl.activityLetturaNonInseritaInSapAssenti((String)sender.get('Id'));
+            }
             when 'isDistributoreInRete'
             {
                 result = criteriaUtl.isDistributoreInRete(sender);
@@ -51,6 +59,10 @@ global inherited sharing class HDT_SRV_PostSalesCriteriaManager implements wrts_
             when 'isNotDistributoreInRete'
             {
                 result = criteriaUtl.isNotDistributorInRete(sender);
+            }
+            when 'isSuspendedMeter'
+            {
+                result = criteriaUtl.isSuspendedMeter(sender);
             }
         }
 

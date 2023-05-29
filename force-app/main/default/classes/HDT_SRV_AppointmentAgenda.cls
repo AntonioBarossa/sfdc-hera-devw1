@@ -1,7 +1,18 @@
+/**
+ * @description       : 
+ * @author            : Giacinto Florio
+ * @group             : 
+ * @last modified on  : 24-05-2022
+ * @last modified by  : Giacinto Florio
+**/
 public with sharing class HDT_SRV_AppointmentAgenda {
     
     public String getActivity(Id activityId,List<String> fields){
         return JSON.serialize(HDT_UTL_AppointmentAgenda.getActivity(activityId,String.join(fields,',')));
+    }
+
+    public String getCase(Id caseId,List<String> fields){
+        return JSON.serialize(HDT_UTL_AppointmentAgenda.getCase(caseId,String.join(fields,',')));
     }
     
     public String handleFirstSearch(Id activityId, Date preferedDate, String preferedTimeSlot){

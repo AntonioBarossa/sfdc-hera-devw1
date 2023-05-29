@@ -32,7 +32,8 @@ export default class HdtBillDeliveryChooser extends LightningElement {
         return [
             { label: 'Bolletta per E-mail', value: 'Bolletta per e-mail' },
             { label: 'Cartaceo', value: 'Cartaceo' },
-            { label: 'Invio tramite PEC', value: 'Invio tramite PEC'}
+            { label: 'Invio tramite PEC', value: 'Invio tramite PEC'},
+            { label: 'Fatturazione PA', value: 'Fatturazione PA'}
         ];
     }
     @wire(getRecord, { recordId: '$caseId', fields: FIELDS })
@@ -109,6 +110,9 @@ export default class HdtBillDeliveryChooser extends LightningElement {
                     // Display fresh data in the form
                     console.log('Record aggiornato');
                     if(this.availableActions.find(action => action === 'NEXT')){
+                        email = email!=null?email:'';
+                        pec = pec!=null?pec:'';
+                        presso = presso!=null?presso:'';
                         const modInvioChangeEvent = new FlowAttributeChangeEvent('modInvioBoll', this.modInvioBoll);
                         this.dispatchEvent(modInvioChangeEvent);
                         const emailChangeEvent = new FlowAttributeChangeEvent('email', email);

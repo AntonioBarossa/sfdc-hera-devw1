@@ -2,7 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>DistributorName__c</fullName>
     <externalId>false</externalId>
-    <formula>ServicePoint__r.Distributor__r.Name</formula>
+    <formula>IF(ServicePoint__c != &apos;&apos;, ServicePoint__r.Distributor__r.Name, Distributor__r.Name)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Nome Distributore</label>
     <required>false</required>

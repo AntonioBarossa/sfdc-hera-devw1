@@ -1,6 +1,15 @@
 public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
 
-
+    public Boolean isSuspendedMeter(SObject sender){
+        String servicePointId = (String)sender.get('ServicePoint__c');
+        if(String.isBlank(servicePointId)) return false;
+        List<ServicePoint__c> spList = [SELECT Id,MeterStatus__c FROM ServicePoint__c WHERE Id =:servicePointId];
+        if(!spList.isEmpty() && String.isNotBlank(spList[0].MeterStatus__c) && 'Sospeso'.equalsIgnoreCase(spList[0].MeterStatus__c)){
+            return true;
+        }else {
+            return false;
+        }
+    }
     public Boolean distributorManagement(String phaseStory){
 
         return !(phaseStory.containsIgnoreCase('Pratica non gestita per il DL'));
@@ -36,7 +45,19 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
     }
     public Boolean areActivityOpen(String orderId)
     {
+
         List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Order__c = :orderId AND Type__c = 'Valori non corrispondenti' AND wrts_prcgvr__IsClosed__c = false WITH SECURITY_ENFORCED];
+
+        return activities.isEmpty();
+    }
+    public Boolean activityLetturaNonInseritaInSapPresente(String caseId)
+    {
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id FROM wrts_prcgvr__Activity__c WHERE Case__c = :caseId AND Type__c = 'Gestione Back Office' AND wrts_prcgvr__IsClosed__c = true WITH SECURITY_ENFORCED];
+        return !activities.isEmpty();
+    }
+    public Boolean activityLetturaNonInseritaInSapAssenti(String caseId)
+    {
+        List<wrts_prcgvr__Activity__c> activities = [SELECT Id, wrts_prcgvr__IsClosed__c FROM wrts_prcgvr__Activity__c WHERE Case__c = :caseId AND Type__c = 'Gestione Back Office' WITH SECURITY_ENFORCED];
 
         return activities.isEmpty();
     }
@@ -63,5 +84,6 @@ public inherited sharing class HDT_UTL_PostSalesCriteriaManager {
     {
         return !(isDistributoreInRete(sender));
     }
+
 
 }

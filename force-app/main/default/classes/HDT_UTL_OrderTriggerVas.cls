@@ -2,7 +2,7 @@
  * @description       : Processing Orders for VAS process
  * @author            : gabriele.rota@webresults.it
  * @group             : WR
- * @last modified on  : 2021-09-28
+ * @last modified on  : 10-24-2022
  * @last modified by  : gabriele.rota@webresults.it
  * Modifications Log 
  * Ver   Date         Author                        Modification
@@ -14,6 +14,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
     private static final String PHASE_CANCELLED = 'Annullato';
     private static final Id VAS_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_VAS').getRecordTypeId();
     private static final Id SCONTIBONUS_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();
+    private static final Id AGEVOLAZIONI_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_AgevolazioniAmbiente').getRecordTypeId();
+    private static final Id RIMOZ_AGEV_RT = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ModificaTariffaRimozione').getRecordTypeId();
 
     private static HDT_SRV_Order orderSrv = new HDT_SRV_Order();
     
@@ -27,9 +29,11 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
         Set<Id> canceledOrderIds = new Set<Id>();
         Set<Id> canceledOrderQuotesIds = new Set<Id>();
+        Set<Id> excludedRecTypes = new Set<Id>{VAS_RT, SCONTIBONUS_RT, AGEVOLAZIONI_RT, RIMOZ_AGEV_RT};
+
         for (Order newOrder : (List<Order>)newMap.values()) {
             Order oldOrder = (Order) oldMap.get(newOrder.Id);
-            if (!'Annullamento Ordine di Riferimento'.equalsIgnoreCase(newOrder.CancellationReason__c) && newOrder.RecordTypeId!=VAS_RT && newOrder.RecordTypeId!=SCONTIBONUS_RT && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
+            if (!'Annullamento Ordine di Riferimento'.equalsIgnoreCase(newOrder.CancellationReason__c) && !excludedRecTypes.contains(newOrder.RecordTypeId) && ((newOrder.Status==STATUS_CANCELLED && oldOrder.Status!=STATUS_CANCELLED) || ('Voltura Rifiutata'.equalsIgnoreCase(newOrder.Phase__c) && !newOrder.Phase__c.equalsIgnoreCase(oldOrder.Phase__c)) )) {
                 canceledOrderIds.add( newOrder.Id );
                 if (newOrder.SBQQ__Quote__c != null){
                     canceledOrderQuotesIds.add(newOrder.SBQQ__Quote__c);
@@ -66,6 +70,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             return;
         }
         List<Order> vasOrdersToCancel = new List<Order>();
+        List<Order> ordersToCancel = new List<Order>();
         //Map<Id,Order> commodityOrderMap = new Map<Id,Order>();
         Map<Id,Id> mapQuoteContactId = new Map<Id,Id>();
         Map<Id,Id> mapOrderContactId = new Map<Id,Id>();
@@ -77,8 +82,8 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
                 continue;
             }
             switch on orderToWork.RecordType.DeveloperName {
-                when 'HDT_RT_VAS','HDT_RT_ScontiBonus' {
-                    vasOrdersToCancel.add(orderToWork);
+                when 'HDT_RT_VAS','HDT_RT_ScontiBonus', 'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione' {
+                    ordersToCancel.add(orderToWork);
                 }
                 when 'HDT_RT_Default'{
                     //verifyDraftVas(orderToWork,vasOrdersToCancel);
@@ -98,7 +103,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
             vasOrder.CancellationReason__c = 'Annullamento Ordine di Riferimento';
         }
 
-        orderSrv.updateRecords(vasOrdersToCancel);
+        orderSrv.updateRecords(ordersToCancel);
     }
 
     /* 

@@ -26,11 +26,11 @@
     <formFactors>Large</formFactors>
     <isNavAutoTempTabsDisabled>false</isNavAutoTempTabsDisabled>
     <isNavPersonalizationDisabled>false</isNavPersonalizationDisabled>
+    <isNavTabPersistenceDisabled>false</isNavTabPersistenceDisabled>
     <label>Caricatore Massivo</label>
     <navType>Standard</navType>
     <tabs>MassiveLoader</tabs>
     <tabs>MassiveLoaderRequest__c</tabs>
-    <tabs>MassiveLoaderRequestItem__c</tabs>
     <uiType>Lightning</uiType>
     <utilityBar>Caricatore_Massivo_UtilityBar</utilityBar>
 </CustomApplication>

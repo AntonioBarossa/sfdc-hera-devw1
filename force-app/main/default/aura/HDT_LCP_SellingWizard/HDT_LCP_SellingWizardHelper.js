@@ -35,7 +35,7 @@
 
     getSaleRecord : function(component) {
         var saleIdParam = component.get("v.saleId");
-        var fieldsParam = 'Id, SalesContact__c, SalesContact__r.Name,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.VatNumber__c,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CommissioningCampaign__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c, Campaign__r.CampaignEligibilityGroup__c, Campaign__r.Channel__c,Ecid__c,isTransition__c';
+        var fieldsParam = 'Id, Account__c,SalesContact__c, SalesContact__r.Name,Name,Account__r.Category__c,Account__r.RecordType.DeveloperName,Account__r.VatNumber__c,Account__r.Name,Account__r.FiscalCode__c,Account__r.CompanyOwner__c,Account__r.Owner.Name,CurrentStep__c,Status__c,CreatedDate,Agency__c,Market__c,Channel__c,FriendCode__c,CommissioningCampaign__c,CampaignCode__c,CreatedBy__c,SalesCompany__c,Campaign__c,CreatedBy.LoginChannel__c,CreatedBy.Station__c,CreatedBy.CreatorGroup__c, Campaign__r.CampaignEligibilityGroup__c, Campaign__r.Channel__c,Ecid__c,isTransition__c';
 
         var action = component.get("c.getSale");
         action.setParams({id : saleIdParam, fields: fieldsParam});
@@ -50,6 +50,27 @@
             }
         });
         $A.enqueueAction(action);
+
+    },
+
+    getCustomerCode : function(component) {
+
+        var recId = component.get('v.recordId');
+        console.log('PUNTO HELPER -> recordId --> '+recId);
+
+        var actCustomerCode = component.get("c.getAccountCustomerCode");
+        actCustomerCode.setParams({"id" : recId});
+
+        actCustomerCode.setCallback(this, function(response){
+            var state = response.getState();
+            if(state == 'SUCCESS') {
+                var retrievedCustomerCode = response.getReturnValue();
+                component.set('v.customerCode', retrievedCustomerCode);
+            } else {
+                console.log('ERROR --> '+JSON.stringify(response.getError()));
+            }
+        });
+        $A.enqueueAction(actCustomerCode);
 
     },
 

@@ -68,4 +68,12 @@ public inherited sharing class HDT_LC_SellingWizardController {
         return retrievedSale;
     }
 
+    @AuraEnabled
+    public static String getAccountCustomerCode(String id){
+        
+        List<Account> accList = [SELECT Id, CustomerCode__c FROM Account WHERE Id =: id WITH SECURITY_ENFORCED];
+
+        return accList[0].CustomerCode__c;
+    }
+
 }

@@ -3,6 +3,10 @@
     <label>Pagamenti - Doppi Pagamenti</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Ambiente</value>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;Type&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:true,&quot;Column&quot;:1},

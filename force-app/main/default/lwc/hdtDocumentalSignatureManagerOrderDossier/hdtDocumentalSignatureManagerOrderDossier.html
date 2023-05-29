@@ -7,9 +7,6 @@
                     <template if:true={loading}>
                         <lightning-spinner variant="brand" alternative-text="Saving..." size="large"></lightning-spinner>
                     </template>
-                    <template if:true={loadData}>
-                        <c-hdt-document-signature-manager disableinput={disabled} params={inputParams} onconfirmdata={handleConfirmData} onsetrequiredfield={setDataFirmaRequired}></c-hdt-document-signature-manager>
-                    </template>
                     <lightning-record-edit-form record-id={orderParentRecord.Id} object-api-name="Order">
                         <div class="slds-grid slds-wrap slds-m-top_small">
                             <lightning-input-field disabled={disabledInput} data-id="SignedDate__c" if:true={isVisibleSignedDate} required={isVisibleSignedDate} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="SignedDate__c" variant="label-stacked" value={actualSignedDate}></lightning-input-field>
@@ -17,7 +14,27 @@
                             </div>
                             <lightning-input-field disabled={disabledInput} data-id="RelatedPractice__c" if:true={isRelatedPracticeVisible} onchange={handleDataCollection} class="slds-size_1-of-3" field-name="RelatedPractice__c" variant="label-stacked" value={actualRelatedPractice}></lightning-input-field>
                         </div>
+                        <div class="slds-section slds-is-open">
+                            <h3 if:true={isVisibleAmbiente} class="slds-section__title slds-theme_shade">
+                                <span class="slds-truncate slds-p-horizontal_small" title="Section Title">Dati Richiesta Ambiente</span>
+                            </h3>
+                            <div aria-hidden="false" class="slds-section__content">
+                                <div class="slds-grid">
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field disabled={disabledInput} data-id="RequestSource__c" if:true={isVisibleAmbiente} onchange={handleRequestSourceChange} class="slds-size_1-of-3" field-name="RequestSource__c" variant="label-stacked"></lightning-input-field>
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-8 slds-grow-none"> 
+                                    </div>
+                                    <div class="slds-col slds-size_1-of-3">
+                                        <lightning-input-field disabled={disabledInput} data-id="DeliveredDocumentation__c" if:true={isVisbleDocumentazioneContribuente} onchange={handleRequestSourceChange} class="slds-size_1-of-3" field-name="DeliveredDocumentation__c" variant="label-stacked" value={lastDocContrValue}></lightning-input-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </lightning-record-edit-form>
+                    <template if:true={loadData}>
+                        <c-hdt-document-signature-manager disableinput={disabled} params={inputParams} onconfirmdata={handleConfirmData} onsetrequiredfield={setDataFirmaRequired}></c-hdt-document-signature-manager>
+                    </template>
                 </lightning-layout-item>
             </lightning-layout>
             <div class="slds-clearfix slds-p-around_small">
