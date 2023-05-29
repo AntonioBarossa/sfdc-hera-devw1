@@ -197,7 +197,7 @@
         <language>en_US</language>
         <protected>false</protected>
         <shortDescription>Distributori Processo M03 Energy</shortDescription>
-        <value>13D0000001;</value>
+        <value>NESSUN_DL;</value>
     </labels>
     <labels>
         <fullName>HDT_M03_Distributors_Gas_To_Exclude</fullName>

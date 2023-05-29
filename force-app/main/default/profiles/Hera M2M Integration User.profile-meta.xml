@@ -22089,6 +22089,11 @@
         <field>SBQQ__LookupData__c.ExternalId__c</field>
         <readable>true</readable>
     </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__LookupData__c.NumberValueLookup__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
 	<fieldPermissions>
 		<editable>true</editable>
 		<field>SBQQ__LookupData__c.Agency__c</field>
