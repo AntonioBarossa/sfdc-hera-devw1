@@ -1,29 +1,43 @@
-import { LightningElement, api } from 'lwc';
+import { LightningElement, api, wire } from 'lwc';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
 import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinishEvent,FlowNavigationBackEvent  } from 'lightning/flowSupport';
-
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 
 export default class HdtTargetObjectAddressForFlow extends LightningElement {
 
     @api cancelCase;
     @api theCase;
-    
+    @api interviewId;
     @api hideNavigationButtons = false;
+    @api hideButtonAccountLogic = false;
 
     stopRendered=false;//boolean to check if set indirizzi
 
+    //subscribe
+    @wire(MessageContext)
+	messageContext;
+    //subscribe
+
     @api
     validate() {
-        let address = this.getAddress();
-        let validity = this.validateAddress(address);
-        if (validity.isValid === true) {
-            this.populateCase(address);
-            //lanciare evento per inviare oggetto theCase;
-            //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
-            //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
-            //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
+        console.log("event catched   "+this.eventButton);
+        this.unsubscribeToMessageChannel();
+        this.cancelCase = 'cancel' == this.eventButton ? true : this.cancelCase;
+        if(!this.cancelCase){
+            let address = this.getAddress();
+            let validity = this.validateAddress(address);
+            if (validity.isValid === true) {
+                this.populateCase(address);
+                //lanciare evento per inviare oggetto theCase;
+                //integrare coi campi del BP (non fare update diretto da apex, torna un nuovo case)
+                //Gestire salva in bozza in cui saltiamo i controlli dell'input ma poi siamo anche in grado di riprenderli (sfrutta funzionalità clona bp)
+                //anche per cb indirizzi, abilita sempre il tasto per verifica indirizzi
+            }
+            return validity;
+        }else{
+            return {isValid: true};
         }
-        return validity;
     }
 
     @api
@@ -35,6 +49,23 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
             variant: variant
         });
         dispatchEvent(event);
+    }
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {if(this.interviewId==mc.sessionid) this.eventButton = mc.message},
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
     }
 
     validateAddress(address) {
@@ -96,11 +127,13 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         if(lwcIndirizzi==null)  return;
         this.stopRendered=true;
         let wrapperAddress = {};
-        if(this.theCase["InvoicingStreetName__c"] != undefined){
-            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
-        }
         if(this.theCase["InvoicingCity__c"] != undefined){
             wrapperAddress['Comune'] = this.theCase["InvoicingCity__c"];
+        }else{
+            return;
+        }
+        if(this.theCase["InvoicingStreetName__c"] != undefined){
+            wrapperAddress['Via'] = this.theCase["InvoicingStreetName__c"];
         }
         if(this.theCase["InvoicingPostalCode__c"] != undefined){
             wrapperAddress['CAP'] = this.theCase["InvoicingPostalCode__c"];
@@ -116,6 +149,15 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         }
         if(this.theCase["InvoicingStreetNumber__c"] != undefined){
             wrapperAddress['Civico'] = this.theCase["InvoicingStreetNumber__c"];
+        }
+        if(this.theCase["InvoicingPlace__c"] != undefined){
+            wrapperAddress['Localita'] = this.theCase["InvoicingPlace__c"];
+        }
+        if(this.theCase["InvoicingStreetCode__c"] != undefined){
+            wrapperAddress['Codice Via Stradario SAP'] = this.theCase["InvoicingStreetCode__c"];
+        }
+        if(this.theCase["InvoicingCityCode__c"] != undefined){
+            wrapperAddress['Codice Comune SAP'] = this.theCase["InvoicingCityCode__c"];
         }
         //wrapperAddress["AbilitaVerifica"]=false;//abilita il tasto verifica
         wrapperAddress["Flag Verificato"]=true;//questi due abilitano la check "verificata"
@@ -138,7 +180,7 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         if (address['Stato']=='Italy' || address['Stato']=='Italia'){
             address['Stato']='ITALIA';
         }
-        address['Flag Verificato']=true;
+        //address['Flag Verificato']=true;
         console.log('### Get Address >>> ' + JSON.stringify(address));
         return address;
     }
@@ -158,9 +200,11 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         this.theCase["InvoicingPostalCode__c"] = address['CAP'];
         this.theCase["InvoicingCountry__c"] = address['Stato'];
         this.theCase["InvoicingProvince__c"] = address['Provincia'];
-        this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico'];
+        this.theCase["InvoicingStreetNumberExtension__c"] =  address['Estens.Civico']? address['Estens.Civico'] : null;
         this.theCase["InvoicingStreetNumber__c"] = address['Civico'];
-        this.theCase["InvoicingPlace__c"] = address['Localita'];
+        this.theCase["InvoicingPlace__c"] = address['Localita']? address['Localita'] : null;
+        this.theCase["InvoicingStreetCode__c"] = address['Codice Via Stradario SAP']? address['Codice Via Stradario SAP'] : null;
+        this.theCase["InvoicingCityCode__c"] = address['Codice Comune SAP']? address['Codice Comune SAP'] : null;
     }
 
     handleNext(event){
@@ -184,5 +228,10 @@ export default class HdtTargetObjectAddressForFlow extends LightningElement {
         this.dispatchEvent(NavigationBackEvent);*/
         const navigateNextEvent = new FlowNavigationNextEvent();
         this.dispatchEvent(navigateNextEvent);
+    }
+
+    connectedCallback(){
+        this.subscribeMC();
+        this.showButtonAccountLogic = !this.hideButtonAccountLogic;
     }
 }

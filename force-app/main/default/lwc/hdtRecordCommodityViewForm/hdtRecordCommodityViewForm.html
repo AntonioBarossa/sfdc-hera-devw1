@@ -1,0 +1,22 @@
+<template>
+    <lightning-card title="Dettaglio Commodity" icon-name="custom:custom14">
+        <template if:true={fields}>
+            <lightning-record-view-form record-id={recordId}
+                                        object-api-name={objectApiName}
+                                        density="comfy">
+                <lightning-layout multiple-rows="true">
+                    <!--<template for:each={fields} for:item="field">
+                        <lightning-layout-item padding="around-small" size="6" key={field}>
+                            <lightning-output-field field-name={field}></lightning-output-field>
+                        </lightning-layout-item>
+                    </template>-->
+                    <template for:each={fields} for:item="field">
+                        <lightning-layout-item padding="around-small" size="6" key={field.FieldName}>
+                            <lightning-output-field field-name={field.FieldName}></lightning-output-field>
+                        </lightning-layout-item>
+                    </template>
+                </lightning-layout>
+            </lightning-record-view-form>
+        </template>
+    </lightning-card>
+</template> 

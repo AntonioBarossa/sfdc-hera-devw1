@@ -23,6 +23,10 @@
         <value xsi:type="xsd:string">lwcmethod</value>
     </values>
     <values>
+        <field>HideForExtObj__c</field>
+        <value xsi:type="xsd:boolean">false</value>
+    </values>
+    <values>
         <field>IsVisible__c</field>
         <value xsi:type="xsd:boolean">false</value>
     </values>

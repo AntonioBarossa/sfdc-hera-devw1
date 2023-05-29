@@ -16,7 +16,7 @@ public with sharing class HDT_SCH_UpdateActivitiesStatusTst {
 
         insert internalUser;  
         System.runAs(internalUser){
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             List<wrts_prcgvr__Activity__c> activity = HDT_UTL_DataFactoryTst.createActivityCustom(1,false,accId);
             activity[0].Type__c='Chiamata inbound';

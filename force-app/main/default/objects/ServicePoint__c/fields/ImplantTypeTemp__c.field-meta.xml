@@ -90,5 +90,109 @@
             <controllingFieldValue>Gas</controllingFieldValue>
             <valueName>1010-Usi interni</valueName>
         </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1100-ACQUA --- Non definito ---</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1101-Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1102-Non domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1103-Attivita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1104-Scar. poz priv. civ. cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1105-Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1106-Cantiere</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1107-Colonnetta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1108-Irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1109-Comunale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1110-Ente pubblico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1111-Promiscuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1112-Subfornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1113-Uso interno</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1114-Rete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1115-Scar poz priv.civ no cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1116-Scar. acq reflue uso ind</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1117-Autobotte (solo usi Hera)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1118-Scar ind no cont. ACQ+POZ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1119-Scar. ind.le  cont. div</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1120-Scar. ind.le no cont. div</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1121-Scar.pozzo priv. ind cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1122-Scar.poz priv.ind.no cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Acqua</controllingFieldValue>
+            <valueName>1123-Prel. pozzo priv. no fatt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ambiente</controllingFieldValue>
+            <valueName>1201-Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Ambiente</controllingFieldValue>
+            <valueName>1202-Non domestico</valueName>
+        </valueSettings>
     </valueSet>
 </CustomField>

@@ -35,6 +35,7 @@ public inherited sharing class HDT_LC_SaleActions {
     * @param primaryQlSconto 
     * @param allQlSconto 
     **/
+    @TestVisible
     private static void reassignQlSconti(List<SBQQ__QuoteLine__c> primaryQlSconto,  List<SBQQ__QuoteLine__c> allQlSconto){
         Map<id, SBQQ__QuoteLine__c> mapOfferToPrimary = new Map<id, SBQQ__QuoteLine__c>();
         list<SBQQ__QuoteLine__c> listToUpdate = new list<SBQQ__QuoteLine__c>();
@@ -81,6 +82,17 @@ public inherited sharing class HDT_LC_SaleActions {
         Id campaignElegibilityGroup = (sale.Campaign__c != null && sale.Campaign__r.CampaignEligibilityGroup__c != null) ? sale.Campaign__r.CampaignEligibilityGroup__c : null;
         String campaignChannel = (sale.Campaign__c != null && sale.Campaign__r.Channel__c != null) ? sale.Campaign__r.Channel__c : null;
         
+        List<SObject> sobjToUpdate = new List<SObject>();
+        
+        HDT_UTL_SaleActions.HDT_WRP_SaleActions quoteLinesGrouped = new HDT_UTL_SaleActions.HDT_WRP_SaleActions();
+        quoteLinesGrouped = HDT_UTL_SaleActions.groupQuoteLines(sale.Id);
+
+        if(String.isNotBlank(quoteLinesGrouped.errorMessage))
+        {
+            throw new AuraHandledException(quoteLinesGrouped.errorMessage);
+        }
+
+        /*
         List<SBQQ__QuoteLine__c> quoteLinesListToUpdate = new List<SBQQ__QuoteLine__c>();
 
         //1 - Check if QuoteLines have BillingProfiles associated
@@ -116,17 +128,22 @@ public inherited sharing class HDT_LC_SaleActions {
 
         system.debug('***quoteLinePrimary: ' + quoteLinePrimary);
         
+        */
         //2 - Update Opportunity stage
-        opportunitySrv.checkReadAccess('StageName');
+        //opportunitySrv.checkReadAccess('StageName');
+
+
+
         List<Opportunity> opps = opportunityQr.getRecordsBySaleFilterStageName(sale.Id, 'StageName, CampaignEleggibilityGroup__c', 'Negotiation');
         
         for (Opportunity opp : opps) {
             opp.StageName = 'Closed Won';
             opp.CampaignEleggibilityGroup__c = campaignElegibilityGroup;
+            sobjToUpdate.add(opp);
         }
         
         //3 - Update SBQQ__Quote
-        quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
+        //quoteSrv.checkReadAccess('SBQQ__Status__c,SBQQ__Ordered__c,SBQQ__LineItemsGrouped__c,SBQQ__OrderByQuoteLineGroup__c');
         List<SBQQ__Quote__c> quoteList = quoteQr.getRecordsForSaleSaveEvent(sale.Id); //quotes that have a status of not rejected
 
         /**@frpanico check for activities
@@ -153,9 +170,10 @@ public inherited sharing class HDT_LC_SaleActions {
             quote.SBQQ__OrderByQuoteLineGroup__c = true;
             quote.CancellationReason__c = null;
             quote.CampaignEleggibilityGroup__c = campaignElegibilityGroup;
+            sobjToUpdate.add(quote);
         }
 
-        system.debug('quoteList: ' + quoteList);
+        //system.debug('quoteList: ' + quoteList);
 
         //4 - Update Sale
         Sale__c saleToUpdate = new Sale__c(Id = sale.Id, Status__c = 'Attiva', CampaignEleggibilityGroup__c = campaignElegibilityGroup, isTransition__c = sale.isTransition__c, CurrentStep__c = currentStep);
@@ -163,9 +181,10 @@ public inherited sharing class HDT_LC_SaleActions {
         //5 - SBQQ__QuoteLineGroup__c
         //Creazione di un QuoteLineGroup per ogni QuoteLine principale.
         //Associazione su ogni QuoteLineGroup del record configurato su SBQQ__QuoteProcess__c
-        Map<String,SBQQ__QuoteLineGroup__c> mapLineGroup = new Map<String,SBQQ__QuoteLineGroup__c>();
+        //Map<String,SBQQ__QuoteLineGroup__c> mapLineGroup = new Map<String,SBQQ__QuoteLineGroup__c>();
 
-        quoteProcessSrv.checkReadAccess('SBQQ__Default__c,SBQQ__GuidedOnly__c,SBQQ__ProductAutoSelected__c,SBQQ__ProductConfigurationInitializer__c,SBQQ__ProductSearchExecutor__c,SBQQ__SortOrder__c,Name');
+        //quoteProcessSrv.checkReadAccess('SBQQ__Default__c,SBQQ__GuidedOnly__c,SBQQ__ProductAutoSelected__c,SBQQ__ProductConfigurationInitializer__c,SBQQ__ProductSearchExecutor__c,SBQQ__SortOrder__c,Name');
+        /*
         List<SBQQ__QuoteProcess__c> quoteProcessList = quoteProcessQr.getProcessForGroupAssoc();
         system.debug('quoteProcessList '+quoteProcessList.size());
         for (SBQQ__QuoteLine__c quoteLine : quoteLinePrimary) {
@@ -182,10 +201,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
         //6 - SBQQ__QuoteLine__c
         //SBQQ__Group: Valorizzazione con l’id Gruppo di riferimento
-        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
-        HDT_UTL_QuoteProcess.disableCpq();
         quoteLineGroupSrv.createRecords(mapLineGroup.values()); //create QuoteLineGroups to update group id in quoteLine
-        HDT_UTL_QuoteProcess.enableCpq();
 
         List<SBQQ__QuoteLine__c> allQuoteLines = quoteLineQr.getRecordsBySale(sale.Id);
         
@@ -227,6 +243,7 @@ public inherited sharing class HDT_LC_SaleActions {
 
             quoteLinesListToUpdate.add(quoteLineToUpdate);
         }
+        */
         //if(sale.Id=='a3I3N00000042c6UAA') throw new AuraHandledException('Mio test');
         if(!String.isBlank(campaignMemberId)){
             CampaignMember cm = new CampaignMember();
@@ -235,21 +252,23 @@ public inherited sharing class HDT_LC_SaleActions {
             saleToUpdate.Campaign__c = [SELECT Id, CampaignId FROM CampaignMember WHERE Id =: campaignMemberId WITH SECURITY_ENFORCED LIMIT 1].CampaignId;
         }
 
-        system.debug('***salesTransition ->: ' + saleToUpdate.isTransition__c);
+        //system.debug('***salesTransition ->: ' + saleToUpdate.isTransition__c);
         if(saleToUpdate.isTransition__c!= null && saleToUpdate.isTransition__c){
             Account account = new Account(Id = sale.Account__c, Segment__c = 'ZCOD-DA CODIFICARE');
-            accountSrv.updateRecord(account);
+            sobjToUpdate.add(account);
+            //accountSrv.updateRecord(account);
         }
 
+        sobjToUpdate.add(saleToUpdate);
+        
+        HDT_UTL_DatabaseService.updateSObject(sobjToUpdate);
         //7 - Execute actions
-        /*CPQ: Il trigger puo' essere spento in quanto non si necessita di ricalcoli */
-        HDT_UTL_QuoteProcess.disableCpq();
+        /*
         opportunitySrv.updateRecords(opps);
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
-        HDT_UTL_QuoteProcess.enableCpq();
         quoteSrv.updateRecords(quoteList);
-
+        */
         //update campaignMember Status
         // if (string.isNotBlank(campaignMemberId)) {
         //     CampaignMember myCampaignMember = [select id, Campaign.PositiveOutcomeDefaultStatus__c  from CampaignMember where Id = :campaignMemberId WITH SECURITY_ENFORCED];   
@@ -292,11 +311,11 @@ public inherited sharing class HDT_LC_SaleActions {
 
     }
 
-    /**
+/*
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Save sale backup
      * @param sale
-     */
+     
     @AuraEnabled
     public static void saveBackup(Sale__c sale){
         
@@ -397,7 +416,7 @@ public inherited sharing class HDT_LC_SaleActions {
         saleSrv.updateRecord(saleToUpdate);
         quoteLineSrv.updateRecords(quoteLinesListToUpdate);
         quoteSrv.updateRecords(quoteList);
-    }
+    } */
     /**
      * @author Keltin Mesonjesi (keltin.mesonjesi@dunegroup.it)
      * @description Cancel sale

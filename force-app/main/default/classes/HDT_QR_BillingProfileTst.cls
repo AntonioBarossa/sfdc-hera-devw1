@@ -16,6 +16,30 @@ public with sharing class HDT_QR_BillingProfileTst {
     }
 
     @isTest
+    public static void testGetRecordByContractAccount(){
+        BillingProfile__c billingProfile = [SELECT ContractAccountCode__c FROM BillingProfile__c LIMIT 1];
+        Test.startTest();
+        List<BillingProfile__c> testBp = new HDT_QR_BillingProfile().getRecordByContractAccount(new Set<String>{billingProfile.ContractAccountCode__c});
+
+		System.assert(testBp != null, 'getRecordByContractAccount did not work correctly');
+		System.assertNotEquals(null, testBp, 'getRecordByContractAccount did not work correctly');
+
+        Test.stopTest();
+    }
+
+    @isTest
+    public static void testGetRecordByIdVolturaSol(){
+        BillingProfile__c billingProfile = [SELECT Id FROM BillingProfile__c LIMIT 1];
+        Test.startTest();
+        BillingProfile__c testBp = new HDT_QR_BillingProfile().getRecordByIdVolturaSol(billingProfile.Id);
+
+		System.assert(testBp != null, 'testGetRecordByIdVolturaSol did not work correctly');
+		System.assertNotEquals(null, testBp, 'testGetRecordByIdVolturaSol did not work correctly');
+
+        Test.stopTest();
+    }
+
+    @isTest
     public static void testGetRecordById(){
         BillingProfile__c billingProfile = [SELECT Id FROM BillingProfile__c LIMIT 1];
         Test.startTest();

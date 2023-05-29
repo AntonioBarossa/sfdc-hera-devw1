@@ -37,6 +37,20 @@ public inherited sharing class HDT_UTL_ContractProcess {
         }
     }
 
+    public static void moveOutFromServicePoint( Id servicePointId ){
+
+        List<Contract> contrs = [SELECT Id FROM Contract WHERE ServicePoint__c =:servicePointId AND Status = 'Attivo' WITH SECURITY_ENFORCED];
+        for (Contract contr : contrs) {
+            contr.Status = 'Cessato';
+            contr.EndDate = date.Today();
+        }
+
+        if(!contrs.isEmpty())
+        {
+            HDT_UTL_DatabaseService.updateSObject(contrs);   
+        }
+    }
+
     public static void moveOut( Id recordId, string apiName ){
 
         List<sObject> ids = new List<sObject>();

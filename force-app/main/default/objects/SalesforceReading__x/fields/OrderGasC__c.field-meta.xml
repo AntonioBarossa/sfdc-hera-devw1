@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OrderGasC__c</fullName>
+    <description>OrderGasC</description>
+    <externalDeveloperName>OrderGasC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Ordine Gas</label>
+    <length>255</length>
+    <referenceTo>SalesforceOrder__x</referenceTo>
+    <relationshipLabel>Letture Gas Salesforce</relationshipLabel>
+    <relationshipName>LettureGasSalesforce</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

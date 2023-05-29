@@ -105,6 +105,7 @@ public inherited sharing  class  HDT_UTL_SieXiv {
             //Se abbiamo finito il ciclo e siamo in OR, non c'era neanche un true e torniamo false.
         }
 
+        @TestVisible
         private boolean checkIndexes(SObject obj, List<String> indexes, Boolean isAnd){
             for(String boolOrIndex : indexes){
                 String boolOrIndexTrim = boolOrIndex.trim();

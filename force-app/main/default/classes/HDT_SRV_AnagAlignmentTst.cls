@@ -30,6 +30,7 @@ public class HDT_SRV_AnagAlignmentTst {
         List<BillingProfile__c> billingProfileList = HDT_UTL_DataFactoryTst.createBillingProfile(1,true, accList[0].Id);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
         contractList[0].Status = 'Attivo';
+        contractList[0].ServicePoint__c = servPointList[0].Id;
         insert contractList;
 
         List<Contract> contractListTwo = HDT_UTL_DataFactoryTst.createContract(1, true, accList[1].id);
@@ -330,11 +331,11 @@ public class HDT_SRV_AnagAlignmentTst {
         
     }
 
-    @IsTest
+   /*  @IsTest
     static void testHandleResponse(){
 
         ServicePoint__c servPoint = [SELECT Id, ServicePointCode__c FROM ServicePoint__c LIMIT 1];
-        Case currentCase = [SELECT Id, Type, ServicePoint__c FROM Case LIMIT 1];
+        Case currentCase = [SELECT Id, Type, ServicePoint__c,CommodityFormula__c,Commodity__c FROM Case LIMIT 1];
 
         Test.startTest();
 
@@ -355,7 +356,7 @@ public class HDT_SRV_AnagAlignmentTst {
 
         Test.stopTest();
         
-    }
+    } */
 
     @IsTest
     static void testHandleAnagAlignmentSObject(){

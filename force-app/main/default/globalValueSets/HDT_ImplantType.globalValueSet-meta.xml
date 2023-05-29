@@ -101,6 +101,11 @@
         <label>13Z0-Grossisti</label>
     </customValue>-->
     <customValue>
+        <fullName>1100-ACQUA --- Non definito ---</fullName>
+        <default>false</default>
+        <label>1100-ACQUA --- Non definito ---</label>
+    </customValue>
+    <customValue>
         <fullName>1101-Domestico</fullName>
         <default>false</default>
         <label>1101-Domestico</label>
@@ -312,7 +317,9 @@
     </customValue>
     <description>1001-Cottura cibi
 1002-Cottura/Produz acq calda
-1003-Riscaldamento esclusivo</description>
+1003-Riscaldamento esclusivo
+1100-ACQUA --- Non definito --- 
+1119-Scar. ind.le  cont. Div</description>
     <masterLabel>Tipologia Impianto</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

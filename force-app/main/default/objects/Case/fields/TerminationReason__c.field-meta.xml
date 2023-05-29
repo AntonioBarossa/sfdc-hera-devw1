@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TerminationReason__c</fullName>
+    <externalId>false</externalId>
+    <label>Motivazione Cessazione</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>RequestSource__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>Cessazione del presupposto da verifica interna</fullName>
+                <default>false</default>
+                <label>Cessazione del presupposto da verifica interna</label>
+            </value>
+            <value>
+                <fullName>Cessazione del presupposto di applicazione</fullName>
+                <default>false</default>
+                <label>Cessazione del presupposto di applicazione</label>
+            </value>
+            <value>
+                <fullName>Richiesta da ente creditore</fullName>
+                <default>false</default>
+                <label>Richiesta da ente creditore</label>
+            </value>
+        </valueSetDefinition>
+        <valueSettings>
+            <controllingFieldValue>Da contribuente</controllingFieldValue>
+            <valueName>Cessazione del presupposto di applicazione</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D'ufficio</controllingFieldValue>
+            <valueName>Cessazione del presupposto da verifica interna</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>D'ufficio</controllingFieldValue>
+            <valueName>Richiesta da ente creditore</valueName>
+        </valueSettings>
+    </valueSet>
+</CustomField>

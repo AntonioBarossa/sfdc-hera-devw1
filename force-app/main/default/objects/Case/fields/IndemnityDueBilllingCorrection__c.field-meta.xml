@@ -2,51 +2,7 @@
 <CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
     <fullName>IndemnityDueBilllingCorrection__c</fullName>
     <externalId>false</externalId>
-    <formula>IF(
-				ISPICKVAL(CorrectionRight__c,&quot;Si&quot;)
-				/*if true*/
-			 ,IF(ISPICKVAL(FirstLevelComplaintClassification__c, &quot;Reclamo Scritto&quot;)
-								/*if true Reclamo Scritto*/
-								,IF(CorrectionDocumentEmissionDay__c &lt;= SendDate__c + 120 &amp;&amp; CorrectionDocumentEmissionDay__c &gt; SendDate__c + 60
-												/*if true first SLA*/ 
-												, 25
-												/*if false first SLA*/
-												, IF(CorrectionDocumentEmissionDay__c &lt;= SendDate__c + 180 &amp;&amp; CorrectionDocumentEmissionDay__c &gt; SendDate__c + 120
-																	/*if true second SLA*/
-																	, 50
-																	/*if false second SLA*/
-																	, IF(CorrectionDocumentEmissionDay__c &gt; SendDate__c + 180
-																						/*if true third SLA*/
-																						, 75
-																						/*if false third SLA*/
-																						,0
-																					)
-																	)
-												)
-								/*if false Reclamo Scritto*/									
-								,IF(ISPICKVAL(FirstLevelComplaintClassification__c, &quot;Rettifica Doppia Fatturazione&quot;)
-												/*if true Rettifica Doppia Fatturazione*/
-												,IF(CorrectionDocumentEmissionDay__c &lt;= SendDate__c + 40 &amp;&amp; CorrectionDocumentEmissionDay__c &gt; SendDate__c + 20
-																/*if true first SLA*/
-																,25
-																/*if false first SLA*/
-																,IF(CorrectionDocumentEmissionDay__c &lt;= SendDate__c + 60 &amp;&amp; CorrectionDocumentEmissionDay__c &gt; SendDate__c + 40
-																				/*if true second SLA*/
-																				,50
-																				/*if false second SLA*/
-																				,IF(CorrectionDocumentEmissionDay__c &gt; SendDate__c + 60
-																								/* if true third SLA*/
-																								,75
-																								/*if false third SLA*/
-																								,0)
-																			)
-															)
-												/*if false Rettifica Doppia Fatturazione*/
-												,0)
-							)
-				/*if false*/
-				,0
-)</formula>
+    <formula>IF(ISPICKVAL(CorrectionRight__c, &quot;Si&quot;), DepositAmount__c, null)</formula>
     <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
     <label>Indennizzo per rettifica fatturazione</label>
     <precision>18</precision>

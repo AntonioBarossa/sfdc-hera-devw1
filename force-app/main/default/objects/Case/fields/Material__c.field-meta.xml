@@ -1,0 +1,573 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Material__c</fullName>
+    <externalId>false</externalId>
+    <label>Materiale</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>TypeOperation__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_Material</valueSetName>
+            <valueSettings>
+            <valueName>NESSUN MATERIALE</valueName>
+            <controllingFieldValue>APERTURAELETTRONICANONFUNZIONA</controllingFieldValue>
+            <controllingFieldValue>CANCELLAZIONE SCRITTE MURARIE</controllingFieldValue>
+            <controllingFieldValue>CIMITERIALI</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA KIT PORTA A PORTA</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA PANNOLINI</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO TUTTI I CONTEN</controllingFieldValue>
+            <controllingFieldValue>DISERBO</controllingFieldValue>
+            <controllingFieldValue>LAMENTELE COMPORTAM OPERATORE</controllingFieldValue>
+            <controllingFieldValue>MUSCHIO_ERBA MURELLA</controllingFieldValue>
+            <controllingFieldValue>NOLEGGIO CASSONI</controllingFieldValue>
+            <controllingFieldValue>ODORI MEZZI/DOTAZIONE/IMPIANTI</controllingFieldValue>
+            <controllingFieldValue>PRELIEVO CARCASSE ANIMALI</controllingFieldValue>
+            <controllingFieldValue>PULIZIA ARENILE</controllingFieldValue>
+            <controllingFieldValue>PULIZIA CADITOIE</controllingFieldValue>
+            <controllingFieldValue>PULIZIA GIARDINI</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA SIRINGHE</controllingFieldValue>
+            <controllingFieldValue>RICH. VERIFICA SCONTI RACC.DIF</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA INFORMAZIONI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA INFORMAZIONI PAP</controllingFieldValue>
+            <controllingFieldValue>RITIRO A PAGAMENTO</controllingFieldValue>
+            <controllingFieldValue>RUMORI DI MEZZI/IMPIANTI</controllingFieldValue>
+            <controllingFieldValue>SCARICHI ABUSIVI</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SEGNALAZ COMPORTAMEN CITTADINI</controllingFieldValue>
+            <controllingFieldValue>SEGNALAZIONE SU CDR</controllingFieldValue>
+            <controllingFieldValue>SERVIZI A FESTE E MANIFESTAZ</controllingFieldValue>
+            <controllingFieldValue>SERVIZI DEIEZIONI CANINE</controllingFieldValue>
+            <controllingFieldValue>SERVIZIO BORA</controllingFieldValue>
+            <controllingFieldValue>SERVIZIO NEVE</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTO CESTINI STRADALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CARTA</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>ORGANICO</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>DISMISSIONE COMPOSTIERA</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA COMPOSTIERA</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PLASTICA</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PLASTICA/LATTINE</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RSU</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CHIAVETTA ELETTRONICA_CONSEGNA</controllingFieldValue>
+            <controllingFieldValue>CHIAVETTA ELETTRONICA_MANUTENZ</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CESTINI</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RESTITUZCONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RESTITUZCONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIFIUTI ATTORNO AL CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_IND</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VETRO</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VETRO/PLASTICA/LATTINE</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VETRO/VETRO + LATTINE</valueName>
+            <controllingFieldValue>CALOTTA_MANUTENZIONE</controllingFieldValue>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CARTA/CARTONE</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CARTONE_SOLOAZIENDE</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LATTINE</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>ORGANICO_SOLOUTNONDOM</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PANNOLINI/PANNOLONI</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>RESTITUZCONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RESTITUZCONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_IND</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>POTATURE</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SFALCI E POTATURE</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VERDE</valueName>
+            <controllingFieldValue>CAMBIO VOLUMETRIA PAP</controllingFieldValue>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>MANUTENZIONECONTENITOREPAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTACONTENITAGGIUNTIVOPAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLECIT_CONSEGNA_CONT_PAP_RD</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PANNOLINI</valueName>
+            <controllingFieldValue>CONSEGNA KIT PANNOLINI ECO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>ECOSELF (CARTA E PLASTICA)</valueName>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>FITOFARMACI</valueName>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LEGNO</valueName>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MULTIMATERIALE</valueName>
+            <controllingFieldValue>CONSEGNA/RITIRO CASSONE</controllingFieldValue>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>LAVAGGIO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA SACCHI</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CASSONETTO</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>ABITI USATI</valueName>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>FARMACI</valueName>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>OLIO VEGETALE/ALIMENTARE</valueName>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PILE</valueName>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>SPOSTAMENTO CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RAEE</valueName>
+            <controllingFieldValue>CONTENITORE ROTTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>GUASTOCHEIMPEDISCECONFERIMENTO</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PORTICO</valueName>
+            <controllingFieldValue>LAVAGGIO PORTICI</controllingFieldValue>
+            <controllingFieldValue>PULIZIA SUOLO PUBBLICO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LEGNO_SOLOAZIENDE</valueName>
+            <controllingFieldValue>MANCATA RACCOLTA PAP</controllingFieldValue>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>AMIANTO/ETHERNIT</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>BUCHE SU STRADA</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CADUTA CALCINACCI</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CARCASSE ANIMALI</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LAVAGGIO/PULIZIA SEDE STRADALE</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>OLIO SU STRADA</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIMOZIONE/ROVESCIAMENTO CASSON</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SIRINGHE</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VETRI A TERRA</valueName>
+            <controllingFieldValue>PRONTO INTERVENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PSEUDOEDILI</valueName>
+            <controllingFieldValue>PSEUDOEDILI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CON RIMOZIONE</valueName>
+            <controllingFieldValue>PULIZIA SUOLO PUBBLICO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MARCIAPIEDE</valueName>
+            <controllingFieldValue>PULIZIA SUOLO PUBBLICO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PISTA CICLABILE</valueName>
+            <controllingFieldValue>PULIZIA SUOLO PUBBLICO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SEDE STRADALE</valueName>
+            <controllingFieldValue>PULIZIA SUOLO PUBBLICO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RSU_SOLOAZIENDE</valueName>
+            <controllingFieldValue>RESTITUZCONTENITORE PAP</controllingFieldValue>
+            <controllingFieldValue>RESTITUZCONTENITOREPAP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VERDE/SFALCI/POTATURE</valueName>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VETRO+LATTINE</valueName>
+            <controllingFieldValue>RICHIESTA CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE</controllingFieldValue>
+            <controllingFieldValue>SOSTITUZIONE CONTENITORE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CESTINI</valueName>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>TONER</valueName>
+            <controllingFieldValue>RICHIESTA CONTENITORE STRADALE</controllingFieldValue>
+            <controllingFieldValue>RIMOZIONE CASSONETTO STRADALE</controllingFieldValue>
+            <controllingFieldValue>SVUOTAMENTOCONTENITORESTRADALE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RD</valueName>
+            <controllingFieldValue>RIFIUTI ATTORNO AL CONTENITORE</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>ANIMALI D'AFFEZIONE</valueName>
+            <controllingFieldValue>RITIRO ANIMALI MORTI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>INGOMBRANTI</valueName>
+            <controllingFieldValue>SE_SEGNALAZIONE DISSERVIZI</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>FANGOSI NON PERICOLOSI</valueName>
+            <controllingFieldValue>SMALTIMENTO RIFIUTI SPECIALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>FANGOSI PERICOLOSI</valueName>
+            <controllingFieldValue>SMALTIMENTO RIFIUTI SPECIALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LIQUIDI NON PERICOLOSI</valueName>
+            <controllingFieldValue>SMALTIMENTO RIFIUTI SPECIALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LIQUIDI PERICOLOSI</valueName>
+            <controllingFieldValue>SMALTIMENTO RIFIUTI SPECIALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLIDI NON PERICOLOSI</valueName>
+            <controllingFieldValue>SMALTIMENTO RIFIUTI SPECIALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLIDI PERICOLOSI</valueName>
+            <controllingFieldValue>SMALTIMENTO RIFIUTI SPECIALI</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>AMIANTO</valueName>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>INGOMBRANTI+RAEE</valueName>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MACERIE</valueName>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO CONAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PILE/BATTERIE</valueName>
+            <controllingFieldValue>SOLLEC RITIROGRATUITO SENZAAPP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIFIUTI SPECIALI</valueName>
+            <controllingFieldValue>SOLLECITO RITIRO A PAGAMENTO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>DISTANZACASSONDADOMICILIOUT</valueName>
+            <controllingFieldValue>VERIFICA TARIFFA</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>UTENZA INSERITA IN PAP_CENTRO</valueName>
+            <controllingFieldValue>VERIFICA TARIFFA</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>UTENZA INSERITA IN PAP_ZAI</valueName>
+            <controllingFieldValue>VERIFICA TARIFFA</controllingFieldValue>
+            </valueSettings>
+    </valueSet>
+</CustomField>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WebLink xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>HDT_Modifica_Dati</fullName>
+    <availability>online</availability>
+    <displayType>button</displayType>
+    <encodingKey>UTF-8</encodingKey>
+    <height>600</height>
+    <linkType>url</linkType>
+    <masterLabel>Modifica Dati</masterLabel>
+    <openType>sidebar</openType>
+    <protected>false</protected>
+    <url>/lightning/cmp/c__HDT_LCP_OpenAuraCmp?c__id={!Case.Id}&amp;c__accid={!Case.AccountId}&amp;c__flowName=HDT_FL_Modifica_Date</url>
+</WebLink>

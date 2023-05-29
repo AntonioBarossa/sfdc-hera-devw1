@@ -26,7 +26,7 @@ public class HDT_BA_OrderEstimateExpirationTst {
             Id recordtypeId = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ConnessioneConAttivazione').getRecordTypeId();
             HDT_UTL_DataFactoryTst.newPhaseTransition('Preventivo scaduto','Attesa conferma preventivo cliente',recordTypeId,'HDT_RT_ConnessioneConAttivazione');
              HDT_UTL_DataFactoryTst.newPhaseTransition('Preventivo scaduto','Ammissibilità OK',recordTypeId,'HDT_RT_ConnessioneConAttivazione');       
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1,false,accId);
             for(Contact c : contacts)

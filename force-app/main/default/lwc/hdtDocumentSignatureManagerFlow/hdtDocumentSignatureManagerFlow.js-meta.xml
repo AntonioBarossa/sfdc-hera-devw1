@@ -21,6 +21,8 @@
             <property name="entryChannel" type="String" label="Entry Channel (Reclami)" description="Entry Channel (Reclami)" role="inputOnly"/>
             <property name="discardRework" type="String" label="Discard Rework" description="Discard Rework" role="inputOnly" default="false"/>
             <property name="discardActivityId" type="String" label="Discard Activity Id" description="Discard Activity Id" role="inputOnly" default=""/>
+            <property name="isAmbiente" type="String" label="Is Ambiente?" description="Pass true if TARI or TCP" role="inputOnly" default="false"/>
+            <property name="skipDocumentalPhase" type="String" label="Skip Documental Phase" description="If true skip documental Phase" role="OutputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

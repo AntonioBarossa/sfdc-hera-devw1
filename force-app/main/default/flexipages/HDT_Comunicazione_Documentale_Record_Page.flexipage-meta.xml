@@ -7,7 +7,7 @@
                     <name>actionNames</name>
                     <valueList>
                         <valueListItems>
-                            <value>DocumentSendTracking__c.HDT_ShowOriginalDocument</value>
+                            <value>DocumentSendTracking__c.Visualizza_Plico</value>
                         </valueListItems>
                         <valueListItems>
                             <value>DocumentSendTracking__c.HDT_ResendDocusignEnvelope</value>
@@ -22,6 +22,15 @@
                                     <leftValue>{!Record.Case__r.SignMode__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>OTP Remoto</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>CustomButton.DocumentSendTracking__c.HDT_SendContract</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.Order__r.OrderNumber}</leftValue>
+                                    <operator>NE</operator>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

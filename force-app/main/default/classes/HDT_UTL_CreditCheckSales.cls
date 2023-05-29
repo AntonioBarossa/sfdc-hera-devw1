@@ -130,7 +130,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
 
             } catch(Exception ex){
                 processObject.requestItem.Status__c = 'Errore';
-                processObject.requestItem.StatusDescription__c = ex.getMessage() + ' linea: ' + String.valueOf(ex.getLineNumber());
+                processObject.requestItem.StatusDescription__c = (ex.getMessage() + ' linea: ' + String.valueOf(ex.getLineNumber())).abbreviate(250);
             }
 
             itemsToUpdate.add(processObject.requestItem);
@@ -147,7 +147,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
         update itemsToUpdate;
     }
 
-    public static HDT_WS_Response sendRequest(String namedCredential, String path, String method, HDT_WS_Request request){
+    /*public static HDT_WS_Response sendRequest(String namedCredential, String path, String method, HDT_WS_Request request){
                
         HTTP http = new Http();
         HTTPRequest req = new HTTPRequest();
@@ -166,7 +166,7 @@ public inherited sharing class HDT_UTL_CreditCheckSales {
             resp.exceptionMessage = e.getMessage();
         }
         return resp;
-    }
+    }*/
 
     private class HDT_WRP_ProcessObject {
         private MassiveLoaderRequestItem__c requestItem;

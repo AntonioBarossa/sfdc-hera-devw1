@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>ImplantType__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipologia Impianto</label>
+    <required>false</required>
+    <trackTrending>false</trackTrending>
+    <type>MultiselectPicklist</type>
+    <valueSet>
+        <controllingField>ImplantTypeOperator__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_ImplantType</valueSetName>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1001-Cottura cibi</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1002-Cottura/Produz acq calda</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1003-Riscaldamento esclusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1004-Riscaldamento promiscuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1005-Risc. centraliz esclusivo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1006-Risc. centraliz promiscuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1007-Attivita produttive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1008-Promiscuo (prod+ risc)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1009-Reti (cabine primo salto)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1010-Usi interni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13A0-Usi di Abitazione BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13BB-Illuminazione pubblica BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13CB-Non domestici in BT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13CT-Forn temporanee &lt; 21 gg</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13DM-Illuminazione pubblica MT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13EM-Non domestici MT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>13FM-Non domestici AT</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1101-Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1102-Non domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1103-Attivita</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1104-Scar. poz priv. civ. cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1105-Antincendio</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1106-Cantiere</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1107-Colonnetta</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1108-Irriguo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1109-Comunale</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1110-Ente pubblico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1111-Promiscuo</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1112-Subfornitura</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1113-Uso interno</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1114-Rete</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1115-Scar poz priv.civ no cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1116-Scar. acq reflue uso ind</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1117-Autobotte (solo usi Hera)</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1118-Scar ind no cont. ACQ+POZ</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1119-Scar. ind.le  cont. div</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1120-Scar. ind.le no cont. div</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1121-Scar.pozzo priv. ind cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1122-Scar.poz priv.ind.no cont</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1123-Prel. pozzo priv. no fatt</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1201-Domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1202-Non domestico</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1401-Risc amb singoli</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1402-Risc AcquaIS - Raffr Sing</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1403-Risc Amb centr</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1404-Attivita produttive</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1405-Risc AcquaIS-Raffr Centr</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1406-Acqua calda Sing unità</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1407-Acqua calda Centr</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1408-Ospedalieri</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1409-Usi interni</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1410-Solo Raffrescamento</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1411-Piscine e Palestre</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>G_ICD-Imposta Usi Domestici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>G_ICC-Imposta Usi Non Dom.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>G_ICC-Imp. Usi Civili Commerci</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>E_I_USIDOM-Domestici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>EIMP_L01-Illuminaz. Pubb.</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>EIMP_M04-Non domestici</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>includesValues</controllingFieldValue>
+            <controllingFieldValue>excludesValues</controllingFieldValue>
+            <valueName>1100-ACQUA --- Non definito ---</valueName>
+        </valueSettings>
+    </valueSet>
+    <visibleLines>4</visibleLines>
+</CustomField>

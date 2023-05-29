@@ -104,6 +104,21 @@ public with sharing class HDT_LC_EditScartiComplessi {
             when 'VAS' {
                 fase = 'Comunicazione Motore VAS';
             }
+            when 'Connessione con Attivazione'{
+                /**
+                 * For H2O Commodity check if Activity Type is Ammissibilità KO and if is created after the quote acceptance.
+                 * If true, the correct phase to fire Esecuzione Lavori is Preventivo Accettato
+                */
+                Order ordConnessione = (Order)HDT_QR_GenericQuery.getGenericRecords('Id,Phase__c, PhaseStory__c,CommodityFormula__c', 'Order', 'Id =\''+ord.Id+'\'')[0];
+                wrts_prcgvr__Activity__c activity = (wrts_prcgvr__Activity__c)HDT_QR_GenericQuery.getGenericRecords('Id,Type__c', 'wrts_prcgvr__Activity__c', 'Id =\''+activityId+'\'')[0];
+                String phaseStory = ordConnessione?.PhaseStory__c;
+                String commodity = ordConnessione?.CommodityFormula__c;
+                String activityType = activity?.Type__c;
+                if(String.isNotBlank(activityType) && String.isNotBlank(commodity) && String.isNotBlank(phaseStory) 
+                    && commodity.equalsIgnoreCase('Acqua') && phaseStory.containsIgnoreCase('Preventivo Accettato') && activityType.equalsIgnoreCase('Ammissibilità KO')){
+                    fase = 'Preventivo Accettato';
+                }
+            }
         }
         if ('Caricamento Siebel KO'.equalsIgnoreCase(ord.Phase__c)){
             fase = 'Esportazione VS Siebel';
@@ -139,9 +154,10 @@ public with sharing class HDT_LC_EditScartiComplessi {
                 'HDT_RT_CambioUso','HDT_RT_ConnessioneConAttivazione','HDT_RT_TemporaneaNuovaAtt','HDT_RT_VAS','HDT_RT_Subentro'{
                 step = 5;
             }
-            /* when 'HDT_RT_Subentro'{
-                step = 5; //setStepCheckAccount(ord, ord.ServicePoint__r, 5);
-            } */
+            when 'HDT_RT_SubentroAmbiente', 'HDT_RT_AttivazioneAmbiente', 'HDT_RT_CambioTariffa', 
+                'HDT_RT_AgevolazioniAmbiente', 'HDT_RT_ModificaTariffaRimozione'{
+                step = 1;
+            }
             when 'HDT_RT_Voltura'{
                 step = 3;//setStepCheckAccount(ord, ord.ServicePoint__r, 3);
             }

@@ -45,6 +45,20 @@ public class HDT_SRV_FieldCoerenceServicePoint {
           resultMap.put('valid', false);
           resultMap.put('message', 'Impossibile selezionare Mercato: \"' + market +'\" per Tipo Fornitura: \"'+ supplyType + '\"');  
         }
+        if( String.isNotBlank(commodity) && commodity.equalsIgnoreCase('Acqua') )
+        {
+            String comune = (String)inputFieldMap.get('SupplyCity__c');
+            String companyOwner = (String)inputFieldMap.get('CompanyOwner__c');
+            
+            List<TownATOTable__c> townAtoTableList = [SELECT Id FROM TownATOTable__c WHERE CompanyOwner__c = :companyOwner AND Town__c = :comune WITH SECURITY_ENFORCED];
+
+            if( townAtoTableList.isEmpty() )
+            {
+                resultMap.put('valid', false);
+                String errorMessage = 'Societa\' non coerente con il comune selezionato.';
+                resultMap.put('message', errorMessage);
+            }
+        }
         if(String.isNotBlank(commodity) && commodity.equalsIgnoreCase('Gas') && !inputFieldMap.isEmpty() && !(checkCoerence(inputFieldMap)))
         {
             resultMap.put('valid', false);

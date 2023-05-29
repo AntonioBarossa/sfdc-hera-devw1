@@ -20,15 +20,40 @@
         <default>false</default>
         <label>Costing e Forecasting</label>
     </customValue>
+       <customValue>
+        <fullName>Fatturazione consumi/contratti</fullName>
+        <default>false</default>
+        <label>Fatturazione consumi/contratti</label>
+    </customValue>
     <customValue>
         <fullName>Fatturazione e pagamenti</fullName>
         <default>false</default>
         <label>Fatturazione e pagamenti</label>
     </customValue>
     <customValue>
+        <fullName>Fognatura e Depurazione</fullName>
+        <default>false</default>
+        <label>Fognatura e Depurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Preventivi/Lavori/Prestazioni</fullName>
+        <default>false</default>
+        <label>Preventivi/Lavori/Prestazioni</label>
+    </customValue>
+    <customValue>
+        <fullName>Qualità e Continuità di servizio</fullName>
+        <default>false</default>
+        <label>Qualità e Continuità di servizio</label>
+    </customValue>
+    <customValue>
         <fullName>Rapporto con i distributori e SII</fullName>
         <default>false</default>
         <label>Rapporto con i distributori e SII</label>
+    </customValue>
+    <customValue>
+        <fullName>Risarcimento danni</fullName>
+        <default>false</default>
+        <label>Risarcimento danni</label>
     </customValue>
     <customValue>
         <fullName>Supporto credito Hera Comm</fullName>
@@ -56,6 +81,11 @@
         <label>Supporto Normativo</label>
     </customValue>
     <customValue>
+        <fullName>Supporto recupero credito legale</fullName>
+        <default>false</default>
+        <label>Supporto recupero credito legale</label>
+    </customValue>
+    <customValue>
         <fullName>Supporto responsabile HC</fullName>
         <default>false</default>
         <label>Supporto responsabile HC</label>
@@ -69,6 +99,11 @@
         <fullName>Verifica Gestione Front</fullName>
         <default>false</default>
         <label>Verifica Gestione Front</label>
+    </customValue>
+    <customValue>
+        <fullName>Verifica posizione contributiva</fullName>
+        <default>false</default>
+        <label>Verifica posizione contributiva</label>
     </customValue>
     <masterLabel>Pareri 1° Livello</masterLabel>
     <sorted>true</sorted>

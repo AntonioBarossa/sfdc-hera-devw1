@@ -8,6 +8,7 @@ export default class HdtQuoteAmendContract extends LightningElement {
     @api contractId;
     @api isCommunity;
     @api quoteId;
+    title="Aggiunta Bonus o VAS";
     iframeSrcAmend = '';;
     
     getIframeSrc(contractId){

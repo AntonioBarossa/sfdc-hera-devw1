@@ -3,6 +3,10 @@ import { FlowAttributeChangeEvent, FlowNavigationNextEvent, FlowNavigationFinish
 import getListOptions from '@salesforce/apex/HDT_UTL_CaseCancellation.getListCanellationReasonLwc';
 import { getRecord } from 'lightning/uiRecordApi';
 import { ShowToastEvent } from 'lightning/platformShowToastEvent';
+
+import { MessageContext, subscribe, unsubscribe, APPLICATION_SCOPE} from "lightning/messageService";
+import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
+
 const FIELDS = ['Case.CancellationReason__c'];
 export default class HdtInputFieldComboboxCanellation extends LightningElement {
     @api defaultValue;
@@ -15,7 +19,30 @@ export default class HdtInputFieldComboboxCanellation extends LightningElement {
     @api processTypeToCancell;
     @api recordId;
     @track defaultValue2;
-    
+
+    @api interviewId;
+    @api required; // ???
+
+    @wire(MessageContext)
+	messageContext;
+
+    subscribeMC() {
+		// recordId is populated on Record Pages, and this component
+		// should not update when this component is on a record page.
+        this.subscription = subscribe(
+            this.messageContext,
+            BUTTONMC,
+            (mc) => {if(this.interviewId==mc.sessionid) this.eventButton = mc.message},
+            //{ scope: APPLICATION_SCOPE }
+        );
+		// Subscribe to the message channel
+	}
+
+    unsubscribeToMessageChannel() {
+        unsubscribe(this.subscription);
+        this.subscription = null;
+    }
+
     /*@wire(getRecord, { recordId: '$recordId', fields: FIELDS })
     wiredRecord({ error, data }) {
         if (error) {
@@ -39,6 +66,7 @@ export default class HdtInputFieldComboboxCanellation extends LightningElement {
     }*/
     
     connectedCallback(){
+        this.subscribeMC(); //Aggiunta Metodo Subscribe
         this.selectedReason = this.defaultValue;
         console.log('this.selectedReason ' + this.selectedReason);
         console.log('this.defaultValue ' + this.defaultValue);
@@ -73,17 +101,35 @@ export default class HdtInputFieldComboboxCanellation extends LightningElement {
         this.defaultValue = event.detail.value;
     }
 
-    @api
-    validate() {
-    if(this.selectedReason != null && this.selectedReason != 'undefined') { 
-         return { isValid: true }; 
+    // // -> VECCHIO VALIDATE <-
+    //
+    // @api
+    // validate() {
+    // if(this.selectedReason != null && this.selectedReason != 'undefined') { 
+    //      return { isValid: true }; 
+    //     } 
+    // else { 
+    // //If the component is invalid, return the isValid parameter as false and return an error message. 
+    //      return { 
+    //            isValid: false, 
+    //            errorMessage: 'Inserisci un valore.' 
+    //             }; 
+    //  } 
+    // }
+
+    @api validate (){
+        console.log("event catched   "+this.eventButton);
+        if('cancel' != this.eventButton && 'draft' != this.eventButton){ // 'save' == this.eventButton
+            if(this.selectedReason != null && this.selectedReason != 'undefined') { 
+                return { isValid : true };
+            } 
+            else { 
+            //If the component is invalid, return the isValid parameter as false and return an error message. 
+                return { isValid: false, errorMessage: 'Inserisci un valore.' }; 
+            } 
         } 
-    else { 
-    //If the component is invalid, return the isValid parameter as false and return an error message. 
-         return { 
-               isValid: false, 
-               errorMessage: 'Inserisci un valore.' 
-                }; 
-     } 
-}
+        else{ 
+            return { isValid : true, errorMessage: null };
+        }
+    }
 }

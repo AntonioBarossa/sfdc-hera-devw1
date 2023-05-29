@@ -27,7 +27,7 @@ public class HDT_BA_ComfortCallTst {
             HDT_UTL_DataFactoryTst.pClickOrderPhase();
             HDT_UTL_DataFactoryTst.newPhaseTransition('In attesa conferma cliente','Bozza',constants.ORDER_RECORDTYPEID_SWITCHIN,constants.ORDER_RECORDTYPE_DEVELOPERNAME_SWITCHIN);    
 
-            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+            List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
             Id accId = accs[0].id;
             
             List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(2,false,accId);

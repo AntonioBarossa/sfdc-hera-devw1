@@ -19,6 +19,8 @@ public with sharing class HDT_QR_ServicePointTst {
         User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
         internalUser.UserPermissionsMarketingUser=true;
         insert internalUser;
+        List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager',false)};
+        insert permissionSetAssignments;
 
         Id rtServPoint=constants.SERVICEPOINT_RECORDTYPEID_PELETRICCO;
 
@@ -35,6 +37,7 @@ public with sharing class HDT_QR_ServicePointTst {
             spList[0].MeterStatus__c = 'Bozza';
             spList[0].CommoditySector__c = 'Energia Elettrica';
             spList[0].ImplantType__c = '13A0-Usi di Abitazione BT';
+            spList[0].SAPImplantCode__c = '0123456789';
             spList[0].SupplyStreet__c = 'via rua';
             spList[0].SupplyStreetNumber__c = '51';
             spList[0].SupplyStreetNumberExtension__c = 'D';
@@ -64,6 +67,11 @@ public with sharing class HDT_QR_ServicePointTst {
             selezioneList[0].FieldRequiredGas__c = 'testFieldRequiredGas';
             
             insert selezioneList;
+
+            List<String> legalCities = new List<String>();
+            legalCities.add(spList[0].SupplyCity__c);
+            HDT_UTL_DataFactoryTst.createLandRegistries( legalCities, spList[0], true);
+
         }
     }
 
@@ -145,6 +153,52 @@ public with sharing class HDT_QR_ServicePointTst {
          
             System.assertEquals(sp.Id, spList[0].Id, 'ServicePoint successfully queried');
             System.assertNotEquals(null, spList[0].Id, 'ServicePoint query failed');
+        }
+    }
+
+    @isTest
+    public static void testGetRecordByImplantCode() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+    
+        System.runAs(u){
+
+            Test.startTest();
+
+            ServicePoint__c sp = [SELECT Id, SAPImplantCode__c FROM ServicePoint__c WHERE SupplyCity__c = 'Firenze'];
+
+            List<ServicePoint__c> spList = qrServPoint.getRecordByImplantCode('0123456789', 'Id, SAPImplantCode__c');
+
+            Test.stopTest();
+         
+            System.assertEquals(sp.Id, spList[0].Id, 'ServicePoint successfully queried');
+            System.assertNotEquals(null, spList[0].Id, 'ServicePoint query failed');
+        }
+    }
+
+    @isTest
+    public static void testGetServicePointsByDatiCatastali() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+    
+        System.runAs(u){
+
+            Test.startTest();
+
+            ServicePoint__c sp = [SELECT Id, SupplyCity__c FROM ServicePoint__c WHERE SupplyCity__c = 'Firenze'];
+
+            Map<String,String> landRegistries = new Map<String,String>();
+            landRegistries.put('LegalCity', 'Firenze');
+		
+            String datiCatastali = JSON.Serialize(landRegistries);
+            String fields = '';
+
+            List<Map<String,Object>> landRegistryList = qrServPoint.getServicePointsByDatiCatastali( datiCatastali, fields );
+
+            Test.stopTest();
+         
+            System.assertNotEquals(null, landRegistryList, 'ServicePoint query failed');
+            System.assertNotEquals(0, landRegistryList.size(), 'ServicePoint query failed');
         }
     }
 
@@ -432,6 +486,50 @@ public with sharing class HDT_QR_ServicePointTst {
             List<CS_SelezioneFornitura__c> selezList = new List<CS_SelezioneFornitura__c>();
 
             CS_SelezioneFornitura__c selezione = HDT_QR_ServicePoint.getCustomSettingFieldsRequiredGas();
+
+            selezList.add(selezione);
+
+            Test.stopTest();
+         
+            System.assertEquals(false, selezList.isEmpty(), 'CS_SelezioneFornitura__c successfully queried');
+            System.assertNotEquals(true, selezList.isEmpty(), 'CS_SelezioneFornitura__c query failed');
+        }
+    }
+
+    @isTest
+    public static void testGetCustomSettingFieldsRequiredAcqua() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+    
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<CS_SelezioneFornitura__c> selezList = new List<CS_SelezioneFornitura__c>();
+
+            CS_SelezioneFornitura__c selezione = HDT_QR_ServicePoint.getCustomSettingFieldsRequiredAcqua();
+
+            selezList.add(selezione);
+
+            Test.stopTest();
+         
+            System.assertEquals(false, selezList.isEmpty(), 'CS_SelezioneFornitura__c successfully queried');
+            System.assertNotEquals(true, selezList.isEmpty(), 'CS_SelezioneFornitura__c query failed');
+        }
+    }
+
+    @isTest
+    public static void testGetCustomSettingFieldsRequiredAmbiente() {
+
+        User u=[SELECT Id FROM User WHERE Alias='crmuser' LIMIT 1];
+    
+        System.runAs(u){
+
+            Test.startTest();
+
+            List<CS_SelezioneFornitura__c> selezList = new List<CS_SelezioneFornitura__c>();
+
+            CS_SelezioneFornitura__c selezione = HDT_QR_ServicePoint.getCustomSettingFieldsRequiredAmbiente();
 
             selezList.add(selezione);
 

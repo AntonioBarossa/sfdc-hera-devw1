@@ -16,8 +16,6 @@ public with sharing class HDT_QR_ProcessSalesTst {
         accounts[0].CustomerMarking__c='Azienda';
         
         List<Account> accDist = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME'); 
-
-        System.debug('*** '+accounts);
         insert accounts;
 
         BillingProfile__c bp = new BillingProfile__c(
@@ -25,12 +23,13 @@ public with sharing class HDT_QR_ProcessSalesTst {
             ContractAccountCode__c = '200001008453'
         );
         insert bp;
-        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, false, accounts[0].Id);
-        insert contacts;
-        
-       
 
-        } 
+        List<Contact> contacts = HDT_UTL_DataFactoryTst.createContact(1, false, accounts[0].Id);
+        insert contacts;        
+        
+        HDT_UTL_DataFactoryTst.createServicePoint(1, true);
+
+    } 
     
 
     @isTest
@@ -60,17 +59,40 @@ public with sharing class HDT_QR_ProcessSalesTst {
 
     }
 
+    @isTest
+    public static void getAccountContactRelationByAccountIdTst(){
 
-    
-
-        public static void getAccountContactRelationByAccountIdTst(){
-
-        List<AccountContactRelation> acrList = [SELECT Id FROM AccountContactRelation WITH SECURITY_ENFORCED LIMIT 1];
+        List<AccountContactRelation> acrList = [SELECT Id, AccountId FROM AccountContactRelation WITH SECURITY_ENFORCED LIMIT 1];
         List<Id> accountIdsList = new List<Id>();
-        Id id1 = [SELECT Id FROM Account WITH SECURITY_ENFORCED LIMIT 1].Id;
+        Id id1 = [SELECT Id FROM Account WHERE Id = :acrList[0].AccountId WITH SECURITY_ENFORCED LIMIT 1].Id;
         accountIdsList.add(id1);
         List<AccountContactRelation> lacr = HDT_QR_ProcessSales.getAccountContactRelationByAccountId(acrList,accountIdsList);
         System.assertNotEquals(lacr[0], null, 'Query fails');
 
     }
+
+    @isTest
+    public static void getAccountContactRelationListTst(){
+
+        List<AccountContactRelation> acrList = [SELECT Id, AccountId FROM AccountContactRelation WITH SECURITY_ENFORCED LIMIT 1];
+        List<Id> accountIdsList = new List<Id>();
+        Id id1 = [SELECT Id FROM Account WHERE Id = :acrList[0].AccountId WITH SECURITY_ENFORCED LIMIT 1].Id;
+        accountIdsList.add(id1);
+        List<AccountContactRelation> lacr = HDT_QR_ProcessSales.getAccountContactRelationList(acrList,accountIdsList);
+        System.assertNotEquals(lacr[0], null, 'Query fails');
+
+    }
+
+    @isTest
+    public static void getServicePointListTst(){
+
+        List<ServicePoint__c> spList = [SELECT Id FROM ServicePoint__c WITH SECURITY_ENFORCED LIMIT 1];
+        List<Id> spIdsList = new List<Id>();
+        Id id1 = [SELECT Id FROM ServicePoint__c WITH SECURITY_ENFORCED LIMIT 1].Id;
+        spIdsList.add(id1);
+        List<ServicePoint__c> sps = HDT_QR_ProcessSales.getServicePointList(spList,spIdsList);
+        System.assertNotEquals(sps[0], null, 'Query fails');
+
+    }
+
 }

@@ -13,6 +13,44 @@
         <restricted>true</restricted>
         <valueSetName>HDT_FifthLevelComplaintClassification</valueSetName>
         <valueSettings>
+            <controllingFieldValue>Modalità di pagamento</controllingFieldValue>
+            <controllingFieldValue>Periodicità</controllingFieldValue>
+            <controllingFieldValue>Problemi di fatturazione</controllingFieldValue>
+            <controllingFieldValue>Recapito</controllingFieldValue>
+            <controllingFieldValue>Solleciti</controllingFieldValue>
+            <controllingFieldValue>Subentro/Voltura</controllingFieldValue>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
+            <controllingFieldValue>Pagamenti e Rimborsi</controllingFieldValue>
+            <controllingFieldValue>Sportello</controllingFieldValue>
+            <controllingFieldValue>Attivazione/Cessazione</controllingFieldValue>
+            <controllingFieldValue>Avviso/Bolletta</controllingFieldValue>
+            <controllingFieldValue>Calcolo</controllingFieldValue>
+            <controllingFieldValue>Contestazioni</controllingFieldValue>
+            <controllingFieldValue>Contratto</controllingFieldValue>
+            <controllingFieldValue>Rimborsi</controllingFieldValue>
+            <valueName>Ambiente</valueName>
+        </valueSettings>
+        <valueSettings>
+            <controllingFieldValue>Richiamo animali/insetti</controllingFieldValue>
+            <controllingFieldValue>Servizi a chiamata</controllingFieldValue>
+            <controllingFieldValue>Servizi di raccolta</controllingFieldValue>
+            <controllingFieldValue>Spazzamento</controllingFieldValue>
+            <controllingFieldValue>Traffico/cantieri</controllingFieldValue>
+            <controllingFieldValue>Servizio clienti (call center, sportelli, altri servizi)</controllingFieldValue>
+            <controllingFieldValue>Web</controllingFieldValue>
+            <controllingFieldValue>Call Center</controllingFieldValue>
+            <controllingFieldValue>Altro</controllingFieldValue>
+            <controllingFieldValue>Sportello</controllingFieldValue>
+            <controllingFieldValue>Arenile</controllingFieldValue>
+            <controllingFieldValue>Centri di Raccolta</controllingFieldValue>
+            <controllingFieldValue>Emissioni</controllingFieldValue>
+            <controllingFieldValue>Impatto visivo</controllingFieldValue>
+            <controllingFieldValue>Materiali/sostanze</controllingFieldValue>
+            <valueName>Igiene ambientale</valueName>
+        </valueSettings>
+        <valueSettings>
             <controllingFieldValue>Presunti Contratti non Richiesti</controllingFieldValue>
             <valueName>Comportamento non professionale</valueName>
         </valueSettings>

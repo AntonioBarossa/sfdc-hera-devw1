@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cas_ExistCorrectorC__c</fullName>
+    <defaultValue>false</defaultValue>
+    <description>Cas_ExistCorrectorC</description>
+    <externalDeveloperName>Cas_ExistCorrectorC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Presenza correttore</label>
+    <type>Checkbox</type>
+</CustomField>

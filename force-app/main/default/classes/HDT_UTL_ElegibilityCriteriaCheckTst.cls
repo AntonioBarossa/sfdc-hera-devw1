@@ -14,6 +14,7 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
         
         List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         ServicePoint__c mySp = servPointList[0];
+        mySp.CommoditySector__c = 'Energia Elettrica';
         mySp.Account__c = residAccList[0].Id;
         insert mySp;
 
@@ -22,8 +23,10 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, residAccList[0].Id);
         Contract myContr = contractList[0];
         myContr.BillingProfile__c = billProfList[0].Id;
+        myContr.Status ='Attivo';
+        myContr.ServicePoint__c = mySp.Id;
         insert myContr;
-        
+
         List<Product2> prodList = HDT_UTL_DataFactoryTst.createProduct2(1, false);        
         Product2 myProd = prodList[0];
         myProd.Family = 'Offerta commerciale';
@@ -94,6 +97,7 @@ public class HDT_UTL_ElegibilityCriteriaCheckTst {
 
         HDT_UTL_DataFactoryTst.createConfigurationAttribute(1, true, 'SendingBillMode__c', myProd.Id);
         HDT_UTL_DataFactoryTst.createConfigurationAttribute(1, true, 'PaymentMode__c', myProd.Id);
+
     }
     
     @isTest

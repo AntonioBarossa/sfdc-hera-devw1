@@ -254,4 +254,8 @@ public inherited sharing class HDT_QR_Contact {
         return (List<Contact>)qrHelper.getListSObject();
 
     }
+
+    public List<Contact> getContactsByFiscalCodes(Set<String> fiscalCodes) {
+        return [SELECT Id,FiscalCode__c FROM Contact WHERE FiscalCode__c IN : fiscalCodes WITH SECURITY_ENFORCED ];
+    }
 }

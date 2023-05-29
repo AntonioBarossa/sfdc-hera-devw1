@@ -43,4 +43,33 @@ public inherited sharing class HDT_QR_Activity {
 
         return actList;
     }
+
+
+    /**
+    * @author Marco Arci (marco.arci@webresults.it)
+    * @description metodo per prelevare le activity del tipo scelto e correlate ai parent passati come parametri
+    * @date 18/05/2022
+    * @param1 List<String> lista di Id dei parent delle activity (Case o Order)
+    * @param2 List<Case> lista dei tipi di activiti che si vogliono cercare
+    */
+    public static List<wrts_prcgvr__Activity__c> getActivityFromTypeList(List<String> parentIds, Set<String> actTypes){
+        
+        List<wrts_prcgvr__Activity__c> actList = new List<wrts_prcgvr__Activity__c>();
+        String nameObject = ((Id)parentIds[0]).getSObjectType().getDescribe().getName();
+        if('Case'.equalsIgnoreCase(nameObject)){
+            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Case__r.AccountId, Order__r.AccountId, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName, CreatedDate
+                       FROM wrts_prcgvr__Activity__c 
+                       WHERE Type__c = :actTypes
+                       AND Case__c = :parentIds
+                       WITH SECURITY_ENFORCED];
+        }else if('Order'.equalsIgnoreCase(nameObject)){
+            actList = [SELECT Id, RecordTypeId, Case__c, Case__r.RecordType.DeveloperName, Case__r.AccountId, Order__r.AccountId, Order__c, Order__r.Id, Order__r.AgencyCode__c, Order__r.RecordType.DeveloperName, CreatedDate
+                       FROM wrts_prcgvr__Activity__c 
+                       WHERE Type__c = :actTypes
+                       AND Order__c = :parentIds
+                       WITH SECURITY_ENFORCED];
+        }
+
+        return actList;
+    }
 }

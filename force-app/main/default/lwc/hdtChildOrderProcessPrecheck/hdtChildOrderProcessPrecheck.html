@@ -1,3 +1,10 @@
+<!--
+  @description       : 
+  @author            : Giacinto Florio
+  @group             : 
+  @last modified on  : 23-06-2022
+  @last modified by  : Giacinto Florio
+-->
 <template>
     <template if:true={order}>
     <lightning-card title='Selezione Processo'>
@@ -99,6 +106,14 @@
                         </div>
                     </lightning-record-edit-form>
 
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout if:true={isCheckAssessmentsVisible}>
+            <lightning-layout-item padding="horizontal-large" size="12">
+                <h1 class="slds-text-title slds-truncate slds-text-title_bold" title="Verifica Accertamenti">Verifica Accertamenti</h1>
+                <br>
+                <c-hdt-check-assessments fiscal-code={order.Account.FiscalCode__c} supply-city={order.SupplyCityCode__c} customer-marking={order.CustomerType__c}></c-hdt-check-assessments>
             </lightning-layout-item>
         </lightning-layout>
 

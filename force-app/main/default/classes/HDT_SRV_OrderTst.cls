@@ -149,7 +149,7 @@ public class HDT_SRV_OrderTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<Sale__c> tSale=[SELECT Id, Name
@@ -184,7 +184,7 @@ public class HDT_SRV_OrderTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<Sale__c> tSale=[SELECT Id, Name
@@ -224,7 +224,7 @@ public class HDT_SRV_OrderTst{
 
 			List<Account> tAccount=[SELECT Id, Name
 			                        FROM Account 
-			                        WHERE Name='test account0'
+			                        WHERE Name='test account bsn0'
 			                        LIMIT 1];
 
 			List<Sale__c> tSale=[SELECT Id, Name

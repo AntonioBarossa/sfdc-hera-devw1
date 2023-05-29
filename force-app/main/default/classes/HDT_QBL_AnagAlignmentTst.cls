@@ -40,6 +40,7 @@ public class HDT_QBL_AnagAlignmentTst {
         caseList = HDT_UTL_DataFactoryTst.createCase(2, false, acc.Id, cont.Id, sp.Id, contr.Id, ord.Id);
         for(Case c : caseList){
             c.RecordTypeId = rtId;
+            c.Commodity__C= 'Energia Elettrica';
         }
         // Necessario per valorizzare i campi formula PODPDRFormula__c e ContractCode__c usati dall'arricchimento dati.
         Formula.recalculateFormulas(caseList);

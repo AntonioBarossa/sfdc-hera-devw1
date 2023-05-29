@@ -1,0 +1,10 @@
+:host .slds-form-element__help{
+    position: absolute !important;
+}
+.error-text{
+    color: #EA001E;
+    position:absolute;
+}
+.pt0{
+    padding-top: 0% !important;
+}

@@ -46,6 +46,21 @@
                 <default>false</default>
                 <label>Annullato Comfort Call</label>
             </value>
+            <value>
+                <fullName>Primo contatto fallito</fullName>
+                <default>false</default>
+                <label>Primo contatto fallito</label>
+            </value>
+            <value>
+                <fullName>Secondo contatto fallito</fullName>
+                <default>false</default>
+                <label>Secondo contatto fallito</label>
+            </value>
+            <value>
+                <fullName>Terzo contatto fallito</fullName>
+                <default>false</default>
+                <label>Terzo contatto fallito</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

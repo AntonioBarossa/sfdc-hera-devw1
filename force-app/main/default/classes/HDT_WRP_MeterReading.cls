@@ -59,6 +59,7 @@ public inherited sharing class HDT_WRP_MeterReading {
     public class HDT_WRP_ColumnsMetadata {
         @AuraEnabled public Boolean success;
         @AuraEnabled public String message;
+        @AuraEnabled public Boolean trbEnable;
         @AuraEnabled public String contractTable;
         @AuraEnabled public String meterReadingTable;
     }

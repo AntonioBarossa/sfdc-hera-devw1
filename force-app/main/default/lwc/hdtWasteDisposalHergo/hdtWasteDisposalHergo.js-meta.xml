@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+
+
+
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    
+    
+    <apiVersion>54.0</apiVersion>
+    
+    
+    <isExposed>true</isExposed>
+    
+    
+    <masterLabel>Waste Disposal Hergo</masterLabel>
+    
+    
+    <description>This is a component extends the FormFlow</description>
+    
+    
+    <targets>
+        
+        
+        <target>lightning__FlowScreen</target>
+        
+        
+    </targets>
+    
+    
+    <targetConfigs>
+        
+        
+        <targetConfig targets="lightning__FlowScreen">            
+            
+            <property name="recordId" type="String" label="Record Id" description="Id of the record to edit" role="inputOnly"/>
+            
+            
+            <property name="objectName" type="String" label="Object Name" description="Name of the object to edit" role="inputOnly"/>
+            
+            
+            <property name="saveButton" type="Boolean" label="Save Button" description="Enable Save Button" role="inputOnly"/>
+            
+            
+            <property name="labelSaveButton" type="String" label="Label Save Button" description="Label Save Button" role="inputOnly"/>
+            
+            
+            <property name="previousButton" type="Boolean" label="Previous Button" description="Enable Previous Button" role="inputOnly"/>
+            
+            
+            <property name="labelPreviousButton" type="String" label="Label Previous Button" description="Label Previous Button" role="inputOnly"/>
+            
+            
+            <property name="cancelButton" type="Boolean" label="Cancel Button" description="Enable Cancel Button" role="inputOnly"/>
+            
+            
+            <property name="draftButton" type="Boolean" label="Draft Button" description="Enable Draft Button" role="inputOnly"/>
+            
+            
+            <property name="labelDraftButton" type="String" label="Label Draft Button" description="Label Draft Button" role="inputOnly"/>
+            
+            
+            <property name="density" type="String" label="Density" description="Layout Density" role="inputOnly"/>
+            
+            
+            <property name="recordType" type="String" label="Record Type" description="Record Type" role="inputOnly"/>            
+                        
+            <property name="saveInDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>
+            
+            
+            <property name="cancelCase" type="Boolean" label="Cancellation" description="Is true if the user press the Cancel Button" role="outputOnly"/>
+            
+            
+            <property name="nextStep" type="String" label="Next Step" description="Next Step" role="inputOnly"/>
+            
+            
+            <property name="showReadOnly" type="Boolean" label="Show ReadOnly Section" description="Show ReadOnly Section" role="inputOnly"/>
+            
+            
+            <property name="labelInputSection" type="String" label="Label Input Section" description="Label Sezione Input" role="inputOnly"/>
+            
+            
+            <property name="labelReadOnlySection" type="String" label="Label ReadOnly Section" description="Label Sezione ReadOnly" role="inputOnly"/>
+            
+            
+            <property name="variantSaveButton" type="String" label="Variant Save Button" description="Variant Save Button" role="inputOnly" default="brand"/>
+            
+            
+            <property name="outputId" type="String" label="Output Id" description="Id of the created record" role="outputOnly"/>
+
+            <property name="freeWithdrawConfig" type="@salesforce/schema/FreeWithdrawConfig__c[]" label="Ritiri Gratuiti" description="Free Withdraw Configuration" role="inputOnly"/>
+
+            <property name="lastWithdrawDate" type="String" label="Data Ultimo Ritiro" description="Last Withdraw Date" role="inputOnly"/>
+
+            <!-- <propertyType name="T" extends="SObject" label="Input Type" description="Generic sObject data type used for input sObject properties" />
+            <property name="accountss" type="{T[]}" label="Ritiri Gratuiti Configs" role="inputOnly" />         -->
+        </targetConfig>
+        
+        
+    </targetConfigs>
+    
+    
+</LightningComponentBundle>

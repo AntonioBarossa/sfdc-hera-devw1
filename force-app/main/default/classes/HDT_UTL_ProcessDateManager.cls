@@ -38,6 +38,27 @@ public with sharing class HDT_UTL_ProcessDateManager {
 			handleBusinessDate(orderList);
 		}
     }
+
+    public static void updateReadingDate(List<Order> orderList){
+		if(orderList.size()>0)
+		{
+			List<Reading__c> readingList = [ SELECT ReadingDate__c, ReadingValueMeter__c, OrderAcqua__r.MeterSN__c FROM Reading__c WHERE OrderAcqua__c IN :orderList WITH SECURITY_ENFORCED ];
+			if(!readingList.isEmpty()){
+				for( Reading__c reading : readingList ){
+					reading.ReadingDate__c = System.today();
+					reading.ReadingValueMeter__c = String.isBlank(reading.OrderAcqua__r.MeterSN__c)? 0 : reading.ReadingValueMeter__c;
+				}
+			} else {
+				Reading__c dummyReading = new Reading__c();
+				dummyReading.ReadingDate__c = System.today();
+				dummyReading.ReadingValueMeter__c = 0;
+				dummyReading.OrderAcqua__c = orderList[0].Id;
+				readingList.add(dummyReading);
+			}
+			HDT_UTL_DatabaseService.upsertSObject(readingList);
+		}
+    }
+
     public static void setMaxAfterthoughtDate(List<Order> orderList) {
 		if(!orderList.isEmpty()){
 			Order order = orderList[0];
@@ -239,7 +260,11 @@ public with sharing class HDT_UTL_ProcessDateManager {
 				}
 				
 				if( order.SignedDate__c != null && ( order.DocumentalProcessType__c.equalsIgnoreCase('Voltura') || order.DocumentalProcessType__c.equalsIgnoreCase('Voltura con autolettura') ) ){
-					order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					if(order.CommodityFormula__c != null && 'Acqua'.equalsIgnoreCase(order.CommodityFormula__c)){
+						order.EffectiveDate__c = System.today();
+					}else{
+						order.EffectiveDate__c = order.SignedDate__c.addDays(3);
+					}	
 				}
 
 				if(dateToFrom != null){

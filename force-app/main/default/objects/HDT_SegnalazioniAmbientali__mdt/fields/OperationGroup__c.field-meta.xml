@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>OperationGroup__c</fullName>
+    <externalId>false</externalId>
+    <fieldManageability>DeveloperControlled</fieldManageability>
+    <label>Gruppo Intervento</label>
+    <required>false</required>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value><fullName>ALTRI SERVIZI-IUAS0001</fullName><default>true</default><label>ALTRI SERVIZI-IUAS0001</label></value>
+            <value><fullName>ALTRI SERVIZI-IUAS0002</fullName><default>false</default><label>ALTRI SERVIZI-IUAS0002</label></value>
+            <value><fullName>CIMITERIALI-IUIN0023</fullName><default>false</default><label>CIMITERIALI-IUIN0023</label></value>
+            <value><fullName>DLGS_116/2020-IUAS0003</fullName><default>false</default><label>DLGS_116/2020-IUAS0003</label></value>
+            <value><fullName>MOVIM.CONTENITORI TARIP-TARIG</fullName><default>false</default><label>MOVIM.CONTENITORI TARIP-TARIG</label></value>
+            <value><fullName>MOVIMENTAZIONE CONTENITORI TCP</fullName><default>false</default><label>MOVIMENTAZIONE CONTENITORI TCP</label></value>
+            <value><fullName>PULIZIA AREE PUBBLIC-IUPS0000</fullName><default>false</default><label>PULIZIA AREE PUBBLIC-IUPS0000</label></value>
+            <value><fullName>PULIZIA AREE PUBBLIC-IUPS0002</fullName><default>false</default><label>PULIZIA AREE PUBBLIC-IUPS0002</label></value>
+            <value><fullName>PULIZIA AREE PUBBLIC-IUPS0007</fullName><default>false</default><label>PULIZIA AREE PUBBLIC-IUPS0007</label></value>
+            <value><fullName>RACCOLTA DIFFERENZIAT-IURD0023</fullName><default>false</default><label>RACCOLTA DIFFERENZIAT-IURD0023</label></value>
+            <value><fullName>RACCOLTA INDIFFERENZ-IUIN0021</fullName><default>false</default><label>RACCOLTA INDIFFERENZ-IUIN0021</label></value>
+            <value><fullName>SCARICHI ABUSIVI-IUPS0000</fullName><default>false</default><label>SCARICHI ABUSIVI-IUPS0000</label></value>
+            <value><fullName>SERVIZI A PAG.CARCASS-IUAS0001</fullName><default>false</default><label>SERVIZI A PAG.CARCASS-IUAS0001</label></value>
+            <value><fullName>SERVIZI A PAGAMENTO-IUAS0002</fullName><default>false</default><label>SERVIZI A PAGAMENTO-IUAS0002</label></value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

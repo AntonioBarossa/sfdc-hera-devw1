@@ -52,7 +52,7 @@ public inherited sharing class HDT_SRV_ActivityCustom {
     public wrts_prcgvr__Activity__c createRecord(wrts_prcgvr__Activity__c activity){
         
         /** Rimosso in data 28/03/2023 in quanto controllo ridondante
-         * List<String> fields = helperMethods.getObjAttrList(activity);
+         List<String> fields = helperMethods.getObjAttrList(activity);
 
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('wrts_prcgvr__Activity__c', String.join(fields, ','), 'create');
         securityAccess.checkSecurityAccess();**/
@@ -71,9 +71,11 @@ public inherited sharing class HDT_SRV_ActivityCustom {
 
     public List<wrts_prcgvr__Activity__c> createRecordWithFieldCheck(List<wrts_prcgvr__Activity__c> activity){
         /** Rimosso in data 28/03/2023 in quanto controllo ridondante
+        /** Rimosso in data 28/03/2023 in quanto controllo ridondante
         List<String> fields = helperMethods.getObjAttrList(activity[0]);
         HDT_UTL_SecurityAccess securityAccess = new HDT_UTL_SecurityAccess('wrts_prcgvr__Activity__c', String.join(fields, ','), 'create');
-        securityAccess.checkSecurityAccess();**/
+        securityAccess.checkSecurityAccess();
+        **/
         HDT_UTL_DatabaseService.insertSObject(activity);
 
         return activity;
@@ -81,16 +83,19 @@ public inherited sharing class HDT_SRV_ActivityCustom {
 
     public void updateRecord(wrts_prcgvr__Activity__c activity){
         /** Rimosso in data 28/03/2023 in quanto controllo ridondante
+        /** Rimosso in data 28/03/2023 in quanto controllo ridondante
         List<String> fields = helperMethods.getObjAttrList(activity);
-        checkUpdateAccess(String.join(fields, ','));**/
+        checkUpdateAccess(String.join(fields, ','));
+        **/
 
         HDT_UTL_DatabaseService.updateSObject(activity);
     }
 
     public void updateRecords(List<wrts_prcgvr__Activity__c> activity){
         /** Rimosso in data 28/03/2023 in quanto controllo ridondante
-         * List<String> fields = helperMethods.getObjAttrList(activity[0]);
-        checkUpdateAccess(String.join(fields, ','));**/
+        List<String> fields = helperMethods.getObjAttrList(activity[0]);
+        checkUpdateAccess(String.join(fields, ','));
+        **/
 
         HDT_UTL_DatabaseService.updateSObject(activity);
     }
