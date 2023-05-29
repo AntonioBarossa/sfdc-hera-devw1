@@ -104,4 +104,8 @@
         <label><!-- UnsupportedObjectType --></label>
         <name>UnsupportedObjectType</name>
     </customLabels>
+    <customLabels>
+        <label><!-- View All --></label>
+        <name>ViewAll</name>
+    </customLabels>
 </Translations>

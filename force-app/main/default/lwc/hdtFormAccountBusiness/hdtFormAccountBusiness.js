@@ -268,7 +268,7 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
         let key = this.categoryData.controllerValues[event.target.value];
         this.categoryOptions = this.categoryData.values.filter(opt => opt.validFor.includes(key));
         this.categoryValue = '';
-        if(this.markingValue=='Ditta individuale'){
+        if(this.markingValue.includes('Ditta individuale')){
         //    this.template.querySelector('[data-id="legalForm"]').value = 'Ditta individuale';
         //    this.template.querySelector('[data-id="legalForm"]').readOnly = true;
             this.template.querySelector('[data-id="showDiv"]').classList.add('slds-show');

@@ -16,6 +16,14 @@
     <aura:attribute name="vatNumber" type="String"/>
     <aura:attribute name="columnsDocumenti" type="List"/>
     
+    <!--@frpanico 2022-07-22
+        Aggiunta nuovo attributo
+        Per discriminare la pressione dei due bottoni
+        * Gestisci Processi
+        * Gestisci Processi Tari 
+    -->
+    <aura:attribute name='macroProcessType' type="String"/>
+
     <aura:handler name="init" value="{!this}" action="{!c.doInit}"/>
     
     <lightning:navigation aura:id="navService"/>
@@ -42,7 +50,7 @@
     <aura:if isTrue="{!v.orderParentRecord}">
         <div class="slds-m-top_small">
             <!--<c:hdtOrderDossierWizardSignature orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtOrderDossierWizardSignature>-->
-            <c:hdtDocumentalSignatureManagerOrderDossier recordId="{!v.orderParentRecord.Id}" orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}"></c:hdtDocumentalSignatureManagerOrderDossier>
+            <c:hdtDocumentalSignatureManagerOrderDossier recordId="{!v.orderParentRecord.Id}" orderParentRecord="{!v.orderParentRecord}" onorderrefresh="{!c.handleOrderRefreshEvent}" ontablerefresh="{!c.handleTableRefreshEvent}" ondocumentalrefresh="{!c.handleDocumentalRefreshEvent}" ></c:hdtDocumentalSignatureManagerOrderDossier>
         </div>
     </aura:if>
 
@@ -55,7 +63,7 @@
 
     <!-- Actions buttons -->
     <aura:renderIf isTrue="{!v.orderParentRecord}">
-        <c:hdtOrderDossierWizardActions recordId="{!v.orderParentId}" orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}" discardRework="{!v.discardRework}" discardActivityId="{!v.discardActivityId}"></c:hdtOrderDossierWizardActions>
+        <c:hdtOrderDossierWizardActions aura:id="hdtOrderDossierWizardActions" recordId="{!v.orderParentId}" orderParentRecord="{!v.orderParentRecord}" onredirecttoorderrecordpage="{!c.redirectToOrderRecordPage}" discardRework="{!v.discardRework}" discardActivityId="{!v.discardActivityId}"></c:hdtOrderDossierWizardActions>
     </aura:renderIf>
 
 </aura:component>

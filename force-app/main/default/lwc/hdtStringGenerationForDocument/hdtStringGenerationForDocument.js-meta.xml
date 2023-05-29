@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>54.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="caseId" type="String" label="caseId" description="caseId" role="inputOnly"/>
+            <property name="comune" type="String" label="comune" description="comune" role="inputOnly"/>
+            <property name="caseProcess" type="String" label="caseProcess" description="caseProcess" role="inputOnly"/>
+            <property name="caseSubProcess" type="String" label="caseSubProcess" description="caseSubProcess" role="inputOnly"/>
+            <property name="numComponenti" type="String" label="numComponenti" description="numComponenti" role="inputOnly"/>
+            <property name="interviewId" type="String" label="interviewId" description="interviewId" role="inputOnly"/>
+            <property name="isRequired" type="Boolean" label="isRequired" default="true" role="inputOnly"/>
+
+            <property name="resultString" type="String" label="resultString" description="resultString" role="outputOnly"/> 
+            <property name="errorMessage" type="String" label="errorMessage" description="valida il component" role="outputOnly"/> 
+        </targetConfig>
+        
+    </targetConfigs>
+    
+</LightningComponentBundle>

@@ -3,6 +3,10 @@
     <label>Preventivi - Mod. Imp. Recap</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:nil="true"/>
     </values>
@@ -20,7 +24,17 @@
 {&quot;FieldName&quot;:&quot;VoltageLevelRequested__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;PhaseTypeRequested__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
 {&quot;FieldName&quot;:&quot;CaliberRequested__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
-{&quot;FieldName&quot;:&quot;SystemCapacity__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1}]</value>
+{&quot;FieldName&quot;:&quot;SystemCapacity__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},{&quot;FieldName&quot;:&quot;Note__c&quot;,&quot;Required&quot;:false,&quot;Column&quot;:1},
+{
+    &quot;FieldName&quot;: &quot;Commodity__c&quot;,
+    &quot;ReadOnly&quot;: true,
+    &quot;Column&quot;: 1
+}
+]</value>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
     </values>
     <values>
         <field>ValidateClass__c</field>

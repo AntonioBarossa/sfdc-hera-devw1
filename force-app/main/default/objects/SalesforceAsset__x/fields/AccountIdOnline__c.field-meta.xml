@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AccountIdOnline__c</fullName>
+    <deleteConstraint>SetNull</deleteConstraint>
+    <externalDeveloperName>AccountId</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Cliente Online</label>
+    <referenceTo>Account</referenceTo>
+    <relationshipLabel>Assets Salesforce</relationshipLabel>
+    <relationshipName>AssetsSalesforce</relationshipName>
+    <required>false</required>
+    <type>Lookup</type>
+</CustomField>

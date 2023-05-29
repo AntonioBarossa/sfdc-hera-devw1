@@ -295,6 +295,101 @@
         <default>false</default>
         <label>50</label>
     </customValue>
+    <customValue>
+        <fullName>10 x 30 - 10 mc</fullName>
+        <default>false</default>
+        <label>10 x 30 - 10 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>20 x 40 - 16 mc</fullName>
+        <default>false</default>
+        <label>20 x 40 - 16 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>3 x 15 - 2.5 mc</fullName>
+        <default>false</default>
+        <label>3 x 15 - 2.5 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>5 x 20 - 4 mc</fullName>
+        <default>false</default>
+        <label>5 x 20 - 4 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>7 x 25 - 6.3 mc</fullName>
+        <default>false</default>
+        <label>7 x 25 - 6.3 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 100 - 100 mc</fullName>
+        <default>false</default>
+        <label>WV 100 - 100 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 50 - 25 mc</fullName>
+        <default>false</default>
+        <label>WV 50 - 25 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV 80 - 63 mc</fullName>
+        <default>false</default>
+        <label>WV 80 - 63 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>WV150 - 300 mc</fullName>
+        <default>false</default>
+        <label>WV150 - 300 mc</label>
+    </customValue>
+    <customValue>
+        <fullName>30X50</fullName>
+        <default>false</default>
+        <label>30X50</label>
+    </customValue>
+    <customValue>
+        <fullName>60X100</fullName>
+        <default>false</default>
+        <label>60X100</label>
+    </customValue>
+    <customValue>
+        <fullName>WV40</fullName>
+        <default>false</default>
+        <label>WV40</label>
+    </customValue>
+    <customValue>
+        <fullName>WV65</fullName>
+        <default>false</default>
+        <label>WV65</label>
+    </customValue>
+    <customValue>
+        <fullName>WV125</fullName>
+        <default>false</default>
+        <label>WV125</label>
+    </customValue>
+    <customValue>
+        <fullName>WV200</fullName>
+        <default>false</default>
+        <label>WV200</label>
+    </customValue>
+    <customValue>
+        <fullName>WV250</fullName>
+        <default>false</default>
+        <label>WV250</label>
+    </customValue>
+    <customValue>
+        <fullName>WV300</fullName>
+        <default>false</default>
+        <label>WV300</label>
+    </customValue>
+    <customValue>
+        <fullName>WV350</fullName>
+        <default>false</default>
+        <label>WV350</label>
+    </customValue>
+    <customValue>
+        <fullName>WV400</fullName>
+        <default>false</default>
+        <label>WV400</label>
+    </customValue>
     <description>Classe contatore (Calibro)</description>
     <masterLabel>Caliber</masterLabel>
     <sorted>false</sorted>

@@ -62,7 +62,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             if( !checkVatNumber(account.VATNumber__c) ){
                 throw new AuraHandledException('Partita Iva non corretta.');
             }
-            if(!String.isBlank(account.FiscalCode__c) &&  ((!account.FiscalCode__c.isNumeric() && !account.CustomerMarking__c.equalsIgnoreCase('Ditta Individuale')) 
+            if(!String.isBlank(account.FiscalCode__c) &&  ((!account.FiscalCode__c.isNumeric() && !account.CustomerMarking__c.containsIgnoreCase('Ditta Individuale')) 
                 || (account.FiscalCode__c.isNumeric() && !checkVatNumber(account.FiscalCode__c)))){
                 throw new AuraHandledException('Il Codice Fiscale deve contenere una Partita Iva corretta.');
             }
@@ -73,7 +73,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
         }
 
         /* TK 951554C -- Aggiunto controllo su codice fiscale, formalita' e match con nome e cognome per ditta individuale */
-        if('Ditta Individuale'.equalsIgnoreCase(account.CustomerMarking__c))
+        if(account.CustomerMarking__c != null && account.CustomerMarking__c.containsIgnoreCase('Ditta Individuale'))
         {
             String result = '';
             HDT_UTL_CaseValidations formalValidation = new HDT_UTL_CaseValidations();
@@ -212,7 +212,7 @@ public with sharing class HDT_LC_FormAccountBusiness {
             // }
             //
             // Fix bug LEM006 EC  06/08/2021 
-            Map<String, String> mapTranscodifica = new Map<String, String>{'AAA-EBT'=>'AAS Persona fisica','HERA COMM'=>'Persona fisica','MMS'=>'MMS Persona fisica'};
+            Map<String, String> mapTranscodifica = new Map<String, String>{'AAA-EBT'=>'AAS Persona fisica','HERA COMM'=>'Persona fisica','MMS'=>'G1 - MMS Persona fisica'};
            
             Date birthdate = (dataAccount.get('birthDate') != null && dataAccount.get('birthDate') != '' ? Date.valueOf(dataAccount.get('birthDate')) : null );
             String namePerson= dataAccount.get('firstName') + ' '+ dataAccount.get('lastName');

@@ -17,10 +17,15 @@ public with sharing class HDT_QR_DistributorPointCodeTst{
 		System.runAs(internalUser){
 
 			List<Account> accList=HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-			List<DistributorPointCode__c> distPointCodes=HDT_UTL_DataFactoryTst.createDistributorPointCode(1, false, accList[0].Id);
+			List<DistributorPointCode__c> distPointCodes=HDT_UTL_DataFactoryTst.createDistributorPointCode(2, false, accList[0].Id);
 			distPointCodes[0].PointCode__c='testPointCode';
 			distPointCodes[0].Commodity__c='testCommodity';
 			distPointCodes[0].City__c='testComune';
+
+			distPointCodes[1].PointCode__c='testPointCode';
+			distPointCodes[1].Commodity__c='Acqua';
+			distPointCodes[1].City__c='testComune';
+
 			insert distPointCodes;
 		}
 	}
@@ -38,6 +43,49 @@ public with sharing class HDT_QR_DistributorPointCodeTst{
 			test.startTest();
 
 			List<DistributorPointCode__c> getDistPointCode=distPointCodeQr.getDistributorPointCode('testPointCode', 'testCommodity', 'testComune', 'Si');
+
+			test.stopTest();
+
+			System.assertEquals(true, getDistPointCode[0].Id!=null, 'Distributor Code not found');
+			System.assertNotEquals(false, getDistPointCode[0].Id!=null, 'value of parameter is not matching');
+		}
+	}
+
+	@isTest
+	public static void testGetDistributorPointCode2(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			HDT_QR_DistributorPointCode distQr=new HDT_QR_DistributorPointCode();
+			List<DistributorPointCode__c> getDistPointCode=distQr.getDistributorPointCode('testPointCode', 'Acqua', 'testComune', 'Si');
+
+			test.stopTest();
+
+			System.assertEquals(true, getDistPointCode[0].Id!=null, 'Distributor Code not found');
+			System.assertNotEquals(false, getDistPointCode[0].Id!=null, 'value of parameter is not matching');
+		}
+	}
+
+	@isTest
+	public static void testGetDistributorPointCode3(){
+
+		User tUser=[SELECT Id
+		            FROM User
+		            WHERE Alias='crmuser'
+		            LIMIT 1];
+
+		System.runAs(tUser){
+
+			test.startTest();
+
+			List<DistributorPointCode__c> getDistPointCode=distPointCodeQr.getDistributorPointCode('testPointCode', 'testCommodity', 'testComune', 'No');
 
 			test.stopTest();
 

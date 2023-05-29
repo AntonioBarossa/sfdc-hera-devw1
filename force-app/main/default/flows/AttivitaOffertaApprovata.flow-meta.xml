@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Fields</name>
         <label>Set_Fields</label>
-        <locationX>873</locationX>
-        <locationY>339</locationY>
+        <locationX>875</locationX>
+        <locationY>338</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.Approved__c</assignToReference>
             <operator>Assign</operator>
@@ -108,7 +108,7 @@
         <name>Approvazione_Offerta</name>
         <label>Approvazione Offerta</label>
         <locationX>1194</locationX>
-        <locationY>357</locationY>
+        <locationY>356</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>

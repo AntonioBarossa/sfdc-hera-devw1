@@ -29,7 +29,11 @@
             <property name="isPrevious" type="Boolean" label="Is Previous?" description="if the Case is Previous" role="inputOnly"/>
             
             <property name="recordId" type="String" label="Record Id" description="Record Id" role="inputOnly"/>
+
+            <property name="sessionid" type="String" label="sessionid" description="sessionid Id" role="inputOnly"/>
             
+            <property name="disabledNavigationEvent" type="Boolean" label="disabledNavigationEvent" description="Disabile navigation command of this Component" default="false" role="inputOnly"/>
+
             <property name="loadingSpinner" type="Boolean" label="Loading Spinner" description="If true a loading spinner is shown" role="inputOnly"/>
             
             <property name="saveDraft" type="Boolean" label="Save in Draft" description="Is true if the user press the Draft Button" role="outputOnly"/>

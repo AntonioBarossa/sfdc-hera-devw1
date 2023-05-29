@@ -3,6 +3,10 @@
     <label>Pagamenti - Comunicazione Pagamento Rec.</label>
     <protected>false</protected>
     <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Ambiente</value>
+    </values>
+    <values>
         <field>FieldsJSON__c</field>
         <value xsi:type="xsd:string">[
 {&quot;FieldName&quot;:&quot;PaidAmount__c&quot;,&quot;Required&quot;:true,&quot;ReadOnly&quot;:false,&quot;Column&quot;:1},
@@ -24,7 +28,11 @@
 ]</value>
     </values>
     <values>
-        <field>ValidateClass__c</field>
+        <field>ReadOnlyRelatedFields__c</field>
         <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ValidateClass__c</field>
+        <value xsi:type="xsd:string">HDT_UTL_CaseValidations</value>
     </values>
 </CustomMetadata>

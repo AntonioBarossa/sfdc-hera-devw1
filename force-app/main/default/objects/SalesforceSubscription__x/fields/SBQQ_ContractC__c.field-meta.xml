@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>SBQQ_ContractC__c</fullName>
+    <description>SBQQ_ContractC</description>
+    <externalDeveloperName>SBQQ_ContractC</externalDeveloperName>
+    <externalId>false</externalId>
+    <isFilteringDisabled>false</isFilteringDisabled>
+    <isNameField>false</isNameField>
+    <isSortingDisabled>false</isSortingDisabled>
+    <label>Contratto</label>
+    <length>255</length>
+    <referenceTo>SalesforceContract__x</referenceTo>
+    <relationshipLabel>Subscriptions Salesforce</relationshipLabel>
+    <relationshipName>SubscriptionsSalesforce</relationshipName>
+    <type>ExternalLookup</type>
+</CustomField>

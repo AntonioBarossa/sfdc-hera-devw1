@@ -77,6 +77,11 @@
                 <default>false</default>
                 <label>OptionConfiguration</label>
             </value>
+            <value>
+                <fullName>OptionTARI</fullName>
+                <default>false</default>
+                <label>OptionTARI</label>
+            </value>
         </valueSetDefinition>
     </valueSet>
 </CustomField>

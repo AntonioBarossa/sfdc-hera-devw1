@@ -65,7 +65,7 @@ public with sharing class HDT_LC_CopiaContratto {
             }
         }else{
             List<DocumentSendTracking__c> listDocument = getDocumentTracking(orderParentId);
-            if(listDocument == null ||listDocument.isEmpty() ){
+            if((listDocument == null ||listDocument.isEmpty()) && tipoSend.equalsIgnoreCase('Posta Cartacea') ){
                 wrts_prcgvr__Activity__c activity= new wrts_prcgvr__Activity__c(Case__c= caseId, Account__c= accountId, RecordTypeId= recTypeId, Type__c= 'Recupero contratto da Postel');
                 activitySrv.createRecord(activity);
                 c.phase__c = 'In Lavorazione';

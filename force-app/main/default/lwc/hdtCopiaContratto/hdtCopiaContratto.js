@@ -437,7 +437,7 @@ export default class HdtCopiaContratto extends NavigationMixin(LightningElement)
                 }).then(response =>{
                     if(response == null || response == ''){
                         const event = new ShowToastEvent({
-                            message: 'Puoi Continuare la lavorazione in autonomia',
+                            message: 'Processo confermato con successo',
                             variant: 'success',
                             mode: 'dismissable'
                             });

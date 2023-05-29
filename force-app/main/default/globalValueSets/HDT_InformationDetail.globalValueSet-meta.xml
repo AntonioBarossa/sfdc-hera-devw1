@@ -31,6 +31,16 @@
         <label>Stato pratica attivazione</label>
     </customValue>
     <customValue>
+        <fullName>Specifica su fognatura e depurazione</fullName>
+        <default>false</default>
+        <label>Specifica su fognatura e depurazione</label>
+    </customValue>
+    <customValue>
+        <fullName>Specifica su esenzione fognatura e depurazione</fullName>
+        <default>false</default>
+        <label>Specifica su esenzione fognatura e depurazione	</label>
+    </customValue>
+    <customValue>
         <fullName>Info appuntamento apertura</fullName>
         <default>false</default>
         <label>Info appuntamento apertura</label>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <apiVersion>55.0</apiVersion>
+    <isExposed>true</isExposed>
+    <targets>
+        <target>lightning__FlowScreen</target>
+        <target>lightning__HomePage</target>
+    </targets>
+    
+    
+    <targetConfigs>
+      <targetConfig targets="lightning__HomePage">
+          <property name="caseId" type="String" />
+      </targetConfig>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="caseId"         type="String"   label="Case ID"         role="inputOnly"    description="Id of the reimbursment Case"/>
+            <property name="saveInDraft"    type="Boolean"  label="Save in Draft"   role="outputOnly"   description="Is true if the user press the Draft Button"/>
+            <property name="cancelCase"     type="Boolean"  label="Cancellation"    role="outputOnly"   description="Is true if the user press the Cancel Button"/>
+        </targetConfig>
+    </targetConfigs>
+</LightningComponentBundle>

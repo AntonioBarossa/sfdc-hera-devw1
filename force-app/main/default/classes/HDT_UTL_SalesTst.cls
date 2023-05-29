@@ -13,143 +13,150 @@ public class HDT_UTL_SalesTst {
 
     @TestSetup
     static void makeData(){
+        //DEBUG
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.HERA_SYSTEM_ADMINISTRATOR_NAME);
+        User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+        internalUser.UserPermissionsMarketingUser=true;
+        insert internalUser;
+        List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager', false)};
+        insert permissionSetAssignments;
+        System.runAs(internalUser){
+            HDT_UTL_DataFactoryTst.pClickOrderPhase();
 
-        HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
+            city.Name = 'PESARO';
+            city.Province__c = 'PU';
+            city.ServiceGas__c = true;
+            update city;
 
-        City__c city=HDT_UTL_DataFactoryTst.createCity()[0];
-        city.Name = 'PESARO';
-        city.Province__c = 'PU';
-        city.ServiceGas__c = true;
-        update city;
+            List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountDistributore(2, false, 'AAA-EBT', 'AAS Azienda', 'Enti');
+            accounts[0].Code__c = '00';
+            accounts[1].Code__c = null;
+            accounts[1].Category__C = 'Aziende Soho';
+            insert accounts;
 
-        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountDistributore(2, false, 'AAA-EBT', 'AAS Azienda', 'Enti');
-        accounts[0].Code__c = '00';
-        accounts[1].Code__c = null;
-        accounts[1].Category__C = 'Aziende Soho';
-        insert accounts;
+            List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,false,accounts[0].Id,'Attiva');
+            sales.addAll(HDT_UTL_DataFactoryTst.createSale(1,false,accounts[1].Id,'Attiva'));
+            insert sales;
+            
+            ServicePoint__c sp = HDT_UTL_DataFactoryTst.createServicePoint(1, false).get(0);
+            sp.SupplyCity__c = city.Name;
+            sp.Distributor__c = accounts[0].Id;
+            sp.GlobalMigrationKey__c = '1123255';
+            insert sp;
 
-        List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,false,accounts[0].Id,'Attiva');
-        sales.addAll(HDT_UTL_DataFactoryTst.createSale(1,false,accounts[1].Id,'Attiva'));
-        insert sales;
-        
-        ServicePoint__c sp = HDT_UTL_DataFactoryTst.createServicePoint(1, false).get(0);
-        sp.SupplyCity__c = city.Name;
-        sp.Distributor__c = accounts[0].Id;
-        sp.GlobalMigrationKey__c = '1123255';
-        insert sp;
+            List<Contract> myContractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
 
-        List<Contract> myContractList = HDT_UTL_DataFactoryTst.createContract(1, true, accounts[0].Id);
+            List<Product2> myProdList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
+            myProdList[0].ProductCode = 'myCode';
+            myProdList[0].Version__c = 'myVersion';
+            myProdList[0].Family = 'Offerta Commerciale';
+            update myProdList;
 
-        List<Product2> myProdList = HDT_UTL_DataFactoryTst.createProduct2(1, true);
-        myProdList[0].ProductCode = 'myCode';
-        myProdList[0].Version__c = 'myVersion';
-        myProdList[0].Family = 'Offerta Commerciale';
-        update myProdList;
+            List<SBQQ__Subscription__c> mySubList = HDT_UTL_DataFactoryTst.createSubscription(1, true, accounts[0].Id, myContractList[0].Id, sp.Id);
+            mySubList[0].SBQQ__Contract__c = myContractList[0].Id;
+            mySubList[0].SBQQ__Product__c = myProdList[0].Id;
+            update mySubList;
 
-        List<SBQQ__Subscription__c> mySubList = HDT_UTL_DataFactoryTst.createSubscription(1, true, accounts[0].Id, myContractList[0].Id, sp.Id);
-        mySubList[0].SBQQ__Contract__c = myContractList[0].Id;
-        mySubList[0].SBQQ__Product__c = myProdList[0].Id;
-        update mySubList;
+            List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(2, false, accounts[0].Id, sales);
+            orders[0].AccountId = sales[0].Account__c;
+            orders[1].AccountId = sales[1].Account__c;
+            orders[0].Phase__c = 'Documentazione da inviare';
+            orders[1].Phase__c = 'Documentazione da firmare';
+            orders[0].Channel__c = 'Teleselling Outbound';
+            orders[1].Channel__c = 'Agenzie';
+            orders[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            orders[1].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
 
-        List<Order> orders = HDT_UTL_DataFactoryTst.createOrder(2, false, accounts[0].Id, sales);
-        orders[0].AccountId = sales[0].Account__c;
-        orders[1].AccountId = sales[1].Account__c;
-        orders[0].Phase__c = 'Documentazione da inviare';
-        orders[1].Phase__c = 'Documentazione da firmare';
-        orders[0].Channel__c = 'Teleselling Outbound';
-        orders[1].Channel__c = 'Agenzie';
-        orders[0].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
-        orders[1].RecordTypeId = utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER;
+            orders[0].SignatureMethod__c = 'Vocal Order';
+            orders[1].DocumentalPhase__c = 'Plico firmato';
 
-        orders[0].SignatureMethod__c = 'Vocal Order';
-        orders[1].DocumentalPhase__c = 'Plico firmato';
+            insert orders;
 
-        insert orders;
+            Id priceBookId = Test.getStandardPriceBookId();
 
-        Id priceBookId = Test.getStandardPriceBookId();
+            List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(myProdList, true, priceBookId);
 
-        List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(myProdList, true, priceBookId);
+            List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
 
-        List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
-
-        List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(myProdList, true, pbList[0].Id);
-
-
-        List<Order> orders2 = HDT_UTL_DataFactoryTst.createOrder(2, false, accounts[0].Id, sales);
-
-        String rtOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();        
-        String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
-        orders2[0].RecordTypeId = rtOrder;
-        orders2[1].RecordTypeId = rtParentOrder;
-        orders2[0].ProcessType__c = 'Aggiunta Sconti o Bonus VAS';
-        orders2[0].ContractReference__c = myContractList[0].Id;
-        orders2[0].ServicePoint__c = sp.Id;
-        insert orders2;
-
-        orders2[0].ParentOrder__c = orders2[1].Id;
-        orders2[0].Pricebook2Id = pbList[0].Id;
-        update orders2;
-
-        List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders2[0].Id, sp.Id, myProdList[0].Id, priceBookEntryList[0].Id);
+            List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(myProdList, true, pbList[0].Id);
 
 
+            List<Order> orders2 = HDT_UTL_DataFactoryTst.createOrder(2, false, accounts[0].Id, sales);
 
-        // Pclick setup
+            String rtOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_ScontiBonus').getRecordTypeId();        
+            String rtParentOrder = Schema.SObjectType.Order.getRecordTypeInfosByDeveloperName().get('HDT_RT_OrderDossier').getRecordTypeId();        
+            orders2[0].RecordTypeId = rtOrder;
+            orders2[1].RecordTypeId = rtParentOrder;
+            orders2[0].ProcessType__c = 'Aggiunta Sconti o Bonus VAS';
+            orders2[0].ContractReference__c = myContractList[0].Id;
+            orders2[0].ServicePoint__c = sp.Id;
+            insert orders2;
 
-        wrts_prcgvr.PostInstall postinstall = new wrts_prcgvr.PostInstall();
-        Test.testInstall(postinstall, null);
+            orders2[0].ParentOrder__c = orders2[1].Id;
+            orders2[0].Pricebook2Id = pbList[0].Id;
+            update orders2;
 
-        HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Order');
-        HDT_UTL_DataFactoryTst.installCSDependecyPhaseCheckSetting('Documentazione Gestita');
-        HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
+            List<OrderItem> ordersItems = HDT_UTL_DataFactoryTst.createOrderItem(1, true, orders2[0].Id, sp.Id, myProdList[0].Id, priceBookEntryList[0].Id);
 
-        List<wrts_prcgvr__PhaseTransition__c> phaseTransitions = new List<wrts_prcgvr__PhaseTransition__c>();
 
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da firmare to Documentazione Gestita',
-            'Documentazione Gestita',null,null,null,false, 'Documentazione da firmare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da firmare to Documentazione Gestita',
-            'Documentazione da validare',null,null,null,false, 'Documentazione da firmare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione Gestita',
-            'Documentazione Gestita',null,null,null,false, 'Documentazione da inviare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Registrazione  da validare',
-            'Registrazione  da validare',null,null,null,false, 'Documentazione da inviare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da validare',
-            'Documentazione da validare',null,null,null,false, 'Documentazione da inviare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
-            'Documentazione da firmare',null,null,null,false, 'Documentazione da inviare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
-            'Registrazione validata',null,null,null,false, 'Documentazione da inviare', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
-        phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
-            'Registrazione da validare',null,null,null,false, 'Registrazione validata', null,null,
-            utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
 
-        insert phaseTransitions;
+            // Pclick setup
 
-        List<ServiceRequest__c> serviceRequests = HDT_UTL_DataFactoryTst.createServiceRequest(2, false);
+            wrts_prcgvr.PostInstall postinstall = new wrts_prcgvr.PostInstall();
+            Test.testInstall(postinstall, null);
 
-        serviceRequests[0].ServicePoint__c = sp.Id;
-        serviceRequests[0].ServicePointCode__c = sp.ServicePointCode__c;
-        serviceRequests[1].Order__c = orders[0].Id;
-        serviceRequests[0].Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-        serviceRequests[0].Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
-        serviceRequests[0].ProcessType__c = PROCESS_TYPE;
+            HDT_UTL_DataFactoryTst.installPhaseManagerSObjectSetting('Order');
+            HDT_UTL_DataFactoryTst.installCSDependecyPhaseCheckSetting('Documentazione Gestita');
+            HDT_UTL_DataFactoryTst.pClickInstanceActivityIntegration();
 
-        serviceRequests[1].ServicePoint__c = sp.Id;
-        serviceRequests[1].ServicePointCode__c = sp.ServicePointCode__c;
-        serviceRequests[1].Order__c = orders[1].Id;
-        serviceRequests[1].Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
-        serviceRequests[1].Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
-        serviceRequests[1].ProcessType__c = PROCESS_TYPE;
+            List<wrts_prcgvr__PhaseTransition__c> phaseTransitions = new List<wrts_prcgvr__PhaseTransition__c>();
 
-        insert serviceRequests;
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da firmare to Documentazione Gestita',
+                'Documentazione Gestita',null,null,null,false, 'Documentazione da firmare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da firmare to Documentazione Gestita',
+                'Documentazione da validare',null,null,null,false, 'Documentazione da firmare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione Gestita',
+                'Documentazione Gestita',null,null,null,false, 'Documentazione da inviare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Registrazione  da validare',
+                'Registrazione  da validare',null,null,null,false, 'Documentazione da inviare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da validare',
+                'Documentazione da validare',null,null,null,false, 'Documentazione da inviare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
+                'Documentazione da firmare',null,null,null,false, 'Documentazione da inviare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
+                'Registrazione validata',null,null,null,false, 'Documentazione da inviare', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
+            phaseTransitions.add(HDT_UTL_DataFactoryTst.insertPhaseTransition(null,null,null,null, '','From Documentazione da inviare to Documentazione da firmare',
+                'Registrazione da validare',null,null,null,false, 'Registrazione validata', null,null,
+                utlConstants.ORDER_RECORDTYPEID_ORDERDOSSIER, utlConstants.ORDER_RECORDTYPE_DEVELOPERNAME_ORDERDOSSIER, null, 'A', false));
 
+            insert phaseTransitions;
+
+            List<ServiceRequest__c> serviceRequests = HDT_UTL_DataFactoryTst.createServiceRequest(2, false);
+
+            serviceRequests[0].ServicePoint__c = sp.Id;
+            serviceRequests[0].ServicePointCode__c = sp.ServicePointCode__c;
+            serviceRequests[1].Order__c = orders[0].Id;
+            serviceRequests[0].Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
+            serviceRequests[0].Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
+            serviceRequests[0].ProcessType__c = PROCESS_TYPE;
+
+            serviceRequests[1].ServicePoint__c = sp.Id;
+            serviceRequests[1].ServicePointCode__c = sp.ServicePointCode__c;
+            serviceRequests[1].Order__c = orders[1].Id;
+            serviceRequests[1].Type__c = HDT_UTL_Dependencies.TIPOLOGY_SALES;
+            serviceRequests[1].Status__c = HDT_UTL_Dependencies.STATUS_BOZZA;
+            serviceRequests[1].ProcessType__c = PROCESS_TYPE;
+
+            insert serviceRequests;
+        }
     }
     
     @IsTest
@@ -189,6 +196,27 @@ public class HDT_UTL_SalesTst {
         Test.startTest();
         System.assertEquals(true, HDT_UTL_Sales.getAgentNameAndCode(sp,'').get('nomeAgente')=='', 'Agent and code shoud be empty');//because there are no custom metadatas
         System.assertEquals(true, HDT_UTL_Sales.getAgentNameAndCode(sp,'').get('codiceAgente')=='', 'Agent and code shoud be empty');//because there are no custom metadatas
+        Test.stopTest();
+    }
+
+    @IsTest
+    static void getAgentNameAndCodeInvocable(){
+        ServicePoint__c sp=[SELECT Id,SupplyCity__c,CommoditySector__c,Distributor__r.code__c FROM ServicePoint__c WHERE GlobalMigrationKey__c='1123255' LIMIT 1];
+        Test.startTest();
+        List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs> inputs = new List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs>{new HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowInputs() };
+        inputs[0].servicePoint = sp;
+        inputs[0].customerMarking = '';
+
+
+        List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs> outputs = 
+            new List<HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs>
+        {  
+                new HDT_UTL_RimozioneAgevolazione.HDT_WRP_FlowOutputs()
+        };
+        outputs = HDT_UTL_RimozioneAgevolazione.getSalesCompany(inputs);
+
+        System.assert(STRING.isBlank(outputs[0].salesCompany), 'Agent and code shoud be empty');//because there are no custom metadatas
+        System.assert(STRING.isBlank(outputs[0].salesCompanyCode), 'Agent and code shoud be empty');//because there are no custom metadatas
         Test.stopTest();
     }
 

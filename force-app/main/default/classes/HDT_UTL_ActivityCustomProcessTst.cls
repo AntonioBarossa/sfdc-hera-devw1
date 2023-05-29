@@ -59,7 +59,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
     
     @isTest static void updateActivity(){
         
-        wrts_prcgvr__Activity__c myActivity = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'];
+        wrts_prcgvr__Activity__c myActivity = [SELECT id FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account bsn0'];
         
         Test.startTest();
         
@@ -68,7 +68,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
         
         Test.stopTest();
         
-        myActivity = [SELECT id, ownerId FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'];
+        myActivity = [SELECT id, ownerId FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account bsn0'];
         
         System.assertEquals(userinfo.getuserid(), myActivity.ownerId, 'Activity not updated correctly');
         System.assertNotEquals(null, myActivity, 'Activity not updated correctly');        
@@ -113,7 +113,7 @@ public class HDT_UTL_ActivityCustomProcessTst {
                                                      Order__r.Account.VATNumber__c, Order__r.Account.CustomerMarking__c, Order__r.Account.Category__c, 
                                                      Order__r.Account.CustomerType__c, Order__r.ProcessType__c, Order__r.Market__c, Order__r.Catalog__c,
                                                      Order__r.ServicePoint__r.Account__r.CustomerCode__c
-                                                     FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account0'].Id;
+                                                     FROM wrts_prcgvr__Activity__c WHERE Account__r.Name = 'test account bsn0'].Id;
         
         List<Id> myActivityListId = new List<Id>();
         myActivityListId.add(myActivityId);

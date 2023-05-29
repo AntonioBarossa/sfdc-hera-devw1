@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <GlobalValueSet xmlns="http://soap.sforce.com/2006/04/metadata">
     <customValue>
+        <fullName>Ambiente</fullName>
+        <default>false</default>
+        <label>Ambiente</label>
+    </customValue>
+    <customValue>
         <fullName>Comportamento non professionale</fullName>
         <default>false</default>
         <label>Comportamento non professionale</label>
@@ -9,6 +14,11 @@
         <fullName>Firma falsa</fullName>
         <default>false</default>
         <label>Firma falsa</label>
+    </customValue>
+    <customValue>
+        <fullName>Igiene ambientale</fullName>
+        <default>false</default>
+        <label>Igiene ambientale</label>
     </customValue>
     <customValue>
         <fullName>Procedura/info errata</fullName>
@@ -22,5 +32,5 @@
     </customValue>
     <description>Classificazione Quinto Livello (cluster Reclami)</description>
     <masterLabel>5° Livello</masterLabel>
-    <sorted>false</sorted>
+    <sorted>true</sorted>
 </GlobalValueSet>

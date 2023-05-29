@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CharacterAccDeterm__c</fullName>
+    <externalId>false</externalId>
+    <label>Caratt. determinazione conti</label>
+    <required>false</required>
+    <trackHistory>false</trackHistory>
+    <type>Picklist</type>
+    <valueSet>
+        <restricted>true</restricted>
+        <valueSetDefinition>
+            <sorted>false</sorted>
+            <value>
+                <fullName>CLIENTI GENERICI 10%</fullName>
+                <default>false</default>
+                <label>CLIENTI GENERICI 10%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI GENERICI 20%</fullName>
+                <default>false</default>
+                <label>CLIENTI GENERICI 20%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOC. CONTROLLATE 10%</fullName>
+                <default>false</default>
+                <label>CLIENTI SOC. CONTROLLATE 10%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOC.CONTROLLATE 20%</fullName>
+                <default>false</default>
+                <label>CLIENTI SOC.CONTROLLATE 20%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOC. COLLEGATE 10%</fullName>
+                <default>false</default>
+                <label>CLIENTI SOC. COLLEGATE 10%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOC. COLLEGATE 20%</fullName>
+                <default>false</default>
+                <label>CLIENTI SOC. COLLEGATE 20%</label>
+            </value>
+            <value>
+                <fullName>LIENTI SOC. CONTROLLANTI 10%</fullName>
+                <default>false</default>
+                <label>LIENTI SOC. CONTROLLANTI 10%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI SOC. CONTROLLANTI 20%</fullName>
+                <default>false</default>
+                <label>CLIENTI SOC. CONTROLLANTI 20%</label>
+            </value>
+            <value>
+                <fullName>SOCIETA&apos; DEL GRUPPO 10%</fullName>
+                <default>false</default>
+                <label>SOCIETA&apos; DEL GRUPPO 10%</label>
+            </value>
+            <value>
+                <fullName>SOCIETA&apos; DEL GRUPPO 20%</fullName>
+                <default>false</default>
+                <label>SOCIETA&apos; DEL GRUPPO 20%</label>
+            </value>
+            <value>
+                <fullName>CLIENTI NON IMP. ART. 8 E 9</fullName>
+                <default>false</default>
+                <label>CLIENTI NON IMP. ART. 8 E 9</label>
+            </value>
+            <value>
+                <fullName>CLIENTI NON IMP. ART. 72</fullName>
+                <default>false</default>
+                <label>CLIENTI NON IMP. ART. 72</label>
+            </value>
+            <value>
+                <fullName>CLI.AUTOFATT.FUORI C.IVA Art.2</fullName>
+                <default>false</default>
+                <label>CLI.AUTOFATT.FUORI C.IVA Art.2</label>
+            </value>
+            <value>
+                <fullName>CLIENTI AUTOFATTURE 20%</fullName>
+                <default>false</default>
+                <label>CLIENTI AUTOFATTURE 20%</label>
+            </value>
+        </valueSetDefinition>
+    </valueSet>
+</CustomField>

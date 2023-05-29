@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningMessageChannel xmlns="http://soap.sforce.com/2006/04/metadata">
+    <description>This Notify a cancel operation</description>
+    <isExposed>true</isExposed>
+    <lightningMessageFields>
+        <description>This is the information</description>
+        <fieldName>message</fieldName>
+    </lightningMessageFields>
+    <lightningMessageFields>
+        <description>This is the guid of the Flow</description>
+        <fieldName>sessionid</fieldName>
+    </lightningMessageFields>
+    <masterLabel>flowButton</masterLabel>
+</LightningMessageChannel>

@@ -35,10 +35,12 @@ public inherited sharing class HDT_BA_CreditCheckSales implements Database.Batch
 
     public void finish(Database.BatchableContext bc){
         //System.debug('HDT_BA_ProcessRequestItem finish ');
-        MassiveLoaderRequest__c oldReq = new MassiveLoaderRequest__c();
-        oldReq.Id = idLoaderRequest;
+        Datetime dt = Datetime.now();
+        MassiveLoaderRequest__c oldReq = [SELECT Id, Description__c,Status__c,Phase__c,EndDateTime__c FROM MassiveLoaderRequest__c WHERE Id = :idLoaderRequest LIMIT 1];
         oldReq.Status__c = constantsUtl.MASSIVLOADER_STATUS_CHIUSO;
         oldReq.Phase__c = 'File processato';
+        oldReq.EndDateTime__c = Datetime.now();
+        oldReq.Description__c = oldReq.Description__c + '\n[6] Credit check  --------> ora fine ---> ' + String.valueOf(dt.format('HH:mm:ss')) + '\n';
         update oldReq;
 
         // Creazione file RequestItem in Errore 

@@ -1,6 +1,6 @@
 @isTest
 public with sharing class HDT_UTL_PayloadManagementTst {
-    
+    private static HDT_UTL_Constants utlConstants=new HDT_UTL_Constants();
     //DEBUG
     public static final String TEST_NAME = 'HDT_UTL_PayloadManagementTst';
     
@@ -14,97 +14,104 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         
         //DEBUG
         String debugString = TEST_NAME + ' - mySetup';
-        
-        //ACCOUNT - Distributore
-        List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
-        
-        //ACCOUNT - PARTNER
-        List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'DIRETTO EDISON-10R0000051');
-        partnerList[0].CompanyOwner__c = 'HERA COMM';
-        insert partnerList;
+        Id adminUserProfileId=HDT_UTL_DataFactoryTst.getProfileId(utlConstants.HERA_SYSTEM_ADMINISTRATOR_NAME);
+		User internalUser=HDT_UTL_DataFactoryTst.createInternalUser(adminUserProfileId, false);
+		internalUser.UserPermissionsMarketingUser=true;
+		insert internalUser;
+		List<PermissionSetAssignment> permissionSetAssignments=new List<PermissionSetAssignment>{HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_ADMIN_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_VOLTURARETROATTIVA, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser, utlConstants.PERMISSIONSET_HDT_SALESFORCE_CPQ_LICENSE_NAME, false), HDT_UTL_DataFactoryTst.assignPermissionSet(internalUser,'HDT_DistributorManager', false)};
+		insert permissionSetAssignments;
+		System.runAs(internalUser){
+            //ACCOUNT - Distributore
+            List<Account> accList = HDT_UTL_DataFactoryTst.createAccountDistributore(1, true, 'HERA COMM', 'Azienda', 'Aziende SME');
+            
+            //ACCOUNT - PARTNER
+            List<Account> partnerList = HDT_UTL_DataFactoryTst.createAccountPartner(1, false, 'DIRETTO EDISON-10R0000051');
+            partnerList[0].CompanyOwner__c = 'HERA COMM';
+            insert partnerList;
 
-        //SERVICE POINT
-        List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
-        ServicePoint__c servPoint = servPointList[0];
-        servPoint.Distributor__c = accList[0].Id;
-        servPoint.CommoditySector__c = 'Gas';
-        insert servPoint;
-        
-        
-        //SALE
-        List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(2, true, accList[0].Id, 'Bozza');
-        
-        //PRODUCT
-        List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
-        productList[0].Name = 'POD';
-        if(isSubscriptionSetup){
-            productList[0].Family = 'Offerta commerciale';
-        } else {
-            productList[0].Family = 'VAS Fatturabili';
-        }
-        insert productList;
-        
-        //PRICE BOOK
-        Id pricebookId=Test.getStandardPricebookId();
-		List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pricebookId);
-        
-        //ORDER
-        HDT_UTL_DataFactoryTst.pClickOrderPhase();
-        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(2, true, accList[0].Id, saleList, pricebookId);
-        orderList[0].ServicePoint__c = servPoint.Id;
-        orderList[0].Resident__c = false;
-        orderList[0].ParentOrder__c = orderList[1].Id;
-        orderList[0].SignatureMethod__c = 'OTP Remoto';
-        update orderList;
-        
-        
-        //ORDER ITEMS
-        List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, false, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
-        orderItems[0].OccupantsNumber__c = 4;
-        orderItems[0].Surface__c = 100.00;
-        orderItems[0].DwellingType__c = 'Casa Indipendente';
-        orderItems[0].OwnerAC__c = 'Si';
-        insert orderItems;
-        System.debug(debugString + ' - orderItems: ' + orderItems);
-        
-        //CONTACT AND ACCOUNT RELATIONSHIP
-        List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
-        HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id);
-        
-        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
-        contractList[0].ServicePoint__c = servPoint.Id;
-        contractList[0].StartDate = Date.today();
-        insert contractList;
-        
-        if(isSubscriptionSetup){
-            //CODICE REPLICATO
-            SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
-            SBQQ__Contract__c = contractList[0].Id, 
-            SBQQ__Product__c = productList[0].Id, 
-            SBQQ__Quantity__c = 10.2, 
-            SBQQ__Account__c = accList[0].Id,
-            SBQQ__NetPrice__c = 100.2,
-            SBQQ__SubscriptionEndDate__c = Date.Today());
-            insert subs;
-        }
-        
-        List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
-        if(isSubscriptionSetup){
-            caseList[0].ComplaintType__c = 'Reclamo Scritto';
-            caseList[0].FirstLevelComplaintClassification__c = 'Reclamo Scritto';
-            caseList[0].IndemnityConfirmed__c = true;
-            //caseList[0].IndemnityMotivation__c = '';
-            caseList[0].CorrectionRight__c = 'Si';
-            caseList[0].SendDate__c = date.today().addDays(35);
-            //caseList[0].IndemnityDueSendResponse__c = 5.45;
-            //caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
-            caseList[0].SignMode__c = 'OTP Remoto';
-        }
-        insert caseList;
+            //SERVICE POINT
+            List<ServicePoint__c> servPointList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
+            ServicePoint__c servPoint = servPointList[0];
+            servPoint.Distributor__c = accList[0].Id;
+            servPoint.CommoditySector__c = 'Gas';
+            insert servPoint;
+            
+            
+            //SALE
+            List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(2, true, accList[0].Id, 'Bozza');
+            
+            //PRODUCT
+            List<Product2> productList = HDT_UTL_DataFactoryTst.createProduct2(1, false);
+            productList[0].Name = 'POD';
+            if(isSubscriptionSetup){
+                productList[0].Family = 'Offerta commerciale';
+            } else {
+                productList[0].Family = 'VAS Fatturabili';
+            }
+            insert productList;
+            
+            //PRICE BOOK
+            Id pricebookId=Test.getStandardPricebookId();
+            List<PricebookEntry> pricebookEntry=HDT_UTL_DataFactoryTst.createPricebookEntry(productList, true, pricebookId);
+            
+            //ORDER
+            HDT_UTL_DataFactoryTst.pClickOrderPhase();
+            List<Order> orderList = HDT_UTL_DataFactoryTst.createOrderWithPricebook(2, true, accList[0].Id, saleList, pricebookId);
+            orderList[0].ServicePoint__c = servPoint.Id;
+            orderList[0].Resident__c = false;
+            orderList[0].ParentOrder__c = orderList[1].Id;
+            orderList[0].SignatureMethod__c = 'OTP Remoto';
+            update orderList;
+            
+            
+            //ORDER ITEMS
+            List<OrderItem> orderItems = HDT_UTL_DataFactoryTst.createOrderItem(1, false, orderList[0].Id, servPointList[0].Id, productList[0].Id, pricebookEntry[0].Id);
+            orderItems[0].OccupantsNumber__c = 4;
+            orderItems[0].Surface__c = 100.00;
+            orderItems[0].DwellingType__c = 'Casa Indipendente';
+            orderItems[0].OwnerAC__c = 'Si';
+            insert orderItems;
+            System.debug(debugString + ' - orderItems: ' + orderItems);
+            
+            //CONTACT AND ACCOUNT RELATIONSHIP
+            List<Contact> contactList = HDT_UTL_DataFactoryTst.createContact(1, true, accList[0].id);
+            HDT_UTL_DataFactoryTst.createAccountContactRelation(true, partnerList[0].Id, contactList[0].Id);
+            
+            List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, false, accList[0].id);
+            contractList[0].ServicePoint__c = servPoint.Id;
+            contractList[0].StartDate = Date.today();
+            insert contractList;
+            
+            if(isSubscriptionSetup){
+                //CODICE REPLICATO
+                SBQQ__Subscription__c subs = new SBQQ__Subscription__c(
+                SBQQ__Contract__c = contractList[0].Id, 
+                SBQQ__Product__c = productList[0].Id, 
+                SBQQ__Quantity__c = 10.2, 
+                SBQQ__Account__c = accList[0].Id,
+                SBQQ__NetPrice__c = 100.2,
+                SBQQ__SubscriptionEndDate__c = Date.Today());
+                insert subs;
+            }
+            
+            List<Case> caseList = HDT_UTL_DataFactoryTst.createCase(1, false, accList[0].id, contactList[0].Id, servPointList[0].id, contractList[0].id, orderList[0].id);
+            if(isSubscriptionSetup){
+                caseList[0].ComplaintType__c = 'Reclamo Scritto';
+                caseList[0].FirstLevelComplaintClassification__c = 'Reclamo Scritto';
+                caseList[0].IndemnityConfirmed__c = true;
+                //caseList[0].IndemnityMotivation__c = '';
+                caseList[0].CorrectionRight__c = 'Si';
+                caseList[0].SendDate__c = date.today().addDays(35);
+                //caseList[0].IndemnityDueSendResponse__c = 5.45;
+                //caseList[0].IndemnityDueBilllingCorrection__c = 6.25;
+                caseList[0].SignMode__c = 'OTP Remoto';
+            }
+            insert caseList;
 
-        HDT_DistributorExceptionHC__mdt myDEHC = HDT_DistributorExceptionHC__mdt.getInstance('DIRETTO_EDISON_10R0000051');
+            HDT_DistributorExceptionHC__mdt myDEHC = HDT_DistributorExceptionHC__mdt.getInstance('DIRETTO_EDISON_10R0000051');
 
-        HDT_HcmCityException__mdt myCityEx = HDT_HcmCityException__mdt.getInstance('Config100');
+            HDT_HcmCityException__mdt myCityEx = HDT_HcmCityException__mdt.getInstance('Config100');
+        }
 
     }
 
@@ -1257,20 +1264,21 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         indemnityConfirmed = True;
         indemnityMotivation = null;
         correctionRight = 'Si';
-        expiredCorrection = False;
-        correctionDocumentEmissionDate = String.valueOf(Date.today());
-        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('1', boxType, 'Indemnity Box Test OK');
-
-        complaintClassification = 'Reclamo Scritto';
-        indemnityConfirmed = True;
-        indemnityMotivation = null;
-        correctionRight = 'Si';
         expiredCorrection = True;
         indemnityDueSendResponse = 0;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('2', boxType, 'Indemnity Box Test OK');
+        
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = True;
+        indemnityMotivation = null;
+        correctionRight = 'Si';
+        expiredCorrection = False;
+        indemnityDueSendResponse = 0;
+        correctionDocumentEmissionDate = '';
+        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
+        System.assertEquals('3', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Reclamo Scritto';
         indemnityConfirmed = True;
@@ -1286,54 +1294,58 @@ public with sharing class HDT_UTL_PayloadManagementTst {
         indemnityMotivation = null;
         correctionRight = 'Si';
         expiredCorrection = True;
-        correctionDocumentEmissionDate = null;
+        correctionDocumentEmissionDate =  '';
+        indemnityDueSendResponse = 2;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('5', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Reclamo Scritto';
-        indemnityConfirmed = True;
+        indemnityConfirmed = false;
+        indemnityDueSendResponse = 2;
         indemnityMotivation = null;
-        correctionRight = 'Si';
-        expiredCorrection = False;
+        correctionRight = 'No';
+        expiredCorrection = false;
         correctionDocumentEmissionDate = null;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('', boxType, 'Indemnity Box Test OK');
+        System.assertEquals('6', boxType, 'Indemnity Box Test OK');
 
-        complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = True;
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = true;
         indemnityMotivation = null;
-        correctionRight = 'Si';
-        expiredCorrection = True;
+        correctionRight = 'No';
+        expiredCorrection = false;
+        indemnityDueSendResponse = 0;
         correctionDocumentEmissionDate = null;
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assert(String.isBlank(boxType), 'Indemnity Box Test OK');
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = True;
+        indemnityConfirmed = true;
         indemnityMotivation = null;
         correctionRight = 'Si';
-        expiredCorrection = False;
-        correctionDocumentEmissionDate = String.valueOf(Date.today());
-        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assert(String.isBlank(boxType), 'Indemnity Box Test OK');
-
-        complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = True;
-        indemnityMotivation = null;
-        correctionRight = 'Si';
-        expiredCorrection = True;
+        expiredCorrection = true;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
         System.assertEquals('8', boxType, 'Indemnity Box Test OK');
 
         complaintClassification = 'Rettifica Doppia Fatturazione';
-        indemnityConfirmed = False;
+        indemnityConfirmed = false;
         indemnityMotivation = 'Altro indennizzo stesso anno solare';
         correctionRight = 'Si';
-        expiredCorrection = True;
+        expiredCorrection = true;
         correctionDocumentEmissionDate = String.valueOf(Date.today());
         boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
-        System.assertEquals('6', boxType, 'Indemnity Box Test OK');
+        System.assertEquals('9', boxType, 'Indemnity Box Test OK');
+
+        complaintClassification = 'Reclamo Scritto';
+        indemnityConfirmed = false;
+        indemnityMotivation = 'Altro indennizzo stesso anno solare';
+        correctionRight = 'Si';
+        indemnityDueSendResponse = 2;
+        expiredCorrection = true;
+        correctionDocumentEmissionDate = String.valueOf(Date.today());
+        boxType = HDT_UTL_PayloadManagement.calculateIndemnityBox(complaintClassification, indemnityConfirmed, indemnityMotivation, correctionRight, expiredCorrection, correctionDocumentEmissionDate, indemnityDueSendResponse);
+        System.assertEquals('10', boxType, 'Indemnity Box Test OK');
 
         Test.stopTest();
     }

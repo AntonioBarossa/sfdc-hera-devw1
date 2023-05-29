@@ -4,8 +4,8 @@
     <assignments>
         <name>Set_Fields</name>
         <label>Set_Fields</label>
-        <locationX>401</locationX>
-        <locationY>307</locationY>
+        <locationX>400</locationX>
+        <locationY>310</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.Approved__c</assignToReference>
             <operator>Assign</operator>

@@ -12,14 +12,18 @@ import isSaveDisabled from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.is
 import isCommunity from '@salesforce/apex/HDT_LC_SellingWizardController.checkCommunityLogin';
 import previewDocumentFile from '@salesforce/apex/HDT_LC_DocumentSignatureManager.previewDocumentFile';
 import sendDocument from '@salesforce/apex/HDT_LC_DocumentSignatureManager.sendDocumentFile';
+import createActChangeAddress from '@salesforce/apex/HDT_LC_DocumentSignatureManager.createActChangeAddress';
 import { getRecord } from 'lightning/uiRecordApi';
 import SIGN_FIELD from '@salesforce/schema/Order.SignatureMethod__c';
-import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
-
+import SEND_FIELD from '@salesforce/schema/Order.DocSendingMethod__c';
+import getPicklistValue from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.getActivePicklistValue';
+import RequestSource from '@salesforce/schema/Order.RequestSource__c';
+import WasteCommodityType from '@salesforce/schema/Order.WasteCommodityType__c';
 import SIGNED_FIELD from '@salesforce/schema/Order.ContractSigned__c';
 //Il seguente campo è stato utilizzato per tracciare l'ultimo SignatureMethod inviato a docusign.
 import OLDSIGN_FIELD from '@salesforce/schema/Order.SignMode__c';
 import CHANNEL_FIELD from '@salesforce/schema/Order.Channel__c';
+import DELIVERED_DOC from '@salesforce/schema/Order.DeliveredDocumentation__c';
 import isOnlyAmend from '@salesforce/apex/HDT_LC_OrderDossierWizardActions.isOnlyAmend';
 // TOOLBAR STUFF
 import { loadScript } from 'lightning/platformResourceLoader';
@@ -34,6 +38,8 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     currentStep = 2;
     loading = false;
     channel = '';
+    provenienza = '';
+    commodityType='';
     signatureMethod = '';
     isSaveButtonDisabled = false;
     isCancelButtonDisabled = false;
@@ -54,11 +60,16 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
     get disablePreviewButton(){
         return this.isPreviewForbidden || this.isSaveButtonDisabled;
     }
-
+    @api
+    disableSendButton(){
+        console.log('in disableSendButton');
+        this.isPrintButtonDisabled = true;
+        this.isPreviewForbidden = false;
+    }
     @wire(getPicklistValue,{objectApiName: 'Order', fieldApiName: 'SignMode__c'})
     activeValue;
 
-    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD] })
+    @wire(getRecord, { recordId: '$recordId', fields: [SIGN_FIELD,SEND_FIELD,SIGNED_FIELD,OLDSIGN_FIELD, CHANNEL_FIELD,RequestSource,WasteCommodityType,DELIVERED_DOC] })
     wiredParentOrder({ error, data }) {
         if (error) {
             let message = 'Unknown error';
@@ -79,11 +90,17 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             //var signed = this.parentOrder.fields.ContractSigned__c.value;
             this.signatureMethod = data.fields.SignatureMethod__c.value;
             this.channel = data.fields.Channel__c.value;
+            this.commodityType = data.fields.WasteCommodityType__c.value 
+            this.provenienza = data.fields.RequestSource__c.value;
+            var deliveredDoc = data.fields.DeliveredDocumentation__c.value;
             // 28/12/2021: commentata logica che disabilita il component documentale, poichè deve sempre essere visibile nel wizard.
             //this.enableDocumental = !signed;
             console.log('### Signature method >>> ' + this.signatureMethod)
             console.log('### ParentOrder Channel >>> ' + this.channel);
-            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato'
+            this.enableDocumental = this.signatureMethod !== 'Contratto già firmato';
+            if(this.commodityType && this.provenienza && this.commodityType === 'Ambiente' && (this.provenienza != 'Da contribuente' || deliveredDoc)){
+                this.enableDocumental = false;
+            }
         }
     }
 
@@ -380,19 +397,25 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
 
     handleSave(){
         this.loading = true;
+
+        createActChangeAddress({
+            recordId: this.recordId
+        }).then(result => {
+            console.log('CreateActChangeAddress successfully run');
+        }).catch(error => {
+            this.showToast('Errore nella creazione dell\'activity di Modifica Indirizzo Fornitura.');
+            console.error(error);
+        });
+
         save({orderParent: this.orderParentRecord}).then(data =>{
             this.loading = false;
-
             this.dispatchEvent(new CustomEvent('redirecttoorderrecordpage'));
-
             const toastSuccessMessage = new ShowToastEvent({
                 title: 'Successo',
                 message: 'Order confermato con successo',
                 variant: 'success'
             });
             this.dispatchEvent(toastSuccessMessage);
-            //this.sendDocumentFile();
-
         }).catch(error => {
             this.loading = false;
 
@@ -415,6 +438,7 @@ export default class hdtOrderDossierWizardActions extends NavigationMixin(Lightn
             });
             this.dispatchEvent(toastErrorMessage);
         });
+
     }
 
     handleSave2(){

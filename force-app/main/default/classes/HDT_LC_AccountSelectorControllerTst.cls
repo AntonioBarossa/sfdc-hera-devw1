@@ -13,8 +13,9 @@ public with sharing class HDT_LC_AccountSelectorControllerTst {
     private static void mySetup() {
         HDT_UTL_DataFactoryTst.pClickInstance();
         //ACCOUNT
-        Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, true, 'HERA COMM', 'Azienda', 'Enti')[0];
-        
+        Account account = HDT_UTL_DataFactoryTst.createAccountBusiness(1, false, 'HERA COMM', 'Azienda', 'Enti')[0];
+        account.VATNumber__c = '00692800428';
+        insert account;
         //CONTACT
         Contact contact;
         if(!isLead){

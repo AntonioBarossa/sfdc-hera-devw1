@@ -121,4 +121,14 @@
         <default>false</default>
         <label>Contenitore Contributi</label>
     </standardValue>
+    <standardValue>
+        <fullName>Opzione TARI - Sosp</fullName>
+        <default>false</default>
+        <label>Opzione TARI - Sosp</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Opzioni TARI</fullName>
+        <default>false</default>
+        <label>Opzioni TARI</label>
+    </standardValue>
 </StandardValueSet>

@@ -43,6 +43,22 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 	}
 
+	public static ContentVersion createContentVersion(String body, String filename, String extension){
+		ContentVersion cv = new ContentVersion();
+		cv.VersionData = Blob.valueOf(body);
+		cv.Title = filename;
+		cv.PathOnClient = filename + '.' + extension;
+		cv.ContentLocation = 'S';
+		try {
+			//Sostituire con HDT_UTL_DatabaseService.insertSObject()
+			HDT_UTL_DatabaseService.insertSObject(cv);
+			return cv;
+		} catch(DMLException e) {
+			System.debug(LoggingLevel.DEBUG, e);
+			return null;
+		}
+	}
+
 	public static ContentDocumentLink createContentLink(String contentVersionId, String recordId) {
 		if (contentVersionId == null || recordId == null) { return null; }
 		ContentDocumentLink cdl = new ContentDocumentLink();
@@ -170,7 +186,7 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		}
 		return false;
 	}
-	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context){
+	public static Boolean updateDocumentalPhase(SObject processRecord, HDT_WRP_DocumentalResponse response,String context,String formParams){
 		SObject rec = processRecord.getSObjectType().newSObject();
 		rec.put('Id',processRecord.get('Id'));
 		String archive = response.deliverPackageResponse.archive;
@@ -180,6 +196,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		Boolean isMassive = false;
 		String signatureMethod = '';
 		String signMode='';
+		Map<String,Object> formParamsMap = formParams != null? (Map<String,Object>) JSON.deserializeUntyped(formParams) : new Map<String,Object>();
+		String tipoPlico = formParamsMap.get('TipoPlico') != null? (String)formParamsMap.get('TipoPlico'):'';
 		if(context.equalsIgnoreCase('Order')){
 			isMassive = (Boolean) processRecord.get('isMassive__c');
 		}
@@ -189,6 +207,8 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			}else{
 				if(isSignNeeded(response)){
 					rec.put('DocumentalPhase__c','Plico in firma');
+				}else if(String.isNotBlank(tipoPlico) && tipoPlico.equalsIgnoreCase('Sollecito')){
+					rec.put('DocumentalPhase__c','Plico sollecitato');
 				}else {
 					rec.put('DocumentalPhase__c','Plico inviato');
 				}
@@ -414,8 +434,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 		listAccount.add(accountObject);
 		List<sObject> listContact = new List<sObject>();
 		listContact.add(contactObject);
+		//DATI CATASTALI
+		List<LandRegistry__c> landList = new List<LandRegistry__c>();
+		for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) caseObject.Dati_Catastali__r){
+			landList.add(singleLandRegistry);
+		}
 		Map<String,List<sObject>> mapStringObjectRecords = new Map<String,List<sObject>>{
-			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList
+			'Case' => listCase, 'Account' => listAccount, 'PrimaryContact' => listContact, 'DocumentSelected' => documentSelectedObjectList,'LandRegistry'=> landList
 		};
 		List<Map<String,List<sObject>>> toReturn = new List<Map<String,List<sObject>>>();
 		toReturn.add(mapStringObjectRecords);
@@ -499,6 +524,13 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 			List<sObject> orderList = new List<sObject>();
 			orderList.add(singleOrder);
 			mapStringObjectRecords.put('Order', orderList);
+
+			//DATI CATASTALI
+			List<LandRegistry__c> landList = new List<LandRegistry__c>();
+			for(LandRegistry__c singleLandRegistry : (List<LandRegistry__c>) singleOrder.Dati_Catastali__r){
+				landList.add(singleLandRegistry);
+			}
+			mapStringObjectRecords.put('LandRegistry', landList);
 			
 			//PROCESSING ORDER ITEMS
 			for(OrderItem singleOrderItem : (List<OrderItem>) singleOrder.OrderItems){

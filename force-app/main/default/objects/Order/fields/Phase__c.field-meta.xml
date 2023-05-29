@@ -86,14 +86,29 @@
                 <label>Annullamento dal SII</label>
             </value>
             <value>
+                <fullName>Annullamento - Dati discordanti</fullName>
+                <default>false</default>
+                <label>Annullamento - Dati discordanti</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Errore invio a DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Errore invio a DL/SII</label>
             </value>
             <value>
+                <fullName>Annullamento - Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Annullamento - Esito KO da DL/SII</fullName>
                 <default>false</default>
                 <label>Annullamento - Esito KO da DL/SII</label>
+            </value>
+            <value>
+                <fullName>Annullamento - Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Annullamento - Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Annullamento - Esito OK da DL/SII</fullName>
@@ -136,9 +151,19 @@
                 <label>Annullato per Dati Discordanti</label>
             </value>
             <value>
+                <fullName>Annullato per decorrenza dei termini</fullName>
+                <default>false</default>
+                <label>Annullato per decorrenza dei termini</label>
+            </value>
+            <value>
                 <fullName>Annullato SII</fullName>
                 <default>false</default>
                 <label>Annullato SII</label>
+            </value>
+            <value>
+                <fullName>Approvata</fullName>
+                <default>false</default>
+                <label>Approvata</label>
             </value>
             <value>
                 <fullName>Attesa conferma preventivo cliente</fullName>
@@ -247,6 +272,11 @@
                 <label>Conferma Appuntamento KO</label>
             </value>
             <value>
+                <fullName>Creazione BP-CA</fullName>
+                <default>false</default>
+                <label>Creazione BP-CA</label>
+            </value>
+            <value>
                 <fullName>Credit Check KO</fullName>
                 <default>false</default>
                 <label>Credit Check KO</label>
@@ -337,6 +367,11 @@
                 <label>Esecuzione Appuntamento OK</label>
             </value>
             <value>
+                <fullName>Esito Consuntivazione KO</fullName>
+                <default>false</default>
+                <label>Esito Consuntivazione KO</label>
+            </value>
+            <value>
                 <fullName>Esito DL KO</fullName>
                 <default>false</default>
                 <isActive>false</isActive>
@@ -349,14 +384,29 @@
                 <label>Esito DL OK</label>
             </value>
             <value>
+                <fullName>Esito KO da DBO</fullName>
+                <default>false</default>
+                <label>Esito KO da DBO</label>
+            </value>
+            <value>
                 <fullName>Esito KO da DL</fullName>
                 <default>false</default>
                 <label>Esito KO da DL</label>
             </value>
             <value>
+                <fullName>Esito KO Da SAP</fullName>
+                <default>false</default>
+                <label>Esito KO Da SAP</label>
+            </value>
+            <value>
                 <fullName>Esito KO da SII</fullName>
                 <default>false</default>
                 <label>Esito KO da SII</label>
+            </value>
+            <value>
+                <fullName>Esito OK da DBO</fullName>
+                <default>false</default>
+                <label>Esito OK da DBO</label>
             </value>
             <value>
                 <fullName>Esito OK da DL</fullName>
@@ -384,6 +434,11 @@
                 <label>Gestione appuntamento su portale DL</label>
             </value>
             <value>
+                <fullName>In attesa Approvazione</fullName>
+                <default>false</default>
+                <label>In attesa Approvazione</label>
+            </value>
+            <value>
                 <fullName>In attesa appuntamento DL</fullName>
                 <default>false</default>
                 <label>In attesa appuntamento DL</label>
@@ -404,9 +459,29 @@
                 <label>In attesa esecuzione appuntamento</label>
             </value>
             <value>
+                <fullName>In attesa esito documentale da E1</fullName>
+                <default>false</default>
+                <label>In attesa esito documentale da E1</label>
+            </value>
+            <value>
+                <fullName>In attesa esito SAP</fullName>
+                <default>false</default>
+                <label>In attesa esito SAP</label>
+            </value>
+            <value>
                 <fullName>In Attesa Legge 80</fullName>
                 <default>false</default>
                 <label>In Attesa Legge 80</label>
+            </value>
+            <value>
+                <fullName>In attesa perfezionamento documentazione</fullName>
+                <default>false</default>
+                <label>In attesa perfezionamento documentazione</label>
+            </value>
+            <value>
+                <fullName>In attesa perfezionamento documentazione sollecitata</fullName>
+                <default>false</default>
+                <label>In attesa perfezionamento documentazione sollecitata</label>
             </value>
             <value>
                 <fullName>In attesa tempi di ripensamento</fullName>
@@ -417,6 +492,11 @@
                 <fullName>In attesa validazione</fullName>
                 <default>false</default>
                 <label>In attesa validazione</label>
+            </value>
+            <value>
+                <fullName>In attesa Verifica</fullName>
+                <default>false</default>
+                <label>In attesa Verifica</label>
             </value>
             <value>
                 <fullName>In Corso caricamento Siebel</fullName>
@@ -700,6 +780,11 @@
                 <label>Sequenzializzato</label>
             </value>
             <value>
+                <fullName>Sollecito perfezionamento documentazione da inviare a E1</fullName>
+                <default>false</default>
+                <label>Sollecito perfezionamento documentazione da inviare a E1</label>
+            </value>
+            <value>
                 <fullName>Sospeso</fullName>
                 <default>false</default>
                 <label>Sospeso</label>
@@ -718,11 +803,6 @@
                 <fullName>Voltura Rifiutata</fullName>
                 <default>false</default>
                 <label>Voltura Rifiutata</label>
-            </value>
-            <value>
-                <fullName>Annullamento - Dati discordanti</fullName>
-                <default>false</default>
-                <label>Annullamento - Dati discordanti</label>
             </value>
         </valueSetDefinition>
     </valueSet>

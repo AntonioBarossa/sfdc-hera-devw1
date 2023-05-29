@@ -5,11 +5,45 @@ public with sharing class HDT_LC_DocumentSignatureManager {
         String base64 = HDT_SRV_DocumentalManagementFacade.getBase64(recordId, context,formParams);
         return base64;
     }
+
     @AuraEnabled
     public static void sendDocumentFile(String recordId,String context,String formParams){
+        if( 'Order'.equalsIgnoreCase(context) )
+        {
+            createActivityForChangeAddress(recordId);
+        }
         HDT_SRV_DocumentalManagementFacade.sendDocumentAsync(recordId, context,formParams);
         HDT_SRV_DocumentalManagementFacade.checkEnvelopeForDiscard(recordId, formParams);
         HDT_UTL_Scarti.closeDocumentalManagementActivity(formParams);
+    }
+
+    @AuraEnabled
+    public static void createActChangeAddress(String recordId){
+            createActivityForChangeAddress(recordId);
+    }
+
+    @future
+    public static void createActivityForChangeAddress(String recordId){
+        List<Order> ordIdList = [ SELECT Id FROM Order WHERE ParentOrder__c = :recordId 
+                                            AND ServicePoint__r.IsAddressChanged__c = true 
+                                            AND ( Process__c = 'Subentro' OR Process__c = 'Subentro Cambio Cat.Tariffa' OR
+                                                (
+                                                    ( Process__c = 'Prima Attivazione' OR
+                                                    Process__c = 'Voltura' OR
+                                                    Process__c = 'Cambio Offerta' OR
+                                                    Process__c = 'Voltura - Subentro Scarico produttivo' OR
+                                                    Process__c = 'Connessione con Attivazione' ) AND 
+                                                    ( Commodity__c = 'Acqua' OR Commodity__c = 'Ambiente' OR Commodity__c = 'Teleriscaldamento' )
+                                                )
+                                            ) WITH SECURITY_ENFORCED ];
+        
+        if ( !ordIdList.isEmpty())
+        {
+            wrts_prcgvr__Activity__c activity = new wrts_prcgvr__Activity__c();
+            activity.Order__c = ordIdList[0].Id;
+            activity.Type__c = 'Modifica Indirizzo Fornitura';
+            HDT_UTL_DatabaseService.insertSObject(activity);
+        }
     }
 
     @AuraEnabled

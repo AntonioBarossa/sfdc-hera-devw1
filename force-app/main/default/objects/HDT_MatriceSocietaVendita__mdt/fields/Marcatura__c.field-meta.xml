@@ -21,6 +21,11 @@
                 <label>AAS</label>
             </value>
             <value>
+                <fullName>MMS</fullName>
+                <default>false</default>
+                <label>MMS</label>
+            </value>
+            <value>
                 <fullName>ALTRO</fullName>
                 <default>false</default>
                 <label>ALTRO</label>

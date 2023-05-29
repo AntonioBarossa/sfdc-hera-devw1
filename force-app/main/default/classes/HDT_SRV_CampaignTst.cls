@@ -17,6 +17,27 @@ public class HDT_SRV_CampaignTst{
 	}
 
 	@isTest
+	static void testInsertCampaignsFail(){
+
+		Test.startTest();
+
+		User tUser=[SELECT Id, FirstName
+		            FROM USER
+		            WHERE UserPermissionsMarketingUser=true AND IsActive=true
+		            LIMIT 1];
+
+		System.runAs(tUser){
+			try{
+				HDT_SRV_Campaign.unableToLockRowManagement(null, 0);
+			} catch (Exception ex) {
+				System.assertEquals('Attempt to de-reference a null object', ex.getMessage());
+			}
+		}
+		
+		Test.stopTest();
+	}
+
+	@isTest
 	static void testinsertCampaigns(){
 
 		Test.startTest();

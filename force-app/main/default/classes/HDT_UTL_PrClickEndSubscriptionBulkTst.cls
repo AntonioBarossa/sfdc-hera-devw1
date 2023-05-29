@@ -21,7 +21,7 @@ public class HDT_UTL_PrClickEndSubscriptionBulkTst {
         HDT_UTL_DataFactoryTst.pClickOrderPhase();
         HDT_UTL_DataFactoryTst.pClickCasePhase();
         
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,true,'MMS','G3 - MMS Azienda','Aziende SME');
         Id accId = accs[0].id; 
         
         List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(1,true,accId,'Bozza'); 

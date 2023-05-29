@@ -2,7 +2,7 @@
 public with sharing class HDT_UTL_BillingProfileTst {
     @TestSetup
     static void makeData(){
-        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','MMS Azienda','Aziende SME');
+        List<Account> accs = HDT_UTL_DataFactoryTst.createAccountBusiness(1,false,'MMS','G3 - MMS Azienda','Aziende SME');
         accs[0].FirstName__c = 'Mario';
         accs[0].LastName__c = 'Rossi';
         accs[0].FiscalCode__c = 'RSSMRA80A01H501U';

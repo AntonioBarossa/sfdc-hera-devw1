@@ -7,8 +7,8 @@ public inherited sharing class HDT_LC_AccountStatementController {
     }
 
     @AuraEnabled
-    public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumns(String tabValue) {
-        return HDT_LC_AccountStatementCtrlHelper.getSecondLevelColumnsHelper(tabValue);
+    public static HDT_WRP_AccountStatement.HDT_WRP_SecLevColumnsObj getSecondLevelColumns(String tabValue, String recordId) {
+        return HDT_LC_AccountStatementCtrlHelper.getSecondLevelColumnsHelper(tabValue, recordId);
     }
 
     @AuraEnabled(cacheable=true)

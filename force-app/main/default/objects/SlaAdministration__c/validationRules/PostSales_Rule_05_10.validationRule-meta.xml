@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>PostSales_Rule_05_10</fullName>
+    <active>true</active>
+    <errorConditionFormula>AND(OR(ISPICKVAL(Type__c,&apos;05&apos;),ISPICKVAL(Type__c,&apos;10&apos;)),
+ISPICKVAL(ActivityType__c,&apos;&apos;)
+)</errorConditionFormula>
+    <errorDisplayField>ActivityType__c</errorDisplayField>
+    <errorMessage>Per questo tipo di regola deve essere compilato il campo &quot;Tipo Attività&quot;</errorMessage>
+</ValidationRule>

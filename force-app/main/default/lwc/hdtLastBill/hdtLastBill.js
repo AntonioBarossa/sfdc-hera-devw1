@@ -1,6 +1,8 @@
 import { LightningElement, track,api,wire } from 'lwc';
 import imageResource from '@salesforce/resourceUrl/HDT_Service1';
 import imageResource2 from '@salesforce/resourceUrl/HDT_Service2';
+import imageResource3 from '@salesforce/resourceUrl/HDT_Service3';
+import imageResource4 from '@salesforce/resourceUrl/HDT_Service4';
 import getData from '@salesforce/apex/HDT_LC_LastBill.getData';
 import { getRecord } from 'lightning/uiRecordApi';
 import getDataInContinuation from '@salesforce/apexContinuation/HDT_LC_LastBill.startRequest';
@@ -17,6 +19,8 @@ export default class HdtLastBill extends LightningElement {
 
     @track eleUrl = imageResource;
     @track gasUrl = imageResource2;
+    @track acquaUrl = imageResource3;
+    @track ambienteUrl = imageResource4;
     @api customerCode;
     @api kpiId;
     @api recordId;
@@ -29,6 +33,8 @@ export default class HdtLastBill extends LightningElement {
     @track commodity;
     @track energy = false;
     @track gas = false;
+    @track acqua = false;
+    @track ambiente = false;
     @track spinner = true;
     pdfSpinner = false;
     customerAccountCode;
@@ -104,6 +110,8 @@ export default class HdtLastBill extends LightningElement {
 
             this.energy = this.commodity['Energia elettrica'];
             this.gas = this.commodity['Gas'];
+            this.acqua = this.commodity['Acqua'];
+            this.ambiente = this.commodity['Ambiente'];
             console.log(this.energy);
             this.spinner = false;
         }else{

@@ -77,6 +77,11 @@
         <label>Helpdesk</label>
     </standardValue>
     <standardValue>
+        <fullName>Heroku</fullName>
+        <default>false</default>
+        <label>Heroku</label>
+    </standardValue>
+    <standardValue>
         <fullName>IVR</fullName>
         <default>false</default>
         <label>IVR</label>
@@ -165,6 +170,16 @@
         <fullName>Alexa</fullName>
         <default>false</default>
         <label>Alexa</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Rifiutologo</fullName>
+        <default>false</default>
+        <label>Rifiutologo</label>
+    </standardValue>
+    <standardValue>
+        <fullName>Web-MMS</fullName>
+        <default>false</default>
+        <label>Web-MMS</label>
     </standardValue>
     <standardValue>
         <fullName>Facebook</fullName>

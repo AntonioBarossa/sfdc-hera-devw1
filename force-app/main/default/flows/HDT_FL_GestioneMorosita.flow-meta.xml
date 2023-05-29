@@ -1749,7 +1749,7 @@
             <targetReference>Innesco_Da_Sospensione</targetReference>
         </connector>
     </start>
-    <status>Active</status>
+    <status>Draft</status>
     <subflows>
         <name>Annulla_Prestazione</name>
         <label>Annulla Prestazione</label>

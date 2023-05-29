@@ -21,7 +21,7 @@
                 </componentInstanceProperties>
                 <componentInstanceProperties>
                     <name>numVisibleActions</name>
-                    <value>3</value>
+                    <value>5</value>
                 </componentInstanceProperties>
                 <componentName>force:highlightsPanel</componentName>
                 <identifier>force_highlightsPanel</identifier>
@@ -36,6 +36,13 @@
             <componentInstance>
                 <componentName>hdtMetersListOnServicePoint</componentName>
                 <identifier>hdtMetersListOnServicePoint</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.CommoditySector__c}</leftValue>
+                        <operator>NE</operator>
+                        <rightValue>Ambiente</rightValue>
+                    </criteria>
+                </visibilityRule>
             </componentInstance>
         </itemInstances>
         <itemInstances>

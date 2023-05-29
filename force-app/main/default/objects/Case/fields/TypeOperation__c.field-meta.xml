@@ -1,0 +1,404 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>TypeOperation__c</fullName>
+    <externalId>false</externalId>
+    <label>Tipo Intervento</label>
+    <required>false</required>
+    <trackFeedHistory>false</trackFeedHistory>
+    <trackHistory>false</trackHistory>
+    <trackTrending>false</trackTrending>
+    <type>Picklist</type>
+    <valueSet>
+        <controllingField>OperationGroup__c</controllingField>
+        <restricted>true</restricted>
+        <valueSetName>HDT_OperationType</valueSetName>
+        <valueSettings>
+            <valueName>Amianto/Eternit-IURD0026</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Amianto/Eternit_NOApp-IURD0026</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Ingombr+RAEE-IURD0033</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Ingombr+RAEE_NOAPP-IURD0033</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Ingombr-IURD0033</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Pile-IURD0041</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RAEE-IURD0031</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Toner-IURD0053</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/fascine-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/fascine_NOApp-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/pot&lt;=3mc_NOApp-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/pot&gt;3mc_NOApp-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potature(18m3)-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potature(4,5m3)-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potature-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potature&lt;=3mc-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potature&gt;3mc-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potatureAutogru-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>Verde/potature_NOApp-IURD0043</valueName>
+            <controllingFieldValue>CONSULTA IL RIFIUTOLOGO</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SCARICHI ABUSIVI</valueName>
+            <controllingFieldValue>SCARICHI ABUSIVI-IUPS0000</controllingFieldValue>
+            <controllingFieldValue>SCARICHI ABUSIVI-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CONSEGNA KIT PANNOLINI ECO</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0001</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>DISMISSIONE COMPOSTIERA</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0001</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LAMENTELE COMPORTAM OPERATORE</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0001</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>ODORI MEZZI/DOTAZIONE/IMPIANTI</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0001</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RUMORI DI MEZZI/IMPIANTI</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0001</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CONSEGNA PANNOLINI</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICH. VERIFICA SCONTI RACC.DIF</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTA INFORMAZIONI</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTA INFORMAZIONI PAP</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SEGNALAZ COMPORTAMEN CITTADINI</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLLEC RITIROGRATUITO CONAPP</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLLEC RITIROGRATUITO SENZAAPP</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>VERIFICA TARIFFA</valueName>
+            <controllingFieldValue>ALTRI SERVIZI-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CIMITERIALI</valueName>
+            <controllingFieldValue>CIMITERIALI-IUIN0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CONSEGNA/RITIRO TUTTI I CONTEN</valueName>
+            <controllingFieldValue>DLGS_116/2020-IUAS0003</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTA CONTENITORE</valueName>
+            <controllingFieldValue>MOVIM.CONTENITORI TARIP-TARIG</controllingFieldValue>
+            <controllingFieldValue>MOVIMENTAZIONE CONTENITORI TCP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIMOZIONE CONTENITORE</valueName>
+            <controllingFieldValue>MOVIM.CONTENITORI TARIP-TARIG</controllingFieldValue>
+            <controllingFieldValue>MOVIMENTAZIONE CONTENITORI TCP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOSTITUZIONE CONTENITORE</valueName>
+            <controllingFieldValue>MOVIM.CONTENITORI TARIP-TARIG</controllingFieldValue>
+            <controllingFieldValue>MOVIMENTAZIONE CONTENITORI TCP</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CANCELLAZIONE SCRITTE MURARIE</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LAVAGGIO PORTICI</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PRELIEVO CARCASSE ANIMALI</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PRONTO INTERVENTO</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PULIZIA ARENILE</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PULIZIA CADITOIE</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PULIZIA GIARDINI</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PULIZIA SUOLO PUBBLICO</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RACCOLTA SIRINGHE</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SERVIZI A FESTE E MANIFESTAZ</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SERVIZI DEIEZIONI CANINE</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SERVIZIO BORA</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SERVIZIO NEVE</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SVUOTAMENTO CESTINI STRADALI</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0000</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>DISERBO</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MUSCHIO_ERBA MURELLA</valueName>
+            <controllingFieldValue>PULIZIA AREE PUBBLIC-IUPS0007</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CALOTTA_MANUTENZIONE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CAMBIO VOLUMETRIA PAP</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CONSEGNA KIT PORTA A PORTA</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CONSEGNA/RITIRO CASSONE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CONTENITORE ROTTO STRADALE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>GUASTOCHEIMPEDISCECONFERIMENTO</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>LAVAGGIO CONTENITORE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MANCATA RACCOLTA PAP</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MANUTENZIONECONTENITOREPAP</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MANUTENZIONE CONTENITORE PAP</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>PSEUDOEDILI</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTA COMPOSTIERA</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTA CONTENITORE STRADALE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTA SACCHI</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RICHIESTACONTENITAGGIUNTIVOPAP</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIFIUTI ATTORNO AL CONTENITORE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIMOZIONE CONTENITORE STRADALE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIMOZIONE CASSONETTO STRADALE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RIMOZIONE CONTENITORE PAP</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SEGNALAZIONE SU CDR</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SE_SEGNALAZIONE DISSERVIZI</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLLECIT_CONSEGNA_CONT_PAP_RD</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SPOSTAMENTO CASSONETTO</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SPOSTAMENTO CONTENITORE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SVUOTAMENTOCONTENITORESTRADALE</valueName>
+            <controllingFieldValue>RACCOLTA DIFFERENZIAT-IURD0023</controllingFieldValue>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>APERTURAELETTRONICANONFUNZIONA</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CHIAVETTA ELETTRONICA_CONSEGNA</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>CHIAVETTA ELETTRONICA_MANUTENZ</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>MANUTENZIONE CESTINI</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RESTITUZCONTENITORE PAP</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RESTITUZCONTENITOREPAP</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLLECIT_CONSEGNA_CONT_PAP_IND</valueName>
+            <controllingFieldValue>RACCOLTA INDIFFERENZ-IUIN0021</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RITIRO ANIMALI MORTI</valueName>
+            <controllingFieldValue>SERVIZI A PAG.CARCASS-IUAS0001</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SOLLECITO RITIRO A PAGAMENTO</valueName>
+            <controllingFieldValue>SERVIZI A PAG.CARCASS-IUAS0001</controllingFieldValue>
+            <controllingFieldValue>SERVIZI A PAGAMENTO-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>NOLEGGIO CASSONI</valueName>
+            <controllingFieldValue>SERVIZI A PAGAMENTO-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>RITIRO A PAGAMENTO</valueName>
+            <controllingFieldValue>SERVIZI A PAGAMENTO-IUAS0002</controllingFieldValue>
+            </valueSettings>
+            <valueSettings>
+            <valueName>SMALTIMENTO RIFIUTI SPECIALI</valueName>
+            <controllingFieldValue>SERVIZI A PAGAMENTO-IUAS0002</controllingFieldValue>
+            </valueSettings>
+    </valueSet>
+</CustomField>

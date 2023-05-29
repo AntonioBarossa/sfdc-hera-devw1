@@ -15,7 +15,7 @@ public  inherited sharing  class HDT_QR_AccountDataEnrichment {
     public static List<Account> getAccountRecords(List<Account> accList, String recordId){
         accList = new List<Account>();
         accList = [
-            SELECT Id, CustomerCode__c
+            SELECT Id, CustomerCode__c, FiscalCode__c
             FROM Account
             WHERE Id = :recordId
             WITH SECURITY_ENFORCED
@@ -32,6 +32,19 @@ public  inherited sharing  class HDT_QR_AccountDataEnrichment {
         ];
 
         return transcodeMap;
+    }
+
+    //W2
+    public static List<sObject> getRecordsList(List<sObject> sObjectList, String queryString, String sObectType){
+
+        SObjectType objtype = Schema.getGlobalDescribe().get(sObectType);
+        Schema.DescribeSObjectResult objRes = objtype.getDescribe();
+ 
+        if(objRes.isAccessible()){
+            sObjectList = Database.query(queryString);
+        }
+
+        return sObjectList;
     }
 
 }

@@ -11,7 +11,9 @@ export default class HdtEligibilityCriteriaParameters extends LightningElement {
       {label: 'Canale', fieldName: 'Channel__c', operator: 'ChannelOperator__c'},
       {label: 'Mercato Provenienza', fieldName: 'OriginMarket__c', operator: 'OriginMarketOperator__c'},
       {label: 'Marcatura Cliente', fieldName: 'ClientMarker__c', operator: 'ClientMarkerOperator__c'},
-      {label: 'Company Owner', fieldName: 'CompanyOwner__c', operator: 'CompanyOwnerOperator__c'}
+      {label: 'Company Owner', fieldName: 'CompanyOwner__c', operator: 'CompanyOwnerOperator__c'},
+      {label: 'ATO di riferimento', fieldName: 'AtoReference__c', operator: 'AtoReferenceOperator__c'},
+      {label: 'Tipologia Impianto', fieldName: 'ImplantType__c', operator: 'ImplantTypeOperator__c'}
     ];
 
     fieldsList = [

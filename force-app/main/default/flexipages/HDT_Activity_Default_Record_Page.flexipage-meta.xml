@@ -332,7 +332,7 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.HDT_Resume_Activity</value>
                             <visibilityRule>
-                                <booleanFilter>1 AND 2 AND 3</booleanFilter>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>EQUAL</operator>
@@ -342,11 +342,6 @@
                                     <leftValue>{!Record.Type__c}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Gestione dati discordanti</rightValue>
-                                </criteria>
-                                <criteria>
-                                    <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
-                                    <operator>NE</operator>
-                                    <rightValue>HDT_RT_DistributorAppointment</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -425,10 +420,16 @@
                         <valueListItems>
                             <value>wrts_prcgvr__Activity__c.Comunicazioni_Distributore</value>
                             <visibilityRule>
+                                <booleanFilter>1 AND 2</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.RecordTypeDevName__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>HDT_RT_DistributorAppointment</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Case__r.Commodity__c}</leftValue>
+                                    <operator>NE</operator>
+                                    <rightValue>Acqua</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -586,6 +587,16 @@
                                     <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
                                     <operator>EQUAL</operator>
                                     <rightValue>Aperta</rightValue>
+                                </criteria>
+                            </visibilityRule>
+                        </valueListItems>
+                        <valueListItems>
+                            <value>wrts_prcgvr__Activity__c.HDT_Suspend_Activity</value>
+                            <visibilityRule>
+                                <criteria>
+                                    <leftValue>{!Record.wrts_prcgvr__Status__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Creata</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>
@@ -1149,6 +1160,40 @@
             <fieldInstance>
                 <fieldInstanceProperties>
                     <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.ContactResult__c</fieldItem>
+                <identifier>RecordContactResult_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.NoteRicontattoCliente__c</fieldItem>
+                <identifier>RecordNoteRicontattoCliente_cField</identifier>
+                <visibilityRule>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Presa Appuntamento</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.ParentActivity__c</fieldItem>
@@ -1194,7 +1239,7 @@
                     <value>readonly</value>
                 </fieldInstanceProperties>
                 <fieldItem>Record.Individual_Email_Result__c</fieldItem>
-                <identifier>RecordIndividual_Email_Result__cField</identifier>
+                <identifier>RecordIndividual_Email_Result__c</identifier>
                 <visibilityRule>
                     <criteria>
                         <leftValue>{!Record.Individual_Email_Result__r.Name}</leftValue>
@@ -1469,6 +1514,29 @@
                         <leftValue>{!Record.Type__c}</leftValue>
                         <operator>EQUAL</operator>
                         <rightValue>Lavorazione Reclamo Post Survey</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>readonly</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Reason__c</fieldItem>
+                <identifier>RecordReason_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND 2</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.Case__r.Type}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Consumo Anomalo Idrico</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Gestione Back Office</rightValue>
                     </criteria>
                 </visibilityRule>
             </fieldInstance>
@@ -3738,6 +3806,10 @@
         </itemInstances>
         <itemInstances>
             <componentInstance>
+                <componentInstanceProperties>
+                    <name>showLegacyActivityComposer</name>
+                    <value>false</value>
+                </componentInstanceProperties>
                 <componentName>runtime_sales_activities:activityPanel</componentName>
                 <identifier>runtime_sales_activities_activityPanel</identifier>
                 <visibilityRule>

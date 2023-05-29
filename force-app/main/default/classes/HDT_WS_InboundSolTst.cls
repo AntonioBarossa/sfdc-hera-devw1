@@ -254,6 +254,41 @@ public with sharing class HDT_WS_InboundSolTst {
         
     }
 
+    @isTest
+    static void handleAnalisiConsumiTest(){
+        Case currentCase = [SELECT Id, PODPDRFormula__c, ContractCode__c,AccountId FROM Case WITH SECURITY_ENFORCED LIMIT 1];
+        Contact cont=[SELECT Id FROM Contact WHERE AccountId=:currentCase.AccountId WITH SECURITY_ENFORCED LIMIT 1];
+        BillingProfile__c bill = [SELECT Id,ContractAccountCode__c from BillingProfile__c limit 1];
+        //mock
+        HttpResponse httpRes = new HttpResponse();
+        httpRes.setHeader('Content-Type', 'application/json');
+        httpRes.setBody('{"status":"success","correlationId":"65d9b870-1643-11ec-9817-022a9bf2c34e","timestamp":"2021-09-15T18:38:50","data":{"testata":{"esito":"OK"},"posizioni":[{"campo":"IMPOSTE","valore":"200008867681"},{"campo":"STAMPADEL501GAS","valore":"200008867681"},{"campo":"ACCISE","valore":"200008867681"},{"campo":"CA","valore":"200008867681"},{"campo":"PRESSIONE","valore":"200008867681"},{"campo":"CALIBRO1","valore":"200008867681"},{"campo":"DESCRFATTURACOLL","valore":"200008867681"},{"campo":"OPZIONE","valore":"200008867681"},{"campo":"MOTIVOBLOCCOCALCOLO","valore":"200008867681"},{"campo":"ANNOFABBRCONT","valore":"2021"},{"campo":"DATACESSAZIONE","valore":"20210930"}]}}');
+        httpRes.setStatusCode(200);
+        httpRes.setStatus('OK');
+        Test.setMock(HttpCalloutMock.class, new HDT_WS_InboundSolTstMock(httpRes));
+        //test
+        Test.startTest();
+
+        //setup for test
+        RestRequest req = new RestRequest(); 
+		RestResponse res = new RestResponse();
+        //Map<String,String> bdy=new Map<String,String>{'method'=>'analisiConsumi','caseId'=>'currentCase.Id','phase'=>'Da Inviare','accountId'=>currentCase.AccountId,'contactId'=>cont.Id};
+        String reqString = '{ "method":"analisiConsumi", "caseId":"'+ currentCase.Id +'", "phase":"Da Inviare","accountId":"'+currentCase.AccountId+'","contactId":"'+cont.Id+'","contractAccount":"'+bill.ContractAccountCode__c+'"}';
+        req.requestURI = 'services/apexrest/SolInboundServices';
+		req.httpMethod = 'POST';
+		req.requestBody = Blob.valueOf(reqString);  
+
+		RestContext.request = req;
+		RestContext.response = res;
+
+        HDT_WS_InboundSol.doPost();
+        res = RestContext.response;
+
+        //assertions
+        System.assertNotEquals(null, res, 'res == null');
+        Test.stopTest();
+    }
+
     /*@IsTest
     static void testAnalisiConsumiFirstCall(){
         Account acc = [SELECT Id from Account limit 1];

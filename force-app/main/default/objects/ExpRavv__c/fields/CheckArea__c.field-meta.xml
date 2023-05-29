@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomField xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>CheckArea__c</fullName>
+    <externalId>false</externalId>
+    <formula>OR(IF(ISBLANK(Case__c), false, Case__r.ServicePoint__r.AreaDeclaredTARI__c &lt; Case__r.Surface__c), IF(ISBLANK(Order__c), false, Order__r.ServicePoint__r.AreaDeclaredTARI__c &lt; Order__r.Surface__c))</formula>
+    <formulaTreatBlanksAs>BlankAsZero</formulaTreatBlanksAs>
+    <label>Confronto Area</label>
+    <trackTrending>false</trackTrending>
+    <type>Checkbox</type>
+</CustomField>
