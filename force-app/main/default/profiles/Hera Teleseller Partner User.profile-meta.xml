@@ -32421,6 +32421,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__AsyncJob__c.wrts_prcgvr__Phase__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__AsyncJob__c.wrts_prcgvr__Status__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -32896,6 +32901,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>wrts_prcgvr__PhaseTransition__c.wrts_prcgvr__ProcessType__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>wrts_prcgvr__PhaseTransition__c.wrts_prcgvr__RecordTypeId__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -33027,6 +33037,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>wrts_prcgvr__ServiceLink__c.wrts_prcgvr__Subcategory__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>wrts_prcgvr__TransitionActivityTemplate__c.wrts_prcgvr__AutoPush__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
