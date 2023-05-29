@@ -390,7 +390,7 @@ export default class hdtChildOrderProcessActions extends LightningElement {
     invalidRequestPhase(ord){
         let response = (
             this.order.RecordType.DeveloperName === 'HDT_RT_Subentro' || this.order.RecordType.DeveloperName === 'HDT_RT_Attivazione'
-            || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica'
+            || this.order.RecordType.DeveloperName === 'HDT_RT_AttivazioneConModifica' || this.order.RecordType.DeveloperName === 'HDT_RT_CambioUso'
             || this.order.RecordType.DeveloperName === 'HDT_RT_ConnessioneConAttivazione' || this.order.RecordType.DeveloperName === 'HDT_RT_TemporaneaNuovaAtt'
             ) && this.order.ServicePoint__r?.RecordType.DeveloperName === 'HDT_RT_Ele' 
             && !this.order.RequestPhase__c;
