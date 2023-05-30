@@ -3,8 +3,8 @@
     <actionCalls>
         <name>Calculate_Expiration_Date</name>
         <label>Calculate Expiration Date</label>
-        <locationX>578</locationX>
-        <locationY>638</locationY>
+        <locationX>908</locationX>
+        <locationY>566</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -39,10 +39,26 @@
     </actionCalls>
     <apiVersion>49.0</apiVersion>
     <assignments>
+        <name>Assegna_Causale</name>
+        <label>Assegna Causale</label>
+        <locationX>578</locationX>
+        <locationY>1970</locationY>
+        <assignmentItems>
+            <assignToReference>CausalCalculation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Attesa</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Causal_Code</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>Assegna_Motivo_Sospensione</name>
         <label>Assegna Motivo Sospensione</label>
         <locationX>50</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SuspensionMotivation__c</assignToReference>
             <operator>Assign</operator>
@@ -58,7 +74,7 @@
         <name>Assegna_Motivo_Sospensione_0</name>
         <label>Assegna Motivo Sospensione</label>
         <locationX>314</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.SuspensionMotivation__c</assignToReference>
             <operator>Assign</operator>
@@ -74,7 +90,7 @@
         <name>AssegnaFase</name>
         <label>Assegna Fase</label>
         <locationX>182</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>GetInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -89,8 +105,8 @@
     <assignments>
         <name>AssegnaFase_0</name>
         <label>Assegna Fase</label>
-        <locationX>578</locationX>
-        <locationY>758</locationY>
+        <locationX>908</locationX>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>Get_Case_Aggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -119,8 +135,8 @@
     <assignments>
         <name>Chiusura_Activity</name>
         <label>Chiusura Activity</label>
-        <locationX>578</locationX>
-        <locationY>998</locationY>
+        <locationX>908</locationX>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>Get_Activity.wrts_prcgvr__Status__c</assignToReference>
             <operator>Assign</operator>
@@ -181,6 +197,234 @@
             <targetReference>Aggiorna_Activity</targetReference>
         </connector>
     </assignments>
+    <assignments>
+        <name>Copy_1_of_Assegna_Causale</name>
+        <label>Copy 1 of Assegna Causale</label>
+        <locationX>842</locationX>
+        <locationY>1970</locationY>
+        <assignmentItems>
+            <assignToReference>CausalCalculation</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Rettifica</stringValue>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Get_Causal_Code</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>Initialize_case_Indennizzo</name>
+        <label>Initialize case Indennizzo</label>
+        <locationX>710</locationX>
+        <locationY>1646</locationY>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.AccountId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.AccountId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.ContactId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.ContactId</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Cluster__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Indennizzi</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Type</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Type</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Origin</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Origin</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Contract__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Contract__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Phase__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>Bozza</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Status</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <stringValue>New</stringValue>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Email__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Email__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.PhoneNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.PhoneNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.ParentId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SalesCompany__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SalesCompany__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SalesCompanyCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SalesCompanyCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.DistributorCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.DistributorCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.RateCategory__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.RateCategory__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.CompanyOwner__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.CompanyOwner__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.BillingProfile__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.BillingProfile__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyCityCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyCityCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyCity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyCity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyPostalCode__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyPostalCode__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyStreetNumber__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyStreetNumber__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyStreetName__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyStreetName__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyStreetNumberExtension__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyStreetNumberExtension__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.SupplyCountry__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.SupplyCountry__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Commodity__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Commodity__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Distributor__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Distributor__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.Amount__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.IndemnityDueBilllingCorrection__c</elementReference>
+            </value>
+        </assignmentItems>
+        <assignmentItems>
+            <assignToReference>IndenmnityCase.RecordTypeId</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>Get_RecordType_indennizzo.Id</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>Create_indennizzo</targetReference>
+        </connector>
+    </assignments>
     <choices>
         <name>AltraRichiestaChoice</name>
         <choiceText>Sospeso per altra richiesta</choiceText>
@@ -198,10 +442,78 @@
         </value>
     </choices>
     <decisions>
+        <name>Causale_Indennizzo</name>
+        <label>Causale Indennizzo</label>
+        <locationX>710</locationX>
+        <locationY>1862</locationY>
+        <defaultConnector>
+            <targetReference>Copy_1_of_Assegna_Causale</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Rettifica Fatturazione</defaultConnectorLabel>
+        <rules>
+            <name>Reclamo_SCritto</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>Get_Case_Aggiornato.FirstLevelComplaintClassification__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Reclamo Scritto</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Assegna_Causale</targetReference>
+            </connector>
+            <label>Reclamo SCritto</label>
+        </rules>
+    </decisions>
+    <decisions>
+        <name>Creazione_Indennizzo_Rettifica</name>
+        <label>Creazione Indennizzo Rettifica?</label>
+        <locationX>908</locationX>
+        <locationY>1430</locationY>
+        <defaultConnectorLabel>No indennizzo</defaultConnectorLabel>
+        <rules>
+            <name>Indennizzo</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>RefreshCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>IsNull</operator>
+                <rightValue>
+                    <booleanValue>false</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RefreshCase.IndemnityDueBilllingCorrection__c</leftValueReference>
+                <operator>GreaterThan</operator>
+                <rightValue>
+                    <numberValue>0.0</numberValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RefreshCase.IndemnityConfirmed__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <booleanValue>true</booleanValue>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>RefreshCase.CorrectionRight__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Si</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>Get_RecordType_indennizzo</targetReference>
+            </connector>
+            <label>Indennizzo</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>In_sospensione_o_chiusura</name>
         <label>In sospensione o chiusura?</label>
-        <locationX>644</locationX>
-        <locationY>278</locationY>
+        <locationX>864</locationX>
+        <locationY>242</locationY>
         <defaultConnector>
             <targetReference>Richiesta_del_Cliente_accolta_0_0</targetReference>
         </defaultConnector>
@@ -255,7 +567,7 @@
         <name>Sospeso_Cliente_o_Altra_richiesta</name>
         <label>Sospeso Cliente o Altra richiesta?</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <defaultConnector>
             <targetReference>Assegna_Motivo_Sospensione_0</targetReference>
         </defaultConnector>
@@ -316,11 +628,21 @@
         </value>
     </processMetadataValues>
     <processType>Flow</processType>
+    <recordCreates>
+        <name>Create_indennizzo</name>
+        <label>Create indennizzo</label>
+        <locationX>710</locationX>
+        <locationY>1754</locationY>
+        <connector>
+            <targetReference>Causale_Indennizzo</targetReference>
+        </connector>
+        <inputReference>IndenmnityCase</inputReference>
+    </recordCreates>
     <recordLookups>
         <name>Get_Activity</name>
         <label>Get Activity</label>
-        <locationX>578</locationX>
-        <locationY>878</locationY>
+        <locationX>908</locationX>
+        <locationY>782</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Chiusura_Activity</targetReference>
@@ -347,8 +669,8 @@
     <recordLookups>
         <name>Get_Case_Aggiornato</name>
         <label>Get Case Aggiornato</label>
-        <locationX>578</locationX>
-        <locationY>518</locationY>
+        <locationX>908</locationX>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Calculate_Expiration_Date</targetReference>
@@ -366,10 +688,73 @@
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
     <recordLookups>
+        <name>Get_Causal_Code</name>
+        <label>Get Causal Code</label>
+        <locationX>710</locationX>
+        <locationY>2162</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Aggiorna_Case_Indennizzo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Cluster__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Cluster__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Process__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>Indennizzo</stringValue>
+            </value>
+        </filters>
+        <filters>
+            <field>Commodity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>Get_Case_Aggiornato.Commodity__c</elementReference>
+            </value>
+        </filters>
+        <filters>
+            <field>Subprocess__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>CausalCalculation</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>HDT_CausalCodeCalculation__mdt</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>Get_RecordType_indennizzo</name>
+        <label>Get RecordType indennizzo</label>
+        <locationX>710</locationX>
+        <locationY>1538</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Initialize_case_Indennizzo</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>DeveloperName</field>
+            <operator>EqualTo</operator>
+            <value>
+                <stringValue>HDT_RT_Indennizzo</stringValue>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>RecordType</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>GetInputCase</name>
         <label>Get Input Case</label>
-        <locationX>644</locationX>
-        <locationY>158</locationY>
+        <locationX>864</locationX>
+        <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>In_sospensione_o_chiusura</targetReference>
@@ -386,11 +771,32 @@
         <object>Case</object>
         <storeOutputAutomatically>true</storeOutputAutomatically>
     </recordLookups>
+    <recordLookups>
+        <name>RefreshCase</name>
+        <label>RefreshCase</label>
+        <locationX>908</locationX>
+        <locationY>1322</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Creazione_Indennizzo_Rettifica</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetInputCase.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
     <recordUpdates>
         <name>Aggiorna_Activity</name>
         <label>Aggiorna Activity</label>
-        <locationX>578</locationX>
-        <locationY>1118</locationY>
+        <locationX>908</locationX>
+        <locationY>998</locationY>
         <connector>
             <targetReference>Reset_Transaction</targetReference>
         </connector>
@@ -403,22 +809,58 @@
     <recordUpdates>
         <name>Aggiorna_Case</name>
         <label>Aggiorna Case</label>
-        <locationX>578</locationX>
-        <locationY>1358</locationY>
+        <locationX>908</locationX>
+        <locationY>1214</locationY>
+        <connector>
+            <targetReference>RefreshCase</targetReference>
+        </connector>
         <inputReference>Get_Case_Aggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>182</locationX>
-        <locationY>974</locationY>
+        <locationY>866</locationY>
         <inputReference>GetInputCase</inputReference>
+    </recordUpdates>
+    <recordUpdates>
+        <name>Aggiorna_Case_Indennizzo</name>
+        <label>Aggiorna Case Indennizzo</label>
+        <locationX>710</locationX>
+        <locationY>2270</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>IndenmnityCase.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CausalCode__c</field>
+            <value>
+                <elementReference>Get_Causal_Code.CausalCode__c</elementReference>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>Da Inviare</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <screens>
         <name>Reset_Transaction</name>
         <label>Reset Transaction</label>
-        <locationX>578</locationX>
-        <locationY>1238</locationY>
+        <locationX>908</locationX>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -440,7 +882,7 @@
         <name>Richiesta_del_Cliente_accolta_0</name>
         <label>Motivazione Sospensione</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -534,8 +976,8 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0</name>
         <label>Screen Errore</label>
-        <locationX>1106</locationX>
-        <locationY>398</locationY>
+        <locationX>1546</locationX>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -550,8 +992,8 @@
     <screens>
         <name>Richiesta_del_Cliente_accolta_0_0_0</name>
         <label>Richiesta Cliente Accolta</label>
-        <locationX>578</locationX>
-        <locationY>398</locationY>
+        <locationX>908</locationX>
+        <locationY>350</locationY>
         <allowBack>false</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>false</allowPause>
@@ -653,7 +1095,7 @@
         <showHeader>false</showHeader>
     </screens>
     <start>
-        <locationX>518</locationX>
+        <locationX>738</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>GetInputCase</targetReference>
@@ -669,6 +1111,21 @@
         <value>
             <elementReference>GetInputCase.Id</elementReference>
         </value>
+    </variables>
+    <variables>
+        <name>CausalCalculation</name>
+        <dataType>String</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+    </variables>
+    <variables>
+        <name>IndenmnityCase</name>
+        <dataType>SObject</dataType>
+        <isCollection>false</isCollection>
+        <isInput>false</isInput>
+        <isOutput>false</isOutput>
+        <objectType>Case</objectType>
     </variables>
     <variables>
         <name>InputCase</name>
