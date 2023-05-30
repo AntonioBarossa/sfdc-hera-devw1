@@ -5,7 +5,7 @@
         <name>AssignCaldaiaSicura</name>
         <label>AssignCaldaiaSicura</label>
         <locationX>1766</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistCaldaiaSicura</assignToReference>
             <operator>Assign</operator>
@@ -28,7 +28,7 @@
         <name>AssignContaWatt</name>
         <label>AssignContaWatt</label>
         <locationX>974</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistContaWatt</assignToReference>
             <operator>Assign</operator>
@@ -51,7 +51,7 @@
         <name>AssignEbike</name>
         <label>AssignEbike</label>
         <locationX>2822</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistEbike</assignToReference>
             <operator>Assign</operator>
@@ -67,7 +67,7 @@
         <name>AssignEE</name>
         <label>AssignEE</label>
         <locationX>622</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>isEnergiaElettrica</assignToReference>
             <operator>Assign</operator>
@@ -83,7 +83,7 @@
         <name>AssignFotoVoltaico</name>
         <label>AssignFotoVoltaico</label>
         <locationX>3614</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistFotoVoltaico</assignToReference>
             <operator>Assign</operator>
@@ -99,7 +99,7 @@
         <name>AssignGas</name>
         <label>AssignGas</label>
         <locationX>1502</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <assignmentItems>
             <assignToReference>isGas</assignToReference>
             <operator>Assign</operator>
@@ -115,7 +115,7 @@
         <name>AssignInstallazione</name>
         <label>AssignInstallazione</label>
         <locationX>1150</locationX>
-        <locationY>3038</locationY>
+        <locationY>2714</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneTermostato</assignToReference>
             <operator>Assign</operator>
@@ -131,7 +131,7 @@
         <name>AssignInstallazioneStandard</name>
         <label>AssignInstallazioneStandard</label>
         <locationX>1150</locationX>
-        <locationY>4046</locationY>
+        <locationY>3614</locationY>
         <assignmentItems>
             <assignToReference>ContainsInstallazioneStandard</assignToReference>
             <operator>Assign</operator>
@@ -147,7 +147,7 @@
         <name>AssignLED</name>
         <label>AssignLED</label>
         <locationX>446</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistLED</assignToReference>
             <operator>Assign</operator>
@@ -170,7 +170,7 @@
         <name>AssignLedKit</name>
         <label>AssignLedKit</label>
         <locationX>1150</locationX>
-        <locationY>3374</locationY>
+        <locationY>3014</locationY>
         <assignmentItems>
             <assignToReference>KitLedVariable</assignToReference>
             <operator>Assign</operator>
@@ -186,7 +186,7 @@
         <name>AssignMonopattino</name>
         <label>AssignMonopattino</label>
         <locationX>3086</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistMonopattino</assignToReference>
             <operator>Assign</operator>
@@ -202,7 +202,7 @@
         <name>AssignNoProblemAcqua</name>
         <label>AssignNoProblemAcqua</label>
         <locationX>2558</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemAcqua</assignToReference>
             <operator>Assign</operator>
@@ -225,7 +225,7 @@
         <name>AssignNoProblemGas</name>
         <label>AssignNoProblemGas</label>
         <locationX>1502</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemGas</assignToReference>
             <operator>Assign</operator>
@@ -248,7 +248,7 @@
         <name>AssignNoProblemLuce</name>
         <label>AssignNoProblemLuce</label>
         <locationX>1238</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistNoProblemLuce</assignToReference>
             <operator>Assign</operator>
@@ -271,7 +271,7 @@
         <name>AssignRicaricaPrivata</name>
         <label>AssignRicaricaPrivata</label>
         <locationX>2294</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPrivata</assignToReference>
             <operator>Assign</operator>
@@ -294,7 +294,7 @@
         <name>AssignRicaricaPubblica</name>
         <label>AssignRicaricaPubblica</label>
         <locationX>2030</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistRicaricaPubblica</assignToReference>
             <operator>Assign</operator>
@@ -310,7 +310,7 @@
         <name>AssignSanifica</name>
         <label>AssignSanifica</label>
         <locationX>3350</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistSanifica</assignToReference>
             <operator>Assign</operator>
@@ -326,7 +326,7 @@
         <name>AssignThermo</name>
         <label>AssignThermo</label>
         <locationX>710</locationX>
-        <locationY>5966</locationY>
+        <locationY>5330</locationY>
         <assignmentItems>
             <assignToReference>ExistThermo</assignToReference>
             <operator>Assign</operator>
@@ -349,7 +349,7 @@
         <name>AssignVariabiliConcatenate</name>
         <label>AssignVariabiliConcatenate</label>
         <locationX>1062</locationX>
-        <locationY>758</locationY>
+        <locationY>674</locationY>
         <assignmentItems>
             <assignToReference>NomiFamiglie_Bonus_Concatenati</assignToReference>
             <operator>Assign</operator>
@@ -386,7 +386,7 @@
         <name>CounterTermostato</name>
         <label>CounterTermostato</label>
         <locationX>1150</locationX>
-        <locationY>2702</locationY>
+        <locationY>2414</locationY>
         <assignmentItems>
             <assignToReference>TermostatoQuantity</assignToReference>
             <operator>Add</operator>
@@ -402,7 +402,7 @@
         <name>CounterWallBox</name>
         <label>CounterWallBox</label>
         <locationX>1150</locationX>
-        <locationY>3710</locationY>
+        <locationY>3314</locationY>
         <assignmentItems>
             <assignToReference>WallBoxCounter</assignToReference>
             <operator>Add</operator>
@@ -418,7 +418,7 @@
         <name>Vas_PresentiAssign</name>
         <label>Vas PresentiAssign</label>
         <locationX>2162</locationX>
-        <locationY>5726</locationY>
+        <locationY>5114</locationY>
         <assignmentItems>
             <assignToReference>VariableVasPresenti</assignToReference>
             <operator>Assign</operator>
@@ -434,7 +434,7 @@
         <name>Bonus_Decision</name>
         <label>Bonus Decision</label>
         <locationX>402</locationX>
-        <locationY>1478</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision</targetReference>
         </defaultConnector>
@@ -480,7 +480,7 @@
         <name>Bonus_Decision_0</name>
         <label>Bonus Decision</label>
         <locationX>1282</locationX>
-        <locationY>1478</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_1</targetReference>
         </defaultConnector>
@@ -526,7 +526,7 @@
         <name>Bonus_Decision_2</name>
         <label>Bonus Decision</label>
         <locationX>842</locationX>
-        <locationY>1478</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_2</targetReference>
         </defaultConnector>
@@ -572,7 +572,7 @@
         <name>Bonus_Decision_INB</name>
         <label>Bonus Decision</label>
         <locationX>1722</locationX>
-        <locationY>1478</locationY>
+        <locationY>1322</locationY>
         <defaultConnector>
             <targetReference>Promo_Decision_INB_GAS</targetReference>
         </defaultConnector>
@@ -618,7 +618,7 @@
         <name>CanaleVenditaDecision</name>
         <label>CanaleVenditaDecision</label>
         <locationX>622</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_EE_INB</targetReference>
         </defaultConnector>
@@ -643,7 +643,7 @@
         <name>CanaleVenditaDecision_0</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1502</locationX>
-        <locationY>1118</locationY>
+        <locationY>998</locationY>
         <defaultConnector>
             <targetReference>Condizioni_Economiche_Famiglie_Gas_3</targetReference>
         </defaultConnector>
@@ -668,7 +668,7 @@
         <name>CanaleVenditaDecision_1</name>
         <label>CanaleVenditaDecision</label>
         <locationX>798</locationX>
-        <locationY>4478</locationY>
+        <locationY>3998</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_EE_INB</targetReference>
         </defaultConnector>
@@ -693,7 +693,7 @@
         <name>CanaleVenditaDecision_Gas</name>
         <label>CanaleVenditaDecision</label>
         <locationX>1326</locationX>
-        <locationY>4478</locationY>
+        <locationY>3998</locationY>
         <defaultConnector>
             <targetReference>Dati_Tecnici_Famiglie_Gas_INB</targetReference>
         </defaultConnector>
@@ -718,7 +718,7 @@
         <name>ChannelDecision</name>
         <label>ChannelDecision</label>
         <locationX>182</locationX>
-        <locationY>6374</locationY>
+        <locationY>5690</locationY>
         <defaultConnector>
             <targetReference>Durata_Contratto_0</targetReference>
         </defaultConnector>
@@ -743,7 +743,7 @@
         <name>ConstainsInstallStandard</name>
         <label>ConstainsInstallStandard</label>
         <locationX>1282</locationX>
-        <locationY>3926</locationY>
+        <locationY>3506</locationY>
         <defaultConnector>
             <targetReference>CounterLoop</targetReference>
         </defaultConnector>
@@ -768,7 +768,7 @@
         <name>ContainsKitLed</name>
         <label>ContainsKitLed</label>
         <locationX>1282</locationX>
-        <locationY>3254</locationY>
+        <locationY>2906</locationY>
         <defaultConnector>
             <targetReference>ContainsWallBox</targetReference>
         </defaultConnector>
@@ -793,7 +793,7 @@
         <name>ContainsTermostato</name>
         <label>ContainsTermostato</label>
         <locationX>1282</locationX>
-        <locationY>2582</locationY>
+        <locationY>2306</locationY>
         <defaultConnector>
             <targetReference>ContainsTermostatoConInstallazione</targetReference>
         </defaultConnector>
@@ -825,7 +825,7 @@
         <name>ContainsTermostatoConInstallazione</name>
         <label>ContainsTermostatoConInstallazione</label>
         <locationX>1282</locationX>
-        <locationY>2918</locationY>
+        <locationY>2606</locationY>
         <defaultConnector>
             <targetReference>ContainsKitLed</targetReference>
         </defaultConnector>
@@ -850,7 +850,7 @@
         <name>ContainsWallBox</name>
         <label>ContainsWallBox</label>
         <locationX>1282</locationX>
-        <locationY>3590</locationY>
+        <locationY>3206</locationY>
         <defaultConnector>
             <targetReference>ConstainsInstallStandard</targetReference>
         </defaultConnector>
@@ -875,7 +875,7 @@
         <name>Promo_Decision</name>
         <label>Promo Decision</label>
         <locationX>402</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -921,7 +921,7 @@
         <name>Promo_Decision_1</name>
         <label>Promo Decision</label>
         <locationX>1282</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -974,7 +974,7 @@
         <name>Promo_Decision_2</name>
         <label>Promo Decision</label>
         <locationX>842</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -1020,7 +1020,7 @@
         <name>Promo_Decision_INB_GAS</name>
         <label>Promo Decision</label>
         <locationX>1722</locationX>
-        <locationY>1814</locationY>
+        <locationY>1622</locationY>
         <defaultConnector>
             <targetReference>GetOrderItem</targetReference>
         </defaultConnector>
@@ -1073,7 +1073,7 @@
         <name>Servizio_Decision</name>
         <label>Servizio Decision</label>
         <locationX>1062</locationX>
-        <locationY>878</locationY>
+        <locationY>782</locationY>
         <defaultConnector>
             <targetReference>AssignGas</targetReference>
         </defaultConnector>
@@ -1098,7 +1098,7 @@
         <name>Servizio_Decision_0</name>
         <label>Servizio_Decision</label>
         <locationX>1062</locationX>
-        <locationY>4358</locationY>
+        <locationY>3890</locationY>
         <defaultConnector>
             <targetReference>CanaleVenditaDecision_Gas</targetReference>
         </defaultConnector>
@@ -1123,7 +1123,7 @@
         <name>Vas_Presenti_Decision</name>
         <label>Vas Presenti Decision</label>
         <locationX>1216</locationX>
-        <locationY>5606</locationY>
+        <locationY>5006</locationY>
         <defaultConnector>
             <targetReference>Vas_PresentiAssign</targetReference>
         </defaultConnector>
@@ -1148,7 +1148,7 @@
         <name>WhichVasName</name>
         <label>WhichVasName</label>
         <locationX>2162</locationX>
-        <locationY>5846</locationY>
+        <locationY>5222</locationY>
         <defaultConnector>
             <targetReference>Order_Items_Vas_Loop</targetReference>
         </defaultConnector>
@@ -1405,7 +1405,7 @@
         <name>CounterLoop</name>
         <label>CounterLoop</label>
         <locationX>1062</locationX>
-        <locationY>2462</locationY>
+        <locationY>2198</locationY>
         <collectionReference>GetOrderItem</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1419,7 +1419,7 @@
         <name>LoopOrdiniFigliOfferta</name>
         <label>LoopOrdiniFigliOfferta</label>
         <locationX>182</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1433,7 +1433,7 @@
         <name>Order_Items_Vas_Loop</name>
         <label>Order Items Vas Loop</label>
         <locationX>182</locationX>
-        <locationY>5366</locationY>
+        <locationY>4790</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVASBonusOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -1466,7 +1466,7 @@
         <name>GetOrderItem</name>
         <label>GetOrderItem</label>
         <locationX>1062</locationX>
-        <locationY>2342</locationY>
+        <locationY>2090</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>CounterLoop</targetReference>
@@ -1487,7 +1487,7 @@
         <name>GetOrderProduct</name>
         <label>GetOrderProduct</label>
         <locationX>182</locationX>
-        <locationY>5126</locationY>
+        <locationY>4574</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>Servizi_Bundle</targetReference>
@@ -1508,7 +1508,7 @@
         <name>GetParent</name>
         <label>GetParent</label>
         <locationX>182</locationX>
-        <locationY>5006</locationY>
+        <locationY>4466</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>GetOrderProduct</targetReference>
@@ -1543,7 +1543,7 @@
         <name>Bonus_Obbligatorio</name>
         <label>Bonus Obbligatorio</label>
         <locationX>402</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1562,7 +1562,7 @@
         <name>Bonus_Obbligatorio_0</name>
         <label>Bonus Obbligatorio</label>
         <locationX>1282</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1581,7 +1581,7 @@
         <name>Bonus_Obbligatorio_1</name>
         <label>Bonus Obbligatorio</label>
         <locationX>842</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1600,7 +1600,7 @@
         <name>Bonus_Obbligatorio_2</name>
         <label>Bonus Obbligatorio</label>
         <locationX>1722</locationX>
-        <locationY>1358</locationY>
+        <locationY>1214</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1619,7 +1619,7 @@
         <name>Condizioni_Economiche_Bonus</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>270</locationX>
-        <locationY>1598</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1638,7 +1638,7 @@
         <name>Condizioni_Economiche_Bonus_0</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1150</locationX>
-        <locationY>1598</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1686,7 +1686,7 @@
         <name>Condizioni_Economiche_Bonus_2</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>710</locationX>
-        <locationY>1598</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1703,14 +1703,7 @@
                     <leftValueReference>NomiFamiglie_Bonus_Concatenati</leftValueReference>
                     <operator>Contains</operator>
                     <rightValue>
-                        <stringValue>Bonus Soluzioni Sostenibili</stringValue>
-                    </rightValue>
-                </conditions>
-                <conditions>
-                    <leftValueReference>OfferteVocalOrder_Concatenazione</leftValueReference>
-                    <operator>Contains</operator>
-                    <rightValue>
-                        <stringValue>PiuControllo Flat Casa Luce</stringValue>
+                        <stringValue>Soluzioni Sostenibili</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -1722,7 +1715,7 @@
         <name>Condizioni_Economiche_Bonus_INB_GAS</name>
         <label>Condizioni Economiche Bonus</label>
         <locationX>1590</locationX>
-        <locationY>1598</locationY>
+        <locationY>1430</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1770,7 +1763,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_1</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>402</locationX>
-        <locationY>1238</locationY>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1828,7 +1821,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_1</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’64% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 36% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1843,7 +1836,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_2</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’64% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 36% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -1897,7 +1890,7 @@
         <name>Condizioni_Economiche_Famiglie_EE_INB</name>
         <label>Condizioni Economiche Famiglie EE</label>
         <locationX>842</locationX>
-        <locationY>1238</locationY>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -1955,7 +1948,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_0</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’64% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 36% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -1970,7 +1963,7 @@
         </fields>
         <fields>
             <name>CONDIZIONI_ECONOMICHE_FAM_INB_1</name>
-            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’67% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 33% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;Il prezzo descritto, al netto delle perdite pari al 10,0%, verrà applicato ai consumi effettivi ed alle perdite di rete e rappresenta circa l’64% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i restanti corrispettivi compresi nella spesa per la materia energia, ovvero corrispettivo di commercializzazione, pari a 144 €/punto di fornitura/anno, dispacciamento, corrispettivo Integrazione Mercato Capacità pari a 0,0050 €/kWh applicato ai consumi effettivi, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 36% circa della spesa annua.&amp;nbsp;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2024,7 +2017,7 @@
         <name>Condizioni_Economiche_Famiglie_Gas</name>
         <label>Condizioni Economiche Famiglie Gas</label>
         <locationX>1282</locationX>
-        <locationY>1238</locationY>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2043,7 +2036,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 74% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 26% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>or</conditionLogic>
@@ -2058,7 +2051,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_OUT_TEXTBOX_5_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 74% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 26% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2107,7 +2100,7 @@
         <name>Condizioni_Economiche_Famiglie_Gas_3</name>
         <label>Condizioni Economiche Famiglie Gas</label>
         <locationX>1722</locationX>
-        <locationY>1238</locationY>
+        <locationY>1106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2121,7 +2114,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_2_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 74% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 26% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2136,7 +2129,7 @@
         </fields>
         <fields>
             <name>PCFLAT_GAS_INB_TEXTBOX_3_0</name>
-            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 83% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 17% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	Il prezzo fisso descritto rappresenta circa il 74% della spesa annua per un cliente domestico, escluse IVA ed imposte.&lt;/p&gt;&lt;p&gt;•	Sono a carico del cliente i corrispettivi compresi nella spesa per la materia gas naturale, ovvero quota vendita al dettaglio pari a 144 €/punto di fornitura/anno e oneri aggiuntivi come previsti dall’Autorità, e nella spesa per il trasporto, la gestione del contatore ed oneri di sistema, come previsti dall’Autorità, che insieme rappresentano il restante 26% circa della spesa annua.&lt;/p&gt;&lt;p&gt;L’incidenza percentuale dei corrispettivi indicati si riferisce all’ambito tariffario nord-orientale e può variare in relazione all’ambito tariffario di riferimento in cui è sito il punto di fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
             <visibilityRule>
                 <conditionLogic>and</conditionLogic>
@@ -2185,7 +2178,7 @@
         <name>Condizioni_Economiche_Promozioni</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>270</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2248,7 +2241,7 @@
         <name>Condizioni_Economiche_Promozioni_0</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>1150</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2333,7 +2326,7 @@
         <name>Condizioni_Economiche_Promozioni_2</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>710</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2396,7 +2389,7 @@
         <name>Condizioni_Economiche_Promozioni_INB_GAS</name>
         <label>Condizioni Economiche Promozioni</label>
         <locationX>1590</locationX>
-        <locationY>1934</locationY>
+        <locationY>1730</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -2481,7 +2474,7 @@
         <name>Conferma_Adesione_Screen</name>
         <label>Conferma Adesione Screen</label>
         <locationX>50</locationX>
-        <locationY>6614</locationY>
+        <locationY>5906</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3027,7 +3020,7 @@
         <name>Conferma_Adesione_Screen_0</name>
         <label>Conferma Adesione Screen</label>
         <locationX>314</locationX>
-        <locationY>6614</locationY>
+        <locationY>5906</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3587,7 +3580,7 @@
         <name>Dati_Tecnici_Famiglie_EE</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>666</locationX>
-        <locationY>4598</locationY>
+        <locationY>4106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3725,7 +3718,7 @@
         <name>Dati_Tecnici_Famiglie_EE_INB</name>
         <label>Dati Tecnici Famiglie EE</label>
         <locationX>930</locationX>
-        <locationY>4598</locationY>
+        <locationY>4106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -3951,7 +3944,7 @@
         <name>Dati_Tecnici_Famiglie_Gas</name>
         <label>Dati Tecnici Famiglie Gas</label>
         <locationX>1194</locationX>
-        <locationY>4598</locationY>
+        <locationY>4106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4089,7 +4082,7 @@
         <name>Dati_Tecnici_Famiglie_Gas_INB</name>
         <label>Dati Tecnici Famiglie Gas</label>
         <locationX>1458</locationX>
-        <locationY>4598</locationY>
+        <locationY>4106</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4322,7 +4315,7 @@
         <name>Durata_Contratto</name>
         <label>Durata Contratto</label>
         <locationX>50</locationX>
-        <locationY>6494</locationY>
+        <locationY>5798</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4402,7 +4395,7 @@
         </fields>
         <fields>
             <name>PCF_DURATA_CONTRATTO_FAM_TEXTBOX2_END</name>
-            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;color: rgb(68, 68, 68); background-color: rgb(255, 255, 255);&quot;&gt;•	&lt;/span&gt;Qualora la fornitura si interrompa prima del periodo scelto, ci riserviamo la possibilità di conguagliare tutti i consumi, utilizzando il prezzo del profilo con durata più prossima a quella effettiva della fornitura.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	In deroga all&apos;articolo 8 delle condizioni generali di contratto, riceverà una bolletta con periodicità &lt;strong&gt;mensile&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
+            <fieldText>&lt;p&gt;•	L’offerta può essere sostituita solo previa nostra comunicazione scritta.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Il contratto è a tempo indeterminato ed in qualsiasi momento potrà recedere entro e non oltre il giorno dieci del mese precedente la data di cambio venditore.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	In deroga all&apos;articolo 8 delle condizioni generali di contratto, riceverà una bolletta con periodicità &lt;strong&gt;mensile&lt;/strong&gt;.&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;•	Le ricordo che in caso di pagamento delle bollette oltre la data di scadenza saranno addebitati gli interessi di mora e, se la morosità persiste, le può essere sospesa la fornitura.&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
@@ -4412,7 +4405,7 @@
         <name>Durata_Contratto_0</name>
         <label>Durata Contratto</label>
         <locationX>314</locationX>
-        <locationY>6494</locationY>
+        <locationY>5798</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4502,7 +4495,7 @@
         <name>Servizi_Bundle</name>
         <label>Servizi Bundle</label>
         <locationX>182</locationX>
-        <locationY>5246</locationY>
+        <locationY>4682</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -4635,7 +4628,7 @@
         <name>HDT_FL_Script_Concatenazione_Ordini_Figli</name>
         <label>HDT_FL_Script_Concatenazione Ordini Figli</label>
         <locationX>1062</locationX>
-        <locationY>638</locationY>
+        <locationY>566</locationY>
         <connector>
             <targetReference>AssignVariabiliConcatenate</targetReference>
         </connector>
@@ -4652,7 +4645,7 @@
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <connector>
             <targetReference>HDT_Script_Introduzione</targetReference>
         </connector>
@@ -4675,7 +4668,7 @@
         <name>HDT_Script_Anagrafica</name>
         <label>HDT Script - Anagrafica</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <connector>
             <targetReference>LoopOrdiniFigliOfferta</targetReference>
         </connector>
@@ -4715,7 +4708,7 @@
         <name>HDT_Script_Introduzione</name>
         <label>HDT Script - Introduzione</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <connector>
             <targetReference>HDT_Script_Anagrafica</targetReference>
         </connector>
@@ -4753,7 +4746,7 @@
         <name>HDT_Script_VAS</name>
         <label>HDT Script - VAS</label>
         <locationX>1216</locationX>
-        <locationY>5486</locationY>
+        <locationY>4898</locationY>
         <connector>
             <targetReference>Vas_Presenti_Decision</targetReference>
         </connector>
