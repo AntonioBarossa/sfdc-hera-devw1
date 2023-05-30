@@ -7,7 +7,7 @@
 public with sharing class HDT_UTL_BpCaCreate
 {
 
-    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate();
+    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate(); 
     public final String SOBJ_KEY = 'sobj';
     public final String EVT_KEY = 'evt';
     /** This method simply calls the private method
