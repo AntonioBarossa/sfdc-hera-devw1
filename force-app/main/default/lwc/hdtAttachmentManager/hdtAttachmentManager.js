@@ -33,7 +33,7 @@ export default class HdtAttachmentManager extends LightningElement {
      //subscribe
 
     get acceptedFormats() {
-        return ['.pdf', '.png', '.jpg'];
+        return [];
     }
 
     handleAdditionalChange(event){
