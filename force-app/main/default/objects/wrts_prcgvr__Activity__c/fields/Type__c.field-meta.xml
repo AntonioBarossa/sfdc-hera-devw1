@@ -16,11 +16,6 @@
                 <label>Accettazione Voltura</label>
             </value>
             <value>
-                <fullName>Inviare Resoconto Verifica</fullName>
-                <default>false</default>
-                <label>Inviare Resoconto Verifica</label>
-            </value>
-            <value>
                 <fullName>Acconto scaduto non pagato da gestire</fullName>
                 <default>false</default>
                 <label>Acconto scaduto non pagato da gestire</label>
@@ -99,11 +94,6 @@
                 <fullName>Back Office - Supporto/Comunicazioni Urgenti</fullName>
                 <default>false</default>
                 <label>Back Office - Supporto/Comunicazioni Urgenti</label>
-            </value>
-            <value>
-                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
-                <default>false</default>
-                <label>Segnalazione HVAC e Fotovoltaico</label>
             </value>
             <value>
                 <fullName>Blocco Sollecito</fullName>
@@ -466,6 +456,11 @@
                 <label>Inviare Preventivo</label>
             </value>
             <value>
+                <fullName>Inviare Resoconto Verifica</fullName>
+                <default>false</default>
+                <label>Inviare Resoconto Verifica</label>
+            </value>
+            <value>
                 <fullName>Inviata comunicazione</fullName>
                 <default>false</default>
                 <label>Inviata comunicazione</label>
@@ -543,7 +538,7 @@
             <value>
                 <fullName>Legge 80_Istanza EE Estraneità Debiti</fullName>
                 <default>false</default>
-                <label>Legge 80_Istanza EE Estraneità Debiti</label>
+                <label>Legge 80_Istanza EE</label>
             </value>
             <value>
                 <fullName>Mancata messa a ruolo contratto</fullName>
@@ -696,6 +691,11 @@
                 <label>Protocollo - Segnalazioni</label>
             </value>
             <value>
+                <fullName>Protocollo - TARI da Ufficio</fullName>
+                <default>false</default>
+                <label>Protocollo - TARI da Ufficio</label>
+            </value>
+            <value>
                 <fullName>Protocollo - Variazioni</fullName>
                 <default>false</default>
                 <label>Protocollo - Variazioni</label>
@@ -719,11 +719,6 @@
                 <fullName>Protocollo - Web</fullName>
                 <default>false</default>
                 <label>Protocollo - Web</label>
-            </value>
-            <value>
-                <fullName>Protocollo - TARI da Ufficio</fullName>
-                <default>false</default>
-                <label>Protocollo - TARI da Ufficio</label>
             </value>
             <value>
                 <fullName>Quality Call</fullName>
@@ -839,6 +834,11 @@
                 <fullName>Scarto transitorio</fullName>
                 <default>false</default>
                 <label>Scarto transitorio</label>
+            </value>
+            <value>
+                <fullName>Segnalazione HVAC e Fotovoltaico</fullName>
+                <default>false</default>
+                <label>Segnalazione HVAC e Fotovoltaico</label>
             </value>
             <value>
                 <fullName>Segnalazioni Commissioni Agenzie</fullName>
