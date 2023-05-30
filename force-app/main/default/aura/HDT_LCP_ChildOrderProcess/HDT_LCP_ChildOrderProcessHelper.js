@@ -174,7 +174,7 @@
                                     state: {
                                         "c__accountId": accountId,
                                         "c__venditaId": venditaId,
-                                        "c_macroProcessType":'handleProcess'
+                                        "c__macroProcessType":'handleProcess'
                                     }
                                 };
             

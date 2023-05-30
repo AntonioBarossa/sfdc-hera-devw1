@@ -7,7 +7,7 @@
 public with sharing class HDT_UTL_BpCaCreate
 {
 
-    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate();
+    private HDT_QR_BpCaCreate bpCaQuery = new HDT_QR_BpCaCreate(); 
     public final String SOBJ_KEY = 'sobj';
     public final String EVT_KEY = 'evt';
     /** This method simply calls the private method
@@ -207,7 +207,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico =  tryParse(infoOrder.Account.BillingStreetNumber__c);
         request.suffissoCivico =  tryParse(infoOrder.Account.BillingStreetNumberExtension__c);
         request.cap =  tryParse(infoOrder.Account.BillingPostalCode);
-        request.provincia =  tryParse(infoOrder.Account.BillingState);
+        request.provincia =  tryParse(infoOrder.Account.BillingState?.Substring(0,2)).toUpperCase();
         request.via =  tryParse(infoOrder.Account.BillingStreetName__c);
         
         return request;
@@ -313,7 +313,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.InvoicingStreetNumberExtension__c);
         request.cap = tryParse(infoOrder.BillingProfile__r.InvoicingPostalCode__c);
-        request.provincia = tryParse(infoOrder.BillingProfile__r.InvoicingProvince__c);
+        request.provincia = tryParse(infoOrder.BillingProfile__r.InvoicingProvince__c?.Substring(0,2)).toUpperCase();
         request.via = tryParse(infoOrder.BillingProfile__r.InvoicingStreetName__c);
         request.presso = tryParse(infoOrder.BillingProfile__r.CareOf__c);
 
@@ -328,7 +328,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(billing.InvoicingStreetNumber__c);
         request.suffissoCivico = tryParse(billing.InvoicingStreetNumberExtension__c);
         request.cap = tryParse(billing.InvoicingPostalCode__c);
-        request.provincia = tryParse(billing.InvoicingProvince__c);
+        request.provincia = tryParse(billing.InvoicingProvince__c?.Substring(0,2)).toUpperCase();
         request.via = tryParse(billing.InvoicingStreetName__c);
         request.presso = tryParse(billing.CareOf__c);
 
@@ -383,7 +383,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetNumberExtension__c);
         request.cap = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingPostalCode);
-        request.provincia = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingState);
+        request.provincia = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingState?.Substring(0,2)).toUpperCase();
         request.via = tryParse(infoOrder.BillingProfile__r.DivergentSubject__r.MailingStreetName__c);
         request.comune = '';
 
@@ -398,7 +398,7 @@ public with sharing class HDT_UTL_BpCaCreate
         request.civico = tryParse(billing.DivergentSubject__r.MailingStreetNumber__c);
         request.suffissoCivico = tryParse(billing.DivergentSubject__r.MailingStreetNumberExtension__c);
         request.cap = tryParse(billing.DivergentSubject__r.MailingPostalCode);
-        request.provincia = tryParse(billing.DivergentSubject__r.MailingState);
+        request.provincia = tryParse(billing.DivergentSubject__r.MailingState?.Substring(0,2)).toUpperCase();
         request.via = tryParse(billing.DivergentSubject__r.MailingStreetName__c);
         request.comune = '';
 
