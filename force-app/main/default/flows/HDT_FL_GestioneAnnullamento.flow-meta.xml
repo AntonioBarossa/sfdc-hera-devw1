@@ -539,22 +539,6 @@
         </connector>
     </assignments>
     <assignments>
-        <name>Assegna_Motivo_0</name>
-        <label>Assegna Motivo</label>
-        <locationX>3394</locationX>
-        <locationY>782</locationY>
-        <assignmentItems>
-            <assignToReference>GetRecord.CancellationReason__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <elementReference>DefaultReason</elementReference>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Motivo_0</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
         <name>Assegna_Motivo_0_0</name>
         <label>Assegna Motivo</label>
         <locationX>4186</locationX>
@@ -847,29 +831,6 @@
         </assignmentItems>
         <connector>
             <targetReference>Decision_Voltura_Tecnica_Dati_Discordanti</targetReference>
-        </connector>
-    </assignments>
-    <assignments>
-        <name>Passa_Fase_In_Lavorazione</name>
-        <label>Passa Fase In Lavorazione</label>
-        <locationX>3130</locationX>
-        <locationY>1106</locationY>
-        <assignmentItems>
-            <assignToReference>GetRecord.Phase__c</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <assignmentItems>
-            <assignToReference>GetRecord.Status</assignToReference>
-            <operator>Assign</operator>
-            <value>
-                <stringValue>In Lavorazione</stringValue>
-            </value>
-        </assignmentItems>
-        <connector>
-            <targetReference>Aggiorna_Fase</targetReference>
         </connector>
     </assignments>
     <assignments>
@@ -1920,7 +1881,7 @@
         <name>Salva_In_Bozza_o_Conferma</name>
         <label>Salva In Bozza o Conferma?</label>
         <locationX>3394</locationX>
-        <locationY>998</locationY>
+        <locationY>890</locationY>
         <defaultConnectorLabel>Salva In Bozza</defaultConnectorLabel>
         <rules>
             <name>Conferma</name>
@@ -1940,7 +1901,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>Passa_Fase_In_Lavorazione</targetReference>
+                <targetReference>Aggiorna_Fase</targetReference>
             </connector>
             <label>Conferma</label>
         </rules>
@@ -2450,8 +2411,28 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Aggiorna_Fase</name>
         <label>Aggiorna Fase</label>
         <locationX>3130</locationX>
-        <locationY>1214</locationY>
-        <inputReference>GetRecord</inputReference>
+        <locationY>998</locationY>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>Phase__c</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <inputAssignments>
+            <field>Status</field>
+            <value>
+                <stringValue>In Lavorazione</stringValue>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Fase_0</name>
@@ -2477,11 +2458,25 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Aggiorna_Motivo_0</name>
         <label>Aggiorna Motivo</label>
         <locationX>3394</locationX>
-        <locationY>890</locationY>
+        <locationY>782</locationY>
         <connector>
             <targetReference>Salva_In_Bozza_o_Conferma</targetReference>
         </connector>
-        <inputReference>GetRecord</inputReference>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetRecord.Id</elementReference>
+            </value>
+        </filters>
+        <inputAssignments>
+            <field>CancellationReason__c</field>
+            <value>
+                <elementReference>DefaultReason</elementReference>
+            </value>
+        </inputAssignments>
+        <object>Case</object>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Motivo_0_0</name>
@@ -2790,7 +2785,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Motivo_0</targetReference>
+            <targetReference>Aggiorna_Motivo_0</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_4</name>
