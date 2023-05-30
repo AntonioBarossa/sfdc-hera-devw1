@@ -173,7 +173,8 @@
                                     },
                                     state: {
                                         "c__accountId": accountId,
-                                        "c__venditaId": venditaId
+                                        "c__venditaId": venditaId,
+                                        "c_macroProcessType":'handleProcess'
                                     }
                                 };
             
