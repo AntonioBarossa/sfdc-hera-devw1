@@ -32,6 +32,7 @@ export default class HdtAttachmentManager extends LightningElement {
      messageContext;
      //subscribe
 
+
     get acceptedFormats() {
         return [];
     }
