@@ -154,7 +154,7 @@
         //     });
         // $A.enqueueAction(action);
     },
-
+    /**AF aggiunto macroprocessType per fix 984452C*/
     redirectToComponent : function(component,accountId,venditaId,orderParent){
         var checkprocess = component.get("c.isCommunity");
         var navService = component.find("navService");
