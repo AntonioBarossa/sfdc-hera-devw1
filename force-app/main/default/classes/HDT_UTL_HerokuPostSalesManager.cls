@@ -740,6 +740,8 @@ public inherited sharing class HDT_UTL_HerokuPostSalesManager {
                 //In questo scenario restiamo in attesa del flusso 152 contenente l'allegato delle verifiche
             }else if(currentCase.Type.equalsIgnoreCase('Modifica Unita Immobiliari Componenti') || (currentCase.Type.equalsIgnoreCase('Esenzione Modifica Fognatura Depurazione') && currentCase.Subprocess__c.equalsIgnoreCase('Modifica Fognatura e Depurazione'))) {
                 //In questo scenario il set di fase "Completata" viene gestito mediante altre logiche presenti sulla classe HDT_UTL_PostSalesManager, richiamata da process click all'atterraggio sulla fase di "Esito OK da DBO" tramite classe HDT_SRV_PostSalesManager
+            }else if('Rettifica Consumi'.equalsIgnoreCase(currentCase.Type) && 'Errore Stima Consumi'.equalsIgnoreCase(currentCase.Subprocess__c)){
+                //do nothing
             }
             else{
                 //DBO non invia mai il completata

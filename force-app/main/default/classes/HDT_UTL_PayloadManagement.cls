@@ -316,13 +316,15 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
                 commodity = HDT_UTL_DocumentalManagement.getValue('Case', 'CommodityFormula__c', 0, inputs, formParams);
                 cluster = HDT_UTL_DocumentalManagement.getValue('Case', 'Cluster__c', 0, inputs, formParams);
                 companyOwner = HDT_UTL_DocumentalManagement.getValue('Case', 'CompanyOwner__c', 0, inputs, formParams);
-                List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
-                if (cityExceptionList != null && cityExceptionList.size()>0) {
-                    List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
-                    if (distributorList != null && distributorList.size()>0) {
-                        companyDesc = 'Hera Comm S.p.A.';
-                    } else {
-                        companyDesc = 'Hera Comm Marche';
+                if(cluster != 'Reclami'){ 
+                    List<HDT_HcmCityException__mdt> cityExceptionList = queryClass.getHcmCityExceptionByName(city, commodity);
+                    if (cityExceptionList != null && cityExceptionList.size()>0) {
+                        List<HDT_DistributorExceptionHC__mdt> distributorList = queryClass.getHcDistributorExceptionByName(distributorName);
+                        if (distributorList != null && distributorList.size()>0) {
+                            companyDesc = 'Hera Comm S.p.A.';
+                        } else {
+                            companyDesc = 'Hera Comm Marche';
+                        }
                     }
                 }
 
