@@ -64,6 +64,13 @@ public inherited sharing class HDT_LC_ChildOrderProcessActions {
                     orderToUpdate.put(lastStepField, lastStepData.get(lastStepField));
                 }
             }
+            /** Inserito blocco per forzare l'inserimento della data decorrenza in caso di "Attivazione Posticipata" a true
+             * In quanto in questa casistica l'algoritmo non valuta la data decorrenza
+            */
+            if(orderToUpdate.IsActivationDeferred__c != null && orderToUpdate.IsActivationDeferred__c == true && orderToUpdate.EffectiveDate__c == null)
+            {
+                throw new AuraHandledException('Se Attivazione Posticipata è necessario valorizzare la data decorrenza');
+            }
 
             if (orderToUpdate.VATfacilitationFlag__c || orderToUpdate.FacilitationExcise__c) {
                 List<ContentDocumentLink> docsIvaAccise = contDocLinkQr.getRecordsByEntityAndContentDocumentDescription(order.Id, 'ivaAccise');
