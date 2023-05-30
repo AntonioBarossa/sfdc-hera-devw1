@@ -9,7 +9,8 @@
 			OR(RecordType.DeveloperName = &apos;HDT_RT_Default&apos;, RecordType.DeveloperName = &apos;HDT_RT_AttivitaGestionali&apos;),
 			NOT(ISPICKVAL(Type__c,&apos;Validazione Documentale&apos;)),
 			NOT(ISPICKVAL(Type__c,&apos;Validazione Vocal Order&apos;)),
-			NOT(ISPICKVAL(Type__c,&apos;Documenti non validati&apos;))
+			NOT(ISPICKVAL(Type__c,&apos;Documenti non validati&apos;)),
+			NOT(ISPICKVAL(Type__c,&apos;Approvazione Offerte&apos;))
 		),
 		AND(
 			RecordType.DeveloperName = &apos;HDT_RT_Scarto&apos;, 
