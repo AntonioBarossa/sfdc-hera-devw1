@@ -1549,44 +1549,52 @@ export default class HdtTargetObjectCreateForm extends LightningElement {
                     this.alert('Dati tabella', 'Per poter salvare popolare i seguenti campi di indirizzo: ' + concatAddressErrorFields.slice(0, -2), 'error')
                 }
             }
+
             console.log('### Error Skip Dimensione' + JSON.stringify(this.selectedDistributor));
-            if (this.selectedDistributor!== undefined && !this.selectedDistributor['SkipDimensione__c'] && (this.allSubmitedFields['ServicePointCode__c'] != undefined) && (this.allSubmitedFields['ServicePointCode__c'] != '')) {
+/*             if (this.selectedDistributor!== undefined && !this.selectedDistributor['SkipDimensione__c'] && (this.allSubmitedFields['ServicePointCode__c'] != undefined) && (this.allSubmitedFields['ServicePointCode__c'] != '')) {
+                //Ele e Gas, SPCode.length = 14
                 if((this.allSubmitedFields['ServicePointCode__c'] == 'Energia Elettrica' || this.allSubmitedFields['ServicePointCode__c'] == 'Gas') && this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length != 14){
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Codice POD/PDR non valido', 'error');
+                //Inutilizzato
                 }else if(this.allSubmitedFields['ServicePointCode__c'] == 'Acqua' && (this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length < 5 || this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '').length > 20)){
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Codice POD/PDR non valido', 'error');
                 }
-            }
-            if (this.allSubmitedFields['ServicePointCode__c'] != undefined && this.allSubmitedFields['ServicePointCode__c'] != '') {
+            } */
+
+            if (this.allSubmitedFields['ServicePointCode__c'] !== undefined && this.allSubmitedFields['ServicePointCode__c'] !== '')
+            {
                 this.allSubmitedFields['ServicePointCode__c'] = this.allSubmitedFields['ServicePointCode__c'].replace(/\s/g, '');
-                if (this.allSubmitedFields['PlugPresence__c'] == 'Si' && this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' && this.allSubmitedFields['CommoditySector__c'] == 'Energia Elettrica') {
+                
+                if( this.allSubmitedFields['CommoditySector__c'] === 'Energia Elettrica' && 
+                    ( 
+                        ( this.allSubmitedFields['PlugPresence__c'] === 'Si' && this.allSubmitedFields['ServicePointCode__c'].substring(0, 2) != 'IT' ) || 
+                        this.allSubmitedFields['ServicePointCode__c'].length !== 14 
+                    ) 
+                  )
+                {
                     this.isValidFields = false;
                     this.loading = false;
                     this.alert('Errore', 'Codice POD non valido', 'error');
                 }
-                if ((!this.isNumeric(this.allSubmitedFields['ServicePointCode__c']) && this.allSubmitedFields['CommoditySector__c'] == 'Gas')) {
+                else if( this.allSubmitedFields['CommoditySector__c'] === 'Gas' && 
+                        ( this.allSubmitedFields['ServicePointCode__c'].length !== 14 || !this.isNumeric(this.allSubmitedFields['ServicePointCode__c']) ) )
+                {
                     this.isValidFields = false;
                     this.loading = false;
-                    this.alert('Errore', 'Codice PDR non valido', 'error');
+                    this.alert('Errore', 'Codice POD non valido', 'error');
                 }
-            } 
-            else if(this.recordtype.label === 'Punto Elettrico' || this.recordtype.label == 'Punto Gas'){
-                this.servicePointRetrievedData['ServicePointCode__c'] = this.servicePointRetrievedData['ServicePointCode__c'].replace(/\s/g, '');
-
-                if (this.servicePointRetrievedData['ServicePointCode__c'].substring(0, 2) != 'IT' && this.servicePointRetrievedData['CommoditySector__c'] == 'Energia Elettrica') {
+                else if( this.allSubmitedFields['CommoditySector__c'] == 'Acqua' &&
+                        ( this.allSubmitedFields['ServicePointCode__c'].length < 5 || this.allSubmitedFields['ServicePointCode__c'].length > 20) )
+                {
                     this.isValidFields = false;
                     this.loading = false;
-                    this.alert('Errore', 'Codice POD/PDR non valido', 'error');
+                    this.alert('Errore', 'Codice Punto non valido', 'error');
                 }
-                if ((this.isNumeric(this.servicePointRetrievedData['ServicePointCode__c']) != true && this.servicePointRetrievedData['CommoditySector__c'] == 'Gas')) {
-                    this.isValidFields = false;
-                    this.loading = false;
-                    this.alert('Errore', 'Codice PDR non valido', 'error');
-                }
+                
             }
 
             //Check di coerenza campi SP Gas
