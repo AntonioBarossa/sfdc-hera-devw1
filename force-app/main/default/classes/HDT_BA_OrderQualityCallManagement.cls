@@ -105,13 +105,13 @@ public with sharing class HDT_BA_OrderQualityCallManagement implements Database.
                 Boolean needsActivity = false;
                 
                 if ('CANCEL'.equalsIgnoreCase(result) && canDeleteOrder 
-                    && ((isMonitoringList.contains(o.CommercialId__c) /* && o.IsVAS__c */) || hasCancellableProduct)) {
+                    && (isMonitoringList.contains(o.CommercialId__c) || hasCancellableProduct || 'In Attesa Quality Call'.equalsIgnoreCase(o.Phase__c))) {
                         ordToUpd.Phase__c = 'Annullato';
                         ordToUpd.Status = 'Annullato';         
                         orderToCancel.add(ordToUpd.Id);
                         ordersToUpdate.add(ordToUpd);
                         continue;     
-                }else if ((isMonitoringList.contains(o.CommercialId__c)/*  && o.IsVAS__c */) || hasCancellableProduct){
+                }else if (isMonitoringList.contains(o.CommercialId__c) || hasCancellableProduct){
                     needsActivity = true;
                 }
                 if (!'Activated'.equalsIgnoreCase(o.Status)){
