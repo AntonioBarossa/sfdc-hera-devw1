@@ -26,9 +26,14 @@
                 <label>EstEnergy S.p.A.</label>
             </value>
             <value>
-                <fullName>MMS</fullName>
+                <fullName>Marche Multiservizi TARI</fullName>
                 <default>false</default>
-                <label>MMS</label>
+                <label>Marche Multiservizi TARI</label>
+            </value>
+            <value>
+                <fullName>Marche Multiservizi S.p.A</fullName>
+                <default>false</default>
+                <label>Marche Multiservizi S.p.A</label>
             </value>
         </valueSetDefinition>
     </valueSet>

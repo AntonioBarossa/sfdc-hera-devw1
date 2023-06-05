@@ -502,7 +502,30 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 				//Settare phase del case in completata
 				record.put('Phase__c', 'Completata');
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Case__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
-				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+				String privacyVersion;
+				for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
+					if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
+						privacyVersion = singleAttachment.Version__c;
+					}
+				}
+				Map<String, String> radioMap = HDT_UTL_DocumentalManagement.manageRadioBtns(listOfRadio, new List<Order>(), new Map<String,Object>());
+				if(String.isNotBlank(radioMap.get('radio1')))
+				{
+					record.put('MarketingPrivacy__c', radioMap.get('radio1'));
+					individualRecord.MarketingPrivacy__c = radioMap.get('radio1');
+					individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
+					individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
+					individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+				}
+				if(String.isNotBlank(radioMap.get('radio2')))
+				{
+					record.put('ProfilingPrivacy__c', radioMap.get('radio2'));
+					individualRecord.ProfilingPrivacy__c = radioMap.get('radio2');
+					individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
+					individualRecord.PrivacyProfilingChoiceSource__c = 'CONTRATTO';
+					individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+				}
+				/*for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					String privacyVersion;
 					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
 						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
@@ -525,7 +548,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 							individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 						}
 					}
-				}
+				}*/
 			}else{
 				List<SObject> attachmentList = HDT_QR_GenericQuery.getGenericRecords('select id,AttachmentCode__c, Description__c, Version__c from DocumentalEnvelopeAttachment__c where Order__c = \''+(String)record.get('Id')+'\'', 'DocumentalEnvelopeAttachment__c');
 				List<SObject> orderList = HDT_QR_GenericQuery.getGenericRecords('SELECT Id,Instance326__c,AccountId,DocumentLow80__c,Phase__c,DocumentalPhase__c,DocumentalProcessType__c,Cluster__c,OrderNumber FROM Order WHERE ParentOrder__c = \''+(String)record.get('Id')+'\' AND ProcessType__c != \'VAS\'', 'Order');
@@ -539,16 +562,39 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					actOtpSign.ActivityType__c = 'Plico Firmato OTP';
 					activitiesToCreate.add(actOtpSign);
 				}
-
-				for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
-					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
-					String privacyVersion;
-					// TODO DA FIXARE: attachmentList è vuoto poichè il record in contesto è l'order padre, mentre gli attachment sono sotto gli order figli.
-					for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
-						if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
-							privacyVersion = singleAttachment.Version__c;
-						}
+				String privacyVersion;
+				// TODO DA FIXARE: attachmentList è vuoto poichè il record in contesto è l'order padre, mentre gli attachment sono sotto gli order figli.
+				for(DocumentalEnvelopeAttachment__c singleAttachment : (List<DocumentalEnvelopeAttachment__c>) attachmentList){
+					if(singleAttachment.AttachmentCode__c.indexOf('PRIVACY')>-1){
+						privacyVersion = singleAttachment.Version__c;
 					}
+				}
+				Map<String, String> radioMap = HDT_UTL_DocumentalManagement.manageRadioBtns(listOfRadio, orderList, new Map<String,Object>{'envelopeId'=> envelopeId, 'record' => record});
+				if(String.isNotBlank(radioMap.get('radio1')))
+				{
+					record.put('MarketingPrivacy__c', radioMap.get('radio1'));
+					individualRecord.MarketingPrivacy__c = radioMap.get('radio1');
+					individualRecord.PrivacyMarketingChoiceDate__c = Date.today();
+					individualRecord.PrivacyMarketingChoiceSource__c = 'CONTRATTO';
+					individualRecord.MarketingPrivacyVersion__c = privacyVersion;
+				}
+				if(String.isNotBlank(radioMap.get('radio2')))
+				{
+					record.put('ProfilingPrivacy__c', radioMap.get('radio2'));
+					individualRecord.ProfilingPrivacy__c = radioMap.get('radio2');
+					individualRecord.PrivacyProfilingChoiceDate__c = Date.today();
+					individualRecord.PrivacyProfilingChoiceSource__c = 'CONTRATTO';
+					individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
+				}
+				moduliOpzionaliMancanti = (Set<String>) JSON.deserialize(radioMap.get('moduliOpzionaliMancanti'), Set<String>.class);
+				List<DocumentalActivity__c> radioBtnAct = (List<DocumentalActivity__c>) JSON.deserialize(radioMap.get('activitiesToCreate'), List<DocumentalActivity__c>.class);
+				if(!radioBtnAct.isEmpty())
+				{
+					activitiesToCreate.addAll(radioBtnAct);
+				}
+				/*for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
+					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
+
 					if(singleRadio.selected.equalsIgnoreCase('true')){
 						String value = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
 						if(singleRadio.groupName.indexOf('radio1') > -1){
@@ -628,7 +674,7 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 						
 						
 					}
-				}
+				}*/
 				try {
 					if (!moduliOpzionaliMancanti.isEmpty()) {
 						System.debug(LoggingLevel.DEBUG, 'Moduli opzionali NON compilati: ' + moduliOpzionaliMancanti);

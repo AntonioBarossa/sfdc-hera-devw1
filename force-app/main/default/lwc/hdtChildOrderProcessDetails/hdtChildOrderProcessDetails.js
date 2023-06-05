@@ -188,7 +188,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
         }
 
-        if( this.currentSection.name === 'processVariables'){
+        if( this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Acqua' && this.currentSection.name === 'processVariables' ){
             this.showMessage('', 'Attenzione! Verificare la presenza del bonus sociale idrico sul cliente.', 'warning');
         }
     }

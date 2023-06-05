@@ -22,7 +22,7 @@ public with sharing class HDT_LC_RecordEditFormSales {
     }
     @AuraEnabled
     public static wrapReturn getActivity(String caseId){
-        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,AccountId,Channel__c,CopyType__c,sendmode__c,order__c,OperationSubType__c,OperationType__c,Contract__c');
+        List<Case> caseList = caseQr.getRecordsById(new List<String>{caseId},'id,AccountId,Channel__c,CopyType__c,sendmode__c,order__c,OperationSubType__c,OperationType__c,Contract__c,Origin');
         List<wrts_prcgvr__Activity__c> listActiv = HDT_QR_ActivityCustom.getRecordByCaseId(caseId);
         Case res = new Case();
         wrapReturn wrp = new wrapReturn();

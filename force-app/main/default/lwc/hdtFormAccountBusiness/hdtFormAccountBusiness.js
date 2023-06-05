@@ -678,6 +678,11 @@ export default class HdtFormAccountBusiness extends NavigationMixin(LightningEle
                 }
             }
         }
+        if(this.markingValue === 'Azienda'){
+            if(!fiscalCode.reportValidity()){
+                isValidated=false;
+            }
+        }
 
         // if(this.birthPlace == undefined || this.birthPlace == ''){
         //     isValidated = false;

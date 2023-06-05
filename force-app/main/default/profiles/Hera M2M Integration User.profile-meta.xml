@@ -5333,6 +5333,11 @@
     </fieldPermissions>
     <fieldPermissions>
         <editable>true</editable>
+        <field>SBQQ__Quote__c.AtoReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
         <field>SBQQ__Quote__c.VasSupplyAddress__c</field>
         <readable>true</readable>
     </fieldPermissions>
@@ -11301,6 +11306,16 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>DocumentalPayloadAdministration__c.Type__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>EligibilityCriteria__c.AtoReference__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+	<fieldPermissions>
+        <editable>true</editable>
+        <field>EligibilityCriteria__c.AtoReferenceOperator__c</field>
         <readable>true</readable>
     </fieldPermissions>
     <fieldPermissions>
@@ -22087,6 +22102,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__LookupData__c.ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__LookupData__c.NumberValueLookup__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>

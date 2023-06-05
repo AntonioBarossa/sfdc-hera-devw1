@@ -158,7 +158,7 @@ public inherited sharing class HDT_UTL_SelfReadings {
         c.ServicePointCode__c = inputContract.ServicePoint__r?.ServicePointCode__c;
         
         // c.DistributorCode__c = inputContract.ServicePoint__r.Distributor__r.Code__c;
-        //c.SalesCompanyCode__c = isGas ? '10V0000160' : '13V0000000'; // TODO WAVE 2: adeguare con le altre company in ambito.
+        //c.SalesCompanyCode__c = isGas ? '10V0000160' : (!isAcqua?'13V0000000':'11-HERASPA'); // TODO WAVE 2: adeguare con le altre company in ambito.
         /**
          * Autor: AF
          * Note: Commentata riga precedente e inserita gestione Acqua.

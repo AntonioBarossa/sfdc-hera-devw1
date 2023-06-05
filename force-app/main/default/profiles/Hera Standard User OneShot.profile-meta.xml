@@ -71,11 +71,6 @@
         <visible>false</visible>
     </applicationVisibilities>
     <applicationVisibilities>
-        <application>standard__OnlineSales</application>
-        <default>false</default>
-        <visible>false</visible>
-    </applicationVisibilities>
-    <applicationVisibilities>
         <application>standard__Platform</application>
         <default>false</default>
         <visible>false</visible>
@@ -21547,6 +21542,11 @@
     <fieldPermissions>
         <editable>true</editable>
         <field>SBQQ__LookupData__c.ExternalId__c</field>
+        <readable>true</readable>
+    </fieldPermissions>
+    <fieldPermissions>
+        <editable>true</editable>
+        <field>SBQQ__LookupData__c.NumberValueLookup__c</field>
         <readable>true</readable>
     </fieldPermissions>
 	<fieldPermissions>

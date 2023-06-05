@@ -77,7 +77,7 @@ public with sharing class HDT_LC_FormAccountResidenziale {
         for(String s: accountAddressRes.keySet()){
                 //System.debug('s+ :'+s);
                 //System.debug('accountAddressRes.get(s) :'+accountAddressRes.get(s));
-                if('ShippingIsAddressVerified__c' == s){
+                if('ShippingIsAddressVerified__c' == s || 'ShippingAddressIsForeign__c' == s || 'BillingAddressIsForeign__c' == s){
                     account.put(s, accountAddressRes.get(s) == 'true' ? true : false);
                 }
                 else{ 
