@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>NewCardKey1__c</columns>
+    <columns>NewCardKey2__c</columns>
+    <columns>NewCardKey3__c</columns>
+    <columns>NewCardKey4__c</columns>
+    <columns>NewGarbageBag1__c</columns>
+    <columns>NewGarbageBag2__c</columns>
+    <columns>NewGarbageBag3__c</columns>
+    <columns>NewGarbageBag4__c</columns>
+    <columns>NewGarbageBin1__c</columns>
+    <columns>NewGarbageBin2__c</columns>
+    <filterScope>Everything</filterScope>
+    <label>All Records</label>
+</ListView>
