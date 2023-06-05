@@ -5,6 +5,10 @@
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
 */
 
+/*
+* TEST_CLASSES: HDT_SRV_SalesHandlerTst
+*/
+
 @SuppressWarnings('PMD.CyclomaticComplexity, PMD.NcssMethodCount, PMD.AvoidDeeplyNestedIfStmts')
 public with sharing class HDT_SRV_SalesHandler {
 
@@ -383,7 +387,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                     String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
                                     if(mapRequestFields.get('ANNOTAZIONI_ANN') != null && mapRequestFields.get('ANNOTAZIONI_ANN') != '')
                                     {
-                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                        String fullCancNote = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                        ord.CancellationNote__c = fullCancNote.abbreviate(255);
                                         ord.DiscardReason__c = mapRequestFields.get('ANNOTAZIONI_ANN');
                                     }
                                     if(previousPhase.indexOf('Ripensamento') >-1){
