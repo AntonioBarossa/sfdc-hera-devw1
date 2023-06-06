@@ -72,23 +72,23 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.MeterStatus__c  = 'Inattivo';
             }
         }
-        if(mapRes.get('PRESSIONE')!=null && !String.isBlank(mapRes.get('PRESSIONE'))){
+        if( String.isNotBlank(mapRes.get('PRESSIONE'))){
             spNew.Pressure__c  = Decimal.valueOf(mapRes.get('PRESSIONE'));
         }        
-        if(mapRes.get('CODICEREMI')!=null && !String.isBlank(mapRes.get('CODICEREMI'))){
+        if( String.isNotBlank(mapRes.get('CODICEREMI'))){
             spNew.RemiCode__c = mapRes.get('CODICEREMI');
         }
-        if(mapRes.get('CALIBRO1')!=null && !String.isBlank(mapRes.get('CALIBRO1'))){
+        if( String.isNotBlank(mapRes.get('CALIBRO1'))){
             String calDevName = 'CAL_' + mapRes.get('CALIBRO1');
             HDT_CaliberTranscode__mdt cmdCaliber = HDT_CaliberTranscode__mdt.getInstance(calDevName);
             spNew.MeterClass__c = cmdCaliber != null ? cmdCaliber.SfdcFieldValue__c : '';
         }
-        if(mapRes.get('AF_CLASSE')!=null && !String.isBlank(mapRes.get('AF_CLASSE'))){
+        if( String.isNotBlank(mapRes.get('AF_CLASSE'))){
             String devName = 'AF_' + mapRes.get('AF_CLASSE');
             HDT_AfClassTranscode__mdt cmdAfClass = HDT_AfClassTranscode__mdt.getInstance(devName);
             spNew.MeterClass__c = cmdAfClass != null ? cmdAfClass.SfdcFieldValue__c : '';
         }
-        if(mapRes.get('STATO_PUNTO')!=null && !String.isBlank(mapRes.get('STATO_PUNTO'))){
+        if( String.isNotBlank(mapRes.get('STATO_PUNTO'))){
             String metStatus = spNew.MeterStatus__c;
             switch on mapRes.get('STATO_PUNTO') {
                 when 'H010', 'H030', 'H045', 'H050', 'H060' {
@@ -103,35 +103,35 @@ public with sharing class HDT_UTL_ServicePoint {
             }
             spNew.MeterStatus__c = metStatus;
         }
-        if(mapRes.get('MATRICOLA1')!=null && !String.isBlank(mapRes.get('MATRICOLA1'))){
+        if( String.isNotBlank(mapRes.get('MATRICOLA1'))){
             spNew.MeterSN__c = mapRes.get('MATRICOLA1');
         }
-        if(mapRes.get('BRANDSOCIETARIO')!=null && !String.isBlank(mapRes.get('BRANDSOCIETARIO'))){
+        if( String.isNotBlank(mapRes.get('BRANDSOCIETARIO'))){
             spNew.BrandLogo__c   = mapRes.get('BRANDSOCIETARIO');
         }
-        if(mapRes.get('DISTRIBUTORE')!=null && !String.isBlank(mapRes.get('DISTRIBUTORE'))){
+        if( String.isNotBlank(mapRes.get('DISTRIBUTORE'))){
             Account a = accountQr.getAccountByDistributorKey(mapRes.get('DISTRIBUTORE'));
             spNew.Distributor__c = a.Id != null ? a.Id : ((sp != null && sp.Distributor__c != null) ? sp.Distributor__c : null);
         }
-        if(mapRes.get('VENDITORE')!=null && !String.isBlank(mapRes.get('VENDITORE'))){
+        if( String.isNotBlank(mapRes.get('VENDITORE'))){
             String codiceVenditore = (String)mapRes.get('VENDITORE');
             List<HDT_MatriceSocietaVendita__mdt> salesCompanies = [SELECT SellerCompany__c FROM HDT_MatriceSocietaVendita__mdt WHERE SalesCompanyCode__c = :codiceVenditore WITH SECURITY_ENFORCED];
             if(!salesCompanies.isEmpty()){
                 spNew.Vendor__c = salesCompanies[0].SellerCompany__c;
             }
             spNew.SalesCompanyCode__c = codiceVenditore;
-        } else if(mapRes.get('COMPANY')!=null && !String.isBlank(mapRes.get('COMPANY'))){
+        } else if( String.isNotBlank(mapRes.get('COMPANY'))){
             /* recupero il codice società per i casi di non energy -- cr005 */
             spNew.SalesCompanyCode__c = mapRes.get('COMPANY');
         }
-        if(mapRes.get('POD')!=null && !String.isBlank(mapRes.get('POD'))){
+        if( String.isNotBlank(mapRes.get('POD'))){
             spNew.ServicePointCode__c   = mapRes.get('POD');
             spNew.Name   = mapRes.get('POD');            
         }
-        if(mapRes.get('IMPIANTO')!=null && !String.isBlank(mapRes.get('IMPIANTO'))){            
+        if( String.isNotBlank(mapRes.get('IMPIANTO'))){            
             spNew.SAPImplantCode__c = mapRes.get('IMPIANTO');
         }
-        if(mapRes.get('DESCRCOMM')!=null && !String.isBlank(mapRes.get('DESCRCOMM'))){            
+        if( String.isNotBlank(mapRes.get('DESCRCOMM'))){            
             if(mapRes.get('DESCRCOMM')== 'Energia elettrica'){
                 spNew.CommoditySector__c = 'Energia Elettrica';
                 spNew.RecordTypeId = qrRecordType.getRecordTypeIdByName('HDT_RT_Ele');
@@ -192,13 +192,13 @@ public with sharing class HDT_UTL_ServicePoint {
         else if(mapRes.get('MOTGARANZIAFORN') == ''){            
             spNew.Disconnectable__c = 'No';
         }        
-        if(mapRes.get('RESELLER')!=null && !String.isBlank(mapRes.get('RESELLER'))){
+        if( String.isNotBlank(mapRes.get('RESELLER'))){
             spNew.isReseller__c = mapRes.get('RESELLER') == 'X';
         }
         else{
             spNew.isReseller__c = false;
         }
-        if(mapRes.get('DATACESSAZIONE') !=null && !String.isBlank(mapRes.get('DATACESSAZIONE')))
+        if( String.isNotBlank(mapRes.get('DATACESSAZIONE')))
         {
             if(mapRes.get('DATACESSAZIONE') == '99991231' || Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8)) > System.today())
             {
@@ -209,7 +209,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.SapContractStatus__c = 'Cessato';
             }
         }
-        if(mapRes.get('DATACESSAZIONE')!=null && !String.isBlank(mapRes.get('DATACESSAZIONE'))){
+        if( String.isNotBlank(mapRes.get('DATACESSAZIONE'))){
             if(mapRes.get('DATACESSAZIONE') != '99991231' && mapRes.get('DATACESSAZIONE').length()== 8 ){
                 Date d = Date.valueOf(mapRes.get('DATACESSAZIONE').substring(0,4)+'-'+mapRes.get('DATACESSAZIONE').substring(4,6)+'-'+mapRes.get('DATACESSAZIONE').substring(6,8));
                 if(d > date.today()){
@@ -250,7 +250,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.PayPurification__c = 'Si - Ridotta';                
             }
         }
-        if(mapRes.get('AFPAGA_FOG')!=null && !String.isBlank(mapRes.get('AFPAGA_FOG'))){
+        if( String.isNotBlank(mapRes.get('AFPAGA_FOG'))){
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFPAGA_FOG')))== 0) {
                 spNew.PaySewer__c = 'No - Esente';                
             }
@@ -258,7 +258,7 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.PaySewer__c = 'Si - Paga';                
             }
         }
-        if(mapRes.get('AFP_DEP355')!=null && !String.isBlank(mapRes.get('AFP_DEP355'))){
+        if( String.isNotBlank(mapRes.get('AFP_DEP355'))){
             if(integer.valueOf(Decimal.valueOf(mapRes.get('AFP_DEP355')))== 0) {
                 spNew.PurificationInfoOnTheInvoice__c = 'Utenza non servita';                
             }
@@ -272,166 +272,166 @@ public with sharing class HDT_UTL_ServicePoint {
                 spNew.PurificationInfoOnTheInvoice__c = 'Utenza temporaneamente non servita';                
             }
         }        
-        if(mapRes.get('CODICE_ATECO')!=null && !String.isBlank(mapRes.get('CODICE_ATECO'))){
+        if( String.isNotBlank(mapRes.get('CODICE_ATECO'))){
             spNew.IstatCode__c = mapRes.get('CODICE_ATECO');
         }
-        if(mapRes.get('TUCATCOM00')!=null && !String.isBlank(mapRes.get('TUCATCOM00'))){
+        if( String.isNotBlank(mapRes.get('TUCATCOM00'))){
             spNew.RonchiCategoryCode__c = mapRes.get('TUCATCOM00');
         }
-        if(mapRes.get('TUSCATCOM0')!=null && !String.isBlank(mapRes.get('TUSCATCOM0'))){
+        if( String.isNotBlank(mapRes.get('TUSCATCOM0'))){
             spNew.RonchiSubCategoryCode__c = mapRes.get('TUSCATCOM0');
         }
-        if(mapRes.get('TRATAUNICA')!=null && !String.isBlank(mapRes.get('TRATAUNICA'))){
+        if( String.isNotBlank(mapRes.get('TRATAUNICA'))){
             spNew.SingleInstallmentOperating__c = mapRes.get('TRATAUNICA');
         }
-        if(mapRes.get('DI_TRATAUNICA')!=null && !String.isBlank(mapRes.get('DI_TRATAUNICA'))){
+        if( String.isNotBlank(mapRes.get('DI_TRATAUNICA'))){
             spNew.SingleInstallmentValidityDate__c = date.parse(mapRes.get('DI_TRATAUNICA'));
         }
-        if(mapRes.get('AFVASCA_AC')!=null && !String.isBlank(mapRes.get('AFVASCA_AC'))){
+        if( String.isNotBlank(mapRes.get('AFVASCA_AC'))){
             spNew.HasAccumulationTanks__c = Boolean.valueOf(mapRes.get('AFVASCA_AC'));
         }
-        if(mapRes.get('CONSUMOCAPDR')!=null && !String.isBlank(mapRes.get('CONSUMOCAPDR'))){            
+        if( String.isNotBlank(mapRes.get('CONSUMOCAPDR'))){            
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOCAPDR')));
         }
-        if(mapRes.get('CONSUMOANNUOEE')!=null && !String.isBlank(mapRes.get('CONSUMOANNUOEE'))){         
+        if( String.isNotBlank(mapRes.get('CONSUMOANNUOEE'))){         
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('CONSUMOANNUOEE')));
         }
-        if(mapRes.get('AQCNS_ANNO')!=null && !String.isBlank(mapRes.get('AQCNS_ANNO'))){         
+        if( String.isNotBlank(mapRes.get('AQCNS_ANNO'))){         
             spNew.AnnualConsumption__c = integer.valueOf(Decimal.valueOf(mapRes.get('AQCNS_ANNO')));
         }
-        if(mapRes.get('TFNCE0000')!=null && !String.isBlank(mapRes.get('TFNCE0000'))){      
-            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCE0000'));
+        if( String.isNotBlank(mapRes.get('TFNCE00000'))){      
+            spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCE00000'));
         } 
-        if(mapRes.get('TFNCDC0000')!=null && !String.isBlank(mapRes.get('TFNCDC0000'))){    
+        if( String.isNotBlank(mapRes.get('TFNCDC0000'))){    
             spNew.NumberOfTARIMembers__c = (mapRes.get('TFNCDC0000'));
         }        
-        if(mapRes.get('AFNUM_COMP')!=null && !String.isBlank(mapRes.get('AFNUM_COMP'))){         
+        if( String.isNotBlank(mapRes.get('AFNUM_COMP'))){         
             spNew.NumberOfCommunityMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNUM_COMP')));
         }        
-        if(mapRes.get('AFUADRS')!=null && !String.isBlank(mapRes.get('AFUADRS'))){         
+        if( String.isNotBlank(mapRes.get('AFUADRS'))){         
             spNew.ResidentDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUADRS')));
         }
-        if(mapRes.get('AFUADNR')!=null && !String.isBlank(mapRes.get('AFUADNR'))){         
+        if( String.isNotBlank(mapRes.get('AFUADNR'))){         
             spNew.NotResidentDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUADNR')));
         }
-        if(mapRes.get('AFUND')!=null && !String.isBlank(mapRes.get('AFUND'))){         
+        if( String.isNotBlank(mapRes.get('AFUND'))){         
             spNew.NotDomesticHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUND')));
         }
-        if(mapRes.get('AFUNDA')!=null && !String.isBlank(mapRes.get('AFUNDA'))){         
+        if( String.isNotBlank(mapRes.get('AFUNDA'))){         
             spNew.AgriculturalHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDA')));
         }
-        if(mapRes.get('AFUNDC')!=null && !String.isBlank(mapRes.get('AFUNDC'))){         
+        if( String.isNotBlank(mapRes.get('AFUNDC'))){         
             spNew.CommercialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDC')));
         }
-        if(mapRes.get('AFUNDI')!=null && !String.isBlank(mapRes.get('AFUNDI'))){         
+        if( String.isNotBlank(mapRes.get('AFUNDI'))){         
             spNew.IndustrialHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDI')));
         }
-        if(mapRes.get('AFUNDZ')!=null && !String.isBlank(mapRes.get('AFUNDZ'))){
+        if( String.isNotBlank(mapRes.get('AFUNDZ'))){
             spNew.ZootechnicalHousingUnit__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFUNDZ')));
         }
-        if(mapRes.get('AFBI_DIAM1')!=null && !String.isBlank(mapRes.get('AFBI_DIAM1'))){         
+        if( String.isNotBlank(mapRes.get('AFBI_DIAM1'))){         
             spNew.HydrantMouthsNumberA__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM1')));
         }
-        if(mapRes.get('AFBI_DIAM2')!=null && !String.isBlank(mapRes.get('AFBI_DIAM2'))){         
+        if( String.isNotBlank(mapRes.get('AFBI_DIAM2'))){         
             spNew.HydrantMouthsNumberB__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFBI_DIAM2')));
         }
-        if(mapRes.get('AF_BOC_IDR')!=null && !String.isBlank(mapRes.get('AF_BOC_IDR'))){         
+        if( String.isNotBlank(mapRes.get('AF_BOC_IDR'))){         
             spNew.HydrantMouthsNumber__c = integer.valueOf(Decimal.valueOf(mapRes.get('AF_BOC_IDR')));
         }
-        if(mapRes.get('SUP_DICH')!=null && !String.isBlank(mapRes.get('SUP_DICH'))){         
+        if( String.isNotBlank(mapRes.get('SUP_DICH'))){         
             spNew.AreaDeclaredTARI__c = integer.valueOf(Decimal.valueOf(mapRes.get('SUP_DICH')));
         }
-        if(mapRes.get('SUP_RILEVANTE')!=null && !String.isBlank(mapRes.get('SUP_RILEVANTE'))){         
+        if( String.isNotBlank(mapRes.get('SUP_RILEVANTE'))){         
             spNew.AreaRelevantForCalculation__c  = integer.valueOf(Decimal.valueOf(mapRes.get('SUP_RILEVANTE')));
         }
-        if(mapRes.get('MERCATO')!=null && !String.isBlank(mapRes.get('MERCATO'))){
+        if( String.isNotBlank(mapRes.get('MERCATO'))){
             String mercato =  mapRes.get('MERCATO').containsIgnoreCase('STGM') ? 'STGM' : mapRes.get('MERCATO').substring(0,1) + mapRes.get('MERCATO').substring(1,mapRes.get('MERCATO').length()).toLowerCase();
             Boolean isStg = mapRes.get('DEFINIZIONEOFFERTA')!=null && mapRes.get('DEFINIZIONEOFFERTA').containsIgnoreCase('STG_')? true:false;
             mercato = mercato.containsIgnoreCase('Tutela')?'Regolamentato':mercato;
             mercato = isStg ? 'Regolamentato':mercato;
             spNew.MarketOrigin__c = mercato;
         }
-        if(mapRes.get('FLAGTELEGESTIBILE')!=null && !String.isBlank(mapRes.get('FLAGTELEGESTIBILE'))){            
+        if( String.isNotBlank(mapRes.get('FLAGTELEGESTIBILE'))){            
             spNew.IsRemoteManaged__c = 'X'.equalsIgnoreCase(mapRes.get('FLAGTELEGESTIBILE'));
         }
-        if(mapRes.get('POTENZACONTRATTUALE')!=null && !String.isBlank(mapRes.get('POTENZACONTRATTUALE'))){
+        if( String.isNotBlank(mapRes.get('POTENZACONTRATTUALE'))){
             Decimal d = decimal.valueOf(mapRes.get('POTENZACONTRATTUALE'));
             spNew.PowerContractual__c = d;
         }
-        if(mapRes.get('POTENZATECNICA')!=null && !String.isBlank(mapRes.get('POTENZATECNICA'))){            
+        if( String.isNotBlank(mapRes.get('POTENZATECNICA'))){            
             Decimal d = decimal.valueOf(mapRes.get('POTENZATECNICA'));
             spNew.PowerAvailable__c  =d;            
         }
-        if(mapRes.get('TENSIONE')!=null && !String.isBlank(mapRes.get('TENSIONE'))){            
+        if( String.isNotBlank(mapRes.get('TENSIONE'))){            
             spNew.VoltageLevel__c = mapRes.get('TENSIONE');
         }
-        if(mapRes.get('RESIDENTEINDFORN')!=null && !String.isBlank(mapRes.get('RESIDENTEINDFORN'))){            
+        if( String.isNotBlank(mapRes.get('RESIDENTEINDFORN'))){            
             spNew.Resident__c = mapRes.get('RESIDENTEINDFORN') == 'SI' ? true : false;
         }        
-        if(mapRes.get('CAP')!=null && !String.isBlank(mapRes.get('CAP'))){            
+        if( String.isNotBlank(mapRes.get('CAP'))){            
             spNew.SupplyPostalCode__c = mapRes.get('CAP');
         }
-        if(mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))){
+        if( String.isNotBlank(mapRes.get('VIA'))){
             spNew.SupplyStreet__c  = mapRes.get('VIA');
             spNew.SupplyStreetName__c = mapRes.get('VIA');
         }
-        if(mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))){
+        if( String.isNotBlank(mapRes.get('CIVICO'))){
             spNew.SupplyStreetNumber__c  = mapRes.get('CIVICO');
         }
-        if(mapRes.get('LOCALITA')!=null && !String.isBlank(mapRes.get('LOCALITA'))){
+        if( String.isNotBlank(mapRes.get('LOCALITA'))){
             spNew.SupplyCity__c  = mapRes.get('LOCALITA');
             if(!String.isBlank(spNew.CommoditySector__c) && 'Acqua'.equalsIgnoreCase(spNew.CommoditySector__c)){
                 List<TownATOTable__c> atoList = [Select id, ATO__c from TownATOTable__c where Town__c =: spNew.SupplyCity__c WITH SECURITY_ENFORCED];
                 spNew.ATO__c = (!atoList.isEmpty() && String.isNotBlank(atoList[0].ATO__c)) ? atoList[0].ATO__c : '';
             }
         }
-        if(mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA'))){
+        if( String.isNotBlank(mapRes.get('CODICEVIA'))){
             spNew.SupplySAPStreetCode__c = mapRes.get('CODICEVIA');
             spNew.SupplyStreetCode__c = mapRes.get('CODICEVIA');
         }
-        if(mapRes.get('REGIONE')!=null && !String.isBlank(mapRes.get('REGIONE'))){
+        if( String.isNotBlank(mapRes.get('REGIONE'))){
             spNew.SupplyProvince__c = mapRes.get('REGIONE');
         }
-        if(mapRes.get('CODIFICALOCALITA')!=null && !String.isBlank(mapRes.get('CODIFICALOCALITA'))){
+        if( String.isNotBlank(mapRes.get('CODIFICALOCALITA'))){
             spNew.SupplySAPCityCode__c = mapRes.get('CODIFICALOCALITA');
             spNew.SupplyCityCode__c = mapRes.get('CODIFICALOCALITA');
         }
-        if(mapRes.get('CODICEPAESE')!=null && !String.isBlank(mapRes.get('CODICEPAESE'))){
+        if( String.isNotBlank(mapRes.get('CODICEPAESE'))){
             spNew.SupplyCountry__c = mapRes.get('CODICEPAESE') == 'IT' ? 'Italia' : 'Estero';
         }
-        if(mapRes.get('LOCALITA')!=null && !String.isBlank(mapRes.get('LOCALITA'))
-           && mapRes.get('CIVICO')!=null && !String.isBlank(mapRes.get('CIVICO'))
-           && mapRes.get('CODIFICALOCALITA')!=null && !String.isBlank(mapRes.get('CODIFICALOCALITA'))
-           && mapRes.get('VIA')!=null && !String.isBlank(mapRes.get('VIA'))
-           && mapRes.get('CODICEVIA')!=null && !String.isBlank(mapRes.get('CODICEVIA')))
+        if( String.isNotBlank(mapRes.get('LOCALITA'))
+           && String.isNotBlank(mapRes.get('CIVICO'))
+           && String.isNotBlank(mapRes.get('CODIFICALOCALITA'))
+           && String.isNotBlank(mapRes.get('VIA'))
+           && String.isNotBlank(mapRes.get('CODICEVIA')))
         {
             spNew.SupplyisAddressVerified__c = true;
         }
-        if(mapRes.get('AFNCOMP')!=null && !String.isBlank(mapRes.get('AFNCOMP'))){
+        if( String.isNotBlank(mapRes.get('AFNCOMP'))){
             spNew.NumberOfFamilyMembers__c = integer.valueOf(Decimal.valueOf(mapRes.get('AFNCOMP')));
         }
-        if(mapRes.get('PADRE-FIGLIO')!=null && !String.isBlank(mapRes.get('PADRE-FIGLIO'))){
+        if( String.isNotBlank(mapRes.get('PADRE-FIGLIO'))){
             spNew.MeterRelation__c = mapRes.get('PADRE-FIGLIO');
         }
-        if (mapRes.get('CATEGORIATARIFFA')!=null && !String.isBlank(mapRes.get('CATEGORIATARIFFA'))){
+        if( String.isNotBlank(mapRes.get('CATEGORIATARIFFA'))){
             List<AllineamentoGAA__c> listAllineamentoGaa = [SELECT Frequenza__c FROM AllineamentoGAA__c WHERE Comune__c =: spNew.SupplyCity__c AND Rate_Category__c =: mapRes.get('CATEGORIATARIFFA') WITH SECURITY_ENFORCED];
     
             if(listAllineamentoGaa.size() > 0){
                 spNew.AlignmentFrequencyGAA__c = listAllineamentoGaa.get(0).Frequenza__c;
             }
         }
-        if(mapRes.get('FATTURACOLLETTIVA')!=null && !String.isBlank(mapRes.get('FATTURACOLLETTIVA'))){
+        if( String.isNotBlank(mapRes.get('FATTURACOLLETTIVA'))){
             spNew.AggregateBilling__c = mapRes.get('FATTURACOLLETTIVA');
         }
 
-        if(mapRes.get('DATAULTIMAGAA')!=null && !String.isBlank(mapRes.get('DATAULTIMAGAA'))){
+        if( String.isNotBlank(mapRes.get('DATAULTIMAGAA'))){
             spNew.DateOfLastAlignmentGAA__c = dataEnrich.alignGaaDate(String.valueOf(spNew.DateOfLastAlignmentGAA__c), mapRes.get('DATAULTIMAGAA'));
         }
 
         //Reset flag di check creazione activity di "Modifica Indirizzo Fornitura", tale flag verrà impostato a true nel caso in cui si vada a modificare l'indirizzo sul form del service point.
         spNew.IsAddressChanged__c = false;
 
-        if(mapRes.get('CA')!=null && !String.isBlank(mapRes.get('CA'))){
+        if( String.isNotBlank(mapRes.get('CA'))){
             spNew.SAPContractAccountCode__c = mapRes.get('CA');
         }
         Map<String, Account> accBpMap = new Map<String, Account>();

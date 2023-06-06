@@ -261,7 +261,7 @@ public with sharing class HDT_UTL_ServicePointTst {
             positions.add(position);
                         
             position = new HDT_WS_ArrichmentDataEntityResponse.HDT_WRP_PosizioniResponseObject();
-            position.campo = 'TFNCE0000';
+            position.campo = 'TFNCE00000';
             position.valore = '2';
             positions.add(position);
                         

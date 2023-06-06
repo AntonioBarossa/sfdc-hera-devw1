@@ -503,8 +503,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                     else if(previousPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica'))
                                     {
                                         ord.Phase__c = previousPhase;
-                                    }
-                                    else
+                                    }else if ('Annullato SII'.equalsIgnoreCase(previousPhase) && 'Annullato'.equalsIgnoreCase(ordRetrieved.Status)){
+                                        ord.Phase__c = previousPhase;
+                                    }else
                                     {
                                         Boolean redirectPreventivo = false;
                                         switch on ordRetrieved.ProcessType__c{
