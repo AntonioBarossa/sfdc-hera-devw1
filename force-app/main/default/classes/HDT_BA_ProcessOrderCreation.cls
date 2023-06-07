@@ -31,6 +31,7 @@ public inherited sharing class HDT_BA_ProcessOrderCreation implements Database.B
         HDT_UTL_ProcessExecution cls;
         Type t = Type.forName(orderCreationClass);
         cls = (HDT_UTL_ProcessExecution)t.newInstance();
+        cls.setRequestId(this.idLoaderRequest);
         cls.setProcess(process);
         cls.setMassiveLoaderRequestItemList(scope);
         

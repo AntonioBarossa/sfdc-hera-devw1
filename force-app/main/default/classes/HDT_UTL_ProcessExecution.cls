@@ -20,17 +20,19 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public Boolean isTest = false;
     public Boolean isDiscountAndBonusProcess = false;
     public Boolean isMucProcess = false;
-    public Id fileUploadedByUserId;
+    //public Id fileUploadedByUserId;
+    public MassiveLoaderRequest__c currentRequest;
 
     public void setRequestId(Id requestId){
         this.requestId = requestId;
-        fileUploadedByUserId = [
-            SELECT Id, CreatedById
+        currentRequest = [
+            SELECT Id, CreatedById, CreatedBy.CreatorGroup__c, CreatedBy.LoginChannel__c
             FROM MassiveLoaderRequest__c
             WHERE Id = :requestId
             WITH SECURITY_ENFORCED
             LIMIT 1
-        ].CreatedById;
+        ];
+
         System.debug(LoggingLevel.DEBUG, '>>> set this requestId: ' + this.requestId);
     }
 
@@ -346,7 +348,7 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
         newCase.Phase__c = 'Bozza';
         //Rimosso per W2 
         //newCase.CompanyOwner__c = 'HERA COMM';
-        newCase.CreatedById = fileUploadedByUserId;
+        newCase.CreatedById = currentRequest.CreatedById;
         return newCase;
     }
 
