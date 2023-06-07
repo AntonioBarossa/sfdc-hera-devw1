@@ -683,6 +683,7 @@ export default class HdtAdvancedSearch extends LightningElement {
                         }else{
                             this.confirmButtonDisabled = false;
                         }
+                        found = false;
                     }
                 }
                 console.log('this.originalData >>> ' + this.originalData);
