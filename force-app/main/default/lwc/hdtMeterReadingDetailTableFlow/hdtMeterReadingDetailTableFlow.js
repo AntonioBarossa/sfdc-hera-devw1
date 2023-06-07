@@ -38,7 +38,6 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
     messageContext;
 
     handleSelection(data){
-        console.log('@@@ea subscribe event', data);
         if (this.sessionId){
             const payload = {
                 name : 'selectedReadingDateString',
@@ -166,7 +165,6 @@ export default class HdtMeterReadingDetailTableFlow extends LightningElement {
             this.dispatchEvent(attributeChangeEventDisputed);
         }
         //CR ALM_1966
-        console.log('@@@ea subscribe event call', readingDate);
         this.handleSelection(readingDate);
     }
 
