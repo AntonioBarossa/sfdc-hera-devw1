@@ -476,6 +476,12 @@
         <label>Giro contatore da gestire</label>
     </customValue>
     <customValue>
+        <fullName>Green Loyalty</fullName>
+        <default>false</default>
+        <label>Green Loyalty</label>
+    </customValue>
+    
+    <customValue>
         <fullName>In attesa documentazione</fullName>
         <default>false</default>
         <label>In attesa documentazione</label>

@@ -490,6 +490,21 @@
         <default>false</default>
         <label>Pagamento Online</label>
     </customValue>
+    <customValue>
+        <fullName>GreenLoyalty_assegnazione punteggio</fullName>
+        <default>false</default>
+        <label>GreenLoyalty_assegnazione punteggio</label>
+    </customValue>
+    <customValue>
+        <fullName>GreenLoyalty_info generali advice punteggio</fullName>
+        <default>false</default>
+        <label>GreenLoyalty_info generali advice punteggio</label>
+    </customValue>
+    <customValue>
+        <fullName>GreenLoyalty_stato premi</fullName>
+        <default>false</default>
+        <label>GreenLoyalty_stato premi</label>
+    </customValue>
     <masterLabel>Dettaglio Informazioni</masterLabel>
     <sorted>false</sorted>
 </GlobalValueSet>

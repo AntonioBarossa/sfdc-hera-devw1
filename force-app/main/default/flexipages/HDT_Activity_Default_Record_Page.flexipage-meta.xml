@@ -1541,6 +1541,62 @@
                 </visibilityRule>
             </fieldInstance>
         </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.Channel__c</fieldItem>
+                <identifier>RecordChannel_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_ComfortQualityCall</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Comfort Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Quality Call</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
+        <itemInstances>
+            <fieldInstance>
+                <fieldInstanceProperties>
+                    <name>uiBehavior</name>
+                    <value>none</value>
+                </fieldInstanceProperties>
+                <fieldItem>Record.SignMode__c</fieldItem>
+                <identifier>RecordSignMode_cField</identifier>
+                <visibilityRule>
+                    <booleanFilter>1 AND (2 OR 3)</booleanFilter>
+                    <criteria>
+                        <leftValue>{!Record.RecordType.DeveloperName}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>HDT_RT_ComfortQualityCall</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Comfort Call</rightValue>
+                    </criteria>
+                    <criteria>
+                        <leftValue>{!Record.Type__c}</leftValue>
+                        <operator>EQUAL</operator>
+                        <rightValue>Quality Call</rightValue>
+                    </criteria>
+                </visibilityRule>
+            </fieldInstance>
+        </itemInstances>
         <name>Facet-89e09c30-566d-4833-be03-3b926e0c4b28</name>
         <type>Facet</type>
     </flexiPageRegions>
@@ -3382,7 +3438,7 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-6950295a-6426-4e69-8c1b-ffe9478cbc5d</value>
-                </componentInstanceProperties>
+                </componentInstanceProperties>    
                 <componentInstanceProperties>
                     <name>label</name>
                     <value>Altre informazioni</value>
@@ -3407,7 +3463,7 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-ae0fbe87-2330-479b-816e-288f306c5521</value>
-                </componentInstanceProperties>
+                </componentInstanceProperties>     
                 <componentInstanceProperties>
                     <name>label</name>
                     <value>Migrazione</value>
@@ -3428,7 +3484,7 @@
                 <componentInstanceProperties>
                     <name>columns</name>
                     <value>Facet-40c6e09a-e894-4792-bb3d-29b399a3ca7d</value>
-                </componentInstanceProperties>
+                </componentInstanceProperties>  
                 <componentInstanceProperties>
                     <name>label</name>
                     <value>Integrazione QAd</value>

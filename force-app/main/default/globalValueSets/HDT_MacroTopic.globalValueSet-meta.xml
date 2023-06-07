@@ -16,6 +16,11 @@
         <label>Info modulistica</label>
     </customValue>
     <customValue>
+        <fullName>genHERAZIONI</fullName>
+        <default>false</default>
+        <label>genHERAZIONI</label>
+    </customValue>
+    <customValue>
         <fullName>Info su stato pratica</fullName>
         <default>false</default>
         <label>Info su stato pratica</label>
