@@ -87,8 +87,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('InvoicingStreetNumberExtension__c') != null? (String) caseRecord.get('InvoicingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('InvoicingPostalCode__c');
-       // requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
-        requestBody.ordine.indirizzo.provincia = caseRecord.InvoicingProvince__c.substring(0,2).toUpperCase();
+        requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('InvoicingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
         requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
@@ -162,8 +161,7 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.civico = (String) caseRecord.get('InvoicingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('InvoicingStreetNumberExtension__c') != null? (String) caseRecord.get('InvoicingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('InvoicingPostalCode__c');
-     //   requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
-        requestBody.ordine.indirizzo.provincia = caseRecord.InvoicingProvince__c.substring(0,2).toUpperCase();
+        requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('InvoicingProvince__c');
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('InvoicingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
         //requestBody.ordine.indirizzo.presso = (String) caseRecord.get('CareOf__c');
