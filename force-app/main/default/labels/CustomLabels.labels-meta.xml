@@ -550,6 +550,13 @@
         <value>Stai creando un&apos;offerta tecnica per questo prodotto</value>
     </labels>
     <labels>
+        <fullName>HDT_NegativeOutcomes</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_NegativeOutcomes</shortDescription>
+        <value>Annullato;KO definitivo;Eliminato;KO;Pratica rifiutata;KO gestito;Annullato per recesso</value>
+    </labels>
+    <labels>
         <fullName>HDT_OfferConfig_ConfigError</fullName>
         <language>it</language>
         <protected>false</protected>
@@ -611,6 +618,13 @@
         <protected>false</protected>
         <shortDescription>HDT_OfferConfig_WS_Success</shortDescription>
         <value>Offerta inviata a SAP correttamente, codice Sap:</value>
+    </labels>
+    <labels>
+        <fullName>HDT_PositiveOutcomes</fullName>
+        <language>it</language>
+        <protected>false</protected>
+        <shortDescription>HDT_PositiveOutcomes</shortDescription>
+        <value>Pratica gestita;Chiuso</value>
     </labels>
     <labels>
         <fullName>HDT_PermissionSetNameForCPQ</fullName>
