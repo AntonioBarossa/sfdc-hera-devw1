@@ -43,7 +43,7 @@
 						<div key={contact.Id} data-id={contact.Id} data-sobjtype={contact.attributes.type} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
 							<lightning-card title={contact.Name} icon-name="standard:contact">
 								<ul class="slds-m-around_medium">
-									Telefono fisso: {contact.Phone}, Cellulare:{contact.MobilePhone}, Email: {contact.Email}
+									{contact.CompanyOwner__c}, Telefono fisso: {contact.Phone}, Cellulare:{contact.MobilePhone}, Email: {contact.Email}
 								</ul>
 							</lightning-card>
 						</div>
@@ -54,7 +54,7 @@
 						<div key={lead.Id} data-id={lead.Id} data-sobjtype={lead.attributes.type} class="slds-col slds-size_1-of-1 slds-m-top_small" onclick={handleClick} onmouseover={handleMouseOver} onmouseout={handleMouseOut}>
 							<lightning-card title={lead.Name} icon-name="standard:lead">
 								<ul class="slds-m-around_medium">
-									Telefono fisso: {lead.Phone}, Cellulare:{lead.MobilePhone}, Email: {lead.Email}
+									{lead.CompanyOwner__c}, Telefono fisso: {lead.Phone}, Cellulare:{lead.MobilePhone}, Email: {lead.Email}
 								</ul>
 							</lightning-card>
 						</div>

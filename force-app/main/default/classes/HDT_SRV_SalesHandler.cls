@@ -5,6 +5,10 @@
 * @history Inserire Nome Cognome – Data Modifica – Descrizione della modifica
 */
 
+/*
+* TEST_CLASSES: HDT_SRV_SalesHandlerTst
+*/
+
 @SuppressWarnings('PMD.CyclomaticComplexity, PMD.NcssMethodCount, PMD.AvoidDeeplyNestedIfStmts')
 public with sharing class HDT_SRV_SalesHandler {
 
@@ -383,7 +387,8 @@ public with sharing class HDT_SRV_SalesHandler {
                                     String cancellationNote = ordRetrieved.CancellationNote__c != null ? ordRetrieved.CancellationNote__c : '';
                                     if(mapRequestFields.get('ANNOTAZIONI_ANN') != null && mapRequestFields.get('ANNOTAZIONI_ANN') != '')
                                     {
-                                        ord.CancellationNote__c = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                        String fullCancNote = nowDateFormat + ': ' + mapRequestFields.get('ANNOTAZIONI_ANN') + '\n' + cancellationNote;
+                                        ord.CancellationNote__c = fullCancNote.abbreviate(255);
                                         ord.DiscardReason__c = mapRequestFields.get('ANNOTAZIONI_ANN');
                                     }
                                     if(previousPhase.indexOf('Ripensamento') >-1){
@@ -498,8 +503,9 @@ public with sharing class HDT_SRV_SalesHandler {
                                     else if(previousPhase.equalsIgnoreCase('Dati Tecnici Ricevuti') && ordRetrieved.ProcessType__c.containsIgnoreCase('Prima Attivazione con modifica'))
                                     {
                                         ord.Phase__c = previousPhase;
-                                    }
-                                    else
+                                    }else if ('Annullato SII'.equalsIgnoreCase(previousPhase) && 'Annullato'.equalsIgnoreCase(ordRetrieved.Status)){
+                                        ord.Phase__c = previousPhase;
+                                    }else
                                     {
                                         Boolean redirectPreventivo = false;
                                         switch on ordRetrieved.ProcessType__c{

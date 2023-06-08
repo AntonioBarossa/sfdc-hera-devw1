@@ -41,7 +41,8 @@ public inherited sharing class HDT_UTL_CreateGenericCase {
                 'CreatedById',
                 'OwnerId',
                 'LastModifiedById',
-                'Origin'
+                'Origin',
+                'GlobalMigrationKey__c'
             };
         Case childCase = new Case();
         
