@@ -729,7 +729,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         Boolean res = false;
         Boolean checkTari = false;
         Boolean checkStandard = false;
-        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c 
+        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c,SBQQ__Quote__c, SBQQ__Quote__r.SapContractCode__c, SBQQ__Product__r.Service__c
         FROM SBQQ__QuoteLine__c 
         WHERE SBQQ__Quote__r.Sale__c = :saleId
         WITH SECURITY_ENFORCED];
@@ -741,6 +741,10 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
                 checkTari = true;
             }
             else if(quoteLine.ServicePoint__c != null && !quoteLine.ServicePoint__r.CommoditySector__c.equalsIgnoreCase('Ambiente'))
+            {
+                checkStandard = true;
+            }
+            else if(quoteLine.ServicePoint__c == null && quoteLine.SBQQ__Quote__c != null && quoteLine.SBQQ__Quote__r.SapContractCode__c != null && !'Ambiente'.equalsIgnoreCase(quoteLine.SBQQ__Product__r.Service__c))
             {
                 checkStandard = true;
             }
