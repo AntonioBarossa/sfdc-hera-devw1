@@ -267,33 +267,29 @@ public without sharing class HDT_UTL_ActivityCustomProcess {
                 }
                 //precedenteCliente = true;                
             }
-                
-            if(typeOfCommodity == 'Energia Elettrica'){
-                typeOfCommodity = 'ENERGIAELETTRICA';
-            }
-            if(typeOfCommodity == 'Gas'){
-                typeOfCommodity = 'GAS';
-            }
-            if(typeOfCommodity == 'Acqua'){
-                typeOfCommodity = 'ACQUA';
-            }
+            
             
             HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail iwd = new HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail();
-            if(act.Order__r.ServicePoint__c != null && act.Order__r.ServicePoint__r.AnnualConsumption__c != null){
+            if(typeOfCommodity == 'Energia Elettrica'){
+                iwd.commodity = 'ENERGIAELETTRICA';
+            }
+            if(typeOfCommodity == 'Gas'){
+                iwd.commodity = 'GAS';
+            }
+            if(typeOfCommodity == 'Acqua'){
+                iwd.commodity = 'ACQUA';
+            }
+            
+            if (act.Order__r.IsVAS__c){
+                iwd.annualConsumption = HDT_LC_ChildOrderProcessPrecheck.getConsumptionAnnualForVas(act.Order__c); 
+            }else if(act.Order__r.ServicePoint__r?.AnnualConsumption__c != null){
                 iwd.annualConsumption = String.valueOf(act.Order__r.ServicePoint__r.AnnualConsumption__c);
-            }            
-            iwd.commodity = typeOfCommodity;
+            }          
             
             system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail ---> ' + JSON.serialize(iwd)); 
 
             List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail> l = new List<HDT_WS_CreditCheckRequest.HDT_WRP_InputWrapperDetail>();
             l.add(iwd);
-
-            // da testare 18/6/21 @Picchiri
-            if(act.Order__r.RecordType.DeveloperName == 'HDT_RT_VAS' ){
-                l.remove(0);
-                l.remove(1);
-            }
 
             system.debug(LoggingLevel.DEBUG, 'HDT_VFC_InputWrapperDetail 2 ---> ' + JSON.serialize(iwd)); 
             String separator =  String.isBlank(act.Order__r.Account?.CustomerCode__c)? ',':' ';
