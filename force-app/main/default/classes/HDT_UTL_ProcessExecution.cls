@@ -19,15 +19,27 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
     public String splitCharacter = HDT_LC_MassiveLoader.getSplitCharacter();
     public Boolean isTest = false;
     public Boolean isDiscountAndBonusProcess = false;
+    public Boolean isMucProcess = false;
+    //public Id fileUploadedByUserId;
+    public MassiveLoaderRequest__c currentRequest;
 
     public void setRequestId(Id requestId){
         this.requestId = requestId;
+        currentRequest = [
+            SELECT Id, CreatedById, CreatedBy.CreatorGroup__c, CreatedBy.LoginChannel__c
+            FROM MassiveLoaderRequest__c
+            WHERE Id = :requestId
+            WITH SECURITY_ENFORCED
+            LIMIT 1
+        ];
+
         System.debug(LoggingLevel.DEBUG, '>>> set this requestId: ' + this.requestId);
     }
 
     public void setProcess(String processName){
         this.processName = processName;
         isDiscountAndBonusProcess = (processName.equalsIgnoreCase('TariffeSconti'));
+        isMucProcess = (processName.equalsIgnoreCase('MUC'));
         System.debug(LoggingLevel.DEBUG, '>>> set this process: ' + this.processName);
     }
 
@@ -328,12 +340,15 @@ public inherited sharing virtual class HDT_UTL_ProcessExecution {
 
     }
 
-    public static Case setCaseField(Case newCase, Id recordTypeId){
-        newCase.RecordTypeId = recordTypeId;
+    public Case setCaseField(Case newCase, Id recordTypeId){
+        if(recordTypeId != null){
+            newCase.RecordTypeId = recordTypeId;
+        }
         newCase.Status = 'In Lavorazione';
         newCase.Phase__c = 'Bozza';
         //Rimosso per W2 
         //newCase.CompanyOwner__c = 'HERA COMM';
+        newCase.CreatedById = currentRequest.CreatedById;
         return newCase;
     }
 

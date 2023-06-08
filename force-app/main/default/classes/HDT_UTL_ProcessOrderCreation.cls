@@ -1085,6 +1085,8 @@ public inherited sharing class HDT_UTL_ProcessOrderCreation extends HDT_UTL_Proc
             wrpChildOrder.orderType = 'Attivazione';
             wrpChildOrder.childOrder = new Order();
             wrpChildOrder.childOrder.RecordTypeId = childOrderRecordTypeId;
+            wrpChildOrder.childOrder.CreatorGroup__c = currentRequest.CreatedBy.CreatorGroup__c;
+            wrpChildOrder.childOrder.LoginChannel__c = currentRequest.CreatedBy.LoginChannel__c;
             wrpChildOrder.childOrder.IsMassive__c = true;
             wrpChildOrder.childOrder.Status = 'In Lavorazione';
             wrpChildOrder.childOrder.AccountId = nextDataObj.accountId;
