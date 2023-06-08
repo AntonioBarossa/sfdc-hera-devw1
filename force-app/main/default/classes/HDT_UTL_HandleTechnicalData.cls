@@ -239,6 +239,11 @@ public inherited sharing class HDT_UTL_HandleTechnicalData {
 
             if (String.isNotBlank(keyValue)) {
                 if (isNumber) {
+                    if('AnnualConsumption__c'.equalsIgnoreCase(field.getDescribe().getName())){
+                        String target = ',';
+                        String replacement = '.';
+                        keyValue = keyValue.replace(target, replacement);
+                    }
                     sp.put(field, Decimal.valueOf(keyValue));
                 }
                 else {

@@ -241,7 +241,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.account.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
-        requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        //requestBody.account.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.account.indirizzo.provincia = caseRecord.BillingProvince__c.substring(0,2).toUpperCase();
         requestBody.account.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.account.indirizzo.piano = '';
         requestBody.account.telefono = (String) caseRecord.get('PhoneNumber__c') != null ? (String) caseRecord.get('PhoneNumber__c') : '';
@@ -340,7 +341,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.account.indirizzo.civico = (String) caseRecord.Account.BillingStreetNumber__c;
         requestBody.account.indirizzo.suffissoCivico = (String) caseRecord.Account.BillingStreetNumberExtension__c != null? (String) caseRecord.Account.BillingStreetNumberExtension__c:'';
         requestBody.account.indirizzo.cap = (String) caseRecord.Account.BillingPostalCode;
-        requestBody.account.indirizzo.provincia = (String) caseRecord.Account.BillingState;
+       // requestBody.account.indirizzo.provincia = (String) caseRecord.Account.BillingState;
+        requestBody.account.indirizzo.provincia = caseRecord.Account.BillingState.substring(0,2).toUpperCase();
         requestBody.account.indirizzo.via = (String) caseRecord.Account.BillingStreetName__c;
         requestBody.account.indirizzo.piano = '';
 
@@ -354,7 +356,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.destinatarioDivergente.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.ordine.destinatarioDivergente.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.ordine.destinatarioDivergente.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
-        requestBody.ordine.destinatarioDivergente.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        //requestBody.ordine.destinatarioDivergente.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.ordine.destinatarioDivergente.indirizzo.provincia = caseRecord.BillingProvince__c.substring(0,2).toUpperCase();
         requestBody.ordine.destinatarioDivergente.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.ordine.destinatarioDivergente.indirizzo.piano = '';
         // L'indirizzo dell'amministratore deve andare nel nodo ordine, come da specifica del webservice as-is.
@@ -363,7 +366,8 @@ public with sharing class HDT_SRV_BpCaVariation {
         requestBody.ordine.indirizzo.civico = (String) caseRecord.get('BillingStreetNumber__c');
         requestBody.ordine.indirizzo.suffissoCivico = (String) caseRecord.get('BillingStreetNumberExtension__c') != null? (String) caseRecord.get('BillingStreetNumberExtension__c'):'';
         requestBody.ordine.indirizzo.cap = (String) caseRecord.get('BillingPostalCode__c');
-        requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        //requestBody.ordine.indirizzo.provincia = (String) caseRecord.get('BillingProvince__c');
+        requestBody.ordine.indirizzo.provincia = caseRecord.BillingProvince__c.substring(0,2).toUpperCase();
         requestBody.ordine.indirizzo.via = (String) caseRecord.get('BillingStreetName__c');
         requestBody.ordine.indirizzo.piano = '';
 
