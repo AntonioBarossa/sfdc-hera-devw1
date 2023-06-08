@@ -1,5 +1,3 @@
-//TEST_CLASSES: HDT_UTL_ServiceCatalogOrFilterProcessTst
-
 public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
     public static Map<String,Map<String,List<String>>> mapCaseFilter = new Map<String,Map<String,List<String>>>
     { 
@@ -731,7 +729,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
         Boolean res = false;
         Boolean checkTari = false;
         Boolean checkStandard = false;
-        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c,SBQQ__Quote__c, SBQQ__Quote__r.SapContractCode__c
+        List<SBQQ__QuoteLine__c> quoteLines = [SELECT Id, ServicePoint__c, ServicePoint__r.CommoditySector__c,SBQQ__Quote__c, SBQQ__Quote__r.SapContractCode__c, SBQQ__Product__r.Service__c
         FROM SBQQ__QuoteLine__c 
         WHERE SBQQ__Quote__r.Sale__c = :saleId
         WITH SECURITY_ENFORCED];
@@ -746,7 +744,7 @@ public with sharing class HDT_UTL_ServiceCatalogOrFilterProcess {
             {
                 checkStandard = true;
             }
-            else if(quoteLine.ServicePoint__c == null && quoteLine.SBQQ__Quote__c != null && quoteLine.SBQQ__Quote__r.SapContractCode__c != null)
+            else if(quoteLine.ServicePoint__c == null && quoteLine.SBQQ__Quote__c != null && quoteLine.SBQQ__Quote__r.SapContractCode__c != null && !'Ambiente'.equalsIgnoreCase(quoteLine.SBQQ__Product__r.Service__c))
             {
                 checkStandard = true;
             }
