@@ -188,7 +188,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
             }
         }
 
-        if( this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Acqua' && this.currentSection.name === 'processVariables' ){
+        if( this.order.ServicePoint__c != null && this.order.ServicePoint__r.RecordType.DeveloperName === 'HDT_RT_Acqua' && this.currentSection.name === 'processVariables' ){
             this.showMessage('', 'Attenzione! Verificare la presenza del bonus sociale idrico sul cliente.', 'warning');
         }
     }
@@ -252,7 +252,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
         let rateCategories = evaluationRateCategories.rateCategories;
 
         // !Acqua, then if 'required', set 'notrequired', if 'visible/notvisible', set 'visible'
-        if(this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua' || !Array.isArray(rateCategories) ) return evaluationType !== 'required';
+        if(this.order.ServicePoint__c != null && (this.order.ServicePoint__r.RecordType.DeveloperName !== 'HDT_RT_Acqua' || !Array.isArray(rateCategories) )) return evaluationType !== 'required';
         
         // case Acqua
         let rateCategory = this.order.RateCategory__c;
