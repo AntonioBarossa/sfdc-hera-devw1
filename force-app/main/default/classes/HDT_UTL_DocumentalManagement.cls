@@ -1076,4 +1076,122 @@ public inherited sharing class HDT_UTL_DocumentalManagement {
 
 		return transcoded;
 	}
-}
+
+	public static Map<String, String> manageRadioBtns(List<HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio> listOfRadio, List<Order> orderList, Map<String, Object> extraParams)
+	{
+		Map<String, String> result = new Map<String, String>();
+		String valueOne = '';
+		String valueTwo = '';
+		Boolean hcOneFound = false;
+		Boolean hcTwoFound = false;
+		Set<String> moduliOpzionaliMancanti = new Set<String>();
+		List<DocumentalActivity__c> activitiesToCreate = new List<DocumentalActivity__c>();
+
+		for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio)
+		{
+			if(!singleRadio.selected.equalsIgnoreCase('true')) { continue; }
+			/** Allegati opzionali per order */
+			if(!orderList.isEmpty())
+			{
+				SObject record = (SObject) extraParams.get('record');
+				String envelopeId = (String) extraParams.get('envelopeId');
+				if (singleRadio.groupName.contains('DTC_radio1')){
+					String actDescription = 'Ritornato correttamente';
+					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+						if(singleRadio.groupName.contains('_1')){
+							actDescription  = actDescription + ' su ordine '+ orderList[0].get('OrderNumber');
+						}else {
+							actDescription  = actDescription + ' su ordine '+ orderList[1].get('OrderNumber');
+						}
+						DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+						if (documentalActivity != null){
+							documentalActivity.AttachmentCode__c = 'DATI_CATASTALI'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+							documentalActivity.ActivityType__c = 'Allegati ricevuti';
+							documentalActivity.AttachmentDescription__c = actDescription;
+							activitiesToCreate.add(documentalActivity);
+						}
+						continue;
+					} else {
+						moduliOpzionaliMancanti.add(singleRadio.groupName);
+						continue;
+					}
+				}
+				if (singleRadio.groupName.contains('L80_radio')){
+					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+						String actDescriptionLeggeOtt = 'Ritornato correttamente';
+						if(singleRadio.groupName.contains('_1')){
+							actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[0].get('OrderNumber');
+							orderList[0].put('DocumentLow80__c','Validato');
+						}else {
+							actDescriptionLeggeOtt  = actDescriptionLeggeOtt + ' su ordine '+ orderList[1].get('OrderNumber');
+							orderList[1].put('DocumentLow80__c','Validato');
+						}
+						DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+						if (documentalActivity != null){
+							documentalActivity.AttachmentCode__c = 'LEGGE_80'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+							documentalActivity.ActivityType__c = 'Allegati ricevuti';
+							documentalActivity.AttachmentDescription__c = actDescriptionLeggeOtt;
+							activitiesToCreate.add(documentalActivity);
+						}
+						continue;
+					} else {
+						moduliOpzionaliMancanti.add(singleRadio.groupName);
+						continue;
+					}
+				}
+				if (singleRadio.groupName.contains('326_radio')){
+					if (singleRadio.value.equalsIgnoreCase('Pulsante di opzione1') && singleRadio.selected.equalsIgnoreCase('true')){
+						String actDescriptionIstanza = 'Ritornato correttamente';
+						if(singleRadio.groupName.contains('_1')){
+							actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[0].get('OrderNumber');
+							orderList[0].put('Instance326__c','Validato');
+						}else {
+							actDescriptionIstanza  = actDescriptionIstanza + ' su ordine '+ orderList[1].get('OrderNumber');
+							orderList[1].put('Instance326__c','Validato');
+						}
+						DocumentalActivity__c documentalActivity  = HDT_UTL_DocumentalManagement.initDocumentalActivity(record, envelopeId);
+						if (documentalActivity != null){
+							documentalActivity.AttachmentCode__c = 'ISTANZA_326'; // utilizziamo un Id fittizio al posto del codice allegato Engage1, poichè non riusciamo a recuperarlo.
+							documentalActivity.ActivityType__c = 'Allegati ricevuti';
+							documentalActivity.AttachmentDescription__c = actDescriptionIstanza;
+							activitiesToCreate.add(documentalActivity);
+						}
+						continue;
+					} else {
+						moduliOpzionaliMancanti.add(singleRadio.groupName);
+						continue;
+					}
+				}
+			}
+			switch on singleRadio.groupName {
+				when  'radio1_HC'{
+					hcOneFound = true;
+					valueOne = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';	
+				}
+				when  'radio2_HC'{
+					hcTwoFound = true;
+					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+				}
+				when 'radio1_HCM','radio1_NS','radio1_EST','radio1_EBT','radio1_HC_vas'{
+					if(hcOneFound) {break;} 
+					valueOne = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+				}
+				when 'radio2_HCM','radio2_NS','radio2_EST','radio2_EBT','radio2_HC_vas'{
+					if(hcTwoFound) {break;}
+					valueTwo = singleRadio.value.equalsIgnoreCase('YES')?'SI':'NO';
+				}				
+				when else {
+					break;
+				}
+			}
+		}
+
+		result.put('radio1', valueOne);
+		result.put('radio2', valueTwo);
+		result.put('activitiesToCreate', JSON.serialize(activitiesToCreate));
+		result.put('moduliOpzionaliMancanti', JSON.serialize(moduliOpzionaliMancanti));
+
+		return result;
+	}
+
+}	
