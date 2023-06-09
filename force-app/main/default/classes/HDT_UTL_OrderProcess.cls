@@ -1550,7 +1550,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
              * Pratica Gestita
              * per pratiche a transitorio
              */
-            Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica rifiutata','Chiuso'};
+            Set<String> finalStatuses = splitOutcomes(System.Label.HDT_NegativeOutcomes);
+            finalStatuses.addAll(splitOutcomes(System.Label.HDT_PositiveOutcomes)); //Set<String> finalStatuses = new Set<String>{'Annullato','KO definitivo','Pratica gestita','KO gestito','Eliminato','KO','Pratica rifiutata','Chiuso'};
             if(String.isNotEmpty((String)newOrder.get('SiebelStatus__c'))&&(finalStatuses.contains((String)newOrder.get('SiebelStatus__c'))))
             {
                 response = true;
@@ -1561,6 +1562,19 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         }
         return response;
     }
+    
+    private static Set<String> splitOutcomes(String str){
+
+        Set<String> strToSet = new Set<String>();
+
+        for(String item : str.split(';')){
+            strToSet.add(item.trim());
+        }
+
+        return strToSet;
+
+    }
+
     /**@frpanico 2022-03-10
      * Gestione Aggiornamento in Completata
      * Alla ricezione del Pratica Gestita
@@ -1581,8 +1595,8 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         //fine fix 915259C
         Map<Id,String> mapVasPhase = new Map<Id,String>();
         Map<Id,String> mapVasStatus = new Map<Id,String>();
-        Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica rifiutata','KO gestito'};
-        Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
+        Set<String> negativeOutcomes = splitOutcomes(System.Label.HDT_NegativeOutcomes); //Set<String> negativeOutcomes = new Set<String>{'Annullato','KO definitivo','Eliminato','KO','Pratica rifiutata','KO gestito'};
+        Set<String> positiveOutcomes = splitOutcomes(System.Label.HDT_PositiveOutcomes); //Set<String> positiveOutcomes = new Set<String>{'Pratica gestita','Chiuso'};
         for(Order newOrder : (List<Order>) newOrderList)
         {
             String oldPhase = newOrder.Phase__c;
