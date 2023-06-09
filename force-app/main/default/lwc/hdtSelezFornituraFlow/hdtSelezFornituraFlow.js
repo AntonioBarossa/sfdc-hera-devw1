@@ -271,7 +271,45 @@ const DATA_ACCESS_MAP = {
             {label: 'POD/PDR', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]
-    }
+    },
+    'ASSOCIA_DOTAZIONI_ORDER':{
+        label : 'Ordini',
+        sObjectName: 'Order',
+        emptyMessage: 'Non ci sono record selezionabili',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.recNumber = item.OrderNumber;
+                item.Type = item.Type;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Servizio', fieldName: 'recNumber', type: 'text'},
+            {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'Fornitura', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
+    'ASSOCIA_DOTAZIONI_CONTRACT':{
+        label : 'Contratti',
+        sObjectName: 'Contract',
+        emptyMessage: 'Non ci sono record selezionabili',
+        dataProcessFunction: (data) => {
+            data.forEach((item) => {
+                item.recNumber = item.SAPContractCode__c;
+                item.Type = item.ContractType__c;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
+            });
+        },
+        columns: [
+            {label: 'Numero Servizio', fieldName: 'recNumber', type: 'text'},
+            {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'Fornitura', fieldName: 'PodPdr', type: 'text'},
+            {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
+        ]
+    },
 };
 const ROWS_PER_PAGE = 4;
 
