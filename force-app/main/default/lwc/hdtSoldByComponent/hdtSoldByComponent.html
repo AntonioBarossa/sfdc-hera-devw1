@@ -47,7 +47,7 @@
                     <template if:true={showPaginationButtons}>
                         <div class="slds-grid slds-grid_align-center">
                             <div class="slds-col">
-                                <button disabled={disabledInput} onclick={previousPage}
+                                <button onclick={previousPage}
                                     class="slds-button slds-button_neutral pagination-button">
                                     <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                         <use
@@ -59,7 +59,7 @@
                                 <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPages}</p>
                             </div>
                             <div class="slds-col">
-                                <button disabled={disabledInput} onclick={nextPage}
+                                <button onclick={nextPage}
                                     class="slds-button slds-button_neutral pagination-button next">Next
                                     <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
                                         <use
@@ -83,7 +83,7 @@
                 <template if:true={showPaginationButtons2}>
                     <div class="slds-grid slds-grid_align-center">
                         <div class="slds-col">
-                            <button disabled={disabledInput2} onclick={previousPage2}
+                            <button onclick={previousPage2}
                                 class="slds-button slds-button_neutral pagination-button">
                                 <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use
@@ -95,7 +95,7 @@
                             <p style="font-size: 12px;margin:5px;">Page {getCurrentPage2} / {totalPages2}</p>
                         </div>
                         <div class="slds-col">
-                            <button disabled={disabledInput2} onclick={nextPage2}
+                            <button onclick={nextPage2}
                                 class="slds-button slds-button_neutral pagination-button next">Next
                                 <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
                                     <use

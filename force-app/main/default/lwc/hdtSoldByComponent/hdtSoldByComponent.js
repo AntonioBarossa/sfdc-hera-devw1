@@ -24,12 +24,26 @@ export default class HdtSoldByComponent extends LightningElement {
     @track disabledBack = true;
     @track disabledNext = false;
     selectedFromCompleteList = {};
+    selectedFromCompleteListAgent = {};
     @track completeListAgent;
     @track agentListForFilter = [];
     submitButtonStatus = true;
+    @track disabledSave = true;
 
     connectedCallback() {
         this.handleAgencySelection();
+    }
+
+    get showPaginationButtons2() {
+        return this.totalPages2 > 1;
+    }
+
+    get getCurrentPage2() {
+        if (this.totalPages2 === 0) {
+            return 0;
+        } else {
+            return this.currentPage2 + 1;
+        }
     }
 
     handleAgencySelection() {
@@ -117,7 +131,13 @@ export default class HdtSoldByComponent extends LightningElement {
 
     }
 
-    
+    getSelectedFromCompleteListAgent(event) {
+        let selectedRows = event.detail.selectedRows;
+        this.selectedFromCompleteListAgent = (selectedRows[0] !== undefined) ? selectedRows[0] : {};
+
+        console.log('getSelectedFromCompleteListAgent: '+ JSON.stringify(this.selectedFromCompleteListAgent));
+        this.disabledSave = false;
+    }
 
     getSelectedFromCompleteList(event) {
         let selectedRows = event.detail.selectedRows;
@@ -125,6 +145,69 @@ export default class HdtSoldByComponent extends LightningElement {
         this.disabledNextAgency = false;
 
         console.log('getSelectedFromCompleteList: ', this.selectedFromCompleteList);
+    }
+
+    nextPage() {
+        if (this.currentPage < this.totalPages - 1) {
+            this.currentPage++;
+        }
+        this.reLoadTable();
+    }
+    
+    previousPage() {
+        if (this.currentPage > 0) {
+            this.reLoadTable();
+            this.currentPage--;
+        }
+        this.reLoadTable();
+    }
+
+    searchAgentTable(event) {
+        let val = event.target.value;
+        let self = this;
+        let data;
+        setTimeout(function () {
+            data = JSON.parse(JSON.stringify(self.completeListAgent));
+            if (val.trim() !== '') {
+                data = data.filter(row => {
+                    let found = false;
+                    Object.values(row).forEach(v => {
+                        if (v !== undefined && typeof(v)== "string" && null != v.toLowerCase() && (v.toLowerCase().search(val.toLowerCase()) !== -1)) {
+                            found = true;
+                        }
+                    });
+                    if (found) return row;
+                })
+            }
+            self.createTable2(data); // redesign table
+            self.currentPage2 = 0; // reset page
+        }, 1000);
+    }
+
+    nextPage2() {
+        if (this.currentPage2 < this.totalPages2 - 1) {
+            this.currentPage2++;
+        }
+        this.reLoadTable2();
+    }
+
+    previousPage2() {
+        if (this.currentPage2 > 0) {
+            this.currentPage2--;
+        }
+        this.reLoadTable2();
+    }
+
+    get showPaginationButtons() {
+        return this.totalPages > 1;
+    }
+
+    get getCurrentPage() {
+        if (this.totalPages === 0) {
+            return 0;
+        } else {
+            return this.currentPage + 1;
+        }
     }
 
     handleBackPage(event) {
