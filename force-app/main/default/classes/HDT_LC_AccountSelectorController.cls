@@ -84,10 +84,16 @@ public with sharing class HDT_LC_AccountSelectorController {
 	public static String search(String queryString, String recordId) {
 		HDT_UTL_Struct result = new HDT_UTL_Struct();
 		if(queryString.isNumeric()) {
-			if( queryString.startsWith('100') ){
+			// query Account
+			List<Account> accountList = getAccountByBPCode(queryString);
+			if (accountList != null && !accountList.isEmpty()) {
+				result.accounts = accountList;
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+			//TK 986182C @enricodursontt
+			/*if( queryString.startsWith('100')){
 				//BP
 				result.accounts = getAccountByBPCode(queryString);
-				result.contacts = getContactTitolare(result.accounts.get(0).Id);
+				result.contacts = getContactTitolare(result.accounts.get(0).Id);*/
 			} else if( queryString.startsWith('3') && queryString.length() == 10 ){
 				//mobilephone
 				result=getContactsAndLeads(result, queryString,'MobilePhone', recordId);
