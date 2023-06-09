@@ -1016,7 +1016,7 @@
                         <valueListItems>
                             <value>Global.EscalationCmp</value>
                             <visibilityRule>
-                                <booleanFilter>4 AND (1 OR 2 OR 3)</booleanFilter>
+                                <booleanFilter>4 AND (1 OR 2 OR 3 OR 5 OR 6)</booleanFilter>
                                 <criteria>
                                     <leftValue>{!Record.Status}</leftValue>
                                     <operator>EQUAL</operator>
@@ -1036,6 +1036,16 @@
                                     <leftValue>{!Record.Type}</leftValue>
                                     <operator>NE</operator>
                                     <rightValue>Contenitore Morosità</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito KO</rightValue>
+                                </criteria>
+                                <criteria>
+                                    <leftValue>{!Record.Phase__c}</leftValue>
+                                    <operator>EQUAL</operator>
+                                    <rightValue>Esito OK</rightValue>
                                 </criteria>
                             </visibilityRule>
                         </valueListItems>

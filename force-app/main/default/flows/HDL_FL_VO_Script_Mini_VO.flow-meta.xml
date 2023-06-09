@@ -5,7 +5,7 @@
         <name>categoryAssigment_0</name>
         <label>categoryAssigment</label>
         <locationX>182</locationX>
-        <locationY>278</locationY>
+        <locationY>242</locationY>
         <assignmentItems>
             <assignToReference>categoryAssigmentVariable</assignToReference>
             <operator>Assign</operator>
@@ -21,7 +21,7 @@
         <name>Offerta</name>
         <label>Offerta</label>
         <locationX>270</locationX>
-        <locationY>1190</locationY>
+        <locationY>1058</locationY>
         <assignmentItems>
             <assignToReference>OffertaSingola</assignToReference>
             <operator>Assign</operator>
@@ -44,7 +44,7 @@
         <name>OffertaVas</name>
         <label>OffertaVas</label>
         <locationX>270</locationX>
-        <locationY>854</locationY>
+        <locationY>758</locationY>
         <assignmentItems>
             <assignToReference>OfferteVas</assignToReference>
             <operator>Add</operator>
@@ -67,7 +67,7 @@
         <name>checkIfAzienda</name>
         <label>checkIfAzienda</label>
         <locationX>182</locationX>
-        <locationY>398</locationY>
+        <locationY>350</locationY>
         <defaultConnector>
             <targetReference>LoopOrdiniOffertaVas</targetReference>
         </defaultConnector>
@@ -92,8 +92,9 @@
         <name>SalesCompanyFormula</name>
         <dataType>String</dataType>
         <expression>IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Hera Comm S.p.A&quot;), &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;, 
+IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Marche Multiservizi S.p.A&quot;), &quot;PESARO, VIA DEI CANONICI 144&quot;, 
  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;Hera Comm Marche&quot;), &quot;HERA COMM MARCHE, SOCIETÀ DI VENDITA GAS CON SEDE A URBINO, VIA SASSO 120 E DI HERA COMM CON SEDE A IMOLA, VIA MOLINO ROSSO 8&quot;, 
-  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;EstEnergy S.p.A&quot;), &quot;ESTENERGY SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A TRIESTE, IN VIA DEI RETTORI 1&quot;, &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;)))</expression>
+  IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c} , &quot;EstEnergy S.p.A&quot;), &quot;ESTENERGY SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A TRIESTE, IN VIA DEI RETTORI 1&quot;, &quot;HERA COMM, SOCIETÀ DI VENDITA DI ENERGIA ELETTRICA E GAS, CON SEDE A IMOLA, IN VIA MOLINO ROSSO 8&quot;))))</expression>
     </formulas>
     <interviewLabel>HDL FL VO Script - Mini VO {!$Flow.CurrentDateTime}</interviewLabel>
     <label>HDL FL VO Script - Mini VO</label>
@@ -101,7 +102,7 @@
         <name>LoopOrdiniOfferta</name>
         <label>LoopOrdiniOfferta</label>
         <locationX>182</locationX>
-        <locationY>1070</locationY>
+        <locationY>950</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -115,7 +116,7 @@
         <name>LoopOrdiniOffertaVas</name>
         <label>LoopOrdiniOffertaVas</label>
         <locationX>182</locationX>
-        <locationY>734</locationY>
+        <locationY>650</locationY>
         <collectionReference>HDT_FL_Script_Gestione_Ordini.AssignOrdiniFigliVasOutput</collectionReference>
         <iterationOrder>Asc</iterationOrder>
         <nextValueConnector>
@@ -148,7 +149,7 @@
         <name>Get_Sales_Contact</name>
         <label>Get Sales Contact</label>
         <locationX>182</locationX>
-        <locationY>1406</locationY>
+        <locationY>1250</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>MinoVO_text1</targetReference>
@@ -169,7 +170,7 @@
         <name>getInfoLegaleRappresentate_0</name>
         <label>getInfoLegaleRappresentate</label>
         <locationX>50</locationX>
-        <locationY>518</locationY>
+        <locationY>458</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>LoopOrdiniOffertaVas</targetReference>
@@ -197,7 +198,7 @@
         <name>MinoVO_text1</name>
         <label>MinoVO_text1</label>
         <locationX>182</locationX>
-        <locationY>1526</locationY>
+        <locationY>1358</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -303,7 +304,7 @@
         <name>HDT_FL_Script_Gestione_Ordini</name>
         <label>HDT_FL_Script_Gestione_Ordini</label>
         <locationX>182</locationX>
-        <locationY>158</locationY>
+        <locationY>134</locationY>
         <connector>
             <targetReference>categoryAssigment_0</targetReference>
         </connector>
