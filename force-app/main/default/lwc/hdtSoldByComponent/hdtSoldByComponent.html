@@ -1,53 +1,80 @@
 <template>
-    <div class="modal-container slds-modal__container">
-        <lightning-spinner variant="brand" if:true={loading} alternative-text="Saving..." size="large">
-        </lightning-spinner>
-        <!--header class="slds-modal__header">
-            <button
-                class="slds-button slds-button_icon slds-modal__close closeIcon slds-button_icon-bare slds-button_icon-inverse"
-                title="close" onclick={closeModal}>
-                <lightning-icon icon-name="utility:close" variant="inverse" size="medium">
-                </lightning-icon>
-                <span class="slds-assistive-text">Close</span>
-            </button>
-            <h2 class="slds-modal__title slds-hyphenate">Seleziona </h2>
-        </header-->
-
-        <div class="modal-body slds-modal__content slds-p-around--large">
-            <template lwc:if={showpageOne}>
-                <lightning-layout-item padding="around-small" size="4">
-                    <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
-                        size="small"></lightning-spinner>
-                    <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search"
-                        label="Filter Agency" onchange={searchAgencyName} class="searchInput">
-                    </lightning-input>
-                </lightning-layout-item>
-                <lightning-layout-item padding="around-medium" size="3">
-                </lightning-layout-item>
-                <lightning-layout horizontal-align="end">
+    <!--div class="modal-container slds-modal__container"-->
+        <template lwc:if={loading}>
+            <lightning-spinner variant="brand" alternative-text="Saving..." size="large">
+            </lightning-spinner>   
+        </template>
+        <template lwc:else>
+            <div class="modal-body slds-modal__content slds-p-around--large">
+                <template lwc:if={showpageOne}>
                     <lightning-layout-item padding="around-small" size="4">
-                        <div
-                            class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
-                            <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon"
-                                aria-hidden="true">
-                            </svg>
-                        </div>
+                        <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
+                            size="small"></lightning-spinner>
+                        <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search"
+                            label="Filter Agency" onchange={searchAgencyName} class="searchInput">
+                        </lightning-input>
                     </lightning-layout-item>
-                </lightning-layout>
-                <template lwc:if={showEmptyMessage} class="slds-size_1-of-1">
-                    <div class="slds-align_absolute-center" >Non ci sono agienzie attive in
-                        corso</div>
+                    <lightning-layout-item padding="around-medium" size="3">
+                    </lightning-layout-item>
+                    <lightning-layout horizontal-align="end">
+                        <lightning-layout-item padding="around-small" size="4">
+                            <div
+                                class="slds-form-element__control slds-input-has-icon slds-input-has-icon_right filterField">
+                                <svg class="slds-icon slds-input__icon slds-input__icon_right slds-icon-text-default searchIcon"
+                                    aria-hidden="true">
+                                </svg>
+                            </div>
+                        </lightning-layout-item>
+                    </lightning-layout>
+                    <template lwc:if={showEmptyMessage} class="slds-size_1-of-1">
+                        <div class="slds-align_absolute-center" >{message}</div>
+                    </template>
+                    <template lwc:else class="slds-size_1-of-1">
+                        <div style="height: 14rem;">
+                            <lightning-datatable key-field="Id" data={tableData} columns={completeListcolumns}
+                            max-row-selection=1 onrowselection={getSelectedFromCompleteList}>
+                        </lightning-datatable>
+                        </div>
+                        <template if:true={showPaginationButtons}>
+                            <div class="slds-grid slds-grid_align-center">
+                                <div class="slds-col">
+                                    <button onclick={previousPage}
+                                        class="slds-button slds-button_neutral pagination-button">
+                                        <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                            <use
+                                                xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft">
+                                            </use>
+                                        </svg>Previous</button>
+                                </div>
+                                <div class="slds-col">
+                                    <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPages}</p>
+                                </div>
+                                <div class="slds-col">
+                                    <button onclick={nextPage}
+                                        class="slds-button slds-button_neutral pagination-button next">Next
+                                        <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
+                                            <use
+                                                xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright">
+                                            </use>
+                                        </svg></button>
+                                </div>
+                            </div>
+                        </template>
+                    </template>
                 </template>
-                <template lwc:else class="slds-size_1-of-1">
+                <template if:true={showpageTwo}>
+                    <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
+                    <lightning-input  name="enter-search" type="search" label="Filter Agent" onchange={searchAgentTable} class="searchInput"></lightning-input>
+                    <lightning-layout-item padding="around-medium" size="3"></lightning-layout-item>
                     <div style="height: 14rem;">
-                        <lightning-datatable key-field="Id" data={tableData} columns={completeListcolumns}
-                        max-row-selection=1 onrowselection={getSelectedFromCompleteList}>
-                    </lightning-datatable>
+                        <lightning-datatable key-field="Id" data={tableDataAgent} columns={completeListcolumnsAgent}
+                            max-row-selection=1 onrowselection={getSelectedFromCompleteListAgent}>
+                        </lightning-datatable>
                     </div>
-                    <template if:true={showPaginationButtons}>
+                    <template if:true={showPaginationButtonsTwo}>
                         <div class="slds-grid slds-grid_align-center">
                             <div class="slds-col">
-                                <button onclick={previousPage}
+                                <button onclick={previousPageTwo}
                                     class="slds-button slds-button_neutral pagination-button">
                                     <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                         <use
@@ -56,10 +83,10 @@
                                     </svg>Previous</button>
                             </div>
                             <div class="slds-col">
-                                <p style="font-size: 12px;margin:5px;">Page {getCurrentPage} / {totalPages}</p>
+                                <p style="font-size: 12px;margin:5px;">Page {getCurrentPageTwo} / {totalPagesTwo}</p>
                             </div>
                             <div class="slds-col">
-                                <button onclick={nextPage}
+                                <button onclick={nextPageTwo}
                                     class="slds-button slds-button_neutral pagination-button next">Next
                                     <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
                                         <use
@@ -70,52 +97,17 @@
                         </div>
                     </template>
                 </template>
-            </template>
-            <template if:true={showpageTwo}>
-                <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
-                <lightning-input  name="enter-search" type="search" label="Filter Agent" onchange={searchAgentTable} class="searchInput"></lightning-input>
-                <lightning-layout-item padding="around-medium" size="3"></lightning-layout-item>
-                <div style="height: 14rem;">
-                    <lightning-datatable key-field="Id" data={tableDataAgent} columns={completeListcolumnsAgent}
-                        max-row-selection=1 onrowselection={getSelectedFromCompleteListAgent}>
-                    </lightning-datatable>
-                </div>
-                <template if:true={showPaginationButtons2}>
-                    <div class="slds-grid slds-grid_align-center">
-                        <div class="slds-col">
-                            <button onclick={previousPage2}
-                                class="slds-button slds-button_neutral pagination-button">
-                                <svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use
-                                        xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronleft">
-                                    </use>
-                                </svg>Previous</button>
-                        </div>
-                        <div class="slds-col">
-                            <p style="font-size: 12px;margin:5px;">Page {getCurrentPage2} / {totalPages2}</p>
-                        </div>
-                        <div class="slds-col">
-                            <button onclick={nextPage2}
-                                class="slds-button slds-button_neutral pagination-button next">Next
-                                <svg class="slds-button__icon slds-button__icon_right" aria-hidden="true">
-                                    <use
-                                        xlink:href="/_slds/icons/utility-sprite/svg/symbols.svg?cache=9.36.1#chevronright">
-                                    </use>
-                                </svg></button>
-                        </div>
-                    </div>
-                </template>
-            </template>
-        </div>
-        <footer class="slds-modal__footer">
-            <lightning-button disabled={disabledBack} onclick={handleBackPage} label="Indietro" variant="brand"
-                icon-name="utility:left" class="slds-p-right--small"></lightning-button>
-            <lightning-button disabled={disabledNextAgency} onclick={handleNextPage} label="Avanti" variant="brand"
-                icon-name="utility:right" class="slds-p-right--small"></lightning-button>
-            <lightning-button variant="brand" disabled={disabledSave} name="" type="submit" label="Salva"
-                onclick={handleSave}>
+            </div>
+            <footer class="slds-modal__footer">
+                <lightning-button disabled={disabledBack} onclick={handleBackPage} label="Indietro" variant="brand"
+                    icon-name="utility:left" class="slds-p-right--small"></lightning-button>
+                <lightning-button disabled={disabledNextAgency} onclick={handleNextPage} label="Avanti" variant="brand"
+                    icon-name="utility:right" class="slds-p-right--small"></lightning-button>
+                <lightning-button variant="brand" disabled={disabledSave} name="" type="submit" label="Salva"
+                    onclick={handleSave}>
 
-            </lightning-button>
-        </footer>
-    </div>
+                </lightning-button>
+            </footer>
+        </template>
+    <!--/div-->
 </template>

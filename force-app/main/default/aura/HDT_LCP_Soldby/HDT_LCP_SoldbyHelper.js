@@ -10,7 +10,7 @@
         .fire();
         $A.get("e.force:closeQuickAction").fire();
     },
-    errorHandle(component,error){
+    errorHandle: function(component,error){
         let message = "Attenzione! L'operazione non è andata a buon fine";
         if (error){
             message = error[0] && error[0].message ? error[0].message : message; 

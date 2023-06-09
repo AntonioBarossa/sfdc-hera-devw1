@@ -1,12 +1,13 @@
 public with sharing class HDT_LC_SoldByController {
      @AuraEnabled
      public static string getSaleChannel(Id saleId){
+        String channel = '';
         try {
-            return HDT_QR_GenericQuery.getGenericRecords('Id,Channel__c', 'Sale__c', 'Id =\''+String.escapeSingleQuotes(saleId)+'\'').get(0).Channel__c;
+            channel = (String) HDT_QR_GenericQuery.getGenericRecords('Id,Channel__c', 'Sale__c', 'Id =\''+String.escapeSingleQuotes(saleId)+'\'').get(0).get('Channel__c');
         } catch (Exception e) {
             throw new AuraHandledException('Attenzione! '+e.getMessage());
         }
-        return '';
+        return channel;
      }
 
      @AuraEnabled

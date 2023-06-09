@@ -1,12 +1,20 @@
 import { LightningElement,api,track } from 'lwc';
+import updateSale from '@salesforce/apex/HDT_LC_GeneralInfo.updateSale';
+import getAgents from '@salesforce/apex/HDT_LC_GeneralInfo.getAgents';
+import getChannelAgency from '@salesforce/apex/HDT_LC_GeneralInfo.getChannelAgency';
+import getChannel from '@salesforce/apex/HDT_LC_SoldByController.getSaleChannel';
+import getSaleChannel from '@salesforce/apex/HDT_LC_SoldByController.getSaleChannel';
 
+const CONST_CHUNK = 6;
 export default class HdtSoldByComponent extends LightningElement {
+    
 
-    @api saleId;
-    @api channel;
+    @api saleid;
+    channel;
     searchInputValue = null;
     disabledNextAgency;
     showEmptyMessage;
+    @track message;
     completeListcolumns = [
         { label: 'Nome Agenzia', fieldName: 'AgencyName__c', type: 'text' },
         { label: 'Codice Agenzia', fieldName: 'AgencyCode__c', type: 'text' },
@@ -20,7 +28,7 @@ export default class HdtSoldByComponent extends LightningElement {
     @track pages = [];
     @track showpageOne = true;
     @track showpageTwo = false;
-    loading = false;
+    loading = true;
     @track disabledBack = true;
     @track disabledNext = false;
     selectedFromCompleteList = {};
@@ -29,20 +37,33 @@ export default class HdtSoldByComponent extends LightningElement {
     @track agentListForFilter = [];
     submitButtonStatus = true;
     @track disabledSave = true;
-
+    @track tableDataAgent = [];
+    @track pagesTwo = [];
     connectedCallback() {
-        this.handleAgencySelection();
+        console.log('@@@@ea vendita ' + this.saleid);
+        if (this.saleid){
+            getSaleChannel({saleId : this.saleid}).then( data => {
+                this.channel = data;
+                console.log('@ea channel ' + this.channel);
+                if (this.channel){
+                    this.handleAgencySelection();
+                }
+            }).catch(error => {
+                console.error(error);
+            });
+            
+        }
     }
 
-    get showPaginationButtons2() {
-        return this.totalPages2 > 1;
+    get showPaginationButtonsTwo() {
+        return this.totalPagesTwo > 1;
     }
 
-    get getCurrentPage2() {
-        if (this.totalPages2 === 0) {
+    get getCurrentPageTwo() {
+        if (this.totalPagesTwo === 0) {
             return 0;
         } else {
-            return this.currentPage2 + 1;
+            return this.currentPageTwo + 1;
         }
     }
 
@@ -63,27 +84,24 @@ export default class HdtSoldByComponent extends LightningElement {
 
                 this.createTable(this.completeList);
             } else {
-                this.showEmptyMessage = true;                
+                this.showEmptyMessage = true; 
+                this.message = 'Non ci sono agienzie attive in corso';    
             }
+            this.loading = false;
         }).catch(error => {
-            console.log('Error: ', JSON.stringify(error));
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+            this.launchEvent('errorcomponent',error.body.message);
         });
     }
 
     createTable(data) {
-        let i, j, temporary, chunk = 6;
+        let i, j, temporary, chunk = CONST_CHUNK;
         this.pages = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
             temporary = data.slice(i, i + chunk);
             this.pages.push(temporary);
         }
         this.totalPages = this.pages.length;
+        console.log('@ea total page ' + this.totalPages);
         this.reLoadTable();
     }
 
@@ -179,26 +197,27 @@ export default class HdtSoldByComponent extends LightningElement {
                     if (found) return row;
                 })
             }
-            self.createTable2(data); // redesign table
-            self.currentPage2 = 0; // reset page
+            self.createTableTwo(data); // redesign table
+            self.currentPageTwo = 0; // reset page
         }, 1000);
     }
 
-    nextPage2() {
-        if (this.currentPage2 < this.totalPages2 - 1) {
-            this.currentPage2++;
+    nextPageTwo() {
+        if (this.currentPageTwo < this.totalPagesTwo - 1) {
+            this.currentPageTwo++;
         }
-        this.reLoadTable2();
+        this.reLoadTableTwo();
     }
 
-    previousPage2() {
-        if (this.currentPage2 > 0) {
-            this.currentPage2--;
+    previousPageTwo() {
+        if (this.currentPageTwo > 0) {
+            this.currentPageTwo--;
         }
-        this.reLoadTable2();
+        this.reLoadTableTwo();
     }
 
     get showPaginationButtons() {
+        console.log('@ea total page ' + this.totalPages);
         return this.totalPages > 1;
     }
 
@@ -214,7 +233,7 @@ export default class HdtSoldByComponent extends LightningElement {
         this.showpageOne = true;
         this.showpageTwo = false;
         this.handleAgencySelection();
-        this.disabledNextAgency = false;
+        this.disabledNextAgency = true;
         this.disabledBack = true;
         this.disabledSave = true;
     }
@@ -225,7 +244,7 @@ export default class HdtSoldByComponent extends LightningElement {
         this.handleAdditionalFilter();
         this.disabledNextAgency = true;
         this.disabledBack = false;
-        this.showPaginationButtons2 = true;
+        this.showPaginationButtonsTwo = true;
     }
 
     handleAdditionalFilter() {
@@ -234,7 +253,7 @@ export default class HdtSoldByComponent extends LightningElement {
         console.log("this.selectedFromCompleteList.AgencyName__c", this.selectedFromCompleteList.AgencyName__c);
 
         getAgents({AgencyName:this.selectedFromCompleteList.AgencyName__c, Channel:this.channel}).then(data => {
-
+            console.log('@ea data ' + JSON.stringify(data));
             this.completeListAgent = [...data];
 
             console.log('getAgents completeListcompleteList: ', (this.completeListAgent));
@@ -249,39 +268,34 @@ export default class HdtSoldByComponent extends LightningElement {
 
             if (this.completeListAgent.length > 0) {
                 console.log('getAgents: ', JSON.stringify(this.completeListAgent));
-                this.currentPage2 = 0;
-                this.createTable2(this.completeListAgent);
+                this.currentPageTwo = 0;
+                this.createTableTwo(this.completeListAgent);
                 this.disabledNextAgency =true;
             } else {
-                this.showEmptyMessage = false;
+                this.showEmptyMessage = true;
+                this.message = "Non ci sono agenti";
             }
         }).catch(error => {
-            console.log('Error: ', JSON.stringify(error));
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+            this.launchEvent('errorcomponent',error.body.message);
         });
 
     }
 
 
-    createTable2(data) {
-        let i, j, temporary, chunk = 6;
-        this.pages2 = [];
+    createTableTwo(data) {
+        let i, j, temporary, chunk = CONST_CHUNK;
+        this.pagesTwo = [];
         for (i = 0, j = data.length; i < j; i += chunk) {
             temporary = data.slice(i, i + chunk);
-            this.pages2.push(temporary);
+            this.pagesTwo.push(temporary);
         }
-        this.totalPages2 = this.pages2.length;
-        this.reLoadTable2();
+        this.totalPagesTwo = this.pagesTwo.length;
+        this.reLoadTableTwo();
     }
 
-    reLoadTable2() {
+    reLoadTableTwo() {
         console.log('tableData='+JSON.stringify(this.tableDataAgent));
-        this.tableDataAgent = this.pages2[this.currentPageTwo];
+        this.tableDataAgent = this.pagesTwo[this.currentPageTwo];
     }
 
     handleSave() {
@@ -304,12 +318,6 @@ export default class HdtSoldByComponent extends LightningElement {
             };
 
             this.updateSaleRecord(saleUpdateAgent);
-            this.currentPage = 0;
-            this.currentPageTwo = 0; // reset page
-            this.template.querySelector("[data-id='Agency__c']").value = this.selectedFromCompleteList.AgencyName__c;
-            this.template.querySelector("[data-id='CommercialId']").value = this.selectedFromCompleteListAgent.AgentCode__c;
-            this.template.querySelector("[data-id='VendorFirstName__c']").value = this.selectedFromCompleteListAgent.AgentFirstName__c;
-            this.template.querySelector("[data-id='VendorLastName__c']").value = this.selectedFromCompleteListAgent.AgentLastName__c;
 
         }
     }
@@ -317,17 +325,13 @@ export default class HdtSoldByComponent extends LightningElement {
     updateSaleRecord(saleData) {
         this.loading = true;
         updateSale({ sale: saleData }).then(data => {
-            this.loading = false;
-            this.dispatchEvent(new CustomEvent('saleupdate'));
+            this.launchEvent('selectevent',JSON.stringify(saleData));
         }).catch(error => {
-            this.loading = false;
-            console.log(error.body.message);
-            const toastErrorMessage = new ShowToastEvent({
-                title: 'Errore',
-                message: error.body.message,
-                variant: 'error'
-            });
-            this.dispatchEvent(toastErrorMessage);
+            this.launchEvent('errorcomponent',error.body.message);
         });
+    }
+
+    launchEvent(event,message){
+        this.dispatchEvent(new CustomEvent(event,{detail : message}));
     }
 }

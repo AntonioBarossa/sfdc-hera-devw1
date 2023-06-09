@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <QuickAction xmlns="http://soap.sforce.com/2006/04/metadata">
-    <height>250</height>
+    <height>500</height>
     <label>Venduto Da</label>
-    <lightningComponent>HDT_LCP_SoldByContainer</lightningComponent>
+    <lightningComponent>HDT_LCP_Soldby</lightningComponent>
     <optionsCreateFeedItem>false</optionsCreateFeedItem>
     <type>LightningComponent</type>
     <width>-100</width>
