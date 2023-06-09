@@ -587,7 +587,11 @@ public with sharing class  HDT_SRV_DocumentalManagement{
 					individualRecord.ProfilingPrivacyVersion__c = privacyVersion;
 				}
 				moduliOpzionaliMancanti = (Set<String>) JSON.deserialize(radioMap.get('moduliOpzionaliMancanti'), Set<String>.class);
-				activitiesToCreate = (List<DocumentalActivity__c>) JSON.deserialize(radioMap.get('activitiesToCreate'), List<DocumentalActivity__c>.class);
+				List<DocumentalActivity__c> radioBtnAct = (List<DocumentalActivity__c>) JSON.deserialize(radioMap.get('activitiesToCreate'), List<DocumentalActivity__c>.class);
+				if(!radioBtnAct.isEmpty())
+				{
+					activitiesToCreate.addAll(radioBtnAct);
+				}
 				/*for(HDT_WRP_DocusignNotify.HDT_WRP_DocusignNotifyRadio singleRadio : listOfRadio){
 					System.debug(LoggingLevel.DEBUG, 'Checking radiobutton: ' + JSON.serialize(singleRadio));
 
