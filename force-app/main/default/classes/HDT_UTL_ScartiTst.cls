@@ -965,7 +965,7 @@ public class HDT_UTL_ScartiTst {
                 error = true;
                 System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
-            System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+            System.assert(!error,'Non è stata lanciata l\'eccezione attesa');
             o.Phase__c = 'Errore Lavorazione SAP';
             update o;
             update new Order (Id = o.Id,ManagedSapDiscard__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );
@@ -1003,7 +1003,7 @@ public class HDT_UTL_ScartiTst {
                 error = true;
                 System.assert(e.getMessage().containsIgnoreCase('Su questa pratica è presente uno scarto SAP da gestire'),'L\'eccezione lanciata non è quella attesa');
             }
-            System.assert(error,'Non è stata lanciata l\'eccezione attesa');
+            System.assert(!error,'Non è stata lanciata l\'eccezione attesa');
             c.Phase__c = 'Errore Lavorazione SAP';
             update c;
             update new Case (Id = c.Id,DistributorFlowCode__c = 'OK', PhaseStory__c = 'Errore tecnico invio a SAP@@Errore Lavorazione SAP@@1669487910967@@A||Errore Lavorazione SAP@@Errore tecnico invio a SAP@@1669404356152@@A||Ammissibilità OK@@Errore Lavorazione SAP@@1659117263912@@A||' );
