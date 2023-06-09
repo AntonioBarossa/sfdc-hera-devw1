@@ -26,6 +26,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         @AuraEnabled public String city {get;set;}
         @AuraEnabled public Datetime startDate {get;set;}
         @AuraEnabled public Datetime endDate {get;set;}
+        @AuraEnabled public Datetime firstDate {get;set;}
 
         public HDT_WRP_DataApp(){
             return;
@@ -103,6 +104,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         String city;
         String startDate;
         String endDate;
+        String firstDate;
         
         public HDT_WRP_AppointmentReqConfirm(HDT_WRP_DataApp wrap) {
 
@@ -116,6 +118,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
             this.numberOfLines = wrap.numberOfLines;
             this.startDate = wrap.startDate.format('yyyyMMddhhmmss');
             this.endDate = wrap.endDate.format('yyyyMMddhhmmss');
+            this.firstDate = wrap.firstDate.format('yyyyMMddhhmmss');
         }
     }
 
@@ -150,11 +153,24 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
         @AuraEnabled public String endDate {get;set;}
     }
 
-    @AuraEnabled(cacheable=true)
     public static HDT_WS_AppointmentSearchResponse handleSearch(HDT_WRP_DataApp wrap) {
         HDT_WRP_AppointmentReqSearch req = new HDT_WRP_AppointmentReqSearch(wrap);
         HDT_WS_AppointmentSearchResponse res = (HDT_WS_AppointmentSearchResponse)HDT_WS_HTTPServiceCall.sendRequest('MulesoftBasePath',REQUEST_PATH_SEARCH,'POST', req, HDT_WS_AppointmentSearchResponse.class);
-        System.Debug(LoggingLevel.DEBUG,'search res -> ' + res); 
+        System.Debug(LoggingLevel.DEBUG,'search res -> ' + res);
+        return res;
+    }
+
+    @AuraEnabled(cacheable=true)
+    public static HDT_WS_AppointmentSearchResponse handleSearch(Case theCase, HDT_WRP_DataApp wrap) {
+        HDT_WS_AppointmentSearchResponse res = handleSearch(wrap);
+        if(
+            theCase?.Id!=null
+            && theCase.FirstAppointmentAvaiable__c == null 
+            && res?.data?.appointmentData?.isEmpty() == false
+        ){
+            updateCase(new Case(Id=theCase.Id, FirstAppointmentAvaiable__c= new HDT_UTL_GarbageMan().formatDate(res.data.appointmentData[0].startDate)));
+            //qui è ok fare una dml anche col metodo cached perché tanto va aggiornato una sola volta
+        }
         return res;
     }
 
@@ -187,7 +203,7 @@ public with sharing class HDT_LC_AppointmentTariAgenda {
                 System.debug(LoggingLevel.DEBUG, 'ritiro -> ' + ritiro);
                 HDT_UTL_DatabaseService.insertSObject(ritiro);
             }
-            HDT_UTL_DatabaseService.updateSObject(theCase);
+            updateCase(theCase);
         }
         return res;
     }
