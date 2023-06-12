@@ -1,13 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Package xmlns="http://soap.sforce.com/2006/04/metadata">
 	<types>
-		<members>HDT_FiltriProcessiSelFornitura.Unificazione_Separazione_BP_CA_Boll_AMB</members>
-		<members>HDT_MatrixCompatibilityMap.Unificazione_Separazione_BP_CA_Boll_AMB</members>
-		<name>CustomMetadata</name>
+		<members>HDT_LCP_RunFlowCitizenComplaint</members>
+		<name>AuraDefinitionBundle</name>
 	</types>
-	<types>
-		<members>HDT_ProcessType</members>
-		<name>GlobalValueSet</name>
-	</types>
-	<version>55.0</version>
+	<version>53.0</version>
 </Package>
