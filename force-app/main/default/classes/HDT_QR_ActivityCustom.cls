@@ -192,6 +192,7 @@ public inherited sharing class HDT_QR_ActivityCustom {
             Order__r.ServicePoint__r.SupplyProvince__c,
             Order__r.ServicePoint__r.SupplyPostalCode__c,
             Order__r.ProcessType__c,
+            Order__r.isVas__c,
             Order__r.Market__c,
             Order__r.Catalog__c,
             Order__r.ServicePoint__r.Account__r.CustomerCode__c

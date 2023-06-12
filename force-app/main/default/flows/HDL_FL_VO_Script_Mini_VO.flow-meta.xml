@@ -88,6 +88,32 @@
             <label>isAzienda</label>
         </rules>
     </decisions>
+    <decisions>
+        <name>SalesCompanyDec</name>
+        <label>SalesCompanyDec</label>
+        <locationX>182</locationX>
+        <locationY>1358</locationY>
+        <defaultConnector>
+            <targetReference>MinoVO_text1</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>Default Outcome</defaultConnectorLabel>
+        <rules>
+            <name>MMS</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany__c</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Marche Multiservizi S.p.A</stringValue>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>MMS_Screen</targetReference>
+            </connector>
+            <label>MMS</label>
+        </rules>
+    </decisions>
+    <environments>Default</environments>
     <formulas>
         <name>SalesCompanyFormula</name>
         <dataType>String</dataType>
@@ -152,7 +178,7 @@ IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany
         <locationY>1250</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>MinoVO_text1</targetReference>
+            <targetReference>SalesCompanyDec</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -197,8 +223,8 @@ IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany
     <screens>
         <name>MinoVO_text1</name>
         <label>MinoVO_text1</label>
-        <locationX>182</locationX>
-        <locationY>1358</locationY>
+        <locationX>314</locationX>
+        <locationY>1466</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -287,6 +313,37 @@ IF(ISPICKVAL({!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.SalesCompany
         <fields>
             <name>MinoVO_text5</name>
             <fieldText>&lt;p&gt;&lt;br&gt;&lt;/p&gt;&lt;p&gt;Operatore: Mi autorizza e quindi conferma che desidera ricevere la nostra proposta , comprensiva della documentazione contrattuale a mezzo mail all&apos;indirizzo {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ShippingMail__c}(oppure SMS al numero numero {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.PhoneNumber__c})&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Bene Sig./ra&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Sales_Contact.Name} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;abbiamo terminato la registrazione, in breve tempo riceverà tutta la documentazione contrattuale che, se lo riterrà, potrà sottoscrivere attraverso il codice che le invieremo via sms.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Prima di terminare mi conferma che oggi è il {!$Flow.CurrentDate}&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;Operatore: Grazie Sig./ra arrivederci&lt;/p&gt;&lt;p&gt;&lt;b&gt;[FINE REGISTRAZIONE]&lt;/b&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <showFooter>true</showFooter>
+        <showHeader>true</showHeader>
+    </screens>
+    <screens>
+        <name>MMS_Screen</name>
+        <label>MMS_Screen</label>
+        <locationX>50</locationX>
+        <locationY>1466</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <fields>
+            <name>MMS_1</name>
+            <fieldText>&lt;p&gt;Chiamo per conto di {!SalesCompanyFormula}, con sede a Pesaro, Via dei Canonici 144, Nell&apos;ambito di questa telefonata ho raccolto la sua richiesta di contrattualizzazione relativamente al servizio idrico.&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMS_2</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Mi conferma che Lei è il Sig./ra {!Get_Sales_Contact.Name}&lt;/p&gt;&lt;p&gt;ed il suo codice fiscale è {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.Account.FiscalCode__c}?&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: Confermo&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMS_3</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Mi autorizza e quindi conferma che desidera ricevere il contratto relativo al servizio idrico, comprensivo di tutti gli allegati necessari, a mezzo mail all&apos;indirizzo indirizzo mail {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.ShippingMail__c}(oppure SMS al numero numero {!HDT_FL_Script_Gestione_Ordini.AssignOrderPadreOutput.PhoneNumber__c})&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Cliente&lt;/strong&gt;: Confermo&lt;/p&gt;&lt;p&gt;&lt;br&gt;&lt;/p&gt;</fieldText>
+            <fieldType>DisplayText</fieldType>
+        </fields>
+        <fields>
+            <name>MMS_4</name>
+            <fieldText>&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Bene Sig./ra&lt;/p&gt;&lt;p&gt;&lt;span style=&quot;background-color: rgb(255, 255, 255);&quot;&gt;{!Get_Sales_Contact.Name} &lt;/span&gt;&lt;/p&gt;&lt;p&gt;abbiamo terminato la registrazione, in breve tempo riceverà tutta la documentazione contrattuale che, se lo riterrà, potrà sottoscrivere attraverso il codice che le invieremo via sms.&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Prima di terminare mi conferma che oggi è il {!$Flow.CurrentDate}&lt;/p&gt;&lt;p&gt;Cliente: Confermo&lt;/p&gt;&lt;p&gt;&amp;nbsp;&lt;/p&gt;&lt;p&gt;&lt;strong&gt;Operatore&lt;/strong&gt;: Grazie Sig./ra arrivederci&lt;/p&gt;&lt;p&gt;&lt;strong&gt;[FINE REGISTRAZIONE]&lt;/strong&gt;&lt;/p&gt;</fieldText>
             <fieldType>DisplayText</fieldType>
         </fields>
         <showFooter>true</showFooter>
