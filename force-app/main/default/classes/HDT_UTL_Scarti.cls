@@ -1337,6 +1337,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
             String oldPhase = oldObj.get('Phase__c') == null ? '' : (String)oldObj.get('Phase__c');
             String checkScartoSap = obj.get(fieldName) == null ? '' : (String)obj.get(fieldName);
             String checkOldScartoSap = oldObj.get(fieldName) == null ? '' : (String)oldObj.get(fieldName);
+            Set<String> notAllowedPhases = new Set<String>{'Annullato SII','Inviare preventivo','Da Inviare'};
             if(!newPhase.equalsIgnoreCase(oldPhase) && HDT_UTL_GestioneScartiSap.skipPhaseManager(oldPhase) && !HDT_UTL_GestioneScartiSap.skipPhaseManager(newPhase)
             && (String.isBlank(checkScartoSap))){
                 if ('Completata'.equalsIgnoreCase(newPhase)){
@@ -1351,7 +1352,7 @@ global with sharing class HDT_UTL_Scarti implements wrts_prcgvr.Interfaces_1_2.I
                         pManSkip = newRecsMap.values().size() == 1;
                         continue;
                     }
-                }else if (!newPhase.containsIgnoreCase('OK') && !'Annullato SII'.equalsIgnoreCase(newPhase) && !'Inviare preventivo'.equalsIgnoreCase(newPhase)){
+                }else if (!newPhase.containsIgnoreCase('OK') && !notAllowedPhases.contains(newPhase)){
                     obj.addError('Su questa pratica è presente uno scarto SAP da gestire');
                 }
                 obj.put('PreviousPhase__c','');

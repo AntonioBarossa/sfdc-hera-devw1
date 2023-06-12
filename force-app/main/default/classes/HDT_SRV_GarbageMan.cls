@@ -169,6 +169,7 @@ public with sharing class HDT_SRV_GarbageMan {
             }else{
                 wrpDataApp.startDate = utlGarbage.formatDate(response.data.appointmentData[0].startDate);
                 wrpDataApp.endDate = utlGarbage.formatDate(response.data.appointmentData[0].endDate);
+                currentCase.FirstAppointmentAvaiable__c = utlGarbage.formatDate(response.data.appointmentData[0].startDate);
                 errorCode= '07';
                 HDT_LC_AppointmentTariAgenda.HDT_WS_AppointmentConfirmResponse res = HDT_LC_AppointmentTariAgenda.handleConfirm(currentCase, wrpDataApp);
                 if(String.isBlank(res?.data?.noticeNumber)){

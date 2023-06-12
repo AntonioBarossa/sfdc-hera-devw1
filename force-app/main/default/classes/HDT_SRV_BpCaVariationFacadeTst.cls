@@ -14,15 +14,21 @@ public class HDT_SRV_BpCaVariationFacadeTst {
         caseList[0].BillingProfile__c = billingProfileList[0].Id;
         caseList[0].XMLType__c = 'Sintetico';
         caseList[0].ElectronicInvoicingMethod__c = 'XML PA';
+        caseList[0].BillingProvince__c = 'LU';
+        caseList[0].InvoicingProvince__c = 'LU';
         caseList[1].BillingProfile__c = billingProfileList[0].Id;
         caseList[1].XMLType__c = 'Dettaglio';
         caseList[1].ElectronicInvoicingMethod__c = 'XML';
+        caseList[1].BillingProvince__c = 'LU';
+        caseList[0].InvoicingProvince__c = 'LU';
         caseList[2].BillingProfile__c = billingProfileList[0].Id;
         caseList[2].XMLType__c = '';
         caseList[2].VatNumber__c = '35435345331';
         caseList[2].VATGroup__c = '35435345331';
         caseList[2].VATGroupStartDate__c = Date.today();
         caseList[2].VATGroupEndDate__c = Date.today();
+        caseList[2].BillingProvince__c = 'LU';
+        caseList[0].InvoicingProvince__c = 'LU';
         insert caseList;
 
         HDT_UTL_DataFactoryTst.pClickCasePhase();

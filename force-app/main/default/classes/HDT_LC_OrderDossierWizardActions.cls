@@ -625,7 +625,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardActions {
         Map<id, Order> ordersToUpdateMap = new map<id, Order>{parentOrderToUpdate.Id => parentOrderToUpdate};
 
         for(Order childOrd : orderQr.getChildOrdersByParentId(orderParentRetreived.Id)){
-            if( 'HDT_RT_AgevolazioniAmbiente' == childOrd.RecordType.DeveloperName && childOrd.OrderReference__c != null){
+            if( 
+                'HDT_RT_AgevolazioniAmbiente' == childOrd.RecordType.DeveloperName 
+                && childOrd.OrderReference__c != null 
+                && !'MMS'.equalsIgnoreCase(childOrd.Account.CompanyOwner__c)
+            ){
                 Order o = new Order(
                     Id=childOrd.Id,
                     Surface__c = childOrd.OrderReference__r.Surface__c
