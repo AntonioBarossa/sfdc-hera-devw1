@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomMetadata xmlns="http://soap.sforce.com/2006/04/metadata" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <label>Reclami - Dati Tecnici M03</label>
+    <protected>false</protected>
+    <values>
+        <field>Commodity__c</field>
+        <value xsi:type="xsd:string">Gas</value>
+    </values>
+    <values>
+        <field>FieldsJSON__c</field>
+        <value xsi:type="xsd:string">[
+{"FieldName":"SalesCompany__c","Required":true,"Column":1},
+{"FieldName":"Market__c","Required":true,"Column":2},
+{"FieldName":"Distributor__c","Required":true,"Column":1},
+{"FieldName":"PODPDRFormula__c","Required":false,"Column":2},
+{"FieldName":"FacilityType__c","Required":false,"Column":1},
+{"FieldName":"MeterCode__c","Required":false,"Column":2},
+{"FieldName":"LastName__c","Required":true,"Column":1},
+{"FieldName":"AccountFiscalCodeFormula__c","Required":false,"Column":2},
+{"FieldName":"PhoneNumber__c","Required":true,"Column":1},
+{"FieldName":"BillingErrorArgument__c","Required":true,"Column":2},
+{"FieldName":"OriginalProcess__c","Required":false,"Column":1},
+{"FieldName":"StartDate__c","Required":true,"Column":2},
+{"FieldName":"EndDate__c","Required":false,"Column":1},
+{"FieldName":"CustomerSelfReading__c","Required":true,"Column":2},
+{"FieldName":"Note__c","Required":true,"Column":1},
+{"FieldName":"PecReply__c","Required":false,"Column":2}
+]</value>
+    </values>
+    <values>
+        <field>ProcessType__c</field>
+        <value xsi:type="xsd:string">Mancata notifica Bonus Gas</value>
+    </values>
+    <values>
+        <field>ReadOnlyFields__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ReadOnlyRelatedFields__c</field>
+        <value xsi:nil="true"/>
+    </values>
+    <values>
+        <field>ValidateClass__c</field>
+        <value xsi:nil="true"/>
+    </values>
+</CustomMetadata>
