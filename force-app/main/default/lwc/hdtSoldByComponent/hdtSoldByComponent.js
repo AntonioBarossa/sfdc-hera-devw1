@@ -282,15 +282,15 @@ export default class HdtSoldByComponent extends LightningElement {
         if (Object.keys(this.selectedFromCompleteList).length != 0) {
             let saleUpdateAgent = { 
                 Id: this.saleid,
-                Agency__c: this.selectedFromCompleteList.AgencyName__c,
-                AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c,
-                VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c,
-                VendorFirstName__c:this.selectedFromCompleteListAgent.AgentFirstName__c,
-                CommercialId__c:this.selectedFromCompleteListAgent.AgentCode__c,
-                UpperChannelAgency__c:this.selectedFromCompleteListAgent.UpperChannelAgency__c,
-                LowerChannelAgency__c:this.selectedFromCompleteListAgent.LowerChannelAgency__c,
-                IsMonitoring__c:this.selectedFromCompleteListAgent.IsMonitoring__c,
-                AreaManager__c: this.selectedFromCompleteListAgent.AreaManager__c
+                Agency__c: this.selectedFromCompleteList.AgencyName__c ? this.selectedFromCompleteList.AgencyName__c : '',
+                AgencyCode__c: this.selectedFromCompleteList.AgencyCode__c ? this.selectedFromCompleteList.AgencyCode__c : '',
+                VendorLastName__c:this.selectedFromCompleteListAgent.AgentLastName__c ? this.selectedFromCompleteListAgent.AgentLastName__c : '',
+                VendorFirstName__c:this.selectedFromCompleteListAgent.AgentFirstName__c ? this.selectedFromCompleteListAgent.AgentFirstName__c : '',
+                CommercialId__c:this.selectedFromCompleteListAgent.AgentCode__c ? this.selectedFromCompleteListAgent.AgentCode__c : '',
+                UpperChannelAgency__c:this.selectedFromCompleteListAgent.UpperChannelAgency__c ? this.selectedFromCompleteListAgent.UpperChannelAgency__c : '',
+                LowerChannelAgency__c:this.selectedFromCompleteListAgent.LowerChannelAgency__c ? this.selectedFromCompleteListAgent.LowerChannelAgency__c : '',
+                IsMonitoring__c:this.selectedFromCompleteListAgent.IsMonitoring__c ? true : false,
+                AreaManager__c: this.selectedFromCompleteListAgent.AreaManager__c ? this.selectedFromCompleteListAgent.AreaManager__c : ''
             };
             this.updateSaleRecord(saleUpdateAgent);
 
