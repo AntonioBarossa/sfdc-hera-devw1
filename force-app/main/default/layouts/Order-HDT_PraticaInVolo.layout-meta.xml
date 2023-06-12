@@ -229,6 +229,7 @@
         </quickActionListItems>
     </quickActionList>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>ORDERS.ORDER_NUMBER</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
         <fields>ORDERS.STATUS</fields>
@@ -236,10 +237,12 @@
         <relatedList>Order.ParentOrder__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>Reading__c.OrderEle__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>Reading__c.OrderGas__c</relatedList>
     </relatedLists>
@@ -279,6 +282,7 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.CREATED_DATE</fields>
@@ -286,6 +290,7 @@
         <relatedList>Case.VulturePracticeReference__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SendDate__c</fields>
         <fields>SendMode__c</fields>
@@ -294,6 +299,7 @@
         <relatedList>DocumentSendTracking__c.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ActivityType__c</fields>
         <fields>EnvelopeId__c</fields>
@@ -304,6 +310,7 @@
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>AttachmentCode__c</fields>
         <fields>Version__c</fields>

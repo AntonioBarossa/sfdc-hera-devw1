@@ -631,6 +631,7 @@
         <relatedList>LandRegistry__c.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.TYPE</fields>
         <fields>Phase__c</fields>
@@ -638,6 +639,11 @@
         <relatedList>Case.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>AddOrderProduct</excludeButtons>
+        <excludeButtons>AddProduct</excludeButtons>
+        <excludeButtons>EditAllProduct</excludeButtons>
+        <excludeButtons>MultiAdd</excludeButtons>
+        <excludeButtons>MultiEdit</excludeButtons>
         <fields>Product2</fields>
         <fields>ProductCode</fields>
         <fields>Quantity</fields>
@@ -659,6 +665,7 @@
         <relatedList>wrts_prcgvr__Activity__c.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>CONTRACT.CONTRACT_NUMBER</fields>
         <fields>CONTRACT.NAME</fields>
         <fields>SALES.ACCOUNT.NAME</fields>
@@ -691,6 +698,7 @@
         <relatedList>RelatedHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SendDate__c</fields>
         <fields>SendMode__c</fields>
@@ -699,6 +707,7 @@
         <relatedList>DocumentSendTracking__c.Order__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ActivityType__c</fields>
         <fields>EnvelopeId__c</fields>
@@ -709,6 +718,7 @@
         <relatedList>DocumentalActivity__c.OrderId__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>AttachmentCode__c</fields>
         <fields>Version__c</fields>
@@ -721,7 +731,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>false</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h3N000003fwUS</masterLabel>
+        <masterLabel>00h2o00000loxyt</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
