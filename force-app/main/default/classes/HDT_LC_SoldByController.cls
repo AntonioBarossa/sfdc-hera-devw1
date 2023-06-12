@@ -11,7 +11,7 @@ public with sharing class HDT_LC_SoldByController {
      }
 
      @AuraEnabled
-     public static string updateAllOrder(Sale__c sale){
+     public static String updateAllOrder(Sale__c sale){
         try {
             List<SObject> orderToUpdate = new List<SObject>();
             for(SObject ord : HDT_QR_GenericQuery.getGenericRecords('Id','Order', 'Sale__c =\''+sale.Id+'\'')){

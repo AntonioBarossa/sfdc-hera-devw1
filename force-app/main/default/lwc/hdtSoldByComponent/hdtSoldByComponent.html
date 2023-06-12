@@ -7,13 +7,7 @@
         <template lwc:else>
             <div class="modal-body slds-modal__content slds-p-around--large">
                 <template lwc:if={showpageOne}>
-                    <lightning-layout-item padding="around-small" size="4">
-                        <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..."
-                            size="small"></lightning-spinner>
-                        <lightning-input onkeyup={handleSearchInputKeyChange} name="enter-search" type="search"
-                            label="Filter Agency" onchange={searchAgencyName} class="searchInput">
-                        </lightning-input>
-                    </lightning-layout-item>
+                    <lightning-input  name="enter-search" type="search" label="Filter Agency" onchange={searchAgencyName} class="searchInput"></lightning-input> 
                     <lightning-layout-item padding="around-medium" size="3">
                     </lightning-layout-item>
                     <lightning-layout horizontal-align="end">
@@ -63,7 +57,6 @@
                     </template>
                 </template>
                 <template if:true={showpageTwo}>
-                    <lightning-spinner variant="brand" if:true={preloading} alternative-text="Loading..." size="small"></lightning-spinner>
                     <lightning-input  name="enter-search" type="search" label="Filter Agent" onchange={searchAgentTable} class="searchInput"></lightning-input>
                     <lightning-layout-item padding="around-medium" size="3"></lightning-layout-item>
                     <div style="height: 14rem;">
