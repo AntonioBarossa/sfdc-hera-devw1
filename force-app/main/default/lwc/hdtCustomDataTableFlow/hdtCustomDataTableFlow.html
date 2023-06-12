@@ -1,0 +1,15 @@
+<template>
+    <template if:true={showTable}>
+        <lightning-datatable
+                key-field="id"
+                data={records}
+                columns={columns}
+                hide-checkbox-column="true">
+        </lightning-datatable>
+    </template>
+    <template if:true={showErrorMessage}>
+        <div align="center">
+            <b>Nessun record trovato</b>
+        </div>
+    </template>
+</template>
