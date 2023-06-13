@@ -161,4 +161,23 @@ public class HDT_UTL_ActivityCustomProcessTst {
         HDT_UTL_ActivityCustomProcess.closeSobjectOnActivityClosing(newActList, oldActList);
 
     }
+    @IsTest
+    public static void testShareRecordAppointmentSelf(){
+        List<wrts_prcgvr__Activity__c> newActs= [SELECT id,Account__c,Case__c,Order__c FROM wrts_prcgvr__Activity__c];
+        Map<Id,wrts_prcgvr__Activity__c> oldActsMap = new Map<Id,wrts_prcgvr__Activity__c>();
+        Id rtId = constants.ACTIVITYCUSTOM_RECORDTYPEID_DISTRIBUTORAPPOINTMENT;
+        for (wrts_prcgvr__Activity__c newAct :newActs){
+            newAct.RecordTypeId = rtId;
+            newAct.isSelfAppointment__c = true;
+            wrts_prcgvr__Activity__c oldAct = new wrts_prcgvr__Activity__c(Id = newAct.Id);
+            oldAct.RecordTypeId = rtId;
+            oldAct.isSelfAppointment__c = false;
+            oldActsMap.put(newAct.Id,oldAct);
+        }
+        test.startTest();
+            HDT_UTL_ActivityCustomProcess.shareRecordAppointmentSelf(newActs,oldActsMap);  
+        test.stopTest();
+        List<Account> accs = [SELECT id,ShareForAppointment__c FROM Account WHERE Id = : newActs[0].Account__c];
+        System.assertEquals(true, accs[0].ShareForAppointment__c, 'Account non condiviso');
+    }
 }
