@@ -141,9 +141,22 @@ public class HDT_BA_VasSupplierTableTst {
         table.VasSupplierStatus__c = 'DA RICHIAMARE';
         update table;
         
+        String crono = '20 30 8 10 2 ?';
+        
         Test.startTest();
-            Database.executeBatch(new HDT_BA_VasSupplierTable());
+        
+		HDT_BA_VasSupplierTable vst = new HDT_BA_VasSupplierTable();
+        String jobId = System.schedule('Label', crono , vst);
+        
         Test.stopTest();
+
+        System.AssertNotEquals(null, jobId, 'job not scheduled correctly');
+        
+        List<AsyncApexJob> jobsScheduled = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'ScheduledApex'];
+    	System.assertEquals(1, jobsScheduled.size(), 'expecting one scheduled job');
+        
+        List<AsyncApexJob> jobsApexBatch = [select Id, ApexClassID, ApexClass.Name, Status, JobType from AsyncApexJob where JobType = 'BatchApex'];
+    	System.assertEquals(1, jobsApexBatch.size(), 'expecting one apex batch job');
 
         Integer subScriptionAct = 0;
         Integer assetAct = 0;
@@ -155,8 +168,14 @@ public class HDT_BA_VasSupplierTableTst {
             }
         }
         System.assertNotEquals(1, assetAct, 'Non si è creata l\'attività per l\'asset');
-        System.assertNotEquals(1, subScriptionAct, 'Non si è creata l\'attività per la subscription');
+        System.assertNotEquals(1, subScriptionAct, 'Non si è creata l\'attività per la subscription');   
+    }
+
+    @isTest
+    static void testOrderReferenceOnTable(){
+        Test.startTest();
+            Database.executeBatch(new HDT_BA_VasSupplierTable());
+        Test.stopTest();
         System.assertEquals([SELECT id FROM VasSupplierTable__c WHERE OrderReference__c != null].size(), 2, 'Ordine non correttamente ribaltato sul rispettivo campo nella tabella fornitori');
-        
     }
 }
