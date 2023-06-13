@@ -2324,10 +2324,267 @@
             <default>false</default>
         </values>
     </picklistValues>
-    <picklistValues>
+        <picklistValues>
+        <picklist>Casuistry__c</picklist>
+        <values>
+            <fullName>Anticipo appuntamento o richiesta appuntamento fuori standard</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Approfondimento su permessi esecuzione lavori</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Assenza prolungata di letture effettive %28non da reclamo del cliente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificazione dati titolarità per fini legali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiarimenti su esito di servizio</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Chiarimenti sulla risposta a  M01 o a M02</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Comunicazione mancata Concessione Bonus Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Contestazione esito intervento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallineamento - Flusso ACG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallineamento - Flusso RCG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallineamento - Flusso UIG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallineamento - Flusso VTG</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Disallineamento con RCU</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Il PDF del servizio non è leggibile</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Incongruenza  della matricola misuratore a sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Infomazioni su pratiche con accertamento documentale in stato  REA</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni su pdr inesistente a sistema</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni%2FSblocco PdR chiusi da ordinanza pubblica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malfunzionamenti contatore elettronico - anomalia display</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Malfunzionamenti contatore tradizionale - anomalia totalizzatore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Manca esito del servizio o di un appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata notifica Bonus Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancata registrazione servizi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Mancato appuntamento</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratica in stato AND %28da recuperare%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Pratiche RET-DPR-ETS %28registrato temporaneo-da prenotare-esito tecnico scartato%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione Breve - Richiesta certificazioni dati</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Preventivi in stato SPE %28sopralluogo eseguito%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta Elenco PdR aggiornato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta certificati di taratura del contatore%2Fconvertitore</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta chiarimenti agevolazione sul PdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di agevolazione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta di conferma di lettura riguardante servizi tecnici al PdR %28non da reclamo del cliente%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Richiesta preventivo installazione emettitore di impulsi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Segnalazioni Manomissione impianto</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Servizio in ETC %28esito tecnico completato%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito della risposta ad un M01 o ad un M02 aperti con tempistiche già scadute</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Titolarità del PdR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Titolarità del cliente finale</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica Bonus Gas</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica e certificazione dei dati di lettura per fini legali</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica ed aggiornamento ubicazione PDR</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifica metrologica su contatore rimosso %28V03%29</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche sullo stato del misuratore e sullo stato tecnico del PdR</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
+        <picklist>CertificationType__c</picklist>
+        <values>
+            <fullName>FULL</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>LIGHT</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
+        <picklist>DataToCertified__c</picklist>
+        <values>
+            <fullName>Consumi</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Titolarità</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Titolarità e consumi</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
         <picklist>EndCustomerRequestType__c</picklist>
         <values>
+            <fullName>Altro</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Certificazione per contenzioso legale</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Conciliazione paritetica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatture di connessione errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatture di connessione mancante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatture di trasporto errate</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Fatture di trasporto mancante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso di misura errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Flusso di misura mancante</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Informazioni richieste respinte</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Lettura errata%2Fanomala</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Modifica indirizzo di fornitura</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Prescrizione breve</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Reclamo Scritto</fullName>
             <default>false</default>
         </values>
         <values>
@@ -2343,7 +2600,140 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Reclamo Scritto</fullName>
+            <fullName>Segnalazioni relative a impianti di e-distribuzione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sisma - Attivazione agevolazione non automatica</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito attività di connessione</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Sollecito cessazione fornitura temporanea</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Verifiche_segnalazione dati errati o mancanti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+	<picklistValues>
+        <picklist>FlowType__c</picklist>
+        <values>
+            <fullName>Ante Delibera 65%2F2012</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Misura flusso 0150 errato</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PDO2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PNO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>PNO2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RFO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RFO2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RNO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RNO2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RNV</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RNV2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSN</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>RSN2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMIS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SMN2G</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SNF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SNM</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SNS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOF</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>SOS</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VNO</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>VNO2G</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>Multisite__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+    <picklistValues>
+        <picklist>PecReply__c</picklist>
+        <values>
+            <fullName>No</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Si</fullName>
             <default>false</default>
         </values>
     </picklistValues>
