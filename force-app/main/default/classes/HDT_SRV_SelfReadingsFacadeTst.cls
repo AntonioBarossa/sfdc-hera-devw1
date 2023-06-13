@@ -459,6 +459,17 @@ public with sharing class HDT_SRV_SelfReadingsFacadeTst {
         System.assertEquals(null, myUpdatedCase.TecnicalPhase__c, '');
         
     }
+    @isTest
+    private static void handleResponseLettureNot200() {
+        
+        HDT_WRP_GenericSapIntegration wrp = new HDT_WRP_GenericSapIntegration();
+        wrp.responseBody = '{"status": "success","correlationId": "33a875d0-0543-11ee-a4da-06f62857eab2","timestamp":"2023-06-07T16:54:28","data":"","errorDetails":[{"message":"Errore"}]}';
+        Test.startTest();
+        HDT_SRV_SelfReadings.getErrorMessage(wrp);
+        Test.stopTest();
+        
+    }
+    
     
     
     
