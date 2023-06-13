@@ -2307,6 +2307,10 @@
     <picklistValues>
         <picklist>Type__c</picklist>
         <values>
+            <fullName>Green Loyalty</fullName>
+            <default>false</default>
+        </values>
+        <values>
             <fullName>Protocollo - Attivazioni</fullName>
             <default>false</default>
         </values>
