@@ -758,6 +758,7 @@ export default class hdtChildOrderProcessDetails extends LightningElement {
                 let effectiveDate = new Date(this.template.querySelector("[data-id='EffectiveDate__c']").value);
                 if( this.typeVisibility('acqua') &&
                     this.order.ServicePoint__r.MeterStatus__c !== 'Sospeso' && // eccetto per punto moroso
+                    this.order.ServicePoint__r.MeterSN__c && //eccetto per punti senza matricola contatore
                     this.order.RecordType.DeveloperName === 'HDT_RT_Voltura' &&
                     ( this.order.Subprocess__c == 'Retroattiva' || effectiveDate < today ) &&
                     this.availableSteps.find(element => element.step === nextSectionStep).label === 'Fatturazione' ) //check next section
