@@ -1287,6 +1287,11 @@
         <label>Nuovo Impianto - GAS</label>
     </customValue>
     <customValue>
+        <fullName>Unificazione/Separazione BP-CA-Bolletta - AMB</fullName>
+        <default>false</default>
+        <label>Unificazione/Separazione BP-CA-Bolletta - AMB</label>
+    </customValue>
+    <customValue>
         <fullName>Richiesta domiciliazione - GAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
