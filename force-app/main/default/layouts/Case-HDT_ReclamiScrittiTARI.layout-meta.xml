@@ -369,6 +369,11 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.HDT_OpinionRequest</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>Case.HDT_SendEmail</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>1</sortOrder>
@@ -397,11 +402,6 @@
             <actionName>EscalationCmp</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>6</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.HDT_OpinionRequest</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -437,6 +437,7 @@
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Phase__c</fields>
         <fields>CASES.TYPE</fields>
@@ -450,6 +451,7 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>Phase__c</fields>
         <fields>ComplaintType__c</fields>
@@ -461,6 +463,7 @@
         <relatedList>Case.RelatedCase__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>Delivered__c</fields>
@@ -469,6 +472,7 @@
         <relatedList>SMSTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>MessageOpened__c</fields>
@@ -476,6 +480,7 @@
         <relatedList>PushTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>et4ae5__DateSent__c</fields>
         <fields>et4ae5__DateOpened__c</fields>
@@ -489,10 +494,12 @@
         <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>DocumentSendTracking__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
     </relatedLists>
@@ -505,7 +512,7 @@
     <showRunAssignmentRulesCheckbox>false</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1w000000TasD</masterLabel>
+        <masterLabel>00h2o00000loxwy</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>

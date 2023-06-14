@@ -686,6 +686,41 @@
     <platformActionList>
         <actionListContext>Record</actionListContext>
         <platformActionListItems>
+            <actionName>Case.HDT_SendCertifiedEmail</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>14</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>EscalationCmp</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>15</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Case.HDT_CaseDocumentValidation</actionName>
+            <actionType>QuickAction</actionType>
+            <sortOrder>0</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>HDT_DynamicCancellation</actionName>
+            <actionType>CustomButton</actionType>
+            <sortOrder>1</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Edit</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>2</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>Delete</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>3</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
+            <actionName>CloseCase</actionName>
+            <actionType>StandardButton</actionType>
+            <sortOrder>4</sortOrder>
+        </platformActionListItems>
+        <platformActionListItems>
             <actionName>LogACall</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>5</sortOrder>
@@ -729,41 +764,6 @@
             <actionName>Case.HDT_SendSms</actionName>
             <actionType>QuickAction</actionType>
             <sortOrder>13</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.HDT_SendCertifiedEmail</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>14</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>EscalationCmp</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>15</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Case.HDT_CaseDocumentValidation</actionName>
-            <actionType>QuickAction</actionType>
-            <sortOrder>0</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>HDT_DynamicCancellation</actionName>
-            <actionType>CustomButton</actionType>
-            <sortOrder>1</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Edit</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>2</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>Delete</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>3</sortOrder>
-        </platformActionListItems>
-        <platformActionListItems>
-            <actionName>CloseCase</actionName>
-            <actionType>StandardButton</actionType>
-            <sortOrder>4</sortOrder>
         </platformActionListItems>
     </platformActionList>
     <quickActionList>
@@ -829,6 +829,7 @@
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.PRIORITY</fields>
@@ -838,6 +839,7 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.SUBJECT</fields>
         <fields>CASES.CREATED_DATE</fields>
@@ -848,14 +850,17 @@
         <relatedList>RelatedEntityHistoryList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>Reading__c.CaseEle__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>Reading__c.CaseGas__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
@@ -872,14 +877,17 @@
         <relatedList>RelatedAttachmentList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>SMSTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>PushTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <relatedList>et4ae5__IndividualEmailResult__c.CaseID__c</relatedList>
     </relatedLists>
@@ -933,7 +941,7 @@
     <showRunAssignmentRulesCheckbox>true</showRunAssignmentRulesCheckbox>
     <showSubmitAndAttachButton>true</showSubmitAndAttachButton>
     <summaryLayout>
-        <masterLabel>00h1w000000TZ8J</masterLabel>
+        <masterLabel>00h2o00000loxx3</masterLabel>
         <sizeX>4</sizeX>
         <sizeY>0</sizeY>
         <summaryLayoutStyle>Default</summaryLayoutStyle>
