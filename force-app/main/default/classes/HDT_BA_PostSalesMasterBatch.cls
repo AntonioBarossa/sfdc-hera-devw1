@@ -4,9 +4,16 @@
     Reason: Modifica per gestione Annullamento Case con Phase "In Bozza", Case con Type "Blocco Sollecito/Interessi" e inversione porzioni di codice Case/Knowledge Article
 */
 public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.Batchable<SObject>, Database.Stateful, Database.AllowsCallouts {
-
+    public Integer counterKo = 0;
+    public Integer counterOk = 0;
+    private static HDT_SRV_BatchExecutionKpi srvBatchEx = new HDT_SRV_BatchExecutionKpi();
+    BatchExecutionKpiConfiguration__mdt kpiMeta = BatchExecutionKpiConfiguration__mdt.getInstance('HDT_BA_PostSalesMasterBatch');
+    BatchExecutionKpi__c kpiTrack=new BatchExecutionKpi__c();
 
     public List<SObject> start(Database.BatchableContext bc){
+        if(kpiMeta!=null && kpiMeta.EnableTracking__c){
+            kpiTrack = srvBatchEx.createRecord(Datetime.now(),'HDT_BA_DeleteServicePoints');
+        }
 
         HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
 
@@ -222,9 +229,12 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
             Database.SaveResult[] srList = Database.update(caseToUpdate, false);
             for (Database.SaveResult sr : srList){
                 if (!sr.isSuccess()){
+                    counterKo++;
                     for (Database.Error err : sr.getErrors()){
                         System.debug(LoggingLevel.DEBUG, 'Error returned: ' + err.getStatusCode() + ' - ' + err.getMessage());
                     }
+                }else{
+                    counterOk++;
                 }
             }        
         }
@@ -239,6 +249,21 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
     public void finish(Database.BatchableContext bc){
         AsyncApexJob a = [SELECT Id, Status, NumberOfErrors, JobItemsProcessed, TotalJobItems, CreatedBy.Email FROM AsyncApexJob WHERE Id = :bc.getJobId()];
         System.debug(LoggingLevel.DEBUG, 'HDT_BA_PostSalesMasterBatch - finished job: ' + a);
+
+        if(kpiMeta!=null && kpiMeta.EnableEmailSend__c){
+            Messaging.SingleEmailMessage mail = new Messaging.SingleEmailMessage();
+            OrgWideEmailAddress[] owea = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address' LIMIT 1];
+            mail.setOrgWideEmailAddressId(owea[0].Id);
+            mail.setToAddresses(new String[]{kpiMeta.DesiredEmail__c});
+            mail.setSubject('Batch HDT_BA_PostSalesMasterBatch execution KPI');
+            String body='number of records: ' + (counterKo+counterOk) + '\nsuccessful updates: ' + counterOk + '\nunsuccessful updates ' + counterKo ;
+            mail.setPlainTextBody (body);
+            Messaging.sendEmail(new Messaging.SingleEmailMessage[] { mail });
+        }
+
+        if(kpiMeta!=null && kpiMeta.EnableTracking__c){
+            srvBatchEx.updateRecord(kpiTrack.Id,counterOk, counterKo, counterKo + counterOk);
+        }
         
     }
 
