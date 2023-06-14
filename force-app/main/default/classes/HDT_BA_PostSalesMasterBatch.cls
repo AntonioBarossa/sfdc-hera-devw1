@@ -12,7 +12,7 @@ public inherited sharing class HDT_BA_PostSalesMasterBatch implements Database.B
 
     public List<SObject> start(Database.BatchableContext bc){
         if(kpiMeta!=null && kpiMeta.EnableTracking__c){
-            kpiTrack = srvBatchEx.createRecord(Datetime.now(),'HDT_BA_DeleteServicePoints');
+            kpiTrack = srvBatchEx.createRecord(Datetime.now(),'HDT_BA_PostSalesMasterBatch');
         }
 
         HDT_QR_PostSalesMasterBatch postsalesQr = new HDT_QR_PostSalesMasterBatch();
