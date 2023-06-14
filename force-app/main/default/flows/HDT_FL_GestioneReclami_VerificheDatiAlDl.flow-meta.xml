@@ -1683,6 +1683,12 @@
                     <stringValue>Conferma</stringValue>
                 </value>
             </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
+                </value>
+            </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -1837,12 +1843,19 @@
             <isRequired>true</isRequired>
             <storeOutputAutomatically>true</storeOutputAutomatically>
             <visibilityRule>
-                <conditionLogic>and</conditionLogic>
+                <conditionLogic>or</conditionLogic>
                 <conditions>
                     <leftValueReference>hdtCustomPicklist.outcome</leftValueReference>
-                    <operator>NotEqualTo</operator>
+                    <operator>EqualTo</operator>
                     <rightValue>
-                        <stringValue>Processo M03</stringValue>
+                        <stringValue>Processo M01</stringValue>
+                    </rightValue>
+                </conditions>
+                <conditions>
+                    <leftValueReference>hdtCustomPicklist.outcome</leftValueReference>
+                    <operator>EqualTo</operator>
+                    <rightValue>
+                        <stringValue>Processo M02</stringValue>
                     </rightValue>
                 </conditions>
             </visibilityRule>
@@ -2358,6 +2371,12 @@
                 <name>labelSaveButton</name>
                 <value>
                     <stringValue>Conferma</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>addContentDocument</name>
+                <value>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
