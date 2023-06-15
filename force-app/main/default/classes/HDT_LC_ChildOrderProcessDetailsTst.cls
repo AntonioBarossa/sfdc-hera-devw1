@@ -354,7 +354,7 @@ public class HDT_LC_ChildOrderProcessDetailsTst{
 			Test.stopTest();
 
 			System.assertEquals(true, quoteTypeWrp.quoteCode!=null, 'quoteTypeWrp return is Wrong');
-			System.assertNotEquals(false, quoteTypeWrp.quoteCode!=null, 'getQuoteTypeMtd did not work correctly');
+			System.assertNotEquals(true, quoteTypeWrp.quoteCode!=null, 'getQuoteTypeMtd did not work correctly');
 		}
 	}
 
