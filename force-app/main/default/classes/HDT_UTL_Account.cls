@@ -194,8 +194,12 @@ public with sharing class HDT_UTL_Account {
                 query += ' AND VAT_REGN_NUM__c = :vatNumber';
             }
             query += ' WITH SECURITY_ENFORCED';
-
-            siebelCustomer = Database.query(query);
+            try {
+                siebelCustomer = Database.query(query);
+            } catch (Exception e) {
+                System.debug('Errore query su SiebelCustomer__x '+e.getMessage());
+            }
+           // siebelCustomer = Database.query(query);
             /* If query returns results update account */
             if(!siebelCustomer.isEmpty()){
                 archive = true;
