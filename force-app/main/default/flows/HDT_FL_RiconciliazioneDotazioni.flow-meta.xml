@@ -4,7 +4,7 @@
     <assignments>
         <name>assignCausalCode</name>
         <label>assignCausalCode</label>
-        <locationX>264</locationX>
+        <locationX>600</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.CausalCode__c</assignToReference>
@@ -20,7 +20,7 @@
     <assignments>
         <name>assignCausalCode_0</name>
         <label>assignCausalCode</label>
-        <locationX>528</locationX>
+        <locationX>864</locationX>
         <locationY>458</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.CausalCode__c</assignToReference>
@@ -36,7 +36,7 @@
     <assignments>
         <name>assignContract</name>
         <label>assignContract</label>
-        <locationX>264</locationX>
+        <locationX>600</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.Contract__c</assignToReference>
@@ -52,7 +52,7 @@
     <assignments>
         <name>assignOrder</name>
         <label>assignOrder</label>
-        <locationX>528</locationX>
+        <locationX>864</locationX>
         <locationY>974</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.Order__c</assignToReference>
@@ -68,8 +68,8 @@
     <assignments>
         <name>assignProcessEquipment</name>
         <label>assignProcessEquipment</label>
-        <locationX>572</locationX>
-        <locationY>2414</locationY>
+        <locationX>446</locationX>
+        <locationY>2738</locationY>
         <assignmentItems>
             <assignToReference>newProcessEquipment.Case__c</assignToReference>
             <operator>Assign</operator>
@@ -91,8 +91,8 @@
     <assignments>
         <name>AssignResultValues</name>
         <label>AssignResultValues</label>
-        <locationX>836</locationX>
-        <locationY>2738</locationY>
+        <locationX>710</locationX>
+        <locationY>3062</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -105,9 +105,41 @@
         </connector>
     </assignments>
     <assignments>
+        <name>assignServicePoint</name>
+        <label>assignServicePoint</label>
+        <locationX>600</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>getInputCase.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getContract.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>firstUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
+        <name>assignServicePoint_0</name>
+        <label>assignServicePoint</label>
+        <locationX>864</locationX>
+        <locationY>1190</locationY>
+        <assignmentItems>
+            <assignToReference>getInputCase.ServicePoint__c</assignToReference>
+            <operator>Assign</operator>
+            <value>
+                <elementReference>getOrder.ServicePoint__c</elementReference>
+            </value>
+        </assignmentItems>
+        <connector>
+            <targetReference>firstUpdate</targetReference>
+        </connector>
+    </assignments>
+    <assignments>
         <name>PreAssign</name>
         <label>PreAssign</label>
-        <locationX>396</locationX>
+        <locationX>732</locationX>
         <locationY>650</locationY>
         <assignmentItems>
             <assignToReference>getInputCase.FirstName__c</assignToReference>
@@ -151,7 +183,7 @@
     <decisions>
         <name>RiprendiProcesso</name>
         <label>RipresaProcesso</label>
-        <locationX>176</locationX>
+        <locationX>512</locationX>
         <locationY>242</locationY>
         <defaultConnector>
             <targetReference>WhichMarcatura</targetReference>
@@ -168,7 +200,7 @@
                 </rightValue>
             </conditions>
             <connector>
-                <targetReference>FirstForm</targetReference>
+                <targetReference>getCityTech</targetReference>
             </connector>
             <label>Si</label>
         </rules>
@@ -176,10 +208,10 @@
     <decisions>
         <name>SceltaButtons</name>
         <label>SceltaButtons</label>
-        <locationX>396</locationX>
-        <locationY>1382</locationY>
+        <locationX>732</locationX>
+        <locationY>1490</locationY>
         <defaultConnector>
-            <targetReference>FirstForm</targetReference>
+            <targetReference>getCityTech</targetReference>
         </defaultConnector>
         <defaultConnectorLabel>next</defaultConnectorLabel>
         <rules>
@@ -213,8 +245,8 @@
     <decisions>
         <name>SceltaButtons_0</name>
         <label>SceltaButtons</label>
-        <locationX>176</locationX>
-        <locationY>1982</locationY>
+        <locationX>50</locationX>
+        <locationY>2306</locationY>
         <defaultConnector>
             <targetReference>getEquipment</targetReference>
         </defaultConnector>
@@ -251,8 +283,8 @@
     <decisions>
         <name>SceltaButtons_1</name>
         <label>SceltaButtons</label>
-        <locationX>572</locationX>
-        <locationY>2630</locationY>
+        <locationX>446</locationX>
+        <locationY>2954</locationY>
         <defaultConnector>
             <targetReference>AssignResultValues</targetReference>
         </defaultConnector>
@@ -289,7 +321,7 @@
     <decisions>
         <name>SObjectParent</name>
         <label>SObjectParent</label>
-        <locationX>396</locationX>
+        <locationX>732</locationX>
         <locationY>866</locationY>
         <defaultConnector>
             <targetReference>assignOrder</targetReference>
@@ -319,9 +351,41 @@
         </rules>
     </decisions>
     <decisions>
+        <name>Tari_o_Tcp</name>
+        <label>Tari o Tcp</label>
+        <locationX>512</locationX>
+        <locationY>2090</locationY>
+        <defaultConnector>
+            <targetReference>screenToastError</targetReference>
+        </defaultConnector>
+        <defaultConnectorLabel>TCP</defaultConnectorLabel>
+        <rules>
+            <name>Tari</name>
+            <conditionLogic>and</conditionLogic>
+            <conditions>
+                <leftValueReference>getCityTech.TARIManagingStartDate__c</leftValueReference>
+                <operator>LessThan</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <conditions>
+                <leftValueReference>getCityTech.TARIManagingEndDate__c</leftValueReference>
+                <operator>GreaterThanOrEqualTo</operator>
+                <rightValue>
+                    <elementReference>$Flow.CurrentDate</elementReference>
+                </rightValue>
+            </conditions>
+            <connector>
+                <targetReference>FirstForm</targetReference>
+            </connector>
+            <label>Tari</label>
+        </rules>
+    </decisions>
+    <decisions>
         <name>WhichMarcatura</name>
         <label>WhichMarcatura</label>
-        <locationX>396</locationX>
+        <locationX>732</locationX>
         <locationY>350</locationY>
         <defaultConnector>
             <targetReference>assignCausalCode_0</targetReference>
@@ -383,21 +447,42 @@
     <recordCreates>
         <name>createProcessEquipment</name>
         <label>createProcessEquipment</label>
-        <locationX>572</locationX>
-        <locationY>2522</locationY>
+        <locationX>446</locationX>
+        <locationY>2846</locationY>
         <connector>
             <targetReference>SceltaButtons_1</targetReference>
         </connector>
         <inputReference>newProcessEquipment</inputReference>
     </recordCreates>
     <recordLookups>
+        <name>getCityTech</name>
+        <label>getCityTech</label>
+        <locationX>512</locationX>
+        <locationY>1982</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Tari_o_Tcp</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>CadastralCity__c</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>getInputCase.ServicePoint__r.SupplyCity__c</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>CityTechnicalData__c</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
         <name>getContract</name>
         <label>getContract</label>
-        <locationX>264</locationX>
+        <locationX>600</locationX>
         <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>firstUpdate</targetReference>
+            <targetReference>assignServicePoint</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -414,8 +499,8 @@
     <recordLookups>
         <name>getEquipment</name>
         <label>getEquipment</label>
-        <locationX>572</locationX>
-        <locationY>2090</locationY>
+        <locationX>446</locationX>
+        <locationY>2414</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>getProcessEquipment</targetReference>
@@ -435,7 +520,7 @@
     <recordLookups>
         <name>getInputCase</name>
         <label>getInputCase</label>
-        <locationX>176</locationX>
+        <locationX>512</locationX>
         <locationY>134</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
@@ -456,11 +541,11 @@
     <recordLookups>
         <name>getOrder</name>
         <label>getOrder</label>
-        <locationX>528</locationX>
+        <locationX>864</locationX>
         <locationY>1082</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
-            <targetReference>firstUpdate</targetReference>
+            <targetReference>assignServicePoint_0</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -477,8 +562,8 @@
     <recordLookups>
         <name>getProcessEquipment</name>
         <label>getProcessEquipment</label>
-        <locationX>572</locationX>
-        <locationY>2198</locationY>
+        <locationX>446</locationX>
+        <locationY>2522</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>ScreenSecondForm</targetReference>
@@ -498,15 +583,15 @@
     <recordUpdates>
         <name>FinalUpdate</name>
         <label>FinalUpdate</label>
-        <locationX>836</locationX>
-        <locationY>2846</locationY>
+        <locationX>710</locationX>
+        <locationY>3170</locationY>
         <inputReference>getInputCase</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>firstUpdate</name>
         <label>firstUpdate</label>
-        <locationX>396</locationX>
-        <locationY>1274</locationY>
+        <locationX>732</locationX>
+        <locationY>1382</locationY>
         <connector>
             <targetReference>SceltaButtons</targetReference>
         </connector>
@@ -515,8 +600,8 @@
     <screens>
         <name>FirstForm</name>
         <label>FirstForm</label>
-        <locationX>176</locationX>
-        <locationY>1874</locationY>
+        <locationX>50</locationX>
+        <locationY>2198</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -620,7 +705,7 @@
     <screens>
         <name>ParentChoice</name>
         <label>ScreenParentChoice</label>
-        <locationX>396</locationX>
+        <locationX>732</locationX>
         <locationY>758</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
@@ -749,8 +834,8 @@
     <screens>
         <name>ScreenSecondForm</name>
         <label>ScreenSecondForm</label>
-        <locationX>572</locationX>
-        <locationY>2306</locationY>
+        <locationX>446</locationX>
+        <locationY>2630</locationY>
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
@@ -900,8 +985,61 @@
         <showFooter>false</showFooter>
         <showHeader>false</showHeader>
     </screens>
+    <screens>
+        <name>screenToastError</name>
+        <label>screenToastError</label>
+        <locationX>974</locationX>
+        <locationY>2198</locationY>
+        <allowBack>true</allowBack>
+        <allowFinish>true</allowFinish>
+        <allowPause>true</allowPause>
+        <connector>
+            <isGoTo>true</isGoTo>
+            <targetReference>GestioneAnnullamento</targetReference>
+        </connector>
+        <fields>
+            <name>showError</name>
+            <extensionName>c:hdtShowToastForFlow</extensionName>
+            <fieldType>ComponentInstance</fieldType>
+            <inputParameters>
+                <name>isBlocking</name>
+                <value>
+                    <booleanValue>false</booleanValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>mode</name>
+                <value>
+                    <stringValue>sticky</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>title</name>
+                <value>
+                    <stringValue>Attenzione!</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>variant</name>
+                <value>
+                    <stringValue>error</stringValue>
+                </value>
+            </inputParameters>
+            <inputParameters>
+                <name>message</name>
+                <value>
+                    <stringValue>Per il seguente comune la Tari risulta non gestita nella data odierna</stringValue>
+                </value>
+            </inputParameters>
+            <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
+            <isRequired>true</isRequired>
+            <storeOutputAutomatically>true</storeOutputAutomatically>
+        </fields>
+        <showFooter>false</showFooter>
+        <showHeader>false</showHeader>
+    </screens>
     <start>
-        <locationX>50</locationX>
+        <locationX>386</locationX>
         <locationY>0</locationY>
         <connector>
             <targetReference>getInputCase</targetReference>
@@ -911,8 +1049,8 @@
     <subflows>
         <name>GestioneAnnullamento</name>
         <label>GestioneAnnullamento</label>
-        <locationX>132</locationX>
-        <locationY>1490</locationY>
+        <locationX>468</locationX>
+        <locationY>1598</locationY>
         <flowName>HDT_FL_GestioneAnnullamento</flowName>
         <inputAssignments>
             <name>InputCase</name>
