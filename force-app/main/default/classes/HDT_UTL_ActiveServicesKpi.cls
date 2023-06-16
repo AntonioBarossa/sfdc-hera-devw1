@@ -25,8 +25,12 @@ public with sharing class HDT_UTL_ActiveServicesKpi {
                 updateServicesCount(account, service, (-1));
             }
         }
-
-        update accountMap.values();
+        try {
+            update accountMap.values();
+        } catch (DmlException ex) {
+            System.debug(DEBUG, ex.getDmlMessage(index));
+        }
+        
     }
 
     public static void updateServicesCount(Account account, String service, Integer delta) {
