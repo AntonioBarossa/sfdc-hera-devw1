@@ -421,6 +421,11 @@
                 <label>Giro contatore da gestire</label>
             </value>
             <value>
+                <fullName>Green Loyalty</fullName>
+                <default>false</default>
+                <label>Green Loyalty</label>
+            </value>
+            <value>
                 <fullName>In attesa risposta cliente</fullName>
                 <default>false</default>
                 <label>In attesa risposta cliente</label>
