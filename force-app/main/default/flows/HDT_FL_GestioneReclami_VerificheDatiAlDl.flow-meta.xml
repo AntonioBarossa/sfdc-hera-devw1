@@ -425,7 +425,7 @@
                 <leftValueReference>Get_Flow_Case_Aggiornato.CommodityFormula__c</leftValueReference>
                 <operator>EqualTo</operator>
                 <rightValue>
-                    <elementReference>EnergiaElettrica</elementReference>
+                    <stringValue>Energia Elettrica</stringValue>
                 </rightValue>
             </conditions>
             <connector>
