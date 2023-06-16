@@ -10,7 +10,8 @@ public with sharing class HDT_LC_InterventionDependency {
 
         List<EquipmentAdministration__c> quadSignals = [SELECT OperationGroup__c, OperationType__c, Material__c 
                                                         FROM EquipmentAdministration__c 
-                                                        WHERE IsActive__c = true AND IsQuadruplet__c = true AND City__c =: city];
+                                                        WHERE IsActive__c = true AND IsQuadruplet__c = true AND City__c =: city
+                                                        WITH SECURITY_ENFORCED];
 
         if (quadSignals.isEmpty()) {
             throw new AuraHandledException('Non sono state trovate configurazioni per il Comune selezionato.');

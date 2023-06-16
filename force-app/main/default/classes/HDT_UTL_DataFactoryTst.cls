@@ -3756,4 +3756,29 @@ public with sharing class HDT_UTL_DataFactoryTst{
 		return results;
 		
 	}
+
+	public static List<EquipmentAdministration__c> createEquipmentAdministrations(Integer amount, Boolean doInsert) {
+
+		List<EquipmentAdministration__c> equipmentAdministrations = new List<EquipmentAdministration__c>();
+
+		for (Integer i = 0; i < amount; i++) {
+			
+			equipmentAdministrations.add(new EquipmentAdministration__c(
+				City__c = 'City -' + i,
+				OperationGroup__c = 'Raccolta differenziat-IURD0023',
+				OperationType__c = 'Richiesta contenitore',
+				Material__c = 'Vetro',
+				isActive__c = true,
+				IsQuadruplet__c = true
+			));
+
+		}
+
+		if (doInsert) {
+			insert equipmentAdministrations;
+		}
+
+		return equipmentAdministrations;
+
+	}
 }
