@@ -182,7 +182,7 @@ public with sharing class HDT_TRH_Account extends HDT_TRH_TriggerHandler {
 
         if(!accidSet.isEmpty()){
             accIdList.addAll(accidSet);
-            for(Contact cont : contQr.getContactsIdByAccountIdList(accIdList)){
+            for(Contact cont : contQr.getContactsFromAcrByAccId(accIdList)){
                 if(accToIndividualMap.get(cont.AccountId) != null){
                     accToIndividualMap.get(cont.AccountId).add(cont.IndividualId);
                 }
