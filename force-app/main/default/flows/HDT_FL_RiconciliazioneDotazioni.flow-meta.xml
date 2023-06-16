@@ -993,10 +993,6 @@
         <allowBack>true</allowBack>
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
-        <connector>
-            <isGoTo>true</isGoTo>
-            <targetReference>GestioneAnnullamento</targetReference>
-        </connector>
         <fields>
             <name>showError</name>
             <extensionName>c:hdtShowToastForFlow</extensionName>
@@ -1004,7 +1000,7 @@
             <inputParameters>
                 <name>isBlocking</name>
                 <value>
-                    <booleanValue>false</booleanValue>
+                    <booleanValue>true</booleanValue>
                 </value>
             </inputParameters>
             <inputParameters>
