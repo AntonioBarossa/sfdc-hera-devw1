@@ -365,6 +365,7 @@
         </relatedContentItems>
     </relatedContent>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>Delivered__c</fields>
@@ -373,6 +374,7 @@
         <relatedList>SMSTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>MessageOpened__c</fields>
@@ -380,6 +382,7 @@
         <relatedList>PushTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>et4ae5__DateSent__c</fields>
         <fields>et4ae5__DateOpened__c</fields>
@@ -401,9 +404,10 @@
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>Amount__c</fields>
-        <fields>Residue__c</fields>
+        <fields>DocumentResidue__c</fields>
         <relatedList>DocumentSelected__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
@@ -427,6 +431,7 @@
         <relatedList>RelatedArticleList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>ActivityType__c</fields>
         <fields>EnvelopeId__c</fields>
@@ -437,6 +442,7 @@
         <relatedList>DocumentalActivity__c.CaseId__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>SendDate__c</fields>
         <fields>SendMode__c</fields>
@@ -445,6 +451,7 @@
         <relatedList>DocumentSendTracking__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>AttachmentCode__c</fields>
         <fields>Version__c</fields>
