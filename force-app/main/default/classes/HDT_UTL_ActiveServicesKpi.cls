@@ -28,7 +28,7 @@ public with sharing class HDT_UTL_ActiveServicesKpi {
         try {
             update accountMap.values();
         } catch (DmlException ex) {
-            System.debug(DEBUG, ex.getDmlMessage(index));
+            System.debug(LoggingLevel.DEBUG, ex.getDmlMessage(ex));
         }
         
     }
