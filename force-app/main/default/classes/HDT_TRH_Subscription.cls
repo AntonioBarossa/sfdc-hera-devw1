@@ -19,6 +19,7 @@ public inherited sharing class HDT_TRH_Subscription extends HDT_TRH_TriggerHandl
     }
     public override void afterInsert(){
         System.debug('After Insert Sub: ' + trigger.new);
+        HDT_UTL_SubscriptionProcess.checkSubsToTerminate(trigger.new);
         HDT_UTL_SubscriptionProcess.dmlOnAfterInsert();
     }
 }
