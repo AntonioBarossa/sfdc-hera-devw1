@@ -2506,10 +2506,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Richiesta Parere</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Ripresa formativa CC</fullName>
             <default>false</default>
         </values>
