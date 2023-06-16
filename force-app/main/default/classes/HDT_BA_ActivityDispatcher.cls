@@ -202,6 +202,7 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
                 }
             }
         }
+        system.debug('kkk Query: '+String.join(query, ' AND ') + ' LIMIT 10000');
         // RETURN THE UNIFIED VALUES
         return String.join(query, ' AND ') + ' LIMIT 10000';
     }
