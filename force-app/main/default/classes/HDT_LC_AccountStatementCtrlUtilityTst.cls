@@ -96,7 +96,7 @@ public with sharing class HDT_LC_AccountStatementCtrlUtilityTst {
         Test.startTest();
         ret = (HDT_WRP_AccountStatement.HDT_WRP_HttpDataBodyRow) HDT_LC_AccountStatementCtrlUtility.setHttpDataBodyRow(tObj, dbr);
         Test.stopTest();
-        System.assertEquals(ret.applicativo, null, 'Errore setHttpDataBodyRow');
+        System.assertEquals(ret.applicativo, 'ML', 'Errore setHttpDataBodyRow');
     }
 
     @isTest
