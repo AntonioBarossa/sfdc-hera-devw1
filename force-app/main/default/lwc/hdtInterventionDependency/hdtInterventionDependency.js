@@ -4,7 +4,7 @@ import { MessageContext, subscribe, unsubscribe } from "lightning/messageService
 import BUTTONMC from "@salesforce/messageChannel/flowButton__c";
 import generatePicklistsData from "@salesforce/apex/HDT_LC_InterventionDependency.generatePicklistsData";
 
-export default class HdtInterventionDependecy extends LightningElement {
+export default class HdtInterventionDependency extends LightningElement {
     @api city = null;
     @api cityId = null;
     @api operationGroup = null;
