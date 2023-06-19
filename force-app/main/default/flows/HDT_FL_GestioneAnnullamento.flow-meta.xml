@@ -1692,6 +1692,13 @@
                     <stringValue>Annullamento Smart Meter</stringValue>
                 </rightValue>
             </conditions>
+            <conditions>
+                <leftValueReference>ProcessType</leftValueReference>
+                <operator>EqualTo</operator>
+                <rightValue>
+                    <stringValue>Associa Dotazioni</stringValue>
+                </rightValue>
+            </conditions>
             <connector>
                 <targetReference>Check_Case_Before_Cancel</targetReference>
             </connector>
@@ -2036,6 +2043,7 @@
         </rules>
     </decisions>
     <description>Flow che si occupa della gestione dei processi di Post Sales Cluster Annullamento.</description>
+    <environments>Default</environments>
     <formulas>
         <name>EffectiveDateFormula</name>
         <dataType>Date</dataType>
