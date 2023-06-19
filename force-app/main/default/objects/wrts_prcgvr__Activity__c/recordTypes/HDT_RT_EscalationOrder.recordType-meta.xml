@@ -2554,10 +2554,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>Sblocco Processo Post-Vendita</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>Pratica gestita erroneamente</fullName>
             <default>false</default>
         </values>
