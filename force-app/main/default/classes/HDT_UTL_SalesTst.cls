@@ -608,19 +608,27 @@ public class HDT_UTL_SalesTst {
 
     @IsTest
     static void setAgeFromAccountTest(){
-        List<Account> accounts = HDT_UTL_DataFactoryTst.createAccountDistributore(2, false, 'HERA COMM', 'Azienda', 'Azienda Soho');
-        accounts[1].CustomerMarking__c = 'Persona Fisica';
-        accounts[1].Category__C = 'Famiglie';
-        accounts[1].FiscalCode__c = 'SXSRLA45H28H5';
-        accounts[1].VatNumber__c = null;
-        insert accounts;
+        List<Account> accounts = [SELECT id FROM Account LIMIT 2];
+        accounts[0].Name = 'TEST DITTA';
+        accounts[0].LastName__c = 'TEST DITTA';
+        accounts[0].FiscalCode__c = '';
+        accounts[1].FirstNAme__c = 'Mario';
+        accounts[1].LastName__c = 'Rossi';
+        accounts[1].VatNumber__c = '';
+        accounts[1].FiscalCode__c = 'RSSMRA74D04H501L';
+        update accounts;
         List<Sale__c> sales = HDT_UTL_DataFactoryTst.createSale(2,false,accounts[0].Id,'Attiva');
         sales[1].Account__c = accounts[1].Id;
         Test.startTest();
             insert sales;
-            Map<Id,Sale__c> mapSale = new Map<Id,Sale__c>([SELECT id, ClientAge__c FROM Sale__c WHERE Id IN : sales]);
-            System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode('SXSRLA45H28H5'), mapSale.get(sales[0].Id).ClientAge__c, 'Età non correttamente valorizzata');
-            System.assert(mapSale.get(sales[1].Id).ClientAge__c == null, 'L\'età è stata ribaltata anche in assenza di cf');
+            for (Sale__c s : [SELECT id, Account__r.FiscalCode__c,ClientAge__c FROM Sale__c WHERE Id IN : sales]){
+                if (String.isNotBlank(s.Account__r.FiscalCode__c)){
+                    System.assertEquals(HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode('RSSMRA74D04H501L'), s.ClientAge__c, 'Età non correttamente valorizzata');
+                }
+                else{
+                    System.assertEquals(null, s.ClientAge__c,'L\'età è stata ribaltata anche in assenza di cf');
+                }
+            }
         Test.stopTest();
     }
 
