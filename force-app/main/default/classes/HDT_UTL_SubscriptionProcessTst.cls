@@ -207,8 +207,12 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         secondSetup();
         List<Contract> cs = [Select id from Contract];
         List<SBQQ__Subscription__c> subs = [Select id from SBQQ__Subscription__c];
+        subs[0].SBQQ__Quantity__c = 2;
         Test.startTest();
-        Finalizer f = new HDT_UTL_SubscriptionProcess.HDT_QBL_Finalizer(cs, subs);
+        Finalizer f = new HDT_UTL_SubscriptionProcess.HDT_QBL_Finalizer(new List<Contract>(), new List<SBQQ__Subscription__c>(), subs);
+        f.execute(null);
+        subs = [Select id from SBQQ__Subscription__c];
+        f = new HDT_UTL_SubscriptionProcess.HDT_QBL_Finalizer(cs, subs, new List<Sobject>());
         f.execute(null);
         Test.stopTest();
         
