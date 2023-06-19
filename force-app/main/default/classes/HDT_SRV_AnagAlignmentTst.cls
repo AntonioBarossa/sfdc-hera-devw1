@@ -19,6 +19,8 @@ public class HDT_SRV_AnagAlignmentTst {
         ordList[0].ServicePoint__c = servPointList[0].Id;
         ordList[0].SupplyState__c = 'AQ';
         ordList[0].Type = 'New';
+        ordList[0].SalesCompanyCode__c = '10V0000000';
+        
         //ordList[0].ProcessType__c='Prima Attivazione Ele';
         ordList[0].ProcessType__c='Subentro Gas';
 

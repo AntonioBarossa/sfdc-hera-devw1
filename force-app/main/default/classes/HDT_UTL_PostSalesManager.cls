@@ -146,10 +146,10 @@ public inherited sharing class HDT_UTL_PostSalesManager{
         List<SObject> objToUpdate = new List<SObject>();
 
         List<String> phasesOrder = new List<String>{'Bozza','Da Inviare','In Lavorazione'};
-        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.AccountId, phasesOrder);
+        List<Order> orderToUpdate = orderQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesOrder);
 
         List<String> phasesCase = new List<String>{'Bozza','Da Inviare'};
-        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.AccountId, phasesCase);
+        List<Case> caseToUpdate = caseQr.getRecordsByAccountIdInPhases(currentCase.Id, currentCase.AccountId, phasesCase);
 
         System.debug(LoggingLevel.DEBUG,'currentCase.SubProcess__c:' + currentCase.SubProcess__c);
         switch on currentCase.SubProcess__c {

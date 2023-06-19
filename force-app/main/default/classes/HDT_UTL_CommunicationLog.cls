@@ -27,7 +27,7 @@ public class HDT_UTL_CommunicationLog {
         if(accountId != null && accountId != ''){
             comm.AccountID__c= accountId;
         }
-        comm.CompanyOwner__c = companyOwner;
+        comm.CompanyOwner__c = String.isNotBlank(companyOwner)?companyOwner:'HERA COMM';
         comm.Company__c = company;
         return comm;
     }   

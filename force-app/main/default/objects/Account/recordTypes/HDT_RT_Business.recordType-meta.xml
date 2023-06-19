@@ -456,22 +456,6 @@
             <default>false</default>
         </values>
         <values>
-            <fullName>MMS Associazione</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS Azienda</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS Condominio</fullName>
-            <default>false</default>
-        </values>
-        <values>
-            <fullName>MMS Ditta individuale</fullName>
-            <default>false</default>
-        </values>
-        <values>
             <fullName>MOODS-Altro</fullName>
             <default>false</default>
         </values>

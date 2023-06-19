@@ -275,10 +275,23 @@ public with sharing class HDT_UTL_PayloadManagement implements HDT_UTL_Documenta
 
         if (context == 'Order' && isPlicoReitek) { // plico "ex-Reitek", cioè firmato con vocal order
             Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue('Order', 'Resident__c', 0, inputs, formParams));
-            residentTranscoded = isResident ? 'SI' : 'NO';
+            String commodity = HDT_UTL_DocumentalManagement.getValue('Order', 'Commodity__c', 0, inputs, formParams);
+            String product = HDT_UTL_DocumentalManagement.getValue('Order', 'CommercialProduct__c', 0, inputs, formParams);
+            //TK984592C - Per l'idrico il flag residente non viene modificato in fase di selezione fornitura ma eredita quanto presente in arricchimento.
+            //Se l'operatore modifica la tariffa da res a non res e viceversa, il flag non viene aggiornato e per questo bisogna fare logica anche sul CommercialProduct__c.
+            residentTranscoded = 'Acqua'.equalsIgnoreCase(commodity) && 'Domestico non residente'.equalsIgnoreCase(product)?'NO':(isResident ? 'SI' : 'NO');
+            //residentTranscoded = isResident ? 'SI' : 'NO';
         } else { // plico "normale"
             Boolean isResident = Boolean.valueOf(HDT_UTL_DocumentalManagement.getValue(context, 'Resident__c', 0, inputs, formParams));
-            residentTranscoded = isResident ? 'Si' : 'No';
+            //TK984592C - Per l'idrico il flag residente non viene modificato in fase di selezione fornitura ma eredita quanto presente in arricchimento.
+            //Se l'operatore modifica la tariffa da res a non res e viceversa, il flag non viene aggiornato e per questo bisogna fare logica anche sul CommercialProduct__c.
+            String product = '';
+            String commodity = HDT_UTL_DocumentalManagement.getValue(context, 'Commodity__c', 0, inputs, formParams);
+            if('Order'.equalsIgnoreCase(context)){
+                product = HDT_UTL_DocumentalManagement.getValue('Order', 'CommercialProduct__c', 0, inputs, formParams);
+            }
+            residentTranscoded = 'Acqua'.equalsIgnoreCase(commodity) && 'Domestico non residente'.equalsIgnoreCase(product)?'No':(isResident ? 'Si' : 'No');
+            //residentTranscoded = isResident ? 'Si' : 'No';
         }
 
         return residentTranscoded;
