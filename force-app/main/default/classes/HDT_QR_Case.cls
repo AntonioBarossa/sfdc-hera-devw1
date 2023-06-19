@@ -307,7 +307,7 @@ public inherited sharing class HDT_QR_Case {
         return [SELECT Id, CorrectionRight__c, CorrectionDocumentEmissionDay__c,IndemnityConfirmed__c, Phase__c, Status FROM Case WHERE AccountId = :accountid AND type IN :types AND isClosed = false WITH SECURITY_ENFORCED];
     }
 
-    public List<Case> getRecordsByAccountIdInPhases(String accountId, List<String> phases ){
+    public List<Case> getRecordsByAccountIdInPhases(Id senderId, String accountId, List<String> phases ){
         return [
             SELECT
             Id,
@@ -321,7 +321,8 @@ public inherited sharing class HDT_QR_Case {
             CustomerMarking__c
             FROM
             Case
-            WHERE AccountId = :accountId
+            WHERE Id != :senderId 
+            AND AccountId = :accountId
             AND Phase__c IN :phases
             WITH SECURITY_ENFORCED
         ];

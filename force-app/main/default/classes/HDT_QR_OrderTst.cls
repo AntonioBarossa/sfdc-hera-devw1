@@ -713,7 +713,7 @@ public class HDT_QR_OrderTst{
 		
 		Test.startTest();
 		
-		List<Order> orders = (new HDT_QR_Order()).getRecordsByAccountIdInPhases(acc.Id, new List<String>{'Bozza'});
+		List<Order> orders = (new HDT_QR_Order()).getRecordsByAccountIdInPhases(null, acc.Id, new List<String>{'Bozza'});
 
 		System.assertEquals(false, orders.isEmpty(), 'The Orders were not retrieved correctly');
 

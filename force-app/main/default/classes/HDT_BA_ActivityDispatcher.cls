@@ -197,11 +197,12 @@ public with sharing class HDT_BA_ActivityDispatcher implements Database.Batchabl
             } else  {
                 mapping = MAPPINGS.get(key);
                 if(mapping != null) {
-                    value = '\'' + ((String) ruleMap.get(key)).replace(';','\',\'') + '\'';
+                    value = '\'' + (String.escapeSingleQuotes((String) ruleMap.get(key)).replace(';','\',\'')) + '\'';
                     query.add(mapping.replace(PLACEHOLDER, value));
                 }
             }
         }
+        system.debug('kkk Query: '+String.join(query, ' AND ') + ' LIMIT 10000');
         // RETURN THE UNIFIED VALUES
         return String.join(query, ' AND ') + ' LIMIT 10000';
     }

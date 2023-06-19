@@ -201,4 +201,56 @@ public with sharing class HDT_UTL_SubscriptionProcessTst
         //System.assertEquals(true, testResult, 'Subscription non riconciliate');
     }
 
+    @isTest
+    static void testFinalizer()
+    {
+        secondSetup();
+        List<Contract> cs = [Select id from Contract];
+        List<SBQQ__Subscription__c> subs = [Select id from SBQQ__Subscription__c];
+        subs[0].SBQQ__Quantity__c = 2;
+        Test.startTest();
+        Finalizer f = new HDT_UTL_SubscriptionProcess.HDT_QBL_Finalizer(new List<Contract>(), new List<SBQQ__Subscription__c>(), subs);
+        f.execute(null);
+        subs = [Select id from SBQQ__Subscription__c];
+        f = new HDT_UTL_SubscriptionProcess.HDT_QBL_Finalizer(cs, subs, new List<Sobject>());
+        f.execute(null);
+        Test.stopTest();
+        
+    }
+
+    @isTest
+    static void testTari()
+    {
+        secondSetup();
+        List<SBQQ__Subscription__c> oldSub = [Select SBQQ__Contract__c, SBQQ__Contract__r.AccountId, SBQQ__Product__c from SBQQ__Subscription__c];
+        Contract cs = oldSub[0].SBQQ__Contract__r;
+        List<PricebookEntry> lpbe = [Select id from PricebookEntry LIMIT 1];
+        List<Pricebook2> lpb = [Select id from Pricebook2 LIMIT 1];
+        Id prodId = oldSub[0].SBQQ__Product__c;
+        List<Order> orderList = HDT_UTL_DataFactoryTst.createOrder(1, false, cs.AccountId, 'Bozza');
+        orderList[0].RecordTypeId = constants.ORDER_RECORDTYPEID_ATTIVAZIONE;
+        //orderList[0].ServicePoint__c = spList[0].Id;
+        orderList[0].Commodity__c = 'Ambiente';
+        orderList[0].EffectiveDate__c = Date.today();
+        orderList[0].Pricebook2Id = lpb[0].Id;
+        insert orderList[0];
+
+        List<OrderItem> orderItemList = HDT_UTL_DataFactoryTst.createOrderItem(5, false, orderList[0].Id, null, prodId, lpbe[0].Id);
+        orderItemList[0].OrderId = orderList[0].Id;
+        orderItemList[0].Product2Id = prodId;
+        orderItemList[0].PricebookEntryId = lpbe[0].Id;
+        insert orderItemList[0];
+
+        Test.startTest();
+        List<SBQQ__Subscription__c> subList = HDT_UTL_DataFactoryTst.createSubscription(1, false, cs.AccountId, cs.Id, null);
+        subList[0].SBQQ__Contract__c = cs.Id;
+        subList[0].SBQQ__Product__c = prodId;
+        subList[0].SBQQ__OrderProduct__c = orderItemList[0].Id;
+        subList[0].SBQQ__Quantity__c = -1;
+        //system.debug('ivaste_final' + [Select id From SBQQ__Subscription__c where SBQQ__Contract__c =:subList[0].SBQQ__Contract__c AND ]);
+        insert subList;
+        Test.stopTest();
+        system.debug('ivaste_final' + [Select Count() From SBQQ__Subscription__c]);
+    }
+
 }
