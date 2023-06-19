@@ -4,7 +4,7 @@
         <name>Calcola_Causale_Annullamento</name>
         <label>Calcola Causale Annullamento</label>
         <locationX>1260</locationX>
-        <locationY>1622</locationY>
+        <locationY>1730</locationY>
         <actionName>HDT_UTL_CaseCancellation</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -18,13 +18,13 @@
         <inputParameters>
             <name>causalCode</name>
             <value>
-                <elementReference>GetRecord.CausalCode__c</elementReference>
+                <elementReference>GetCaseAggiornatoScreen.CausalCode__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>commodity</name>
             <value>
-                <elementReference>GetRecord.CommodityFormula__c</elementReference>
+                <elementReference>GetCaseAggiornatoScreen.CommodityFormula__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -36,7 +36,7 @@
         <inputParameters>
             <name>processCancellationReason</name>
             <value>
-                <elementReference>GetCase.CancellationReason__c</elementReference>
+                <elementReference>GetCaseAggiornatoScreen.CancellationReason__c</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
@@ -48,13 +48,13 @@
         <inputParameters>
             <name>processTypeToCancell</name>
             <value>
-                <elementReference>GetRecord.Type</elementReference>
+                <elementReference>GetCaseAggiornatoScreen.Type</elementReference>
             </value>
         </inputParameters>
         <inputParameters>
             <name>recordId</name>
             <value>
-                <elementReference>GetRecord.Id</elementReference>
+                <elementReference>GetCaseAggiornatoScreen.Id</elementReference>
             </value>
         </inputParameters>
         <storeOutputAutomatically>true</storeOutputAutomatically>
@@ -128,7 +128,7 @@
         <name>Crea_Attivit_Gestione_Manuale_SAP</name>
         <label>Crea Attività Gestione Manuale SAP</label>
         <locationX>578</locationX>
-        <locationY>2594</locationY>
+        <locationY>2702</locationY>
         <actionName>HDT_UTL_CaseCancellation</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -175,7 +175,7 @@
         <name>NoteAnnullamento</name>
         <label>NoteAnnullamento</label>
         <locationX>1260</locationX>
-        <locationY>2054</locationY>
+        <locationY>2162</locationY>
         <actionName>HDT_UTL_Case</actionName>
         <actionType>apex</actionType>
         <connector>
@@ -263,7 +263,7 @@
         <name>Annullamento_Da_inviare</name>
         <label>Annullamento - Da inviare</label>
         <locationX>1546</locationX>
-        <locationY>2486</locationY>
+        <locationY>2594</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -286,7 +286,7 @@
         <name>Annullato</name>
         <label>Annullato</label>
         <locationX>710</locationX>
-        <locationY>2960</locationY>
+        <locationY>3068</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -384,16 +384,16 @@
         <name>Assegna_Codice_Causale</name>
         <label>Assegna Codice Causale</label>
         <locationX>1260</locationX>
-        <locationY>1730</locationY>
+        <locationY>1838</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReasonDescription__c</assignToReference>
+            <assignToReference>GetCaseAggiornatoScreen.CancellationReasonDescription__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcola_Causale_Annullamento.cancellationReason</elementReference>
             </value>
         </assignmentItems>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReasonCode__c</assignToReference>
+            <assignToReference>GetCaseAggiornatoScreen.CancellationReasonCode__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>Calcola_Causale_Annullamento.causalCode</elementReference>
@@ -446,14 +446,14 @@
             </value>
         </assignmentItems>
         <connector>
-            <targetReference>Assegna_Motivo</targetReference>
+            <targetReference>GetCaseAggiornatoScreen</targetReference>
         </connector>
     </assignments>
     <assignments>
         <name>Assegna_Fase_Annullamento_Extra_Sistema</name>
         <label>Assegna Fase Annullamento Extra Sistema</label>
         <locationX>842</locationX>
-        <locationY>2702</locationY>
+        <locationY>2810</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -477,7 +477,7 @@
         <name>Assegna_Fase_Precedente</name>
         <label>Assegna Fase Precedente</label>
         <locationX>1546</locationX>
-        <locationY>2378</locationY>
+        <locationY>2486</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
@@ -510,7 +510,7 @@
         <name>Assegna_Fase_Precedente_Annullamento_Extra_Sistema</name>
         <label>Assegna Fase Precedente Annullamento Extra Sistema</label>
         <locationX>842</locationX>
-        <locationY>2594</locationY>
+        <locationY>2702</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.PreviousPhase__c</assignToReference>
             <operator>Assign</operator>
@@ -526,9 +526,9 @@
         <name>Assegna_Motivo</name>
         <label>Assegna Motivo</label>
         <locationX>1260</locationX>
-        <locationY>1406</locationY>
+        <locationY>1514</locationY>
         <assignmentItems>
-            <assignToReference>GetCase.CancellationReason__c</assignToReference>
+            <assignToReference>GetCaseAggiornatoScreen.CancellationReason__c</assignToReference>
             <operator>Assign</operator>
             <value>
                 <elementReference>DefaultReason</elementReference>
@@ -636,7 +636,7 @@
         <name>AssegnaFormattazioneNote</name>
         <label>AssegnaFormattazioneNote</label>
         <locationX>1260</locationX>
-        <locationY>2162</locationY>
+        <locationY>2270</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.CancellationNote__c</assignToReference>
             <operator>Assign</operator>
@@ -751,7 +751,7 @@
         <name>Bozza_Annullata</name>
         <label>Bozza Annullata</label>
         <locationX>314</locationX>
-        <locationY>2594</locationY>
+        <locationY>2702</locationY>
         <assignmentItems>
             <assignToReference>GetCaseAggiornato.Phase__c</assignToReference>
             <operator>Assign</operator>
@@ -1213,7 +1213,7 @@
         <name>Fase</name>
         <label>Fase?</label>
         <locationX>710</locationX>
-        <locationY>2486</locationY>
+        <locationY>2594</locationY>
         <defaultConnector>
             <targetReference>Annullato</targetReference>
         </defaultConnector>
@@ -1330,7 +1330,7 @@
         <name>InviataHeroku</name>
         <label>Inviata ad Heroku?</label>
         <locationX>1260</locationX>
-        <locationY>2270</locationY>
+        <locationY>2378</locationY>
         <defaultConnector>
             <isGoTo>true</isGoTo>
             <targetReference>Close_Activity_Case</targetReference>
@@ -2181,10 +2181,31 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>GetCaseAggiornato</name>
         <label>GetCaseAggiornato</label>
         <locationX>1260</locationX>
-        <locationY>1946</locationY>
+        <locationY>2054</locationY>
         <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
         <connector>
             <targetReference>NoteAnnullamento</targetReference>
+        </connector>
+        <filterLogic>and</filterLogic>
+        <filters>
+            <field>Id</field>
+            <operator>EqualTo</operator>
+            <value>
+                <elementReference>GetCaseAggiornatoScreen.Id</elementReference>
+            </value>
+        </filters>
+        <getFirstRecordOnly>true</getFirstRecordOnly>
+        <object>Case</object>
+        <storeOutputAutomatically>true</storeOutputAutomatically>
+    </recordLookups>
+    <recordLookups>
+        <name>GetCaseAggiornatoScreen</name>
+        <label>GetCaseAggiornatoScreen</label>
+        <locationX>1260</locationX>
+        <locationY>1406</locationY>
+        <assignNullValuesIfNoRecordsFound>false</assignNullValuesIfNoRecordsFound>
+        <connector>
+            <targetReference>Assegna_Motivo</targetReference>
         </connector>
         <filterLogic>and</filterLogic>
         <filters>
@@ -2374,18 +2395,18 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Aggiorna_Case_0</name>
         <label>Aggiorna Case</label>
         <locationX>1260</locationX>
-        <locationY>3152</locationY>
+        <locationY>3260</locationY>
         <inputReference>GetCaseAggiornato</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale</name>
         <label>Aggiorna Causale</label>
         <locationX>1260</locationX>
-        <locationY>1838</locationY>
+        <locationY>1946</locationY>
         <connector>
             <targetReference>GetCaseAggiornato</targetReference>
         </connector>
-        <inputReference>GetCase</inputReference>
+        <inputReference>GetCaseAggiornatoScreen</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Causale_0</name>
@@ -2448,11 +2469,11 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Aggiorna_Motivo</name>
         <label>Aggiorna Motivo</label>
         <locationX>1260</locationX>
-        <locationY>1514</locationY>
+        <locationY>1622</locationY>
         <connector>
             <targetReference>Calcola_Causale_Annullamento</targetReference>
         </connector>
-        <inputReference>GetCase</inputReference>
+        <inputReference>GetCaseAggiornatoScreen</inputReference>
     </recordUpdates>
     <recordUpdates>
         <name>Aggiorna_Motivo_0</name>
@@ -2633,7 +2654,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <allowFinish>true</allowFinish>
         <allowPause>true</allowPause>
         <connector>
-            <targetReference>Assegna_Motivo</targetReference>
+            <targetReference>GetCaseAggiornatoScreen</targetReference>
         </connector>
         <fields>
             <name>DisplayHeader_2</name>
@@ -2748,13 +2769,13 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
             <inputParameters>
                 <name>recordId</name>
                 <value>
-                    <elementReference>GetRecord.Id</elementReference>
+                    <elementReference>GetCase.Id</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
                 <name>recordType</name>
                 <value>
-                    <elementReference>GetRecord.RecordTypeId</elementReference>
+                    <elementReference>GetCase.RecordTypeId</elementReference>
                 </value>
             </inputParameters>
             <inputParameters>
@@ -3500,7 +3521,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Chiudi_Attivit_Custom_Invio_Case</name>
         <label>Chiudi Attività Custom Invio Case</label>
         <locationX>1282</locationX>
-        <locationY>2378</locationY>
+        <locationY>2486</locationY>
         <connector>
             <isGoTo>true</isGoTo>
             <targetReference>Annullamento_Da_inviare</targetReference>
@@ -3613,7 +3634,7 @@ IF(TODAY()&lt;DATE(YEAR({!GetOrderAggiornato_0.EffectiveDate__c}),MONTH({!GetOrd
         <name>Close_Activity_Case</name>
         <label>Close Activity Case</label>
         <locationX>710</locationX>
-        <locationY>2378</locationY>
+        <locationY>2486</locationY>
         <connector>
             <targetReference>Fase</targetReference>
         </connector>
