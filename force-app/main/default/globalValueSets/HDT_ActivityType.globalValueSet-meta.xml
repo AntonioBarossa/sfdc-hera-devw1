@@ -1091,6 +1091,11 @@
         <label>Vocal Order non validato</label>
     </customValue>
     <customValue>
+        <fullName>Esito KO da DBO</fullName>
+        <default>false</default>
+        <label>Esito KO da DBO</label>
+    </customValue>
+    <customValue>
         <fullName>Segnalazioni VAS</fullName>
         <default>false</default>
         <isActive>false</isActive>
