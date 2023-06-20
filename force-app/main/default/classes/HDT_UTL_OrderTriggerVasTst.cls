@@ -20,7 +20,24 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
 		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
         List<ServicePoint__c> servList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         servList[0].Account__c = accList[0].id;
+        //test
+        servList[0].PlugPresence__c = 'Si';
+        servList[0].isReseller__c = false;
+        servList[0].SwitchInWinback__c = false;
+        servList[0].SAPContractStatus__c = 'Attivo';
+        
         insert servList;
+
+        //Test
+        //SALE
+        List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
+        saleList[0].SalesContact__c = conList[0].Id;
+        saleList[0].Ecid__c = 'myTestEcid';
+        saleList[0].Channel__c = 'Sportello';
+        update saleList;
+        
+        List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, True);
+        List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
         List<Order> firstOrder= HDT_UTL_DataFactoryTst.createOrder(3, false,accList[0].Id, 'Bozza');
         firstOrder[0].RecordTypeId = rtVoltura;
@@ -34,7 +51,27 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         orders[1].Contact__c = conList[0].Id;
         orders[1].isVas__c = true;
         orders[1].OrderReference__c = firstOrder[0].Id;
+        //Test
+        orders[1].PowerRequested__c = 2;
+        orders[1].PowerCommitted__c = 2;
+        
+        
         insert orders;
+
+        //Test
+        List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, true, orders[0].Id, oppList[0].Id, saleList[0].Id, 'Quote');
+        quoteList[0].IsVAS__c = true;
+        quoteList[0].IsBillableVas__c = false;
+        quoteList[0].AmendmentAllowed__c = false;
+        quoteList[0].ContractReference__c = contractList[0].Id;
+        quoteList[0].OrderReference__c = firstOrder[0].Id;
+        quoteList[0].AllowChangeUse__c = false;
+        quoteList[0].SBQQ__Type__c = 'Quote';
+        update quoteList;
+
+        firstOrder[0].SBQQ__Quote__c = quoteList[0].Id;      
+        update firstOrder;
+
 	}
     
     @isTest
@@ -56,7 +93,7 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         List<Order> newOrds= [SELECT Id,AccountId, RecordTypeId, Status, Phase__c, SBQQ__Quote__c, CancellationReason__c FROM Order];
         Map<Id,Order> newOrders= new Map<Id,Order>();
         for(Order o: newOrds){
-            if(o.RecordTypeId == rtVas){
+            if(o.RecordTypeId == rtVas ){
                 o.OrderReference__c =ordId;
             }else{
               	o.Status='Annullato';
