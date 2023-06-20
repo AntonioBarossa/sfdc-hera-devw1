@@ -80,7 +80,7 @@ public inherited sharing class HDT_SRV_ServicePoint {
             fields.add('MarketOrigin__c');
             checkCreateAccess(String.join(fields, ','));
 
-            servicePoint.MarketOrigin__c = servicePoint.MarketOrigin__c == null && (servicePoint.CommoditySector__c == 'Acqua' || servicePoint.CommoditySector__c == 'Ambiente')? 'Regolamentato':'Libero';
+            servicePoint.MarketOrigin__c = String.isBlank(servicePoint.MarketOrigin__c) && (servicePoint.CommoditySector__c == 'Acqua' || servicePoint.CommoditySector__c == 'Ambiente')? 'Regolamentato': servicePoint.MarketOrigin__c;
 
             HDT_UTL_DatabaseService.insertSObject(servicePoint);
             return servicePoint;
