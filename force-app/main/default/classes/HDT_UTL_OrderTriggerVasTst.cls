@@ -20,7 +20,6 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
 		List<Contact> conList = HDT_UTL_DataFactoryTst.createContact(1,true,accList[0].Id);
         List<ServicePoint__c> servList = HDT_UTL_DataFactoryTst.createServicePoint(1, false);
         servList[0].Account__c = accList[0].id;
-        //test
         servList[0].PlugPresence__c = 'Si';
         servList[0].isReseller__c = false;
         servList[0].SwitchInWinback__c = false;
@@ -28,8 +27,7 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         
         insert servList;
 
-        //Test
-        //SALE
+         //SALE
         List<Sale__c> saleList = HDT_UTL_DataFactoryTst.createSale(1, true, accList[0].Id, 'Bozza');
         saleList[0].SalesContact__c = conList[0].Id;
         saleList[0].Ecid__c = 'myTestEcid';
@@ -39,18 +37,22 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         List<Opportunity> oppList = HDT_UTL_DataFactoryTst.createOpportunity(1, True);
         List<Contract> contractList = HDT_UTL_DataFactoryTst.createContract(1, true, accList[0].id);
 
-        List<Order> firstOrder= HDT_UTL_DataFactoryTst.createOrder(3, false,accList[0].Id, 'Bozza');
+        List<Order> firstOrder= HDT_UTL_DataFactoryTst.createOrder(1, false,accList[0].Id, 'Bozza');
         firstOrder[0].RecordTypeId = rtVoltura;
+        firstOrder[0].ServicePoint__c =servList[0].Id;
+        firstOrder[0].Contact__c = conList[0].Id;
         insert firstOrder;
 
         List<Order> orders= HDT_UTL_DataFactoryTst.createOrder(2, false,accList[0].Id, 'Bozza');
         orders[0].RecordTypeId= rtVas;
         orders[0].Contact__c = conList[0].Id;
         orders[0].OrderReference__c = firstOrder[0].Id;
+        orders[0].ServicePoint__c =servList[0].Id;
         orders[1].RecordTypeId= rtDefault;
         orders[1].Contact__c = conList[0].Id;
         orders[1].isVas__c = true;
         orders[1].OrderReference__c = firstOrder[0].Id;
+        orders[1].ServicePoint__c =servList[0].Id;
         //Test
         orders[1].PowerRequested__c = 2;
         orders[1].PowerCommitted__c = 2;
@@ -58,19 +60,35 @@ public with sharing class HDT_UTL_OrderTriggerVasTst {
         
         insert orders;
 
-        //Test
         List<SBQQ__Quote__c> quoteList = HDT_UTL_DataFactoryTst.createQuote(1, true, orders[0].Id, oppList[0].Id, saleList[0].Id, 'Quote');
         quoteList[0].IsVAS__c = true;
         quoteList[0].IsBillableVas__c = false;
-        quoteList[0].AmendmentAllowed__c = false;
+        quoteList[0].AmendmentAllowed__c = true;
         quoteList[0].ContractReference__c = contractList[0].Id;
-        quoteList[0].OrderReference__c = firstOrder[0].Id;
+        quoteList[0].OrderReference__c = orders[0].Id;
         quoteList[0].AllowChangeUse__c = false;
         quoteList[0].SBQQ__Type__c = 'Quote';
         update quoteList;
 
-        firstOrder[0].SBQQ__Quote__c = quoteList[0].Id;      
-        update firstOrder;
+        orders[0].SBQQ__Quote__c = quoteList[0].Id;      
+        update orders;
+        List<Product2> products = HDT_UTL_DataFactoryTst.createProduct2(1,false);
+        products[0].family = 'VAS Servizio';
+        products[0].CancelableQC__c = true;
+        insert products;
+        List<ServicePoint__c> sp = HDT_UTL_DataFactoryTst.createServicePoint(1,true);
+        Id priceBookId = Test.getStandardPriceBookId();
+
+        List<PricebookEntry> stdpriceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, priceBookId);
+
+        List<Pricebook2> pbList = HDT_UTL_DataFactoryTst.createPricebook(1, true);
+
+        List<PricebookEntry> priceBookEntryList = HDT_UTL_DataFactoryTst.createPricebookEntry(products, true, pbList[0].Id);
+        
+        orders[0].Pricebook2Id = pbList[0].Id;
+        update orders;
+        
+        HDT_UTL_DataFactoryTst.createOrderItem(1,true,orders[0].Id,servList[0].Id,products[0].Id,priceBookEntryList[0].id);
 
 	}
     
