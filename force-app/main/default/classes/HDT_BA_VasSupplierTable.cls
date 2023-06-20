@@ -381,7 +381,6 @@ public with sharing class HDT_BA_VasSupplierTable implements Database.Batchable<
                 vasRecord.ErrorDescription__c = vasRecord.ErrorDescription__c.abbreviate(255);
             }
         }
-        System.debug(LoggingLevel.DEBUG, '@ea update ' + JSON.serialize(vasRecords));
         Database.update(vasRecords, true);
         //createDraftActivities(ordsIdScarti);
     }
