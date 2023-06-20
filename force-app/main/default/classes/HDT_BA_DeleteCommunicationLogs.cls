@@ -16,9 +16,11 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
 
         //imposto tramite custom setting il delay sulla query che pesca i record di CommunicationLogTracking__c
         String numberOfDays = setNumberOfDays();
-        Date d = date.today();
-        Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
-        cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT 50000];
+        if(!String.isBlank(numberOfDays)){
+            Date d = date.today();
+            Date endDate = d.addDays(-Integer.valueOf(numberOfDays));
+            cltList = [SELECT CaseId__c, OrderId__c FROM CommunicationLogTracking__c WHERE CreatedDate <=: endDate WITH SECURITY_ENFORCED LIMIT 50000];
+        }
         Set<String> caseIdSet = new Set<String>();
         Set<String> orderIdSet = new Set<String>();
         if(cltList.size() > 0){
@@ -78,7 +80,6 @@ public inherited sharing class HDT_BA_DeleteCommunicationLogs implements Databas
 
     public String setNumberOfDays() {
         List<CS_DaysToExpiration__c> numberOfDays = [SELECT NumberOfDays__c FROM CS_DaysToExpiration__c WHERE Type__c='DeleteCommunicationLogs'];
-        
-        return numberOfDays[0].NumberOfDays__c;
+        return numberOfDays[0]?.NumberOfDays__c;
     }
 }
