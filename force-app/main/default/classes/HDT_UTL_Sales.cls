@@ -576,6 +576,29 @@ public with sharing class HDT_UTL_Sales {
         }
     }
 
+    //CR PAEVOW1_024
+    public static void getAgeFromAccount(List<Sale__c> sales){
+        Map<String,List<Sale__c>> mapAccId = new Map<String,List<Sale__c>>();
+        for (Sale__c s:sales){
+            if (s.Account__c != null){
+                if (!mapAccId.containsKey(s.Account__c)){
+                    mapAccId.put(s.Account__c,new List<Sale__c>());
+                }
+                mapAccId.get(s.Account__c).add(s);
+            }
+        }
+        if (mapAccId.isEmpty()){
+            return;
+        }
+        for (SObject o : HDT_QR_GenericQuery.getGenericRecords('Id,FiscalCode__c', 'Account', 'Id IN (\''+String.join(new List<String>(mapAccId.KeySet()), '\',\'')+'\') AND FiscalCode__c != null')){
+            Account a = (Account)o;
+            for (Sale__c s : mapAccId.get(a.Id)){
+                s.ClientAge__c = HDT_UTL_CalculateFiscalCode.getAgeFromFiscalCode(a.FiscalCode__c);
+            }
+        }
+    }
+    //FINE CR PAEVOW1_024
+
     private static void sendEmail(Exception ex, Order ord, Order originalOrder){
         try{
             list <OrgWideEmailAddress> orgWideAddress = [SELECT Id FROM OrgWideEmailAddress WHERE DisplayName = 'HERA Org Wide Address'  LIMIT 1];
