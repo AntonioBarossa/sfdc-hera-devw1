@@ -131,7 +131,7 @@ public inherited sharing class HDT_UTL_OrderTriggerVas {
 
         }
         for (Order o : [
-            SELECT id,isVas__c,VasSubType__c,CommodityFormula__c,PowerRequested__c,PowerCommitted__c, ServicePoint__r.Account__c,AccountId,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.PlugPresence__c,ServicePoint__r.SAPContractStatus__c,ServicePoint__r.isReseller__c,IsWinback__c
+            SELECT id,isVas__c,VasSubType__c,CommodityFormula__c,PowerRequested__c,PowerCommitted__c, ServicePoint__r.Account__c,AccountId,SBQQ__Quote__r.AmendmentAllowed__c,ServicePoint__r.PlugPresence__c,ServicePoint__r.SAPContractStatus__c,ServicePoint__r.isReseller__c,ServicePoint__r.SwitchInWinback__c
             FROM Order 
             WHERE Id IN :orderToCheckVas.keySet() 
             //condizione per toglere i vas dalla query

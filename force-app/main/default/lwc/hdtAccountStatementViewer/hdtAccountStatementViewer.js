@@ -936,7 +936,7 @@ export default class HdtAccountStatementViewer extends NavigationMixin(Lightning
 
         if(obj.data.length > 0){
             this.viewResultData.id = obj.data[0].codiceEsito;
-            this.viewResultData.resultDate = obj.data[0].dataEsisto;
+            this.viewResultData.resultDate = obj.data[0].dataEsito;
             this.viewResultData.resultDetail = obj.data[0].descrizioneEsito;
             this.showViewResult = true;
         } else {

@@ -1827,4 +1827,28 @@ public inherited sharing  class HDT_UTL_OrderProcess {
         return remiCodeMap;
 
     }
+
+    public static void handleAfterUpdate(List<Order> orderList, Map<Id,SObject> orderOldMap){
+        Order orderNew = orderList[0];
+        Order orderOld = (Order) orderOldMap.get(orderNew.Id);
+        String newPhase = orderNew.Phase__c;
+        String oldPhase = orderOld.Phase__c;
+        try {
+            if(String.isNotBlank(newPhase) && String.isNotBlank(oldPhase) && newPhase != oldPhase){
+                List<CommunicationLogTracking__c> comLogTrackList = new List<CommunicationLogTracking__c>();
+                for (Order ord : orderList) {
+                    if('Completata'.equalsIgnoreCase(ord.Phase__c)){
+                        CommunicationLogTracking__c trck = new CommunicationLogTracking__c();
+                        trck.OrderId__c = ord.Id;
+                        comLogTrackList.add(trck);
+                    }
+                }
+                if (comLogTrackList.size() > 0){
+                    insert comLogTrackList;
+                }
+            }
+        } catch (Exception e) {
+            System.debug(LoggingLevel.DEBUG, 'Throwed error: ' + e.getMessage());
+        }
+    }
 }
