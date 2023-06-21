@@ -280,7 +280,7 @@ const DATA_ACCESS_MAP = {
             data.forEach((item) => {
                 item.recNumber = item.OrderNumber;
                 item.Type = item.Type;
-                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.SAPImplantCode__c : '';
                 item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
             });
         },
@@ -298,14 +298,15 @@ const DATA_ACCESS_MAP = {
         dataProcessFunction: (data) => {
             data.forEach((item) => {
                 item.recNumber = item.SAPContractCode__c;
-                item.Type = item.ContractType__c;
-                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.ServicePointCode__c : '';
+                item.Type = item.CommoditySectorFormula__c;
+                item.PodPdr = item.ServicePoint__r !== undefined? item.ServicePoint__r.SAPImplantCode__c : '';
                 item.ServicePointAddr = item.ServicePoint__r !== undefined ? item.ServicePoint__r.SupplyAddress__c : '';
             });
         },
         columns: [
-            {label: 'Numero Servizio', fieldName: 'recNumber', type: 'text'},
+            {label: 'Numero Contratto', fieldName: 'recNumber', type: 'text'},
             {label: 'Tipo Servizio', fieldName: 'Type', type: 'text'},
+            {label: 'Stato', fieldName: 'Status', type: 'text'},
             {label: 'Fornitura', fieldName: 'PodPdr', type: 'text'},
             {label: 'Indirizzo fornitura', fieldName: 'ServicePointAddr', type: 'text'}
         ]

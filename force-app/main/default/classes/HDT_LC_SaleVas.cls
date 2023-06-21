@@ -399,14 +399,14 @@ public inherited sharing class HDT_LC_SaleVas {
                 records = [ Select id,SapContractCode__c,ContractNumber,ServicePoint__r.SupplyAddress__c,ServicePoint__r.ServicePointCode__c From Contract where Id IN :contrIds WITH SECURITY_ENFORCED];
             }
             when 'ASSOCIA_DOTAZIONI_ORDER'{
-                records.addAll([SELECT Id, OrderNumber, ProcessType__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                records.addAll([SELECT Id, OrderNumber, ProcessType__c, ServicePoint__r.SAPImplantCode__c, ServicePoint__r.SupplyAddress__c
                                 FROM Order
                                 WHERE AccountId = :searchString
                                 AND RecordType.DeveloperName IN ('HDT_RT_AgevolazioniAmbiente','HDT_RT_AttivazioneAmbiente','HDT_RT_SubentroAmbiente','HDT_RT_CambioTariffa')
                                 WITH SECURITY_ENFORCED]);
             }
             when 'ASSOCIA_DOTAZIONI_CONTRACT'{
-                records.addAll([SELECT ContractNumber, SAPContractCode__c, ServicePoint__r.ServicePointCode__c, ServicePoint__r.SupplyAddress__c
+                records.addAll([SELECT ContractNumber, SAPContractCode__c, ServicePoint__r.SAPImplantCode__c, ServicePoint__r.SupplyAddress__c, CommoditySectorFormula__c, Status
                                 FROM Contract WHERE AccountId=:searchString
                                 AND (ServicePoint__r.CommoditySector__c='Ambiente' OR SBQQ__Order__r.ServicePoint__r.CommoditySector__c='Ambiente')
                                 WITH SECURITY_ENFORCED]
