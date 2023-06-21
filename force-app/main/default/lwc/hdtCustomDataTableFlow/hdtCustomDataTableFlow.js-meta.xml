@@ -9,7 +9,7 @@
         <targetConfig targets="lightning__FlowScreen">
             <propertyType name="object" extends="SObject" label="Select a SObject" description="Select a SObject"/>
             <property name="records" type="{object[]}" label="records" description="List of Records"/>
-            <property name="jsonColumns" type="String" label="columns json" description="columns" role="inputOnly"/>
+            <property name="processType" type="String" label="processType" description="processType" role="inputOnly"/>
         </targetConfig>
     </targetConfigs>
 </LightningComponentBundle>

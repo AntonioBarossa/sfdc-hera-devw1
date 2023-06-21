@@ -862,9 +862,9 @@
                 </value>
             </inputParameters>
             <inputParameters>
-                <name>jsonColumns</name>
+                <name>processType</name>
                 <value>
-                    <stringValue>[{&quot;label&quot;:&quot;Anagrafica TCP Name&quot;,&quot;fieldName&quot;:&quot;Name&quot;},{&quot;label&quot;:&quot;Codice Dotazione&quot;,&quot;fieldName&quot;:&quot;EquipmentCode__c&quot;,&quot;type&quot;:&quot;Text&quot;},{&quot;label&quot;:&quot;Tipologia&quot;,&quot;fieldName&quot;:&quot;Type__c&quot;,&quot;type&quot;:&quot;Text&quot;},{&quot;label&quot;:&quot;Codice Impianto&quot;,&quot;fieldName&quot;:&quot;ImplantCode__c&quot;,&quot;type&quot;:&quot;Text&quot;}]</stringValue>
+                    <stringValue>ASSOCIA_DOTAZIONI</stringValue>
                 </value>
             </inputParameters>
             <inputsOnNextNavToAssocScrn>UseStoredValues</inputsOnNextNavToAssocScrn>
