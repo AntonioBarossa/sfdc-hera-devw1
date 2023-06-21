@@ -69,10 +69,8 @@ public inherited sharing class HDT_LC_AccountStatementCtrlUtility {
                 }
                 //Tasto Visualizza Esito
                 when 'viewResult' {
-                    dbr.applicativo = null;
-                    dbr.codiceCliente = null;
-                    dbr.tipoEstrattoConto = null;
-                    dbr.loginId = null;
+                    dbr.applicativo = 'ML';
+                    dbr.aggregazione = '03';
                     dbr.tipoTransazione = 'EC4';
                 }
                 //Tasto Scaduto
