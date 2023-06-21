@@ -261,6 +261,11 @@
         <label>Offerte Luce e Gas</label>
     </customValue>
     <customValue>
+        <fullName>Prezzo Netto Relax Casa Gas</fullName>
+        <default>false</default>
+        <label>Prezzo Netto Relax Casa Gas</label>
+    </customValue>
+    <customValue>
         <fullName>Prezzo Netto Special Dual</fullName>
         <default>false</default>
         <label>Prezzo Netto Special Dual</label>
