@@ -172,6 +172,10 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
             quoteLine.Id = currentOrderItem[0].SBQQ__QuoteLine__c;
             quoteLine.OwnerAC__c = ordItem.OwnerAC__c != null ? ordItem.OwnerAC__c : currentOrderItem[0].OwnerAC__c;
             quoteLine.DwellingType__c = ordItem.DwellingType__c != null ? ordItem.DwellingType__c : currentOrderItem[0].DwellingType__c;
+            //TK 986414C @enricodursontt
+            if (ordItem.OccupantsNumber__c  == null) {
+                throw new AuraHandledException('Il campo Numero Occupanti non può essere vuoto');
+            }
             quoteLine.OccupantsNumber__c = ordItem.OccupantsNumber__c != null ? ordItem.OccupantsNumber__c : currentOrderItem[0].OccupantsNumber__c;
             quoteLine.Surface__c = ordItem.Surface__c != null ? ordItem.Surface__c : currentOrderItem[0].Surface__c;
             orderToUpdate.Id = ordItem.OrderId;
@@ -252,7 +256,8 @@ public inherited sharing class HDT_LC_ChildOrderProcessDetails {
 
             if(recordTypeDevName=='HDT_RT_ConnessioneConAttivazione'){
                 //ConnessioneConAttivazione
-                metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
+                //metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c=:ord.ProcessType__c WITH SECURITY_ENFORCED];
+                metas = [SELECT QuoteType__c, OperationCode__c FROM QuoteManagement__c WHERE CausalCode__c=:ord.ProcessCode__c AND Operation_type__c='HDT_RT_ConnessioneConAttivazione' WITH SECURITY_ENFORCED];
                 if(!metas?.isEmpty()){
                     wrp.quoteType = metas[0].QuoteType__c; 
                     wrp.quoteCode = formatCode( Decimal.ValueOf(metas[0].OperationCode__c) ); 

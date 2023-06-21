@@ -493,6 +493,7 @@
         <relatedList>wrts_prcgvr__Activity__c.Case__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
         <fields>CASES.TYPE</fields>
         <fields>Phase__c</fields>
@@ -500,13 +501,15 @@
         <relatedList>RelatedChildCaseList</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>NewCase</excludeButtons>
         <fields>CASES.CASE_NUMBER</fields>
-        <fields>CASES.TYPE</fields>
-        <fields>Phase__c</fields>
-        <fields>CASES.STATUS</fields>
+        <fields>CASES.SUBJECT</fields>
+        <fields>CASES.CREATED_DATE</fields>
+        <fields>CASES.PRIORITY</fields>
         <relatedList>Case.RelatedCase__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>Delivered__c</fields>
@@ -515,6 +518,7 @@
         <relatedList>SMSTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>MessageText__c</fields>
         <fields>MessageOpened__c</fields>
@@ -522,6 +526,7 @@
         <relatedList>PushTracking__c.CaseID__c</relatedList>
     </relatedLists>
     <relatedLists>
+        <excludeButtons>New</excludeButtons>
         <fields>NAME</fields>
         <fields>et4ae5__DateSent__c</fields>
         <fields>et4ae5__DateOpened__c</fields>

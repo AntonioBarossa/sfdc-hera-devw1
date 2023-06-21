@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LightningComponentBundle xmlns="http://soap.sforce.com/2006/04/metadata">
+    <targets>
+        <target>lightning__FlowScreen</target>
+    </targets>
+    <targetConfigs>
+        <targetConfig targets="lightning__FlowScreen">
+            <property name="cityId" type="String" label="Id Comune" role="inputOnly"/>
+            <property name="city" type="String" label="Comune" role="outputOnly"/>
+            <property name="operationGroup" type="String" label="Gruppo Intervento"/>
+            <property name="operationType" type="String" label="Tipo Intervento"/>
+            <property name="material" type="String" label="Materiale"/>
+        </targetConfig>
+    </targetConfigs>
+    <apiVersion>57.0</apiVersion>
+    <isExposed>true</isExposed>
+</LightningComponentBundle>

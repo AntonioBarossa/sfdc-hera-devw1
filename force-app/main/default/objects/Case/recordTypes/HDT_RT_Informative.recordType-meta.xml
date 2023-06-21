@@ -8015,7 +8015,7 @@
             <default>false</default>
         </values>
     </picklistValues>
-   <!-- <picklistValues>
+    <picklistValues>
         <picklist>MacroTopic__c</picklist>
         <values>
             <fullName>Appuntamento agente</fullName>
@@ -8030,7 +8030,7 @@
             <default>false</default>
         </values>
        <values>
-            <fullName>Info adesione iniziativa</fullName>
+            <fullName>genHERAZIONI</fullName>
             <default>false</default>
         </values>
         <values>
@@ -8097,7 +8097,11 @@
             <fullName>Richiesta di approfondimenti</fullName>
             <default>false</default>
         </values>
-    </picklistValues> -->
+        <values>
+            <fullName>Info servizi altri Enti</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
     <picklistValues>
         <picklist>Market__c</picklist>
         <values>
