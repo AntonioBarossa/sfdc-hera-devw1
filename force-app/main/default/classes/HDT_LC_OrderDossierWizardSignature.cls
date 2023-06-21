@@ -221,18 +221,13 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         Set<String> customerCategory = new Set<String>();
         Set<String> marketOrigin = new Set<String>();
         Boolean isVas = false;
-        for (Order ord : orders){
-            populateSetString(channel, ord.Channel__c);
-            populateSetString(customerCategory, ord.CustomerCategory__c);
-            if ('HDT_RT_VAS'.equalsIgnoreCase(ord.RecordType.DeveloperName)){
-                isVas = true;
-                continue;
-            }
-            populateSetString(marketOrigin, ord.MarketOrigin__c);
-            populateSetString(recordType, ord.RecordType.DeveloperName);            
-        }
+        if ('HDT_RT_VAS'.equalsIgnoreCase(ord[0].RecordType.DeveloperName)){
+            isVas = true;
+            continue;
+        }  
         if (isVas){
-            return [SELECT
+            return HDT_QR_ComfortQualityCall.getRecordByOrderParamsVasMassive(orders,signatureMethod,docSendingMethod);
+            /* [SELECT
             Id,
             ComfortEnabled__c,
             QualityEnabled__c,
@@ -252,9 +247,10 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
             AND (QualitySignatureMethod__c = :signatureMethod
                 OR ComfortSignatureMethod__c = :signatureMethod
                 OR ComfortDocSendingChannel__c = :docSendingMethod)
-            WITH SECURITY_ENFORCED];
-        }
-        return [SELECT
+            WITH SECURITY_ENFORCED];*/
+        } 
+        return HDT_QR_ComfortQualityCall.getRecordByOrderParamsMassive(orders,signatureMethod);
+        /* [SELECT
         Id,
         ComfortEnabled__c,
         QualityEnabled__c,
@@ -274,7 +270,7 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         AND MarketType__c IN :marketOrigin //picklist
         AND (ComfortSignatureMethod__c = :signatureMethod 
             OR QualitySignatureMethod__c = :signatureMethod)
-        WITH SECURITY_ENFORCED];
+        WITH SECURITY_ENFORCED]; */
 
     }
 
@@ -333,11 +329,11 @@ public inherited sharing class HDT_LC_OrderDossierWizardSignature {
         }
     }
 
-    private static void populateSetString(Set<String> queryValue, String value){
+    /* private static void populateSetString(Set<String> queryValue, String value){
         if (String.isNotBlank(value)){
             queryValue.add(value);
         }
-    }
+    } */
 
     private static List<ComfortQualityCall__c> getComfortQualityCall(Order o, List<ComfortQualityCall__c> comfortQualityCall){
         List<ComfortQualityCall__c> response = new List<ComfortQualityCall__c>();
